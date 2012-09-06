@@ -9,3 +9,4 @@ test/dummy/.sass-cache
 vendor/bundle
 test/dummy/vendor/bundle
 
+.sass-cache

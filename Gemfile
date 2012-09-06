@@ -15,3 +15,9 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'debugger'
+
+
+gem 'pry'
+gem 'pry-rails'
+gem 'yui-compressor'
+gem 'fog'
