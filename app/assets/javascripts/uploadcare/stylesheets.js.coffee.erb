@@ -1,0 +1,5 @@
+uploadcare.whenReady ->
+  {jQuery} = uploadcare
+  uploadcare.stylesheets = '<%= evaluate "uploadcare/widget.css" %>'
+  tag = jQuery('<style>').html(uploadcare.stylesheets)
+  jQuery('head').append(tag)

@@ -1,0 +1,114 @@
+@mixin inline-blocks {
+  letter-spacing: -.31em;
+  word-spacing: -.43em;  
+}
+
+@mixin inline-block {
+  letter-spacing: normal;
+  word-spacing: normal;
+  display: inline-block;
+  vertical-align: top;
+}
+
+$widget_height: 25px;
+
+@function x($count) {
+  @return $count * $widget_height;
+}
+
+@function y($count) {
+  @return $count * $widget_height;
+}
+
+$circle_background_color: #e6e6e6;
+$button_text_color: #8f9295;
+$circle_center_color: white;
+$circle_center_width: 15%;
+$circle_active_background: gold;
+
+.uploadcare-widget {
+  @include inline-blocks;
+  white-space: nowrap;
+
+  &.loaded, &.started {
+    .uploadcare-widget-buttons > li { display: none; }
+  }  
+
+  &.started {
+    .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel {
+      display: inline-block;
+    }
+  }
+
+  &.loaded {
+    .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
+      display: inline-block;
+    }
+  }
+}
+
+.uploadcare-widget-circle {
+  width: $widget_height;
+  height: $widget_height;
+  font-size: 0;  
+  position: relative;
+  margin-right: 1ex;
+  @include inline-block;
+  float: left;
+  [role=uploadcare-widget-status] {
+    width: 100%; height: 100%;
+    border-radius: $widget_height;
+    background: $circle_background_color;
+    &.uploadcare-widget-circle-active {
+      background: $circle_active_background;
+    }
+  }
+  .uploadcare-widget-center {
+    position: absolute;
+    background: $circle_center_color;
+    width: $circle_center_width;
+    height: $circle_center_width;
+    top: 50%;
+    left: 50%;
+    border-radius: 100%;
+    margin-top: -$circle_center_width / 2;
+    margin-left: -$circle_center_width / 2;
+  }
+}
+
+.uploadcare-widget-buttons {
+  float: right;
+  @include inline-block;
+  margin: 0; padding: 0;
+  > li {
+    color: $button_text_color;
+    @include inline-block;
+    line-height: y(1);
+    min-width: x(1) * 1.5;
+    height: y(1);
+    padding: 0 1ex;
+    margin-left: 1ex;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: $circle_background_color;
+    cursor: pointer;
+
+    &.uploadcare-widget-buttons-file,
+    &.uploadcare-widget-buttons-url {
+      background-image: asset-data-url('uploadcare/buttons.png');
+    }
+    &.uploadcare-widget-buttons-url {
+      background-position: -1 * x(1) * 1.5 0;
+    }
+    &.uploadcare-widget-buttons-cancel, &.uploadcare-widget-buttons-remove {
+      display: none;
+    }
+  }
+}
+
+.uploadcare-widget-status-text {
+  @include inline-block;
+  line-height: y(1);
+  height: y(1);
+  margin-right: 1ex;
+}
