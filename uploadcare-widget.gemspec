@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.version     = UploadcareWidget::VERSION
   s.authors     = ["Vadik Rastyagaev"]
   s.email       = ["vr@whitescape.com"]
-  s.homepage    = "http://uploacare.ru"
+  s.homepage    = "http://uploadcare.com"
   s.summary     = "Widget for uploadcare service"
   s.description = "Widget for uploadcare service."
 
