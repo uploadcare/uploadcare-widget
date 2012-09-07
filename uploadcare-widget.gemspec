@@ -1,5 +1,7 @@
 $:.push File.expand_path("../lib", __FILE__)
 
+require 'rake'
+
 # Maintain your gem's version:
 require "uploadcare-widget/version"
 
@@ -14,7 +16,8 @@ Gem::Specification.new do |s|
   s.description = "Widget for uploadcare service."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.markdown"]
-  s.test_files = Dir["test/**/*"]
+
+  s.test_files = FileList["test/**/*"].exclude('test/dummy/vendor/bundle/**/*').exclude('test/dummy/tmp/**/*')
 
   s.add_dependency "rails", "~> 3.2"
   s.add_dependency "jquery-rails"
