@@ -96,7 +96,7 @@ uploadcare.whenReady ->
         return color
 
       __initRaphael: ->
-        raphael = uploadcare.Raphael @pie.get(0)
+        raphael = uploadcare.Raphael @pie.get(0), @width, @width
         color = @color
         width = @width
         angleOffset = @angleOffset
