@@ -13,6 +13,6 @@ See other instructions in [official Uploadcare documentation](http://uploadcare.
 Clone the repository, make your changes, update VERSION [here](https://github.com/uploadcare/uploadcare-widget/blob/master/lib/uploadcare-widget/version.rb) and make release:
     
     rake release
-    rake make_js_build AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret AWS_BUCKET_NAME=bucket
+    rake js AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret AWS_BUCKET_NAME=bucket
 
 Last line makes compiled javascript file in `pkg` folder and upload it in AWS S3.
