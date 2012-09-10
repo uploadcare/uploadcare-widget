@@ -39,6 +39,7 @@ task :default => :test
 
 namespace :js do
   task :env do
+    require 'yaml'
     ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
     Bundler.require :development
   end
@@ -63,12 +64,11 @@ namespace :js do
 
   desc 'Upload last version of widget'
   task upload: [:env] do
-    storage = Fog::Storage.new(
-      provider: :aws,
-      aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-    )
-    directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
+    credentials = YAML::parse_file(File.expand_path("../fog_credentials.yml",  __FILE__)).to_ruby
+    credentials.symbolize_keys!
+    bucket_name = credentials.delete(:bucket_name)
+    storage = Fog::Storage.new credentials
+    directory = storage.directories.get(bucket_name)
 
     filename = "uploadcare-#{UploadcareWidget::VERSION}.min.js"
     widget_path = File.expand_path("../pkg/#{filename}",  __FILE__)    

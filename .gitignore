@@ -10,3 +10,5 @@ vendor/bundle
 test/dummy/vendor/bundle
 
 .sass-cache
+Gemfile.lock
+fog_credentials.yml

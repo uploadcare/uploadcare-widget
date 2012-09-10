@@ -10,6 +10,13 @@ See other instructions in [official Uploadcare documentation](http://uploadcare.
 
 ## Build new version
 
+Push fog credentials and bucket name to fog_credentials.yml in gem root like here:
+
+    provider: AWS
+    aws_access_key_id: 'access'
+    aws_secret_access_key: 'secret'
+    bucket_name: 'bucket'
+
 Clone the repository, make your changes, update VERSION [here](https://github.com/uploadcare/uploadcare-widget/blob/master/lib/uploadcare-widget/version.rb) and make release:
     
     rake release
