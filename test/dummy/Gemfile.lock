@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    uploadcare-widget (0.1.4)
+    uploadcare-widget (0.1.5)
       coffee-rails
       ejs
       jquery-rails
@@ -11,6 +11,10 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     actionmailer (3.2.8)
       actionpack (= 3.2.8)
       mail (~> 2.4.4)
@@ -64,6 +68,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.3.6)
+    open4 (1.3.0)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -105,9 +110,8 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
-    uglifier (1.2.7)
-      execjs (>= 0.3.0)
-      multi_json (~> 1.3)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
@@ -117,5 +121,5 @@ DEPENDENCIES
   jquery-rails
   rails (= 3.2.8)
   sass-rails (~> 3.2.3)
-  uglifier (>= 1.0.3)
   uploadcare-widget!
+  yui-compressor
