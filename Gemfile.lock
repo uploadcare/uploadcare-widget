@@ -147,6 +147,6 @@ DEPENDENCIES
   jquery-rails
   pry
   pry-rails
-  rake
+  sprockets
   uploadcare-widget!
   yui-compressor
