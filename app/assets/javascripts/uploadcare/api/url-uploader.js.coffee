@@ -8,58 +8,79 @@ uploadcare.whenReady ->
       upload: (url) ->
         return unless url?
 
-        # Deferred object that manage responses from status check URL
-        @status = jQuery.Deferred()
-        @status
-          .progress (data) =>
-            jQuery(this).trigger('uploadcare.api.uploader.progress') #, {loaded: data.done, fileSize: data.total}
-          .done (data) =>
-            [@fileName, @fileId] = [data.original_filename, data.file_id]
-            jQuery(this).trigger('uploadcare.api.uploader.load')
-          .fail =>
-            jQuery(this).trigger('uploadcare.api.uploader.error')
-          .always =>
-            clearInterval @checking
+        @pusher = new Pusher(@settings['pusher-key'])
 
-        # Check function to get upload status by token and pass this data to deferred object
-        check = (token) =>
-          @__status(token)
-            .done (data) =>
-              if data.status isnt 'unknown'
-                [@fileSize, @loaded] = [data.total, data.done]
-                
-                if @loaded < @fileSize
-                  @status.notify data
-                else
-                  @status.resolve data
-            .fail =>
-              @status.reject()
+        @_stateStart()
 
-        # Make a jsonp-request to upload remote file
-        # NOTE: jsonp & cross-domain requests won't trigger the error calls like 404 and stuff
-        # Easy step to fix that is to create a separate method with periodical execution, that will check XHR state for 15 seconds and then reject it.
         @xhr = jQuery.ajax("#{@settings['upload-url-base']}/from_url/",
           data: {pub_key: @settings['public-key'], source_url: url}
           dataType: 'jsonp'
-          # Fires an event to change widget state to 'started'
-          beforeSend: (xhr) =>
-            jQuery(this).trigger('uploadcare.api.uploader.start')
         ).done (data) =>
-          @token    = data.token
+          @token = data.token
 
-          # Passing token to check func executed with defined check interval
-          @checking = setInterval ->
-            check(data.token)
-          , @settings['progress-check-interval']
+          @channel = @pusher.subscribe("task-status-#{@token}")
+
+          #@channel.bind_all (e, data) => console.log('pusher event', e, data)
+
+          @channel.bind 'pusher:subscription_succeeded', (data) =>
+            # avoiding race condition: the file could be downloaded too fast
+            setTimeout (=> @_checkStatusFallback() if @_state == 'start'), 300
+
+          @channel.bind 'progress', (data) => @_stateProgress(data)
+          @channel.bind 'success', (data) => @_stateSuccess(data)
+          @channel.bind 'fail', (data) => @_stateError()
         .fail (e) =>
-          jQuery(this).trigger('uploadcare.api.uploader.error')
+          @_stateError()
 
       cancel: ->
-        clearInterval(@checking) if @checking?
+        @pusher.unsubscribe("task-status-#{@token}") if @pusher
+        @_cleanup()
 
-      # Method to fetch upload status, returns deferred
-      __status: (token) ->
+      ####### Four States of Uploader
+      _stateStart: ->
+        @_state = 'start'
+        jQuery(this).trigger('uploadcare.api.uploader.start')
+
+      _stateProgress: (data) ->
+        # avoid progress after success
+        return if @_state == 'success'
+
+        @_state = 'progress'
+
+        [@loaded, @fileSize] = [data.done, data.total]
+        jQuery(this).trigger('uploadcare.api.uploader.progress')
+
+      _stateSuccess: (data) ->
+        # avoiding firing success twice (may happen because of a fallback to /status/ after subscription)
+        return if @_state == 'success'
+
+        @_stateProgress(data)
+
+        @_state = 'success'
+
+        [@fileName, @fileId] = [data.original_filename, data.file_id]
+        jQuery(this).trigger('uploadcare.api.uploader.load')
+
+        @_cleanup()
+
+      _stateError: ->
+        @_state = 'error'
+        jQuery(this).trigger('uploadcare.api.uploader.error')
+
+        @_cleanup()
+
+      _cleanup: ->
+        if @pusher
+          @pusher.disconnect()
+          @pusher = null
+
+      # the pull-based fallback in case push-based fails
+      _checkStatusFallback: ->
+        console.log 'Fallback check :(', @_state, @token
+
         jQuery.ajax("#{@settings['upload-url-base']}/status/", 
-          data: {'token': token}
+          data: {'token': @token}
           dataType: 'jsonp'
-        )
+        ).done (data) =>
+          @_stateSuccess data if data.status == 'success'
+
