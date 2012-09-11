@@ -51,8 +51,7 @@ uploadcare.whenReady ->
         @adapters = new Object
         for key in @settings.adapters.split(' ')
           if ns.adapters.registeredAdapters.hasOwnProperty(key)
-            li = @template.addButton(key)
-            @adapters[key] = new ns.adapters.registeredAdapters[key](this, li)
+            @adapters[key] = new ns.adapters.registeredAdapters[key](this)
 
 
     initialize class: ns.Widget, elements: '@uploadcare-uploader'
