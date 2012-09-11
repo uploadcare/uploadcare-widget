@@ -86,7 +86,7 @@ namespace :js do
     )
 
     write_js(
-      "latest.min.js",
+      "uploadcare-latest.min.js",
       YUI::JavaScriptCompressor.new.compress(source)
     )
 
@@ -104,7 +104,7 @@ namespace :js do
 
     upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.min.js", credentials)
     upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.js", credentials)
-    upload_js(bucket_name, "latest.min.js", credentials)
+    upload_js(bucket_name, "uploadcare-latest.min.js", credentials)
   end
 end
 
