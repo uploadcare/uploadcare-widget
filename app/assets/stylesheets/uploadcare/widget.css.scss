@@ -54,7 +54,6 @@ $circle_active_background: gold;
   position: relative;
   margin-right: 1ex;
   @include inline-block;
-  float: left;
   [role=uploadcare-widget-status] {
     width: 100%; height: 100%;
     border-radius: $widget_height;
@@ -77,7 +76,6 @@ $circle_active_background: gold;
 }
 
 .uploadcare-widget-buttons {
-  float: right;
   @include inline-block;
   margin: 0; padding: 0;
   > li {
