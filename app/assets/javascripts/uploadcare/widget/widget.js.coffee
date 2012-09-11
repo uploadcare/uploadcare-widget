@@ -22,7 +22,7 @@ uploadcare.whenReady ->
         jQuery([@uploader, @urlUploader])
           .on('uploadcare.api.uploader.start', => @template.started())
           .on('uploadcare.api.uploader.error', => @template.error())
-          .on('uploadcare.api.uploader.load', => @__loaded)
+          .on('uploadcare.api.uploader.load', @__loaded)
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
