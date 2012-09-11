@@ -37,6 +37,33 @@ end
 
 task :default => :test
 
+def in_root(file)
+  File.expand_path("../#{file}",  __FILE__)
+end
+
+def write_js(filename, contents)
+  Dir.mkdir(in_root("pkg")) unless Dir.exists?(in_root("pkg"))
+  widget_path = in_root("pkg/#{filename}")
+  File.open(widget_path, "w") do |f|
+    f.write(contents)
+  end
+  puts "Created #{widget_path}"
+end
+
+def upload_js(bucket_name, filename, credentials)
+  storage = Fog::Storage.new credentials
+  directory = storage.directories.get(bucket_name)
+
+  key = "widget/#{filename}"
+  file = directory.files.create(
+    key: key,
+    body: File.read(in_root("pkg/#{filename}")),
+    public: true,
+    content_type: 'application/javascript'
+  )
+  puts "Uploaded #{CGI::unescape file.public_url}"
+end
+
 namespace :js do
   task :env do
     require 'yaml'
@@ -52,30 +79,32 @@ namespace :js do
     env.append_path File.expand_path('../app/assets/image', __FILE__)
 
     source = env['uploadcare/widget.js']
-    source = YUI::JavaScriptCompressor.new.compress(source)
 
-    filename = "uploadcare-#{UploadcareWidget::VERSION}.min.js"
-    widget_path = File.expand_path("../pkg/#{filename}",  __FILE__)
-    File.open(widget_path, "w") do |f|
-      f.write(source)
-    end
-    puts "Created #{widget_path}"
+    write_js(
+      "uploadcare-#{UploadcareWidget::VERSION}.min.js",
+      YUI::JavaScriptCompressor.new.compress(source)
+    )
+
+    write_js(
+      "latest.min.js",
+      YUI::JavaScriptCompressor.new.compress(source)
+    )
+
+    write_js(
+      "uploadcare-#{UploadcareWidget::VERSION}.js",
+      source
+    )
   end
 
-  desc 'Upload last version of widget'
+  desc 'Upload latest version of widget'
   task upload: [:env] do
-    credentials = YAML::parse_file(File.expand_path("../fog_credentials.yml",  __FILE__)).to_ruby
+    credentials = YAML::parse_file(in_root('fog_credentials.yml')).to_ruby
     credentials.symbolize_keys!
     bucket_name = credentials.delete(:bucket_name)
-    storage = Fog::Storage.new credentials
-    directory = storage.directories.get(bucket_name)
 
-    filename = "uploadcare-#{UploadcareWidget::VERSION}.min.js"
-    widget_path = File.expand_path("../pkg/#{filename}",  __FILE__)    
-    key = "widget/#{filename}"
-    file = directory.files.create(key: key, body: File.read(widget_path), public: true)
-
-    puts "Created #{CGI::unescape file.public_url}"
+    upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.min.js", credentials)
+    upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.js", credentials)
+    upload_js(bucket_name, "latest.min.js", credentials)
   end
 end
 
