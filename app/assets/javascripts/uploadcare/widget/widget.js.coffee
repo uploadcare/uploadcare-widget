@@ -35,6 +35,7 @@ uploadcare.whenReady ->
         jQuery([@uploader, @urlUploader])
           .on('uploadcare.api.uploader.start', => @available = false)
           .on('uploadcare.api.uploader.cancel', => @available = true)
+          .on('uploadcare.api.uploader.error', => @available = true)
 
         @template.ready()
         @available = true
