@@ -27,6 +27,21 @@ uploadcare.whenReady ->
         @cancelButton.on 'click', => jQuery(this).trigger('uploadcare.widget.template.cancel')
         @removeButton.on 'click', => jQuery(this).trigger('uploadcare.widget.template.remove')
 
+        @labels = []
+
+      pushLabel: (label) ->
+        @labels.push @statusText.text()
+        @statusText.text(label)
+
+      popLabel: ->
+        @statusText.text(@labels.pop())
+
+      addState: (state) ->
+        @content.addClass("uploadcare-widget-state-#{state}")
+
+      removeState: (state) ->
+        @content.removeClass("uploadcare-widget-state-#{state}")
+
       addButton: (name) ->
         li = jQuery('<li>').addClass("uploadcare-widget-buttons-#{name}")
         @buttonsContainer.find('@uploadcare-widget-buttons-cancel').before(li)
