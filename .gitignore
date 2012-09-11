@@ -13,3 +13,4 @@ test/dummy/vendor/bundle
 
 Gemfile.lock
 fog_credentials.yml
+*.sublime-*
