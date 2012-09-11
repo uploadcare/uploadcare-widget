@@ -1,8 +1,6 @@
 uploadcare.whenReady ->
   {
     namespace,
-    initialize,
-    include,
     jQuery
   } = uploadcare
 
@@ -10,26 +8,51 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.adapters', (ns) ->
     ns.registeredAdapters = new Object
-    ns.__registeredButtons = new Object
-    ns.__registeredFileChoosers = new Object
-
-    ns.Button =
-      abc: ->
 
     class ns.Base
       @registerAdapter: ->
         ns.registeredAdapters[@name.toLowerCase()] = this
-      @registerButton: ->
-        include this, ns.Button
-        ns.__registeredButtons[@name.toLowerCase()] = this
 
-      constructor: (@widget, @element) ->
+      constructor: (@widget) ->
 
-    class ns.File extends ns.Base
+    class ns.Button extends ns.Base
+      constructor: (@widget) ->
+        super @widget
+
+        # TODO: fix this for IE. http://matt.scharley.me/2012/03/09/monkey-patch-name-ie.html
+        @element = @widget.template.addButton(@constructor.name.toLowerCase())
+
+    class ns.Dragndrop extends ns.Base
       @registerAdapter()
 
-      constructor: (@widget, @element) ->
-        super @widget, @element
+      constructor: (@widget) ->
+        super @widget
+        @area = jQuery('<div>').addClass('uploadcare-widget-dragndrop-area')
+        @widget.template.content.append(@area)
+        
+        jQuery(document.body).on 'dragenter', (e) =>
+          return unless @widget.available
+          return if @notified
+          @widget.template.pushLabel(t('draghere'))
+          @widget.template.addState('dragover')
+          @notified = true
+
+        jQuery(document.body).on 'dragleave mouseover', (e) =>
+          return unless @widget.available
+          return unless e.target == document.body
+          @widget.template.removeState('dragover')
+          @widget.template.popLabel()
+          @notified = false
+
+        @area.on 'drop', => @widget.template.removeState('dragover')
+        @area.on 'drop', @widget.uploader.listener
+
+
+    class ns.File extends ns.Button
+      @registerAdapter()
+
+      constructor: (@widget) ->
+        super @widget
         @element.css position: 'relative'
         jQuery(@widget).on 'uploadcare.widget.cancel', @__makeInput
         @__makeInput()
@@ -50,9 +73,9 @@ uploadcare.whenReady ->
         @element.append(@input)
         @input.on 'change', @widget.uploader.listener
 
-    class ns.URL extends ns.Base
+    class ns.URL extends ns.Button
       @registerAdapter()
-      constructor: (@widget, @element) ->
-        super @widget, @element
+      constructor: (@widget) ->
+        super @widget
         @element.on 'click', =>
           @widget.urlUploader.upload(prompt(t('buttons.url.prompt')))
