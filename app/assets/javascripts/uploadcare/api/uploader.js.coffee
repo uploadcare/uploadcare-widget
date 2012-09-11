@@ -6,8 +6,10 @@ uploadcare.whenReady ->
       constructor: (@settings) ->
 
       listener: (e) =>
+        e.preventDefault() if e.type == 'drop'
+
         if utils.abilities.canFileAPI()
-          file = e.dataTransfer.files[0] if e.type == 'drop'
+          file = e.originalEvent.dataTransfer.files[0] if e.type == 'drop'
           file = e.target.files[0] if e.type == 'change' 
           @__uploadFile(file)
         else

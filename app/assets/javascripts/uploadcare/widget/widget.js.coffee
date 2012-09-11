@@ -32,7 +32,12 @@ uploadcare.whenReady ->
           @__cancel
         )
 
+        jQuery([@uploader, @urlUploader])
+          .on('uploadcare.api.uploader.start', => @available = false)
+          .on('uploadcare.api.uploader.cancel', => @available = true)
+
         @template.ready()
+        @available = true
 
       __loaded: (e) =>
         @template.loaded()
@@ -52,6 +57,5 @@ uploadcare.whenReady ->
         for key in @settings.adapters.split(' ')
           if ns.adapters.registeredAdapters.hasOwnProperty(key)
             @adapters[key] = new ns.adapters.registeredAdapters[key](this)
-
 
     initialize class: ns.Widget, elements: '@uploadcare-uploader'

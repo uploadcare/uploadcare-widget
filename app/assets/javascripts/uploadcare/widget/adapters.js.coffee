@@ -22,6 +22,32 @@ uploadcare.whenReady ->
         # TODO: fix this for IE. http://matt.scharley.me/2012/03/09/monkey-patch-name-ie.html
         @element = @widget.template.addButton(@constructor.name.toLowerCase())
 
+    class ns.Dragndrop extends ns.Base
+      @registerAdapter()
+
+      constructor: (@widget) ->
+        super @widget
+        @area = jQuery('<div>').addClass('uploadcare-widget-dragndrop-area')
+        @widget.template.content.append(@area)
+        
+        jQuery(document.body).on 'dragenter', (e) =>
+          return unless @widget.available
+          return if @notified
+          @widget.template.pushLabel(t('draghere'))
+          @widget.template.addState('dragover')
+          @notified = true
+
+        jQuery(document.body).on 'dragleave mouseover', (e) =>
+          return unless @widget.available
+          return unless e.target == document.body
+          @widget.template.removeState('dragover')
+          @widget.template.popLabel()
+          @notified = false
+
+        @area.on 'drop', => @widget.template.removeState('dragover')
+        @area.on 'drop', @widget.uploader.listener
+
+
     class ns.File extends ns.Button
       @registerAdapter()
 

@@ -30,6 +30,8 @@ $circle_active_background: gold;
   @include inline-blocks;
   white-space: nowrap;
 
+  position: relative;
+
   &.loaded, &.started {
     .uploadcare-widget-buttons > li { display: none; }
   }  
@@ -110,3 +112,5 @@ $circle_active_background: gold;
   height: y(1);
   margin-right: 1ex;
 }
+
+@import './adapters';
