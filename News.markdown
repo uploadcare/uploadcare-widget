@@ -1,4 +1,9 @@
-version 0.1.6
+version 0.1.8
+
+* dragndrop
+* fixed loaded message
+
+version 0.1.7
 
 * Fog credentials in fog_credentials.yml
 
