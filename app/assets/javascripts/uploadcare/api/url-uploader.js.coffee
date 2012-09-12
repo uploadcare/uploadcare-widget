@@ -70,10 +70,9 @@ uploadcare.whenReady ->
 
     class PusherWatcher
       constructor: (@uploader) ->
-
-      watch: (@token) ->
         @pusher = new Pusher(@uploader.settings['pusher-key'])
 
+      watch: (@token) ->
         @channel = @pusher.subscribe("task-status-#{@token}")
 
         onStarted = =>
@@ -102,7 +101,7 @@ uploadcare.whenReady ->
             console.log '/status/', data
 
             @uploader._state data.status, data if data.status in ['progress', 'success', 'error']
-        50)
+        250)
 
       stopWatching: ->
         clearInterval @interval if @interval
