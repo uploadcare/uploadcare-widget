@@ -1,3 +1,7 @@
+version 0.1.10
+
+* Changed jquery cdn to google cdn.
+
 version 0.1.9
 
 * fixed jquery source for https
