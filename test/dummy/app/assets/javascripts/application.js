@@ -1,3 +1,4 @@
 // = require uploadcare/widget
 
-UPLOADCARE_PUBLIC_KEY = '2ed27e6966563abaae6a0d864a96ecdf48925d9a1499008149ff95349dc124d0';
+UPLOADCARE_PUBLIC_KEY = '8f85983fb3818fe173b4';
+UPLOADCARE_URL_BASE = 'https://upload.staging0.uploadcare.com/';
