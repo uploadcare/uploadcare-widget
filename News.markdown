@@ -1,3 +1,7 @@
+version 0.1.9
+
+* fixed jquery source for https
+
 version 0.1.8
 
 * dragndrop
