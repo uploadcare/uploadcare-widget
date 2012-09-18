@@ -1,3 +1,7 @@
+version 0.1.11
+
+* Pusher for url uploader
+
 version 0.1.10
 
 * Changed jquery cdn to google cdn.
