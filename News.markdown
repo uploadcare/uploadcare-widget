@@ -1,5 +1,10 @@
 version 0.1.11
 
+* markup fix
+* pusher location fix
+
+version 0.1.11
+
 * Pusher for url uploader
 
 version 0.1.10
