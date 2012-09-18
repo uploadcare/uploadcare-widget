@@ -1,6 +1,6 @@
 // changed:
 //   Pusher.dependency_suffix = '.min'; (was '')
-//   window.WEB_SOCKET_SWF_LOCATION = "<%= asset_path 'uploadcare/core/WebSocketMainInsecure.swf' %>"
+//   window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/uploadcare-static/WebSocketMainInsecure.swf"
 
 /*!
  * Pusher JavaScript Library v1.12.2
@@ -1248,7 +1248,7 @@ var _require = (function() {
           Pusher.TransportType = 'flash';
 
           // window.WEB_SOCKET_SWF_LOCATION = root + "/WebSocketMain.swf";
-          window.WEB_SOCKET_SWF_LOCATION = "<%= asset_path 'uploadcare/core/WebSocketMainInsecure.swf' %>"
+          window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/uploadcare-static/WebSocketMainInsecure.swf"
           WebSocket.__addTask(function() {
             Pusher.ready();
           })
