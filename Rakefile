@@ -37,26 +37,76 @@ end
 
 task :default => :test
 
+def in_root(file)
+  File.expand_path("../#{file}",  __FILE__)
+end
 
-task :make_js_build do
-  ENV['RAILS_ENV'] = 'production'
-  require File.expand_path("../test/dummy/config/environment.rb",  __FILE__)
-  Rails.application.config.assets.js_compressor = :yui
-  pkg_dir = File.expand_path("../pkg",  __FILE__)
-  Dir.mkdir(pkg_dir) unless Dir.exists?(pkg_dir)
-  widget_path = File.expand_path("../pkg/uploadcare-#{UploadcareWidget::VERSION}.min.js",  __FILE__)
-  File.open(widget_path, 'w') do |f|
-    f.write Rails.application.assets['uploadcare/widget.js']
+def write_js(filename, contents)
+  Dir.mkdir(in_root("pkg")) unless Dir.exists?(in_root("pkg"))
+  widget_path = in_root("pkg/#{filename}")
+  File.open(widget_path, "w") do |f|
+    f.write(contents)
   end
   puts "Created #{widget_path}"
-
-  storage = Fog::Storage.new(
-    provider: :aws,
-    aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-  )
-  directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
-  key = "widget/uploadcare-#{UploadcareWidget::VERSION}.min.js"
-  file = directory.files.create(key: key, body: File.read(widget_path), public: true)
-  puts "Creates #{file.public_url}"
 end
+
+def upload_js(bucket_name, filename, credentials)
+  storage = Fog::Storage.new credentials
+  directory = storage.directories.get(bucket_name)
+
+  key = "widget/#{filename}"
+  file = directory.files.create(
+    key: key,
+    body: File.read(in_root("pkg/#{filename}")),
+    public: true,
+    content_type: 'application/javascript'
+  )
+  puts "Uploaded #{CGI::unescape file.public_url}"
+end
+
+namespace :js do
+  task :env do
+    require 'yaml'
+    ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
+    Bundler.require :development
+  end
+
+  desc "Build last version of widget"
+  task build: [:env] do
+    env = Sprockets::Environment.new
+    env.append_path File.expand_path('../app/assets/stylesheets', __FILE__)
+    env.append_path File.expand_path('../app/assets/javascripts', __FILE__)
+    env.append_path File.expand_path('../app/assets/image', __FILE__)
+
+    source = env['uploadcare/widget.js']
+
+    write_js(
+      "uploadcare-#{UploadcareWidget::VERSION}.min.js",
+      YUI::JavaScriptCompressor.new.compress(source)
+    )
+
+    write_js(
+      "uploadcare-latest.min.js",
+      YUI::JavaScriptCompressor.new.compress(source)
+    )
+
+    write_js(
+      "uploadcare-#{UploadcareWidget::VERSION}.js",
+      source
+    )
+  end
+
+  desc 'Upload latest version of widget'
+  task upload: [:env] do
+    credentials = YAML::parse_file(in_root('fog_credentials.yml')).to_ruby
+    credentials.symbolize_keys!
+    bucket_name = credentials.delete(:bucket_name)
+
+    upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.min.js", credentials)
+    upload_js(bucket_name, "uploadcare-#{UploadcareWidget::VERSION}.js", credentials)
+    upload_js(bucket_name, "uploadcare-latest.min.js", credentials)
+  end
+end
+
+desc "Build and upload last version of widget"
+task js: ['js:build', 'js:upload']

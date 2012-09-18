@@ -1,6 +1,6 @@
 jQueryVersion = '1.7.2'
 
-jquerySrc = "http://code.jquery.com/jquery-#{jQueryVersion}.min.js"
+jquerySrc = "//ajax.googleapis.com/ajax/libs/jquery/#{jQueryVersion}/jquery.min.js"
 
 if jQuery? and jQuery().jquery > jQueryVersion
   uploadcare.jQuery = jQuery
