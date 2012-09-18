@@ -12,5 +12,6 @@ test/dummy/vendor/bundle
 .sass-cache
 
 Gemfile.lock
+test/dummy/Gemfile.lock
 fog_credentials.yml
 *.sublime-*
