@@ -1,3 +1,7 @@
+version 0.1.14
+
+* updated widget as ruby gem
+
 version 0.1.11
 
 * markup fix
