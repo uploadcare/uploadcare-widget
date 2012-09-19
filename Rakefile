@@ -78,7 +78,7 @@ namespace :js do
     env.append_path File.expand_path('../app/assets/javascripts', __FILE__)
     env.append_path File.expand_path('../app/assets/image', __FILE__)
 
-    source = env['uploadcare/widget.js']
+    source = env['uploadcare/production.js']
 
     write_js(
       "uploadcare-#{UploadcareWidget::VERSION}.min.js",

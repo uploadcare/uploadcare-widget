@@ -6,6 +6,10 @@ Add `uploadcare-widget` to your Gemfile in `assets` section and add this line to
     
     // = require uploadcare/widget
 
+... and line to your css:
+    
+    // = require uploadcare/widget
+
 See other instructions in [official Uploadcare documentation](http://uploadcare.com/documentation).
 
 ## Build new version
