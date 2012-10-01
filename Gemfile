@@ -16,10 +16,15 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
-group :development do
-  gem 'sprockets'
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'yui-compressor'
-  gem 'fog'
-end
+
+gem 'rails', '3.2.8'
+gem 'pry'
+gem 'pry-rails'
+gem 'sprockets'
+gem 'sprockets-rails'
+gem 'sass-rails',   '~> 3.2.3'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'bourbon'
+gem 'jquery-rails'
+gem 'yui-compressor'
+gem 'fog'
