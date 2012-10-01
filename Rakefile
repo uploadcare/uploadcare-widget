@@ -118,7 +118,7 @@ namespace :js do
 
     css = Rails.application.assets['uploadcare/widget.css'].source
     write_file(
-      "uploadcare.css",
+      "widget.css",
       YUI::CssCompressor.new.compress(css)
     )
 
@@ -151,8 +151,8 @@ namespace :js do
     )
 
     upload_file(bucket_name, credentials,
-      'uploadcare.css',
-      "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare.css",
+      'widget.css',
+      "#{Rails.application.config.assets.prefix}/uploadcare/widget.css",
       'text/css'
     )
     upload_file(bucket_name, credentials,
