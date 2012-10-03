@@ -6,17 +6,18 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Submit
-      constructor: (widget) ->
-        @form = widget.closest('@uploadcare-form')
+      constructor: (@widget) ->
+        @form = @widget.closest('@uploadcare-form')
         @form.on('submit', => @canSubmit())
         @element = @form.find(':submit')
 
-      canSubmit: ->
+      canSubmit: (widget = @widget) ->
         notSubmittable = '[data-status=started], [data-status=error]'
-        not $('.uploadcare-widget', @form).is(notSubmittable)
+        not widget.is(notSubmittable)
 
       enable: ->
-        @element.attr('disabled', false) if @canSubmit()
+        formWidgets = $('.uploadcare-widget', @form)
+        @element.attr('disabled', false) if @canSubmit(formWidgets)
 
       disable: ->
         @element.attr('disabled', true)
