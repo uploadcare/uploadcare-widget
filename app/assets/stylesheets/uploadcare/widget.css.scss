@@ -19,11 +19,11 @@ $circle_active_background: gold;
 .uploadcare-widget {
   display: inline-block;
   position: relative;
-  &.loaded, &.started {
+  &[data-status=loaded], &[data-status=started] {
     .uploadcare-widget-buttons > li { display: none; }
   }
-  &.started .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
-  &.loaded .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {  
+  &[data-status=started] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
+  &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
     display: inline-block;
   }
 }

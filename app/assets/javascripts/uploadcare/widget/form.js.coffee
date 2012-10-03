@@ -12,6 +12,7 @@ uploadcare.whenReady ->
 
       __submit: =>
         # TODO Handle submit denial visualy here
-        not $('.uploadcare-widget', @element).is('.started, .error')
+        notSubmittable = '[data-status=started], [data-status=error]'
+        not $('.uploadcare-widget', @element).is(notSubmittable)
 
     initialize class: ns.Form, elements: 'form:has(@uploadcare-uploader)'
