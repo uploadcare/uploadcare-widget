@@ -38,7 +38,7 @@ uploadcare.whenReady ->
         # naked xhr for COPS
 
         @xhr = new XMLHttpRequest
-        @xhr.open 'POST', "#{@settings['upload-url-base']}/iframe/"
+        @xhr.open 'POST', "#{@settings['upload-url-base']}iframe/"
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'loadstart', @__onStart
