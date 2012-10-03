@@ -1,4 +1,4 @@
-# = require ./submit
+# = require ./submit-guard
 # = require ./templates/widget
 # = require ./templates/circle
 
@@ -30,7 +30,7 @@ uploadcare.whenReady ->
 
         @labels = []
 
-        @submit = new ns.Submit(@content)
+        @submit = new ns.SubmitGuard(@content)
 
       pushLabel: (label) ->
         @labels.push @statusText.text()

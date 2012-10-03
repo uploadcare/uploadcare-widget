@@ -5,7 +5,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.widget', (ns) ->
-    class ns.Submit
+    class ns.SubmitGuard
       constructor: (@widget) ->
         @form = @widget.closest('@uploadcare-form')
         @form.on('submit', => @canSubmit())
