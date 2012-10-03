@@ -20,3 +20,4 @@ Clone the repository, make your changes, update VERSION [here](https://github.co
     AWS_ACCESS_KEY_ID='...' AWS_SECRET_ACCESS_KEY='...' AWS_BUCKET_NAME='...' rake js:release
 
 Last line makes compiled javascript file in `pkg` folder and upload it in AWS S3.
+
