@@ -1,3 +1,4 @@
+# = require ./submit
 # = require ./templates/widget
 # = require ./templates/circle
 
@@ -29,6 +30,8 @@ uploadcare.whenReady ->
 
         @labels = []
 
+        @submit = new ns.Submit(@content)
+
       pushLabel: (label) ->
         @labels.push @statusText.text()
         @statusText.text(label)
@@ -51,10 +54,12 @@ uploadcare.whenReady ->
         @statusText.text(t('ready'))
         @status.setValue(0, true)
         @content.attr('data-status', 'ready')
+        @submit.enable()
 
       loaded: ->
         @status.setValue(1)
         @content.attr('data-status', 'loaded')
+        @submit.enable()
 
       progress: (val) ->
         @status.setValue(val)
@@ -66,6 +71,7 @@ uploadcare.whenReady ->
       started: ->
         @statusText.text(t('uploading'))
         @content.attr('data-status', 'started')
+        @submit.disable()
 
       setFileInfo: (fileName, fileSize) ->
         fileSize = Math.ceil(fileSize/1024).toString()
