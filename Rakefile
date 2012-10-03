@@ -40,7 +40,8 @@ def in_root(file)
 end
 
 def write_file(filename, contents)
-  Dir.mkdir(in_root("pkg")) unless Dir.exists?(in_root("pkg"))
+  dir = in_root(File.join('pkg', File.dirname(filename)))
+  FileUtils.mkdir_p(dir) unless Dir.exists?(dir)
   widget_path = in_root("pkg/#{filename}")
   File.open(widget_path, "wb") do |f|
     f.write(contents)
@@ -61,14 +62,68 @@ def upload_file(bucket_name, credentials, filename, key, content_type)
   puts "Uploaded #{CGI::unescape file.public_url}"
 end
 
-namespace :js do
-  task :env do
-    require 'yaml'
-    ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
-    Bundler.require :development
-    require "active_resource/railtie"
-  end
+def setup_prefix(version)
+  Rails.application.config.assets.prefix = "widget/#{version}"
+end
 
+def build_widget(version)
+  js = Rails.application.assets['uploadcare/widget.js'].source
+
+  write_file(
+    "#{version}/uploadcare-#{version}.min.js",
+    YUI::JavaScriptCompressor.new.compress(js)
+  )
+  write_file(
+    "#{version}/uploadcare-#{version}.js",
+    js
+  )
+
+  css = Rails.application.assets['uploadcare/widget.css'].source
+  write_file(
+    "#{version}/widget.css",
+    YUI::CssCompressor.new.compress(css)
+  )
+
+  write_file(
+    "#{version}/zerospace-webfont.eot",
+    Rails.application.assets['inline-blocks/zerospace-webfont.eot'].source
+  )
+end
+
+def upload_widget(version)
+  credentials = {
+    fog: {
+      provider: 'AWS',
+      aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    },
+    bucket_name: ENV['AWS_BUCKET_NAME']
+  }
+
+  upload_file(credentials[:bucket_name], credentials[:fog],
+    "#{version}/uploadcare-#{version}.min.js",
+    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.min.js",
+    'application/javascript'
+  )
+  upload_file(credentials[:bucket_name], credentials[:fog],
+    "#{version}/uploadcare-#{version}.js",
+    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.js",
+    'application/javascript'
+  )
+
+  upload_file(credentials[:bucket_name], credentials[:fog],
+    "#{version}/widget.css",
+    "#{Rails.application.config.assets.prefix}/uploadcare/widget.css",
+    'text/css'
+  )
+  upload_file(credentials[:bucket_name], credentials[:fog],
+    "#{version}/zerospace-webfont.eot",
+    "#{Rails.application.config.assets.prefix}/inline-blocks/zerospace-webfont.eot",
+    'application/vnd.ms-fontobject'
+  )
+end
+
+namespace :js do
   task :application do
     require 'rubygems'
     ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
@@ -90,7 +145,7 @@ namespace :js do
       config.assets.compile = true
       config.assets.digest = false
       config.assets.debug = false
-      config.assets.prefix = "widget/#{UploadcareWidget::VERSION}"
+      
       config.active_support.deprecation = :notify
       config.assets.js_compressor = :yui
       config.action_controller.asset_host = '//uploadcare-static.s3.amazonaws.com'
@@ -98,70 +153,30 @@ namespace :js do
     Application.initialize!
   end
 
-  desc "Build last version of widget"
-  task build: [:application] do
+  namespace :latest do
+    task build: [:application] do
+      setup_prefix('latest')
+      build_widget('latest')
+    end
 
-    js = Rails.application.assets['uploadcare/widget.js'].source
-
-    write_file(
-      "uploadcare-#{UploadcareWidget::VERSION}.min.js",
-      YUI::JavaScriptCompressor.new.compress(js)
-    )
-    write_file(
-      "uploadcare-latest.min.js",
-      YUI::JavaScriptCompressor.new.compress(js)
-    )
-    write_file(
-      "uploadcare-#{UploadcareWidget::VERSION}.js",
-      js
-    )
-
-    css = Rails.application.assets['uploadcare/widget.css'].source
-    write_file(
-      "widget.css",
-      YUI::CssCompressor.new.compress(css)
-    )
-
-    write_file(
-      "zerospace-webfont.eot",
-      Rails.application.assets['inline-blocks/zerospace-webfont.eot'].source
-    )
+    task upload: [:application] do
+      setup_prefix('latest')
+      upload_widget('latest')
+    end
   end
 
-  desc 'Upload latest version of widget'
-  task upload: [:application] do
-    credentials = YAML::parse_file(in_root('fog_credentials.yml')).to_ruby
-    credentials.symbolize_keys!
-    bucket_name = credentials.delete(:bucket_name)
+  namespace :release do
+    task build: [:application] do
+      setup_prefix(UploadcareWidget::VERSION)
+      build_widget(UploadcareWidget::VERSION)
+    end
 
-    upload_file(bucket_name, credentials,
-      "uploadcare-#{UploadcareWidget::VERSION}.min.js",
-      "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{UploadcareWidget::VERSION}.min.js",
-      'application/javascript'
-    )
-    upload_file(bucket_name, credentials,
-      "uploadcare-#{UploadcareWidget::VERSION}.js",
-      "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{UploadcareWidget::VERSION}.js",
-      'application/javascript'
-    )
-    upload_file(bucket_name, credentials,
-      "uploadcare-latest.min.js",
-      "widget/uploadcare-latest.min.js",
-      'application/javascript'
-    )
-
-    upload_file(bucket_name, credentials,
-      'widget.css',
-      "#{Rails.application.config.assets.prefix}/uploadcare/widget.css",
-      'text/css'
-    )
-    upload_file(bucket_name, credentials,
-      'zerospace-webfont.eot',
-      "#{Rails.application.config.assets.prefix}/inline-blocks/zerospace-webfont.eot",
-      'application/vnd.ms-fontobject'
-    )
+    task upload: [:application] do
+      setup_prefix(UploadcareWidget::VERSION)
+      upload_widget(UploadcareWidget::VERSION)
+    end
   end
+
+  task latest: ["latest:build", "latest:upload"]
+  task release: ["release:build", "release:upload"]
 end
-
-desc "Build and upload last version of widget"
-task js: ['js:build', 'js:upload']
