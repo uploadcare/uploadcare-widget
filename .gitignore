@@ -15,3 +15,5 @@ Gemfile.lock
 test/dummy/Gemfile.lock
 fog_credentials.yml
 *.sublime-*
+tmp/cache
+
