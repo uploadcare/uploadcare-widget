@@ -1,5 +1,6 @@
 @import 'spans';
 
+$widget_width: 284px;
 $widget_height: 25px;
 
 @function x($count) {
@@ -19,12 +20,22 @@ $circle_active_background: gold;
 .uploadcare-widget {
   display: inline-block;
   position: relative;
+  width: $widget_width;
+  height: $widget_height;
+  overflow: hidden;
+
   &.loaded, &.started {
     .uploadcare-widget-buttons > li { display: none; }
   }
   &.started .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
   &.loaded .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {  
     display: inline-block;
+  }
+}
+
+abbr, b, cite, code, del, dt, em, i, ins, kbd, label, legend, p, pre, q, small, span, strong, sub, sup {
+  > .uploadcare-widget {
+    margin-top: -$widget_height;
   }
 }
 
