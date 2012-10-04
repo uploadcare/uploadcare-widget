@@ -1,6 +1,5 @@
 uploadcare.whenReady ->
   {
-    namespace,
     jQuery: $
   } = uploadcare
 
