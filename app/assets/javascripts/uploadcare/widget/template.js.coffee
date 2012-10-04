@@ -47,28 +47,30 @@ uploadcare.whenReady ->
         @buttonsContainer.find('@uploadcare-widget-buttons-cancel').before(li)
         return li
 
+      setStatus: (status) ->
+        @content.attr('data-status', status)
+        form = @element.closest('@uploadcare-upload-form')
+        form.trigger("uploadcare.uploader.#{status}")
+
       ready: ->
-        @content.removeClass('started loaded error done')
         @statusText.text(t('ready'))
         @status.setValue(0, true)
+        @setStatus 'ready'
 
       loaded: ->
         @status.setValue(1)
-        @content.removeClass('started')
-        @content.addClass('loaded')
+        @setStatus 'loaded'
 
       progress: (val) ->
-        @content.removeClass('started')
         @status.setValue(val)
 
       error: ->
         @statusText.text(t('error'))
-        @content.removeClass('started')
-        @content.addClass('error')
+        @setStatus 'error'
 
       started: ->
         @statusText.text(t('uploading'))
-        @content.addClass('started')
+        @setStatus 'started'
 
       setFileInfo: (fileName, fileSize) ->
         fileSize = Math.ceil(fileSize/1024).toString()

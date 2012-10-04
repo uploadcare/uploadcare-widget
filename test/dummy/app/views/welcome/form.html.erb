@@ -1,0 +1,27 @@
+<style>
+.param {
+  font-size: 12px;
+  margin-bottom: 1em;
+}
+</style>
+<form role="uploadcare-upload-form" method="post">
+    <div>
+        <input type="hidden" role="uploadcare-uploader" name="upload_a" />
+        <div class="param"><%= params[:upload_a] %></div>
+    </div>
+    <div>
+        <input type="hidden" role="uploadcare-uploader" name="upload_b" />
+        <div class="param"><%= params[:upload_b] %></div>
+    </div>
+    <input type="text" />
+    <button type="submit">Clickity</button>
+</form>
+
+<form style="margin-top: 60px;" method="post">
+    <legend>Submitting not prevented here:</legend>
+    <div>
+        <input type="hidden" role="uploadcare-uploader" name="upload_c" />
+        <div class="param"><%= params[:upload_c] %></div>
+    </div>
+    <button type="submit">Clickity</button>
+</form>
