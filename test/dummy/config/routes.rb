@@ -2,6 +2,7 @@ Dummy::Application.routes.draw do
   root to: "welcome#toc"
   get "welcome/index"
   get "welcome/form"
+  post "welcome/form"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
