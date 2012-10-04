@@ -1,4 +1,3 @@
-# = require ./submit-guard
 # = require ./templates/widget
 # = require ./templates/circle
 
@@ -30,8 +29,6 @@ uploadcare.whenReady ->
 
         @labels = []
 
-        @submit = new ns.SubmitGuard(@content)
-
       pushLabel: (label) ->
         @labels.push @statusText.text()
         @statusText.text(label)
@@ -50,28 +47,30 @@ uploadcare.whenReady ->
         @buttonsContainer.find('@uploadcare-widget-buttons-cancel').before(li)
         return li
 
+      setStatus: (status) ->
+        @content.attr('data-status', status)
+        form = @element.closest('@uploadcare-upload-form')
+        form.trigger("uploadcare.uploader.#{status}")
+
       ready: ->
         @statusText.text(t('ready'))
         @status.setValue(0, true)
-        @content.attr('data-status', 'ready')
-        @submit.enable()
+        @setStatus 'ready'
 
       loaded: ->
         @status.setValue(1)
-        @content.attr('data-status', 'loaded')
-        @submit.enable()
+        @setStatus 'loaded'
 
       progress: (val) ->
         @status.setValue(val)
 
       error: ->
         @statusText.text(t('error'))
-        @content.attr('data-status', 'error')
+        @setStatus 'error'
 
       started: ->
         @statusText.text(t('uploading'))
-        @content.attr('data-status', 'started')
-        @submit.disable()
+        @setStatus 'started'
 
       setFileInfo: (fileName, fileSize) ->
         fileSize = Math.ceil(fileSize/1024).toString()

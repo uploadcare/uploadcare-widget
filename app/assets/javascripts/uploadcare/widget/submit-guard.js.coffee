@@ -4,20 +4,27 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  namespace 'uploadcare.widget', (ns) ->
-    class ns.SubmitGuard
-      constructor: (@widget) ->
-        @form = @widget.closest('@uploadcare-upload-form')
-        @form.on('submit', => @canSubmit())
-        @element = @form.find(':submit')
+  canSubmit = (form) ->
+    notSubmittable = '[data-status=started], [data-status=error]'
+    not form.find('.uploadcare-widget').is(notSubmittable)
 
-      canSubmit: (widget = @widget) ->
-        notSubmittable = '[data-status=started], [data-status=error]'
-        not widget.is(notSubmittable)
+  preventSubmit = (form, prevent) ->
+    form.attr('data-uploadcare-submitted', prevent)
+    form.find(':submit').attr('disabled', prevent)
 
-      enable: ->
-        formWidgets = $('.uploadcare-widget', @form)
-        @element.attr('disabled', false) if @canSubmit(formWidgets)
+  $(document).on 'submit', '@uploadcare-upload-form', ->
+    form = $(this)
+    if canSubmit form
+      true # allow submit
+    else
+      preventSubmit(form, true)
+      false
 
-      disable: ->
-        @element.attr('disabled', true)
+  submittedForm = '@uploadcare-upload-form[data-uploadcare-submitted]'
+  $(document).on 'uploadcare.uploader.loaded', submittedForm, ->
+    $(this).submit()
+
+  cancelEvents = 'uploadcare.uploader.ready uploadcare.uploader.error'
+  $(document).on cancelEvents, submittedForm, ->
+    form = $(this)
+    preventSubmit(form, false) if canSubmit form
