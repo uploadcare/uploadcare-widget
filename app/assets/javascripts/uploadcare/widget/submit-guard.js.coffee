@@ -7,7 +7,7 @@ uploadcare.whenReady ->
     notSubmittable = '[data-status=started], [data-status=error]'
     not form.find('.uploadcare-widget').is(notSubmittable)
 
-  preventSubmit = (form, prevent) ->
+  submitPreventionState = (form, prevent) ->
     form.attr('data-uploadcare-submitted', prevent)
     form.find(':submit').attr('disabled', prevent)
 
@@ -16,7 +16,7 @@ uploadcare.whenReady ->
     if canSubmit form
       true # allow submit
     else
-      preventSubmit(form, true)
+      submitPreventionState(form, true)
       false
 
   submittedForm = '@uploadcare-upload-form[data-uploadcare-submitted]'
@@ -26,4 +26,4 @@ uploadcare.whenReady ->
   cancelEvents = 'uploadcare.uploader.ready uploadcare.uploader.error'
   $(document).on cancelEvents, submittedForm, ->
     form = $(this)
-    preventSubmit(form, false) if canSubmit form
+    submitPreventionState(form, false) if canSubmit form
