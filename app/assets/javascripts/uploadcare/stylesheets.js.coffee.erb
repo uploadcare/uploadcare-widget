@@ -1,0 +1,6 @@
+uploadcare.whenReady ->
+  {jQuery} = uploadcare
+  tag = jQuery('<link>')
+    .attr('rel', 'stylesheet')
+    .attr('href', '<%= asset_path("uploadcare/widget.css") %>')
+  jQuery('head').append(tag)
