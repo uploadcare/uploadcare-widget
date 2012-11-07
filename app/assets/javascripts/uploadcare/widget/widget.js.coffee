@@ -118,4 +118,7 @@ uploadcare.whenReady ->
           )
         uploader
 
-    initialize class: ns.Widget, elements: '@uploadcare-uploader'
+    initialize
+      name: 'widget'
+      class: ns.Widget
+      elements: '@uploadcare-uploader'

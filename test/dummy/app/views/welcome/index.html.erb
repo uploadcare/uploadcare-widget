@@ -3,7 +3,8 @@ We’ve developed a beautiful widget for the web.
 It can do everything from drag-and-drop to selecting photos from various social networking sites like Facebook.
 <ul id="events"></ul>
 <script>
-uploadcare.jQuery(function($) {
+window.onload = function() {
+  var $ = uploadcare.jQuery;
   var log = function(text) {
     var time = (new Date()).toLocaleTimeString();
     $('<li>').appendTo('#events').text(time + ' ' + text);
@@ -18,5 +19,5 @@ uploadcare.jQuery(function($) {
     var value = $(this).val();
     log('change: "' + value + '"');
   });
-});
+};
 </script>
