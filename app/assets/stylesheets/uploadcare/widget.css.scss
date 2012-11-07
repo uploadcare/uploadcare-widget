@@ -396,6 +396,7 @@ $dialog-body-font-size-smaller: 14px;
 
       &[disabled] {
         background: $dialog-body-shadow-color;
+        cursor: default;
       }
     }
 
