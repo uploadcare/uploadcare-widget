@@ -372,13 +372,14 @@ $dialog-body-font-size-smaller: 14px;
       height: y(2);
       margin-bottom: y(1);
       padding: y(0.5) x(0.5);
+      font-family: inherit;
       font-size: $dialog-body-font-size;
       border: 1px solid $dialog-body-border-color;
       background: $dialog-body-field-color;
       color: $dialog-body-text-color;
     }
 
-    button {
+    button, .uploadcare-dialog-button {
       @include prefix(box-sizing, border-box);
       margin-bottom: y(1);
       padding: y(0.5) x(1);
@@ -386,6 +387,7 @@ $dialog-body-font-size-smaller: 14px;
       background: $dialog-link-color;
       border: none;
       border-radius: 5px;
+      font-family: inherit;
       font-size: $dialog-body-font-size-smaller;
       color: $dialog-button-text-color;
       cursor: pointer;
@@ -398,6 +400,10 @@ $dialog-body-font-size-smaller: 14px;
         background: $dialog-body-shadow-color;
         cursor: default;
       }
+    }
+
+    .uploadcare-dialog-button {
+      display: inline-block;
     }
 
     .uploadcare-dialog-drop-file {

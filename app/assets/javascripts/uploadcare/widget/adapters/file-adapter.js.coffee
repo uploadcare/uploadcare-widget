@@ -35,10 +35,13 @@ uploadcare.whenReady ->
             height: '100%'
             cursor: 'pointer'
             display: 'block'
-            overflow: 'hidden'
+            fontSize: '2em'
           )
         container
-          .css(position: 'relative')
+          .css(
+            position: 'relative'
+            overflow: 'hidden'
+          )
           .append(input)
 
       makeDragndrop: ->
