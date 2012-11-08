@@ -21,7 +21,8 @@ uploadcare.whenReady ->
 
       cancel: ->
         @xhr.abort() if @xhr?
-        @iframe.off('load error') if @iframe
+        @iframe.off('load error') if @iframe?
+        @__cleanUp()
 
       __constructUuid: ->
         @fileId = utils.uuid()
@@ -58,11 +59,8 @@ uploadcare.whenReady ->
           })
           .css('display', 'none')
           .appendTo('body')
-          .on('load', (e) =>
-            @__onLoad()
-            complete()
-          )
-          .on('error', => @__onError(); complete())
+          .on('load', (e) => @__onLoad(); @__cleanUp())
+          .on('error', => @__onError(); @__cleanUp())
 
         formParam = (name, value) ->
           $('<input>')
@@ -89,9 +87,12 @@ uploadcare.whenReady ->
           .on('submit', @__onStart)
           .submit()
 
-        complete = =>
-          @iframe.remove()
-          @iframeForm.remove()
+      __cleanUp: ->
+        @iframe.remove() if @iframe?
+        @iframeForm.remove() if @iframeForm?
+        @xhr = null
+        @iframe = null
+        @iframeForm = null
 
       __onError: => $(this).trigger('uploadcare.api.uploader.error')
       __onStart: => $(this).trigger('uploadcare.api.uploader.start')
