@@ -102,11 +102,17 @@ uploadcare.whenReady ->
         @value = val
 
         if instant
-          @path.attr({segment: @value * 360})
+          @path.attr(segment: @__segmentVal(@value))
         else do (value = @value) =>
-          @path.animate {segment: value * 360}, delay, 'linear', =>
+          @path.animate {segment: @__segmentVal(value)}, delay, 'linear', =>
             # Revert value to current if changed during animation
             @setValue(@value, true) if @value != value
+
+      __segmentVal: (value) ->
+        # Supposed to be = 360 * value,
+        # but filling to 360 sometimes doesn't work to IE.
+        # There probably is a correct solution to this.
+        360 * if value < 1 then value else 0.99999999
 
       __getSegmentColor: ->
         color = '#d0bf26'
