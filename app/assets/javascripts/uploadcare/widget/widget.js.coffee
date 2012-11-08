@@ -35,8 +35,8 @@ uploadcare.whenReady ->
         @template.ready()
         @available = true
 
-      setValue: (value) ->
-        @ignoreChange = true
+      setValue: (value, ignore = true) ->
+        @ignoreChange = ignore
         @element.val(value).trigger('change')
 
       getFileInfo: (id, callback) =>
@@ -60,6 +60,9 @@ uploadcare.whenReady ->
               fileSize: data.size
 
       __setLoaded: (instant, data) ->
+        unless data.fileName? && data.fileSize?
+          @setValue data.fileId, false
+          return
         @template.progress(1.0, instant)
         @template.setFileInfo(data.fileName, data.fileSize)
         @setValue(data.fileId)

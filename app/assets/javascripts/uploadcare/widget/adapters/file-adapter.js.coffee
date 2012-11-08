@@ -24,7 +24,10 @@ uploadcare.whenReady ->
       makeInput: (container, fn) ->
         container.find('input:file').remove()
         input = $('<input>')
-          .attr('type', 'file')
+          .attr({
+            type: 'file'
+            name: 'file'
+          })
           .on('change', fn)
           .css(
             opacity: 0
