@@ -1,6 +1,7 @@
 uploadcare.whenReady ->
   {
     namespace,
+    utils,
     jQuery: $
   } = uploadcare
 
@@ -48,6 +49,8 @@ uploadcare.whenReady ->
           .append(input)
 
       makeDragndrop: ->
+        return unless utils.abilities.canFileAPI()
+
         area = $('<div>')
           .addClass('uploadcare-widget-dragndrop-area')
           .text(t('draghere'))
