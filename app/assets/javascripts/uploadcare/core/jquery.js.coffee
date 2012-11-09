@@ -7,9 +7,17 @@ if jQuery? and jQuery().jquery > jQueryVersion
   return uploadcare.jQuery -> uploadcare.ready()
 
 script = document.createElement('script')
-script.addEventListener 'load', ->
+script.setAttribute('src', jquerySrc)
+
+load = ->
   uploadcare.jQuery = jQuery.noConflict(true)
   uploadcare.jQuery -> uploadcare.ready()
 
-script.src = jquerySrc
-document.head.appendChild(script)
+if document.addEventListener?
+  script.addEventListener('load', load, false)
+else
+  script.attachEvent 'onreadystatechange', ->
+    load() if script.readyState == 'loaded' || script.readyState == 'complete'
+
+first = document.getElementsByTagName('script')[0]
+first.parentNode.insertBefore(script, first)
