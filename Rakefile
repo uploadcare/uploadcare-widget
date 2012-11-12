@@ -88,17 +88,6 @@ def build_widget(version)
     "#{version}/uploadcare-#{version}.js",
     comment + js
   )
-
-  css = Rails.application.assets['uploadcare/widget.css'].source
-  write_file(
-    "#{version}/widget.css",
-    comment + YUI::CssCompressor.new.compress(css)
-  )
-
-  write_file(
-    "#{version}/zerospace-webfont.eot",
-    Rails.application.assets['inline-blocks/zerospace-webfont.eot'].source
-  )
 end
 
 def upload_widget(version)
@@ -120,17 +109,6 @@ def upload_widget(version)
     "#{version}/uploadcare-#{version}.js",
     "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.js",
     'application/javascript'
-  )
-
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/widget.css",
-    "#{Rails.application.config.assets.prefix}/uploadcare/widget.css",
-    'text/css'
-  )
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/zerospace-webfont.eot",
-    "#{Rails.application.config.assets.prefix}/inline-blocks/zerospace-webfont.eot",
-    'application/vnd.ms-fontobject'
   )
 end
 

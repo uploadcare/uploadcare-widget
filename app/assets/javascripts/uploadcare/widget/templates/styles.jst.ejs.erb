@@ -1,0 +1,4 @@
+<%=
+  raw = Rails.application.assets.find_asset('uploadcare/widget.css').body
+  YUI::CssCompressor.new.compress(raw)
+%>

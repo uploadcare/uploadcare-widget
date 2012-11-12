@@ -1,6 +1,12 @@
+# = require ./widget/templates/styles
+
 uploadcare.whenReady ->
-  {jQuery} = uploadcare
-  tag = jQuery('<link>')
-    .attr('rel', 'stylesheet')
-    .attr('href', '<%= asset_path("uploadcare/widget.css") %>')
-  jQuery('head').append(tag)
+  {jQuery: $} = uploadcare
+  css = JST['uploadcare/widget/templates/styles']()
+
+  style = document.createElement('style')
+  if style.styleSheet?
+    style.styleSheet.cssText = css
+  else
+    style.appendChild(document.createTextNode(css))
+  $('head').append(style)
