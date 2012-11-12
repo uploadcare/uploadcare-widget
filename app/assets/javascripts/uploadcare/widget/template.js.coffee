@@ -84,7 +84,7 @@ uploadcare.whenReady ->
         @element.append(JST['uploadcare/widget/templates/circle']())
         @pie = @element.find('@uploadcare-widget-status')
         @element.addClass 'uploadcare-widget-circle'
-        @width = 25 # Was: @element.width()
+        @width = @element.width()
         @color = @__getSegmentColor()
         @angleOffset = -90
         @raphael = @__initRaphael()
@@ -96,7 +96,7 @@ uploadcare.whenReady ->
       getValue: () ->
         @value
 
-      setValue: (val, instant = false) -> # val in [0...1]
+      setValue: (val, instant = false) -> # val in [0..1]
         val = 1 if val > 1
         delay = @fullDelay * Math.abs(val - @value)
         @value = val
@@ -115,13 +115,9 @@ uploadcare.whenReady ->
         360 * if value < 1 then value else 0.99999999
 
       __getSegmentColor: ->
-        color = '#d0bf26'
-        # Possible to get from CSS,
-        # when we've made sure it's loaded at this point:
-        #
-        # @pie.addClass('uploadcare-widget-circle-active')
-        # color = @pie.css('background-color')
-        # @pie.removeClass('uploadcare-widget-circle-active')
+        @pie.addClass('uploadcare-widget-circle-active')
+        color = @pie.css('background-color')
+        @pie.removeClass('uploadcare-widget-circle-active')
         return color
 
       __initRaphael: ->
@@ -131,7 +127,6 @@ uploadcare.whenReady ->
         angleOffset = @angleOffset
 
         raphael.customAttributes.segment = (angle) ->
-          # debugger
           x = width / 2
           y = width / 2
           r = width / 2
