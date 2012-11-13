@@ -17,7 +17,8 @@ has more information on using the widget itself.
 
 ## Building Your Own
 
-You need a working Ruby 1.9 environment with [Bundler](http://gembundler.com/).
+You need a working Ruby 1.9.3 environment
+with [Bundler](http://gembundler.com/).
 
 * `bundle install` to get build dependencies.
 * `bundle exec rake js:latest:build` to build assets
