@@ -51,6 +51,11 @@ uploadcare.whenReady ->
       makeDragndrop: ->
         return unless utils.abilities.canFileAPI()
 
+        dragover = (e) ->
+          e.stopPropagation() # Prevent redirect
+          e.preventDefault()
+          e.originalEvent.dataTransfer.dropEffect = 'copy'
+
         area = $('<div>')
           .addClass('uploadcare-widget-dragndrop-area')
           .text(t('draghere'))
