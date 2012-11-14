@@ -59,18 +59,26 @@ uploadcare.whenReady ->
         area = $('<div>')
           .addClass('uploadcare-widget-dragndrop-area')
           .text(t('draghere'))
-        @widget.template.content.append(area)
+          .appendTo(@widget.template.content)
+          .on('dragover', dragover)
+          .on 'drop', (e) =>
+            @hideDragarea()
+            dt = e.originalEvent.dataTransfer
+            if dt.files.length
+              @uploader.listener(e)
+            else
+              uris = dt.getData('text/uri-list')
+              if uris && @widget.uploaders.url?
+                @widget.uploaders.url.upload(uris.split('\n')[0])
 
-        area.on 'drop', (e) =>
-          @hideDragarea()
-          @uploader.listener(e)
+        dialogArea = @tab
+          .find('@uploadcare-dialog-drop-file')
+          .on('dragover', dragover)
+          .on 'drop', (e) =>
+            @widget.dialog.close()
+            @uploader.listener(e)
 
-        dialogArea = @tab.find('@uploadcare-dialog-drop-file')
-        dialogArea.on 'drop', (e) =>
-          @widget.dialog.close()
-          @uploader.listener(e)
-
-        $(window).on 'mouseenter', =>
+        $(window).on 'mouseenter dragend', =>
           return unless @widget.available
           @hideDragarea()
 
