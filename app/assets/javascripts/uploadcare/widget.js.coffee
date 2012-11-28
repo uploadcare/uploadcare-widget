@@ -3,5 +3,7 @@
 # = require uploadcare/utils
 # = require uploadcare/defaults
 # = require uploadcare/locale/locale
+# = require uploadcare/social
 # = require uploadcare/widget/widget
 # = require uploadcare/widget/submit-guard
+
