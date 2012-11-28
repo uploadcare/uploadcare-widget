@@ -33,9 +33,6 @@ uploadcare.whenReady ->
           closeCallback(e) if e.which == 27 # Escape
 
       open: ->
-        # TODO: Event?
-        uploadcare.social.socialServices.updateStatus()
-
         @content.find('input[type=text]')
           .val('')
           .change()
