@@ -1,6 +1,7 @@
 # = require ./templates/dialog
 # = require ./templates/tab-file
 # = require ./templates/tab-url
+# = require ./templates/tab-instagram
 
 uploadcare.whenReady ->
   {

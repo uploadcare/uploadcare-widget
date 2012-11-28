@@ -4,6 +4,7 @@
 # = require ./adapters/base-adapter
 # = require ./adapters/file-adapter
 # = require ./adapters/url-adapter
+# = require ./adapters/instagram-adapter
 
 # = require ./uploaders/base-uploader
 # = require ./uploaders/file-uploader
@@ -79,7 +80,7 @@ uploadcare.whenReady ->
       __setupWidget: ->
         @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
         @buttons = ['file']
-        allowed = ['file', 'url']
+        allowed = ['file', 'url', 'instagram']
 
         adapters = (tab for tab in @tabs when tab in allowed)
         for btn in @buttons
@@ -103,6 +104,10 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @dialog.open()
 
       __uploaderFor: (adapter) ->
+        # TODO: Попросить Димочку разобраться (%
+        if adapter == 'instagram'
+          return @uploaders['url']
+
         uploader = new ns.uploaders.registered[adapter](@settings)
         $(uploader)
           .on('uploadcare.api.uploader.start', =>
