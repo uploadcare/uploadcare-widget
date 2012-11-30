@@ -15,9 +15,6 @@ uploadcare.whenReady ->
   {jQuery} = uploadcare
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
-    class Value
-      constructor: (@score, @state, @data) ->
-
     class ns.PubSubWatcher
       constructor: (@channel, @topic) ->
         @baseUrl = 'http://uploadcare.local:5000/pubsub'
@@ -46,6 +43,6 @@ uploadcare.whenReady ->
           data: {'channel': @channel, 'topic': @topic}
           dataType: 'jsonp'
         .fail =>
-          @_update new Value(-1, 'error')
+          @_update {score: -1, state: 'error'}
         .done (data) =>
-          @_update new Value(data.score, data.state, data)
+          @_update data
