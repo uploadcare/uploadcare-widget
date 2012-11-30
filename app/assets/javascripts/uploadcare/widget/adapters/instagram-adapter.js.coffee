@@ -41,7 +41,7 @@ uploadcare.whenReady ->
           @watcher = new utils.pubsub.PubSubWatcher 'window', @window_id
           jQuery(@watcher).on('done', (e, state) =>
 
-              @stopWatcher()
+              @cleanup()
               
               @uploader.upload(state.url)
 
@@ -49,8 +49,12 @@ uploadcare.whenReady ->
           )
           @watcher.watch()
 
-      stopWatcher: =>
+      cleanup: =>
         @watcher.stop()
+        @watcher = null
+        @iframe.remove()
+        @iframe = null
+
 
 
 
