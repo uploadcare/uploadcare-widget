@@ -1,0 +1,37 @@
+uploadcare.whenReady ->
+  {jQuery} = uploadcare
+
+  uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
+    class Value
+      constructor: (@score, @state, @data) ->
+
+    class ns.PubSubWatcher
+      constructor: (@channel, @topic) ->
+        @baseUrl = 'http://uploadcare.local:5000/pubsub'
+
+      watch: ->
+        @interval = setInterval(
+                      => @_checkStatus()
+                      250
+                    )
+
+      stop: ->
+        clearInterval @interval if @interval
+        @interval = null
+
+      _update: (status) ->
+        if not @status or @status.score < status
+          @status = status
+          @_notify()
+
+      _notify: ->
+        jQuery(this).trigger(['state-changed', @status.state], [@status])
+
+      _checkStatus: ->
+        jQuery.ajax "#{@baseUrl}/status",
+          data: {'channel': @channel, 'topic': @topic}
+          dataType: 'jsonp'
+        .fail =>
+          @_update Value(-1, 'error')
+        .done (data) =>
+          @_update Value(data.score, data.state, data)

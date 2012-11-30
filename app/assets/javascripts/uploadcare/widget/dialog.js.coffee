@@ -44,6 +44,8 @@ uploadcare.whenReady ->
         not @content.is(':hidden')
 
       switchTo: (name) ->
+        $(this).trigger('switch-tab', [name])
+
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
