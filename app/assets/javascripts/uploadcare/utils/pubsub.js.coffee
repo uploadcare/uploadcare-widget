@@ -1,3 +1,16 @@
+#
+# USAGE:
+# 
+#     var w = new uploadcare.utils.pubsub.PubSubWatcher('window', '123');
+#     jQuery(w).on('some-state-name', function(status) { alert(status) })
+#
+#     # or all of them
+#     jQuery(w).on('state-changed', function(status) { alert(status) })
+# 
+#     w.watch()
+#     w.stop() # don't forget, in the end :D
+# 
+
 uploadcare.whenReady ->
   {jQuery} = uploadcare
 
