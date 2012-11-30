@@ -38,27 +38,27 @@ uploadcare.whenReady ->
           .change()
         @content.fadeIn('fast')
 
+        $(this).trigger('open-dialog', [@currentTab or ''])
+
       close: -> @content.fadeOut('fast')
 
       isVisible: ->
         not @content.is(':hidden')
 
-      switchTo: (name) ->
+      switchTo: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
             .end()
-          .find(".uploadcare-dialog-tab-#{name}")
+          .find(".uploadcare-dialog-tab-#{@currentTab}")
             .addClass('uploadcare-dialog-selected-tab')
             .end()
           .find('> div')
             .hide()
-            .filter("#uploadcare-dialog-tab-#{name}")
+            .filter("#uploadcare-dialog-tab-#{@currentTab}")
               .show()
 
-        $(this).trigger('switch-tab',
-            [name,
-             @content.find("#uploadcare-dialog-tab-#{name}")])
+        $(this).trigger('switch-tab', [@currentTab])
 
       addTab: (name) ->
         tpl = "uploadcare/widget/templates/tab-#{name}"
