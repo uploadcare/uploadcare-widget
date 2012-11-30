@@ -1,7 +1,7 @@
 
 # USAGE:
 # 
-#     var w = new uploadcare.utils.pubsub.PubSubWatcher('window', '123');
+#     var w = new uploadcare.utils.pubsub.PubSub('window', '123');
 #     jQuery(w).on('some-state-name', function(status) { alert(status) })
 #
 #     # or all of them
@@ -15,19 +15,21 @@ uploadcare.whenReady ->
   {jQuery} = uploadcare
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
-    class ns.PubSubWatcher
-      constructor: (@channel, @topic) ->
+    class ns.PubSub
+      constructor: (@widget, @channel, @topic) ->
         @baseUrl = 'http://uploadcare.local:5000/pubsub'
+        @pusherw = new PusherWatcher(this, @widget.settings.pusherKey)
+        @pollw = new PollWatcher(this)
 
       watch: ->
-        @interval = setInterval(
-                      => @_checkStatus()
-                      2000
-                    )
+        @pusherw.watch()
+        @pollw.watch()
+        jQuery(@pusherw).on 'uploadcare.watch-started', =>
+          @pollw.stop()
 
       stop: ->
-        clearInterval @interval if @interval
-        @interval = null
+        @pusherw.stop()
+        @pollw.stop()
 
       _update: (status) ->
         if not @status or @status.score < status.score
@@ -35,14 +37,46 @@ uploadcare.whenReady ->
           @_notify()
 
       _notify: ->
+        console.log 'status', @status.score, @status.state, @status
         jQuery(this).trigger('state-changed', [@status])
         jQuery(this).trigger(@status.state, [@status])
 
+    class PusherWatcher
+      constructor: (@ps, pusherKey) ->
+        @pusher = new Pusher(pusherKey)
+
+      watch: ->
+        channel = "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
+        @channel = @pusher.subscribe(channel)
+
+        @channel.bind 'event', (data) => @ps._update jQuery.parseJSON(data)
+
+        # a little thingy to avoid polling
+        onStarted = =>
+          jQuery(this).trigger 'uploadcare.watch-started'
+          @channel.unbind 'event', onStarted
+        @channel.bind 'event', onStarted
+
+      stop: ->
+        @pusher.disconnect() if @pusher
+        @pusher = null
+
+    class PollWatcher
+      constructor: (@ps) ->
+
+      watch: ->
+        @interval = setInterval (=> @_checkStatus()), 2000
+
+      stop: ->
+        clearInterval @interval if @interval
+        @interval = null
+
       _checkStatus: ->
-        jQuery.ajax "#{@baseUrl}/status",
-          data: {'channel': @channel, 'topic': @topic}
+        console.log('polling status...')
+        jQuery.ajax "#{@ps.baseUrl}/status",
+          data: {'channel': @ps.channel, 'topic': @ps.topic}
           dataType: 'jsonp'
         .fail =>
-          @_update {score: -1, state: 'error'}
+          @ps._update {score: -1, state: 'error'}
         .done (data) =>
-          @_update data
+          @ps._update data
