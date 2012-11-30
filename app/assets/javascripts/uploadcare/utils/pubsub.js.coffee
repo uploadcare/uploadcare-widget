@@ -1,4 +1,4 @@
-#
+
 # USAGE:
 # 
 #     var w = new uploadcare.utils.pubsub.PubSubWatcher('window', '123');
@@ -25,7 +25,7 @@ uploadcare.whenReady ->
       watch: ->
         @interval = setInterval(
                       => @_checkStatus()
-                      250
+                      2000
                     )
 
       stop: ->
@@ -33,18 +33,19 @@ uploadcare.whenReady ->
         @interval = null
 
       _update: (status) ->
-        if not @status or @status.score < status
+        if not @status or @status.score < status.score
           @status = status
           @_notify()
 
       _notify: ->
-        jQuery(this).trigger(['state-changed', @status.state], [@status])
+        jQuery(this).trigger('state-changed', [@status])
+        jQuery(this).trigger(@status.state, [@status])
 
       _checkStatus: ->
         jQuery.ajax "#{@baseUrl}/status",
           data: {'channel': @channel, 'topic': @topic}
           dataType: 'jsonp'
         .fail =>
-          @_update Value(-1, 'error')
+          @_update new Value(-1, 'error')
         .done (data) =>
-          @_update Value(data.score, data.state, data)
+          @_update new Value(data.score, data.state, data)
