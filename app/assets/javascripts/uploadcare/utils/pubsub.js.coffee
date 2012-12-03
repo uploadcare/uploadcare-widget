@@ -1,3 +1,4 @@
+# = require uploadcare/utils/pusher
 
 # USAGE:
 # 
@@ -13,6 +14,7 @@
 
 uploadcare.whenReady ->
   {jQuery, debug} = uploadcare
+  {pusher} = uploadcare.utils
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
     class ns.PubSub
@@ -43,7 +45,7 @@ uploadcare.whenReady ->
 
     class PusherWatcher
       constructor: (@ps, pusherKey) ->
-        @pusher = new Pusher(pusherKey)
+        @pusher = pusher.getPusher(pusherKey)
 
       watch: ->
         channel = "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
@@ -53,12 +55,13 @@ uploadcare.whenReady ->
 
         # a little thingy to avoid polling
         onStarted = =>
+          debug('wow, listening with pusher')
           jQuery(this).trigger 'uploadcare.watch-started'
           @channel.unbind 'event', onStarted
         @channel.bind 'event', onStarted
 
       stop: ->
-        @pusher.disconnect() if @pusher
+        @pusher.release() if @pusher
         @pusher = null
 
     class PollWatcher

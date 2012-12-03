@@ -1,5 +1,8 @@
+# = require uploadcare/utils/pusher
+
 uploadcare.whenReady ->
-  {namespace, jQuery, utils} = uploadcare
+  {namespace, jQuery, utils, debug} = uploadcare
+  {pusher} = uploadcare.utils
 
   namespace 'uploadcare.widget.uploaders', (ns) ->
     class ns.URLUploader extends ns.BaseUploader
@@ -75,9 +78,10 @@ uploadcare.whenReady ->
 
     class PusherWatcher
       constructor: (@uploader) ->
-        @pusher = new Pusher(@uploader.settings.pusherKey)
+        @pusher = pusher.getPusher(@uploader.settings.pusherKey)
 
       watch: (@token) ->
+        debug('started url watching with pusher')
         @channel = @pusher.subscribe("task-status-#{@token}")
 
         onStarted = =>
@@ -92,13 +96,14 @@ uploadcare.whenReady ->
         @channel.bind 'fail', (data) => @uploader._state('error')
 
       stopWatching: ->
-        @pusher.disconnect() if @pusher
+        @pusher.release() if @pusher
         @pusher = null
 
     class PollWatcher
       constructor: (@uploader) ->
 
       watch: (@token) ->
+        debug('started url watching with poller')
         @interval = setInterval(
           => @_checkStatus (data) =>
             return unless @interval? # maybe we've stopped watching already
