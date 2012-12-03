@@ -40,21 +40,22 @@ uploadcare.whenReady ->
 
       updateConnection(key)
 
-    ownerCount = (key) ->
-      (owner for owner of pushers[key].owners when pushers[key].owners[owner]).length
+    hasOwners = (key) ->
+      (owner for owner of pushers[key].owners when pushers[key].owners[owner])
+        .length > 0
 
     updateConnection = (key) ->
       instance = pusherInstance(key)
 
       # .connect() and disconnect() seems to be no-ops
       # if it's already in this state. so not checking.
-      if ownerCount(key) > 0
+      if hasOwners(key)
         debug('connect', key)
         instance.connect()
       else
         debug('disconnect timeout started', key)
         setTimeout (->
-          if ownerCount(key) > 0
+          if hasOwners(key)
             debug('not disconnecting in the end')
           else
             debug('actual disconnect', key)
