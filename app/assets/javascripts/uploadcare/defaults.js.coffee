@@ -8,5 +8,7 @@ uploadcare.whenReady ->
     pusherKey: window.UPLOADCARE_PUSHER_KEY or '79ae88bd931ea68464d9'
 
   }
+  uploadcare.debugFn = window.UPLOADCARE_DEBUG or ->
 
-uploadcare.debug = (args...) -> console.log args
+# lazy loaded function
+uploadcare.debug = (args...) -> uploadcare.debugFn(args)

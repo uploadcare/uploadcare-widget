@@ -4,3 +4,4 @@ UPLOADCARE_URL_BASE = 'https://upload.staging0.uploadcare.com';
 UPLOADCARE_PUSHER_KEY = 'a2dfe15c549a403f58ee';
 
 UPLOADCARE_SOCIAL_BASE = 'http://uploadcare.local:5000';
+UPLOADCARE_DEBUG = function(what) { console.log(what); }
