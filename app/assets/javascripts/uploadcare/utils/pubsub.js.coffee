@@ -12,7 +12,7 @@
 # 
 
 uploadcare.whenReady ->
-  {jQuery} = uploadcare
+  {jQuery, debug} = uploadcare
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
     class ns.PubSub
@@ -37,7 +37,7 @@ uploadcare.whenReady ->
           @_notify()
 
       _notify: ->
-        console.log 'status', @status.score, @status.state, @status
+        debug('status', @status.score, @status.state, @status)
         jQuery(this).trigger('state-changed', [@status])
         jQuery(this).trigger(@status.state, [@status])
 
@@ -72,7 +72,7 @@ uploadcare.whenReady ->
         @interval = null
 
       _checkStatus: ->
-        console.log('polling status...')
+        debug('polling status...')
         jQuery.ajax "#{@ps.baseUrl}/status",
           data: {'channel': @ps.channel, 'topic': @ps.topic}
           dataType: 'jsonp'

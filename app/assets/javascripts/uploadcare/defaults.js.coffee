@@ -6,3 +6,5 @@ uploadcare.whenReady ->
     tabs: window.UPLOADCARE_TABS or 'url file instagram'
     pusherKey: window.UPLOADCARE_PUSHER_KEY or '79ae88bd931ea68464d9'
   }
+
+uploadcare.debug = (args...) -> console.log args
