@@ -78,7 +78,7 @@ uploadcare.whenReady ->
 
     class PusherWatcher
       constructor: (@uploader) ->
-        @pusher = pusher.getPusher(@uploader.settings.pusherKey)
+        @pusher = pusher.getPusher(@uploader.settings.pusherKey, 'url-upload')
 
       watch: (@token) ->
         debug('started url watching with pusher')

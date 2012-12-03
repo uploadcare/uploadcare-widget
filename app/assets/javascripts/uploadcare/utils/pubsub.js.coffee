@@ -45,11 +45,14 @@ uploadcare.whenReady ->
 
     class PusherWatcher
       constructor: (@ps, pusherKey) ->
-        @pusher = pusher.getPusher(pusherKey)
+        @pusher = pusher.getPusher(pusherKey, @_channelName())
+
+      _channelName: () ->
+        "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
 
       watch: ->
-        channel = "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
-        @channel = @pusher.subscribe(channel)
+        
+        @channel = @pusher.subscribe(@_channelName())
 
         @channel.bind 'event', (data) => @ps._update jQuery.parseJSON(data)
 

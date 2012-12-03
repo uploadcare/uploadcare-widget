@@ -10,7 +10,6 @@
 
 uploadcare.whenReady ->
   {debug} = uploadcare
-  debug('hello');
 
   uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     pushers = {}
@@ -50,7 +49,6 @@ uploadcare.whenReady ->
       # .connect() and disconnect() seems to be no-ops
       # if it's already in this state. so not checking.
       if hasOwners(key)
-        debug('connect', key)
         instance.connect()
       else
         debug('disconnect timeout started', key)
@@ -79,10 +77,3 @@ uploadcare.whenReady ->
 
       Wrapped.prototype = pusherInstance(key)
       new Wrapped()
-
-
-
-
-      
-
-  
