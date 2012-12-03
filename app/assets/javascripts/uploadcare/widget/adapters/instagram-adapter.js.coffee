@@ -7,8 +7,6 @@ uploadcare.whenReady ->
 
   {t} = uploadcare.locale
 
-  socialBase = 'http://uploadcare.local:5000'
-
   namespace 'uploadcare.widget.adapters', (ns) ->
     class ns.InstagramAdapter extends ns.BaseAdapter
       @registerAs 'instagram'
@@ -29,7 +27,7 @@ uploadcare.whenReady ->
 
           @createWatcher()
 
-          src = "#{socialBase}/window/instagram?window_id=#{@window_id}"
+          src = "#{@widget.settings.socialBase}/window/instagram?window_id=#{@window_id}"
           @iframe = jQuery('<iframe>')
                       .attr('src', src)
                       .css
@@ -55,12 +53,3 @@ uploadcare.whenReady ->
         @watcher = null
         @iframe.remove()
         @iframe = null
-
-
-
-
-
-
-# <iframe src="/window/instagram?window_id={window_id}&pub_key={pub_key}" width="100%" height="100%">
-# </iframe>
-
