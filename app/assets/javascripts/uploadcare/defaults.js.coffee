@@ -6,9 +6,8 @@ uploadcare.whenReady ->
     socialBase: window.UPLOADCARE_SOCIAL_BASE or 'https://social.uploadcare.com'
     tabs: window.UPLOADCARE_TABS or 'url file instagram'
     pusherKey: window.UPLOADCARE_PUSHER_KEY or '79ae88bd931ea68464d9'
-
   }
-  uploadcare.debugFn = window.UPLOADCARE_DEBUG or ->
 
 # lazy loaded function
-uploadcare.debug = (args...) -> uploadcare.debugFn(args)
+uploadcare.debug = (args...) -> uploadcare.jQuery(uploadcare).trigger('uploadcare.debug', [args])
+
