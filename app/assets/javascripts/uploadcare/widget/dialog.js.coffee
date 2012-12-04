@@ -38,7 +38,7 @@ uploadcare.whenReady ->
           .change()
         @content.fadeIn('fast')
 
-        $(this).trigger('open-dialog', [@currentTab or ''])
+        $(this).trigger('uploadcare.dialog.open', [@currentTab or ''])
 
       close: -> @content.fadeOut('fast')
 
@@ -58,7 +58,7 @@ uploadcare.whenReady ->
             .filter("#uploadcare-dialog-tab-#{@currentTab}")
               .show()
 
-        $(this).trigger('switch-tab', [@currentTab])
+        $(this).trigger('uploadcare.dialog.switchtab', [@currentTab])
 
       addTab: (name) ->
         tpl = "uploadcare/widget/templates/tab-#{name}"

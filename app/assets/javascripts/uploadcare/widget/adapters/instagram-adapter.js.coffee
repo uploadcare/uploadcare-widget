@@ -18,8 +18,8 @@ uploadcare.whenReady ->
           if tab_name == 'instagram'
             @createIframe()
 
-        jQuery(@widget.dialog).on('open-dialog', handler)
-        jQuery(@widget.dialog).on('switch-tab', handler)
+        jQuery(@widget.dialog).on('uploadcare.dialog.open', handler)
+        jQuery(@widget.dialog).on('uploadcare.dialog.switchtab', handler)
 
       createIframe: =>
         if not @iframe
