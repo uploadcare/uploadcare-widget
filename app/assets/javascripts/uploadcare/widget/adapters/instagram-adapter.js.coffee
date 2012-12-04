@@ -39,12 +39,11 @@ uploadcare.whenReady ->
         if not @watcher
           @watcher = new utils.pubsub.PubSub @widget, 'window', @window_id
           jQuery(@watcher).on('done', (e, state) =>
+            @uploader.upload(state.url)
 
-              @cleanup()
-              
-              @uploader.upload(state.url)
+            @cleanup()
 
-              @widget.dialog.close()
+            @widget.dialog.close()
           )
           @watcher.watch()
 
