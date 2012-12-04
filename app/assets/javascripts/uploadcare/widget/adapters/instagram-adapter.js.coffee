@@ -15,8 +15,8 @@ uploadcare.whenReady ->
         super @widget
 
         handler = (e, tab_name) =>
-            if tab_name == 'instagram'
-              @createIframe()
+          if tab_name == 'instagram'
+            @createIframe()
 
         jQuery(@widget.dialog).on('open-dialog', handler)
         jQuery(@widget.dialog).on('switch-tab', handler)
