@@ -58,6 +58,8 @@ uploadcare.whenReady ->
               fileId: data.file_id
               fileName: data.original_filename
               fileSize: data.size
+        else
+          @__reset()
 
       __setLoaded: (instant, data) ->
         unless data.fileName? && data.fileSize?
@@ -68,13 +70,15 @@ uploadcare.whenReady ->
         @setValue(data.fileId)
         @template.loaded()
 
-
-      __cancel: =>
+      __reset: =>
         uploader.cancel() for own _, uploader of @uploaders
         @available = true
-        @setValue('')
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
+
+      __cancel: =>
+        @__reset()
+        @setValue('')
 
       __setupWidget: ->
         @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
