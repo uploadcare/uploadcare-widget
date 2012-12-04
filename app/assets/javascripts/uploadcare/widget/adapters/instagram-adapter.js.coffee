@@ -28,13 +28,12 @@ uploadcare.whenReady ->
           @createWatcher()
 
           src = "#{@widget.settings.socialBase}/window/instagram?window_id=#{@window_id}"
-          @iframe = jQuery('<iframe>')
-                      .attr('src', src)
-                      .css
-                        width: '100%'
-                        height: '100%'
-                        border: 0
-                      .appendTo(@tab)
+          @iframe = jQuery('<iframe>').attr('src', src)
+                                      .css
+                                        width: '100%'
+                                        height: '100%'
+                                        border: 0
+                                      .appendTo(@tab)
 
       createWatcher: =>
         if not @watcher
