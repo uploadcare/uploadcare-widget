@@ -104,7 +104,7 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @dialog.open()
 
       __uploaderFor: (adapter) ->
-        # TODO: Попросить Димочку разобраться (%
+        # FIXME
         if adapter == 'instagram'
           return @uploaders['url']
 
