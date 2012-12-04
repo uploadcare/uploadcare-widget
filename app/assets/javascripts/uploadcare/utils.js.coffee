@@ -1,7 +1,7 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pubsub
 
-uploadcare.whenReady ->  
+uploadcare.whenReady ->
   uploadcare.namespace 'uploadcare.utils', (ns) ->
     ns.uuid = ->
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
