@@ -27,7 +27,7 @@ uploadcare.whenReady ->
 
           @createWatcher()
 
-          src = "#{@widget.settings.socialBase}/window/instagram?window_id=#{@window_id}&pub_key=#{@widget.settings.pub_key}"
+          src = "#{@widget.settings.socialBase}/window/instagram?window_id=#{@window_id}"
           @iframe = jQuery('<iframe>')
                       .attr('src', src)
                       .css
