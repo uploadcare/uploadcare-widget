@@ -5,8 +5,10 @@ UPLOADCARE_PUSHER_KEY = 'a2dfe15c549a403f58ee';
 
 UPLOADCARE_SOCIAL_BASE = 'http://0.0.0.0:5000';
 
-uploadcare.jQuery(uploadcare).on('uploadcare.debug', function(e, args){
-    console.log(args);
-});
+setTimeout(function() {
+    uploadcare.jQuery(uploadcare).on('uploadcare.debug', function(e, args){
+        console.log(args);
+    });
+}, 1000);
 
 
