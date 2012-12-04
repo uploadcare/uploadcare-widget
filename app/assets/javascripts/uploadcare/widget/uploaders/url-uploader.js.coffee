@@ -103,11 +103,8 @@ uploadcare.whenReady ->
       constructor: (@uploader) ->
 
       watch: (@token) ->
-        debug('started url watching with poller')
         @interval = setInterval(
           => @_checkStatus (data) =>
-            return unless @interval? # maybe we've stopped watching already
-
             @uploader._state data.status, data if data.status in ['progress', 'success', 'error']
         250)
 
