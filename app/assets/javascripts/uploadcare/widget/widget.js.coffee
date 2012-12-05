@@ -1,3 +1,4 @@
+# = require ./upload-manager
 # = require ./template
 # = require ./dialog
 
@@ -5,10 +6,6 @@
 # = require ./adapters/file-adapter
 # = require ./adapters/url-adapter
 # = require ./adapters/instagram-adapter
-
-# = require ./uploaders/base-uploader
-# = require ./uploaders/file-uploader
-# = require ./uploaders/url-uploader
 
 uploadcare.whenReady ->
   {
@@ -24,6 +21,7 @@ uploadcare.whenReady ->
         @settings = $.extend({}, uploadcare.defaults, @element.data())
         @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
 
+        @upload = new ns.UploadManager(this)
         @template = new ns.Template(@element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
@@ -72,7 +70,6 @@ uploadcare.whenReady ->
         @template.loaded()
 
       __reset: =>
-        uploader.cancel() for own _, uploader of @uploaders
         @available = true
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
@@ -92,14 +89,10 @@ uploadcare.whenReady ->
 
         # Initialize adapters for buttons and tabs
         @dialog = ns.dialog.defaultDialog if @tabs.length > 0
-        @uploaders = {}
         @adapters = {}
         for adapter in adapters
           if ns.adapters.registered.hasOwnProperty(adapter)
-            uploader = @__uploaderFor(adapter)
-            @uploaders[adapter] = uploader
-            @adapters[adapter] =
-              new ns.adapters.registered[adapter](this, uploader)
+            @adapters[adapter] = new ns.adapters.registered[adapter](this)
 
         # Add the dialog button if dialog is used
         if @dialog
@@ -107,12 +100,7 @@ uploadcare.whenReady ->
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @dialog.open()
 
-      __uploaderFor: (adapter) ->
-        # FIXME
-        if adapter == 'instagram'
-          return @uploaders['url']
-
-        uploader = new ns.uploaders.registered[adapter](@settings)
+      addUploader: (uploader) ->
         $(uploader)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
@@ -128,7 +116,6 @@ uploadcare.whenReady ->
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
-        uploader
 
     initialize
       name: 'widget'

@@ -2,10 +2,8 @@ uploadcare.whenReady ->
   {namespace, jQuery: $, utils} = uploadcare
 
   namespace 'uploadcare.widget.uploaders', (ns) ->
-    class ns.FileUploader extends ns.BaseUploader
-      @registerAs 'file'
+    class ns.FileUploader
       constructor: (@settings) ->
-        super
         @targetUrl = "#{@settings.urlBase}/iframe/"
 
       listener: (e) =>

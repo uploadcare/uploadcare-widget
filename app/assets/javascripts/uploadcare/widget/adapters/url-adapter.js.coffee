@@ -9,7 +9,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget.adapters', (ns) ->
     class ns.URLAdapter extends ns.BaseAdapter
       @registerAs 'url'
-      constructor: (@widget, @uploader) ->
+      constructor: (@widget) ->
         super @widget
 
         input = @tab.find('@uploadcare-dialog-url-input')
@@ -22,5 +22,5 @@ uploadcare.whenReady ->
         @tab.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
           @widget.dialog.close()
-          @uploader.upload(url)
+          @widget.upload.fromUrl(url)
           false

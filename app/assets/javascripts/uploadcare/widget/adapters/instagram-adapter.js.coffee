@@ -11,7 +11,7 @@ uploadcare.whenReady ->
     class ns.InstagramAdapter extends ns.BaseAdapter
       @registerAs 'instagram'
 
-      constructor: (@widget, @uploader) ->
+      constructor: (@widget) ->
         super @widget
 
         handler = (e, tab_name) =>
@@ -39,7 +39,7 @@ uploadcare.whenReady ->
         if not @watcher
           @watcher = new utils.pubsub.PubSub @widget, 'window', @window_id
           jQuery(@watcher).on('done', (e, state) =>
-            @uploader.upload(state.url)
+            @widget.upload.fromUrl(state.url)
 
             @cleanup()
 

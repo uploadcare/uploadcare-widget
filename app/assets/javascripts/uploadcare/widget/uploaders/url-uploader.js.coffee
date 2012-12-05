@@ -5,10 +5,8 @@ uploadcare.whenReady ->
   {pusher} = uploadcare.utils
 
   namespace 'uploadcare.widget.uploaders', (ns) ->
-    class ns.URLUploader extends ns.BaseUploader
-      @registerAs 'url'
+    class ns.URLUploader
       constructor: (@settings) ->
-        super
         @_shutdown = true
 
       upload: (url) ->
