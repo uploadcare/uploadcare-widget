@@ -19,7 +19,9 @@ uploadcare.whenReady ->
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
     class ns.PubSub
       constructor: (@widget, @channel, @topic) ->
-        @baseUrl = "#{@widget.settings.socialBase}/pubsub"
+        @pollUrlConstructor = (channel, topic) ->
+          "#{@widget.settings.socialBase}/pubsub/status/#{@channel}/#{@topic}"
+
         @pusherw = new PusherWatcher(this, @widget.settings.pusherKey)
         @pollw = new PollWatcher(this)
 
@@ -79,8 +81,7 @@ uploadcare.whenReady ->
 
       _checkStatus: ->
         debug('polling status...')
-        jQuery.ajax "#{@ps.baseUrl}/status",
-          data: {'channel': @ps.channel, 'topic': @ps.topic}
+        jQuery.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
           dataType: 'jsonp'
         .fail =>
           @ps._update {score: -1, state: 'error'}
