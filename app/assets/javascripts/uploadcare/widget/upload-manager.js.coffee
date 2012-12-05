@@ -28,4 +28,6 @@ uploadcare.whenReady ->
         @current = uploader
 
       cancel: ->
-        @current.cancel() if @current?
+        if @current?
+          @current.cancel()
+          @current = null

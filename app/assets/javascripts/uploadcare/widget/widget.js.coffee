@@ -70,6 +70,7 @@ uploadcare.whenReady ->
         @template.loaded()
 
       __reset: =>
+        @upload.cancel()
         @available = true
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
