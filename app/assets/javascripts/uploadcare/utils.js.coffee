@@ -1,4 +1,5 @@
 # = require uploadcare/utils/abilities
+# = require uploadcare/utils/pubsub
 
 uploadcare.whenReady ->
   uploadcare.namespace 'uploadcare.utils', (ns) ->

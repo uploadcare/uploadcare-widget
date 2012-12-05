@@ -1,6 +1,7 @@
 # = require ./templates/dialog
 # = require ./templates/tab-file
 # = require ./templates/tab-url
+# = require ./templates/tab-instagram
 
 uploadcare.whenReady ->
   {
@@ -37,23 +38,27 @@ uploadcare.whenReady ->
           .change()
         @content.fadeIn('fast')
 
+        $(this).trigger('uploadcare.dialog.open', [@currentTab or ''])
+
       close: -> @content.fadeOut('fast')
 
       isVisible: ->
         not @content.is(':hidden')
 
-      switchTo: (name) ->
+      switchTo: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
             .end()
-          .find(".uploadcare-dialog-tab-#{name}")
+          .find(".uploadcare-dialog-tab-#{@currentTab}")
             .addClass('uploadcare-dialog-selected-tab')
             .end()
           .find('> div')
             .hide()
-            .filter("#uploadcare-dialog-tab-#{name}")
+            .filter("#uploadcare-dialog-tab-#{@currentTab}")
               .show()
+
+        $(this).trigger('uploadcare.dialog.switchtab', [@currentTab])
 
       addTab: (name) ->
         tpl = "uploadcare/widget/templates/tab-#{name}"
