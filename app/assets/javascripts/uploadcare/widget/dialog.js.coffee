@@ -1,7 +1,6 @@
 # = require ./templates/dialog
 # = require ./templates/tab-file
 # = require ./templates/tab-url
-# = require ./templates/tab-instagram
 
 uploadcare.whenReady ->
   {
@@ -61,20 +60,18 @@ uploadcare.whenReady ->
         $(this).trigger('uploadcare.dialog.switchtab', [@currentTab])
 
       addTab: (name) ->
+        tab = $('<li>')
+          .addClass("uploadcare-dialog-tab-#{name}")
+          .attr('title', t("tabs.#{name}"))
+          .on('click', => @switchTo(name))
+          .appendTo(@content.find('.uploadcare-dialog-tabs'))
+        panel = $('<div>')
+          .hide()
+          .addClass('uploadcare-dialog-tabs-panel')
+          .attr('id', "uploadcare-dialog-tab-#{name}")
+          .appendTo(@content.find('.uploadcare-dialog-body'))
         tpl = "uploadcare/widget/templates/tab-#{name}"
-        if JST.hasOwnProperty(tpl)
-          tab = $('<li>')
-            .addClass("uploadcare-dialog-tab-#{name}")
-            .attr('title', t("tabs.#{name}"))
-            .on('click', => @switchTo(name))
-            .appendTo(@content.find('.uploadcare-dialog-tabs'))
-          panel = $('<div>')
-            .hide()
-            .addClass('uploadcare-dialog-tabs-panel')
-            .attr('id', "uploadcare-dialog-tab-#{name}")
-            .append(JST[tpl]())
-            .appendTo(@content.find('.uploadcare-dialog-body'))
-        else
-          $()
+        panel.append(JST[tpl]()) if JST.hasOwnProperty(tpl)
+        panel
 
     ns.defaultDialog = new ns.Dialog()

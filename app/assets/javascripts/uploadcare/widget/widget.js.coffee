@@ -5,6 +5,8 @@
 # = require ./adapters/base-adapter
 # = require ./adapters/file-adapter
 # = require ./adapters/url-adapter
+# = require ./adapters/remote-adapter
+# = require ./adapters/facebook-adapter
 # = require ./adapters/instagram-adapter
 
 uploadcare.whenReady ->
@@ -80,20 +82,19 @@ uploadcare.whenReady ->
         @setValue('')
 
       __setupWidget: ->
-        @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
+        registered = ns.adapters.registered
+        tabs = if @settings.tabs then @settings.tabs.split(' ') else []
+        @tabs = (tab for tab in tabs when registered.hasOwnProperty(tab))
         @buttons = ['file']
-        allowed = ['file', 'url', 'instagram']
 
-        adapters = (tab for tab in @tabs when tab in allowed)
-        for btn in @buttons
-          adapters.push(btn) if btn in allowed && btn not in adapters
+        adapters = (tab for tab in @tabs)
+        adapters.push(btn) for btn in @buttons when btn not in adapters
 
         # Initialize adapters for buttons and tabs
         @dialog = ns.dialog.defaultDialog if @tabs.length > 0
         @adapters = {}
         for adapter in adapters
-          if ns.adapters.registered.hasOwnProperty(adapter)
-            @adapters[adapter] = new ns.adapters.registered[adapter](this)
+          @adapters[adapter] = new registered[adapter](this)
 
         # Add the dialog button if dialog is used
         if @dialog
