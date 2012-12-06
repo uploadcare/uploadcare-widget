@@ -297,6 +297,9 @@ $dialog-body-font-size-smaller: 14px;
       &.uploadcare-dialog-tab-url {
         background-position: 0 $frame-y;
       }
+      &.uploadcare-dialog-tab-facebook  {
+        background-position: 0 ($frame-y * 2);
+      }
       &.uploadcare-dialog-tab-instagram  {
         background-position: 0 ($frame-y * 5);
       }

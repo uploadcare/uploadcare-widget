@@ -4,7 +4,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.widget.adapters', (ns) ->
-    class ns.InstagramAdapter extends ns.RemoteAdapter
-      @registerAs 'instagram'
+    class ns.FacebookAdapter extends ns.RemoteAdapter
+      @registerAs 'facebook'
       constructor: (@widget) ->
-        super @widget, 'instagram'
+        super @widget, 'facebook'
