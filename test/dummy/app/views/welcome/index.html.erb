@@ -10,7 +10,7 @@ Draggable:<br>
 <ul id="events"></ul>
 <script>
 window.onload = function() {
-  setTimeout(function() { // Because load order sucks.
+  uploadcare.whenReady(function() {
     var $ = uploadcare.jQuery;
     var log = function(text) {
       var time = (new Date()).toLocaleTimeString();
@@ -26,6 +26,6 @@ window.onload = function() {
       var value = $(this).val();
       log('change: "' + value + '"');
     });
-  }, 100);
+  });
 };
 </script>
