@@ -6,7 +6,6 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
-  {files} = uploadcare.widget
 
   namespace 'uploadcare.widget.dragdrop', (ns) ->
     noFileAPI = if utils.abilities.canFileAPI() then false else ->
@@ -21,12 +20,12 @@ uploadcare.whenReady ->
           $(el).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
-            upload(new files.EventFile(e))
+            upload('event', e)
           else
             uris = dt.getData('text/uri-list')
             if uris
               url = uris.split('\n')[0]
-              upload(new files.UrlFile(url))
+              upload('url', url)
 
     dragArea = $()
     ns.markOnDrag = noFileAPI or (el) -> dragArea.add(el)

@@ -106,7 +106,19 @@ uploadcare.whenReady ->
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @dialog.open()
 
-      upload: (file) ->
+      fileTypes =
+        event: ns.files.EventFile
+        url: ns.files.UrlFile
+
+      upload: (file, arg) ->
+        # Allow two types of calls:
+        #
+        #     widget.upload(new ns.FooFile(arg))
+        #     widget.upload('foo', arg)
+        if arg?
+          file = new fileTypes[file](arg)
+
+        # Proceed with upload
         @__resetUpload()
         @uploader = file.uploader(@settings)
         $(@uploader)

@@ -5,8 +5,6 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  {files} = uploadcare.widget
-
   namespace 'uploadcare.widget.adapters', (ns) ->
     class ns.RemoteAdapter extends ns.BaseAdapter
       @registerAs 'instagram'
@@ -38,7 +36,7 @@ uploadcare.whenReady ->
         unless @watcher
           @watcher = new utils.pubsub.PubSub @widget, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
-            @widget.upload(new files.UrlFile(state.url))
+            @widget.upload('url', state.url)
             @cleanup()
             @widget.dialog.close()
           )
