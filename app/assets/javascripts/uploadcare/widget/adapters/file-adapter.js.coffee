@@ -6,6 +6,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
+  {files} = uploadcare.widget
 
   namespace 'uploadcare.widget.adapters', (ns) ->
     class ns.FileAdapter extends ns.BaseAdapter
@@ -17,10 +18,11 @@ uploadcare.whenReady ->
         @makeDragndrop()
 
       makeInputs: ->
-        @makeInput @button, @widget.upload.fromFileEvent
+        @makeInput @button, (e) =>
+          @widget.upload(new files.EventFile(e))
         @makeInput @tab.find('@uploadcare-dialog-browse-file'), (e) =>
           @widget.dialog.close()
-          @widget.upload.fromFileEvent(e)
+          @widget.upload(new files.EventFile(e))
 
       makeInput: (container, fn) ->
         container.find('input:file').remove()
@@ -62,18 +64,19 @@ uploadcare.whenReady ->
             @hideDragarea()
             dt = e.originalEvent.dataTransfer
             if dt.files.length
-              @widget.upload.fromFileEvent(e)
+              @widget.upload(new files.EventFile(e))
             else
               uris = dt.getData('text/uri-list')
               if uris && @widget.adapters.url?
-                @widget.upload.fromUrl(uris.split('\n')[0])
+                url = uris.split('\n')[0]
+                @widget.upload(new files.UrlFile(url))
 
         dialogArea = @tab
           .find('@uploadcare-dialog-drop-file')
           .on('dragover', dragover)
           .on 'drop', (e) =>
             @widget.dialog.close()
-            @widget.upload.fromFileEvent(e)
+            @widget.upload(new files.EventFile(e))
 
         $(window).on 'mouseenter dragend', =>
           return unless @widget.available

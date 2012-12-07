@@ -5,12 +5,12 @@ uploadcare.whenReady ->
   {pusher} = uploadcare.utils
 
   namespace 'uploadcare.widget.uploaders', (ns) ->
-    class ns.URLUploader
-      constructor: (@settings) ->
+    class ns.UrlUploader
+      constructor: (@settings, @url) ->
         @_shutdown = true
 
-      upload: (url) ->
-        return unless url?
+      upload: ->
+        return unless @url?
 
         @uploading = true
         @pollWatcher = new PollWatcher(this)
@@ -19,7 +19,7 @@ uploadcare.whenReady ->
         @_state('start')
 
         @xhr = jQuery.ajax("#{@settings.urlBase}/from_url/",
-          data: {pub_key: @settings.publicKey, source_url: url}
+          data: {pub_key: @settings.publicKey, source_url: @url}
           dataType: 'jsonp'
 
         ).done (data) =>

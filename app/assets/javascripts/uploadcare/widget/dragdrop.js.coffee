@@ -6,12 +6,12 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
+  {files} = uploadcare.widget
 
   namespace 'uploadcare.widget.dragdrop', (ns) ->
-    canFileAPI = utils.abilities.canFileAPI()
+    noFileAPI = if utils.abilities.canFileAPI() then false else ->
 
-    ns.uploadDrop = (upload, el) ->
-      return unless canFileAPI
+    ns.recieveDrop = noFileAPI or (upload, el) ->
       $(el)
         .on 'dragover', (e) ->
           e.stopPropagation() # Prevent redirect
@@ -21,16 +21,15 @@ uploadcare.whenReady ->
           $(el).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
-            upload.fromFileEvent(e)
+            upload(new files.EventFile(e))
           else
             uris = dt.getData('text/uri-list')
             if uris
-              upload.fromUrl(uris.split('\n')[0])
+              url = uris.split('\n')[0]
+              upload(new files.UrlFile(url))
 
     dragArea = $()
-    ns.uploadDrag = (el) -> dragArea.add(el)
-
-    return unless canFileAPI
+    ns.markOnDrag = noFileAPI or (el) -> dragArea.add(el)
 
     # Mark body with our class when dragging
     active = false
@@ -43,7 +42,4 @@ uploadcare.whenReady ->
     dragMarker = (newActive) ->
       if active != newActive
         active = newActive
-        if active
-          dragArea.addClass('uploadcare-dragging')
-        else
-          dragArea.removeClass('uploadcare-dragging')
+        dragArea.toggleClass('uploadcare-dragging', active)

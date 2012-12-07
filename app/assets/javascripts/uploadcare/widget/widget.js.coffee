@@ -1,4 +1,9 @@
-# = require ./upload-manager
+# = require ./uploaders/event-uploader
+# = require ./uploaders/url-uploader
+
+# = require ./files/event-file
+# = require ./files/url-file
+
 # = require ./template
 # = require ./dialog
 
@@ -23,7 +28,6 @@ uploadcare.whenReady ->
         @settings = $.extend({}, uploadcare.defaults, @element.data())
         @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
 
-        @upload = new ns.UploadManager(this)
         @template = new ns.Template(@element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
@@ -72,7 +76,7 @@ uploadcare.whenReady ->
         @template.loaded()
 
       __reset: =>
-        @upload.cancel()
+        @__resetUpload()
         @available = true
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
@@ -102,8 +106,10 @@ uploadcare.whenReady ->
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @dialog.open()
 
-      addUploader: (uploader) ->
-        $(uploader)
+      upload: (file) ->
+        @__resetUpload()
+        @uploader = file.uploader(@settings)
+        $(@uploader)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
             @available = false
@@ -118,6 +124,12 @@ uploadcare.whenReady ->
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
+        @uploader.upload()
+
+      __resetUpload: ->
+        if @uploader?
+          @uploader.cancel()
+          @uploader = null
 
     initialize
       name: 'widget'
