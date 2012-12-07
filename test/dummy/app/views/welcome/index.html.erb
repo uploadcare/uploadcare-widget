@@ -10,20 +10,22 @@ Draggable:<br>
 <ul id="events"></ul>
 <script>
 window.onload = function() {
-  var $ = uploadcare.jQuery;
-  var log = function(text) {
-    var time = (new Date()).toLocaleTimeString();
-    $('<li>').appendTo('#events').text(time + ' ' + text);
-  };
-  ['ready', 'started', 'loaded', 'error'].forEach(function(event) {
-    var fullEvent = 'uploadcare.uploader.' + event;
-    $('@uploadcare-uploader').on(fullEvent, function() {
-      log(fullEvent);
+  setTimeout(function() { // Because load order sucks.
+    var $ = uploadcare.jQuery;
+    var log = function(text) {
+      var time = (new Date()).toLocaleTimeString();
+      $('<li>').appendTo('#events').text(time + ' ' + text);
+    };
+    ['ready', 'started', 'loaded', 'error'].forEach(function(event) {
+      var fullEvent = 'uploadcare.uploader.' + event;
+      $('@uploadcare-uploader').on(fullEvent, function() {
+        log(fullEvent);
+      });
     });
-  });
-  $('@uploadcare-uploader').on('change', function() {
-    var value = $(this).val();
-    log('change: "' + value + '"');
-  });
+    $('@uploadcare-uploader').on('change', function() {
+      var value = $(this).val();
+      log('change: "' + value + '"');
+    });
+  }, 100);
 };
 </script>
