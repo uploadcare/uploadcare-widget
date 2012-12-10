@@ -5,8 +5,6 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  {dragdrop} = uploadcare.widget
-
   namespace 'uploadcare.widget.adapters', (ns) ->
     class ns.FileAdapter extends ns.BaseAdapter
       @registerAs 'file'
@@ -16,9 +14,9 @@ uploadcare.whenReady ->
         @__setupFileButton()
         $(@widget).on 'uploadcare.widget.cancel', => @__setupFileButton()
 
-        dropArea = @tab.find('@uploadcare-dialog-drop-file')
-        dragdrop.receiveDrop(@widget.upload, dropArea)
-        dropArea.on 'uploadcare.drop', => @widget.dialog.close()
+        @tab.find('@uploadcare-dialog-drop-file')
+          .receiveDrop(@widget.upload)
+          .on 'uploadcare.drop', => @widget.dialog.close()
 
       __setupFileButton: ->
         fileButton = @tab.find('@uploadcare-dialog-browse-file')
