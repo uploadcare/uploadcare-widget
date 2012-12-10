@@ -129,24 +129,22 @@ $dragndrop-text-color: #707478;
 .uploadcare-widget {
   .uploadcare-widget-dragndrop-area {
     display: none;
-  }
+    position: absolute;
+    $padding: 8px;
+    $height: $padding * 2 + $widget-height;
+    top: -$padding;
+    left: 0;
+    width: 100%;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+    background-color: $dragndrop-background-color;
+    color: $dragndrop-text-color;
+    border: 1px dashed $dragndrop-border-color;
+    border-radius: $widget-height / 2 + $padding;
 
-  &.uploadcare-widget-state-dragover {
-    .uploadcare-widget-dragndrop-area {
+    &.uploadcare-dragging {
       display: block;
-      position: absolute;
-      $padding: 8px;
-      $height: $padding * 2 + $widget-height;
-      top: -$padding;
-      left: 0;
-      width: 100%;
-      height: $height;
-      line-height: $height;
-      text-align: center;
-      background-color: $dragndrop-background-color;
-      color: $dragndrop-text-color;
-      border: 1px dashed $dragndrop-border-color;
-      border-radius: $widget-height / 2 + $padding;
     }
   }
 }

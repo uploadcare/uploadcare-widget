@@ -4,6 +4,7 @@
 # = require ./files/event-file
 # = require ./files/url-file
 
+# = require ./dragdrop
 # = require ./template
 # = require ./dialog
 
@@ -77,6 +78,7 @@ uploadcare.whenReady ->
 
       __reset: =>
         @__resetUpload()
+        @__setupFileButton()
         @available = true
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
@@ -96,9 +98,9 @@ uploadcare.whenReady ->
         for adapter in tabs # FIXME
           @adapters[adapter] = new registered[adapter](this)
 
-        # Add the file browse button
-        fileButton = @template.addButton('file')
-        utils.fileInput(fileButton, (e) => @upload('event', e))
+        # Initialize the file browse button
+        @fileButton = @template.addButton('file')
+        @__setupFileButton()
 
         # Add the dialog button if dialog is used
         if @dialog
@@ -106,11 +108,17 @@ uploadcare.whenReady ->
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @dialog.open()
 
+        # Enable drag and drop
+        ns.dragdrop.receiveDrop(@upload, @template.dropArea)
+
+      __setupFileButton: ->
+        utils.fileInput(@fileButton, (e) => @upload('event', e))
+
       fileTypes =
         event: ns.files.EventFile
         url: ns.files.UrlFile
 
-      upload: (file, arg) ->
+      upload: (file, arg) =>
         # Allow two types of calls:
         #
         #     widget.upload(new ns.FooFile(arg))

@@ -4,7 +4,7 @@
 uploadcare.whenReady ->
   {
     namespace,
-    jQuery,
+    jQuery: $,
     utils
   } = uploadcare
 
@@ -13,7 +13,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
     class ns.Template
       constructor: (@element)->
-        @content = jQuery(JST['uploadcare/widget/templates/widget']())
+        @content = $(JST['uploadcare/widget/templates/widget']())
         @content.css('display', 'none')
         @element.after(@content)
         @status = new ns.Circle(@content.find('@uploadcare-widget-status'))
@@ -25,8 +25,11 @@ uploadcare.whenReady ->
         @cancelButton.text(t('buttons.cancel'))
         @removeButton.text(t('buttons.remove'))
 
-        @cancelButton.on 'click', => jQuery(this).trigger('uploadcare.widget.template.cancel')
-        @removeButton.on 'click', => jQuery(this).trigger('uploadcare.widget.template.remove')
+        @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
+        @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
+
+        @dropArea = @content.find('@uploadcare-widget-dragndrop-area')
+        ns.dragdrop.markOnDrag(@dropArea)
 
         @labels = []
 
@@ -44,7 +47,7 @@ uploadcare.whenReady ->
         @content.removeClass("uploadcare-widget-state-#{state}")
 
       addButton: (name) ->
-        li = jQuery('<li>').addClass("uploadcare-widget-buttons-#{name}")
+        li = $('<li>').addClass("uploadcare-widget-buttons-#{name}")
         @buttonsContainer.find('@uploadcare-widget-buttons-cancel').before(li)
         return li
 
