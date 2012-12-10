@@ -6,20 +6,19 @@ uploadcare.whenReady ->
 
   {t} = uploadcare.locale
 
-  namespace 'uploadcare.widget.adapters', (ns) ->
-    class ns.URLAdapter extends ns.BaseAdapter
-      @registerAs 'url'
+  namespace 'uploadcare.widget.tabs', (ns) ->
+    class ns.UrlTab
       constructor: (@widget) ->
-        super @widget
 
-        input = @tab.find('@uploadcare-dialog-url-input')
+      setContent: (@content) ->
+        input = @content.find('@uploadcare-dialog-url-input')
         input.on 'change keyup input', ->
           button.attr('disabled', not $(this).val())
 
-        button = @tab.find('@uploadcare-dialog-url-submit')
+        button = @content.find('@uploadcare-dialog-url-submit')
           .attr('disabled', true)
 
-        @tab.find('@uploadcare-dialog-url-form').on 'submit', =>
+        @content.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
           @widget.dialog.close()
           @widget.upload('url', url)

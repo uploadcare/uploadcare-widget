@@ -8,12 +8,9 @@
 # = require ./template
 # = require ./dialog
 
-# = require ./adapters/base-adapter
-# = require ./adapters/file-adapter
-# = require ./adapters/url-adapter
-# = require ./adapters/remote-adapter
-# = require ./adapters/facebook-adapter
-# = require ./adapters/instagram-adapter
+# = require ./tabs/file-tab
+# = require ./tabs/url-tab
+# = require ./tabs/remote-tab
 
 uploadcare.whenReady ->
   {
@@ -28,6 +25,7 @@ uploadcare.whenReady ->
       constructor: (@element) ->
         @settings = $.extend({}, uploadcare.defaults, @element.data())
         @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
+        @settings.socialBase = utils.normalizeUrl(@settings.socialBase)
 
         @template = new ns.Template(@element)
         $(@template).on(
@@ -87,26 +85,40 @@ uploadcare.whenReady ->
         @__reset()
         @setValue('')
 
-      __setupWidget: ->
-        registered = ns.adapters.registered
-        tabs = if @settings.tabs then @settings.tabs.split(' ') else []
-        @tabs = (tab for tab in tabs when registered.hasOwnProperty(tab))
+      __makeTab: (name) ->
+        switch name
+          when 'file' then new ns.tabs.FileTab(this)
+          when 'url' then new ns.tabs.UrlTab(this)
+          when 'facebook' then new ns.tabs.RemoteTab(this, 'facebook')
+          when 'instagram' then new ns.tabs.RemoteTab(this, 'instagram')
+          else false
 
-        # Initialize tab adapters
-        @dialog = ns.dialog.defaultDialog if @tabs.length > 0
-        @adapters = {}
-        for adapter in tabs # FIXME
-          @adapters[adapter] = new registered[adapter](this)
+      __setupWidget: ->
+        tabs = if @settings.tabs then @settings.tabs.split(' ') else []
+        @tabOrder = []
+        @tabs = {}
+        for tabName in tabs
+          tab = @__makeTab(tabName)
+          if tab
+            @tabOrder.push(tabName)
+            @tabs[tabName] = tab
 
         # Initialize the file browse button
         @fileButton = @template.addButton('file')
         @__setupFileButton()
 
-        # Add the dialog button if dialog is used
-        if @dialog
-          @dialog.switchTo(@tabs[0])
+        # Create the dialog and its button
+        if @tabOrder.length > 0
+          @dialog = ns.dialog.defaultDialog
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @dialog.open()
+
+          # Creat dialog tabs
+          for name, tab of @tabs
+            content = @dialog.addTab(name)
+            tab.setContent(content)
+          @dialog.switchTo(@tabOrder[0])
+
 
         # Enable drag and drop
         @template.dropArea

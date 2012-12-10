@@ -5,12 +5,11 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  namespace 'uploadcare.widget.adapters', (ns) ->
-    class ns.RemoteAdapter extends ns.BaseAdapter
-      @registerAs 'instagram'
+  namespace 'uploadcare.widget.tabs', (ns) ->
+    class ns.RemoteTab
       constructor: (@widget, @service) ->
-        super @widget
 
+      setContent: (@content) ->
         handler = (e, tabName) =>
           if tabName == @service
             @createIframe()
@@ -23,14 +22,14 @@ uploadcare.whenReady ->
           @windowId = utils.uuid()
           @createWatcher()
 
-          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}"
+          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}/"
           @iframe = $('<iframe>')
             .attr('src', src)
             .css
               width: '100%'
               height: '100%'
               border: 0
-            .appendTo(@tab)
+            .appendTo(@content)
 
       createWatcher: ->
         unless @watcher
