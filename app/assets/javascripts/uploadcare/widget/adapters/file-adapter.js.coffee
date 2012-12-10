@@ -17,7 +17,6 @@ uploadcare.whenReady ->
         $(@widget).on 'uploadcare.widget.cancel', => @__setupFileButton()
 
         dropArea = @tab.find('@uploadcare-dialog-drop-file')
-        dragdrop.markOnDrag(dropArea)
         dragdrop.receiveDrop(@widget.upload, dropArea)
         dropArea.on 'uploadcare.drop', => @widget.dialog.close()
 

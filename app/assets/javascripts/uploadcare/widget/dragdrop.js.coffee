@@ -20,7 +20,7 @@ uploadcare.whenReady ->
         .on 'drop', (e) ->
           e.stopPropagation() # Prevent redirect
           e.preventDefault()
-          dragMarker off
+          dragState off
           $(this).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
@@ -32,17 +32,17 @@ uploadcare.whenReady ->
               upload('url', url)
 
     dragArea = $()
-    ns.markOnDrag = noFileAPI or (el) -> dragArea = dragArea.add(el)
+    ns.watchDrag = noFileAPI or (el) -> dragArea = dragArea.add(el)
 
-    # Mark body with our class when dragging
+    # Trigger an event on watched elements when dragging
     active = false
-    $(window).on 'mouseenter dragend', => dragMarker off
-    $('body').on 'dragenter', (e) => dragMarker on
+    $(window).on 'mouseenter dragend', => dragState off
+    $('body').on 'dragenter', (e) => dragState on
     $('body').on 'dragleave', (e) =>
       return unless e.target == e.currentTarget
-      dragMarker off
+      dragState off
 
-    dragMarker = (newActive) ->
+    dragState = (newActive) ->
       if active != newActive
         active = newActive
-        dragArea.toggleClass('uploadcare-dragging', active)
+        $(dragArea).trigger('uploadcare.drag', active)

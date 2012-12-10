@@ -109,7 +109,12 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @dialog.open()
 
         # Enable drag and drop
-        ns.dragdrop.receiveDrop(@upload, @template.dropArea)
+        dropArea = @template.dropArea
+        ns.dragdrop.receiveDrop(@upload, dropArea)
+        ns.dragdrop.watchDrag(dropArea)
+        dropArea.on 'uploadcare.drag', (e, active) =>
+          unless active && @dialog.isVisible()
+            dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
         utils.fileInput(@fileButton, (e) => @upload('event', e))
