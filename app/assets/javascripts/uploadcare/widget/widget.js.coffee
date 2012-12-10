@@ -89,16 +89,16 @@ uploadcare.whenReady ->
         registered = ns.adapters.registered
         tabs = if @settings.tabs then @settings.tabs.split(' ') else []
         @tabs = (tab for tab in tabs when registered.hasOwnProperty(tab))
-        @buttons = ['file']
 
-        adapters = (tab for tab in @tabs)
-        adapters.push(btn) for btn in @buttons when btn not in adapters
-
-        # Initialize adapters for buttons and tabs
+        # Initialize tab adapters
         @dialog = ns.dialog.defaultDialog if @tabs.length > 0
         @adapters = {}
-        for adapter in adapters
+        for adapter in tabs # FIXME
           @adapters[adapter] = new registered[adapter](this)
+
+        # Add the file browse button
+        fileButton = @template.addButton('file')
+        utils.fileInput(fileButton, (e) => @upload('event', e))
 
         # Add the dialog button if dialog is used
         if @dialog

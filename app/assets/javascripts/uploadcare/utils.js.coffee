@@ -2,7 +2,12 @@
 # = require uploadcare/utils/pubsub
 
 uploadcare.whenReady ->
-  uploadcare.namespace 'uploadcare.utils', (ns) ->
+  {
+    namespace,
+    jQuery: $
+  } = uploadcare
+
+  namespace 'uploadcare.utils', (ns) ->
     ns.uuid = ->
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
         r = Math.random() * 16 | 0
@@ -20,3 +25,26 @@ uploadcare.whenReady ->
         text.slice(0, head) + '...' + text.slice(-tail)
       else
         text
+
+    ns.fileInput = (container, fn) ->
+      container.find('input:file').remove()
+      input = $('<input>')
+        .attr('type', 'file')
+        .on('change', fn)
+        .css(
+          opacity: 0
+          position: 'absolute'
+          top: 0
+          left: 0
+          width: '100%'
+          height: '100%'
+          cursor: 'pointer'
+          display: 'block'
+          fontSize: '2em'
+        )
+      container
+        .css(
+          position: 'relative'
+          overflow: 'hidden'
+        )
+        .append(input)

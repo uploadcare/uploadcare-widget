@@ -15,11 +15,6 @@ uploadcare.whenReady ->
       constructor: (@widget) ->
         name = @constructor.registeredName
 
-        @button = if name in @widget.buttons
-          @widget.template.addButton(name)
-        else
-          $()
-
         @tab = if name in @widget.tabs
           @widget.dialog.addTab(name)
         else
