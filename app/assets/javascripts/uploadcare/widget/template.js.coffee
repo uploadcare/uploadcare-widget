@@ -28,7 +28,7 @@ uploadcare.whenReady ->
         @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
         @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
 
-        @dropArea = @content.find('@uploadcare-widget-dragndrop-area')
+        @dropArea = @content.find('@uploadcare-drop-area')
 
         @labels = []
 
