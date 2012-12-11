@@ -1,9 +1,7 @@
 # = require ./uploaders/event-uploader
 # = require ./uploaders/url-uploader
 
-# = require ./files/event-file
-# = require ./files/url-file
-
+# = require ./files
 # = require ./dragdrop
 # = require ./template
 # = require ./dialog
