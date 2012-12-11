@@ -7,9 +7,7 @@ uploadcare.whenReady ->
         @targetUrl = "#{@settings.urlBase}/iframe/"
 
       upload: ->
-        @e.preventDefault() if @e.type == 'drop'
-
-        @__constructUuid()
+        @fileId = utils.uuid()
         if utils.abilities.canFileAPI()
           file = @e.originalEvent.dataTransfer.files[0] if @e.type == 'drop'
           file = @e.target.files[0] if @e.type == 'change'
@@ -21,9 +19,6 @@ uploadcare.whenReady ->
         @xhr.abort() if @xhr?
         @iframe.off('load error') if @iframe?
         @__cleanUp()
-
-      __constructUuid: ->
-        @fileId = utils.uuid()
 
       __uploadFile: (file) ->
         @fileSize = file.size

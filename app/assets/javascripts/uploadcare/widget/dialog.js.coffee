@@ -54,7 +54,7 @@ uploadcare.whenReady ->
             .end()
           .find('> div')
             .hide()
-            .filter("#uploadcare-dialog-tab-#{@currentTab}")
+            .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
 
         $(this).trigger('uploadcare.dialog.switchtab', [@currentTab])
@@ -68,10 +68,10 @@ uploadcare.whenReady ->
         panel = $('<div>')
           .hide()
           .addClass('uploadcare-dialog-tabs-panel')
-          .attr('id', "uploadcare-dialog-tab-#{name}")
+          .addClass("uploadcare-dialog-tabs-panel-#{name}")
           .appendTo(@content.find('.uploadcare-dialog-body'))
         tpl = "uploadcare/widget/templates/tab-#{name}"
-        panel.append(JST[tpl]()) if JST.hasOwnProperty(tpl)
+        panel.append(JST[tpl]()) if tpl of JST
         panel
 
     ns.defaultDialog = new ns.Dialog()
