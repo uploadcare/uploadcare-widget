@@ -94,7 +94,7 @@ $dragndrop-text-color: #707478;
     @include prefix(box-sizing, border-box);
     border-radius: 2px;
     background: $circle-background-color;
-    cursor: pointer;
+    cursor: default;
 
     $frame: -$height;
     &.uploadcare-widget-buttons-dialog,
@@ -394,7 +394,7 @@ $dialog-body-font-size-smaller: 14px;
       font-family: inherit;
       font-size: $dialog-body-font-size-smaller;
       color: $dialog-button-text-color;
-      cursor: pointer;
+      cursor: default;
 
       &:hover {
         background: $dialog-link-active-color;

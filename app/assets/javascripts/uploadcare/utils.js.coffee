@@ -37,7 +37,7 @@ uploadcare.whenReady ->
           left: 0
           width: '100%'
           height: '100%'
-          cursor: 'pointer'
+          cursor: 'default'
           display: 'block'
           fontSize: '2em'
         )
