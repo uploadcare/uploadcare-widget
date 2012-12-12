@@ -5,6 +5,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
+  {dialog, files} = uploadcare.widget
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.UrlTab
@@ -20,6 +21,5 @@ uploadcare.whenReady ->
 
         @content.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
-          @widget.dialog.close()
-          @widget.upload('url', url)
+          dialog.close(files.url(url))
           false

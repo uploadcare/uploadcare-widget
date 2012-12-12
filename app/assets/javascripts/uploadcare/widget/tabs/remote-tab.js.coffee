@@ -5,6 +5,8 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
+  {dialog, files} = uploadcare.widget
+
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.RemoteTab
       constructor: (@widget, @service) ->
@@ -14,8 +16,8 @@ uploadcare.whenReady ->
           if tabName == @service
             @createIframe()
 
-        $(@widget.dialog).on('uploadcare.dialog.open', handler)
-        $(@widget.dialog).on('uploadcare.dialog.switchtab', handler)
+        $(dialog.currentDialog).on('uploadcare.dialog.open', handler)
+        $(dialog.currentdialog).on('uploadcare.dialog.switchtab', handler)
 
       createIframe: ->
         unless @iframe
@@ -35,9 +37,8 @@ uploadcare.whenReady ->
         unless @watcher
           @watcher = new utils.pubsub.PubSub @widget, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
-            @widget.upload('url', state.url)
             @cleanup()
-            @widget.dialog.close()
+            dialog.close(files.url(state.url))
           )
           @watcher.watch()
 

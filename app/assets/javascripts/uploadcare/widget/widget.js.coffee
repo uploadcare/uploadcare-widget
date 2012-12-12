@@ -6,10 +6,6 @@
 # = require ./template
 # = require ./dialog
 
-# = require ./tabs/file-tab
-# = require ./tabs/url-tab
-# = require ./tabs/remote-tab
-
 uploadcare.whenReady ->
   {
     namespace,
@@ -83,45 +79,21 @@ uploadcare.whenReady ->
         @__reset()
         @setValue('')
 
-      __makeTab: (name) ->
-        switch name
-          when 'file' then new ns.tabs.FileTab(this)
-          when 'url' then new ns.tabs.UrlTab(this)
-          when 'facebook' then new ns.tabs.RemoteTab(this, 'facebook')
-          when 'instagram' then new ns.tabs.RemoteTab(this, 'instagram')
-          else false
-
       __setupWidget: ->
-        tabs = if @settings.tabs then @settings.tabs.split(' ') else []
-        @tabOrder = []
-        @tabs = {}
-        for tabName in tabs
-          tab = @__makeTab(tabName)
-          if tab
-            @tabOrder.push(tabName)
-            @tabs[tabName] = tab
-
         # Initialize the file browse button
         @fileButton = @template.addButton('file')
         @__setupFileButton()
 
         # Create the dialog and its button
-        if @tabOrder.length > 0
-          @dialog = ns.dialog.defaultDialog
+        @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
+        if @tabs.length > 0
           dialogButton = @template.addButton('dialog')
-          dialogButton.on 'click', => @dialog.open()
-
-          # Creat dialog tabs
-          for name, tab of @tabs
-            content = @dialog.addTab(name)
-            tab.setContent(content)
-          @dialog.switchTo(@tabOrder[0])
-
+          dialogButton.on 'click', => ns.dialog.open(this)
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@upload, @template.dropArea)
         @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
-          unless active && @dialog.isVisible()
+          unless active && ns.dialog.isVisible()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
