@@ -17,7 +17,7 @@ uploadcare.whenReady ->
             @createIframe()
 
         $(dialog.currentDialog).on('uploadcare.dialog.open', handler)
-        $(dialog.currentdialog).on('uploadcare.dialog.switchtab', handler)
+        $(dialog.currentDialog).on('uploadcare.dialog.switchtab', handler)
 
       createIframe: ->
         unless @iframe

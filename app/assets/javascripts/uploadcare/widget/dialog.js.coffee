@@ -49,6 +49,7 @@ uploadcare.whenReady ->
         $(window).on 'keydown', (e) ->
           closeCallback(e) if e.which == 27 # Escape
 
+      open: ->
         @tabs = {}
         @tabOrder = []
         for tabName in @widget.tabs when tabName not of @tabs
@@ -58,8 +59,6 @@ uploadcare.whenReady ->
             @tabOrder.push(tabName)
 
         @switchTo(@tabOrder[0]) if @tabOrder.length > 0
-
-      open: ->
         @content.fadeIn('fast')
         $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 
