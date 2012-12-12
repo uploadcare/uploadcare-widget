@@ -127,21 +127,17 @@ uploadcare.whenReady ->
       __setupFileButton: ->
         utils.fileInput(@fileButton, (e) => @upload('event', e))
 
-      fileTypes =
-        event: ns.files.EventFile
-        url: ns.files.UrlFile
-
-      upload: (file, arg) =>
+      upload: (file, args...) =>
         # Allow two types of calls:
         #
-        #     widget.upload(new ns.FooFile(arg))
-        #     widget.upload('foo', arg)
-        if arg?
-          file = new fileTypes[file](arg)
+        #     widget.upload(ns.files.foo(args...))
+        #     widget.upload('foo', args...)
+        if args.length > 0
+          file = ns.files[file](args...)
 
         # Proceed with upload
         @__resetUpload()
-        @uploader = file.uploader(@settings)
+        @uploader = file(@settings)
         $(@uploader)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
