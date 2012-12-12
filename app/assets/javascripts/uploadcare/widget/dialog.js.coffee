@@ -15,29 +15,17 @@ uploadcare.whenReady ->
 
   {t} = uploadcare.locale
 
-  namespace 'uploadcare.widget.dialog', (ns) ->
-    ns.open = (widget) ->
-      unless ns.currentDialog
-        ns.close()
-        ns.currentDialog = new Dialog(widget)
-        ns.currentDialog.open()
-
-    ns.close = (file) ->
-      if ns.currentDialog
-        ns.currentDialog.close()
-        ns.currentDialog.widget.upload(file) if file?
-        ns.currentDialog = null
-
-    ns.isVisible = -> ns.currentDialog?.isVisible()
-
-    class Dialog
+  namespace 'uploadcare.widget', (ns) ->
+    class ns.Dialog
       constructor: (@widget) ->
+
+      open: ->
         @content = $(JST['uploadcare/widget/templates/dialog']())
           .hide()
           .appendTo('body')
 
         closeCallback = (e) =>
-          ns.close() if @isVisible()
+          @widget.closeDialog()
           false
 
         @content.on 'click', (e) ->
@@ -50,22 +38,17 @@ uploadcare.whenReady ->
         $(window).on 'keydown', (e) ->
           closeCallback(e) if e.which == 27 # Escape
 
-      open: ->
         @tabs = {}
-        @tabOrder = []
         for tabName in @widget.tabs when tabName not of @tabs
           tab = @addTab(tabName)
-          if tab
-            @tabs[tabName] = tab
-            @tabOrder.push(tabName)
+          throw "No such tab: #{tabName}" unless tab
+          @tabs[tabName] = tab
 
-        @switchTo(@tabOrder[0]) if @tabOrder.length > 0
+        @switchTo(@widget.tabs[0])
         @content.fadeIn('fast')
         $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 
       close: -> @content.fadeOut('fast', -> $(this).off().remove())
-
-      isVisible: -> not @content.is(':hidden')
 
       switchTo: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')

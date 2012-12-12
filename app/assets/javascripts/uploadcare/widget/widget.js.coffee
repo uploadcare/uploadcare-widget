@@ -88,12 +88,12 @@ uploadcare.whenReady ->
         @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
         if @tabs.length > 0
           dialogButton = @template.addButton('dialog')
-          dialogButton.on 'click', => ns.dialog.open(this)
+          dialogButton.on 'click', => @openDialog()
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@upload, @template.dropArea)
         @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
-          unless active && ns.dialog.isVisible()
+          unless active && @dialog()?
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
@@ -131,6 +131,19 @@ uploadcare.whenReady ->
         if @uploader?
           @uploader.cancel()
           @uploader = null
+
+      currentDialog = null
+
+      dialog: -> currentDialog
+
+      openDialog: ->
+        @closeDialog()
+        currentDialog = new ns.Dialog(this)
+        currentDialog.open()
+
+      closeDialog: ->
+        currentDialog?.close()
+        currentDialog = null
 
     initialize
       name: 'widget'
