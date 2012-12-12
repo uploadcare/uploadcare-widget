@@ -17,9 +17,10 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.dialog', (ns) ->
     ns.open = (widget) ->
-      ns.close()
-      ns.currentDialog = new Dialog(widget)
-      ns.currentDialog.open()
+      unless ns.currentDialog
+        ns.close()
+        ns.currentDialog = new Dialog(widget)
+        ns.currentDialog.open()
 
     ns.close = (file) ->
       if ns.currentDialog
