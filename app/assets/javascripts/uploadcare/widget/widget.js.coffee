@@ -1,13 +1,10 @@
-# = require ./upload-manager
+# = require ./uploaders/event-uploader
+# = require ./uploaders/url-uploader
+
+# = require ./files
+# = require ./dragdrop
 # = require ./template
 # = require ./dialog
-
-# = require ./adapters/base-adapter
-# = require ./adapters/file-adapter
-# = require ./adapters/url-adapter
-# = require ./adapters/remote-adapter
-# = require ./adapters/facebook-adapter
-# = require ./adapters/instagram-adapter
 
 uploadcare.whenReady ->
   {
@@ -22,8 +19,8 @@ uploadcare.whenReady ->
       constructor: (@element) ->
         @settings = $.extend({}, uploadcare.defaults, @element.data())
         @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
+        @settings.socialBase = utils.normalizeUrl(@settings.socialBase)
 
-        @upload = new ns.UploadManager(this)
         @template = new ns.Template(@element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
@@ -72,7 +69,8 @@ uploadcare.whenReady ->
         @template.loaded()
 
       __reset: =>
-        @upload.cancel()
+        @__resetUpload()
+        @__setupFileButton()
         @available = true
         @template.ready()
         $(this).trigger('uploadcare.widget.cancel')
@@ -82,28 +80,37 @@ uploadcare.whenReady ->
         @setValue('')
 
       __setupWidget: ->
-        registered = ns.adapters.registered
-        tabs = if @settings.tabs then @settings.tabs.split(' ') else []
-        @tabs = (tab for tab in tabs when registered.hasOwnProperty(tab))
-        @buttons = ['file']
+        # Initialize the file browse button
+        @fileButton = @template.addButton('file')
+        @__setupFileButton()
 
-        adapters = (tab for tab in @tabs)
-        adapters.push(btn) for btn in @buttons when btn not in adapters
-
-        # Initialize adapters for buttons and tabs
-        @dialog = ns.dialog.defaultDialog if @tabs.length > 0
-        @adapters = {}
-        for adapter in adapters
-          @adapters[adapter] = new registered[adapter](this)
-
-        # Add the dialog button if dialog is used
-        if @dialog
-          @dialog.switchTo(@tabs[0])
+        # Create the dialog and its button
+        @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
+        if @tabs.length > 0
           dialogButton = @template.addButton('dialog')
-          dialogButton.on 'click', => @dialog.open()
+          dialogButton.on 'click', => @openDialog()
 
-      addUploader: (uploader) ->
-        $(uploader)
+        # Enable drag and drop
+        ns.dragdrop.receiveDrop(@upload, @template.dropArea)
+        @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
+          unless active && @dialog()?
+            @template.dropArea.toggleClass('uploadcare-dragging', active)
+
+      __setupFileButton: ->
+        utils.fileInput(@fileButton, (e) => @upload('event', e))
+
+      upload: (file, args...) =>
+        # Allow two types of calls:
+        #
+        #     widget.upload(ns.files.foo(args...))
+        #     widget.upload('foo', args...)
+        if args.length > 0
+          file = ns.files[file](args...)
+
+        # Proceed with upload
+        @__resetUpload()
+        @uploader = file(@settings)
+        $(@uploader)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
             @available = false
@@ -118,6 +125,25 @@ uploadcare.whenReady ->
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
+        @uploader.upload()
+
+      __resetUpload: ->
+        if @uploader?
+          @uploader.cancel()
+          @uploader = null
+
+      currentDialog = null
+
+      dialog: -> currentDialog
+
+      openDialog: ->
+        @closeDialog()
+        currentDialog = new ns.Dialog(this)
+        currentDialog.open()
+
+      closeDialog: ->
+        currentDialog?.close()
+        currentDialog = null
 
     initialize
       name: 'widget'

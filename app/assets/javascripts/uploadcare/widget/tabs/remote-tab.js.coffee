@@ -5,40 +5,39 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  namespace 'uploadcare.widget.adapters', (ns) ->
-    class ns.RemoteAdapter extends ns.BaseAdapter
-      @registerAs 'instagram'
+  namespace 'uploadcare.widget.tabs', (ns) ->
+    class ns.RemoteTab
       constructor: (@widget, @service) ->
-        super @widget
 
+      setContent: (@content) ->
         handler = (e, tabName) =>
           if tabName == @service
             @createIframe()
 
-        $(@widget.dialog).on('uploadcare.dialog.open', handler)
-        $(@widget.dialog).on('uploadcare.dialog.switchtab', handler)
+        $(@widget.dialog()).on('uploadcare.dialog.open', handler)
+        $(@widget.dialog()).on('uploadcare.dialog.switchtab', handler)
 
       createIframe: ->
         unless @iframe
           @windowId = utils.uuid()
           @createWatcher()
 
-          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}"
+          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}/"
           @iframe = $('<iframe>')
             .attr('src', src)
             .css
               width: '100%'
               height: '100%'
               border: 0
-            .appendTo(@tab)
+            .appendTo(@content)
 
       createWatcher: ->
         unless @watcher
           @watcher = new utils.pubsub.PubSub @widget, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
-            @widget.upload.fromUrl(state.url)
             @cleanup()
-            @widget.dialog.close()
+            @widget.closeDialog()
+            @widget.upload('url', state.url)
           )
           @watcher.watch()
 
