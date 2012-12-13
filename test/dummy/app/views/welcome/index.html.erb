@@ -17,8 +17,8 @@ window.onload = function() {
       var time = (new Date()).toLocaleTimeString();
       $('<li>').appendTo('#events').text(time + ' ' + text);
     };
-    ['ready', 'started', 'loaded', 'error'].forEach(function(event) {
-      var fullEvent = 'uploadcare.uploader.' + event;
+    ['ready', 'start', 'load', 'error'].forEach(function(event) {
+      var fullEvent = 'uploadcare-uploader' + event;
       $('@uploadcare-uploader').on(fullEvent, function() {
         log(fullEvent);
       });

@@ -9,5 +9,6 @@ uploadcare.whenReady ->
   }
 
 # lazy loaded function
-uploadcare.debug = (args...) -> uploadcare.jQuery(uploadcare).trigger('uploadcare.debug', [args])
+uploadcare.debug = (args...) ->
+  uploadcare.jQuery(uploadcare).trigger('uploadcare-debug', [args])
 

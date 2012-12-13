@@ -87,9 +87,9 @@ uploadcare.whenReady ->
         @iframe = null
         @iframeForm = null
 
-      __onError: => $(this).trigger('uploadcare.api.uploader.error')
-      __onStart: => $(this).trigger('uploadcare.api.uploader.start')
-      __onLoad: => $(this).trigger('uploadcare.api.uploader.load')
+      __onError: => $(this).trigger('uploadcare-uploaderror')
+      __onStart: => $(this).trigger('uploadcare-uploadstart')
+      __onLoad: => $(this).trigger('uploadcare-uploadload')
       __onProgress: (event) =>
         @loaded = event.loaded
-        $(this).trigger('uploadcare.api.uploader.progress')
+        $(this).trigger('uploadcare-uploadprogress')

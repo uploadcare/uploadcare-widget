@@ -25,8 +25,8 @@ uploadcare.whenReady ->
         @cancelButton.text(t('buttons.cancel'))
         @removeButton.text(t('buttons.remove'))
 
-        @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
-        @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
+        @cancelButton.on 'click', => $(this).trigger('uploadcare-cancel')
+        @removeButton.on 'click', => $(this).trigger('uploadcare-cancel')
 
         @dropArea = @content.find('@uploadcare-drop-area')
 
@@ -53,8 +53,8 @@ uploadcare.whenReady ->
       setStatus: (status) ->
         @content.attr('data-status', status)
         form = @element.closest('@uploadcare-upload-form')
-        form.trigger("uploadcare.uploader.#{status}")
-        @element.trigger("uploadcare.uploader.#{status}")
+        form.trigger("uploadcare-uploader#{status}")
+        @element.trigger("uploadcare-uploader#{status}")
 
       ready: ->
         @statusText.text(t('ready'))
@@ -63,7 +63,7 @@ uploadcare.whenReady ->
 
       loaded: ->
         @status.setValue(1)
-        @setStatus 'loaded'
+        @setStatus 'load'
 
       progress: (val, instant = false) ->
         @status.setValue(val, instant)
@@ -74,7 +74,7 @@ uploadcare.whenReady ->
 
       started: ->
         @statusText.text(t('uploading'))
-        @setStatus 'started'
+        @setStatus 'start'
 
       setFileInfo: (fileName, fileSize) ->
         fileSize = Math.ceil(fileSize/1024).toString()

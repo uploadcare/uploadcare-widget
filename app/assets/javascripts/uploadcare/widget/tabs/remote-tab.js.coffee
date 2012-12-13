@@ -14,8 +14,8 @@ uploadcare.whenReady ->
           if tabName == @service
             @createIframe()
 
-        $(@widget.dialog()).on('uploadcare.dialog.open', handler)
-        $(@widget.dialog()).on('uploadcare.dialog.switchtab', handler)
+        $(@widget.dialog()).on('uploadcare-dialogopen', handler)
+        $(@widget.dialog()).on('uploadcare-dialogswitchtab', handler)
 
       createIframe: ->
         unless @iframe
