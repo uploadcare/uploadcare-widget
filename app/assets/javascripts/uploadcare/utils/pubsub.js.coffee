@@ -1,16 +1,16 @@
 # = require uploadcare/utils/pusher
 
 # USAGE:
-# 
+#
 #     var w = new uploadcare.utils.pubsub.PubSub('window', '123');
 #     jQuery(w).on('some-state-name', function(status) { alert(status) })
 #
 #     # or all of them
 #     jQuery(w).on('state-changed', function(status) { alert(status) })
-# 
+#
 #     w.watch()
 #     w.stop() # don't forget, in the end :D
-# 
+#
 
 uploadcare.whenReady ->
   {jQuery, debug} = uploadcare
@@ -28,7 +28,7 @@ uploadcare.whenReady ->
       watch: ->
         @pusherw.watch()
         @pollw.watch()
-        jQuery(@pusherw).on 'uploadcare.watch-started', =>
+        jQuery(@pusherw).on 'uploadcare-watchstart', =>
           @pollw.stop()
 
       stop: ->
@@ -53,7 +53,6 @@ uploadcare.whenReady ->
         "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
 
       watch: ->
-        
         @channel = @pusher.subscribe(@_channelName())
 
         @channel.bind 'event', (data) => @ps._update jQuery.parseJSON(data)
@@ -61,7 +60,7 @@ uploadcare.whenReady ->
         # a little thingy to avoid polling
         onStarted = =>
           debug('wow, listening with pusher')
-          jQuery(this).trigger 'uploadcare.watch-started'
+          jQuery(this).trigger 'uploadcare-watchstart'
           @channel.unbind 'event', onStarted
         @channel.bind 'event', onStarted
 

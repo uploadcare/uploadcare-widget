@@ -20,7 +20,7 @@ uploadcare.whenReady ->
           e.stopPropagation() # Prevent redirect
           e.preventDefault()
           dragState off
-          $(this).trigger('uploadcare.drop')
+          $(this).trigger('uploadcare-drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
             upload('event', e)
@@ -42,4 +42,4 @@ uploadcare.whenReady ->
     dragState = (newActive) ->
       if active != newActive
         active = newActive
-        $('@uploadcare-drop-area').trigger('uploadcare.dragstatechange', active)
+        $('@uploadcare-drop-area').trigger('uploadcare-dragstatechange', active)

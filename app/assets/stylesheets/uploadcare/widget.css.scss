@@ -30,11 +30,11 @@ $dragndrop-text-color: #707478;
   vertical-align: middle;
   padding: 0 5px;
 
-  &[data-status=loaded], &[data-status=started] {
+  &[data-status=load], &[data-status=start] {
     .uploadcare-widget-buttons > li { display: none; }
   }
-  &[data-status=started] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
-  &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
+  &[data-status=start] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
+  &[data-status=load] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
     display: inline-block;
   }
 }

@@ -22,10 +22,7 @@ uploadcare.whenReady ->
         @settings.socialBase = utils.normalizeUrl(@settings.socialBase)
 
         @template = new ns.Template(@element)
-        $(@template).on(
-          'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
-          @__cancel
-        )
+        $(@template).on('uploadcare-cancel', @__cancel)
 
         @element.on('change', @__changed)
 
@@ -73,7 +70,7 @@ uploadcare.whenReady ->
         @__setupFileButton()
         @available = true
         @template.ready()
-        $(this).trigger('uploadcare.widget.cancel')
+        $(this).trigger('uploadcare-widgetcancel')
 
       __cancel: =>
         @__reset()
@@ -92,7 +89,7 @@ uploadcare.whenReady ->
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@upload, @template.dropArea)
-        @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
+        @template.dropArea.on 'uploadcare-dragstatechange', (e, active) =>
           unless active && @dialog()?
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
@@ -111,18 +108,18 @@ uploadcare.whenReady ->
         @__resetUpload()
         @uploader = file(@settings)
         $(@uploader)
-          .on('uploadcare.api.uploader.start', =>
+          .on('uploadcare-uploadstart', =>
             @template.started()
             @available = false
           )
-          .on('uploadcare.api.uploader.error', =>
+          .on('uploadcare-uploaderror', =>
             @template.error()
             @available = true
           )
-          .on('uploadcare.api.uploader.load', (e) =>
+          .on('uploadcare-uploadload', (e) =>
             @__setLoaded(false, e.target)
           )
-          .on('uploadcare.api.uploader.progress', (e) =>
+          .on('uploadcare-uploadprogress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
         @uploader.upload()

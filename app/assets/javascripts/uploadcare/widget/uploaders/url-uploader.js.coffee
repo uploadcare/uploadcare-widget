@@ -27,7 +27,7 @@ uploadcare.whenReady ->
 
           @pollWatcher.watch @token
           @pusherWatcher.watch @token
-          jQuery(@pusherWatcher).on 'uploadcare.watch-started', => @pollWatcher.stopWatching()
+          jQuery(@pusherWatcher).on 'uploadcare.watchstart', => @pollWatcher.stopWatching()
 
         .fail (e) =>
           @_state('error')
@@ -42,13 +42,13 @@ uploadcare.whenReady ->
         (
           start: =>
             @_shutdown = false
-            jQuery(this).trigger('uploadcare.api.uploader.start')
+            jQuery(this).trigger('uploadcare-uploadstart')
 
           progress: (data) =>
             return if @_shutdown
 
             [@loaded, @fileSize] = [data.done, data.total]
-            jQuery(this).trigger('uploadcare.api.uploader.progress')
+            jQuery(this).trigger('uploadcare-uploadprogress')
 
           success: (data) =>
             return if @_shutdown
@@ -58,13 +58,13 @@ uploadcare.whenReady ->
             @_shutdown = true
 
             [@fileName, @fileId] = [data.original_filename, data.file_id]
-            jQuery(this).trigger('uploadcare.api.uploader.load')
+            jQuery(this).trigger('uploadcare-uploadload')
 
             @_cleanup()
 
           error: =>
             @_shutdown = true
-            jQuery(this).trigger('uploadcare.api.uploader.error')
+            jQuery(this).trigger('uploadcare-uploaderror')
 
             @_cleanup()
         )[state](data)
@@ -83,7 +83,7 @@ uploadcare.whenReady ->
         @channel = @pusher.subscribe("task-status-#{@token}")
 
         onStarted = =>
-          jQuery(this).trigger 'uploadcare.watch-started'
+          jQuery(this).trigger 'uploadcare-watchstart'
           @channel.unbind ev, onStarted for ev in ['progress', 'success']
 
         for ev in ['progress', 'success']
