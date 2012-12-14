@@ -22,7 +22,7 @@ uploadcare.whenReady ->
           @windowId = utils.uuid()
           @createWatcher()
 
-          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}/"
+          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}"
           @iframe = $('<iframe>')
             .attr('src', src)
             .css
