@@ -7,7 +7,3 @@ uploadcare.whenReady ->
     tabs: window.UPLOADCARE_TABS or 'url file facebook instagram'
     pusherKey: window.UPLOADCARE_PUSHER_KEY or '79ae88bd931ea68464d9'
   }
-
-# lazy loaded function
-uploadcare.debug = (args...) -> uploadcare.jQuery(uploadcare).trigger('uploadcare.debug', [args])
-
