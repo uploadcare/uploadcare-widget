@@ -26,3 +26,14 @@ with [Bundler](http://gembundler.com/).
 * `bundle exec rake js:release:build` to build assets
   to the **pkg/version** folder (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
+
+
+## Development
+
+Clone the repository, and go to `test/dummy/`. There is a simple Rails site. Run it:
+
+    bundle install
+    bundle update
+    bundle exec rails server
+    
+Open http://0.0.0.0:3000/ . Follow any link. There's going to be a widget or three. Edit code and reload page :-)
