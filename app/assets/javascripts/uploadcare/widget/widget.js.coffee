@@ -1,7 +1,4 @@
-# = require ./uploaders/event-uploader
-# = require ./uploaders/url-uploader
-
-# = require ./files
+# = require ../files
 # = require ./dragdrop
 # = require ./template
 # = require ./dialog
@@ -11,6 +8,7 @@ uploadcare.whenReady ->
     namespace,
     initialize,
     utils,
+    files,
     jQuery: $
   } = uploadcare
 
@@ -103,7 +101,7 @@ uploadcare.whenReady ->
         #     widget.upload('foo', args...)
         @__resetUpload()
 
-        @uploader = ns.toUploader(@settings, args...)
+        @uploader = files.toFile(@settings, args...)
 
         $(@uploader)
           .on('uploadcare.api.uploader.start', =>

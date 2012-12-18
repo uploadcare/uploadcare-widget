@@ -4,8 +4,8 @@ uploadcare.whenReady ->
   {namespace, jQuery, utils, debug} = uploadcare
   {pusher} = uploadcare.utils
 
-  namespace 'uploadcare.widget.uploaders', (ns) ->
-    class ns.UrlUploader
+  namespace 'uploadcare.files', (ns) ->
+    class ns.UrlFile
       constructor: (@settings, @url) ->
         @__shutdown = true
 

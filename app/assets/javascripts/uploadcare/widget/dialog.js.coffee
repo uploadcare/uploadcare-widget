@@ -11,6 +11,7 @@ uploadcare.whenReady ->
   {
     namespace,
     utils,
+    files,
     jQuery: $
   } = uploadcare
 
@@ -28,7 +29,7 @@ uploadcare.whenReady ->
           @__createDialog()
 
           @always @__closeDialog
-        .pipe((args...) -> ns.toUploader(settings, args...))
+        .pipe((args...) -> files.toFile(settings, args...))
         .promise()
 
 
