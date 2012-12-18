@@ -8,7 +8,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.UrlTab
-      constructor: (@selectedCb) ->
+      constructor: (@callback) ->
 
       setContent: (@content) ->
         input = @content.find('@uploadcare-dialog-url-input')
@@ -20,6 +20,6 @@ uploadcare.whenReady ->
 
         @content.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
-          @selectedCb('url', url)
+          @callback('url', url)
 
           false
