@@ -7,7 +7,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.RemoteTab
-      constructor: (@dialog, @widget, @service, @callback) ->
+      constructor: (@dialog, @settings, @service, @callback) ->
 
       setContent: (@content) ->
         handler = (e, tabName) =>
@@ -22,7 +22,7 @@ uploadcare.whenReady ->
           @windowId = utils.uuid()
           @createWatcher()
 
-          src = "#{@widget.settings.socialBase}/window/#{@windowId}/#{@service}"
+          src = "#{@settings.socialBase}/window/#{@windowId}/#{@service}"
           @iframe = $('<iframe>')
             .attr('src', src)
             .css
@@ -33,7 +33,7 @@ uploadcare.whenReady ->
 
       createWatcher: ->
         unless @watcher
-          @watcher = new utils.pubsub.PubSub @widget.settings, 'window', @windowId
+          @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
             @cleanup()
             @callback('url', state.url)
