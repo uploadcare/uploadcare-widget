@@ -118,7 +118,7 @@ uploadcare.whenReady ->
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
-        @uploader.upload()
+        @uploader.upload(@settings)
 
       __resetUpload: ->
         if @uploader?

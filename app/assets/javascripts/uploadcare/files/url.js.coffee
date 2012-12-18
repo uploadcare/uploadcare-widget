@@ -9,17 +9,17 @@ uploadcare.whenReady ->
       constructor: (@settings, @url) ->
         @__shutdown = true
 
-      upload: ->
+      upload: (settings) ->
         return unless @url?
 
         @uploading = true
-        @pollWatcher = new PollWatcher(this)
-        @pusherWatcher = new PusherWatcher(this)
+        @pollWatcher = new PollWatcher(this, settings)
+        @pusherWatcher = new PusherWatcher(this, settings)
 
         @__state('start')
 
-        @xhr = jQuery.ajax("#{@settings.urlBase}/from_url/",
-          data: {pub_key: @settings.publicKey, source_url: @url}
+        @xhr = jQuery.ajax("#{settings.urlBase}/from_url/",
+          data: {pub_key: settings.publicKey, source_url: @url}
           dataType: 'jsonp'
 
         ).done (data) =>
@@ -75,8 +75,8 @@ uploadcare.whenReady ->
         @pollWatcher.stopWatching()
 
     class PusherWatcher
-      constructor: (@uploader) ->
-        @pusher = pusher.getPusher(@uploader.settings.pusherKey, 'url-upload')
+      constructor: (@uploader, @settings) ->
+        @pusher = pusher.getPusher(@settings.pusherKey, 'url-upload')
 
       watch: (@token) ->
         debug('started url watching with pusher')
@@ -98,7 +98,7 @@ uploadcare.whenReady ->
         @pusher = null
 
     class PollWatcher
-      constructor: (@uploader) ->
+      constructor: (@uploader, @settings) ->
 
       watch: (@token) ->
         @interval = setInterval(
@@ -115,7 +115,7 @@ uploadcare.whenReady ->
         @uploader.__state 'error', data
 
       __checkStatus: (callback) ->
-        jQuery.ajax "#{@uploader.settings.urlBase}/status/",
+        jQuery.ajax "#{@settings.urlBase}/status/",
           data: {'token': @token}
           dataType: 'jsonp'
         .fail =>
