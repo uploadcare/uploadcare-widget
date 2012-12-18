@@ -15,9 +15,12 @@ uploadcare.whenReady ->
         file = files.toFile(args...)
 
         uploadDef = $.Deferred ->
+
           $(file).on 'uploadcare.api.uploader.load', (e) ->
             uploadDef.resolve(@fileId)
 
           file.upload(@settings)
+
+        uploadDef.promise()
 
 

@@ -23,8 +23,10 @@
         myButton.click(function() {
             uploadcare.widget.showDialog().pipe(function(file) {
                 return uploader.upload(file);
+            }).fail(function(error){
+                alert(['error', error])
             }).done(function(file_id) {
-                alert(file_id);
+                alert(['file_id', file_id]);
             });
         });
     });
