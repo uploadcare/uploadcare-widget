@@ -17,7 +17,8 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Dialog
-      constructor: (@widget) ->
+      constructor: (@widget, @tabNames) ->
+        
 
       open: ->
         @content = $(JST['uploadcare/widget/templates/dialog']())
@@ -39,12 +40,12 @@ uploadcare.whenReady ->
           closeCallback(e) if e.which == 27 # Escape
 
         @tabs = {}
-        for tabName in @widget.tabs when tabName not of @tabs
+        for tabName in @tabNames when tabName not of @tabs
           tab = @addTab(tabName)
           throw "No such tab: #{tabName}" unless tab
           @tabs[tabName] = tab
 
-        @switchTo(@widget.tabs[0])
+        @switchTo(@tabNames[0])
         @content.fadeIn('fast')
         $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 

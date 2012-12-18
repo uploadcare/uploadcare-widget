@@ -1,0 +1,23 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<pre>
+    var myButton = $('#some-button');
+    myButton.click(function() {
+        uploadcare.showDialog(function(file_id) {
+           console.log('selected', file_id);
+        });
+    });
+</pre>
+
+<script>
+    $(function() {
+        var myButton = $('#some-button');
+        myButton.click(function() {
+            uploadcare.showDialog(function(file_id) {
+               console.log('selected', file_id);
+            });
+        });
+    });
+</script>
+
+<button id="some-button">hey</button>

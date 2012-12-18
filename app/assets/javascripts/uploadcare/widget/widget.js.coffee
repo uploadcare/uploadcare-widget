@@ -138,7 +138,7 @@ uploadcare.whenReady ->
 
       openDialog: ->
         @closeDialog()
-        currentDialog = new ns.Dialog(this)
+        currentDialog = new ns.Dialog(this, this.tabs)
         currentDialog.open()
 
       closeDialog: ->
