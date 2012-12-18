@@ -39,16 +39,15 @@ uploadcare.whenReady ->
           @reject() if e.target == e.currentTarget
 
         closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', @reject.bind(this)
+        closeButton.on 'click', => @reject()
 
         $(window).on 'keydown', (e) =>
           @reject() if e.which == 27 # Escape
 
         @tabs = {}
         for tabName in @settings.tabs when tabName not of @tabs
-          tab = @_addTab(tabName)
-          throw "No such tab: #{tabName}" unless tab
-          @tabs[tabName] = tab
+          @tabs[tabName] = @_addTab(tabName)
+          throw "No such tab: #{tabName}" unless @tabs[tabName]
 
         @_switchTab(@settings.tabs[0])
         @content.fadeIn('fast')
@@ -69,7 +68,7 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls this, @settings, @resolve.bind(this)
+        tab = new tabCls this, @settings, => @resolve()
 
         if tab
           $('<li>')
