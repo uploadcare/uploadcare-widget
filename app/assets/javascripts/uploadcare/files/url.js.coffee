@@ -10,6 +10,8 @@ uploadcare.whenReady ->
         @__shutdown = true
 
       upload: (settings) ->
+        settings = utils.buildSettings settings
+
         return unless @url?
 
         @uploading = true

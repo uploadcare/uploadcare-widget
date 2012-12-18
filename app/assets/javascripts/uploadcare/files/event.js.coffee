@@ -6,6 +6,8 @@ uploadcare.whenReady ->
       constructor: (@e) ->
 
       upload: (settings) ->
+        settings = utils.buildSettings settings
+
         targetUrl = "#{settings.urlBase}/iframe/"
 
         @fileId = utils.uuid()
