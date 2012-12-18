@@ -16,6 +16,7 @@ uploadcare.whenReady ->
     class ns.Widget
       constructor: (@element) ->
         @settings = utils.buildSettings @element.data()
+        @uploader = new uploadcare.uploader.Uploader(@settings)
 
         @template = new ns.Template(@element)
         $(@template).on(
@@ -55,13 +56,13 @@ uploadcare.whenReady ->
         else
           @__reset()
 
-      __setLoaded: (instant, data) ->
-        unless data.fileName? && data.fileSize?
-          @setValue data.fileId, false
+      __setLoaded: (instant, uploadedFile) ->
+        unless uploadedFile.fileName? && uploadedFile.fileSize?
+          @setValue uploadedFile.fileId, false
           return
         @template.progress(1.0, instant)
-        @template.setFileInfo(data.fileName, data.fileSize)
-        @setValue(data.fileId)
+        @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
+        @setValue(uploadedFile.fileId)
         @template.loaded()
 
       __reset: =>
@@ -101,29 +102,24 @@ uploadcare.whenReady ->
         #     widget.upload('foo', args...)
         @__resetUpload()
 
-        @currentFile = files.toFile(args...)
+        @template.started()
+        @available = false
 
-        $(@currentFile)
-          .on('uploadcare.api.uploader.start', =>
-            @template.started()
-            @available = false
-          )
-          .on('uploadcare.api.uploader.error', =>
+        @currentUpload = @uploader.upload(args...)
+        @currentUpload
+          .progress (done, total) =>
+            @template.progress(done / total)
+
+          .fail (error) =>
             @template.error()
             @available = true
-          )
-          .on('uploadcare.api.uploader.load', (e) =>
-            @__setLoaded(false, e.target)
-          )
-          .on('uploadcare.api.uploader.progress', (e) =>
-            @template.progress(e.target.loaded / e.target.fileSize)
-          )
-        @currentFile.upload(@settings)
+
+          .done (uploadedFile) =>
+            @__setLoaded(false, uploadedFile)
 
       __resetUpload: ->
-        if @uploader?
-          @uploader.cancel()
-          @uploader = null
+        @currentUpload?.reject()
+        @currentUpload = null
 
       currentDialog = null
 
