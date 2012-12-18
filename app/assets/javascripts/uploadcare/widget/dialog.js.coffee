@@ -26,6 +26,7 @@ uploadcare.whenReady ->
         @_createDialog()
 
         @always @_closeDialog
+       .pipe((args...) -> ns.toUploader(settings, args...))
        .promise()
           
 
