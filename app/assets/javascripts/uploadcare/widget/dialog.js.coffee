@@ -69,10 +69,10 @@ uploadcare.whenReady ->
       addTab: (name) ->
         {tabs} = uploadcare.widget
         tab = switch name
-          when 'file' then new tabs.FileTab(@widget)
-          when 'url' then new tabs.UrlTab(@widget)
-          when 'facebook' then new tabs.RemoteTab(@widget, 'facebook')
-          when 'instagram' then new tabs.RemoteTab(@widget, 'instagram')
+          when 'file' then new tabs.FileTab(this, @widget)
+          when 'url' then new tabs.UrlTab(this, @widget)
+          when 'facebook' then new tabs.RemoteTab(this, @widget, 'facebook')
+          when 'instagram' then new tabs.RemoteTab(this, @widget, 'instagram')
           else false
         if tab
           $('<li>')

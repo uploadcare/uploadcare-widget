@@ -7,7 +7,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.RemoteTab
-      constructor: (@widget, @service) ->
+      constructor: (@dialog, @widget, @service) ->
 
       setContent: (@content) ->
         handler = (e, tabName) =>
