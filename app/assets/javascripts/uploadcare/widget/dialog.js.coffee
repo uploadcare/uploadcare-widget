@@ -26,6 +26,7 @@ uploadcare.whenReady ->
         @_createDialog()
 
         @always @_closeDialog
+       .promise()
           
 
     dialogUiMixin =
