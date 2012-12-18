@@ -18,11 +18,11 @@ uploadcare.whenReady ->
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
     class ns.PubSub
-      constructor: (@widget, @channel, @topic) ->
+      constructor: (@settings, @channel, @topic) ->
         @pollUrlConstructor = (channel, topic) ->
-          "#{@widget.settings.socialBase}/pubsub/status/#{@channel}/#{@topic}"
+          "#{@settings.socialBase}/pubsub/status/#{@channel}/#{@topic}"
 
-        @pusherw = new PusherWatcher(this, @widget.settings.pusherKey)
+        @pusherw = new PusherWatcher(this, @settings.pusherKey)
         @pollw = new PollWatcher(this)
 
       watch: ->

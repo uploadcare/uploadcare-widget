@@ -33,7 +33,7 @@ uploadcare.whenReady ->
 
       createWatcher: ->
         unless @watcher
-          @watcher = new utils.pubsub.PubSub @widget, 'window', @windowId
+          @watcher = new utils.pubsub.PubSub @widget.settings, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
             @cleanup()
             @widget.closeDialog()
