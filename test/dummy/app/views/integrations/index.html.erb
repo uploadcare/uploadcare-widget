@@ -14,7 +14,13 @@
         var myButton = $('#some-button');
         myButton.click(function() {
             uploadcare.widget.showDialog().done(function(uploader) {
-                debugger;
+
+                uploadcare.jQuery(uploader).on('uploadcare.api.uploader.load', function() {
+                    alert(this.fileId);
+                });
+                uploader.upload();
+
+
             });
         });
     });

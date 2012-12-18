@@ -18,10 +18,12 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     ns.showDialog = (settings = {}) ->
+      settings = utils.buildSettings settings
+      
       $.Deferred ->
         $.extend this, dialogUiMixin
 
-        @settings = utils.buildSettings settings
+        @settings = settings
 
         @_createDialog()
 
