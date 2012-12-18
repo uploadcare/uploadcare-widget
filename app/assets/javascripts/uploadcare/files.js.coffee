@@ -12,8 +12,8 @@ uploadcare.whenReady ->
     # may be:
     # toFile(settings, uploader)
     # toFile(settings, type, args...)
-    ns.toFile = (settings, file, args...) ->
+    ns.toFile = (file, args...) ->
       return file if args.length == 0
 
-      new ns.files[file](settings, args...)
+      new ns.files[file](args...)
 

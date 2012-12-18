@@ -101,9 +101,9 @@ uploadcare.whenReady ->
         #     widget.upload('foo', args...)
         @__resetUpload()
 
-        @uploader = files.toFile(@settings, args...)
+        @currentFile = files.toFile(args...)
 
-        $(@uploader)
+        $(@currentFile)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
             @available = false
@@ -118,7 +118,7 @@ uploadcare.whenReady ->
           .on('uploadcare.api.uploader.progress', (e) =>
             @template.progress(e.target.loaded / e.target.fileSize)
           )
-        @uploader.upload(@settings)
+        @currentFile.upload(@settings)
 
       __resetUpload: ->
         if @uploader?

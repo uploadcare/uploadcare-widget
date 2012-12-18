@@ -6,7 +6,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.files', (ns) ->
     class ns.UrlFile
-      constructor: (@settings, @url) ->
+      constructor: (@url) ->
         @__shutdown = true
 
       upload: (settings) ->
