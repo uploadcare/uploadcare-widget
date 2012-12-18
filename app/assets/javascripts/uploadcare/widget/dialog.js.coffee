@@ -19,7 +19,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
-      
+
       $.Deferred ->
         $.extend this, dialogUiMixin
 
@@ -69,8 +69,8 @@ uploadcare.whenReady ->
         tabCls = switch name
           when 'file' then tabs.FileTab
           when 'url' then tabs.UrlTab
-          when 'facebook' then tabs.RemoteTab('facebook')
-          when 'instagram' then tabs.RemoteTab('instagram')
+          when 'facebook' then tabs.RemoteTabFor 'facebook'
+          when 'instagram' then tabs.RemoteTabFor 'instagram'
 
         return false if not tabCls
 

@@ -6,7 +6,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.widget.tabs', (ns) ->
-    ns.RemoteTab = (service) ->
+    ns.RemoteTabFor = (service) ->
       class RemoteTab
         constructor: (@dialog, @settings, @callback) ->
 
