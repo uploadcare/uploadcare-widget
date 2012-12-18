@@ -17,9 +17,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
     class ns.Widget
       constructor: (@element) ->
-        @settings = $.extend({}, uploadcare.defaults, @element.data())
-        @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
-        @settings.socialBase = utils.normalizeUrl(@settings.socialBase)
+        @settings = utils.buildSettings @element.data()
 
         @template = new ns.Template(@element)
         $(@template).on(
@@ -85,8 +83,7 @@ uploadcare.whenReady ->
         @__setupFileButton()
 
         # Create the dialog and its button
-        @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
-        if @tabs.length > 0
+        if @settings.tabs.length > 0
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @openDialog()
 
@@ -99,17 +96,15 @@ uploadcare.whenReady ->
       __setupFileButton: ->
         utils.fileInput(@fileButton, (e) => @upload('event', e))
 
-      upload: (file, args...) =>
+      upload: (args...) =>
         # Allow two types of calls:
         #
         #     widget.upload(ns.files.foo(args...))
         #     widget.upload('foo', args...)
-        if args.length > 0
-          file = ns.files[file](args...)
-
-        # Proceed with upload
         @__resetUpload()
-        @uploader = file(@settings)
+
+        @uploader = ns.toUploader(@settings, args...)
+
         $(@uploader)
           .on('uploadcare.api.uploader.start', =>
             @template.started()
@@ -138,12 +133,13 @@ uploadcare.whenReady ->
 
       openDialog: ->
         @closeDialog()
-        currentDialog = new ns.Dialog(this)
-        currentDialog.open()
+        currentDialog = ns.showDialog(@settings)
+          .done(@upload)
+          .always( -> currentDialog = null)
+
 
       closeDialog: ->
         currentDialog?.close()
-        currentDialog = null
 
     initialize
       name: 'widget'
