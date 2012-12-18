@@ -45,16 +45,20 @@ uploadcare.whenReady ->
         $(window).on 'keydown', (e) =>
           @reject() if e.which == 27 # Escape
 
+        @_prepareTabs()
+
+        @content.fadeIn('fast')
+
+      _closeDialog: ->
+        @content.fadeOut 'fast', => @content.off().remove()
+
+      _prepareTabs: ->
         @tabs = {}
         for tabName in @settings.tabs when tabName not of @tabs
           @tabs[tabName] = @_addTab(tabName)
           throw "No such tab: #{tabName}" unless @tabs[tabName]
 
         @_switchTab(@settings.tabs[0])
-        @content.fadeIn('fast')
-
-      _closeDialog: ->
-        @content.fadeOut 'fast', => @content.off().remove()
 
       _addTab: (name) ->
         {tabs} = uploadcare.widget
@@ -64,7 +68,6 @@ uploadcare.whenReady ->
           when 'url' then tabs.UrlTab
           when 'facebook' then tabs.RemoteTab('facebook')
           when 'instagram' then tabs.RemoteTab('instagram')
-          else false
 
         return false if not tabCls
 
