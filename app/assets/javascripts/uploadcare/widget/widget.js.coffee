@@ -135,12 +135,10 @@ uploadcare.whenReady ->
 
       openDialog: ->
         @closeDialog()
-        currentDialog = ns.showDialog(@settings).done @upload.bind(this)
+        currentDialog = ns.showDialog(@settings)
+          .done(@upload)
+          .always( -> currentDialog = null)
 
-        $(currentDialog).on 'uploadcare.dialog.close', ->
-          currentDialog = null
-
-        # currentDialog.open()
 
       closeDialog: ->
         currentDialog?.close()
