@@ -1,17 +1,17 @@
 {namespace} = uploadcare
 
 namespace 'uploadcare', (ns) ->
-  ns._readyCallbacks = []
+  ns.__readyCallbacks = []
 
   isReady = false
   ns.ready = ->
     isReady = true
-    callback() for callback in ns._readyCallbacks
+    callback() for callback in ns.__readyCallbacks
   ns.whenReady = (callback) ->
     if isReady
       callback()
     else
-      ns._readyCallbacks.push(callback)
+      ns.__readyCallbacks.push(callback)
 
   ns.initialize = (options) ->
     {jQuery} = uploadcare

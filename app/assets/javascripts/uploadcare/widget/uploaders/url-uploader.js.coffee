@@ -7,7 +7,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget.uploaders', (ns) ->
     class ns.UrlUploader
       constructor: (@settings, @url) ->
-        @_shutdown = true
+        @__shutdown = true
 
       upload: ->
         return unless @url?
@@ -16,7 +16,7 @@ uploadcare.whenReady ->
         @pollWatcher = new PollWatcher(this)
         @pusherWatcher = new PusherWatcher(this)
 
-        @_state('start')
+        @__state('start')
 
         @xhr = jQuery.ajax("#{@settings.urlBase}/from_url/",
           data: {pub_key: @settings.publicKey, source_url: @url}
@@ -30,46 +30,46 @@ uploadcare.whenReady ->
           jQuery(@pusherWatcher).on 'uploadcare.watch-started', => @pollWatcher.stopWatching()
 
         .fail (e) =>
-          @_state('error')
+          @__state('error')
 
       cancel: ->
         if @uploading
-          @_shutdown = true
-          @_cleanup()
+          @__shutdown = true
+          @__cleanup()
 
       ####### Four States of uploader
-      _state: (state, data) ->
+      __state: (state, data) ->
         (
           start: =>
-            @_shutdown = false
+            @__shutdown = false
             jQuery(this).trigger('uploadcare.api.uploader.start')
 
           progress: (data) =>
-            return if @_shutdown
+            return if @__shutdown
 
             [@loaded, @fileSize] = [data.done, data.total]
             jQuery(this).trigger('uploadcare.api.uploader.progress')
 
           success: (data) =>
-            return if @_shutdown
+            return if @__shutdown
 
-            @_state('progress', data)
+            @__state('progress', data)
 
-            @_shutdown = true
+            @__shutdown = true
 
             [@fileName, @fileId] = [data.original_filename, data.file_id]
             jQuery(this).trigger('uploadcare.api.uploader.load')
 
-            @_cleanup()
+            @__cleanup()
 
           error: =>
-            @_shutdown = true
+            @__shutdown = true
             jQuery(this).trigger('uploadcare.api.uploader.error')
 
-            @_cleanup()
+            @__cleanup()
         )[state](data)
 
-      _cleanup: ->
+      __cleanup: ->
         @uploading = false
         @pusherWatcher.stopWatching()
         @pollWatcher.stopWatching()
@@ -89,9 +89,9 @@ uploadcare.whenReady ->
         for ev in ['progress', 'success']
           do (ev) =>
             @channel.bind ev, onStarted
-            @channel.bind ev, (data) => @uploader._state ev, data
+            @channel.bind ev, (data) => @uploader.__state ev, data
 
-        @channel.bind 'fail', (data) => @uploader._state('error')
+        @channel.bind 'fail', (data) => @uploader.__state('error')
 
       stopWatching: ->
         @pusher.release() if @pusher
@@ -102,23 +102,23 @@ uploadcare.whenReady ->
 
       watch: (@token) ->
         @interval = setInterval(
-          => @_checkStatus (data) =>
-            @uploader._state data.status, data if data.status in ['progress', 'success', 'error']
+          => @__checkStatus (data) =>
+            @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
         250)
 
       stopWatching: ->
         clearInterval @interval if @interval
         @interval = null
 
-      _error: ->
+      __error: ->
         @stopWatching()
-        @uploader._state 'error', data
+        @uploader.__state 'error', data
 
-      _checkStatus: (callback) ->
+      __checkStatus: (callback) ->
         jQuery.ajax "#{@uploader.settings.urlBase}/status/",
           data: {'token': @token}
           dataType: 'jsonp'
         .fail =>
-          @_error()
+          @__error()
 
         .done callback
