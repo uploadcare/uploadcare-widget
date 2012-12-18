@@ -16,6 +16,9 @@ uploadcare.whenReady ->
             if tab == service
               @createIframe()
 
+          @dialog.fail =>
+            @cleanup()
+
 
         createIframe: ->
           unless @iframe
@@ -41,7 +44,7 @@ uploadcare.whenReady ->
             @watcher.watch()
 
         cleanup: ->
-          @watcher.stop()
+          @watcher?.stop()
           @watcher = null
-          @iframe.remove()
+          @iframe?.remove()
           @iframe = null
