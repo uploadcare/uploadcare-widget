@@ -17,9 +17,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
     class ns.Widget
       constructor: (@element) ->
-        @settings = $.extend({}, uploadcare.defaults, @element.data())
-        @settings.urlBase = utils.normalizeUrl(@settings.urlBase)
-        @settings.socialBase = utils.normalizeUrl(@settings.socialBase)
+        @settings = utils.buildSettings @element.data()
 
         @template = new ns.Template(@element)
         $(@template).on(

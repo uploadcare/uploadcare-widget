@@ -10,6 +10,7 @@
 uploadcare.whenReady ->
   {
     namespace,
+    utils,
     jQuery: $
   } = uploadcare
 
@@ -17,8 +18,8 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Dialog
-      constructor: (@settings, @tabNames, @callback) ->
-        
+      constructor: (settings, @tabNames, @callback) ->
+        @settings = utils.buildSettings settings
 
       open: ->
         @content = $(JST['uploadcare/widget/templates/dialog']())
