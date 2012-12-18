@@ -18,6 +18,19 @@ uploadcare.whenReady ->
       url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
       url.replace(/\/+$/, '')
 
+    ns.buildSettings = (settings) ->
+      settings = $.extend({}, uploadcare.defaults, settings)
+
+      settings.urlBase = ns.normalizeUrl(settings.urlBase)
+      settings.socialBase = ns.normalizeUrl(settings.socialBase)
+
+      if $.type(settings.tabs) == "string"
+        settings.tabs = settings.tabs.split(' ')
+      
+      settings.tabs = settings.tabs or []
+
+      settings
+
     ns.fitText = (text, max = 16) ->
       if text.length > max
         head = Math.ceil((max - 3) / 2)

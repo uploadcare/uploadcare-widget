@@ -10,47 +10,89 @@
 uploadcare.whenReady ->
   {
     namespace,
+    utils,
     jQuery: $
   } = uploadcare
 
   {t} = uploadcare.locale
 
   namespace 'uploadcare.widget', (ns) ->
-    class ns.Dialog
-      constructor: (@widget) ->
+    ns.showDialog = (settings = {}) ->
+      settings = utils.buildSettings settings
 
-      open: ->
+      $ .Deferred ->
+          $.extend this, dialogUiMixin
+
+          @settings = settings
+
+          @__createDialog()
+
+          @always @__closeDialog
+        .pipe((args...) -> ns.toUploader(settings, args...))
+        .promise()
+
+
+    dialogUiMixin =
+      __createDialog: ->
         @content = $(JST['uploadcare/widget/templates/dialog']())
           .hide()
           .appendTo('body')
 
-        closeCallback = (e) =>
-          @widget.closeDialog()
-          false
-
-        @content.on 'click', (e) ->
+        @content.on 'click', (e) =>
           e.stopPropagation()
-          closeCallback(e) if e.target == e.currentTarget
+          @reject() if e.target == e.currentTarget
 
         closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', closeCallback
+        closeButton.on 'click', => @reject()
 
-        $(window).on 'keydown', (e) ->
-          closeCallback(e) if e.which == 27 # Escape
+        $(window).on 'keydown', (e) =>
+          @reject() if e.which == 27 # Escape
 
-        @tabs = {}
-        for tabName in @widget.tabs when tabName not of @tabs
-          tab = @addTab(tabName)
-          throw "No such tab: #{tabName}" unless tab
-          @tabs[tabName] = tab
+        @__prepareTabs()
 
-        @switchTo(@widget.tabs[0])
         @content.fadeIn('fast')
-        $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 
-      close: -> @content.fadeOut('fast', -> $(this).off().remove())
+      __closeDialog: ->
+        @content.fadeOut 'fast', => @content.off().remove()
 
-      switchTo: (@currentTab) ->
+      __prepareTabs: ->
+        @tabs = {}
+        for tabName in @settings.tabs when tabName not of @tabs
+          @tabs[tabName] = @__addTab(tabName)
+          throw "No such tab: #{tabName}" unless @tabs[tabName]
+
+        @__switchTab(@settings.tabs[0])
+
+      __addTab: (name) ->
+        {tabs} = uploadcare.widget
+
+        tabCls = switch name
+          when 'file' then tabs.FileTab
+          when 'url' then tabs.UrlTab
+          when 'facebook' then tabs.RemoteTabFor 'facebook'
+          when 'instagram' then tabs.RemoteTabFor 'instagram'
+
+        return false if not tabCls
+
+        tab = new tabCls this, @settings, => @resolve.apply(this, arguments)
+
+        if tab
+          $('<li>')
+            .addClass("uploadcare-dialog-tab-#{name}")
+            .attr('title', t("tabs.#{name}"))
+            .on('click', => @__switchTab(name))
+            .appendTo(@content.find('.uploadcare-dialog-tabs'))
+          panel = $('<div>')
+            .hide()
+            .addClass('uploadcare-dialog-tabs-panel')
+            .addClass("uploadcare-dialog-tabs-panel-#{name}")
+            .appendTo(@content.find('.uploadcare-dialog-body'))
+          tpl = "uploadcare/widget/templates/tab-#{name}"
+          panel.append(JST[tpl]()) if tpl of JST
+          tab.setContent(panel)
+        tab
+
+      __switchTab: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
@@ -63,28 +105,4 @@ uploadcare.whenReady ->
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
 
-        $(this).trigger('uploadcare.dialog.switchtab', @currentTab)
-
-      addTab: (name) ->
-        {tabs} = uploadcare.widget
-        tab = switch name
-          when 'file' then new tabs.FileTab(@widget)
-          when 'url' then new tabs.UrlTab(@widget)
-          when 'facebook' then new tabs.RemoteTab(@widget, 'facebook')
-          when 'instagram' then new tabs.RemoteTab(@widget, 'instagram')
-          else false
-        if tab
-          $('<li>')
-            .addClass("uploadcare-dialog-tab-#{name}")
-            .attr('title', t("tabs.#{name}"))
-            .on('click', => @switchTo(name))
-            .appendTo(@content.find('.uploadcare-dialog-tabs'))
-          panel = $('<div>')
-            .hide()
-            .addClass('uploadcare-dialog-tabs-panel')
-            .addClass("uploadcare-dialog-tabs-panel-#{name}")
-            .appendTo(@content.find('.uploadcare-dialog-body'))
-          tpl = "uploadcare/widget/templates/tab-#{name}"
-          panel.append(JST[tpl]()) if tpl of JST
-          tab.setContent(panel)
-        tab
+        @notify @currentTab
