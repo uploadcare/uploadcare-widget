@@ -139,11 +139,14 @@ uploadcare.whenReady ->
       openDialog: ->
         @closeDialog()
         currentDialog = new ns.Dialog(this, this.tabs)
+
+        $(currentDialog).on 'uploadcare.dialog.close', ->
+          currentDialog = null
+
         currentDialog.open()
 
       closeDialog: ->
         currentDialog?.close()
-        currentDialog = null
 
     initialize
       name: 'widget'

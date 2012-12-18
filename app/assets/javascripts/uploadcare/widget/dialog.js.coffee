@@ -25,9 +25,7 @@ uploadcare.whenReady ->
           .hide()
           .appendTo('body')
 
-        closeCallback = (e) =>
-          @widget.closeDialog()
-          false
+        closeCallback = => @close()
 
         @content.on 'click', (e) ->
           e.stopPropagation()
@@ -49,7 +47,9 @@ uploadcare.whenReady ->
         @content.fadeIn('fast')
         $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 
-      close: -> @content.fadeOut('fast', -> $(this).off().remove())
+      close: ->
+        @content.fadeOut('fast', -> $(this).off().remove())
+        $(this).trigger('uploadcare.dialog.close')
 
       switchTo: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
