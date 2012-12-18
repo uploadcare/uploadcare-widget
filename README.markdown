@@ -1,6 +1,10 @@
 This is the [Uploadcare](http://uploadcare.com) widget source.
 It can also be used as an ordinary Rails plugin.
 
+## Embedding
+
+Try reading our [embedding docs](https://github.com/uploadcare/uploadcare-widget/blob/master/EMBEDDING.markdown).
+
 ## Rails Plugin
 
 Add `uploadcare-widget` to your Gemfile in the `assets` section
