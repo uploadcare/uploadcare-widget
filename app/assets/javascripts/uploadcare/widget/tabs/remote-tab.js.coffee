@@ -11,12 +11,11 @@ uploadcare.whenReady ->
         constructor: (@dialog, @settings, @callback) ->
 
         setContent: (@content) ->
-          handler = (e, tabName) =>
-            if tabName == service
+
+          @dialog.progress (tab) =>
+            if tab == service
               @createIframe()
 
-          $(@dialog).on('uploadcare.dialog.open', handler)
-          $(@dialog).on('uploadcare.dialog.switchtab', handler)
 
         createIframe: ->
           unless @iframe

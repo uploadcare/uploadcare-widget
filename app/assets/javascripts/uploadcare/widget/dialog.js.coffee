@@ -51,10 +51,9 @@ uploadcare.whenReady ->
 
         @_switchTab(@settings.tabs[0])
         @content.fadeIn('fast')
-        $(this).trigger('uploadcare.dialog.open', @currentTab or '')
 
       _closeDialog: ->
-        @content.fadeOut 'fast', => $content.off().remove()
+        @content.fadeOut 'fast', => @content.off().remove()
 
       _addTab: (name) ->
         {tabs} = uploadcare.widget
@@ -68,7 +67,7 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls this, @settings, => @resolve()
+        tab = new tabCls this, @settings, => @resolve.apply(this, arguments)
 
         if tab
           $('<li>')
@@ -99,7 +98,7 @@ uploadcare.whenReady ->
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
 
-        $(this).trigger('uploadcare.dialog.switchtab', @currentTab)
+        @notify @currentTab
 
     
 
