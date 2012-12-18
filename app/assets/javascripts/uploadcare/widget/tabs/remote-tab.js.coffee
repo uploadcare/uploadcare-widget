@@ -6,42 +6,43 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.widget.tabs', (ns) ->
-    class ns.RemoteTab
-      constructor: (@dialog, @settings, @service, @callback) ->
+    ns.RemoteTab = (service) ->
+      class RemoteTab
+        constructor: (@dialog, @settings, @callback) ->
 
-      setContent: (@content) ->
-        handler = (e, tabName) =>
-          if tabName == @service
-            @createIframe()
+        setContent: (@content) ->
+          handler = (e, tabName) =>
+            if tabName == service
+              @createIframe()
 
-        $(@dialog).on('uploadcare.dialog.open', handler)
-        $(@dialog).on('uploadcare.dialog.switchtab', handler)
+          $(@dialog).on('uploadcare.dialog.open', handler)
+          $(@dialog).on('uploadcare.dialog.switchtab', handler)
 
-      createIframe: ->
-        unless @iframe
-          @windowId = utils.uuid()
-          @createWatcher()
+        createIframe: ->
+          unless @iframe
+            @windowId = utils.uuid()
+            @createWatcher()
 
-          src = "#{@settings.socialBase}/window/#{@windowId}/#{@service}"
-          @iframe = $('<iframe>')
-            .attr('src', src)
-            .css
-              width: '100%'
-              height: '100%'
-              border: 0
-            .appendTo(@content)
+            src = "#{@settings.socialBase}/window/#{@windowId}/#{service}"
+            @iframe = $('<iframe>')
+              .attr('src', src)
+              .css
+                width: '100%'
+                height: '100%'
+                border: 0
+              .appendTo(@content)
 
-      createWatcher: ->
-        unless @watcher
-          @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
-          $(@watcher).on('done', (e, state) =>
-            @cleanup()
-            @callback('url', state.url)
-          )
-          @watcher.watch()
+        createWatcher: ->
+          unless @watcher
+            @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
+            $(@watcher).on('done', (e, state) =>
+              @cleanup()
+              @callback('url', state.url)
+            )
+            @watcher.watch()
 
-      cleanup: ->
-        @watcher.stop()
-        @watcher = null
-        @iframe.remove()
-        @iframe = null
+        cleanup: ->
+          @watcher.stop()
+          @watcher = null
+          @iframe.remove()
+          @iframe = null

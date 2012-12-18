@@ -9,7 +9,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.FileTab
-      constructor: (@settings, @callback) ->
+      constructor: (@dialog, @settings, @callback) ->
 
       setContent: (@content) ->
         @__setupFileButton()

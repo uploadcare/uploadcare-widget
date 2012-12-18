@@ -8,7 +8,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.UrlTab
-      constructor: (@settings, @callback) ->
+      constructor: (@dialog, @settings, @callback) ->
 
       setContent: (@content) ->
         input = @content.find('@uploadcare-dialog-url-input')

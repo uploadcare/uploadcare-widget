@@ -74,13 +74,18 @@ uploadcare.whenReady ->
         {tabs} = uploadcare.widget
 
         selectedFileCallback = @fileSelected.bind(this)
-
-        tab = switch name
-          when 'file' then new tabs.FileTab @widget.settings, selectedFileCallback
-          when 'url' then new tabs.UrlTab @widget.settings, selectedFileCallback
-          when 'facebook' then new tabs.RemoteTab(this, @widget.settings, 'facebook', selectedFileCallback)
-          when 'instagram' then new tabs.RemoteTab(this, @widget.settings, 'instagram', selectedFileCallback)
+        
+        tabCls = switch name
+          when 'file' then tabs.FileTab
+          when 'url' then tabs.UrlTab
+          when 'facebook' then tabs.RemoteTab('facebook')
+          when 'instagram' then tabs.RemoteTab('instagram')
           else false
+
+        return false if not tabCls
+
+        tab = new tabCls(this, @widget.settings, selectedFileCallback)
+
         if tab
           $('<li>')
             .addClass("uploadcare-dialog-tab-#{name}")
