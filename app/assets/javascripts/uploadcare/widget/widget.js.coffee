@@ -83,8 +83,7 @@ uploadcare.whenReady ->
         @__setupFileButton()
 
         # Create the dialog and its button
-        @tabs = if @settings.tabs then @settings.tabs.split(' ') else []
-        if @tabs.length > 0
+        if @settings.tabs.length > 0
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @openDialog()
 
@@ -136,7 +135,7 @@ uploadcare.whenReady ->
 
       openDialog: ->
         @closeDialog()
-        currentDialog = new ns.Dialog(@settings, @tabs, @upload.bind(this))
+        currentDialog = new ns.Dialog(@settings, @upload.bind(this))
 
         $(currentDialog).on 'uploadcare.dialog.close', ->
           currentDialog = null
