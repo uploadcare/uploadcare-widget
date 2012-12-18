@@ -3,8 +3,14 @@
 <pre>
     var myButton = $('#some-button');
     myButton.click(function() {
-        uploadcare.showDialog(function(file_id) {
-           console.log('selected', file_id);
+        uploadcare.widget.showDialog().done(function(uploader) {
+
+            uploadcare.jQuery(uploader).on('uploadcare.api.uploader.load', function() {
+                alert(this.fileId);
+            });
+            uploader.upload();
+
+
         });
     });
 </pre>
