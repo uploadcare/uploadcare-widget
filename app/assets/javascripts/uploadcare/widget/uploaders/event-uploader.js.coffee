@@ -37,6 +37,7 @@ uploadcare.whenReady ->
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'loadstart', @__onStart
         @xhr.addEventListener 'load', @__onLoad
+        @xhr.addEventListener 'loadend', => @__onError() unless @xhr.status
         @xhr.upload.addEventListener 'progress', @__onProgress
         @xhr.send formData
 
