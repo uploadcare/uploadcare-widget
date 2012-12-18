@@ -24,6 +24,10 @@ uploadcare.whenReady ->
         @fileSize = file.size
         @fileName = file.name
 
+        if @fileSize > (100*1024*1024)
+          @__fail()
+          return
+
         formData = new FormData()
         formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
@@ -37,7 +41,7 @@ uploadcare.whenReady ->
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'loadstart', @__onStart
         @xhr.addEventListener 'load', @__onLoad
-        @xhr.addEventListener 'loadend', => @__onError() unless @xhr.status
+        @xhr.addEventListener 'loadend', => @__fail() unless @xhr.status
         @xhr.upload.addEventListener 'progress', @__onProgress
         @xhr.send formData
 
@@ -87,6 +91,8 @@ uploadcare.whenReady ->
         @xhr = null
         @iframe = null
         @iframeForm = null
+
+      __fail: -> @__onError()
 
       __onError: => $(this).trigger('uploadcare.api.uploader.error')
       __onStart: => $(this).trigger('uploadcare.api.uploader.start')
