@@ -16,8 +16,11 @@ uploadcare.whenReady ->
 
         uploadDef = $.Deferred ->
 
-          $(file).on 'uploadcare.api.uploader.load', (e) ->
-            uploadDef.resolve(@fileId)
+          $(file)
+            .on 'uploadcare.api.uploader.load', (e) ->
+              uploadDef.resolve(@fileId)
+            .on 'uploadcare.api.uploader.error', (e) ->
+              uploadDef.reject()
 
           file.upload(@settings)
 
