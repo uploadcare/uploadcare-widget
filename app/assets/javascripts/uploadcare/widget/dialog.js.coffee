@@ -17,7 +17,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Dialog
-      constructor: (@widget, @tabNames) ->
+      constructor: (@settings, @tabNames, @callback) ->
         
 
       open: ->
@@ -67,7 +67,7 @@ uploadcare.whenReady ->
         $(this).trigger('uploadcare.dialog.switchtab', @currentTab)
 
       fileSelected: (args...) ->
-        @widget.upload(args...)
+        @callback(args...)
         @close()
 
       addTab: (name) ->
@@ -84,7 +84,7 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls(this, @widget.settings, selectedFileCallback)
+        tab = new tabCls(this, @settings, selectedFileCallback)
 
         if tab
           $('<li>')
