@@ -22,15 +22,15 @@ uploadcare.whenReady ->
 
       $ .Deferred ->
           $.extend this, dialogUiMixin
-  
+
           @settings = settings
-  
+
           @_createDialog()
-  
+
           @always @_closeDialog
         .pipe((args...) -> ns.toUploader(settings, args...))
         .promise()
-          
+
 
     dialogUiMixin =
       _createDialog: ->
@@ -106,7 +106,3 @@ uploadcare.whenReady ->
               .show()
 
         @notify @currentTab
-
-    
-
-      
