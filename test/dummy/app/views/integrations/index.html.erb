@@ -13,8 +13,8 @@
     $(function() {
         var myButton = $('#some-button');
         myButton.click(function() {
-            uploadcare.showDialog(function(file_id) {
-               console.log('selected', file_id);
+            uploadcare.widget.showDialog().done(function(uploader) {
+                debugger;
             });
         });
     });

@@ -17,7 +17,7 @@ uploadcare.whenReady ->
   {t} = uploadcare.locale
 
   namespace 'uploadcare.widget', (ns) ->
-    ns.showDialog = (settings) ->
+    ns.showDialog = (settings = {}) ->
       $.Deferred ->
         $.extend this, dialogUiMixin
 
