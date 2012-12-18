@@ -26,17 +26,15 @@ uploadcare.whenReady ->
           .hide()
           .appendTo('body')
 
-        closeCallback = => @close()
-
-        @content.on 'click', (e) ->
+        @content.on 'click', (e) =>
           e.stopPropagation()
-          closeCallback(e) if e.target == e.currentTarget
+          @close() if e.target == e.currentTarget
 
         closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', closeCallback
+        closeButton.on 'click', @close.bind(this)
 
-        $(window).on 'keydown', (e) ->
-          closeCallback(e) if e.which == 27 # Escape
+        $(window).on 'keydown', (e) =>
+          @close(e) if e.which == 27 # Escape
 
         @tabs = {}
         for tabName in @tabNames when tabName not of @tabs
@@ -74,8 +72,6 @@ uploadcare.whenReady ->
       addTab: (name) ->
         {tabs} = uploadcare.widget
 
-        selectedFileCallback = @fileSelected.bind(this)
-        
         tabCls = switch name
           when 'file' then tabs.FileTab
           when 'url' then tabs.UrlTab
@@ -85,7 +81,7 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls(this, @settings, selectedFileCallback)
+        tab = new tabCls this, @settings, @fileSelected.bind(this)
 
         if tab
           $('<li>')
