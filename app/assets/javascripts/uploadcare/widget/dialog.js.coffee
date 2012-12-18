@@ -66,11 +66,15 @@ uploadcare.whenReady ->
 
         $(this).trigger('uploadcare.dialog.switchtab', @currentTab)
 
+      fileSelected: (args...) ->
+        @widget.upload(args...)
+        @close()
+
       addTab: (name) ->
         {tabs} = uploadcare.widget
         tab = switch name
           when 'file' then new tabs.FileTab(this, @widget)
-          when 'url' then new tabs.UrlTab(this, @widget)
+          when 'url' then new tabs.UrlTab (args...) => @fileSelected(args...)
           when 'facebook' then new tabs.RemoteTab(this, @widget, 'facebook')
           when 'instagram' then new tabs.RemoteTab(this, @widget, 'instagram')
           else false
