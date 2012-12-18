@@ -20,16 +20,16 @@ uploadcare.whenReady ->
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
 
-      $.Deferred ->
-        $.extend this, dialogUiMixin
-
-        @settings = settings
-
-        @_createDialog()
-
-        @always @_closeDialog
-       .pipe((args...) -> ns.toUploader(settings, args...))
-       .promise()
+      $ .Deferred ->
+          $.extend this, dialogUiMixin
+  
+          @settings = settings
+  
+          @_createDialog()
+  
+          @always @_closeDialog
+        .pipe((args...) -> ns.toUploader(settings, args...))
+        .promise()
           
 
     dialogUiMixin =
