@@ -7,15 +7,15 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.RemoteTab
-      constructor: (@dialog, @widget, @service) ->
+      constructor: (@dialog, @widget, @service, @callback) ->
 
       setContent: (@content) ->
         handler = (e, tabName) =>
           if tabName == @service
             @createIframe()
 
-        $(@widget.dialog()).on('uploadcare.dialog.open', handler)
-        $(@widget.dialog()).on('uploadcare.dialog.switchtab', handler)
+        $(@dialog).on('uploadcare.dialog.open', handler)
+        $(@dialog).on('uploadcare.dialog.switchtab', handler)
 
       createIframe: ->
         unless @iframe
@@ -36,8 +36,7 @@ uploadcare.whenReady ->
           @watcher = new utils.pubsub.PubSub @widget.settings, 'window', @windowId
           $(@watcher).on('done', (e, state) =>
             @cleanup()
-            @widget.closeDialog()
-            @widget.upload('url', state.url)
+            @callback('url', state.url)
           )
           @watcher.watch()
 
