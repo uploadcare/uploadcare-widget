@@ -20,30 +20,34 @@ uploadcare.whenReady ->
         @path = @raphael.path()
         @path.attr(segment: 0, stroke: false)
         @fullDelay = 500 # ms
-        @update(0, true)
+        @__update(0, true)
 
         @observed = null
 
       listen: (uploadDeferred) ->
-        if @observed
-          @stopListening()
+        @reset()
 
         uploadDeferred = uploadDeferred.promise()
 
         @observed = uploadDeferred
 
-        @observed.progress (progress) =>
-          console.log progress
-          # if we are still listening to this one
-          if uploadDeferred == @observed
-            console.log 'YES'
-            @update progress.value
+        @observed
+          .progress (progress) =>
+            console.log progress
+            # if we are still listening to this one
+            if uploadDeferred == @observed
+              console.log 'YES'
+              @__update progress.value
 
+          .done (uploadedFile) =>
+            if uploadDeferred == @observed
+              @__update 1, false
 
-      stopListening: ->
+      reset: ->
         @observed = null
+        @__update 0, true
 
-      update: (val, instant = false) -> # val in [0..1]
+      __update: (val, instant = false) -> # val in [0..1]
         val = 1 if val > 1
         delay = @fullDelay * Math.abs(val - @value)
         @value = val
@@ -53,7 +57,7 @@ uploadcare.whenReady ->
         else do (value = @value) =>
           @path.animate {segment: @__segmentVal(value)}, delay, 'linear', =>
             # Revert value to current if changed during animation
-            @update(@value, true) if @value != value
+            @__update(@value, true) if @value != value
 
       __segmentVal: (value) ->
         # Supposed to be = 360 * value,

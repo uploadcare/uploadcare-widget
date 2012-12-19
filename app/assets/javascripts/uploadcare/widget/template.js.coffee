@@ -60,16 +60,14 @@ uploadcare.whenReady ->
 
       ready: ->
         @statusText.text(t('ready'))
-        @circle.update(0, true)
+        @circle.reset()
         @setStatus 'ready'
 
       loaded: ->
-        @circle.update(1)
         @setStatus 'loaded'
 
       listen: (uploadDeferred) ->
         @circle.listen uploadDeferred
-
 
       error: ->
         @statusText.text(t('error'))

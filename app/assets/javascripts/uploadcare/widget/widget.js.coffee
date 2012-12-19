@@ -114,10 +114,7 @@ uploadcare.whenReady ->
             @available = true
 
           .done (uploadedFile) =>
-            @template.circle.update(1.0, false)
             @__setLoaded(false, uploadedFile)
-
-
 
       __resetUpload: ->
         @currentUpload?.reject()
