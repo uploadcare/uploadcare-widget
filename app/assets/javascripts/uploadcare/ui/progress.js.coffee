@@ -7,7 +7,7 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  namespace 'uploadcare.progress', (ns) ->
+  namespace 'uploadcare.ui.progress', (ns) ->
     class ns.Circle
       constructor: (@element) ->
         # should work with other jqueries

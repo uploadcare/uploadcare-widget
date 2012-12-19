@@ -1,12 +1,12 @@
 # = require ./templates/widget
-# = require uploadcare/progress
+# = require uploadcare/ui/progress
 
 uploadcare.whenReady ->
   {
     namespace,
     jQuery: $,
     utils,
-    progress
+    ui: {progress},
   } = uploadcare
 
   {t} = uploadcare.locale
