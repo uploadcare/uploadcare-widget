@@ -10,8 +10,8 @@ uploadcare.whenReady ->
         targetUrl = "#{settings.urlBase}/iframe/"
 
         @fileId = utils.uuid()
-        @fileSize = file.size
-        @fileName = file.name
+        @fileSize = @file.size
+        @fileName = @file.name
 
         if @fileSize > (100*1024*1024)
           @__fail()

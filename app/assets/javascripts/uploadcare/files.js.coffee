@@ -3,15 +3,20 @@
 # = require ./files/url
 
 uploadcare.whenReady ->
-  {utils} = uploadcare
-  uploadcare.namespace 'uploadcare.files', (ns) ->
+  {
+    namespace,
+    utils,
+    jQuery: $
+  } = uploadcare
+
+  namespace 'uploadcare.files', (ns) ->
     ns.toFile = (fileable) ->
       if utils.abilities.canFileAPI() && fileable.target?
         fromEvent(fileable)
       else if fileable.target?
         new ns.InputFile(fileable.target)
       else if $.type(fileable) == 'string'
-        fromUriList(filable)
+        fromUriList(fileable)
       else
         fileable # Must already be a file
 
@@ -26,7 +31,7 @@ uploadcare.whenReady ->
       urls = uris.split('\n')
       fromArray(new ns.UrlFile(url) for url in urls)
 
-    formArray = (array) ->
+    fromArray = (array) ->
       if array.length > 1
         new ns.CompositeFile(array)
       else
