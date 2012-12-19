@@ -29,7 +29,7 @@ uploadcare.whenReady ->
           @__createDialog()
 
           @always @__closeDialog
-        .pipe(files.toFile, () -> 'dialog was closed')
+        .pipe(files.toFile, -> 'dialog was closed')
         .promise()
 
 
