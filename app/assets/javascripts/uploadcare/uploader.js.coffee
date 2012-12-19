@@ -11,7 +11,9 @@ uploadcare.whenReady ->
     class UploadedFile
       constructor: (@fileId, @fileName, @fileSize) ->
 
-
+    class UploadProgress
+      constructor: (@loaded, @total) ->
+        @value = @loaded / @total
 
     class ns.Uploader
       constructor: (@settings) ->
@@ -32,11 +34,8 @@ uploadcare.whenReady ->
               @reject()
 
             .on 'uploadcare.api.uploader.progress', (e) =>
-              @notify(e.target.loaded, e.target.fileSize)
-
+              @notify new UploadProgress(e.target.loaded, e.target.fileSize)
 
           file.upload(@settings)
 
-        uploadDef #.promise()
-
-
+        uploadDef

@@ -107,8 +107,8 @@ uploadcare.whenReady ->
 
         @currentUpload = @uploader.upload(args...)
         @currentUpload
-          .progress (done, total) =>
-            @template.progress(done / total)
+          .progress (progress) =>
+            @template.progress progress.value
 
           .fail (error) =>
             @template.error()
