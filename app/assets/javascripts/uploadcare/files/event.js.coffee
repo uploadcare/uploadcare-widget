@@ -1,26 +1,29 @@
 uploadcare.whenReady ->
   {namespace, jQuery: $, utils} = uploadcare
 
-  namespace 'uploadcare.widget.uploaders', (ns) ->
-    class ns.EventUploader
-      constructor: (@settings, @e) ->
-        @targetUrl = "#{@settings.urlBase}/iframe/"
+  namespace 'uploadcare.files', (ns) ->
+    class ns.EventFile
+      constructor: (@e) ->
 
-      upload: ->
+      upload: (settings) ->
+        settings = utils.buildSettings settings
+
+        targetUrl = "#{settings.urlBase}/iframe/"
+
         @fileId = utils.uuid()
         if utils.abilities.canFileAPI()
           file = @e.originalEvent.dataTransfer.files[0] if @e.type == 'drop'
           file = @e.target.files[0] if @e.type == 'change'
-          @__uploadFile(file)
+          @__uploadFile(settings, targetUrl, file)
         else
-          @__uploadInput(@e.target)
+          @__uploadInput(settings, targetUrl, @e.target)
 
       cancel: ->
         @xhr.abort() if @xhr?
         @iframe.off('load error') if @iframe?
         @__cleanUp()
 
-      __uploadFile: (file) ->
+      __uploadFile: (settings, targetUrl, file) ->
         @fileSize = file.size
         @fileName = file.name
 
@@ -29,14 +32,14 @@ uploadcare.whenReady ->
           return
 
         formData = new FormData()
-        formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
+        formData.append('UPLOADCARE_PUB_KEY', settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
 
         formData.append('file', file)
 
         # naked XHR for CORS
         @xhr = new XMLHttpRequest()
-        @xhr.open 'POST', @targetUrl
+        @xhr.open 'POST', targetUrl
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'loadstart', @__onStart
@@ -45,7 +48,7 @@ uploadcare.whenReady ->
         @xhr.upload.addEventListener 'progress', @__onProgress
         @xhr.send formData
 
-      __uploadInput: (input) ->
+      __uploadInput: (settings, targetUrl, input) ->
         @fileSize = null
         @fileName = null
         iframeId = "uploadcare-iframe-#{@fileId}"
@@ -73,11 +76,11 @@ uploadcare.whenReady ->
         @iframeForm = $('<form>')
           .attr({
             method: 'POST'
-            action: @targetUrl
+            action: targetUrl
             enctype: 'multipart/form-data'
             target: iframeId
           })
-          .append(formParam('UPLOADCARE_PUB_KEY', @settings.publicKey))
+          .append(formParam('UPLOADCARE_PUB_KEY', settings.publicKey))
           .append(formParam('UPLOADCARE_FILE_ID', @fileId))
           .append(input)
           .css('display', 'none')

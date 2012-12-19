@@ -18,15 +18,15 @@
 <script>
     $(function() {
         var myButton = $('#some-button');
+        var uploader = new uploadcare.uploader.Uploader();
+
         myButton.click(function() {
-            uploadcare.widget.showDialog().done(function(uploader) {
-
-                uploadcare.jQuery(uploader).on('uploadcare.api.uploader.load', function() {
-                    alert(this.fileId);
-                });
-                uploader.upload();
-
-
+            uploadcare.widget.showDialog().pipe(function(file) {
+                return uploader.upload(file);
+            }).fail(function(error){
+                alert(['error', error])
+            }).done(function(file_id) {
+                alert(['file_id', file_id]);
             });
         });
     });
