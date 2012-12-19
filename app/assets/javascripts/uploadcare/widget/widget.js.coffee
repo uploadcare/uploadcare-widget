@@ -60,7 +60,6 @@ uploadcare.whenReady ->
         unless uploadedFile.fileName? && uploadedFile.fileSize?
           @setValue uploadedFile.fileId, false
           return
-        @template.progress(1.0, instant)
         @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
         @setValue(uploadedFile.fileId)
         @template.loaded()
@@ -106,16 +105,19 @@ uploadcare.whenReady ->
         @available = false
 
         @currentUpload = @uploader.upload(args...)
-        @currentUpload
-          .progress (progress) =>
-            @template.progress progress.value
 
+        @template.listen @currentUpload
+
+        @currentUpload
           .fail (error) =>
             @template.error()
             @available = true
 
           .done (uploadedFile) =>
+            @template.circle.update(1.0, false)
             @__setLoaded(false, uploadedFile)
+
+
 
       __resetUpload: ->
         @currentUpload?.reject()

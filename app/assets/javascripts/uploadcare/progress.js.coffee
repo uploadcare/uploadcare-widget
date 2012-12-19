@@ -22,6 +22,27 @@ uploadcare.whenReady ->
         @fullDelay = 500 # ms
         @update(0, true)
 
+        @observed = null
+
+      listen: (uploadDeferred) ->
+        if @observed
+          @stopListening()
+
+        uploadDeferred = uploadDeferred.promise()
+
+        @observed = uploadDeferred
+
+        @observed.progress (progress) =>
+          console.log progress
+          # if we are still listening to this one
+          if uploadDeferred == @observed
+            console.log 'YES'
+            @update progress.value
+
+
+      stopListening: ->
+        @observed = null
+
       update: (val, instant = false) -> # val in [0..1]
         val = 1 if val > 1
         delay = @fullDelay * Math.abs(val - @value)
