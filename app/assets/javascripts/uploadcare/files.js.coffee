@@ -10,8 +10,8 @@ uploadcare.whenReady ->
       url: ns.UrlFile
 
     # may be:
-    # toFile(settings, uploader)
-    # toFile(settings, type, args...)
+    # toFile(file)
+    # toFile(type, args...)
     ns.toFile = (file, args...) ->
       return file if args.length == 0
 
