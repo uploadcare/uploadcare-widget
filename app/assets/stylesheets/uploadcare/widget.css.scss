@@ -142,7 +142,7 @@ $dragndrop-text-color: #707478;
     background-color: $dragndrop-background-color;
     color: $dragndrop-text-color;
     border: 1px dashed $dragndrop-border-color;
-    border-radius: 50%;
+    border-radius: $widget-height / 2 + $padding;
 
     &.uploadcare-dragging {
       display: block;
