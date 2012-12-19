@@ -58,7 +58,7 @@ uploadcare.whenReady ->
         form.trigger("uploadcare.uploader.#{status}")
         @element.trigger("uploadcare.uploader.#{status}")
 
-      ready: ->
+      reset: ->
         @statusText.text(t('ready'))
         @circle.reset()
         @setStatus 'ready'
