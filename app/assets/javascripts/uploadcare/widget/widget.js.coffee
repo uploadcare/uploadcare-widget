@@ -27,7 +27,7 @@ uploadcare.whenReady ->
         @element.on('change', @__changed)
 
         @__setupWidget()
-        @template.ready()
+        @template.reset()
         @available = true
 
       setValue: (value, ignore = true) ->
@@ -60,7 +60,6 @@ uploadcare.whenReady ->
         unless uploadedFile.fileName? && uploadedFile.fileSize?
           @setValue uploadedFile.fileId, false
           return
-        @template.progress(1.0, instant)
         @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
         @setValue(uploadedFile.fileId)
         @template.loaded()
@@ -69,7 +68,7 @@ uploadcare.whenReady ->
         @__resetUpload()
         @__setupFileButton()
         @available = true
-        @template.ready()
+        @template.reset()
         $(this).trigger('uploadcare.widget.cancel')
 
       __cancel: =>
@@ -106,10 +105,10 @@ uploadcare.whenReady ->
         @available = false
 
         @currentUpload = @uploader.upload(args...)
-        @currentUpload
-          .progress (progress) =>
-            @template.progress progress.value
 
+        @template.listen @currentUpload
+
+        @currentUpload
           .fail (error) =>
             @template.error()
             @available = true

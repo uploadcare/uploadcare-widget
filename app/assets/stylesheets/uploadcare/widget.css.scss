@@ -37,37 +37,38 @@ $dragndrop-text-color: #707478;
   &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
     display: inline-block;
   }
+
+  .uploadcare-widget-circle {
+    width: $widget-height;
+    height: $widget-height;
+  }
 }
 
 .uploadcare-widget-circle {
   position: relative;
   top: -1px;
   float: left;
-  width: $widget-height;
-  height: $widget-height;
   font-size: 0;
   position: relative;
   margin-right: 1ex;
-  [role=uploadcare-widget-status] {
-    width: 100%; height: 100%;
-    border-radius: $widget-height;
+  .uploadcare-widget-circle-back {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     background: $circle-background-color;
-    svg, vml {
-      width: $widget-height;
-      height: $widget-height;
-    }
     &.uploadcare-widget-circle-active {
       background: $circle-active-background;
     }
   }
-  .uploadcare-widget-center {
+  .uploadcare-widget-circle-center {
     position: absolute;
     background: $circle-center-color;
     width: $circle-center-width;
     height: $circle-center-width;
     top: 50%;
     left: 50%;
-    border-radius: 100%;
+    border-radius: 50%;
     margin-top: -$circle-center-width / 2;
     margin-left: -$circle-center-width / 2;
   }
@@ -141,7 +142,7 @@ $dragndrop-text-color: #707478;
     background-color: $dragndrop-background-color;
     color: $dragndrop-text-color;
     border: 1px dashed $dragndrop-border-color;
-    border-radius: $widget-height / 2 + $padding;
+    border-radius: 50%;
 
     &.uploadcare-dragging {
       display: block;

@@ -16,5 +16,23 @@
 
 ## As a dialog-opening button
 
-> TODO
+    $(function() {
+        var myButton = $('#some-button');
+        var uploader = new uploadcare.uploader.Uploader();
+        var circle = new uploadcare.ui.progress.Circle('#circle');
 
+        myButton.click(function() {
+            uploadcare.widget.showDialog().pipe(function(file) {
+                var upload = uploader.upload(file);
+
+                circle.listen(upload);
+
+                return upload;
+
+            }).fail(function(error){
+                alert(['error', error])
+            }).done(function(file) {
+                alert(['file', JSON.stringify(file)]);
+            });
+        });
+    });
