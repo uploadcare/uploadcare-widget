@@ -16,7 +16,10 @@ uploadcare.whenReady ->
         @element.append(JST['uploadcare/widget/templates/circle']())
         @pie = @element.find('@uploadcare-widget-status')
         @element.addClass 'uploadcare-widget-circle'
-        @width = @element.width()
+
+        @size = Math.min(@element.width(), @element.height())
+        @pie.width(@size).height(@size)
+
         @color = @__getSegmentColor()
         @angleOffset = -90
         @raphael = @__initRaphael()
@@ -76,15 +79,15 @@ uploadcare.whenReady ->
         return color
 
       __initRaphael: ->
-        raphael = uploadcare.Raphael @pie.get(0), @width, @width
+        raphael = uploadcare.Raphael @pie.get(0), @size, @size
         color = @color
-        width = @width
+        size = @size
         angleOffset = @angleOffset
 
         raphael.customAttributes.segment = (angle) ->
-          x = width / 2
-          y = width / 2
-          r = width / 2
+          x = size / 2
+          y = size / 2
+          r = size / 2
           a1 = 0
           a2 = angle
           a1 += angleOffset
