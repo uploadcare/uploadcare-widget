@@ -17,7 +17,7 @@ uploadcare.whenReady ->
         @content = $(JST['uploadcare/widget/templates/widget']())
         @content.css('display', 'none')
         @element.after(@content)
-        @status = new progress.Circle(@content.find('@uploadcare-widget-status'))
+        @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
         @statusText = @content.find('@uploadcare-widget-status-text')
         @buttonsContainer = @content.find('@uploadcare-widget-buttons')
         @cancelButton = @buttonsContainer.find('@uploadcare-widget-buttons-cancel')
@@ -59,15 +59,15 @@ uploadcare.whenReady ->
 
       ready: ->
         @statusText.text(t('ready'))
-        @status.setValue(0, true)
+        @circle.update(0, true)
         @setStatus 'ready'
 
       loaded: ->
-        @status.setValue(1)
+        @circle.update(1)
         @setStatus 'loaded'
 
       progress: (val, instant = false) ->
-        @status.setValue(val, instant)
+        @circle.update(val, instant)
 
       error: ->
         @statusText.text(t('error'))

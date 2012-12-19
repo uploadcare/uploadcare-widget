@@ -1,4 +1,4 @@
-# = require uploadcare/uploadcare-widget-status/templates/circle
+# = require uploadcare/widget/templates/circle
 
 uploadcare.whenReady ->
   {
@@ -20,12 +20,9 @@ uploadcare.whenReady ->
         @path = @raphael.path()
         @path.attr(segment: 0, stroke: false)
         @fullDelay = 500 # ms
-        @setValue(0, true)
+        @update(0, true)
 
-      getValue: () ->
-        @value
-
-      setValue: (val, instant = false) -> # val in [0..1]
+      update: (val, instant = false) -> # val in [0..1]
         val = 1 if val > 1
         delay = @fullDelay * Math.abs(val - @value)
         @value = val
@@ -35,7 +32,7 @@ uploadcare.whenReady ->
         else do (value = @value) =>
           @path.animate {segment: @__segmentVal(value)}, delay, 'linear', =>
             # Revert value to current if changed during animation
-            @setValue(@value, true) if @value != value
+            @update(@value, true) if @value != value
 
       __segmentVal: (value) ->
         # Supposed to be = 360 * value,
