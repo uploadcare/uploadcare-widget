@@ -1,35 +1,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <pre>
-    var myButton = $('#some-button');
-    myButton.click(function() {
-        uploadcare.widget.showDialog().done(function(uploader) {
 
-            uploadcare.jQuery(uploader).on('uploadcare.api.uploader.load', function() {
-                alert(this.fileId);
-            });
-            uploader.upload();
-
-
-        });
-    });
 </pre>
 
 <script>
+    // var $ = uploadcare.jQuery();
+
     $(function() {
         var myButton = $('#some-button');
         var uploader = new uploadcare.uploader.Uploader();
+        var circle = new uploadcare.progress.Circle('#circle');
 
         myButton.click(function() {
             uploadcare.widget.showDialog().pipe(function(file) {
-                return uploader.upload(file);
+                var upload = uploader.upload(file);
+
+                circle.listen(upload);
+
+                return upload;
+
             }).fail(function(error){
                 alert(['error', error])
-            }).done(function(file_id) {
-                alert(['file_id', file_id]);
+            }).done(function(file) {
+                alert(['file', JSON.stringify(file)]);
             });
         });
     });
 </script>
 
 <button id="some-button">hey</button>
+<div id="circle"></div>

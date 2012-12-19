@@ -10,6 +10,9 @@ uploadcare.whenReady ->
   namespace 'uploadcare.progress', (ns) ->
     class ns.Circle
       constructor: (@element) ->
+        # should work with other jqueries
+        @element = $(@element)
+
         @element.append(JST['uploadcare/widget/templates/circle']())
         @pie = @element.find('@uploadcare-widget-status')
         @element.addClass 'uploadcare-widget-circle'
@@ -42,6 +45,7 @@ uploadcare.whenReady ->
           .done (uploadedFile) =>
             if uploadDeferred == @observed
               @__update 1, false
+
 
       reset: ->
         @observed = null
