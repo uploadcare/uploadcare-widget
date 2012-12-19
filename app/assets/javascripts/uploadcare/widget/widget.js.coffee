@@ -94,7 +94,8 @@ uploadcare.whenReady ->
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
-        utils.fileInput(@fileButton, (e) => @upload('event', e))
+        utils.fileInput @fileButton, @settings.multiple, (e) =>
+          @upload('event', e)
 
       upload: (args...) =>
         # Allow two types of calls:

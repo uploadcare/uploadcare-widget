@@ -26,8 +26,10 @@ uploadcare.whenReady ->
 
       if $.type(settings.tabs) == "string"
         settings.tabs = settings.tabs.split(' ')
-      
       settings.tabs = settings.tabs or []
+
+      if settings.multiple != false
+        settings.multiple = settings.multiple?
 
       settings
 
@@ -39,9 +41,14 @@ uploadcare.whenReady ->
       else
         text
 
-    ns.fileInput = (container, fn) ->
+    ns.fileInput = (container, multiple, fn) ->
       container.find('input:file').remove()
-      input = $('<input type="file">')
+      input = if multiple
+        $('<input type="file" multiple>')
+      else
+        $('<input type="file">')
+
+      input
         .on('change', fn)
         .css(
           opacity: 0
