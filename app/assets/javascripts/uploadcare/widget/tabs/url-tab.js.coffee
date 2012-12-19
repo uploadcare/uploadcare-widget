@@ -20,6 +20,6 @@ uploadcare.whenReady ->
 
         @content.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
-          @callback('url', url)
+          @callback(url)
 
           false

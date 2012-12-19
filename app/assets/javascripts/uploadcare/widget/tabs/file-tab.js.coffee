@@ -20,4 +20,4 @@ uploadcare.whenReady ->
       __setupFileButton: ->
         fileButton = @content.find('@uploadcare-dialog-browse-file')
         utils.fileInput fileButton, @settings.multiple, (e) =>
-          @callback('event', e)
+          @callback(e)
