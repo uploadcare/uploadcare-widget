@@ -110,11 +110,13 @@ uploadcare.whenReady ->
         @template.listen @currentUpload
 
         @currentUpload
-          .fail (error) =>
+          .fail =>
             @template.error()
             @available = true
 
-          .done (uploadedFile) =>
+          .done (uploadedFiles) =>
+            # FIXME Report only the first one, for now; should be multiple
+            uploadedFile = uploadedFiles[0]
             @__setLoaded(false, uploadedFile)
 
       __resetUpload: ->

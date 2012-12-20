@@ -8,35 +8,93 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.uploader', (ns) ->
-    class UploadedFile
+    class FileInfo
       constructor: (@fileId, @fileName, @fileSize) ->
 
-    class UploadProgress
-      constructor: (@loaded, @total) ->
-        @value = @loaded / @total
+    class UploadedFile
+      constructor: (@file) ->
+        @loaded = 0
+        @total = 1
+        @fileInfo = null
+        @error = false
+
+      upload: (settings, callback) ->
+        $(@file)
+          .on 'uploadcare.api.uploader.load', (e) =>
+            @loaded = @total
+            @fileInfo = new FileInfo(
+              e.target.fileId,
+              e.target.fileName,
+              e.target.fileSize
+            )
+            callback()
+
+          .on 'uploadcare.api.uploader.error', (e) =>
+            @error = true
+            callback()
+
+          .on 'uploadcare.api.uploader.progress', (e) =>
+            @loaded = e.target.loaded
+            @total = e.target.fileSize
+            callback()
+
+        @file.upload(settings)
+
+      cancel: ->
+        @file.cancel()
+
+      progress: ->
+        return false if @error || @total == 0
+        @loaded / @total
+
+      info: ->
+        return false if @error
+        @fileInfo
+
 
     class ns.Uploader
       constructor: (@settings) ->
+        reset = =>
+          upload.cancel() for upload in @uploads if @uploads?
+          @uploads = []
+          @uploadDef = $.Deferred()
+          @uploadDef.fail reset
+        reset()
 
       upload: (args...) ->
-        files = f.toFiles(args...)
-        file = files[0] # FIXME
+        for file in f.toFiles(args...)
+          uploadedFile = new UploadedFile(file)
+          @uploads.push(uploadedFile)
+          uploadedFile.upload(@settings, @notify)
 
-        uploadDef = $.Deferred ->
+        @uploadDef
 
-          @fail ->
-            file.cancel()
+      notify: =>
+        progress = []
+        info = []
+        loaded = true
+        error = true
 
-          $(file)
-            .on 'uploadcare.api.uploader.load', (e) =>
-              @resolve new UploadedFile(e.target.fileId, e.target.fileName, e.target.fileSize)
+        for uploadedFile in @uploads
+          fileProgress = uploadedFile.progress()
+          progress.push(fileProgress)
 
-            .on 'uploadcare.api.uploader.error', (e) =>
-              @reject()
+          fileInfo = uploadedFile.info()
+          info.push(fileInfo)
+          loaded = false if fileInfo == null
+          error = false if fileInfo != false
 
-            .on 'uploadcare.api.uploader.progress', (e) =>
-              @notify new UploadProgress(e.target.loaded, e.target.fileSize)
+        progressSum = 0
+        progressRecs = 0
+        for progressRec in progress when progressRec
+          progressSum += progressRec
+          progressRecs += 1
 
-          file.upload(@settings)
+        progress.value = progressSum / progressRecs
 
-        uploadDef
+        if error
+          @uploadDef.reject()
+        else if loaded
+          @uploadDef.resolve(info)
+        else
+          @uploadDef.notify(progress)
