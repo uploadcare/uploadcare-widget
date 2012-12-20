@@ -93,7 +93,7 @@ uploadcare.whenReady ->
 
       __setupFileButton: ->
         utils.fileInput @fileButton, @settings.multiple, (e) =>
-          @upload(e)
+          @upload('event', e)
 
       upload: (args...) =>
         # Allow two types of calls:

@@ -3,7 +3,7 @@
 uploadcare.whenReady ->
   {
     namespace,
-    files,
+    files: f,
     jQuery: $
   } = uploadcare
 
@@ -19,7 +19,8 @@ uploadcare.whenReady ->
       constructor: (@settings) ->
 
       upload: (args...) ->
-        file = files.toFile(args...)
+        files = f.toFiles(args...)
+        file = files[0] # FIXME
 
         uploadDef = $.Deferred ->
 

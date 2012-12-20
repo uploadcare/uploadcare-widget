@@ -10,29 +10,27 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
-    ns.toFile = (fileable) ->
-      if utils.abilities.canFileAPI() && fileable.target?
-        fromEvent(fileable)
-      else if fileable.target?
-        new ns.InputFile(fileable.target)
-      else if $.type(fileable) == 'string'
-        fromUriList(fileable)
-      else
-        fileable # Must already be a file
+    # Usage:
+    #
+    #     toFiles(file)
+    #     toFiles(files)
+    #     toFiles(type, args...)
+    ns.toFiles = (file, args...) ->
+      if args.length > 0
+        file = converters[file](args...)
+      if $.isArray(file) then file else [file]
 
-    fromEvent = (event) ->
-      files = if event.type == 'drop'
-        event.originalEvent.dataTransfer.files
-      else
-        event.target.files
-      fromArray(new ns.EventFile(file) for file in files)
+    converters =
+      event: (e) ->
+        if utils.abilities.canFileAPI()
+          files = if e.type == 'drop'
+            e.originalEvent.dataTransfer.files
+          else
+            e.target.files
+          new ns.EventFile(file) for file in files
+        else
+          new ns.InputFile(fileable.target)
 
-    fromUriList = (uris) ->
-      urls = uris.split('\n')
-      fromArray(new ns.UrlFile(url) for url in urls)
-
-    fromArray = (array) ->
-      if array.length > 1
-        new ns.CompositeFile(array)
-      else
-        array[0]
+      url: (uris) ->
+        urls = uris.split('\n')
+        new ns.UrlFile(url) for url in urls

@@ -23,10 +23,10 @@ uploadcare.whenReady ->
           $(this).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
-            upload(e)
+            upload('event', e)
           else
             uris = dt.getData('text/uri-list')
-            upload(uris) if uris
+            upload('url', uris) if uris
           false
 
     # Trigger an event on watched elements when dragging

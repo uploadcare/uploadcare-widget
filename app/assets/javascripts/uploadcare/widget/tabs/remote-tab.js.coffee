@@ -39,7 +39,7 @@ uploadcare.whenReady ->
             @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
             $(@watcher).on('done', (e, state) =>
               @cleanup()
-              @callback(state.url)
+              @callback('url', state.url)
             )
             @watcher.watch()
 
