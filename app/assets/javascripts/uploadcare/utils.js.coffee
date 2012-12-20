@@ -8,6 +8,9 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.utils', (ns) ->
+    ns.defer = (fn) ->
+      setTimeout fn, 0
+
     ns.uuid = ->
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
         r = Math.random() * 16 | 0

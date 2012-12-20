@@ -3,6 +3,7 @@
 uploadcare.whenReady ->
   {
     namespace,
+    utils,
     files: f,
     jQuery: $
   } = uploadcare
@@ -54,18 +55,19 @@ uploadcare.whenReady ->
 
     class ns.Uploader
       constructor: (@settings) ->
-        reset = =>
-          upload.cancel() for upload in @uploads if @uploads?
-          @uploads = []
-          @uploadDef = $.Deferred()
-          @uploadDef.fail reset
-        reset()
+        @reset()
+
+      reset: ->
+        upload.cancel() for upload in @uploads if @uploads?
+        @uploads = []
+        @uploadDef = $.Deferred()
+        @uploadDef.fail => @reset()
 
       upload: (args...) ->
         for file in f.toFiles(args...)
           uploadedFile = new UploadedFile(file)
           @uploads.push(uploadedFile)
-          uploadedFile.upload(@settings, @notify)
+          utils.defer => uploadedFile.upload(@settings, @notify)
 
         @uploadDef
 

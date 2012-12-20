@@ -105,11 +105,10 @@ uploadcare.whenReady ->
         @template.started()
         @available = false
 
-        @currentUpload = @uploader.upload(args...)
+        currentUpload = @uploader.upload(args...)
+        @template.listen(currentUpload)
 
-        @template.listen @currentUpload
-
-        @currentUpload
+        currentUpload
           .fail =>
             @template.error()
             @available = true
@@ -120,8 +119,7 @@ uploadcare.whenReady ->
             @__setLoaded(false, uploadedFile)
 
       __resetUpload: ->
-        @currentUpload?.reject()
-        @currentUpload = null
+        @uploader.reset()
 
       currentDialog = null
 
