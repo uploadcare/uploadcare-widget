@@ -39,19 +39,20 @@ uploadcare.whenReady ->
         if @ignoreChange
           @ignoreChange = false
           return
-        id = @element.val()
-        if id
-          @__setLoaded(new uploads.FileInfo(id))
+        ids = @element.val()
+        if ids
+          fis = (new uploads.FileInfo(id) for id in ids.split(','))
+          @__setLoaded(fis)
         else
           @__reset()
 
       __setLoaded: (uploadedFiles...) ->
-        uploadedFile = uploadedFiles[0] # FIXME Still needs multiple files
-        uploadedFile.info(@settings)
+        infos = (file.info(@settings) for file in uploadedFiles)
+        $.when(infos...)
           .fail(@__fail)
-          .done =>
-            @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
-            @setValue(uploadedFile.fileId)
+          .done (infos...) =>
+            @template.setFileInfo(infos[0].fileName, infos[0].fileSize) # FIXME
+            @setValue((info.fileId for info in infos).join(','))
             @template.loaded()
 
       __fail: =>
