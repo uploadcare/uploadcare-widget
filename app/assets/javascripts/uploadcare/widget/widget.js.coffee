@@ -8,6 +8,7 @@ uploadcare.whenReady ->
     namespace,
     initialize,
     utils,
+    uploads,
     files,
     jQuery: $
   } = uploadcare
@@ -16,7 +17,7 @@ uploadcare.whenReady ->
     class ns.Widget
       constructor: (@element) ->
         @settings = utils.buildSettings @element.data()
-        @uploader = new uploadcare.uploader.Uploader(@settings)
+        @uploader = new uploads.Uploader(@settings)
 
         @template = new ns.Template(@element)
         $(@template).on(
@@ -34,35 +35,28 @@ uploadcare.whenReady ->
         @ignoreChange = ignore
         @element.val(value).trigger('change')
 
-      getFileInfo: (id, callback) =>
-        $.ajax "#{@settings.urlBase}/info/",
-          data:
-            file_id: id
-            pub_key: @settings.publicKey
-          dataType: 'jsonp'
-        .done(callback)
-
       __changed: (e) =>
         if @ignoreChange
           @ignoreChange = false
           return
         id = @element.val()
         if id
-          @getFileInfo id, (data) =>
-            @__setLoaded true,
-              fileId: data.file_id
-              fileName: data.original_filename
-              fileSize: data.size
+          @__setLoaded(new uploads.FileInfo(id))
         else
           @__reset()
 
-      __setLoaded: (instant, uploadedFile) ->
-        unless uploadedFile.fileName? && uploadedFile.fileSize?
-          @setValue uploadedFile.fileId, false
-          return
-        @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
-        @setValue(uploadedFile.fileId)
-        @template.loaded()
+      __setLoaded: (uploadedFiles...) ->
+        uploadedFile = uploadedFiles[0] # FIXME Still needs multiple files
+        uploadedFile.info(@settings)
+          .fail(@__fail)
+          .done =>
+            @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
+            @setValue(uploadedFile.fileId)
+            @template.loaded()
+
+      __fail: =>
+        @template.error()
+        @available = true
 
       __reset: =>
         @__resetUpload()
@@ -109,14 +103,8 @@ uploadcare.whenReady ->
         @template.listen(currentUpload)
 
         currentUpload
-          .fail =>
-            @template.error()
-            @available = true
-
-          .done (uploadedFiles) =>
-            # FIXME Report only the first one, for now; should be multiple
-            uploadedFile = uploadedFiles[0]
-            @__setLoaded(false, uploadedFile)
+          .fail(@__fail)
+          .done (uploadedFiles) => @__setLoaded(uploadedFiles...)
 
       __resetUpload: ->
         @uploader.reset()

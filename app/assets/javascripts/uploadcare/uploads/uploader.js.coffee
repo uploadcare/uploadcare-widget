@@ -1,4 +1,5 @@
 # = require uploadcare/files
+# = require ./uploaded-file
 
 uploadcare.whenReady ->
   {
@@ -8,51 +9,7 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  namespace 'uploadcare.uploader', (ns) ->
-    class FileInfo
-      constructor: (@fileId, @fileName, @fileSize) ->
-
-    class UploadedFile
-      constructor: (@file) ->
-        @loaded = 0
-        @total = 1
-        @fileInfo = null
-        @error = false
-
-      upload: (settings, callback) ->
-        $(@file)
-          .on 'uploadcare.api.uploader.load', (e) =>
-            @loaded = @total
-            @fileInfo = new FileInfo(
-              e.target.fileId,
-              e.target.fileName,
-              e.target.fileSize
-            )
-            callback()
-
-          .on 'uploadcare.api.uploader.error', (e) =>
-            @error = true
-            callback()
-
-          .on 'uploadcare.api.uploader.progress', (e) =>
-            @loaded = e.target.loaded
-            @total = e.target.fileSize
-            callback()
-
-        @file.upload(settings)
-
-      cancel: ->
-        @file.cancel()
-
-      progress: ->
-        return false if @error || @total == 0
-        @loaded / @total
-
-      info: ->
-        return false if @error
-        @fileInfo
-
-
+  namespace 'uploadcare.uploads', (ns) ->
     class ns.Uploader
       constructor: (@settings) ->
         @reset()
@@ -65,7 +22,7 @@ uploadcare.whenReady ->
 
       upload: (args...) ->
         for file in f.toFiles(args...)
-          uploadedFile = new UploadedFile(file)
+          uploadedFile = new ns.UploadedFile(file)
           @uploads.push(uploadedFile)
           utils.defer => uploadedFile.upload(@settings, @notify)
 
