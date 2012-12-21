@@ -39,10 +39,8 @@ uploadcare.whenReady ->
 
         @observed
           .progress (progress) =>
-            console.log progress
             # if we are still listening to this one
             if uploadDeferred == @observed
-              console.log 'YES'
               @__update progress.value
 
           .done (uploadedFile) =>
