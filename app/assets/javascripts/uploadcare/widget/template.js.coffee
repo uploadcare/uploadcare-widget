@@ -77,9 +77,13 @@ uploadcare.whenReady ->
         @statusText.text(t('uploading'))
         @setStatus 'started'
 
-      setFileInfo: (fileName, fileSize) ->
-        fileSize = Math.ceil(fileSize/1024).toString()
-        @statusText.text("#{utils.fitText(fileName)}, #{fileSize} kb")
-
-
-
+      setFileInfo: (infos...) ->
+        if infos.length > 1
+          caption = "#{infos.length} file(s)"
+          size = 0
+          size += info.fileSize for info in infos
+        else
+          caption = utils.fitText(infos[0].fileName, 16)
+          size = infos[0].fileSize
+        size = Math.ceil(size / 1024).toString()
+        @statusText.text("#{caption}, #{size} kb")

@@ -37,7 +37,7 @@ uploadcare.whenReady ->
 
       settings
 
-    ns.fitText = (text, max = 16) ->
+    ns.fitText = (text, max) ->
       if text.length > max
         head = Math.ceil((max - 3) / 2)
         tail = Math.floor((max - 3) / 2)

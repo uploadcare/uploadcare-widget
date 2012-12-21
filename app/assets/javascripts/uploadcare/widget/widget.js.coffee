@@ -42,7 +42,7 @@ uploadcare.whenReady ->
         ids = @element.val()
         if ids
           fis = (new uploads.FileInfo(id) for id in ids.split(','))
-          @__setLoaded(fis)
+          @__setLoaded(fis...)
         else
           @__reset()
 
@@ -51,7 +51,7 @@ uploadcare.whenReady ->
         $.when(infos...)
           .fail(@__fail)
           .done (infos...) =>
-            @template.setFileInfo(infos[0].fileName, infos[0].fileSize) # FIXME
+            @template.setFileInfo(infos...)
             @setValue((info.fileId for info in infos).join(','))
             @template.loaded()
 
