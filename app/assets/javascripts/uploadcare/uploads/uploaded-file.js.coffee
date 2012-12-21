@@ -10,7 +10,7 @@ uploadcare.whenReady ->
     class ns.UploadedFile
       constructor: (@file) ->
         @loaded = 0
-        @total = 1
+        @total = 0
         @fileInfo = null
         @error = false
 
@@ -40,6 +40,7 @@ uploadcare.whenReady ->
         @file.cancel()
 
       progress: ->
+        return 0 if @loaded == 0 # >0 when total is available
         return false if @error || @total == 0
         @loaded / @total
 

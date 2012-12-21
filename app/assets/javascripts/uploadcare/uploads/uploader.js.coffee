@@ -46,7 +46,7 @@ uploadcare.whenReady ->
 
         progressSum = 0
         progressRecs = 0
-        for progressRec in progress when progressRec
+        for progressRec in progress
           progressSum += progressRec
           progressRecs += 1
 

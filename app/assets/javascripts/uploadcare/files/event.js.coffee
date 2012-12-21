@@ -45,4 +45,5 @@ uploadcare.whenReady ->
       __onLoad: => $(this).trigger('uploadcare.api.uploader.load')
       __onProgress: (event) =>
         @loaded = event.loaded
+        @fileSize = event.totalSize || event.total
         $(this).trigger('uploadcare.api.uploader.progress')
