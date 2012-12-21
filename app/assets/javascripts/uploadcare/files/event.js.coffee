@@ -23,7 +23,7 @@ uploadcare.whenReady ->
 
         formData.append('file', @file)
 
-        # naked XHR for CORS
+        # Naked XHR for progress tracking
         @xhr = new XMLHttpRequest()
         @xhr.open 'POST', targetUrl
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')

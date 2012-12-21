@@ -24,7 +24,8 @@ uploadcare.whenReady ->
         for file in f.toFiles(args...)
           uploadedFile = new ns.UploadedFile(file)
           @uploads.push(uploadedFile)
-          utils.defer => uploadedFile.upload(@settings, @notify)
+          do (uploadedFile) =>
+            utils.defer => uploadedFile.upload(@settings, @notify)
 
         @uploadDef
 
