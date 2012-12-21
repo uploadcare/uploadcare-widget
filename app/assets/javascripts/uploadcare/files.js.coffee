@@ -1,19 +1,36 @@
 # = require ./files/event
+# = require ./files/input
 # = require ./files/url
 
 uploadcare.whenReady ->
-  {utils} = uploadcare
-  uploadcare.namespace 'uploadcare.files', (ns) ->
+  {
+    namespace,
+    utils,
+    jQuery: $
+  } = uploadcare
 
-    ns.files =
-      event: ns.EventFile
-      url: ns.UrlFile
+  namespace 'uploadcare.files', (ns) ->
+    # Usage:
+    #
+    #     toFiles(file)
+    #     toFiles(files)
+    #     toFiles(type, args...)
+    ns.toFiles = (file, args...) ->
+      if args.length > 0
+        file = converters[file](args...)
+      if $.isArray(file) then file else [file]
 
-    # may be:
-    # toFile(file)
-    # toFile(type, args...)
-    ns.toFile = (file, args...) ->
-      return file if args.length == 0
+    converters =
+      event: (e) ->
+        if utils.abilities.canFileAPI()
+          files = if e.type == 'drop'
+            e.originalEvent.dataTransfer.files
+          else
+            e.target.files
+          new ns.EventFile(file) for file in files
+        else
+          new ns.InputFile(fileable.target)
 
-      new ns.files[file](args...)
-
+      url: (uris) ->
+        urls = uris.split('\n')
+        new ns.UrlFile(url) for url in urls

@@ -26,9 +26,7 @@ uploadcare.whenReady ->
             upload('event', e)
           else
             uris = dt.getData('text/uri-list')
-            if uris
-              url = uris.split('\n')[0]
-              upload('url', url)
+            upload('url', uris) if uris
           false
 
     # Trigger an event on watched elements when dragging
