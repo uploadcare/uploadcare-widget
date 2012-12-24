@@ -1,4 +1,4 @@
-# = require_directory ./translations
+# = require_directory ./locale
 
 uploadcare.whenReady ->
   uploadcare.namespace 'uploadcare.locale', (ns) ->
