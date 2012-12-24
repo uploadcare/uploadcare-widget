@@ -5,6 +5,11 @@ uploadcare.whenReady ->
       uploading: 'Uploading... Please wait.'
       error: 'Error'
       draghere: 'Drop the file here'
+      file:
+        0: 'No files'
+        1: '1 file'
+        2: '2 files'
+        n: '%1 files'
       buttons:
         cancel: 'Cancel'
         remove: 'Remove'
@@ -29,3 +34,11 @@ uploadcare.whenReady ->
             line2: 'Just provide the link.'
             input: 'Paste your link here...'
             button: 'Upload'
+
+
+  uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+    ns.en = (n) ->
+      switch n
+        when 0 then 0
+        when 1 then 1
+        else 'n'

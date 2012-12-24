@@ -5,6 +5,11 @@ uploadcare.whenReady ->
       uploading: 'Загрузка, пожалуйста, подождите'
       error: 'Ошибка'
       draghere: 'Перетащите файл сюда'
+      file:
+        0: 'Нет файлов'
+        1: '1 файл'
+        2: '%1 файла'
+        n: '%1 файлов'
       buttons:
         cancel: 'Отмена'
         remove: 'Удалить'
@@ -29,3 +34,11 @@ uploadcare.whenReady ->
             line2: 'Просто укажите ссылку.'
             input: 'Укажите ссылку здесь...'
             button: 'Загрузить'
+
+
+  uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+    ns.ru = (n) ->
+      return 0 if n == 0
+      return 1 if (n % 10 == 1) && (n % 100 != 11)
+      return 2 if (n % 10 >= 2) && (n % 10 <= 4) && (n % 100 < 10 || n % 100 >= 20)
+      'n'

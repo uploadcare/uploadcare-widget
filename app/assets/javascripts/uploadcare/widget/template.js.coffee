@@ -76,7 +76,7 @@ uploadcare.whenReady ->
 
       setFileInfo: (infos...) ->
         if infos.length > 1
-          caption = "#{infos.length} file(s)"
+          caption = t('file', infos.length)
           size = 0
           size += info.fileSize for info in infos
         else
