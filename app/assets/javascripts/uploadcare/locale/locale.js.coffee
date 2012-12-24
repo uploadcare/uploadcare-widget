@@ -1,14 +1,7 @@
 # = require_directory ./translations
 
 uploadcare.whenReady ->
-  {
-    namespace,
-    initialize,
-    jQuery,
-    utils
-  } = uploadcare
-
-  namespace 'uploadcare.locale', (ns) ->
+  uploadcare.namespace 'uploadcare.locale', (ns) ->
     defaultLocale = 'en'
     ns.locale = uploadcare.defaults.locale
 
@@ -16,6 +9,7 @@ uploadcare.whenReady ->
       path = key.split('.')
       node = ns.translations[locale]
       for subkey in path
+        return null unless node?
         node = node[subkey]
       node
 

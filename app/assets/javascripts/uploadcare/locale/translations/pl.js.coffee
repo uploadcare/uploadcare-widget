@@ -9,6 +9,9 @@ uploadcare.whenReady ->
         cancel: 'Anuluj'
         remove: 'Usuń'
         file: 'Prześlij z komputera'
-      tabs:
-        file: 'Mój komputer'
-        url: 'Pliki z sieci'
+      dialog:
+        tabs:
+          file:
+            title: 'Mój komputer'
+          url:
+            title: 'Pliki z sieci'
