@@ -1,5 +1,4 @@
-# = require ./translations/en
-# = require ./translations/ru
+# = require_directory ./translations
 
 uploadcare.whenReady ->
   {
