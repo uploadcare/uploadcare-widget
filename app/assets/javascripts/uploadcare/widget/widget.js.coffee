@@ -8,6 +8,7 @@ uploadcare.whenReady ->
     namespace,
     initialize,
     utils,
+    uploads,
     files,
     jQuery: $
   } = uploadcare
@@ -16,7 +17,7 @@ uploadcare.whenReady ->
     class ns.Widget
       constructor: (@element) ->
         @settings = utils.buildSettings @element.data()
-        @uploader = new uploadcare.uploader.Uploader(@settings)
+        @uploader = new uploads.Uploader(@settings)
 
         @template = new ns.Template(@element)
         $(@template).on(
@@ -34,35 +35,29 @@ uploadcare.whenReady ->
         @ignoreChange = ignore
         @element.val(value).trigger('change')
 
-      getFileInfo: (id, callback) =>
-        $.ajax "#{@settings.urlBase}/info/",
-          data:
-            file_id: id
-            pub_key: @settings.publicKey
-          dataType: 'jsonp'
-        .done(callback)
-
       __changed: (e) =>
         if @ignoreChange
           @ignoreChange = false
           return
-        id = @element.val()
-        if id
-          @getFileInfo id, (data) =>
-            @__setLoaded true,
-              fileId: data.file_id
-              fileName: data.original_filename
-              fileSize: data.size
+        ids = @element.val()
+        if ids
+          fis = (new uploads.FileInfo(id) for id in ids.split(','))
+          @__setLoaded(fis...)
         else
           @__reset()
 
-      __setLoaded: (instant, uploadedFile) ->
-        unless uploadedFile.fileName? && uploadedFile.fileSize?
-          @setValue uploadedFile.fileId, false
-          return
-        @template.setFileInfo(uploadedFile.fileName, uploadedFile.fileSize)
-        @setValue(uploadedFile.fileId)
-        @template.loaded()
+      __setLoaded: (uploadedFiles...) ->
+        infos = (file.info(@settings) for file in uploadedFiles)
+        $.when(infos...)
+          .fail(@__fail)
+          .done (infos...) =>
+            @template.setFileInfo(infos...)
+            @setValue((info.fileId for info in infos).join(','))
+            @template.loaded()
+
+      __fail: =>
+        @template.error()
+        @available = true
 
       __reset: =>
         @__resetUpload()
@@ -92,7 +87,8 @@ uploadcare.whenReady ->
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
-        utils.fileInput(@fileButton, (e) => @upload('event', e))
+        utils.fileInput @fileButton, @settings.multiple, (e) =>
+          @upload('event', e)
 
       upload: (args...) =>
         # Allow two types of calls:
@@ -104,21 +100,15 @@ uploadcare.whenReady ->
         @template.started()
         @available = false
 
-        @currentUpload = @uploader.upload(args...)
+        currentUpload = @uploader.upload(args...)
+        @template.listen(currentUpload)
 
-        @template.listen @currentUpload
-
-        @currentUpload
-          .fail (error) =>
-            @template.error()
-            @available = true
-
-          .done (uploadedFile) =>
-            @__setLoaded(false, uploadedFile)
+        currentUpload
+          .fail(@__fail)
+          .done (uploadedFiles) => @__setLoaded(uploadedFiles...)
 
       __resetUpload: ->
-        @currentUpload?.reject()
-        @currentUpload = null
+        @uploader.reset()
 
       currentDialog = null
 

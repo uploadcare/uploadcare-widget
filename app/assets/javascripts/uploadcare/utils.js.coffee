@@ -8,6 +8,9 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.utils', (ns) ->
+    ns.defer = (fn) ->
+      setTimeout fn, 0
+
     ns.uuid = ->
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
         r = Math.random() * 16 | 0
@@ -29,9 +32,12 @@ uploadcare.whenReady ->
 
       settings.tabs = settings.tabs or []
 
+      if settings.multiple != false
+        settings.multiple = settings.multiple?
+
       settings
 
-    ns.fitText = (text, max = 16) ->
+    ns.fitText = (text, max) ->
       if text.length > max
         head = Math.ceil((max - 3) / 2)
         tail = Math.floor((max - 3) / 2)
@@ -39,9 +45,14 @@ uploadcare.whenReady ->
       else
         text
 
-    ns.fileInput = (container, fn) ->
+    ns.fileInput = (container, multiple, fn) ->
       container.find('input:file').remove()
-      input = $('<input type="file">')
+      input = if multiple
+        $('<input type="file" multiple>')
+      else
+        $('<input type="file">')
+
+      input
         .on('change', fn)
         .css(
           opacity: 0
