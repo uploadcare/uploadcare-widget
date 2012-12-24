@@ -9,11 +9,18 @@ uploadcare.whenReady ->
   } = uploadcare
 
   namespace 'uploadcare.locale', (ns) ->
-    ns.t = (key) ->
-      path = key.split('.')
-      start = ns.translations[ns.locale]
-      for subkey in path
-        start = start[subkey]
-      return start
-
+    defaultLocale = 'en'
     ns.locale = uploadcare.defaults.locale
+
+    translate = (key, locale=defaultLocale) ->
+      path = key.split('.')
+      node = ns.translations[locale]
+      for subkey in path
+        node = node[subkey]
+      node
+
+    ns.t = (key) ->
+      value = translate(key, ns.locale)
+      if not value? && ns.locale != defaultLocale
+        value = translate(key)
+      value

@@ -3,6 +3,7 @@ Dummy::Application.routes.draw do
 
   root to: "welcome#toc"
   get "welcome/index"
+  get "welcome/locale"
   get "welcome/form"
   post "welcome/form"
 

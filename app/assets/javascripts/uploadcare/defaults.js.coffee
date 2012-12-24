@@ -1,6 +1,6 @@
 uploadcare.whenReady ->
   uploadcare.defaults = {
-    locale: window.UPLOADCARE_LOCALE or 'en'
+    locale: window.UPLOADCARE_LOCALE
     publicKey: window.UPLOADCARE_PUBLIC_KEY or undefined
     urlBase: window.UPLOADCARE_URL_BASE or 'https://upload.uploadcare.com'
     socialBase: window.UPLOADCARE_SOCIAL_BASE or 'https://social.uploadcare.com'
