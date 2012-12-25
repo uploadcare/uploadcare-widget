@@ -38,6 +38,11 @@ uploadcare.whenReady ->
             button: 'Upload'
 
 
+  # Pluralization rules taken from:
+  # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+  #
+  # Note: English locale is used as a fallback and needs translations
+  # for all possible pluralization variants: zero, one, two, few, many, other.
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
     ns.en = (n) ->
       return 'one' if n == 1
