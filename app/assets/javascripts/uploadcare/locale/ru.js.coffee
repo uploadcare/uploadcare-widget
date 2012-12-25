@@ -13,7 +13,7 @@ uploadcare.whenReady ->
       buttons:
         cancel: 'Отмена'
         remove: 'Удалить'
-        file: 'Загрузить с компьютера'
+        file: 'Компьютер'
       dialog:
         title: 'Загрузите что угодно откуда угодно'
         poweredby: 'Предоставлено'

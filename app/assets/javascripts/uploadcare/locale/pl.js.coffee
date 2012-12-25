@@ -8,7 +8,7 @@ uploadcare.whenReady ->
       buttons:
         cancel: 'Anuluj'
         remove: 'Usuń'
-        file: 'Prześlij z komputera'
+        file: 'Komputer'
       dialog:
         tabs:
           file:

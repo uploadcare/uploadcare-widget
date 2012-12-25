@@ -13,7 +13,7 @@ uploadcare.whenReady ->
       buttons:
         cancel: 'Cancel'
         remove: 'Remove'
-        file: 'Upload from Computer'
+        file: 'Computer'
       dialog:
         title: 'Upload anything from anywhere'
         poweredby: 'Powered by'
