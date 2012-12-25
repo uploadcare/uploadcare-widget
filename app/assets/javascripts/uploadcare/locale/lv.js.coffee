@@ -6,10 +6,9 @@ uploadcare.whenReady ->
       error: 'Kļūda'
       draghere: 'Velciet failus šeit'
       file:
-        0: 'Nav failu'
-        1: '1 fails'
-        2: '2 faili'
-        n: '%1 faili'
+        zero: '0 failu'
+        one: '1 fails'
+        other: '%1 faili'
       buttons:
         cancel: 'Atcelt'
         remove: 'Dzēst'
@@ -38,6 +37,6 @@ uploadcare.whenReady ->
 
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
     ns.lv = (n) ->
-      return 0 if n == 0
-      return 1 if (n % 10 == 1) && (n % 100 != 11)
-      'n'
+      return 'zero' if n == 0
+      return 'one' if (n % 10 == 1) && (n % 100 != 11)
+      'other'

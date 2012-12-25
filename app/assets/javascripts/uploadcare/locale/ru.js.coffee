@@ -6,10 +6,10 @@ uploadcare.whenReady ->
       error: 'Ошибка'
       draghere: 'Перетащите файл сюда'
       file:
-        0: 'Нет файлов'
-        1: '1 файл'
-        2: '%1 файла'
-        n: '%1 файлов'
+        one: '1 файл'
+        few: '%1 файла'
+        many: '%1 файлов'
+        other: '%1 файла'
       buttons:
         cancel: 'Отмена'
         remove: 'Удалить'
@@ -38,7 +38,7 @@ uploadcare.whenReady ->
 
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
     ns.ru = (n) ->
-      return 0 if n == 0
-      return 1 if (n % 10 == 1) && (n % 100 != 11)
-      return 2 if (n % 10 >= 2) && (n % 10 <= 4) && (n % 100 < 10 || n % 100 >= 20)
-      'n'
+      return 'one' if (n % 10 == 1) && (n % 100 != 11)
+      return 'few' if (n % 10 in [2..4]) && (n % 100 not in [12..14])
+      return 'many' if (n % 10 == 0) || (n % 10 in [5..9]) || (n % 100 in [11..14])
+      'other'

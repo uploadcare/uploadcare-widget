@@ -27,9 +27,11 @@ uploadcare.whenReady ->
       node
 
     ns.t = (key, n) ->
+      key += ".#{pluralize(n)}" if n?
+
       value = translate(key, ns.lang)
       if not value? && ns.lang != defaultLocale
         value = translate(key)
-      if n? && value?
-        value = value[pluralize(n)]?.replace('%1', n)
+
+      return value.replace('%1', n) if n? && value?
       value || ''

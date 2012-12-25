@@ -18,8 +18,8 @@ uploadcare.whenReady ->
 
 
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
-    ns.en = (n) ->
-      return 0 if n == 0
-      return 1 if n == 1
-      return 2 if (n % 10 >= 2) && (n % 10 <= 4) && (n % 100 < 10 || n % 100 >= 20)
-      'n'
+    ns.pl = (n) ->
+      return 'one' if n == 1
+      return 'few' if (n % 10 in [2..4]) && (n % 100 not in [12..14])
+      return 'many' if (n != 1) && (n % 10 not in [2..4] || n % 100 in [12..14])
+      'other'

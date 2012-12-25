@@ -6,10 +6,12 @@ uploadcare.whenReady ->
       error: 'Error'
       draghere: 'Drop the file here'
       file:
-        0: 'No files'
-        1: '1 file'
-        2: '2 files'
-        n: '%1 files'
+        zero: '0 files'
+        one: '1 file'
+        two: '2 files'
+        few: '%1 files'
+        many: '%1 files'
+        other: '%1 files'
       buttons:
         cancel: 'Cancel'
         remove: 'Remove'
@@ -38,7 +40,5 @@ uploadcare.whenReady ->
 
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
     ns.en = (n) ->
-      switch n
-        when 0 then 0
-        when 1 then 1
-        else 'n'
+      return 'one' if n == 1
+      'other'
