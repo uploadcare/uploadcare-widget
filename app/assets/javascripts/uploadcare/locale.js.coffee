@@ -1,11 +1,22 @@
 # = require_directory ./locale
 
 uploadcare.whenReady ->
-  uploadcare.namespace 'uploadcare.locale', (ns) ->
+  {
+    namespace,
+    jQuery: $
+  } = uploadcare
+
+  namespace 'uploadcare.locale', (ns) ->
     defaultLocale = 'en'
     ns.lang = uploadcare.defaults.locale
 
-    pluralize = ns.pluralize[ns.lang] || ns.pluralize[defaultLocale]
+    ns.translations[ns.lang] ||= {}
+    $.extend(ns.translations[ns.lang], uploadcare.defaults.translations)
+
+    pluralize =
+      uploadcare.defaults.pluralize ||
+      ns.pluralize[ns.lang] ||
+      ns.pluralize[defaultLocale]
 
     translate = (key, locale=defaultLocale) ->
       path = key.split('.')
