@@ -20,8 +20,7 @@ uploadcare.whenReady ->
         preferedSize: null # `null` means any aspect ratio acceptable
         controls: true
 
-      IMAGE_LOADING_ERROR = 1
-      NO_AREA_SELECTED = 2
+      LOADING_ERROR = "loadingerror"
 
       CONTROLS_HEIGHT = 30
 
@@ -63,7 +62,7 @@ uploadcare.whenReady ->
         if @__currentCoords
           @__deferred.resolve @__buildUrl(@__currentCoords) 
         else
-          @__deferred.reject NO_AREA_SELECTED
+          throw "not ready"
 
       getCurrentCoords: ->
         @__currentCoords
@@ -123,7 +122,7 @@ uploadcare.whenReady ->
             @__initJcrop()
           error: =>
             @__setState 'error'
-            @__deferred.reject IMAGE_LOADING_ERROR
+            @__deferred.reject LOADING_ERROR
 
       __calcImgSizes: ->
         @__originalWidth = @__img[0].width
