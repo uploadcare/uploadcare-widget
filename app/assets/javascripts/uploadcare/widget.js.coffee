@@ -1,7 +1,6 @@
 # = require uploadcare/core/boot
 # = require uploadcare/debug
 # = require uploadcare/utils
-# = require uploadcare/stylesheets
 # = require uploadcare/defaults
 # = require uploadcare/locale
 # = require uploadcare/templates

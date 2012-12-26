@@ -1,11 +1,11 @@
 # = require ./jquery.Jcrop
-# = require ./template
 
 uploadcare.whenReady ->
   {
     namespace,
     jQuery: $
   } = uploadcare
+  {tpl} = uploadcare.templates
 
   namespace 'uploadcare.crop', (ns) ->
 
@@ -95,7 +95,7 @@ uploadcare.whenReady ->
         @__wrapHeight = @__widgetHeight
         if @__options.controls
           @__wrapHeight -= CONTROLS_HEIGHT
-        @__widgetElement = $ JST['uploadcare/ui/crop/template']()
+        @__widgetElement = $ tpl('crop-widget')
         @__imageWrap = @__widgetElement.find '@uploadcare-crop-widget-image-wrap'
         @__doneButton = @__widgetElement.find '@uploadcare-crop-widget-done-button'
         unless @__options.controls
