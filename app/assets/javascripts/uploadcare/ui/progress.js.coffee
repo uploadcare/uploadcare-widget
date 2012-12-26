@@ -1,5 +1,3 @@
-# = require uploadcare/widget/templates/circle
-
 uploadcare.whenReady ->
   {
     namespace,
@@ -7,13 +5,15 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
+  {tpl} = uploadcare.templates
+
   namespace 'uploadcare.ui.progress', (ns) ->
     class ns.Circle
       constructor: (@element) ->
         # should work with other jqueries
         @element = $(@element)
 
-        @element.append(JST['uploadcare/widget/templates/circle']())
+        @element.append(tpl('circle'))
         @pie = @element.find('@uploadcare-widget-status')
         @element.addClass 'uploadcare-widget-circle'
 
