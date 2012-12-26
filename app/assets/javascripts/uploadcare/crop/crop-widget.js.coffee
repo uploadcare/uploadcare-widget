@@ -8,14 +8,7 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  # REFACTOR: remove copypaste
-  css = JST['uploadcare/crop/styles']()
-  style = document.createElement('style')
-  if style.styleSheet?
-    style.styleSheet.cssText = css
-  else
-    style.appendChild(document.createTextNode(css))
-  $('head').append(style)
+  uploadcare.utils.addStyles 'uploadcare/crop/styles'
 
   namespace 'uploadcare.crop', (ns) ->
 
@@ -31,7 +24,19 @@ uploadcare.whenReady ->
         controls: true
 
       IMAGE_LOADING_ERROR = 1
+      NO_AREA_SELECTED = 2
+
       CONTROLS_HEIGTH = 30
+
+      checkOptions = (options) ->
+        throw "options.container must be specified" unless options.container
+        throw "options.url must be specified" unless options.url
+        for option in ['widgetSize', 'preferedSize']
+          value = options[option]
+          unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
+            throw "options.#{option} must follow pattern '123x456' or be null"
+        if option.scale and not options.preferedSize
+          throw "options.preferedSize must be specified if option.scale is true"
 
       # Example:
       #   new CropWidget
@@ -42,7 +47,7 @@ uploadcare.whenReady ->
       #     preferedSize: '100x100'
       constructor: (options) ->
         @_options = $.extend {}, defaultOptions, options
-        @_checkOptions()
+        checkOptions @_options
         @_buildWidget()
         @_deferred = $.Deferred()
         @_setImage @_options.url
@@ -58,7 +63,13 @@ uploadcare.whenReady ->
         @_deferred.promise()
 
       forceDone: ->
-        @_deferred.resolve @_buildUrl @_currentCoords
+        if @_currentCoords
+          @_deferred.resolve @_buildUrl(@_currentCoords) 
+        else
+          @_deferred.reject NO_AREA_SELECTED
+
+      getCurrentCoords: ->
+        @_currentCoords
 
       destroy: ->
         @_widgetElement.remove()
@@ -66,14 +77,15 @@ uploadcare.whenReady ->
 
       _buildUrl: (coords) ->
         scaleRatio = @_resizedWidth / @_originalWidth
+        fixedCoords = {}
         for key, value of coords
-          coords[key] = Math.round value / scaleRatio
-        topLeft = "#{coords.x}x#{coords.y}"
-        bottomRight = "#{coords.x2}x#{coords.y2}"
+          fixedCoords[key] = Math.round value / scaleRatio
+        topLeft = "#{fixedCoords.x}x#{fixedCoords.y}"
+        bottomRight = "#{fixedCoords.x2}x#{fixedCoords.y2}"
         url = "#{@_options.url}-/custom_crop/#{topLeft}/#{bottomRight}/"
         if @_options.scale
           url += "-/resize/#{@_options.preferedSize}/"
-        return url
+        url
 
       _buildWidget: ->
         @container = $ @_options.container
@@ -82,21 +94,24 @@ uploadcare.whenReady ->
           @_widgetHeight = @container.height()
         else
           [@_widgetWidth, @_widgetHeight] = @_options.widgetSize.split 'x'
-        @_widgetElement = $ JST['uploadcare/crop/template']()
-        @_imageWrap = @_widgetElement.find '.uploadcare-crop-widget__image-wrap'
-        @_doneButton = @_widgetElement.find '.uploadcare-crop-widget__done-button'
-        @_doneButton.click =>
-          @forceDone() unless @_doneButton.prop 'disabled'
         @_wrapWidth = @_widgetWidth
         @_wrapHeight = @_widgetHeight
         if @_options.controls
           @_wrapHeight -= CONTROLS_HEIGTH
-        else
+        @_widgetElement = $ JST['uploadcare/crop/template']()
+        @_imageWrap = @_widgetElement.find '.uploadcare-crop-widget__image-wrap'
+        @_doneButton = @_widgetElement.find '.uploadcare-crop-widget__done-button'
+        unless @_options.controls
           @_widgetElement.addClass 'uploadcare-crop-widget--no-controls'
         @_imageWrap.css
           width: @_wrapWidth
           height: @_wrapHeight
         @_widgetElement.appendTo @container
+        @_bind()
+
+      _bind: ->
+        @_doneButton.click =>
+          @forceDone() unless @_doneButton.prop 'disabled'
 
       _setImage: (@url) ->
         @_setState 'loading'
@@ -106,21 +121,26 @@ uploadcare.whenReady ->
         @_img.on
           load: =>
             @_setState 'loaded'
-            @_calcSizes()
+            @_calcImgSizes()
             @_img.appendTo @_imageWrap
             @_initJcrop()
           error: =>
             @_setState 'error'
             @_deferred.reject IMAGE_LOADING_ERROR
 
-      _calcSizes: ->
+      _calcImgSizes: ->
         @_originalWidth = @_img[0].width
         @_originalHeight = @_img[0].height
-        @_resizedWidth = Math.min @_originalWidth, @_wrapWidth
-        @_resizedHeight = Math.floor @_originalHeight / @_originalWidth * @_resizedWidth
-        @_resizedHeight = Math.min @_resizedHeight, @_wrapHeight
-        @_resizedWidth = Math.floor @_originalWidth / @_originalHeight * @_resizedHeight
-        # TODO: upscale
+        if @_originalWidth > @_wrapWidth or @_originalHeight > @_wrapHeight or @_options.upscale
+          if @_wrapWidth / @_wrapHeight < @_originalWidth / @_originalHeight
+            @_resizedWidth = @_wrapWidth
+            @_resizedHeight = Math.floor @_originalHeight / @_originalWidth * @_resizedWidth
+          else
+            @_resizedHeight = @_wrapHeight
+            @_resizedWidth = Math.floor @_originalWidth / @_originalHeight * @_resizedHeight
+        else
+          @_resizedWidth = @_originalWidth
+          @_resizedHeight = @_originalHeight
         @_img.attr
           width: @_resizedWidth
           height: @_resizedHeight
@@ -140,14 +160,6 @@ uploadcare.whenReady ->
           .addClass("uploadcare-crop-widget--#{state}")
         @_doneButton.prop
           disabled: state != 'loaded'
-
-      _checkOptions: ->
-        throw "options.container must be specified" unless @_options.container
-        throw "options.url must be specified" unless @_options.url
-        for option in ['widgetSize', 'preferedSize']
-          value = @_options[option]
-          unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
-            throw "options.#{option} must follow pattern '123x456' or be null"
 
       _initJcrop: ->
         jCropOptions =
