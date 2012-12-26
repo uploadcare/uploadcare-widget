@@ -1,5 +1,0 @@
-// = depend_on uploadcare/crop-widget.css
-<%=
-  raw = Rails.application.assets.find_asset('uploadcare/crop-widget.css').body
-  YUI::CssCompressor.new.compress(raw)
-%>

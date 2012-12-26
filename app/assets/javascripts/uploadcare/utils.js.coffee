@@ -71,12 +71,3 @@ uploadcare.whenReady ->
           overflow: 'hidden'
         )
         .append(input)
-
-    ns.addStyles = (path) ->
-      css = JST[path]()
-      style = document.createElement('style')
-      if style.styleSheet?
-        style.styleSheet.cssText = css
-      else
-        style.appendChild(document.createTextNode(css))
-      $('head').append(style)

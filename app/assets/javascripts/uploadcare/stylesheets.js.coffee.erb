@@ -1,4 +1,12 @@
 # = require ./widget/templates/styles
 
 uploadcare.whenReady ->
-  uploadcare.utils.addStyles 'uploadcare/widget/templates/styles'
+  {jQuery: $} = uploadcare
+  css = JST['uploadcare/widget/templates/styles']()
+
+  style = document.createElement('style')
+  if style.styleSheet?
+    style.styleSheet.cssText = css
+  else
+    style.appendChild(document.createTextNode(css))
+  $('head').append(style)

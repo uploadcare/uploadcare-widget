@@ -1,5 +1,4 @@
 # = require ./jquery.Jcrop
-# = require ./styles
 # = require ./template
 
 uploadcare.whenReady ->
@@ -7,8 +6,6 @@ uploadcare.whenReady ->
     namespace,
     jQuery: $
   } = uploadcare
-
-  uploadcare.utils.addStyles 'uploadcare/crop/styles'
 
   namespace 'uploadcare.crop', (ns) ->
 
