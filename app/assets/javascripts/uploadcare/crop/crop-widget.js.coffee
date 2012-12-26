@@ -89,7 +89,7 @@ uploadcare.whenReady ->
 
       _buildWidget: ->
         @container = $ @_options.container
-        if @_options.widgetSize
+        if !@_options.widgetSize
           @_widgetWidth = @container.width()
           @_widgetHeight = @container.height()
         else
