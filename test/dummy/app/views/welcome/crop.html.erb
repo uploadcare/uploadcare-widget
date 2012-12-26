@@ -59,12 +59,11 @@
         .fail(function(errorCode){
           log('FAIL: ' + errorCode);
           widget.destroy()
-        })
-        .progress(function(data){
-          log('PROGRESS: ' )
         });
 
-      $('#force-done').off().click(function(){widget.forceDone( )});
+      $('#force-done').off().click(function(){
+        widget.forceDone();
+      });
     });
 
   });
