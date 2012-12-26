@@ -13,11 +13,6 @@ uploadcare.whenReady ->
     ns.translations[ns.lang] ||= {}
     $.extend(ns.translations[ns.lang], uploadcare.defaults.translations)
 
-    pluralize =
-      uploadcare.defaults.pluralize ||
-      ns.pluralize[ns.lang] ||
-      ns.pluralize[defaultLocale]
-
     translate = (key, locale=defaultLocale) ->
       path = key.split('.')
       node = ns.translations[locale]
@@ -27,11 +22,15 @@ uploadcare.whenReady ->
       node
 
     ns.t = (key, n) ->
-      key += ".#{pluralize(n)}" if n?
+      lang = ns.lang
+      value = translate(key, lang)
+      if not value? && lang != defaultLocale
+        lang = defaultLocale
+        value = translate(key, lang)
 
-      value = translate(key, ns.lang)
-      if not value? && ns.lang != defaultLocale
-        value = translate(key)
+      if n?
+        pluralize = ns.pluralize[lang]
+        if pluralize?
+          value = value[pluralize(n)]?.replace('%1', n) || n
 
-      return value.replace('%1', n) if n? && value?
       value || ''

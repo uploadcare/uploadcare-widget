@@ -1,4 +1,5 @@
 uploadcare.whenReady ->
+  # Note: English locale is the default and used as a fallback.
   uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     ns.en =
       ready: 'Upload from'
@@ -6,11 +7,7 @@ uploadcare.whenReady ->
       error: 'Error'
       draghere: 'Drop the file here'
       file:
-        zero: '0 files'
         one: '1 file'
-        two: '2 files'
-        few: '%1 files'
-        many: '%1 files'
         other: '%1 files'
       buttons:
         cancel: 'Cancel'
@@ -40,9 +37,6 @@ uploadcare.whenReady ->
 
   # Pluralization rules taken from:
   # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-  #
-  # Note: English locale is used as a fallback and needs translations
-  # for all possible pluralization variants: zero, one, two, few, many, other.
   uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
     ns.en = (n) ->
       return 'one' if n == 1
