@@ -7,4 +7,4 @@
 # = require uploadcare/uploads/uploader
 # = require uploadcare/widget/widget
 # = require uploadcare/widget/submit-guard
-# = require uploadcare/crop/crop-widget
+# = require uploadcare/ui/crop/crop-widget

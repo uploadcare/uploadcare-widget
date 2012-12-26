@@ -54,7 +54,7 @@ uploadcare.whenReady ->
       #   cropWidget.croppedImageUrl()
       #     .done (url) ->
       #       # ...
-      #     .fail (errorCode) ->
+      #     .fail (error) ->
       #       # ...
       croppedImageUrl: ->
         @__deferred.promise()
@@ -95,9 +95,9 @@ uploadcare.whenReady ->
         @__wrapHeight = @__widgetHeight
         if @__options.controls
           @__wrapHeight -= CONTROLS_HEIGHT
-        @__widgetElement = $ JST['uploadcare/crop/template']()
-        @__imageWrap = @__widgetElement.find '.uploadcare-crop-widget__image-wrap'
-        @__doneButton = @__widgetElement.find '.uploadcare-crop-widget__done-button'
+        @__widgetElement = $ JST['uploadcare/ui/crop/template']()
+        @__imageWrap = @__widgetElement.find '@uploadcare-crop-widget-image-wrap'
+        @__doneButton = @__widgetElement.find '@uploadcare-crop-widget-done-button'
         unless @__options.controls
           @__widgetElement.addClass 'uploadcare-crop-widget--no-controls'
         @__imageWrap.css
