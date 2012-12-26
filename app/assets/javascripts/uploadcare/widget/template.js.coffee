@@ -1,4 +1,3 @@
-# = require ./templates/widget
 # = require uploadcare/ui/progress
 
 uploadcare.whenReady ->
@@ -10,11 +9,12 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
+  {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Template
       constructor: (@element)->
-        @content = $(JST['uploadcare/widget/templates/widget']())
+        @content = $(tpl('widget'))
         @content.css('display', 'none')
         @element.after(@content)
         @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
@@ -23,9 +23,6 @@ uploadcare.whenReady ->
         @buttonsContainer = @content.find('@uploadcare-widget-buttons')
         @cancelButton = @buttonsContainer.find('@uploadcare-widget-buttons-cancel')
         @removeButton = @buttonsContainer.find('@uploadcare-widget-buttons-remove')
-
-        @cancelButton.text(t('buttons.cancel'))
-        @removeButton.text(t('buttons.remove'))
 
         @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
         @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
@@ -79,7 +76,7 @@ uploadcare.whenReady ->
 
       setFileInfo: (infos...) ->
         if infos.length > 1
-          caption = "#{infos.length} file(s)"
+          caption = t('file', infos.length)
           size = 0
           size += info.fileSize for info in infos
         else
