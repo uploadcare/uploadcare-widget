@@ -34,7 +34,7 @@ uploadcare.whenReady ->
         for option in ['widgetSize', 'preferedSize']
           value = options[option]
           unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
-            throw "options.#{option} must follow pattern '123x456' or be null"
+            throw "options.#{option} must follow pattern '123x456' or be falsy"
         if option.scale and not options.preferedSize
           throw "options.preferedSize must be specified if option.scale is true"
 
@@ -89,7 +89,7 @@ uploadcare.whenReady ->
 
       _buildWidget: ->
         @container = $ @_options.container
-        if @_options.widgetSize == null
+        if @_options.widgetSize
           @_widgetWidth = @container.width()
           @_widgetHeight = @container.height()
         else
