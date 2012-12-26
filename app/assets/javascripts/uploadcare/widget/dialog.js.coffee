@@ -1,7 +1,3 @@
-# = require ./templates/dialog
-# = require ./templates/tab-file
-# = require ./templates/tab-url
-
 # = require_self
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
@@ -16,6 +12,7 @@ uploadcare.whenReady ->
   } = uploadcare
 
   {t} = uploadcare.locale
+  {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget', (ns) ->
     ns.showDialog = (settings = {}) ->
@@ -35,7 +32,7 @@ uploadcare.whenReady ->
 
     dialogUiMixin =
       __createDialog: ->
-        @content = $(JST['uploadcare/widget/templates/dialog']())
+        @content = $(tpl('dialog'))
           .hide()
           .appendTo('body')
 
@@ -80,7 +77,7 @@ uploadcare.whenReady ->
         if tab
           $('<li>')
             .addClass("uploadcare-dialog-tab-#{name}")
-            .attr('title', t("tabs.#{name}"))
+            .attr('title', t("tabs.#{name}.title"))
             .on('click', => @__switchTab(name))
             .appendTo(@content.find('.uploadcare-dialog-tabs'))
           panel = $('<div>')
@@ -88,8 +85,7 @@ uploadcare.whenReady ->
             .addClass('uploadcare-dialog-tabs-panel')
             .addClass("uploadcare-dialog-tabs-panel-#{name}")
             .appendTo(@content.find('.uploadcare-dialog-body'))
-          tpl = "uploadcare/widget/templates/tab-#{name}"
-          panel.append(JST[tpl]()) if tpl of JST
+          panel.append(tpl("tab-#{name}"))
           tab.setContent(panel)
         tab
 

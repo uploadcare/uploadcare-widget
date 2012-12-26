@@ -1,8 +1,8 @@
-# = require ./widget/templates/styles
-
 uploadcare.whenReady ->
   {jQuery: $} = uploadcare
-  css = JST['uploadcare/widget/templates/styles']()
+  {tpl} = uploadcare.templates
+
+  css = tpl('styles')
 
   style = document.createElement('style')
   if style.styleSheet?

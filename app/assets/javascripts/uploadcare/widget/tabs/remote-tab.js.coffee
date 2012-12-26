@@ -1,6 +1,7 @@
 uploadcare.whenReady ->
   {
     namespace,
+    locale,
     utils,
     jQuery: $
   } = uploadcare
@@ -25,7 +26,9 @@ uploadcare.whenReady ->
             @windowId = utils.uuid()
             @createWatcher()
 
-            src = "#{@settings.socialBase}/window/#{@windowId}/#{service}"
+            src =
+              "#{@settings.socialBase}/window/#{@windowId}/" +
+              "#{service}?lang=#{locale.lang}"
             @iframe = $('<iframe>')
               .attr('src', src)
               .css
