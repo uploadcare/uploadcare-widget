@@ -26,7 +26,7 @@ uploadcare.whenReady ->
       IMAGE_LOADING_ERROR = 1
       NO_AREA_SELECTED = 2
 
-      CONTROLS_HEIGTH = 30
+      CONTROLS_HEIGHT = 30
 
       checkOptions = (options) ->
         throw "options.container must be specified" unless options.container
@@ -97,7 +97,7 @@ uploadcare.whenReady ->
         @_wrapWidth = @_widgetWidth
         @_wrapHeight = @_widgetHeight
         if @_options.controls
-          @_wrapHeight -= CONTROLS_HEIGTH
+          @_wrapHeight -= CONTROLS_HEIGHT
         @_widgetElement = $ JST['uploadcare/crop/template']()
         @_imageWrap = @_widgetElement.find '.uploadcare-crop-widget__image-wrap'
         @_doneButton = @_widgetElement.find '.uploadcare-crop-widget__done-button'
