@@ -48,11 +48,11 @@ uploadcare.whenReady ->
         clearTimeout delayedDragState.timeout
         delayedDragState.timeout = null
       if delay > 0
-        delayedDragState.timeout = setTimeout (-> _dragState newActive), delay
+        delayedDragState.timeout = setTimeout (-> __dragState newActive), delay
       else
-        _dragState newActive
+        __dragState newActive
 
-    _dragState = (newActive) ->
+    __dragState = (newActive) ->
       if active != newActive
         active = newActive
         $('@uploadcare-drop-area').trigger('uploadcare.dragstatechange', active)
