@@ -19,7 +19,7 @@ uploadcare.whenReady ->
         .on 'drop', (e) ->
           e.stopPropagation() # Prevent redirect
           e.preventDefault()
-          dragState off
+          delayedDragState off, 0
           $(this).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
@@ -45,11 +45,11 @@ uploadcare.whenReady ->
         clearTimeout delayedDragState.timeout
         delayedDragState.timeout = null
       if delay > 0
-        delayedDragState.timeout = setTimeout (-> dragState newActive), delay
+        delayedDragState.timeout = setTimeout (-> _dragState newActive), delay
       else
-        dragState newActive
+        _dragState newActive
 
-    dragState = (newActive) ->
+    _dragState = (newActive) ->
       if active != newActive
         active = newActive
         $('@uploadcare-drop-area').trigger('uploadcare.dragstatechange', active)
