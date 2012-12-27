@@ -19,25 +19,40 @@ uploadcare.whenReady ->
         .on 'drop', (e) ->
           e.stopPropagation() # Prevent redirect
           e.preventDefault()
-          dragState off
+          delayedDragState off, 0
           $(this).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
             upload('event', e)
           else
             uris = dt.getData('text/uri-list')
-            upload('url', uris) if uris
+            if uris
+              # opera likes to add \n at the end
+              uris = uris.replace /\n$/, ''
+              upload('url', uris) 
           false
+
+    onDelay = 0
+    offDelay = if $.browser.opera then 200 else 0
 
     # Trigger an event on watched elements when dragging
     active = false
-    $(window).on 'mouseenter dragend', => dragState off
-    $('body').on 'dragenter', (e) => dragState on
+    $(window).on 'mouseenter dragend', => delayedDragState off, offDelay
+    $('body').on 'dragenter', (e) => delayedDragState on, onDelay
     $('body').on 'dragleave', (e) =>
       return unless e.target == e.currentTarget
-      dragState off
+      delayedDragState off, offDelay
 
-    dragState = (newActive) ->
+    delayedDragState = (newActive, delay) ->
+      if delayedDragState.timeout?
+        clearTimeout delayedDragState.timeout
+        delayedDragState.timeout = null
+      if delay > 0
+        delayedDragState.timeout = setTimeout (-> __dragState newActive), delay
+      else
+        __dragState newActive
+
+    __dragState = (newActive) ->
       if active != newActive
         active = newActive
         $('@uploadcare-drop-area').trigger('uploadcare.dragstatechange', active)
