@@ -13,6 +13,8 @@
 <br>
 <label>Prefered size <input id="prefered-size" value="200x300"></label> (may be empty)
 <br>
+<label>Widget size <input id="widget-size" value=""></label> (may be empty)
+<br>
 <label><input type="checkbox" id="scale" checked> scale</label>
 <br>
 <label><input type="checkbox" id="upscale"> upscale</label>
@@ -38,9 +40,13 @@
       $('#log').html($('#log').html() + "\n" + str)
     }
 
+    $('#widget-container').on('uploadcare.crop.statechange', function(__, state){
+      $('#force-done').prop('disabled', state != 'loaded');
+    });
+
     $('#show-widget').click(function(){
 
-      $('#widget-container').empty()
+      $('#widget-container').empty();
 
       var widget = new CropWidget({
         container: '#widget-container',
@@ -48,7 +54,8 @@
         scale: $('#scale').is(':checked'),
         upscale: $('#upscale').is(':checked'),
         controls: $('#controls').is(':checked'),
-        preferedSize: $('#prefered-size').val() || null
+        preferedSize: $('#prefered-size').val() || null,
+        widgetSize: $('#widget-size').val() || null
       });
 
       widget.croppedImageUrl()
@@ -56,8 +63,8 @@
           log('DONE: ' + url);
           widget.destroy()
         })
-        .fail(function(errorCode){
-          log('FAIL: ' + errorCode);
+        .fail(function(error){
+          log('FAIL: ' + error);
           widget.destroy()
         });
 

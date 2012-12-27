@@ -102,12 +102,15 @@ uploadcare.whenReady ->
         @__imageWrap.css
           width: @__wrapWidth
           height: @__wrapHeight
+        @__widgetElement.css
+          width: @__widgetWidth
+          height: @__widgetHeight
         @__widgetElement.appendTo @container
         @__bind()
 
       __bind: ->
         @__doneButton.click =>
-          @forceDone() unless @__doneButton.prop 'disabled'
+          @forceDone()
 
       __setImage: (@url) ->
         @__setState 'loading'
@@ -154,6 +157,7 @@ uploadcare.whenReady ->
         @__widgetElement
           .removeClass(("uploadcare-crop-widget--#{s}" for s in ['error', 'loading', 'loaded']).join ' ')
           .addClass("uploadcare-crop-widget--#{state}")
+          .trigger("uploadcare.crop.statechange", state)
         @__doneButton.prop
           disabled: state != 'loaded'
 
