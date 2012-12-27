@@ -26,6 +26,8 @@ uploadcare.whenReady ->
             upload('event', e)
           else
             uris = dt.getData('text/uri-list')
+            # opera likes to add \n at the end
+            uris = uris.replace /\n$/, ''
             upload('url', uris) if uris
           false
 
