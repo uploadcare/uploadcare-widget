@@ -96,13 +96,17 @@ uploadcare.whenReady ->
       # This method could be usefull if you want to make your own done button.
       forceDone: ->
         if @__currentCoords
-          @__deferred.resolve @__buildUrl(@__currentCoords) 
+          @__deferred.resolve @__buildUrl @getCurrentCoords()
         else
           throw "not ready"
 
       # Returns last selected area coords
       getCurrentCoords: ->
-        @__currentCoords
+        scaleRatio = @__resizedWidth / @__originalWidth
+        fixedCoords = {}
+        for key, value of @__currentCoords
+          fixedCoords[key] = Math.round value / scaleRatio
+        fixedCoords
 
       # Destroys widget completly
       destroy: ->
@@ -112,12 +116,8 @@ uploadcare.whenReady ->
         @__currentCoords = null
 
       __buildUrl: (coords) ->
-        scaleRatio = @__resizedWidth / @__originalWidth
-        fixedCoords = {}
-        for key, value of coords
-          fixedCoords[key] = Math.round value / scaleRatio
-        topLeft = "#{fixedCoords.x}x#{fixedCoords.y}"
-        bottomRight = "#{fixedCoords.x2}x#{fixedCoords.y2}"
+        topLeft = "#{coords.x}x#{coords.y}"
+        bottomRight = "#{coords.x2}x#{coords.y2}"
         url = "#{@__options.url}-/custom_crop/#{topLeft}/#{bottomRight}/"
         if @__options.scale
           url += "-/resize/#{@__options.preferedSize}/"
