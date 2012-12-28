@@ -12,12 +12,33 @@ uploadcare.whenReady ->
     class ns.CropWidget
 
       defaultOptions =
-        container: null # required
-        url: null # required
+
+        # DOM element or selector or jQuery object to which widget 
+        # will be appended (required)
+        container: null
+
+        # URL of image to process (required)
+        url: null
+
+        # If set to `true` the resize method will be appended to result URL
+        # like "-/resize/%preferedSize%/". (optional)
         scale: true
+
+        # If set to `true` image in widget will be upscaled 
+        # to widget size if necessary. (optional)
         upscale: false
-        widgetSize: null # if `null` widget size will be equal the `container` size
-        preferedSize: null # `null` means any aspect ratio acceptable
+
+        # Defines widget size. if set to `null` widget size will be equal 
+        # the `container` size. Syntax: '123x123'. (optional)
+        widgetSize: null
+
+        # Defines image size you want to get at the end.
+        # If `scale` option set to `false` it defines only prefered aspect ratio.
+        # if set to `null` any aspect ratio will be acceptable.
+        # Syntax: '123x123'. (optional)
+        preferedSize: null
+
+        # Specifies whether to show done button in widget or not. (optional)
         controls: true
 
       LOADING_ERROR = "loadingerror"
@@ -72,15 +93,18 @@ uploadcare.whenReady ->
       croppedImageUrl: ->
         @__deferred.promise()
 
+      # This method could be usefull if you want to make your own done button.
       forceDone: ->
         if @__currentCoords
           @__deferred.resolve @__buildUrl(@__currentCoords) 
         else
           throw "not ready"
 
+      # Returns last selected area coords
       getCurrentCoords: ->
         @__currentCoords
 
+      # Destroys widget completly
       destroy: ->
         @__jCropApi.destroy()
         @__widgetElement.remove()
