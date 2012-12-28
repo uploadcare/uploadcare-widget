@@ -34,6 +34,19 @@ uploadcare.whenReady ->
         if option.scale and not options.preferedSize
           throw "options.preferedSize must be specified if option.scale is true"
 
+      fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
+        if objWidth > boxWidth or objHeight > boxHeight or upscale
+          if boxWidth / boxHeight < objWidth / objHeight
+            newWidth = boxWidth
+            newHeight = Math.floor objHeight / objWidth * newWidth
+          else
+            newHeight = boxHeight
+            newWidth = Math.floor objWidth / objHeight * newHeight
+        else
+          newWidth = objWidth
+          newHeight = objHeight
+        [newWidth, newHeight]
+
       # Example:
       #   new CropWidget
       #     container: '.crop-widget-home'
@@ -45,6 +58,7 @@ uploadcare.whenReady ->
         @__options = $.extend {}, defaultOptions, options
         checkOptions @__options
         @__buildWidget()
+        @__bind()
         @__deferred = $.Deferred()
         @__setImage @__options.url
 
@@ -68,8 +82,10 @@ uploadcare.whenReady ->
         @__currentCoords
 
       destroy: ->
+        @__jCropApi.destroy()
         @__widgetElement.remove()
-        # TODO: full destroy somehow
+        @__widgetElement = @__imageWrap = @__doneButton = @__img = null
+        @__currentCoords = null
 
       __buildUrl: (coords) ->
         scaleRatio = @__resizedWidth / @__originalWidth
@@ -85,13 +101,7 @@ uploadcare.whenReady ->
 
       __buildWidget: ->
         @container = $ @__options.container
-        if !@__options.widgetSize
-          @__widgetWidth = @container.width()
-          @__widgetHeight = @container.height()
-        else
-          [@__widgetWidth, @__widgetHeight] = @__options.widgetSize.split 'x'
-        @__wrapWidth = @__widgetWidth
-        @__wrapHeight = @__widgetHeight
+        [@__wrapWidth, @__wrapHeight] = [@__widgetWidth, @__widgetHeight] = @__widgetSize()
         if @__options.controls
           @__wrapHeight -= CONTROLS_HEIGHT
         @__widgetElement = $ tpl('crop-widget')
@@ -106,7 +116,6 @@ uploadcare.whenReady ->
           width: @__widgetWidth
           height: @__widgetHeight
         @__widgetElement.appendTo @container
-        @__bind()
 
       __bind: ->
         @__doneButton.click =>
@@ -130,16 +139,8 @@ uploadcare.whenReady ->
       __calcImgSizes: ->
         @__originalWidth = @__img[0].width
         @__originalHeight = @__img[0].height
-        if @__originalWidth > @__wrapWidth or @__originalHeight > @__wrapHeight or @__options.upscale
-          if @__wrapWidth / @__wrapHeight < @__originalWidth / @__originalHeight
-            @__resizedWidth = @__wrapWidth
-            @__resizedHeight = Math.floor @__originalHeight / @__originalWidth * @__resizedWidth
-          else
-            @__resizedHeight = @__wrapHeight
-            @__resizedWidth = Math.floor @__originalWidth / @__originalHeight * @__resizedHeight
-        else
-          @__resizedWidth = @__originalWidth
-          @__resizedHeight = @__originalHeight
+        [@__resizedWidth, @__resizedHeight] = 
+          fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight, @__options.upscale
         @__img.attr
           width: @__resizedWidth
           height: @__resizedHeight
@@ -151,6 +152,12 @@ uploadcare.whenReady ->
           width: @__wrapWidth - paddingLeft,
           height: @__wrapHeight - paddingTop
         }
+
+      __widgetSize: ->
+        if !@__options.widgetSize
+          [@container.width(), @container.height()]
+        else
+          @__options.widgetSize.split 'x'
 
       # error <- loading -> loaded
       __setState: (state) ->
@@ -170,4 +177,5 @@ uploadcare.whenReady ->
           jCropOptions.setSelect = [0, 0, width, height]
         else
           jCropOptions.setSelect = [0, 0, @__resizedWidth, @__resizedHeight]
-        @__img.Jcrop jCropOptions
+        setApi = (api) => @__jCropApi = api
+        @__img.Jcrop jCropOptions, -> setApi this
