@@ -109,9 +109,9 @@ uploadcare.whenReady ->
         @__currentCoords = null
 
       __buildUrl: (coords) ->
-        topLeft = "#{coords.x}x#{coords.y}"
-        bottomRight = "#{coords.x2}x#{coords.y2}"
-        url = "#{@__url}-/custom_crop/#{topLeft}/#{bottomRight}/"
+        size = "#{coords.w}x#{coords.h}"
+        topLeft = "#{coords.x},#{coords.y}"
+        url = "#{@__url}-/crop/#{size}/#{topLeft}/"
         if @__options.scale
           pWidth = @__options.preferedSize.split('x')[0]
           if coords.w > pWidth or @__options.upscale
