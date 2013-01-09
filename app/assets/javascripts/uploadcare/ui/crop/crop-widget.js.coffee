@@ -17,9 +17,6 @@ uploadcare.whenReady ->
         # will be appended (required)
         container: null
 
-        # URL of image to process. (required)
-        url: null
-
         # If set to `true` the resize method will be appended to result URL
         # like "-/resize/%preferedSize%/". (optional)
         scale: true
@@ -43,11 +40,11 @@ uploadcare.whenReady ->
         controls: true
 
       LOADING_ERROR = 'loadingerror'
+      IMAGE_CLEARED = 'imagecleared'
       CONTROLS_HEIGHT = 30
 
       checkOptions = (options) ->
         throw "options.container must be specified" unless options.container
-        throw "options.url must be specified" unless options.url
         for option in ['widgetSize', 'preferedSize']
           value = options[option]
           unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
@@ -73,22 +70,23 @@ uploadcare.whenReady ->
         @__options = $.extend {}, defaultOptions, options
         option.scale = false unless options.preferedSize
         checkOptions @__options
-        @__deferred = $.Deferred()
         @__buildWidget()
         
       # Example:
       #   cropWidget = new CropWidget( ... )
-      #   cropWidget.croppedImageUrl()
+      #   cropWidget.croppedImageUrl(originalUrl)
       #     .done (url) ->
       #       # ...
       #     .fail (error) ->
       #       # ...
-      croppedImageUrl: ->
+      croppedImageUrl: (originalUrl) ->
+        @__clearImage()
+        @__setImage originalUrl
         @__deferred.promise()
 
       # This method could be usefull if you want to make your own done button.
       forceDone: ->
-        if @__currentCoords
+        if @__state is 'loaded'
           @__deferred.resolve @__buildUrl @getCurrentCoords()
         else
           throw "not ready"
@@ -103,10 +101,9 @@ uploadcare.whenReady ->
 
       # Destroys widget completly
       destroy: ->
-        @__jCropApi?.destroy()
+        @__clearImage()
         @__widgetElement.remove()
-        @__widgetElement = @__imageWrap = @__doneButton = @__img = null
-        @__currentCoords = null
+        @__widgetElement = @__imageWrap = @__doneButton = null
 
       __buildUrl: (coords) ->
         size = "#{coords.w}x#{coords.h}"
@@ -133,14 +130,27 @@ uploadcare.whenReady ->
 
         @__widgetElement.appendTo @container
 
-        @__setImage @__options.url
+        @__setState 'waiting'
         @__bind()
 
       __bind: ->
         @__doneButton.click =>
           @forceDone()
 
+      __clearImage: ->
+        @__jCropApi?.destroy()
+        if @__deferred and @__deferred.state() is 'pending'
+          @__deferred.reject(IMAGE_CLEARED)
+          @__deferred = false
+        if @__img
+          @__img.remove()
+          @__img.off() 
+          @__img = null
+        @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
+        @__setState 'waiting'
+
       __setImage: (@__url) ->
+        @__deferred = $.Deferred()
         @__setState 'loading'
         @__img = $ '<img/>'
         @__img.attr 'src', @__url
@@ -175,11 +185,18 @@ uploadcare.whenReady ->
         else
           @__options.widgetSize.split 'x'
 
+      #             |
+      #             v
+      #   +----> waiting <-----+
+      #   |         |          |
+      #   |         v          |
       # error <- loading -> loaded
       __setState: (state) ->
+        return if @__state is state
+        @__state = state
         prefix = 'uploadcare-crop-widget--'
         @__widgetElement
-          .removeClass((prefix + s for s in ['error', 'loading', 'loaded']).join ' ')
+          .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
           .addClass(prefix + state)
           .trigger('uploadcare.crop.statechange', state)
         @__doneButton.prop 'disabled', state != 'loaded'

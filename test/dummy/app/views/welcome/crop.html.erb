@@ -9,23 +9,23 @@
   }
 </style>
 
-<label>Source url <input id="source-url" value="http://ucarecdn.com/85b5644f-e692-4855-9db0-8c5a83096e25/"></label>
-<br>
-<label>Prefered size <input id="prefered-size" value="200x300"></label> (may be empty)
-<br>
-<label>Widget size <input id="widget-size" value=""></label> (may be empty)
-<br>
-<label><input type="checkbox" id="scale" checked> scale</label>
-<br>
-<label><input type="checkbox" id="upscale"> upscale</label>
-<br>
-<label><input type="checkbox" id="controls" checked> controls</label>
-<br>
+<pre><code>
+widget = <button id="new">new</button> CropWidget({
+  container: '#widget-container',
+  scale: <input type="checkbox" id="scale" checked>,
+  upscale: <input type="checkbox" id="upscale">,
+  controls: <input type="checkbox" id="controls" checked>,
+  preferedSize: <input id="prefered-size" value="200x300"></label>,
+  widgetSize: <input id="widget-size" value=""></label>
+});
 
-<button id="show-widget">Show widget</button>
-<button id="force-done">Force done</button>
-<br>
-<br>
+widget.<button id="cropped-image-url">croppedImageUrl</button>(<input id="source-url" value="http://ucarecdn.com/85b5644f-e692-4855-9db0-8c5a83096e25/">)
+  .done( ... )
+  .fail( ... )
+
+widget.<button id="force-done">forceDone()</button>;
+widget.<button id="destroy">destroy()</button>;
+<code></pre>
 
 <div id="widget-container"></div>
 
@@ -35,22 +35,25 @@
   uploadcare.whenReady(function(){
     var $ = uploadcare.jQuery;
     var CropWidget = uploadcare.crop.CropWidget;
+    var widget;
 
     function log(str) {
       $('#log').html($('#log').html() + "\n" + str)
     }
 
-    $('#widget-container').on('uploadcare.crop.statechange', function(__, state){
-      $('#force-done').prop('disabled', state != 'loaded');
-    });
+    function destroy() {
+      if (widget) {
+        log('DESTROY')
+        widget.destroy()
+        widget = null
+      }
+    }
 
-    $('#show-widget').click(function(){
-
-      $('#widget-container').empty();
-
-      var widget = new CropWidget({
+    function create() {
+      destroy()
+      log('NEW')
+      widget = new CropWidget({
         container: '#widget-container',
-        url: $('#source-url').val(),
         scale: $('#scale').is(':checked'),
         upscale: $('#upscale').is(':checked'),
         controls: $('#controls').is(':checked'),
@@ -58,20 +61,31 @@
         widgetSize: $('#widget-size').val() || null
       });
 
-      widget.croppedImageUrl()
-        .done(function(url){
-          log('DONE: ' + url);
-          widget.destroy()
-        })
-        .fail(function(error){
-          log('FAIL: ' + error);
-          widget.destroy()
-        });
-
       $('#force-done').off().click(function(){
         widget.forceDone();
       });
+    }
+
+    function setUrl() {
+      var url = $('#source-url').val()
+      log('URL: ' + url)
+      widget.croppedImageUrl(url)
+        .done(function(url){
+          log('DONE: ' + url);
+        })
+        .fail(function(error){
+          log('FAIL: ' + error);
+        })
+    }
+
+    $('#widget-container').on('uploadcare.crop.statechange', function(__, state){
+      log('STATE: ' + state)
+      $('#force-done').prop('disabled', state != 'loaded');
     });
+
+    $('#new').click(create);
+    $('#cropped-image-url').click(setUrl);
+    $('#destroy').click(destroy);
 
   });
 </script>
