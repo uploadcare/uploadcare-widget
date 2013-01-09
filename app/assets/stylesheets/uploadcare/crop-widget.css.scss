@@ -1,0 +1,38 @@
+@import 'jCrop';
+
+/*
+<div class="uploadcare-crop-widget">
+  <div class="uploadcare-crop-widget__image-wrap"></div>
+  <div class="uploadcare-crop-widget__controls">
+    <button class="uploadcare-crop-widget__done-button">done</button>
+  </div>
+</div>
+*/
+.uploadcare-crop-widget {}
+.uploadcare-crop-widget--loading {}
+.uploadcare-crop-widget--loaded {}
+.uploadcare-crop-widget--error {}
+.uploadcare-crop-widget--no-controls {}
+  .uploadcare-crop-widget__image-wrap {
+    background: black;
+    .uploadcare-crop-widget--loading & {
+      background: green;
+    }
+    .uploadcare-crop-widget--error & {
+      background: red;
+    }
+  }
+    .uploadcare-crop-widget__image-wrap img {
+      display: block;
+    }
+  .uploadcare-crop-widget__controls {
+    height: 30px;
+    padding-top: 5px;
+    text-align: center;
+    .uploadcare-crop-widget--no-controls & {
+      display: none;
+    }
+  }
+    .uploadcare-crop-widget__done-button {
+    }
+

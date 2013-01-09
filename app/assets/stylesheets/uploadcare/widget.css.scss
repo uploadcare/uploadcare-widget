@@ -1,3 +1,5 @@
+@import "crop-widget";
+
 @mixin prefix($prop, $value) {
   -ms-#{$prop}: $value;
   -moz-#{$prop}: $value;
