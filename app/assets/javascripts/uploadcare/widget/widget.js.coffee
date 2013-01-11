@@ -51,14 +51,14 @@ uploadcare.whenReady ->
           .fail(@__fail)
           .done (infos...) =>
             if @settings.imagesOnly && !uploads.isImage(infos...)
-              return @__fail()
+              return @__fail('image')
             @template.setFileInfo(infos...)
             @setValue((info.fileId for info in infos).join(','))
             @template.loaded()
 
-      __fail: =>
+      __fail: (type) =>
         @__cancel()
-        @template.error()
+        @template.error(type)
         @available = true
 
       __reset: =>

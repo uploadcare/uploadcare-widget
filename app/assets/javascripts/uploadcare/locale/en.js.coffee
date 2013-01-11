@@ -4,7 +4,9 @@ uploadcare.whenReady ->
     ns.en =
       ready: 'Upload from'
       uploading: 'Uploading... Please wait.'
-      error: 'Error'
+      errors:
+        default: 'Error'
+        image: 'Only images allowed'
       draghere: 'Drop the file here'
       file:
         one: '1 file'

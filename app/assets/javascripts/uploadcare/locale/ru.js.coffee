@@ -3,7 +3,9 @@ uploadcare.whenReady ->
     ns.ru =
       ready: 'Выберите файл'
       uploading: 'Загрузка, пожалуйста, подождите'
-      error: 'Ошибка'
+      errors:
+        default: 'Ошибка'
+        image: 'Разрешены только изображения'
       draghere: 'Перетащите файл сюда'
       file:
         one: '1 файл'
