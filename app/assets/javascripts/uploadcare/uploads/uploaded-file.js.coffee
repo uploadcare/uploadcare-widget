@@ -18,11 +18,7 @@ uploadcare.whenReady ->
         $(@file)
           .on 'uploadcare.api.uploader.load', (e) =>
             @loaded = @total
-            @fileInfo = new ns.FileInfo(
-              e.target.fileId,
-              e.target.fileName,
-              e.target.fileSize
-            )
+            @fileInfo = ns.fileInfo(e.target.fileId, settings)
             callback()
 
           .on 'uploadcare.api.uploader.error', (e) =>

@@ -12,3 +12,4 @@ uploadcare.whenReady ->
 
     tabs: window.UPLOADCARE_TABS or 'url file facebook dropbox gdrive instagram'
     multiple: false
+    imagesOnly: undefined

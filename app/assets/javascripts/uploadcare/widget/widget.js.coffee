@@ -41,16 +41,17 @@ uploadcare.whenReady ->
           return
         ids = @element.val()
         if ids
-          fis = (new uploads.FileInfo(id) for id in ids.split(','))
-          @__setLoaded(fis...)
+          infos = (uploads.fileInfo(id, @settings) for id in ids.split(','))
+          @__setLoaded(infos...)
         else
           @__reset()
 
-      __setLoaded: (uploadedFiles...) ->
-        infos = (file.info(@settings) for file in uploadedFiles)
+      __setLoaded: (infos...) ->
         $.when(infos...)
           .fail(@__fail)
           .done (infos...) =>
+            if @settings.imagesOnly && !uploads.isImage(infos...)
+              return @__fail()
             @template.setFileInfo(infos...)
             @setValue((info.fileId for info in infos).join(','))
             @template.loaded()
@@ -105,7 +106,7 @@ uploadcare.whenReady ->
 
         currentUpload
           .fail(@__fail)
-          .done (uploadedFiles) => @__setLoaded(uploadedFiles...)
+          .done (infos) => @__setLoaded(infos...)
 
       __resetUpload: ->
         @uploader.reset()
