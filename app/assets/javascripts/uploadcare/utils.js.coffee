@@ -24,16 +24,17 @@ uploadcare.whenReady ->
     ns.buildSettings = (settings) ->
       settings = $.extend({}, uploadcare.defaults, settings or {})
 
-      settings.urlBase = ns.normalizeUrl(settings.urlBase)
-      settings.socialBase = ns.normalizeUrl(settings.socialBase)
-
       if $.type(settings.tabs) == "string"
         settings.tabs = settings.tabs.split(' ')
 
       settings.tabs = settings.tabs or []
 
-      if settings.multiple != false
-        settings.multiple = settings.multiple?
+      for key in ['urlBase', 'socialBase']
+        settings[key] = ns.normalizeUrl(settings[key])
+
+      for key in ['multiple', 'imagesOnly']
+        if settings[key] != false
+          settings[key] = settings[key]?
 
       settings
 

@@ -8,7 +8,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.locale', (ns) ->
     defaultLocale = 'en'
-    ns.lang = uploadcare.defaults.locale
+    ns.lang = uploadcare.defaults.locale || defaultLocale
 
     ns.translations[ns.lang] ||= {}
     $.extend(ns.translations[ns.lang], uploadcare.defaults.translations)
@@ -32,5 +32,7 @@ uploadcare.whenReady ->
         pluralize = ns.pluralize[lang]
         if pluralize?
           value = value[pluralize(n)]?.replace('%1', n) || n
+        else
+          value = ''
 
       value || ''
