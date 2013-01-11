@@ -57,6 +57,7 @@ uploadcare.whenReady ->
             @template.loaded()
 
       __fail: =>
+        @__cancel()
         @template.error()
         @available = true
 
