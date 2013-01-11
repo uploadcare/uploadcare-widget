@@ -15,7 +15,8 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Widget
-      constructor: (@element) ->
+      constructor: (element) ->
+        @element = $(element)
         @settings = utils.buildSettings @element.data()
         @uploader = new uploads.Uploader(@settings)
 
