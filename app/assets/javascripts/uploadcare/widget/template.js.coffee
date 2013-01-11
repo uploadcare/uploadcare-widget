@@ -68,6 +68,7 @@ uploadcare.whenReady ->
 
       error: ->
         @statusText.text(t('error'))
+        @circle.reset()
         @setStatus 'error'
 
       started: ->
