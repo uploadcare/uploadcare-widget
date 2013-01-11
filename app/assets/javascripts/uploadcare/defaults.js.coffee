@@ -10,6 +10,6 @@ uploadcare.whenReady ->
     urlBase: window.UPLOADCARE_URL_BASE or 'https://upload.uploadcare.com'
     socialBase: window.UPLOADCARE_SOCIAL_BASE or 'https://social.uploadcare.com'
 
-    tabs: window.UPLOADCARE_TABS or 'url file facebook instagram'
+    tabs: window.UPLOADCARE_TABS or 'url file facebook dropbox gdrive instagram'
     multiple: false
     imagesOnly: undefined
