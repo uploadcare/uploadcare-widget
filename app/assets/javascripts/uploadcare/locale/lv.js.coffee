@@ -3,7 +3,9 @@ uploadcare.whenReady ->
     ns.lv =
       ready: 'Izvēlieties failu'
       uploading: 'Augšupielādē... Lūdzu, gaidiet.'
-      error: 'Kļūda'
+      errors:
+        default: 'Kļūda'
+        image: 'Atļauti tikai attēli'
       draghere: 'Velciet failus šeit'
       file:
         zero: '0 failu'

@@ -3,7 +3,8 @@ uploadcare.whenReady ->
     ns.pl =
       ready: 'Prześlij z'
       uploading: 'Przesyłanie... Proszę czekać.'
-      error: 'Błąd'
+      errors:
+        default: 'Błąd'
       draghere: 'Upuść plik tutaj'
       buttons:
         cancel: 'Anuluj'
