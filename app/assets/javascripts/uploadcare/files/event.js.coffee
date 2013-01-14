@@ -26,6 +26,7 @@ uploadcare.whenReady ->
         # Naked XHR for progress tracking
         @xhr = new XMLHttpRequest()
         @xhr.open 'POST', targetUrl
+        @xhr.withCredentials = true
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'load', @__onLoad
