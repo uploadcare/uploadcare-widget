@@ -63,9 +63,7 @@ uploadcare.whenReady ->
 
       __setLoaded: (infos...) ->
         $.when(infos...)
-          .fail =>
-            @__fail
-
+          .fail @__fail
           .done (infos...) =>
             if @settings.imagesOnly && !uploads.isImage(infos...)
               return @__fail('image')
