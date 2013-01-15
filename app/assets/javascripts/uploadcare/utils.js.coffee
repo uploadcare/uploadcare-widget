@@ -38,6 +38,10 @@ uploadcare.whenReady ->
         if settings[key] != false
           settings[key] = settings[key]?
 
+      if settings.multiple
+        console.log 'Sorry, the multiupload is not working now'
+        settings.multiple = false
+
       settings
 
     ns.fitText = (text, max) ->
