@@ -5,6 +5,7 @@ uploadcare.whenReady ->
   css = tpl('styles')
 
   style = document.createElement('style')
+  style.setAttribute('type', 'text/css')
   if style.styleSheet?
     style.styleSheet.cssText = css
   else
