@@ -57,14 +57,14 @@ uploadcare.whenReady ->
       __changed: (e) =>
         @reloadInfo()
 
-      __setLoaded: (infos...) ->
-        $.when(infos...)
-          .fail @__fail
-          .done (infos...) =>
-            if @settings.imagesOnly && !uploads.isImage(infos...)
+      __setLoaded: (infoPr) ->
+        $.when(infoPr)
+          .fail(@__fail)
+          .done (info) =>
+            if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
-            @template.setFileInfo(infos...)
-            @setValue (info.fileId for info in infos).join(',')
+            @template.setFileInfo(info)
+            @setValue info.fileId
             @template.loaded()
 
       __fail: (type) =>
@@ -118,7 +118,7 @@ uploadcare.whenReady ->
 
         currentUpload
           .fail(@__fail)
-          .done (infos) => @__setLoaded(infos...)
+          .done (infos) => @__setLoaded(infos[0])
 
       __resetUpload: ->
         @uploader.reset()
