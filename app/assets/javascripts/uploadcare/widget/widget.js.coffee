@@ -32,30 +32,40 @@ uploadcare.whenReady ->
         @template.reset()
         @available = true
 
-      setValue: (value, ignore = true) ->
-        @ignoreChange = ignore
+        if @element.val()
+          @element.trigger('change') # get info
+
+      setValue: (value, @ignoreChange = true, @ignoreSetValueFailure = false) ->
+        # I really, really dislike arguments to this function
+
         @element.val(value).trigger('change')
 
       __changed: (e) =>
         if @ignoreChange
           @ignoreChange = false
           return
-        ids = @element.val()
-        if ids
-          infos = (uploads.fileInfo(id, @settings) for id in ids.split(','))
-          @__setLoaded(infos...)
+
+        id = utils.uuidRegex.exec @element.val()
+
+        if id
+          info = uploads.fileInfo(id[0], @settings)
+          @__setLoaded(info)
         else
           @__reset()
 
       __setLoaded: (infos...) ->
         $.when(infos...)
-          .fail(@__fail)
+          .fail =>
+            @__fail if @ignoreSetValueFailure
+            @ignoreSetValueFailure = false
+
           .done (infos...) =>
             if @settings.imagesOnly && !uploads.isImage(infos...)
               return @__fail('image')
             @template.setFileInfo(infos...)
             @setValue((info.fileId for info in infos).join(','))
             @template.loaded()
+            @ignoreSetValueFailure = false
 
       __fail: (type) =>
         @__cancel()
