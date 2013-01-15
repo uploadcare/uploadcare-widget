@@ -20,6 +20,8 @@ uploadcare.whenReady ->
         @settings = utils.buildSettings @element.data()
         @uploader = new uploads.Uploader(@settings)
 
+        @currentId = null
+
         @template = new ns.Template(@element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
@@ -32,29 +34,37 @@ uploadcare.whenReady ->
         @template.reset()
         @available = true
 
-      setValue: (value, ignore = true) ->
-        @ignoreChange = ignore
-        @element.val(value).trigger('change')
+        @reloadInfo()
+
+      setValue: (value) ->
+        @element.val(value)
+
+        @reloadInfo()
+
+      reloadInfo: ->
+        id = utils.uuidRegex.exec @element.val()
+        id = if id then id[0] else null
+
+        if @currentId != id
+          @currentId = id
+
+          if id
+            info = uploads.fileInfo(id, @settings)
+            @__setLoaded(info)
+          else
+            @__reset()
 
       __changed: (e) =>
-        if @ignoreChange
-          @ignoreChange = false
-          return
-        ids = @element.val()
-        if ids
-          infos = (uploads.fileInfo(id, @settings) for id in ids.split(','))
-          @__setLoaded(infos...)
-        else
-          @__reset()
+        @reloadInfo()
 
-      __setLoaded: (infos...) ->
-        $.when(infos...)
+      __setLoaded: (infoPr) ->
+        $.when(infoPr)
           .fail(@__fail)
-          .done (infos...) =>
-            if @settings.imagesOnly && !uploads.isImage(infos...)
+          .done (info) =>
+            if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
-            @template.setFileInfo(infos...)
-            @setValue((info.fileId for info in infos).join(','))
+            @template.setFileInfo(info)
+            @setValue info.fileId
             @template.loaded()
 
       __fail: (type) =>
@@ -71,7 +81,7 @@ uploadcare.whenReady ->
 
       __cancel: =>
         @__reset()
-        @setValue('')
+        @setValue ''
 
       __setupWidget: ->
         # Initialize the file browse button
@@ -90,7 +100,7 @@ uploadcare.whenReady ->
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
-        utils.fileInput @fileButton, @settings.multiple, (e) =>
+        utils.fileInput @fileButton, false, (e) =>
           @upload('event', e)
 
       upload: (args...) =>
@@ -108,7 +118,7 @@ uploadcare.whenReady ->
 
         currentUpload
           .fail(@__fail)
-          .done (infos) => @__setLoaded(infos...)
+          .done (infos) => @__setLoaded(infos[0])
 
       __resetUpload: ->
         @uploader.reset()
