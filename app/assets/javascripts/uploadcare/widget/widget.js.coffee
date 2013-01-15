@@ -20,6 +20,8 @@ uploadcare.whenReady ->
         @settings = utils.buildSettings @element.data()
         @uploader = new uploads.Uploader(@settings)
 
+        @currentId = null
+
         @template = new ns.Template(@element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
@@ -32,40 +34,44 @@ uploadcare.whenReady ->
         @template.reset()
         @available = true
 
-        if @element.val()
-          @element.trigger('change') # get info
+        @reloadInfo()
 
-      setValue: (value, @ignoreChange = true, @ignoreSetValueFailure = false) ->
-        # I really, really dislike arguments to this function
+      setValue: (value) ->
+        @element.val(value)
 
-        @element.val(value).trigger('change')
+        @reloadInfo()
+
+      reloadInfo: ->
+        id = utils.uuidRegex.exec @element.val()
+        id = if id then id[0] else null
+
+        if @currentId != id
+          @currentId = id
+
+          if id
+            info = uploads.fileInfo(id, @settings)
+            @__setLoaded(info)
+          else
+            @__reset()
 
       __changed: (e) =>
         if @ignoreChange
           @ignoreChange = false
           return
 
-        id = utils.uuidRegex.exec @element.val()
-
-        if id
-          info = uploads.fileInfo(id[0], @settings)
-          @__setLoaded(info)
-        else
-          @__reset()
+        @reloadInfo()
 
       __setLoaded: (infos...) ->
         $.when(infos...)
           .fail =>
-            @__fail if @ignoreSetValueFailure
-            @ignoreSetValueFailure = false
+            @__fail
 
           .done (infos...) =>
             if @settings.imagesOnly && !uploads.isImage(infos...)
               return @__fail('image')
             @template.setFileInfo(infos...)
-            @setValue((info.fileId for info in infos).join(','))
+            @setValue (info.fileId for info in infos).join(',')
             @template.loaded()
-            @ignoreSetValueFailure = false
 
       __fail: (type) =>
         @__cancel()
@@ -81,7 +87,7 @@ uploadcare.whenReady ->
 
       __cancel: =>
         @__reset()
-        @setValue('')
+        @setValue ''
 
       __setupWidget: ->
         # Initialize the file browse button
