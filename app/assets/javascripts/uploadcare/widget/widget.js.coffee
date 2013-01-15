@@ -55,10 +55,6 @@ uploadcare.whenReady ->
             @__reset()
 
       __changed: (e) =>
-        if @ignoreChange
-          @ignoreChange = false
-          return
-
         @reloadInfo()
 
       __setLoaded: (infos...) ->
