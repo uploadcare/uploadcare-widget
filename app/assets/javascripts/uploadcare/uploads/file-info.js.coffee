@@ -18,6 +18,7 @@ uploadcare.whenReady ->
           fileName: data.original_filename
           fileSize: data.size
           image: data.is_image
+          isStored: data.is_stored
       .fail(=> df.reject())
 
       df.promise()

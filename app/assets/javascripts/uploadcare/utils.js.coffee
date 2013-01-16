@@ -31,7 +31,7 @@ uploadcare.whenReady ->
 
       settings.tabs = settings.tabs or []
 
-      for key in ['urlBase', 'socialBase']
+      for key in ['urlBase', 'socialBase', 'cdnBase']
         settings[key] = ns.normalizeUrl(settings[key])
 
       for key in ['multiple', 'imagesOnly']
