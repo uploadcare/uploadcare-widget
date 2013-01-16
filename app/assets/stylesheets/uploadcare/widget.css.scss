@@ -159,12 +159,12 @@ $dragndrop-text-color: #707478;
 }
 
 
-$dialog-max-tabs: 6;
+$dialog-max-tabs: 8;
 $dialog-tab-width: x(3);
 $dialog-tab-height: y(3);
 $dialog-body-height: $dialog-tab-height * $dialog-max-tabs;
 
-$dialog-width: x(26);
+$dialog-width: x(36);
 $dialog-height: y(3) + $dialog-body-height;
 
 $dialog-corner-radius: 10px;
