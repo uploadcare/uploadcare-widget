@@ -22,7 +22,7 @@ uploadcare.whenReady ->
 
         @currentId = null
 
-        @template = new ns.Template(@element)
+        @template = new ns.Template(@settings, @element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
           @__cancel
