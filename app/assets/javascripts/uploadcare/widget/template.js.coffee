@@ -21,11 +21,6 @@ uploadcare.whenReady ->
 
         @statusText = @content.find('@uploadcare-widget-status-text')
         @buttonsContainer = @content.find('@uploadcare-widget-buttons')
-        @cancelButton = @buttonsContainer.find('@uploadcare-widget-buttons-cancel')
-        @removeButton = @buttonsContainer.find('@uploadcare-widget-buttons-remove')
-
-        @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
-        @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
 
         @dropArea = @content.find('@uploadcare-drop-area')
 
@@ -44,9 +39,14 @@ uploadcare.whenReady ->
       removeState: (state) ->
         @content.removeClass("uploadcare-widget-state-#{state}")
 
-      addButton: (name) ->
-        li = $('<li>').addClass("uploadcare-widget-buttons-#{name}")
-        @buttonsContainer.find('@uploadcare-widget-buttons-cancel').before(li)
+      addButton: (name, captioned = false) ->
+        role = "uploadcare-widget-buttons-#{name}"
+        li = $('<li>')
+          .addClass(role)
+          .attr('role', role)
+        if captioned
+          li.text(t("buttons.#{name}"))
+        @buttonsContainer.append(li)
         return li
 
       setStatus: (status) ->

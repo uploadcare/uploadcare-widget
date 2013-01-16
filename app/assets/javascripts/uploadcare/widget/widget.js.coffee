@@ -23,10 +23,9 @@ uploadcare.whenReady ->
         @currentId = null
 
         @template = new ns.Template(@element)
-        $(@template).on(
-          'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
-          @__cancel
-        )
+
+        @template.addButton('cancel', true).on('click', @__cancel)
+        @template.addButton('remove', true).on('click', @__cancel)
 
         @element.on('change', @__changed)
 
