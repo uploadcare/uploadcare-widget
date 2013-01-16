@@ -32,7 +32,7 @@ uploadcare.whenReady ->
             })
             .val(value)
 
-        $(input).clone(true).insertBefore(input)
+        $(@input).clone(true).insertBefore(@input)
 
         @iframeForm = $('<form>')
           .attr({
@@ -43,7 +43,7 @@ uploadcare.whenReady ->
           })
           .append(formParam('UPLOADCARE_PUB_KEY', settings.publicKey))
           .append(formParam('UPLOADCARE_FILE_ID', @fileId))
-          .append(input)
+          .append(@input)
           .css('display', 'none')
           .appendTo('body')
           .on('submit', @__onStart)

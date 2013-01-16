@@ -29,7 +29,7 @@ uploadcare.whenReady ->
             e.target.files
           new ns.EventFile(file) for file in files
         else
-          new ns.InputFile(fileable.target)
+          new ns.InputFile(e.target)
 
       url: (uris) ->
         urls = uris.split('\n')
