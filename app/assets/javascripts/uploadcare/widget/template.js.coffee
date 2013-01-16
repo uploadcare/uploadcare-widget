@@ -86,7 +86,7 @@ uploadcare.whenReady ->
           size = infos[0].fileSize
 
           if infos[0].isStored
-            href = "#{@settings.cdnBase}/#{infos[0].fileId}/"
+            href = "#{@settings.cdnBase}/#{infos[0].fileId}/#{infos[0].fileName}"
             caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
 
         size = Math.ceil(size / 1024).toString()
