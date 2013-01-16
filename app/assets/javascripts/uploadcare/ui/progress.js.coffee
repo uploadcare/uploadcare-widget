@@ -48,9 +48,9 @@ uploadcare.whenReady ->
               @__update 1, false
 
 
-      reset: ->
+      reset: (filled = false) ->
         @observed = null
-        @__update 0, true
+        @__update (if filled then 100 else 0), true
 
       __update: (val, instant = false) -> # val in [0..1]
         val = 1 if val > 1
