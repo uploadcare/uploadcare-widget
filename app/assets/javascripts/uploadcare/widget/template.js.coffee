@@ -62,6 +62,7 @@ uploadcare.whenReady ->
 
       loaded: ->
         @setStatus 'loaded'
+        @circle.reset true
 
       listen: (uploadDeferred) ->
         @circle.listen uploadDeferred
