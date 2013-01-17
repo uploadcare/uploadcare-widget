@@ -62,7 +62,6 @@ uploadcare.whenReady ->
       # Example:
       #   new CropWidget
       #     container: '.crop-widget-home'
-      #     url: 'http://ucarecdn.com/%something%/'
       #     upscale: true
       #     widgetSize: '500x300'
       #     preferedSize: '100x100'
@@ -74,7 +73,7 @@ uploadcare.whenReady ->
         
       # Example:
       #   cropWidget = new CropWidget( ... )
-      #   cropWidget.croppedImageUrl(originalUrl)
+      #   cropWidget.croppedImageUrl('http://ucarecdn.com/%something%/')
       #     .done (url) ->
       #       # ...
       #     .fail (error) ->
