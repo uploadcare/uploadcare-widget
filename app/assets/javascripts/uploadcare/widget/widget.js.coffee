@@ -36,10 +36,9 @@ uploadcare.whenReady ->
 
         @reloadInfo()
 
-      setValue: (value) ->
+      setValue: (value, changed = true) ->
         @element.val(value)
-
-        @reloadInfo()
+        @element.trigger('change') if changed
 
       reloadInfo: ->
         id = utils.uuidRegex.exec @element.val()
@@ -50,22 +49,22 @@ uploadcare.whenReady ->
 
           if id
             info = uploads.fileInfo(id, @settings)
-            @__setLoaded(info)
+            @__setLoaded(info, false)
           else
             @__reset()
 
       __changed: (e) =>
         @reloadInfo()
 
-      __setLoaded: (infoPr) ->
+      __setLoaded: (infoPr, changed = true) ->
         $.when(infoPr)
           .fail(@__fail)
           .done (info) =>
             if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
             @template.setFileInfo(info)
-            @setValue info.fileId
             @template.loaded()
+            @setValue(info.fileId, changed)
 
       __fail: (type) =>
         @__cancel()
@@ -81,7 +80,7 @@ uploadcare.whenReady ->
 
       __cancel: =>
         @__reset()
-        @setValue ''
+        @setValue('')
 
       __setupWidget: ->
         # Initialize the file browse button
