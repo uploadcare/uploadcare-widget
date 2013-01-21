@@ -30,7 +30,7 @@ uploadcare.whenReady ->
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
         @xhr.addEventListener 'error timeout abort', @__onError
         @xhr.addEventListener 'load', @__onLoad
-        @xhr.addEventListener 'loadend', => @__fail() unless @xhr.status
+        @xhr.addEventListener 'loadend', => @__fail() if @xhr? && !@xhr.status
         @xhr.upload.addEventListener 'progress', @__onProgress
         @xhr.send formData
 

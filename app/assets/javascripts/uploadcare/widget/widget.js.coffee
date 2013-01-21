@@ -25,7 +25,7 @@ uploadcare.whenReady ->
         @template = new ns.Template(@settings, @element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
-          @__cancel
+          => @setValue('')
         )
 
         @element.on('change', @__changed)
@@ -36,11 +36,14 @@ uploadcare.whenReady ->
 
         @reloadInfo()
 
+      setValue: (value) ->
+        @element.val(value).change()
+
       reloadInfo: ->
         id = utils.uuidRegex.exec @element.val()
         id = if id then id[0] else null
 
-        if @currentId != id
+        if !id || @currentId != id
           @currentId = id
 
           if id
@@ -63,7 +66,7 @@ uploadcare.whenReady ->
             @element.val(info.fileId)
 
       __fail: (type) =>
-        @__cancel()
+        @setValue('')
         @template.error(type)
         @available = true
 
@@ -73,10 +76,6 @@ uploadcare.whenReady ->
         @available = true
         @template.reset()
         $(this).trigger('uploadcare.widget.cancel')
-
-      __cancel: =>
-        @__reset()
-        @element.val('').trigger('change')
 
       __setupWidget: ->
         # Initialize the file browse button
@@ -116,7 +115,7 @@ uploadcare.whenReady ->
           .done (infos) =>
             info = infos[0] # FIXME
             @__setLoaded(info)
-            info.done => @element.trigger('change')
+            info.done => @element.change()
 
       __resetUpload: ->
         @uploader.reset()
