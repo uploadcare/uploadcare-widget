@@ -53,19 +53,15 @@ uploadcare.whenReady ->
         @reloadInfo()
 
       __setLoaded: (infoPr) ->
-        dfd = $.Deferred()
         $.when(infoPr)
           .fail =>
             @__fail()
-            dfd.reject()
           .done (info) =>
             if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
             @template.setFileInfo(info)
             @template.loaded()
             @element.val(info.fileId)
-            dfd.resolve()
-        dfd.promise()
 
       __fail: (type) =>
         @__cancel()
@@ -119,8 +115,9 @@ uploadcare.whenReady ->
         currentUpload
           .fail(@__fail)
           .done (infos) =>
-            @__setLoaded(infos[0]).done =>
-              @element.trigger('change')
+            info = infos[0] # FIXME
+            @__setLoaded(info)
+            info.done => @element.trigger('change')
 
       __resetUpload: ->
         @uploader.reset()
