@@ -18,40 +18,23 @@ uploadcare.whenReady ->
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
 
-      $ .Deferred ->
-          $.extend this, dialogUiMixin
-
-          @settings = settings
-
-          @__createDialog()
-
-          @always @__closeDialog
-        .pipe(files.toFiles, -> 'dialog was closed')
-        .promise()
-
+      $.Deferred( ->
+        $.extend this, {settings}, dialogUiMixin
+        ns.DialogApi.show this
+      ).pipe(files.toFiles, -> 'dialog was closed').promise()
 
     dialogUiMixin =
-      __createDialog: ->
-        @content = $(tpl('dialog'))
-          .hide()
-          .appendTo('body')
 
-        @content.on 'click', (e) =>
-          e.stopPropagation()
-          @reject() if e.target == e.currentTarget
+      # for `DialogApi`
+      el: ->
+        unless @content
+          @__render()
+        return @content
+      closed: -> @reject()
 
-        closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @reject()
-
-        $(window).on 'keydown', (e) =>
-          @reject() if e.which == 27 # Escape
-
+      __render: ->
+        @content = $ tpl 'dialog-step1'
         @__prepareTabs()
-
-        @content.fadeIn('fast')
-
-      __closeDialog: ->
-        @content.fadeOut 'fast', => @content.off().remove()
 
       __prepareTabs: ->
         @tabs = {}
@@ -86,13 +69,13 @@ uploadcare.whenReady ->
             .hide()
             .addClass('uploadcare-dialog-tabs-panel')
             .addClass("uploadcare-dialog-tabs-panel-#{name}")
-            .appendTo(@content.find('.uploadcare-dialog-body'))
+            .appendTo(@content)
           panel.append(tpl("tab-#{name}"))
           tab.setContent(panel)
         tab
 
       __switchTab: (@currentTab) ->
-        @content.find('.uploadcare-dialog-body')
+        @content
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
             .end()

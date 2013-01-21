@@ -2,6 +2,7 @@
 # = require ./dragdrop
 # = require ./template
 # = require ./dialog
+# = require ./dialog-api
 
 uploadcare.whenReady ->
   {
@@ -123,19 +124,9 @@ uploadcare.whenReady ->
       __resetUpload: ->
         @uploader.reset()
 
-      currentDialog = null
-
-      dialog: -> currentDialog
-
       openDialog: ->
-        @closeDialog()
-        currentDialog = ns.showDialog(@settings)
+        ns.showDialog(@settings)
           .done(@upload)
-          .always( -> currentDialog = null)
-
-
-      closeDialog: ->
-        currentDialog?.close()
 
     initialize
       name: 'widget'
