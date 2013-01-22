@@ -43,14 +43,14 @@ uploadcare.whenReady ->
         id = utils.uuidRegex.exec @element.val()
         id = if id then id[0] else null
 
-        if !id || @currentId != id
+        if @currentId != id
           @currentId = id
-
           if id
             info = uploads.fileInfo(id, @settings)
             @__setLoaded(info)
-          else
-            @__reset()
+
+        if !id
+          @__reset()
 
       __changed: (e) =>
         @reloadInfo()
