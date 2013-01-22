@@ -17,6 +17,7 @@ uploadcare.whenReady ->
       reset: ->
         upload.cancel() for upload in @uploads if @uploads?
         @uploads = []
+        @uploadDef?.reject(false) # Reject as aborted
         @uploadDef = $.Deferred()
         @uploadDef.fail => @reset()
 
@@ -53,7 +54,7 @@ uploadcare.whenReady ->
         progress.value = progressSum / progressRecs
 
         if error
-          @uploadDef.reject()
+          @uploadDef.reject(true) # Reject as error
         else if loaded
           @uploadDef.resolve(info)
         else

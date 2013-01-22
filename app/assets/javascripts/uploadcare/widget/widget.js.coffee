@@ -111,7 +111,8 @@ uploadcare.whenReady ->
         @template.listen(currentUpload)
 
         currentUpload
-          .fail(@__fail)
+          .fail (error) =>
+            @__fail() if error
           .done (infos) =>
             info = infos[0] # FIXME
             @__setLoaded(info)
