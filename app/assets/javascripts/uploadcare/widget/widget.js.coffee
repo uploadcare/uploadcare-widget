@@ -25,7 +25,7 @@ uploadcare.whenReady ->
         @template = new ns.Template(@settings, @element)
         $(@template).on(
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
-          @__cancel
+          => @setValue('')
         )
 
         @element.on('change', @__changed)
@@ -37,9 +37,7 @@ uploadcare.whenReady ->
         @reloadInfo()
 
       setValue: (value) ->
-        @element.val(value)
-
-        @reloadInfo()
+        @element.val(value).change()
 
       reloadInfo: ->
         id = utils.uuidRegex.exec @element.val()
@@ -47,12 +45,12 @@ uploadcare.whenReady ->
 
         if @currentId != id
           @currentId = id
-
           if id
             info = uploads.fileInfo(id, @settings)
             @__setLoaded(info)
-          else
-            @__reset()
+
+        if !id
+          @__reset()
 
       __changed: (e) =>
         @reloadInfo()
@@ -64,11 +62,11 @@ uploadcare.whenReady ->
             if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
             @template.setFileInfo(info)
-            @setValue info.fileId
             @template.loaded()
+            @element.val(info.fileId)
 
       __fail: (type) =>
-        @__cancel()
+        @setValue('')
         @template.error(type)
         @available = true
 
@@ -78,10 +76,6 @@ uploadcare.whenReady ->
         @available = true
         @template.reset()
         $(this).trigger('uploadcare.widget.cancel')
-
-      __cancel: =>
-        @__reset()
-        @setValue ''
 
       __setupWidget: ->
         # Initialize the file browse button
@@ -117,8 +111,12 @@ uploadcare.whenReady ->
         @template.listen(currentUpload)
 
         currentUpload
-          .fail(@__fail)
-          .done (infos) => @__setLoaded(infos[0])
+          .fail (error) =>
+            @__fail() if error
+          .done (infos) =>
+            info = infos[0] # FIXME
+            @__setLoaded(info)
+            info.done => @element.change()
 
       __resetUpload: ->
         @uploader.reset()
