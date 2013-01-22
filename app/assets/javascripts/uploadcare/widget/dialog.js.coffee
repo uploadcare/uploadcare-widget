@@ -68,7 +68,7 @@ uploadcare.whenReady ->
           when 'file' then tabs.FileTab
           when 'url' then tabs.UrlTab
           when 'facebook' then tabs.RemoteTabFor 'facebook'
-          when 'dropbox' then tabs.RemoteTabFor 'dropbox'
+          # when 'dropbox' then tabs.RemoteTabFor 'dropbox'
           when 'gdrive' then tabs.RemoteTabFor 'gdrive'
           when 'instagram' then tabs.RemoteTabFor 'instagram'
 
