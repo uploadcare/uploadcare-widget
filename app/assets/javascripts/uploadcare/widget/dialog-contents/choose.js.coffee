@@ -19,17 +19,17 @@ uploadcare.whenReady ->
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
       $.Deferred( ->
-        $.extend this, {settings}, step1Mixin
+        $.extend this, {settings}, chooseMixin
         @__init()
       ).pipe(files.toFiles, -> 'dialog was closed').promise()
 
-    step1Mixin =
+    chooseMixin =
 
       __init: ->
         ns.__dialogFrame.show this
 
       __render: ->
-        @content = $ tpl 'dialog-step1'
+        @content = $ tpl 'dialog-choose'
         @__prepareTabs()
 
       __prepareTabs: ->

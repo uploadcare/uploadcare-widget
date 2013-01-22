@@ -24,7 +24,7 @@ uploadcare.whenReady ->
         @__setFile @file
       
       __render: ->
-        @container = $ tpl 'dialog-step2-preview'
+        @container = $ tpl 'dialog-preview'
         @backButton = @container.find '@uploadcare-dialog-preview-back'
         @okButton = @container.find '@uploadcare-dialog-preview-ok'
 

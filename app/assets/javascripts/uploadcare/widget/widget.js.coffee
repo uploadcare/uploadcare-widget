@@ -2,7 +2,7 @@
 # = require ./dragdrop
 # = require ./template
 # = require ./dialog-frame
-# = require ./dialog
+# = require ./dialog-contents/choose.js.coffee
 # = require ./dialog-contents/preview.js.coffee
 
 uploadcare.whenReady ->
