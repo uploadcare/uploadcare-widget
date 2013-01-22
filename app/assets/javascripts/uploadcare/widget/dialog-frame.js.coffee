@@ -12,7 +12,7 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
 
     # The global dialog frame, that can show any `dialogContent`
-    ns.DialogApi =
+    ns.__dialogFrame =
 
       __init: ->
         @__render()
@@ -34,29 +34,37 @@ uploadcare.whenReady ->
 
       show: (dialogContent) ->
         @dialogContent?.closed?()
-        @__setContent dialogContent
-        @__open()
-
-      # same as show() but, don't close current content (just detach)
-      replace: (dialogContent) ->
-        @dialogContent?.detached?()
+        @__detach()
         @__setContent dialogContent
         @__open()
 
       __close: ->
         @dialogContent?.closed?()
+        @__detach()
         @container.fadeOut 'fast'
+
+      __closeLater: ->
+        setTimeout ( => 
+          @__close() unless @dialogContent
+        ), 100
 
       __open: ->
         @container.fadeIn 'fast'
 
+      __detach: ->
+        @dialogContent?.el().detach()
+        @dialogContent = null
+
       __setContent: (dialogContent) ->
         @dialogContent = dialogContent
-        @contentContainer
-          .empty()
-          .append dialogContent.el()
-        dialogContent.always =>
-          @__close() if @dialogContent == dialogContent
+        @contentContainer.append dialogContent.el()
+        unless dialogContent.__alreadyWasHere
+          dialogContent.__alreadyWasHere = true
+          dialogContent.__detachFromFrame = =>
+            if @dialogContent == dialogContent
+              @__detach()
+              @__closeLater()
+          dialogContent.always dialogContent.__detachFromFrame
+            
 
-
-    $ -> ns.DialogApi.__init()
+    $ -> ns.__dialogFrame.__init()

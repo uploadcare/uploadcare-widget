@@ -15,22 +15,18 @@ uploadcare.whenReady ->
   {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget', (ns) ->
+
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
-
       $.Deferred( ->
-        $.extend this, {settings}, dialogUiMixin
-        ns.DialogApi.show this
+        $.extend this, {settings}, step1Mixin
+        @__init()
       ).pipe(files.toFiles, -> 'dialog was closed').promise()
 
-    dialogUiMixin =
+    step1Mixin =
 
-      # for `DialogApi`
-      el: ->
-        unless @content
-          @__render()
-        return @content
-      closed: -> @reject()
+      __init: ->
+        ns.__dialogFrame.show this
 
       __render: ->
         @content = $ tpl 'dialog-step1'
@@ -88,3 +84,10 @@ uploadcare.whenReady ->
               .show()
 
         @notify @currentTab
+
+      el: ->
+        @__render() unless @content
+        return @content
+
+      closed: -> 
+        @reject()

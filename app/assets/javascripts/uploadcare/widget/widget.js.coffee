@@ -1,8 +1,9 @@
 # = require ../files
 # = require ./dragdrop
 # = require ./template
+# = require ./dialog-frame
 # = require ./dialog
-# = require ./dialog-api
+# = require ./dialog-contents/preview.js.coffee
 
 uploadcare.whenReady ->
   {
@@ -125,8 +126,11 @@ uploadcare.whenReady ->
         @uploader.reset()
 
       openDialog: ->
-        ns.showDialog(@settings)
-          .done(@upload)
+        step1 = @__getStep1Content()
+        step2 = ns.showPreview(@settings, step1, @__getStep1Content)
+
+      __getStep1Content: =>
+        ns.showDialog(@settings).done(@upload)
 
     initialize
       name: 'widget'
