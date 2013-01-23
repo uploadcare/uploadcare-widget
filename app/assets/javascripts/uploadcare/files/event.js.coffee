@@ -28,17 +28,18 @@ uploadcare.whenReady ->
         @xhr.open 'POST', targetUrl
         @xhr.withCredentials = true
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @xhr.addEventListener 'error timeout abort', @__onError
+        @xhr.addEventListener 'error timeout', @__onError
         @xhr.addEventListener 'load', @__onLoad
-        @xhr.addEventListener 'loadend', => @__fail() unless @xhr.status
+        @xhr.addEventListener 'loadend', => @__fail() if @xhr? && !@xhr.status
         @xhr.upload.addEventListener 'progress', @__onProgress
         @xhr.send formData
 
       cancel: -> @__cleanUp()
 
       __cleanUp: ->
-        @xhr?.abort()
+        xhr = @xhr
         @xhr = null
+        xhr.abort() # Correct order to avoid errors
 
       __fail: -> @__onError()
 
