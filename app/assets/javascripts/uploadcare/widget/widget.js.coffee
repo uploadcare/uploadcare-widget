@@ -30,6 +30,8 @@ uploadcare.whenReady ->
           @__cancel
         )
 
+        $(@template).on('uploadcare.widget.template.show-file', @openDialogOnStep2)
+
         @element.on('change', @__changed)
 
         @__setupWidget()
@@ -63,6 +65,7 @@ uploadcare.whenReady ->
         $.when(infoPr)
           .fail(@__fail)
           .done (info) =>
+            @fileInfo = info
             if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
             @template.setFileInfo(info)
@@ -129,9 +132,11 @@ uploadcare.whenReady ->
         step1 = @__getStep1Content()
         step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
 
-      openDialogOnStep2: ->
-        # step1 = ?
-        # step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
+      openDialogOnStep2: =>
+        # alert('hello')
+        # debugger
+        step1 = $.Deferred().resolve(@fileInfo).promise()
+        step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
 
       __getStep1Content: =>
         ns.showChooseDialog(@settings).done(@upload)

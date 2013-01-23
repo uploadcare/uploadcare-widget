@@ -41,12 +41,17 @@ uploadcare.whenReady ->
         @file.done (something) =>
           @__render @__extractData something
           ns.__dialogFrame.show this
+        @file.fail => @reject()
 
       __extractData: (something) ->
         if $.isArray something
           something = something[0]
 
         url = name = null
+
+        debugger
+
+        # FIXME: silly data type detection
 
         # uploadcare.files.UrlFile
         if something.url
@@ -57,12 +62,21 @@ uploadcare.whenReady ->
         if something.file
           name = something.file.name
           url = utils.createObjectUrl something.file
-        
-        isImage = utils.isImage(url) or utils.isImage(name)
+
+        # uploadcare.uploads.fileInfo response
+        if something.fileId
+          name = something.fileName
+          url = "#{@settings.urlBase}/preview/?file_id=#{something.fileId}&pub_key=#{@settings.publicKey}"
+          isImage = something.image
+
+        if isImage == undefined
+          isImage = utils.isImage(url) or utils.isImage(name)
 
         type = 'unknown'
+
         if isImage
           type = 'image'
+          
         # if isImage and %crop%
         #   type = 'crop'
 
