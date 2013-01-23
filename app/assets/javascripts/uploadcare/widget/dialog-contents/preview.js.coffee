@@ -11,7 +11,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
 
-    ns.showPreview = (settings = {}, file, ___getNewFile) ->
+    ns.showPreviewDialog = (settings = {}, file, ___getNewFile) ->
       settings = utils.buildSettings settings
       $.Deferred( ->
         $.extend this, {settings, file, ___getNewFile}, previewMixin
@@ -23,10 +23,11 @@ uploadcare.whenReady ->
       __init: ->
         @__setFile @file
       
-      __render: ->
-        @container = $ tpl 'dialog-preview'
+      __render: (data) ->
+        @container = $ tpl("dialog-preview-#{data.type}", data)
         @backButton = @container.find '@uploadcare-dialog-preview-back'
         @okButton = @container.find '@uploadcare-dialog-preview-ok'
+        @__bind()
 
       __bind: ->
         @backButton.click => @__getNewFile()
@@ -37,13 +38,37 @@ uploadcare.whenReady ->
         @__setFile @___getNewFile()
 
       __setFile: (@file) ->
-        @file.done (fileInfo) =>
+        @file.done (something) =>
+          @__render @__extractData something
           ns.__dialogFrame.show this
 
+      __extractData: (something) ->
+        if $.isArray something
+          something = something[0]
+
+        url = name = null
+
+        # uploadcare.files.UrlFile
+        if something.url
+          url = something.url
+          name = null
+
+        # uploadcare.files.EventFile
+        if something.file
+          name = something.file.name
+          url = utils.createObjectUrl something.file
+        
+        isImage = utils.isImage(url) or utils.isImage(name)
+
+        type = 'unknown'
+        if isImage
+          type = 'image'
+        # if isImage and %crop%
+        #   type = 'crop'
+
+        return {url, name, isImage, type}
+
       el: ->
-        unless @container
-          @__render()
-          @__bind()
         @container
 
       closed: ->

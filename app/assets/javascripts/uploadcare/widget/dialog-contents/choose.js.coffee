@@ -16,7 +16,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
 
-    ns.showDialog = (settings = {}) ->
+    ns.showChooseDialog = (settings = {}) ->
       settings = utils.buildSettings settings
       $.Deferred( ->
         $.extend this, {settings}, chooseMixin

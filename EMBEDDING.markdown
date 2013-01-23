@@ -22,7 +22,7 @@
         var circle = new uploadcare.ui.progress.Circle('#circle');
 
         myButton.click(function() {
-            uploadcare.widget.showDialog().pipe(function(file) {
+            uploadcare.widget.showChooseDialog().pipe(function(file) {
                 var upload = uploader.upload(file);
 
                 circle.listen(upload);

@@ -127,10 +127,14 @@ uploadcare.whenReady ->
 
       openDialog: ->
         step1 = @__getStep1Content()
-        step2 = ns.showPreview(@settings, step1, @__getStep1Content)
+        step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
+
+      openDialogOnStep2: ->
+        # step1 = ?
+        # step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
 
       __getStep1Content: =>
-        ns.showDialog(@settings).done(@upload)
+        ns.showChooseDialog(@settings).done(@upload)
 
     initialize
       name: 'widget'
