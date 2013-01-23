@@ -49,8 +49,6 @@ uploadcare.whenReady ->
 
         url = name = null
 
-        debugger
-
         # FIXME: silly data type detection
 
         # uploadcare.files.UrlFile

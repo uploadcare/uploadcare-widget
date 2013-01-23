@@ -99,8 +99,12 @@ uploadcare.whenReady ->
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
+        step1 = $.Deferred()
+        step2 = ns.showPreviewDialog(@settings, step1.promise(), @__getStep1Content)
         utils.fileInput @fileButton, false, (e) =>
-          @upload('event', e)
+          file = files.toFiles 'event', e
+          step1.resolve file
+          @upload file
 
       upload: (args...) =>
         # Allow two types of calls:
