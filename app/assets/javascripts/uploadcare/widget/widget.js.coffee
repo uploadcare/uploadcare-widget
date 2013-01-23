@@ -99,11 +99,9 @@ uploadcare.whenReady ->
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
-        step1 = $.Deferred()
-        step2 = ns.showPreviewDialog(@settings, step1.promise(), @__getStep1Content)
         utils.fileInput @fileButton, false, (e) =>
           file = files.toFiles 'event', e
-          step1.resolve file
+          @__step2Promise $.Deferred().resolve(file)
           @upload file
 
       upload: (args...) =>
@@ -131,17 +129,20 @@ uploadcare.whenReady ->
         @uploader.reset()
 
       openDialog: ->
-        step1 = @__getStep1Content()
-        step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
+        @__step2Promise @__getStep1Content()
 
       openDialogOnStep2: =>
-        # alert('hello')
-        # debugger
-        step1 = $.Deferred().resolve(@fileInfo).promise()
-        step2 = ns.showPreviewDialog(@settings, step1, @__getStep1Content)
+        @__step2Promise $.Deferred().resolve(@fileInfo)
 
       __getStep1Content: =>
         ns.showChooseDialog(@settings).done(@upload)
+
+      # show step 2 of dialog when step1Pr resolves
+      __step2Promise: (step1Pr) ->
+        ns.showPreviewDialog(@settings, step1Pr.promise(), @__getStep1Content)
+          .fail(=> @setValue(''))
+          .done (modifiers) ->
+            # TODO
 
     initialize
       name: 'widget'
