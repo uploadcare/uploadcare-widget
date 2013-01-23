@@ -15,6 +15,7 @@ uploadcare.whenReady ->
     ns.__dialogFrame =
 
       __init: ->
+        @__opened = false
         @__render()
         @__bind()
 
@@ -38,7 +39,11 @@ uploadcare.whenReady ->
         @__setContent dialogContent
         @__open()
 
+      isOpened: ->
+        @__opened
+
       __close: ->
+        @__opened = false
         @dialogContent?.closed?()
         @__detach()
         @container.fadeOut 'fast'
@@ -49,6 +54,7 @@ uploadcare.whenReady ->
         ), 100
 
       __open: ->
+        @__opened = true
         @container.fadeIn 'fast'
 
       __detach: ->

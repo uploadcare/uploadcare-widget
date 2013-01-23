@@ -93,16 +93,19 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @openDialog()
 
         # Enable drag and drop
-        ns.dragdrop.receiveDrop(@upload, @template.dropArea)
+        ns.dragdrop.receiveDrop(@__uploadAndShowPreview, @template.dropArea)
         @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
-          unless active && @dialog()?
+          unless active && ns.__dialogFrame.isOpened()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
+      __uploadAndShowPreview: (args...) =>
+        file = files.toFiles args...
+        @__step2Promise $.Deferred().resolve(file)
+        @upload file
+
       __setupFileButton: ->
-        utils.fileInput @fileButton, false, (e) =>
-          file = files.toFiles 'event', e
-          @__step2Promise $.Deferred().resolve(file)
-          @upload file
+        utils.fileInput @fileButton, false, (e) => 
+          @__uploadAndShowPreview 'event', e
 
       upload: (args...) =>
         # Allow two types of calls:
@@ -129,17 +132,17 @@ uploadcare.whenReady ->
         @uploader.reset()
 
       openDialog: ->
-        @__step2Promise @__getStep1Content()
+        @__step2Promise @__step1Promise()
 
       openDialogOnStep2: =>
         @__step2Promise $.Deferred().resolve(@fileInfo)
 
-      __getStep1Content: =>
+      __step1Promise: =>
         ns.showChooseDialog(@settings).done(@upload)
 
       # show step 2 of dialog when step1Pr resolves
       __step2Promise: (step1Pr) ->
-        ns.showPreviewDialog(@settings, step1Pr.promise(), @__getStep1Content)
+        ns.showPreviewDialog(@settings, step1Pr.promise(), @__step1Promise)
           .fail(=> @setValue(''))
           .done (modifiers) ->
             # TODO
