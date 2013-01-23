@@ -33,7 +33,7 @@ uploadcare.whenReady ->
           false
 
     onDelay = 0
-    offDelay = if $.browser.opera then 200 else 0
+    offDelay = if $.browser.opera then 200 else 1
 
     # Trigger an event on watched elements when dragging
     active = false
@@ -43,6 +43,10 @@ uploadcare.whenReady ->
       return unless e.target == e.currentTarget
       delayedDragState off, offDelay
 
+    # Delayed set state solves two problems:
+    #   1) In Opera it blinking as hell
+    #   2) In Chrome if browser window focused (e.g. drag file from desktop) 
+    #      the drop area disappeared just before drop event.
     delayedDragState = (newActive, delay) ->
       if delayedDragState.timeout?
         clearTimeout delayedDragState.timeout
