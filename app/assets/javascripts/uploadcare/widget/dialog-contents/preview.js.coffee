@@ -92,17 +92,11 @@ uploadcare.whenReady ->
         if $.isArray something
           something = something[0]
 
-        url = name = null
-
-        # FIXME: silly data type detection
-
-        # uploadcare.files.UrlFile
-        if something.url
+        if something instanceof uploadcare.files.UrlFile
           url = something.url
           name = null
 
-        # uploadcare.files.EventFile
-        else if something.file
+        else if something instanceof uploadcare.files.EventFile
           name = something.file.name
           url = utils.createObjectUrl something.file
           unless url
