@@ -33,7 +33,7 @@ uploadcare.whenReady ->
           false
 
     onDelay = 0
-    offDelay = if $.browser.opera then 200 else 0
+    offDelay = if $.browser.opera then 200 else 1
 
     # Trigger an event on watched elements when dragging
     active = false
@@ -43,6 +43,9 @@ uploadcare.whenReady ->
       return unless e.target == e.currentTarget
       delayedDragState off, offDelay
 
+    # Delayed set state fixes:
+    #   1) Drop area blinking in Opera
+    #   2) Disappearance of drop area before drop event
     delayedDragState = (newActive, delay) ->
       if delayedDragState.timeout?
         clearTimeout delayedDragState.timeout
