@@ -1,7 +1,9 @@
 # = require ../files
 # = require ./dragdrop
 # = require ./template
-# = require ./dialog
+# = require ./dialog-frame
+# = require ./dialog-contents/choose.js.coffee
+# = require ./dialog-contents/preview.js.coffee
 
 uploadcare.whenReady ->
   {
@@ -27,6 +29,8 @@ uploadcare.whenReady ->
           'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
           => @setValue('')
         )
+
+        $(@template).on('uploadcare.widget.template.show-file', @openDialog)
 
         @element.on('change', @__changed)
 
@@ -56,9 +60,11 @@ uploadcare.whenReady ->
         @reloadInfo()
 
       __setLoaded: (infoPr) ->
+        @fileInfo = null
         $.when(infoPr)
           .fail(@__fail)
           .done (info) =>
+            @fileInfo = info
             if @settings.imagesOnly && !uploads.isImage(info)
               return @__fail('image')
             @template.setFileInfo(info)
@@ -71,6 +77,7 @@ uploadcare.whenReady ->
         @available = true
 
       __reset: =>
+        @fileInfo = null
         @__resetUpload()
         @__setupFileButton()
         @available = true
@@ -88,14 +95,19 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @openDialog()
 
         # Enable drag and drop
-        ns.dragdrop.receiveDrop(@upload, @template.dropArea)
+        ns.dragdrop.receiveDrop(@__uploadAndShowPreview, @template.dropArea)
         @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
-          unless active && @dialog()?
+          unless active && ns.__dialogFrame.isOpened()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
+      __uploadAndShowPreview: (args...) =>
+        fileToUpload = files.toFiles args...
+        rescueFileInfo = @upload fileToUpload
+        @__step2Promise $.Deferred().resolve {rescueFileInfo, fileInfo: fileToUpload}
+
       __setupFileButton: ->
-        utils.fileInput @fileButton, false, (e) =>
-          @upload('event', e)
+        utils.fileInput @fileButton, false, (e) => 
+          @__uploadAndShowPreview 'event', e
 
       upload: (args...) =>
         # Allow two types of calls:
@@ -110,30 +122,48 @@ uploadcare.whenReady ->
         currentUpload = @uploader.upload(args...)
         @template.listen(currentUpload)
 
+        fileInfo = $.Deferred()
+
         currentUpload
           .fail (error) =>
             @__fail() if error
+            fileInfo.reject()
           .done (infos) =>
             info = infos[0] # FIXME
             @__setLoaded(info)
-            info.done => @element.change()
+            info
+              .done (infos) => 
+                @element.change()
+                fileInfo.resolve(infos)
+              .fail ->
+                fileInfo.reject()
+
+        return fileInfo
 
       __resetUpload: ->
         @uploader.reset()
 
-      currentDialog = null
+      openDialog: =>
+        if @fileInfo
+          @__step2Promise @__fileInfoToStep1Pr @fileInfo
+        else
+          @__step2Promise @__step1Promise()        
 
-      dialog: -> currentDialog
+      __fileInfoToStep1Pr: (fileInfo) ->
+        rescueFileInfo = $.Deferred().resolve(@fileInfo).promise()
+        $.Deferred().resolve {fileInfo, rescueFileInfo}
 
-      openDialog: ->
-        @closeDialog()
-        currentDialog = ns.showDialog(@settings)
-          .done(@upload)
-          .always( -> currentDialog = null)
+      __step1Promise: =>
+        ns.showChooseDialog(@settings).pipe (fileToUpload) => 
+          rescueFileInfo = @upload fileToUpload
+          {rescueFileInfo, fileInfo: fileToUpload}
 
-
-      closeDialog: ->
-        currentDialog?.close()
+      # show step 2 of dialog when step1Pr resolves
+      __step2Promise: (step1Pr) ->
+        ns.showPreviewDialog(@settings, step1Pr.promise(), @__step1Promise)
+          .fail(=> @setValue(''))
+          .done (modifiers) ->
+            # TODO: implemet it for crop step 2 mode
 
     initialize
       name: 'widget'

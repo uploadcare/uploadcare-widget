@@ -27,6 +27,9 @@ uploadcare.whenReady ->
         @cancelButton.on 'click', => $(this).trigger('uploadcare.widget.template.cancel')
         @removeButton.on 'click', => $(this).trigger('uploadcare.widget.template.remove')
 
+        @content.on 'click', '@uploadcare-widget-filename-clickable', =>
+          $(this).trigger('uploadcare.widget.template.show-file')
+
         @dropArea = @content.find('@uploadcare-drop-area')
 
         @labels = []
@@ -82,12 +85,11 @@ uploadcare.whenReady ->
           size = 0
           size += info.fileSize for info in infos
         else
-          caption = utils.fitText(infos[0].fileName, 16)
+          name = utils.fitText(infos[0].fileName, 16)
           size = infos[0].fileSize
 
-          if infos[0].isStored
-            href = "#{@settings.cdnBase}/#{infos[0].fileId}/#{infos[0].fileName}"
-            caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
+          role = 'uploadcare-widget-filename-clickable'
+          caption = "<span class=\"#{role}\" role=\"#{role}\">#{name}</span>"
 
         size = Math.ceil(size / 1024).toString()
         @statusText.html "#{caption}, #{size} kb"

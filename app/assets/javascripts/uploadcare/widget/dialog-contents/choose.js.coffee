@@ -15,43 +15,22 @@ uploadcare.whenReady ->
   {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget', (ns) ->
-    ns.showDialog = (settings = {}) ->
+
+    ns.showChooseDialog = (settings = {}) ->
       settings = utils.buildSettings settings
+      $.Deferred( ->
+        $.extend this, {settings}, chooseMixin
+        @__init()
+      ).pipe(files.toFiles, -> 'dialog was closed').promise()
 
-      $ .Deferred ->
-          $.extend this, dialogUiMixin
+    chooseMixin =
 
-          @settings = settings
+      __init: ->
+        ns.__dialogFrame.show this
 
-          @__createDialog()
-
-          @always @__closeDialog
-        .pipe(files.toFiles, -> 'dialog was closed')
-        .promise()
-
-
-    dialogUiMixin =
-      __createDialog: ->
-        @content = $(tpl('dialog'))
-          .hide()
-          .appendTo('body')
-
-        @content.on 'click', (e) =>
-          e.stopPropagation()
-          @reject() if e.target == e.currentTarget
-
-        closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @reject()
-
-        $(window).on 'keydown', (e) =>
-          @reject() if e.which == 27 # Escape
-
+      __render: ->
+        @content = $ tpl 'dialog-choose'
         @__prepareTabs()
-
-        @content.fadeIn('fast')
-
-      __closeDialog: ->
-        @content.fadeOut 'fast', => @content.off().remove()
 
       __prepareTabs: ->
         @tabs = {}
@@ -86,13 +65,13 @@ uploadcare.whenReady ->
             .hide()
             .addClass('uploadcare-dialog-tabs-panel')
             .addClass("uploadcare-dialog-tabs-panel-#{name}")
-            .appendTo(@content.find('.uploadcare-dialog-body'))
+            .appendTo(@content)
           panel.append(tpl("tab-#{name}"))
           tab.setContent(panel)
         tab
 
       __switchTab: (@currentTab) ->
-        @content.find('.uploadcare-dialog-body')
+        @content
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
             .end()
@@ -105,3 +84,10 @@ uploadcare.whenReady ->
               .show()
 
         @notify @currentTab
+
+      el: ->
+        @__render() unless @content
+        return @content
+
+      closed: -> 
+        @reject()
