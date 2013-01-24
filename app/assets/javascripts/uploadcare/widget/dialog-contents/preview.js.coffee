@@ -102,7 +102,7 @@ uploadcare.whenReady ->
           unless url
             return null
 
-        # uploadcare.uploads.fileInfo response
+        # uploadcare.uploads.fileInfo() response
         else if something.fileId
           name = something.fileName
           url = "#{@settings.urlBase}/preview/?file_id=#{something.fileId}&pub_key=#{@settings.publicKey}"
