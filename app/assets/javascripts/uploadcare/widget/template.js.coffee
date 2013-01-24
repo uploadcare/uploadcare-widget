@@ -52,8 +52,7 @@ uploadcare.whenReady ->
       setStatus: (status) ->
         @content.attr('data-status', status)
         form = @element.closest('@uploadcare-upload-form')
-        form.trigger("uploadcare.uploader.#{status}")
-        @element.trigger("uploadcare.uploader.#{status}")
+        form.trigger("#{status}.uploadcare")
 
       reset: ->
         @statusText.text(t('ready'))

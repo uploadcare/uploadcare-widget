@@ -54,4 +54,4 @@ uploadcare.whenReady ->
     __dragState = (newActive) ->
       if active != newActive
         active = newActive
-        $('@uploadcare-drop-area').trigger('uploadcare.dragstatechange', active)
+        $('@uploadcare-drop-area').trigger('dragstatechange.uploadcare', active)

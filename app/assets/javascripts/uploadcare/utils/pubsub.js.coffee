@@ -25,7 +25,7 @@ uploadcare.whenReady ->
       watch: ->
         @pusherw.watch()
         @pollw.watch()
-        jQuery(@pusherw).on 'uploadcare.watch-started', =>
+        jQuery(@pusherw).on 'started', =>
           @pollw.stop()
 
       stop: ->
@@ -57,7 +57,7 @@ uploadcare.whenReady ->
         # a little thingy to avoid polling
         onStarted = =>
           debug('wow, listening with pusher')
-          jQuery(this).trigger 'uploadcare.watch-started'
+          jQuery(this).trigger 'started'
           @channel.unbind 'event', onStarted
         @channel.bind 'event', onStarted
 

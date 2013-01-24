@@ -93,7 +93,7 @@ uploadcare.whenReady ->
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@upload, @template.dropArea)
-        @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
+        @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
           unless active && @dialog()?
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 

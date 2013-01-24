@@ -36,7 +36,7 @@ uploadcare.whenReady ->
 
           @pollWatcher.watch @token
           @pusherWatcher.watch @token
-          $(@pusherWatcher).on 'uploadcare.watch-started', =>
+          $(@pusherWatcher).on 'started', =>
             @pollWatcher.stopWatching()
 
         .fail (e) =>
@@ -89,7 +89,7 @@ uploadcare.whenReady ->
         @channel = @pusher.subscribe("task-status-#{@token}")
 
         onStarted = =>
-          $(this).trigger 'uploadcare.watch-started'
+          $(this).trigger 'started'
           @channel.unbind ev, onStarted for ev in ['progress', 'success']
 
         for ev in ['progress', 'success']
