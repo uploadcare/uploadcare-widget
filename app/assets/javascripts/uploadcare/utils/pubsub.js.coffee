@@ -5,9 +5,6 @@
 #     var w = new uploadcare.utils.pubsub.PubSub('window', '123');
 #     jQuery(w).on('some-state-name', function(status) { alert(status) })
 #
-#     # or all of them
-#     jQuery(w).on('state-changed', function(status) { alert(status) })
-#
 #     w.watch()
 #     w.stop() # don't forget, in the end :D
 #
@@ -42,7 +39,6 @@ uploadcare.whenReady ->
 
       __notify: ->
         debug('status', @status.score, @status.state, @status)
-        jQuery(this).trigger('state-changed', [@status])
         jQuery(this).trigger(@status.state, [@status])
 
     class PusherWatcher

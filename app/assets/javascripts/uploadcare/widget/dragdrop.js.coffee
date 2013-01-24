@@ -20,7 +20,6 @@ uploadcare.whenReady ->
           e.stopPropagation() # Prevent redirect
           e.preventDefault()
           delayedDragState off, 0
-          $(this).trigger('uploadcare.drop')
           dt = e.originalEvent.dataTransfer
           if dt.files.length
             upload('event', e)

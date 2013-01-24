@@ -76,7 +76,6 @@ uploadcare.whenReady ->
         @__setupFileButton()
         @available = true
         @template.reset()
-        $(this).trigger('uploadcare.widget.cancel')
 
       __cancel: =>
         @__reset()

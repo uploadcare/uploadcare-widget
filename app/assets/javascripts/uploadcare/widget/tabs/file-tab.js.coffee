@@ -13,8 +13,6 @@ uploadcare.whenReady ->
 
       setContent: (@content) ->
         @__setupFileButton()
-        $(@widget).on 'uploadcare.widget.cancel', => @__setupFileButton()
-
         dragdrop.receiveDrop @callback, @content.find('@uploadcare-drop-area')
 
       __setupFileButton: ->
