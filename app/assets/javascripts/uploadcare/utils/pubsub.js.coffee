@@ -3,14 +3,14 @@
 # USAGE:
 #
 #     var w = new uploadcare.utils.pubsub.PubSub('window', '123');
-#     jQuery(w).on('some-state-name', function(status) { alert(status) })
+#     $(w).on('some-state-name', function(status) { alert(status) })
 #
 #     w.watch()
 #     w.stop() # don't forget, in the end :D
 #
 
 uploadcare.whenReady ->
-  {jQuery, debug} = uploadcare
+  {jQuery: $, debug} = uploadcare
   {pusher} = uploadcare.utils
 
   uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
@@ -25,7 +25,7 @@ uploadcare.whenReady ->
       watch: ->
         @pusherw.watch()
         @pollw.watch()
-        jQuery(@pusherw).on 'started', =>
+        $(@pusherw).on 'started', =>
           @pollw.stop()
 
       stop: ->
@@ -39,7 +39,7 @@ uploadcare.whenReady ->
 
       __notify: ->
         debug('status', @status.score, @status.state, @status)
-        jQuery(this).trigger(@status.state, [@status])
+        $(this).trigger(@status.state, [@status])
 
     class PusherWatcher
       constructor: (@ps, pusherKey) ->
@@ -52,12 +52,12 @@ uploadcare.whenReady ->
 
         @channel = @pusher.subscribe(@__channelName())
 
-        @channel.bind 'event', (data) => @ps.__update jQuery.parseJSON(data)
+        @channel.bind 'event', (data) => @ps.__update $.parseJSON(data)
 
         # a little thingy to avoid polling
         onStarted = =>
           debug('wow, listening with pusher')
-          jQuery(this).trigger 'started'
+          $(this).trigger 'started'
           @channel.unbind 'event', onStarted
         @channel.bind 'event', onStarted
 
@@ -77,7 +77,7 @@ uploadcare.whenReady ->
 
       __checkStatus: ->
         debug('polling status...')
-        jQuery.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
+        $.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
           dataType: 'jsonp'
         .fail =>
           @ps.__update {score: -1, state: 'error'}
