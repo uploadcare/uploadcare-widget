@@ -11,39 +11,71 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
 
-    ns.showPreviewDialog = (settings = {}, file, ___getNewFile) ->
+    ns.showPreviewDialog = (settings = {}, step1Pr, ___getNewStep1Pr) ->
       settings = utils.buildSettings settings
       $.Deferred( ->
-        $.extend this, {settings, file, ___getNewFile}, previewMixin
+        $.extend this, {settings, step1Pr, ___getNewStep1Pr}, previewMixin
         @__init()
       ).pipe(null, -> 'dialog was closed').promise()
 
     previewMixin =
 
       __init: ->
-        @__setFile @file
+        @__baseRender()
+        @__setStep1Pr @step1Pr
       
       __render: (data) ->
-        @container = $ tpl("dialog-preview-#{data.type}", data)
-        @backButton = @container.find '@uploadcare-dialog-preview-back'
-        @okButton = @container.find '@uploadcare-dialog-preview-ok'
+        el = $ tpl("dialog-preview-#{data.type}", data)
+        @backButton = el.find '@uploadcare-dialog-preview-back'
+        @okButton = el.find '@uploadcare-dialog-preview-ok'
+        @container.empty().append el
         @__bind()
+
+      __baseRender: ->
+        @container = $ '<div>'
 
       __bind: ->
         @backButton.click => @__getNewFile()
         @okButton.click => @resolve()
 
+      #    |         |
+      #    v         v
+      # loading -> loaded
+      #    |         v
+      #     -----> error
+      __setState: (state) ->
+        # TODO
+
       __getNewFile: ->
         @__detachFromFrame()
-        @__setFile @___getNewFile()
+        @__setStep1Pr @___getNewStep1Pr()
 
-      __setFile: (@file) ->
-        @file.done (something) =>
-          @__render @__extractData something
+      __setStep1Pr: (@step1Pr) ->
+
+        @step1Pr.done (data) =>
+          {fileInfo: something, rescueFileInfo} = data
+          rescueFileInfo.fail ->
+            # It means uploading failed
+            @__setState 'error'
+          renderData = @__extractData something
+          if renderData
+            @__setState 'loaded'
+            @__render renderData
+          else
+            @__setState 'loading'
+            rescueFileInfo.done (something) =>
+              renderData = @__extractData something
+              if renderData
+                @__setState 'loaded'
+                @__render renderData
+              else
+                @__setState 'error'
+
           ns.__dialogFrame.show this
-        @file.fail => @reject()
+        @step1Pr.fail => @reject()
 
       __extractData: (something) ->
+
         if $.isArray something
           something = something[0]
 
@@ -57,28 +89,27 @@ uploadcare.whenReady ->
           name = null
 
         # uploadcare.files.EventFile
-        if something.file
+        else if something.file
           name = something.file.name
           url = utils.createObjectUrl something.file
+          unless url
+            return null
 
         # uploadcare.uploads.fileInfo response
-        if something.fileId
+        else if something.fileId
           name = something.fileName
           url = "#{@settings.urlBase}/preview/?file_id=#{something.fileId}&pub_key=#{@settings.publicKey}"
           isImage = something.image
 
+        else
+          return null
+
         if isImage == undefined
           isImage = utils.isImage(url) or utils.isImage(name)
 
-        type = 'unknown'
-
-        if isImage
-          type = 'image'
+        type =  if isImage then 'image' else 'unknown'
           
-        # if isImage and %crop%
-        #   type = 'crop'
-
-        return {url, name, isImage, type}
+        return {url, name, type}
 
       el: ->
         @container
