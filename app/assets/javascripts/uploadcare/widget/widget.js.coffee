@@ -163,7 +163,7 @@ uploadcare.whenReady ->
         ns.showPreviewDialog(@settings, step1Pr.promise(), @__step1Promise)
           .fail(=> @setValue(''))
           .done (modifiers) ->
-            # TODO
+            # TODO: implemet it for crop step 2 mode
 
     initialize
       name: 'widget'
