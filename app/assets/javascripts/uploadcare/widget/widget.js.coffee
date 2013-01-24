@@ -144,7 +144,6 @@ uploadcare.whenReady ->
         @uploader.reset()
 
       openDialog: =>
-        # FIXME: need to clear @fileInfo on reset
         if @fileInfo
           @__step2Promise @__fileInfoToStep1Pr @fileInfo
         else

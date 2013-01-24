@@ -28,6 +28,7 @@ uploadcare.whenReady ->
         el = $ tpl("dialog-preview-#{data.type}", data)
         @backButton = el.find '@uploadcare-dialog-preview-back'
         @okButton = el.find '@uploadcare-dialog-preview-ok'
+        @imageEl = el.find '@uploadcare-dialog-preview-image'
         @container.empty().append el
         @__bind()
 
@@ -57,11 +58,7 @@ uploadcare.whenReady ->
           rescueFileInfo.fail ->
             # It means uploading failed
             @__setState 'error'
-          renderData = @__extractData something
-          if renderData
-            @__setState 'loaded'
-            @__render renderData
-          else
+          useRescue = =>
             @__setState 'loading'
             rescueFileInfo.done (something) =>
               renderData = @__extractData something
@@ -70,6 +67,14 @@ uploadcare.whenReady ->
                 @__render renderData
               else
                 @__setState 'error'
+          renderData = @__extractData something
+          if renderData
+            @__setState 'loaded'
+            @__render renderData
+            if renderData.type == 'image'
+              @imageEl.on 'error', useRescue
+          else
+            useRescue()
 
           ns.__dialogFrame.show this
         @step1Pr.fail => @reject()
