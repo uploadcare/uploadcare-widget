@@ -1,3 +1,20 @@
+{namespace} = uploadcare
+
+namespace 'uploadcare', (ns) ->
+  ns.__readyCallbacks = []
+
+  isReady = false
+  ns.ready = ->
+    isReady = true
+    callback() for callback in ns.__readyCallbacks
+  ns.whenReady = (callback) ->
+    if isReady
+      callback()
+    else
+      ns.__readyCallbacks.push(callback)
+
+
+
 jQueryVersion = '1.7.2'
 
 jquerySrc = "https://ajax.googleapis.com/ajax/libs/jquery/#{jQueryVersion}/jquery.min.js"
