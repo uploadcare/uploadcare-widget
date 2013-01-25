@@ -13,6 +13,8 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
+  {t} = uploadcare.locale
+
   namespace 'uploadcare.widget', (ns) ->
     class ns.Widget
       constructor: (element) ->
@@ -23,10 +25,9 @@ uploadcare.whenReady ->
         @currentId = null
 
         @template = new ns.Template(@element)
-        $(@template).on(
-          'uploadcare.widget.template.cancel uploadcare.widget.template.remove',
-          @__cancel
-        )
+
+        @template.addButton('cancel', t('buttons.cancel')).on('click', @__cancel)
+        @template.addButton('remove', t('buttons.remove')).on('click', @__cancel)
 
         @element.on('change', @__changed)
 
@@ -77,7 +78,6 @@ uploadcare.whenReady ->
         @__setupFileButton()
         @available = true
         @template.reset()
-        $(this).trigger('uploadcare.widget.cancel')
 
       __cancel: =>
         @__reset()
@@ -95,7 +95,7 @@ uploadcare.whenReady ->
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@upload, @template.dropArea)
-        @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
+        @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
           unless active && @dialog()?
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 

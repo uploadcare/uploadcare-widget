@@ -1,7 +1,12 @@
 # = require uploadcare/utils/pusher
 
 uploadcare.whenReady ->
-  {namespace, jQuery, utils, debug} = uploadcare
+  {
+    namespace,
+    jQuery: $,
+    utils,
+    debug
+  } = uploadcare
   {pusher} = uploadcare.utils
 
   namespace 'uploadcare.files', (ns) ->
@@ -10,9 +15,12 @@ uploadcare.whenReady ->
         @__shutdown = true
 
       upload: (settings) ->
+        @__dfd = $.Deferred()
         settings = utils.buildSettings settings
 
-        return unless @url?
+        unless @url?
+          @__dfd.reject(this)
+          return @__dfd.promise()
 
         @uploading = true
         @pollWatcher = new PollWatcher(this, settings)
@@ -20,19 +28,21 @@ uploadcare.whenReady ->
 
         @__state('start')
 
-        @xhr = jQuery.ajax("#{settings.urlBase}/from_url/",
+        @xhr = $.ajax("#{settings.urlBase}/from_url/",
           data: {pub_key: settings.publicKey, source_url: @url}
           dataType: 'jsonp'
-
         ).done (data) =>
           @token = data.token
 
           @pollWatcher.watch @token
           @pusherWatcher.watch @token
-          jQuery(@pusherWatcher).on 'uploadcare.watch-started', => @pollWatcher.stopWatching()
+          $(@pusherWatcher).on 'started', =>
+            @pollWatcher.stopWatching()
 
         .fail (e) =>
           @__state('error')
+
+        @__dfd.promise()
 
       cancel: ->
         if @uploading
@@ -44,30 +54,23 @@ uploadcare.whenReady ->
         (
           start: =>
             @__shutdown = false
-            jQuery(this).trigger('uploadcare.api.uploader.start')
 
           progress: (data) =>
             return if @__shutdown
-
             [@loaded, @fileSize] = [data.done, data.total]
-            jQuery(this).trigger('uploadcare.api.uploader.progress')
+            @__dfd.notify(this)
 
           success: (data) =>
             return if @__shutdown
-
             @__state('progress', data)
-
             @__shutdown = true
-
             [@fileName, @fileId] = [data.original_filename, data.file_id]
-            jQuery(this).trigger('uploadcare.api.uploader.load')
-
+            @__dfd.resolve(this)
             @__cleanup()
 
           error: =>
             @__shutdown = true
-            jQuery(this).trigger('uploadcare.api.uploader.error')
-
+            @__dfd.reject(this)
             @__cleanup()
         )[state](data)
 
@@ -75,6 +78,7 @@ uploadcare.whenReady ->
         @uploading = false
         @pusherWatcher.stopWatching()
         @pollWatcher.stopWatching()
+        @__dfd = null
 
     class PusherWatcher
       constructor: (@uploader, @settings) ->
@@ -85,7 +89,7 @@ uploadcare.whenReady ->
         @channel = @pusher.subscribe("task-status-#{@token}")
 
         onStarted = =>
-          jQuery(this).trigger 'uploadcare.watch-started'
+          $(this).trigger 'started'
           @channel.unbind ev, onStarted for ev in ['progress', 'success']
 
         for ev in ['progress', 'success']
@@ -117,7 +121,7 @@ uploadcare.whenReady ->
         @uploader.__state 'error', data
 
       __checkStatus: (callback) ->
-        jQuery.ajax "#{@settings.urlBase}/status/",
+        $.ajax "#{@settings.urlBase}/status/",
           data: {'token': @token}
           dataType: 'jsonp'
         .fail =>
