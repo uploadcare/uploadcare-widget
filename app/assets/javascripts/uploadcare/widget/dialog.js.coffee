@@ -17,51 +17,45 @@ uploadcare.whenReady ->
   namespace 'uploadcare.widget', (ns) ->
     ns.showDialog = (settings = {}) ->
       settings = utils.buildSettings settings
+      dialog = new Dialog(settings)
+      dialog.dfd.promise()
 
-      $ .Deferred ->
-          $.extend this, dialogUiMixin
+    class Dialog
+      constructor: (@settings) ->
+        @dfd = $.Deferred()
+        @dfd
+          .always(=> @closeDialog())
+          .pipe(files.toFiles, -> 'dialog was closed')
 
-          @settings = settings
-
-          @__createDialog()
-
-          @always @__closeDialog
-        .pipe(files.toFiles, -> 'dialog was closed')
-        .promise()
-
-
-    dialogUiMixin =
-      __createDialog: ->
         @content = $(tpl('dialog'))
           .hide()
           .appendTo('body')
 
         @content.on 'click', (e) =>
           e.stopPropagation()
-          @reject() if e.target == e.currentTarget
+          @dfd.reject() if e.target == e.currentTarget
 
         closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @reject()
+        closeButton.on 'click', => @dfd.reject()
 
         $(window).on 'keydown', (e) =>
-          @reject() if e.which == 27 # Escape
+          @dfd.reject() if e.which == 27 # Escape
 
         @__prepareTabs()
-
         @content.fadeIn('fast')
-
-      __closeDialog: ->
-        @content.fadeOut 'fast', => @content.off().remove()
 
       __prepareTabs: ->
         @tabs = {}
         for tabName in @settings.tabs when tabName not of @tabs
-          @tabs[tabName] = @__addTab(tabName)
+          @tabs[tabName] = @addTab(tabName)
           throw "No such tab: #{tabName}" unless @tabs[tabName]
 
-        @__switchTab(@settings.tabs[0])
+        @switchTab(@settings.tabs[0])
 
-      __addTab: (name) ->
+      closeDialog: ->
+        @content.fadeOut 'fast', => @content.off().remove()
+
+      addTab: (name) ->
         {tabs} = uploadcare.widget
 
         tabCls = switch name
@@ -74,13 +68,14 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls this, @settings, => @resolve.apply(this, arguments)
+        tab = new tabCls @dfd.promise(), @settings, =>
+          @dfd.resolve.apply(this, arguments)
 
         if tab
           $('<li>')
             .addClass("uploadcare-dialog-tab-#{name}")
             .attr('title', t("tabs.#{name}.title"))
-            .on('click', => @__switchTab(name))
+            .on('click', => @switchTab(name))
             .appendTo(@content.find('.uploadcare-dialog-tabs'))
           panel = $('<div>')
             .hide()
@@ -91,7 +86,7 @@ uploadcare.whenReady ->
           tab.setContent(panel)
         tab
 
-      __switchTab: (@currentTab) ->
+      switchTab: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
@@ -104,4 +99,4 @@ uploadcare.whenReady ->
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
 
-        @notify @currentTab
+        @dfd.notify @currentTab
