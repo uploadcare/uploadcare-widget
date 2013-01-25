@@ -20,10 +20,10 @@ uploadcare.whenReady ->
       false
 
   submittedForm = '@uploadcare-upload-form[data-uploadcare-submitted]'
-  $(document).on 'uploadcare.uploader.loaded', submittedForm, ->
+  $(document).on 'loaded.uploadcare', submittedForm, ->
     $(this).submit()
 
-  cancelEvents = 'uploadcare.uploader.ready uploadcare.uploader.error'
+  cancelEvents = 'ready.uploadcare error.uploadcare'
   $(document).on cancelEvents, submittedForm, ->
     form = $(this)
     submitPreventionState(form, false) if canSubmit form

@@ -1,5 +1,9 @@
 uploadcare.whenReady ->
-  {namespace, jQuery: $, utils} = uploadcare
+  {
+    namespace,
+    jQuery: $,
+    utils
+  } = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
     class ns.InputFile
@@ -8,6 +12,8 @@ uploadcare.whenReady ->
       upload: (settings) ->
         settings = utils.buildSettings settings
         targetUrl = "#{settings.urlBase}/iframe/"
+        dfd = $.Deferred()
+        dfd.always => @__cleanUp()
 
         @fileId = utils.uuid()
         @fileSize = null
@@ -21,8 +27,8 @@ uploadcare.whenReady ->
           })
           .css('display', 'none')
           .appendTo('body')
-          .on('load', (e) => @__onLoad(); @__cleanUp())
-          .on('error', => @__onError(); @__cleanUp())
+          .on('load', => dfd.resolve(this))
+          .on('error', => dfd.reject(this))
 
         formParam = (name, value) ->
           $('<input>')
@@ -46,8 +52,9 @@ uploadcare.whenReady ->
           .append(@input)
           .css('display', 'none')
           .appendTo('body')
-          .on('submit', @__onStart)
           .submit()
+
+        dfd.promise()
 
       cancel: -> @__cleanUp()
 
@@ -56,6 +63,3 @@ uploadcare.whenReady ->
         @iframeForm?.remove()
         @iframe = null
         @iframeForm = null
-
-      __onError: => $(this).trigger('uploadcare.api.uploader.error')
-      __onLoad: => $(this).trigger('uploadcare.api.uploader.load')
