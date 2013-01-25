@@ -2,7 +2,7 @@ uploadcare.whenReady ->
   uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     ns.ru =
       ready: 'Выберите файл'
-      uploading: 'Загрузка, пожалуйста, подождите'
+      uploading: 'Идет загрузка'
       errors:
         default: 'Ошибка'
         image: 'Разрешены только изображения'
@@ -17,7 +17,7 @@ uploadcare.whenReady ->
         remove: 'Удалить'
         file: 'Компьютер'
       dialog:
-        title: 'Загрузите что угодно откуда угодно'
+        title: 'Загрузите что угодно, откуда угодно'
         poweredby: 'Предоставлено'
         support:
           images: 'Изображения'
@@ -33,8 +33,8 @@ uploadcare.whenReady ->
           url:
             title: 'Файлы с других сайтов'
             line1: 'Загрузите любой файл из сети.'
-            line2: 'Просто укажите ссылку.'
-            input: 'Укажите ссылку здесь...'
+            line2: ''
+            input: 'Укажите здесь ссылку...'
             button: 'Загрузить'
 
 

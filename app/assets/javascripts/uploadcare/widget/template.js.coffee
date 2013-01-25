@@ -13,7 +13,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget', (ns) ->
     class ns.Template
-      constructor: (@element)->
+      constructor: (@settings, @element)->
         @content = $(tpl('widget'))
         @content.css('display', 'none')
         @element.after(@content)
@@ -61,6 +61,7 @@ uploadcare.whenReady ->
 
       loaded: ->
         @setStatus 'loaded'
+        @circle.reset true
 
       listen: (uploadDeferred) ->
         @circle.listen uploadDeferred
@@ -82,5 +83,10 @@ uploadcare.whenReady ->
         else
           caption = utils.fitText(infos[0].fileName, 16)
           size = infos[0].fileSize
+
+          if infos[0].isStored
+            href = "#{@settings.cdnBase}/#{infos[0].fileId}/#{infos[0].fileName}"
+            caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
+
         size = Math.ceil(size / 1024).toString()
-        @statusText.text("#{caption}, #{size} kb")
+        @statusText.html "#{caption}, #{size} kb"

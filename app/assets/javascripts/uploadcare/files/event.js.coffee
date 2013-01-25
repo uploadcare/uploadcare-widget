@@ -31,7 +31,9 @@ uploadcare.whenReady ->
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
         @xhr.addEventListener 'error timeout abort', => dfd.reject(this)
         @xhr.addEventListener 'load', => dfd.resolve(this)
-        @xhr.addEventListener 'loadend', => dfd.reject(this) unless @xhr.status
+        @xhr.addEventListener 'loadend', =>
+          if @xhr? && !@xhr.status
+            dfd.reject(this)
         @xhr.upload.addEventListener 'progress', =>
           @loaded = event.loaded
           @fileSize = event.totalSize || event.total
@@ -43,5 +45,6 @@ uploadcare.whenReady ->
       cancel: -> @__cleanUp()
 
       __cleanUp: ->
-        @xhr?.abort()
+        xhr = @xhr
         @xhr = null
+        xhr.abort() # Correct order to avoid errors
