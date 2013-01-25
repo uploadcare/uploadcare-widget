@@ -15,22 +15,21 @@ uploadcare.whenReady ->
         @error = false
 
       upload: (settings, callback) ->
-        $(@file)
-          .on 'uploadcare.api.uploader.load', (e) =>
+        @file.upload(settings)
+          .done (file) =>
             @loaded = @total
-            @fileInfo = ns.fileInfo(e.target.fileId, settings)
+            @fileInfo = ns.fileInfo(file.fileId, settings)
             callback()
 
-          .on 'uploadcare.api.uploader.error', (e) =>
+          .fail =>
             @error = true
             callback()
 
-          .on 'uploadcare.api.uploader.progress', (e) =>
-            @loaded = e.target.loaded
-            @total = e.target.fileSize
+          .progress (file) =>
+            @loaded = file.loaded
+            @total = file.fileSize
             callback()
 
-        @file.upload(settings)
 
       cancel: ->
         @file.cancel()
