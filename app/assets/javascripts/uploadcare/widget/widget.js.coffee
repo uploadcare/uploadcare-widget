@@ -13,6 +13,8 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
+  {t} = uploadcare.locale
+
   namespace 'uploadcare.widget', (ns) ->
     class ns.Widget
       constructor: (element) ->
@@ -24,8 +26,8 @@ uploadcare.whenReady ->
 
         @template = new ns.Template(@element)
 
-        @template.addButton('cancel', true).on('click', @__cancel)
-        @template.addButton('remove', true).on('click', @__cancel)
+        @template.addButton('cancel', t('buttons.cancel')).on('click', @__cancel)
+        @template.addButton('remove', t('buttons.remove')).on('click', @__cancel)
 
         @element.on('change', @__changed)
 

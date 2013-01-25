@@ -39,13 +39,13 @@ uploadcare.whenReady ->
       removeState: (state) ->
         @content.removeClass("uploadcare-widget-state-#{state}")
 
-      addButton: (name, captioned = false) ->
+      addButton: (name, caption) ->
         role = "uploadcare-widget-buttons-#{name}"
         li = $('<li>')
           .addClass(role)
           .attr('role', role)
-        if captioned
-          li.text(t("buttons.#{name}"))
+        if caption?
+          li.text(caption)
         @buttonsContainer.append(li)
         return li
 

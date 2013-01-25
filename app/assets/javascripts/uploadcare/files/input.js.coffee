@@ -13,6 +13,7 @@ uploadcare.whenReady ->
         settings = utils.buildSettings settings
         targetUrl = "#{settings.urlBase}/iframe/"
         dfd = $.Deferred()
+        dfd.always => @__cleanUp()
 
         @fileId = utils.uuid()
         @fileSize = null
@@ -26,8 +27,8 @@ uploadcare.whenReady ->
           })
           .css('display', 'none')
           .appendTo('body')
-          .on('load', => dfd.resolve(this); @__cleanUp())
-          .on('error', => dfd.reject(this); @__cleanUp())
+          .on('load', => dfd.resolve(this))
+          .on('error', => dfd.reject(this))
 
         formParam = (name, value) ->
           $('<input>')
