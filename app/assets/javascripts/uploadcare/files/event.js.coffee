@@ -8,14 +8,15 @@ uploadcare.whenReady ->
       upload: (settings) ->
         settings = utils.buildSettings settings
         targetUrl = "#{settings.urlBase}/iframe/"
+        dfd = $.Deferred()
 
         @fileId = utils.uuid()
         @fileSize = @file.size
         @fileName = @file.name
 
         if @fileSize > (100*1024*1024)
-          @__fail()
-          return
+          dfd.reject(this)
+          return dfd.promise()
 
         formData = new FormData()
         formData.append('UPLOADCARE_PUB_KEY', settings.publicKey)
@@ -28,11 +29,18 @@ uploadcare.whenReady ->
         @xhr.open 'POST', targetUrl
         @xhr.withCredentials = true
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @xhr.addEventListener 'error timeout', @__onError
-        @xhr.addEventListener 'load', @__onLoad
-        @xhr.addEventListener 'loadend', => @__fail() if @xhr? && !@xhr.status
-        @xhr.upload.addEventListener 'progress', @__onProgress
+        @xhr.addEventListener 'error timeout abort', => dfd.reject(this)
+        @xhr.addEventListener 'load', => dfd.resolve(this)
+        @xhr.addEventListener 'loadend', =>
+          if @xhr? && !@xhr.status
+            dfd.reject(this)
+        @xhr.upload.addEventListener 'progress', =>
+          @loaded = event.loaded
+          @fileSize = event.totalSize || event.total
+          dfd.notify(this)
+
         @xhr.send formData
+        dfd.promise()
 
       cancel: -> @__cleanUp()
 
@@ -40,12 +48,3 @@ uploadcare.whenReady ->
         xhr = @xhr
         @xhr = null
         xhr.abort() # Correct order to avoid errors
-
-      __fail: -> @__onError()
-
-      __onError: => $(this).trigger('uploadcare.api.uploader.error')
-      __onLoad: => $(this).trigger('uploadcare.api.uploader.load')
-      __onProgress: (event) =>
-        @loaded = event.loaded
-        @fileSize = event.totalSize || event.total
-        $(this).trigger('uploadcare.api.uploader.progress')

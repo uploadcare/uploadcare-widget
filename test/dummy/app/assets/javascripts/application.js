@@ -8,7 +8,7 @@ UPLOADCARE_SOCIAL_BASE = 'http://social.staging0.uploadcare.com/'
 UPLOADCARE_CDN_BASE = 'http://staging0.ucarecdn.com/'
 
 setTimeout(function() {
-    uploadcare.jQuery(uploadcare).on('uploadcare.debug', function(e, args){
+    uploadcare.jQuery(uploadcare).on('log.uploadcare', function(e, args){
         console.log(args);
     });
 }, 1000);
