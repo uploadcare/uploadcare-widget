@@ -34,7 +34,6 @@ uploadcare.whenReady ->
 
         @__setupWidget()
         @template.reset()
-        @available = true
 
         @reloadInfo()
 
@@ -70,12 +69,10 @@ uploadcare.whenReady ->
       __fail: (type) =>
         @setValue('')
         @template.error(type)
-        @available = true
 
       __reset: =>
         @__resetUpload()
         @__setupFileButton()
-        @available = true
         @template.reset()
 
       __setupWidget: ->
@@ -106,7 +103,6 @@ uploadcare.whenReady ->
         @__resetUpload()
 
         @template.started()
-        @available = false
 
         currentUpload = @uploader.upload(args...)
         @template.listen(currentUpload)
