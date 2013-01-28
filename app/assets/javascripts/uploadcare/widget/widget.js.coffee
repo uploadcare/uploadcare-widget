@@ -26,15 +26,13 @@ uploadcare.whenReady ->
 
         @template = new ns.Template(@settings, @element)
 
-        cancel = => @setValue('')
-        @template.addButton('cancel', t('buttons.cancel')).on('click', cancel)
-        @template.addButton('remove', t('buttons.remove')).on('click', cancel)
+        @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
+        @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
 
         @element.on('change', @__changed)
 
         @__setupWidget()
         @template.reset()
-        @available = true
 
         @reloadInfo()
 
@@ -51,9 +49,6 @@ uploadcare.whenReady ->
             info = uploads.fileInfo(id, @settings)
             @__setLoaded(info)
 
-        if !id
-          @__reset()
-
       __changed: (e) =>
         @reloadInfo()
 
@@ -68,14 +63,14 @@ uploadcare.whenReady ->
             @element.val(info.fileId)
 
       __fail: (type) =>
-        @setValue('')
+        @__reset()
         @template.error(type)
-        @available = true
 
       __reset: =>
+        @currentId = null
+        @setValue('')
         @__resetUpload()
         @__setupFileButton()
-        @available = true
         @template.reset()
 
       __setupWidget: ->
@@ -106,7 +101,6 @@ uploadcare.whenReady ->
         @__resetUpload()
 
         @template.started()
-        @available = false
 
         currentUpload = @uploader.upload(args...)
         @template.listen(currentUpload)
