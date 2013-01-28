@@ -106,8 +106,10 @@ uploadcare.whenReady ->
 
       # closeDialog: ->
       #   currentDialog?.close()
+        
 
-    initialize
-      name: 'widget'
-      class: ns.Widget
-      elements: '@uploadcare-uploader'
+    uploadcare.initialize = ->
+      dataAttr = 'uploadcareWidget'
+      for el in $ '@uploadcare-uploader' when not $(el).data(dataAttr)
+        $(el).data dataAttr, new ns.Widget $(el)
+    $(document).on('ready ajaxSuccess htmlInserted', uploadcare.initialize)
