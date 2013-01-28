@@ -26,11 +26,8 @@ uploadcare.whenReady ->
 
         @template = new ns.Template(@settings, @element)
 
-        cancel = =>
-          @__reset()
-          @setValue('')
-        @template.addButton('cancel', t('buttons.cancel')).on('click', cancel)
-        @template.addButton('remove', t('buttons.remove')).on('click', cancel)
+        @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
+        @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
 
         @element.on('change', @__changed)
 
@@ -68,10 +65,10 @@ uploadcare.whenReady ->
       __fail: (type) =>
         @__reset()
         @template.error(type)
-        @setValue('')
 
       __reset: =>
         @currentId = null
+        @setValue('')
         @__resetUpload()
         @__setupFileButton()
         @template.reset()
