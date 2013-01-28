@@ -41,7 +41,7 @@ uploadcare.whenReady ->
           .progress (progress) =>
             # if we are still listening to this one
             if uploadDeferred == @observed
-              @__update progress.value
+              @__update progress
 
           .done (uploadedFile) =>
             if uploadDeferred == @observed

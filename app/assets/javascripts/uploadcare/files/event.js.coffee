@@ -2,24 +2,24 @@ uploadcare.whenReady ->
   {namespace, jQuery: $, utils} = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
-    class ns.EventFile
-      constructor: (@file) ->
+    class ns.EventFile extends ns.BaseFile
 
-      upload: (settings) ->
-        settings = utils.buildSettings settings
-        targetUrl = "#{settings.urlBase}/iframe/"
-        dfd = $.Deferred()
+      constructor: (settings, @file) ->
+        super
+
+      __upload: ->
+        targetUrl = "#{@settings.urlBase}/iframe/"
 
         @fileId = utils.uuid()
         @fileSize = @file.size
         @fileName = @file.name
 
         if @fileSize > (100*1024*1024)
-          dfd.reject(this)
-          return dfd.promise()
+          @__uploadDf.reject('default')
+          return
 
         formData = new FormData()
-        formData.append('UPLOADCARE_PUB_KEY', settings.publicKey)
+        formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
 
         formData.append('file', @file)
@@ -29,22 +29,19 @@ uploadcare.whenReady ->
         @xhr.open 'POST', targetUrl
         @xhr.withCredentials = true
         @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @xhr.addEventListener 'error timeout abort', => dfd.reject(this)
-        @xhr.addEventListener 'load', => dfd.resolve(this)
+        @xhr.addEventListener 'error timeout abort', => @__uploadDf.reject('default')
+        @xhr.addEventListener 'load', => @__uploadDf.resolve()
         @xhr.addEventListener 'loadend', =>
           if @xhr? && !@xhr.status
-            dfd.reject(this)
+            @__uploadDf.reject('default')
         @xhr.upload.addEventListener 'progress', =>
-          @loaded = event.loaded
+          @__loaded = event.loaded
           @fileSize = event.totalSize || event.total
-          dfd.notify(this)
+          @__uploadDf.notify @fileSize / @__loaded
 
         @xhr.send formData
-        dfd.promise()
 
-      cancel: -> @__cleanUp()
-
-      __cleanUp: ->
+      __cancel: ->
         xhr = @xhr
         @xhr = null
         xhr.abort() # Correct order to avoid errors

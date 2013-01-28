@@ -5,7 +5,6 @@
 # = require uploadcare/locale
 # = require uploadcare/templates
 # = require uploadcare/stylesheets
-# = require uploadcare/uploads/uploader
 # = require uploadcare/widget/widget
 # = require uploadcare/widget/submit-guard
 # = require uploadcare/ui/crop/crop-widget
