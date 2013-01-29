@@ -25,13 +25,10 @@ uploadcare.whenReady ->
         @__uploadDf
           .fail (error) => 
             @__infoDf.reject(error, this)
-          .done =>
-            # FIXME: сделать ленивее, подумав нужно ли
-            @__requestInfo()
 
       __startUpload: -> throw 'not implemented'
 
-      __requestInfo: ->
+      __requestInfo: =>
         $.ajax "#{@settings.urlBase}/info/",
           data:
             file_id: @fileId
@@ -57,14 +54,13 @@ uploadcare.whenReady ->
         return @upload
 
       __createPublicUploadDf: ->
-        df = $.Deferred()
-        @__uploadDf
-          .fail( -> df.reject() )
-          .done( -> df.resolve() )
-          .progress( (value) -> df.notify(value) )
-        @upload = df.promise()
-        @upload.reject = df.reject
-        @upload.fail => @__uploadDf.reject('user')
+        @upload = @__uploadDf.promise()
+        @upload.reject = ->
+          @__uploadDf.reject('user')
+
 
       info: ->
+        unless @__requestInfoPlanned
+          @__requestInfoPlanned = true
+          @__uploadDf.done @__requestInfo
         @__infoDf.promise()

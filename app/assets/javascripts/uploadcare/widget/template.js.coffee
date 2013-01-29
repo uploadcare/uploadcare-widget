@@ -66,7 +66,7 @@ uploadcare.whenReady ->
       listen: (uploadDeferred) ->
         @circle.listen uploadDeferred
 
-      error: (type='default') ->
+      error: (type = 'default') ->
         errorText = t("errors.#{type}") or t("errors.default")
         @statusText.text(errorText)
         @circle.reset()

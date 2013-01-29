@@ -5,12 +5,17 @@
 # = require ./files/uploaded
 
 uploadcare.whenReady ->
-  {namespace, jQuery: $, utils, files: f} = uploadcare
+  {
+    namespace,
+    utils,
+    jQuery: $,
+    files: f
+  } = uploadcare
 
   namespace 'uploadcare', (ns) ->
 
-    ns.fileFrom = (settings, type, data...) ->
-      return converters[type](settings, data...)
+    ns.fileFrom = (settings, type, data) ->
+      return converters[type](settings, data)
 
     converters =
       event: (settings, e) ->
