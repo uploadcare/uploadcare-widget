@@ -4,15 +4,15 @@ uploadcare.whenReady ->
   namespace 'uploadcare.files', (ns) ->
 
     class ns.EventFile extends ns.BaseFile
-      constructor: (settings, @file) ->
+      constructor: (settings, @__file) ->
         super
 
       __startUpload: ->
         targetUrl = "#{@settings.urlBase}/iframe/"
 
         @fileId = utils.uuid()
-        @fileSize = @file.size
-        @fileName = @file.name
+        @fileSize = @__file.size
+        @fileName = @__file.name
 
         if @fileSize > (100*1024*1024)
           @__uploadDf.reject('toobig')
@@ -22,7 +22,7 @@ uploadcare.whenReady ->
         formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
 
-        formData.append('file', @file)
+        formData.append('file', @__file)
 
         # Naked XHR for progress tracking
         @__xhr = new XMLHttpRequest()
