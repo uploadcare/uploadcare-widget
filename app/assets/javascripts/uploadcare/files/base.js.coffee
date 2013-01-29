@@ -17,6 +17,8 @@ uploadcare.whenReady ->
         @previewUrl = null
         @isImage = null
 
+        @upload = null
+
         @__uploadDf = $.Deferred()
         @__infoDf = $.Deferred()
 
@@ -27,8 +29,7 @@ uploadcare.whenReady ->
             # FIXME: сделать ленивее, подумав нужно ли
             @__requestInfo()
 
-      __upload: -> # not implemented
-      __cancel: -> # not implemented
+      __startUpload: -> throw 'not implemented'
 
       __requestInfo: ->
         $.ajax "#{@settings.urlBase}/info/",
@@ -45,11 +46,22 @@ uploadcare.whenReady ->
           # TODO: @previewUrl, @cdnUrl
           @__infoDf.resolve(this)
         .fail =>
-          @__infoDf.reject('default', this)
+          @__infoDf.reject('info', this)
 
-      upload: ->
-        @__upload()
-        @__uploadDf.promise()
+      startUpload: ->
+        @__startUpload()
+        @__createPublicUploadDf()
+        return @upload
+
+      __createPublicUploadDf: ->
+        df = $.Deferred()
+        @__uploadDf
+          .fail( -> df.reject() )
+          .done( -> df.resolve() )
+          .progress( (value) -> df.notify(value) )
+        @upload = df.promise()
+        @upload.reject = df.reject
+        @upload.fail => @__uploadDf.reject('user')
 
       info: ->
         @__infoDf.promise()

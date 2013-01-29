@@ -25,7 +25,7 @@ uploadcare.whenReady ->
         @dfd = $.Deferred()
         @dfd
           .always(=> @closeDialog())
-          .pipe(files.toFiles, -> 'dialog was closed')
+          .pipe(null, -> 'dialog was closed')
 
         @content = $(tpl('dialog'))
           .hide()

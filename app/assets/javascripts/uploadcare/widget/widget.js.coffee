@@ -25,33 +25,42 @@ uploadcare.whenReady ->
         @__setupWidget()
         @__reset()
 
-        # @element.on('change', @reloadInfo)
+        @__skipChange = 0
+        @element.on 'change', =>
+          if @__skipChange == 0
+            @reloadInfo()
+          else
+            @__skipChange--
+
         @reloadInfo()
 
       __reset: =>
-        @currentFile?.__cancel()
+        @currentFile?.upload?.reject()
         @currentFile = null
         @template.reset()
         @__setupFileButton()
+        @__setValue ''
 
       __setFile: (newFile) ->
-        if newFile and @currentFile and newFile.fileId == @currentFile.fileId
-          return
         @__reset()
-        if !newFile
-          return
-        @currentFile = newFile
-        @template.started()
-        @template.listen @currentFile.upload()
-        @currentFile.info()
-          .fail (error, file) =>
-            if file == @currentFile
-              @__fail error
-          .done (file) =>
-            if file == @currentFile
-              @template.setFileInfo(file)
-              @template.loaded()
-              @setValue file.fileId
+        if newFile
+          @currentFile = newFile
+          @template.started()
+          @currentFile.startUpload()
+          @template.listen @currentFile.upload
+          @currentFile.info()
+            .fail (error, file) =>
+              if file == @currentFile
+                @__fail error
+            .done (file) =>
+              if file == @currentFile
+                @template.setFileInfo(file)
+                @template.loaded()
+                @__setValue file.fileId
+
+      __setValue: (value) ->
+        @__skipChange++
+        @setValue value
 
       setValue: (value) ->
         @element.val(value).change()
@@ -65,9 +74,9 @@ uploadcare.whenReady ->
       __setFileOfType: (type, data) =>
         @__setFile uploadcare.fileFrom(@settings, type, data)
 
-      __fail: (type) =>
-        @setValue('')
-        @template.error(type)
+      __fail: (error) =>
+        @__setValue ''
+        @template.error error
 
       __setupWidget: ->
         @template = new ns.Template(@settings, @element)
@@ -87,25 +96,24 @@ uploadcare.whenReady ->
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@__setFileOfType, @template.dropArea)
         @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
-          #unless active && @dialog()?
-          @template.dropArea.toggleClass('uploadcare-dragging', active)
+          unless active && @dialog()?
+            @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
         utils.fileInput @fileButton, false, @__setEventFile
 
-      # currentDialog = null
+      currentDialog = null
 
-      # dialog: -> currentDialog
+      dialog: -> currentDialog
 
-      # openDialog: ->
-      #   @closeDialog()
-      #   currentDialog = ns.showDialog(@settings)
-      #     .done(@upload)
-      #     .always( -> currentDialog = null)
+      openDialog: ->
+        @closeDialog()
+        currentDialog = ns.showDialog(@settings)
+          .done(@__setFileOfType)
+          .always( -> currentDialog = null)
 
-
-      # closeDialog: ->
-      #   currentDialog?.close()
+      closeDialog: ->
+        currentDialog?.close()
         
 
     uploadcare.initialize = ->
