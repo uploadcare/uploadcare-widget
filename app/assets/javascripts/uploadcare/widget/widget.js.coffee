@@ -23,7 +23,9 @@ uploadcare.whenReady ->
         @settings = utils.buildSettings @element.data()
 
         @__setupWidget()
-        @__reset()
+        @currentFile = null
+        @template.reset()
+        @__setupFileButton()
 
         @__skipChange = 0
         @element.on 'change', =>
@@ -54,9 +56,12 @@ uploadcare.whenReady ->
                 @__fail error
             .done (file) =>
               if file == @currentFile
-                @template.setFileInfo(file)
-                @template.loaded()
-                @__setValue file.fileId
+                if @settings.imagesOnly && !file.isImage
+                  @__fail('image')
+                else
+                  @template.setFileInfo(file)
+                  @template.loaded()
+                  @__setValue file.fileId
 
       __setValue: (value) ->
         @__skipChange++
@@ -66,16 +71,23 @@ uploadcare.whenReady ->
         @element.val(value).change()
 
       reloadInfo: =>
-        @__setFileOfType 'uploaded', @element.val()
+        if @element.val()
+          @__setFileOfType 'uploaded', @element.val()
+        else
+          @__reset()
 
       __setEventFile: (e) =>
         @__setFileOfType 'event', e
 
       __setFileOfType: (type, data) =>
-        @__setFile uploadcare.fileFrom(@settings, type, data)
+        file = uploadcare.fileFrom(@settings, type, data)
+        if file
+          @__setFile file
+        else
+          @__fail('cant-create')
 
       __fail: (error) =>
-        @__setValue ''
+        @__reset()
         @template.error error
 
       __setupWidget: ->

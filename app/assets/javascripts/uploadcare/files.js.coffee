@@ -1,8 +1,8 @@
 # = require ./files/base
 # = require ./files/event
-
 # ≠ require ./files/input
 # = require ./files/url
+# = require ./files/uploaded
 
 uploadcare.whenReady ->
   {namespace, jQuery: $, utils, files: f} = uploadcare
@@ -21,13 +21,17 @@ uploadcare.whenReady ->
             e.target.files
           new f.EventFile settings, files[0]
         else
-          new f.InputFile settings, e.target
+          @input settings, e.target
       input: (settings, input) ->
         new f.InputFile settings, input
       url: (settings, url) ->
-        if url
+        # TODO: test url properly
+        if url 
           new f.UrlFile settings, url
         else
           null
-      uploaded: (settings, uid) ->
-        # TODO
+      uploaded: (settings, fileIdOrUrl) ->
+        if utils.uuidRegex.test(fileIdOrUrl)
+          new f.UploadedFile settings, fileIdOrUrl
+        else
+          null

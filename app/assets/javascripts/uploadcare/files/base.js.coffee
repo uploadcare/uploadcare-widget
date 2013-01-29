@@ -38,13 +38,16 @@ uploadcare.whenReady ->
             pub_key: @settings.publicKey
           dataType: 'jsonp'
         .done (data) =>
-          # @fileId = data.file_id
-          @fileName = data.original_filename
-          @fileSize = data.size
-          @isImage = data.is_image
-          @isStored = data.is_stored
-          # TODO: @previewUrl, @cdnUrl
-          @__infoDf.resolve(this)
+          if data.error
+            @__infoDf.reject('info', this)
+          else
+            # @fileId = data.file_id
+            @fileName = data.original_filename
+            @fileSize = data.size
+            @isImage = data.is_image
+            @isStored = data.is_stored
+            # TODO: @previewUrl, @cdnUrl
+            @__infoDf.resolve(this)
         .fail =>
           @__infoDf.reject('info', this)
 
