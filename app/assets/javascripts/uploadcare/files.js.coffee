@@ -1,6 +1,6 @@
 # = require ./files/base
 # = require ./files/event
-# ≠ require ./files/input
+# = require ./files/input
 # = require ./files/url
 # = require ./files/uploaded
 
