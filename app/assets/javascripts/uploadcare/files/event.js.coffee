@@ -37,7 +37,7 @@ uploadcare.whenReady ->
         @__xhr.upload.addEventListener 'progress', =>
           @__loaded = event.loaded
           @fileSize = event.totalSize || event.total
-          @__uploadDf.notify @fileSize / @__loaded
+          @__uploadDf.notify(@fileSize / @__loaded, this)
 
         @__xhr.send formData
 

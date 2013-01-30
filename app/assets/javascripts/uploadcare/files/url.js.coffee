@@ -53,7 +53,7 @@ uploadcare.whenReady ->
           progress: (data) =>
             return if @__shutdown
             @fileSize = data.total
-            @__uploadDf.notify data.total / data.done
+            @__uploadDf.notify(data.total / data.done, this)
 
           success: (data) =>
             return if @__shutdown
