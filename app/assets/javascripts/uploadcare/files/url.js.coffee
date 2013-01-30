@@ -23,14 +23,13 @@ uploadcare.whenReady ->
 
         @__state('start')
 
-        @xhr = $.ajax("#{@settings.urlBase}/from_url/",
+        $.ajax("#{@settings.urlBase}/from_url/",
           data: {pub_key: @settings.publicKey, source_url: @__url}
           dataType: 'jsonp'
         ).done (data) =>
-          @token = data.token
-
-          @__pollWatcher.watch @token
-          @__pusherWatcher.watch @token
+          @__token = data.token
+          @__pollWatcher.watch @__token
+          @__pusherWatcher.watch @__token
           $(@__pusherWatcher).on 'started', =>
             @__pollWatcher.stopWatching()
 

@@ -51,15 +51,16 @@ uploadcare.whenReady ->
           @__infoDf.reject('info', this)
 
       startUpload: ->
-        unless @upload
-          @__startUpload()
+        unless @upload 
+          if @__uploadDf.state() == 'pending'
+            @__startUpload()
           @__createPublicUploadDf()
         return @upload
 
       __createPublicUploadDf: ->
         @upload = @__uploadDf.promise()
         @upload.reject = =>
-          @__uploadDf.reject('user')
+          @__uploadDf.reject('user', this)
 
 
       info: ->
