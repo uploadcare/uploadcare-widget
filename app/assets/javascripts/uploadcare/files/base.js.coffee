@@ -14,6 +14,7 @@ uploadcare.whenReady ->
         @fileSize = null
         @isStored = null
         @cdnUrl = null
+        @cdnUrlModifiers = null
         @previewUrl = null
         @isImage = null
 
@@ -43,7 +44,8 @@ uploadcare.whenReady ->
             @fileSize = data.size
             @isImage = data.is_image
             @isStored = data.is_stored
-            # TODO: @previewUrl, @cdnUrl
+            @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers}"
+            # TODO: @previewUrl
             @__infoDf.resolve(this)
         .fail =>
           @__infoDf.reject('info', this)

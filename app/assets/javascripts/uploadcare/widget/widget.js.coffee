@@ -61,7 +61,10 @@ uploadcare.whenReady ->
                 else
                   @template.setFileInfo(file)
                   @template.loaded()
-                  @__setValue file.fileId
+                  if file.cdnUrlModifiers
+                    @__setValue file.cdnUrl
+                  else
+                    @__setValue file.fileId
 
       __setValue: (value) ->
         @__skipChange++

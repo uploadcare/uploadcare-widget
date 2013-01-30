@@ -7,7 +7,11 @@ uploadcare.whenReady ->
       constructor: (settings, fileIdOrUrl) ->
         super
         @fileId = utils.uuidRegex.exec(fileIdOrUrl)[0]
-        # TODO: save url
+
+        url = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
+        if url and url[1]
+          @cdnUrlModifiers = url[1]
+
         @__uploadDf.resolve(this)
 
       __startUpload: ->
