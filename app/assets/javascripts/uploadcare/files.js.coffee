@@ -30,13 +30,6 @@ uploadcare.whenReady ->
       input: (settings, input) ->
         new f.InputFile settings, input
       url: (settings, url) ->
-        # TODO: test url properly
-        if url 
-          new f.UrlFile settings, url
-        else
-          null
+        new f.UrlFile settings, url
       uploaded: (settings, fileIdOrUrl) ->
-        if utils.uuidRegex.test(fileIdOrUrl)
-          new f.UploadedFile settings, fileIdOrUrl
-        else
-          null
+        new f.UploadedFile settings, fileIdOrUrl

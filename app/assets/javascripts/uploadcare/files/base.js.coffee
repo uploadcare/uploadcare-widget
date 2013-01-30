@@ -23,9 +23,8 @@ uploadcare.whenReady ->
         @__uploadDf = $.Deferred()
         @__infoDf = $.Deferred()
 
-        @__uploadDf
-          .fail (error) => 
-            @__infoDf.reject(error, this)
+        @__uploadDf.fail (error) =>
+          @__infoDf.reject(error, this)
 
       __startUpload: -> throw 'not implemented'
 

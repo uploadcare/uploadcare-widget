@@ -83,11 +83,7 @@ uploadcare.whenReady ->
         @__setFileOfType 'event', e
 
       __setFileOfType: (type, data) =>
-        file = uploadcare.fileFrom(@settings, type, data)
-        if file
-          @__setFile file
-        else
-          @__fail('cant-create')
+        @__setFile uploadcare.fileFrom(@settings, type, data)
 
       __fail: (error) =>
         @__reset()
