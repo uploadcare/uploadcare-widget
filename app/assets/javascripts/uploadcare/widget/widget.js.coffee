@@ -36,15 +36,16 @@ uploadcare.whenReady ->
 
         @reloadInfo()
 
-      __reset: =>
+      __reset: (keepValue=false) =>
         @currentFile?.upload?.reject()
         @currentFile = null
         @template.reset()
         @__setupFileButton()
-        @__setValue ''
+        unless keepValue
+          @__setValue ''
 
-      __setFile: (newFile) ->
-        @__reset()
+      __setFile: (newFile, keepValue=false) ->
+        @__reset(keepValue)
         if newFile
           @currentFile = newFile
           @template.started()
@@ -61,10 +62,11 @@ uploadcare.whenReady ->
                 else
                   @template.setFileInfo(file)
                   @template.loaded()
-                  if file.cdnUrlModifiers
-                    @__setValue file.cdnUrl
-                  else
-                    @__setValue file.fileId
+                  unless keepValue
+                    if file.cdnUrlModifiers
+                      @__setValue file.cdnUrl
+                    else
+                      @__setValue file.fileId
 
       __setValue: (value) ->
         @__skipChange++
@@ -75,15 +77,15 @@ uploadcare.whenReady ->
 
       reloadInfo: =>
         if @element.val()
-          @__setFileOfType 'uploaded', @element.val()
+          @__setFileOfType 'uploaded', @element.val(), true
         else
           @__reset()
 
       __setEventFile: (e) =>
         @__setFileOfType 'event', e
 
-      __setFileOfType: (type, data) =>
-        @__setFile uploadcare.fileFrom(@settings, type, data)
+      __setFileOfType: (type, data, keepValue=false) =>
+        @__setFile uploadcare.fileFrom(@settings, type, data), keepValue
 
       __fail: (error) =>
         @__reset()
