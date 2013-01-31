@@ -2,49 +2,46 @@ uploadcare.whenReady ->
   {namespace, jQuery: $, utils} = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
-    class ns.EventFile
-      constructor: (@file) ->
 
-      upload: (settings) ->
-        settings = utils.buildSettings settings
-        targetUrl = "#{settings.urlBase}/iframe/"
-        dfd = $.Deferred()
+    class ns.EventFile extends ns.BaseFile
+      constructor: (settings, @__file) ->
+        super
+
+      __startUpload: ->
+        targetUrl = "#{@settings.urlBase}/iframe/"
 
         @fileId = utils.uuid()
-        @fileSize = @file.size
-        @fileName = @file.name
+        @fileSize = @__file.size
+        @fileName = @__file.name
 
         if @fileSize > (100*1024*1024)
-          dfd.reject(this)
-          return dfd.promise()
+          @__uploadDf.reject('size', this)
+          return
 
         formData = new FormData()
-        formData.append('UPLOADCARE_PUB_KEY', settings.publicKey)
+        formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
 
-        formData.append('file', @file)
+        formData.append('file', @__file)
 
         # Naked XHR for progress tracking
-        @xhr = new XMLHttpRequest()
-        @xhr.open 'POST', targetUrl
-        @xhr.withCredentials = true
-        @xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @xhr.addEventListener 'error timeout abort', => dfd.reject(this)
-        @xhr.addEventListener 'load', => dfd.resolve(this)
-        @xhr.addEventListener 'loadend', =>
-          if @xhr? && !@xhr.status
-            dfd.reject(this)
-        @xhr.upload.addEventListener 'progress', =>
-          @loaded = event.loaded
+        @__xhr = new XMLHttpRequest()
+        @__xhr.open 'POST', targetUrl
+        @__xhr.withCredentials = true
+        @__xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
+        @__xhr.addEventListener 'error timeout abort', => @__uploadDf.reject('upload', this)
+        @__xhr.addEventListener 'load', => @__uploadDf.resolve(this)
+        @__xhr.addEventListener 'loadend', =>
+          if @__xhr? && !@__xhr.status
+            @__uploadDf.reject('upload', this)
+        @__xhr.upload.addEventListener 'progress', =>
+          @__loaded = event.loaded
           @fileSize = event.totalSize || event.total
-          dfd.notify(this)
+          @__uploadDf.notify(@fileSize / @__loaded, this)
 
-        @xhr.send formData
-        dfd.promise()
+        @__xhr.send formData
 
-      cancel: -> @__cleanUp()
-
-      __cleanUp: ->
-        xhr = @xhr
-        @xhr = null
-        xhr.abort() # Correct order to avoid errors
+        @__uploadDf.always =>
+          xhr = @__xhr
+          @__xhr = null
+          xhr.abort() # Correct order to avoid errors

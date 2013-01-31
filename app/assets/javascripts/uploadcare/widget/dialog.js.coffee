@@ -23,9 +23,7 @@ uploadcare.whenReady ->
     class Dialog
       constructor: (@settings) ->
         @dfd = $.Deferred()
-        @dfd
-          .always(=> @closeDialog())
-          .pipe(files.toFiles, -> 'dialog was closed')
+        @dfd.always(=> @closeDialog())
 
         @content = $(tpl('dialog'))
           .hide()

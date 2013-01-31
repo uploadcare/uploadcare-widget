@@ -75,18 +75,13 @@ uploadcare.whenReady ->
         @statusText.text(t('uploading'))
         @setStatus 'started'
 
-      setFileInfo: (infos...) ->
-        if infos.length > 1
-          caption = t('file', infos.length)
-          size = 0
-          size += info.fileSize for info in infos
-        else
-          caption = utils.fitText(infos[0].fileName, 16)
-          size = infos[0].fileSize
+      setFileInfo: (file) ->
+        caption = utils.fitText(file.fileName, 16)
+        size = file.fileSize
 
-          if infos[0].isStored
-            href = "#{@settings.cdnBase}/#{infos[0].fileId}/#{infos[0].fileName}"
-            caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
+        if file.isStored
+          href = "#{@settings.cdnBase}/#{file.fileId}/#{file.fileName}"
+          caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
 
         size = Math.ceil(size / 1024).toString()
         @statusText.html "#{caption}, #{size} kb"
