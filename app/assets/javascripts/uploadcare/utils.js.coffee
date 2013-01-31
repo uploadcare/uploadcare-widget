@@ -18,13 +18,8 @@ uploadcare.whenReady ->
         v.toString(16)
 
     ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
-    ns.cdnUrlModifiersRegex = /// ^
-      (?:http|https)://                                              # http://
-      [a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(?::[0-9]{1,5})?/  # example.com/
-      [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}   # %file_id%
-      (?:/(.*))?                                                     # /-/scale_crop/100x100/center/
-    $ ///i
-
+    ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_]+\/)+)+/i
+    
     ns.normalizeUrl = (url) ->
       url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
       url.replace(/\/+$/, '')

@@ -10,9 +10,9 @@ uploadcare.whenReady ->
         id = utils.uuidRegex.exec(fileIdOrUrl)
         if id
           @fileId = id[0]
-          url = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
-          if url and url[1]
-            @cdnUrlModifiers = url[1]
+          modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
+          if modifiers
+            @cdnUrlModifiers = modifiers[0]
           @__uploadDf.resolve(this)
         else
           @__uploadDf.reject('baddata', this)
