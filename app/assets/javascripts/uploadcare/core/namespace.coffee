@@ -1,4 +1,4 @@
-window.uploadcare ||= new Object
+window.uploadcare ||= {}
 
 uploadcare.namespace = (path, fn) ->
   parts = path.split('.')
