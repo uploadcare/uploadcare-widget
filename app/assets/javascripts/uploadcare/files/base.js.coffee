@@ -38,7 +38,6 @@ uploadcare.whenReady ->
           if data.error
             @__infoDf.reject('info', this)
           else
-            # @fileId = data.file_id
             @fileName = data.original_filename
             @fileSize = data.size
             @isImage = data.is_image
