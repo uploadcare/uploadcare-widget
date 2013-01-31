@@ -6,6 +6,11 @@ uploadcare.whenReady ->
       uploading: 'Uploading... Please wait.'
       errors:
         default: 'Error'
+        baddata: 'Incorrect value'
+        size: 'Too big'
+        upload: 'Can\'t upload' 
+        user: 'Upload canceled'
+        info: 'Can\'t load info' 
         image: 'Only images allowed'
       draghere: 'Drop the file here'
       file:
