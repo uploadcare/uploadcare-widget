@@ -8,8 +8,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     ns.RemoteTabFor = (service) ->
-      class RemoteTab
-        constructor: (@dialog, @settings, @callback) ->
+      class RemoteTab extends ns.BaseFileTab
 
         setContent: (@content) ->
 
@@ -42,7 +41,7 @@ uploadcare.whenReady ->
             @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
             $(@watcher).on('done', (e, state) =>
               @cleanup()
-              @callback('url', state.url)
+              @onSelected.fire 'url', state.url
             )
             @watcher.watch()
 

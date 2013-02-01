@@ -8,14 +8,13 @@ uploadcare.whenReady ->
   {dragdrop} = uploadcare.widget
 
   namespace 'uploadcare.widget.tabs', (ns) ->
-    class ns.FileTab
-      constructor: (@dialog, @settings, @callback) ->
+    class ns.FileTab extends ns.BaseFileTab
 
       setContent: (@content) ->
         @__setupFileButton()
-        dragdrop.receiveDrop @callback, @content.find('@uploadcare-drop-area')
+        dragdrop.receiveDrop @onSelected.fire, @content.find('@uploadcare-drop-area')
 
       __setupFileButton: ->
         fileButton = @content.find('@uploadcare-dialog-browse-file')
         utils.fileInput fileButton, @settings.multiple, (e) =>
-          @callback('event', e)
+          @onSelected.fire 'event', e
