@@ -14,16 +14,29 @@ uploadcare.whenReady ->
   {t} = uploadcare.locale
   {tpl} = uploadcare.templates
 
-  namespace 'uploadcare.widget', (ns) ->
-    ns.showDialog = (settings = {}) ->
+  namespace 'uploadcare', (ns) ->
+
+    currentDialogPr = null
+
+    ns.isDialogOpened = -> 
+      currentDialogPr != null
+
+    ns.closeDialog = ->
+      currentDialogPr?.reject()
+
+    ns.openDialog = (settings = {}, currentFile = null) ->
+      ns.closeDialog()
       settings = utils.buildSettings settings
-      dialog = new Dialog(settings)
-      dialog.dfd.promise()
+      dialog = new Dialog(settings, currentFile)
+      return currentDialogPr = dialog.publicPromise()
+        .always ->
+          currentDialogPr = null
 
     class Dialog
-      constructor: (@settings) ->
+      constructor: (@settings, currentFile) ->
+        # TODO: handle currentFile
         @dfd = $.Deferred()
-        @dfd.always(=> @closeDialog())
+        @dfd.always(=> @__closeDialog())
 
         @content = $(tpl('dialog'))
           .hide()
@@ -42,6 +55,11 @@ uploadcare.whenReady ->
         @__prepareTabs()
         @content.fadeIn('fast')
 
+      publicPromise: ->
+        promise = @dfd.promise()
+        promise.reject = @dfd.reject
+        return promise
+
       __prepareTabs: ->
         @tabs = {}
         for tabName in @settings.tabs when tabName not of @tabs
@@ -50,7 +68,7 @@ uploadcare.whenReady ->
 
         @switchTab(@settings.tabs[0])
 
-      closeDialog: ->
+      __closeDialog: ->
         @content.fadeOut 'fast', => @content.off().remove()
 
       addTab: (name) ->
@@ -66,8 +84,9 @@ uploadcare.whenReady ->
 
         return false if not tabCls
 
-        tab = new tabCls @dfd.promise(), @settings, =>
-          @dfd.resolve.apply(this, arguments)
+        tab = new tabCls @dfd.promise(), @settings, (fileType, data) =>
+          file = ns.fileFrom @settings, fileType, data
+          @dfd.resolve(file)
 
         if tab
           $('<li>')

@@ -44,7 +44,7 @@ uploadcare.whenReady ->
         unless keepValue
           @__setValue ''
 
-      __setFile: (newFile, keepValue=false) ->
+      __setFile: (newFile, keepValue=false) =>
         @__reset(keepValue)
         if newFile
           @currentFile = newFile
@@ -109,25 +109,15 @@ uploadcare.whenReady ->
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@__setFileOfType, @template.dropArea)
         @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
-          unless active && @dialog()?
+          unless active && uploadcare.isDialogOpened()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       __setupFileButton: ->
         utils.fileInput @fileButton, false, @__setEventFile
 
-      currentDialog = null
-
-      dialog: -> currentDialog
-
       openDialog: ->
-        @closeDialog()
-        currentDialog = ns.showDialog(@settings)
-          .done(@__setFileOfType)
-          .always( -> currentDialog = null)
-
-      closeDialog: ->
-        currentDialog?.close()
-        
+        uploadcare.openDialog(@settings, @currentFile)
+          .done(@__setFile)
 
     uploadcare.initialize = ->
       dataAttr = 'uploadcareWidget'

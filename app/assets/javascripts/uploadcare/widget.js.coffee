@@ -8,3 +8,7 @@
 # = require uploadcare/widget/widget
 # = require uploadcare/widget/submit-guard
 # = require uploadcare/ui/crop/crop-widget
+
+# Exports
+window.uploadcare.fileFrom = uploadcare.fileFrom
+window.uploadcare.openDialog = uploadcare.openDialog
