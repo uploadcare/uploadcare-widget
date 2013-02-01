@@ -118,6 +118,9 @@ uploadcare.whenReady ->
       openDialog: ->
         uploadcare.openDialog(@settings, @currentFile)
           .done(@__setFile)
+          .fail (file) =>
+            unless file == @currentFile
+              @__setFile null
 
     uploadcare.initialize = ->
       dataAttr = 'uploadcareWidget'

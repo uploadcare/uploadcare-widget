@@ -33,8 +33,7 @@ uploadcare.whenReady ->
           currentDialogPr = null
 
     class Dialog
-      constructor: (@settings, currentFile) ->
-        # TODO: handle currentFile
+      constructor: (@settings, @currentFile) ->
         @dfd = $.Deferred()
         @dfd.always(=> @__closeDialog())
 
@@ -44,13 +43,13 @@ uploadcare.whenReady ->
 
         @content.on 'click', (e) =>
           e.stopPropagation()
-          @dfd.reject() if e.target == e.currentTarget
+          @__reject() if e.target == e.currentTarget
 
         closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @dfd.reject()
+        closeButton.on 'click', => @__reject()
 
         $(window).on 'keydown', (e) =>
-          @dfd.reject() if e.which == 27 # Escape
+          @__reject() if e.which == 27 # Escape
 
         @__prepareTabs()
         @content.fadeIn('fast')
@@ -59,6 +58,9 @@ uploadcare.whenReady ->
         promise = @dfd.promise()
         promise.reject = @dfd.reject
         return promise
+
+      __reject: ->
+        @dfd.reject(@currentFile)
 
       __prepareTabs: ->
         @tabs = {}
