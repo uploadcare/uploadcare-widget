@@ -8,8 +8,6 @@ uploadcare.whenReady ->
         super
 
       __startUpload: ->
-        targetUrl = "#{@settings.urlBase}/iframe/"
-
         @fileId = utils.uuid()
         @fileSize = @__file.size
         @fileName = @__file.name
@@ -21,27 +19,29 @@ uploadcare.whenReady ->
         formData = new FormData()
         formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
-
         formData.append('file', @__file)
 
+        fail = =>
+          @__uploadDf.reject('upload', this)
+
         # Naked XHR for progress tracking
-        @__xhr = new XMLHttpRequest()
-        @__xhr.open 'POST', targetUrl
-        @__xhr.withCredentials = true
-        @__xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @__xhr.addEventListener 'error timeout abort', => @__uploadDf.reject('upload', this)
-        @__xhr.addEventListener 'load', => @__uploadDf.resolve(this)
-        @__xhr.addEventListener 'loadend', =>
-          if @__xhr? && !@__xhr.status
-            @__uploadDf.reject('upload', this)
-        @__xhr.upload.addEventListener 'progress', =>
+        xhr = new XMLHttpRequest()
+        xhr.open 'POST', "#{@settings.urlBase}/iframe/?jsonerrors=1"
+        xhr.withCredentials = true
+        xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
+        xhr.addEventListener 'error timeout abort', fail
+        xhr.addEventListener 'load', =>
+          @__uploadDf.resolve(this)
+        xhr.addEventListener 'loadend', =>
+          fail() if xhr? && !xhr.status
+        xhr.upload.addEventListener 'progress', =>
           @__loaded = event.loaded
           @fileSize = event.totalSize || event.total
           @__uploadDf.notify(@fileSize / @__loaded, this)
 
-        @__xhr.send formData
+        xhr.send formData
 
         @__uploadDf.always =>
-          xhr = @__xhr
-          @__xhr = null
-          xhr.abort() # Correct order to avoid errors
+          _xhr = xhr
+          xhr = null
+          _xhr.abort() # Correct order to avoid errors
