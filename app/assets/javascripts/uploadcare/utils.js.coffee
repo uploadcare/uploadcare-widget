@@ -92,9 +92,6 @@ uploadcare.whenReady ->
       a.href = url
       return a
 
-    ns.isImage = (fileName) ->
-      /\.(jpeg|jpg|png|gif)$/i.exec(fileName) != null
-
     ns.createObjectUrl = (object) ->
       URL = window.URL || window.webkitURL
       if URL
