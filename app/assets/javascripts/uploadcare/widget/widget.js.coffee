@@ -45,6 +45,8 @@ uploadcare.whenReady ->
           @__setValue ''
 
       __setFile: (newFile, keepValue=false) =>
+        if newFile == @currentFile
+          return
         @__reset(keepValue)
         if newFile
           @currentFile = newFile
@@ -106,6 +108,9 @@ uploadcare.whenReady ->
         @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
           unless active && uploadcare.isDialogOpened()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
+
+        @template.content.on 'click', '@uploadcare-widget-file-name', =>
+          @openDialog()
 
       __openDialogWithFile: (type, data) =>
         file = uploadcare.fileFrom @settings, type, data

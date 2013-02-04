@@ -76,12 +76,10 @@ uploadcare.whenReady ->
         @setStatus 'started'
 
       setFileInfo: (file) ->
-        caption = utils.fitText(file.fileName, 16)
-        size = file.fileSize
+        name = utils.fitText(file.fileName, 16)
+        size = Math.ceil(file.fileSize / 1024).toString()
 
-        if file.isStored
-          href = "#{@settings.cdnBase}/#{file.fileId}/#{file.fileName}"
-          caption = "<a href='#{href}' target='_blank'>#{caption}</a>"
+        role = 'uploadcare-widget-file-name'
+        caption = "<sapn role=\"#{role}\" class=\"#{role}\">#{name}</span>"
 
-        size = Math.ceil(size / 1024).toString()
         @statusText.html "#{caption}, #{size} kb"
