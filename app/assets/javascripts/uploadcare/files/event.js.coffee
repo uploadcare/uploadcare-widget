@@ -7,12 +7,13 @@ uploadcare.whenReady ->
       constructor: (settings, @__file) ->
         super
 
-      __startUpload: ->
-        targetUrl = "#{@settings.urlBase}/iframe/"
-
         @fileId = utils.uuid()
         @fileSize = @__file.size
         @fileName = @__file.name
+        @previewUrl = utils.createObjectUrl @__file
+
+      __startUpload: ->
+        targetUrl = "#{@settings.urlBase}/iframe/"
 
         if @fileSize > (100*1024*1024)
           @__uploadDf.reject('size', this)

@@ -42,11 +42,14 @@ uploadcare.whenReady ->
             @fileSize = data.size
             @isImage = data.is_image
             @isStored = data.is_stored
-            @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers}"
-            # TODO: @previewUrl
+            @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+            @__buildPreviewUrl()
             @__infoDf.resolve(this)
         .fail =>
           @__infoDf.reject('info', this)
+
+      __buildPreviewUrl: ->
+        @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
 
       startUpload: ->
         unless @upload 
@@ -59,7 +62,6 @@ uploadcare.whenReady ->
         @upload = @__uploadDf.promise()
         @upload.reject = =>
           @__uploadDf.reject('user', this)
-
 
       info: ->
         unless @__requestInfoPlanned

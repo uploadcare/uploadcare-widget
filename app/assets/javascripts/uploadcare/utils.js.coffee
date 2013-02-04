@@ -79,3 +79,24 @@ uploadcare.whenReady ->
           overflow: 'hidden'
         )
         .append(input)
+
+    # url = parseUrl('http://example.com/page/123?foo=bar#top')
+    # url.href == 'http://example.com/page/123?foo=bar#top'
+    # url.protocol == 'http:'
+    # url.host == 'example.com'
+    # url.pathname == '/page/123'
+    # url.search == '?foo=bar'
+    # url.hash == '#top'
+    ns.parseUrl = (url) ->
+      a = document.createElement('a')
+      a.href = url
+      return a
+
+    ns.isImage = (fileName) ->
+      /\.(jpeg|jpg|png|gif)$/i.exec(fileName) != null
+
+    ns.createObjectUrl = (object) ->
+      URL = window.URL || window.webkitURL
+      if URL
+        return URL.createObjectURL(object)
+      return null
