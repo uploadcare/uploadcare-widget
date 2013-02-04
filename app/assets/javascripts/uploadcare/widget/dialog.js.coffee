@@ -142,6 +142,7 @@ uploadcare.whenReady ->
             .hide()
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
+        @dfd.notify @currentTab
 
       __showTab: (tab) ->
         @content.find(".uploadcare-dialog-tab-#{tab}").show()
