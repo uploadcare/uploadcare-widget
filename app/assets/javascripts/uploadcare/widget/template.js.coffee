@@ -80,6 +80,6 @@ uploadcare.whenReady ->
         size = Math.ceil(file.fileSize / 1024).toString()
 
         role = 'uploadcare-widget-file-name'
-        caption = "<sapn role=\"#{role}\" class=\"#{role}\">#{name}</span>"
+        caption = "<span role=\"#{role}\" class=\"#{role}\">#{name}</span>"
 
         @statusText.html "#{caption}, #{size} kb"

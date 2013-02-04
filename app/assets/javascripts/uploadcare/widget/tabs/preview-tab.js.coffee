@@ -21,8 +21,6 @@ uploadcare.whenReady ->
         @content.on('click', PREFIX + 'done', @onDone.fire)
 
       setFile: (@file) ->
-        # @content.find(PREFIX + 'file-name').text @file.fileName or 'unknown'
-        # @pictureEl.attr 'src', @file.previewUrl
         @__setState 'unknown'
         @file.info()
           .done (file) =>
@@ -42,9 +40,3 @@ uploadcare.whenReady ->
       # TODO: crop
       __setState: (state) ->
         @content.empty().append tpl("tab-preview-#{state}", {@file})
-
-
-
-
-        
-        
