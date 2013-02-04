@@ -26,10 +26,11 @@ uploadcare.whenReady ->
 
         # Naked XHR for progress tracking
         xhr = new XMLHttpRequest()
-        xhr.open 'POST', "#{@settings.urlBase}/iframe/?jsonerrors=1"
+        xhr.open('POST', "#{@settings.urlBase}/iframe/?jsonerrors=1", true)
         xhr.withCredentials = true
         xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        xhr.addEventListener 'error timeout abort', fail
+        xhr.addEventListener('error', fail)
+        xhr.addEventListener('abort', fail)
         xhr.addEventListener 'load', =>
           @__uploadDf.resolve(this)
         xhr.addEventListener 'loadend', =>
