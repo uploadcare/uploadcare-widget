@@ -5,7 +5,7 @@ uploadcare.whenReady ->
     jQuery: $
   } = uploadcare
 
-  {dragdrop} = uploadcare.widget
+  {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.PreviewTab
@@ -17,19 +17,34 @@ uploadcare.whenReady ->
         @onBack = $.Callbacks()
 
       setContent: (@content) ->
-        @content.find(PREFIX + 'back').click @onBack.fire
-        @content.find(PREFIX + 'done').click @onDone.fire
+        @content.on('click', PREFIX + 'back', @onBack.fire)
+        @content.on('click', PREFIX + 'done', @onDone.fire)
 
-      setFile: (file) ->
-        infoEl = @content.find(PREFIX + 'info')
-        infoEl.text JSON.stringify {
-          fileId: file.fileId,
-          fileName: file.fileName,
-          fileSize: file.fileSize,
-          isStored: file.isStored,
-          cdnUrl: file.cdnUrl,
-          cdnUrlModifiers: file.cdnUrlModifiers,
-          previewUrl: file.previewUrl,
-          isImage: file.isImage
-        }
+      setFile: (@file) ->
+        # @content.find(PREFIX + 'file-name').text @file.fileName or 'unknown'
+        # @pictureEl.attr 'src', @file.previewUrl
+        @__setState 'unknown'
+        @file.info()
+          .done (file) =>
+            if file == @file
+              if @file.isImage
+                @__setState 'image'
+              else
+                @__setState 'regular'
+          .fail (error, file) =>
+            if file == @file
+              @__setState 'error'
+
+      # error
+      # unknown
+      # image
+      # regular
+      # TODO: crop
+      __setState: (state) ->
+        @content.empty().append tpl("tab-preview-#{state}", {@file})
+
+
+
+
+        
         
