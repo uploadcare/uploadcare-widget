@@ -10,5 +10,7 @@
 # = require uploadcare/ui/crop/crop-widget
 
 # Exports
-window.uploadcare.fileFrom = uploadcare.fileFrom
-window.uploadcare.openDialog = uploadcare.openDialog
+uploadcare.whenReady ->
+  window.uploadcare.fileFrom = uploadcare.fileFrom
+  window.uploadcare.openDialog = uploadcare.openDialog
+  window.uploadcare.Circle = uploadcare.ui.progress.Circle
