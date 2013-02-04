@@ -35,25 +35,19 @@ uploadcare.whenReady ->
           currentDialogPr = null
 
     class Dialog
-      constructor: (@settings, @currentFile) ->
+      constructor: (@settings, currentFile) ->
         @dfd = $.Deferred()
-        @dfd.always(=> @__closeDialog())
+        @dfd.always => 
+          @__closeDialog()
 
         @content = $(tpl('dialog'))
           .hide()
           .appendTo('body')
-
-        @content.on 'click', (e) =>
-          e.stopPropagation()
-          @__reject() if e.target == e.currentTarget
-
-        closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @__reject()
-
-        $(window).on 'keydown', (e) =>
-          @__reject() if e.which == 27 # Escape
-
+        
+        @__bind()
         @__prepareTabs()
+        @__setFile currentFile
+
         @content.fadeIn('fast')
 
       publicPromise: ->
@@ -61,13 +55,27 @@ uploadcare.whenReady ->
         promise.reject = @dfd.reject
         return promise
 
-      __reject: ->
-        @dfd.reject(@currentFile)
+      __bind: ->
+        reject = =>
+          @dfd.reject(@currentFile)
+
+        @content.on 'click', (e) ->
+          e.stopPropagation()
+          reject() if e.target == e.currentTarget
+
+        @content.find('@uploadcare-dialog-close').on 'click', reject
+
+        $(window).on 'keydown', (e) ->
+          reject() if e.which == 27 # Escape
 
       __prepareTabs: ->
         @tabs = {}
 
         @tabs.preview = @__addTab 'preview'
+        @tabs.preview.onDone.add =>
+          @dfd.resolve @currentFile
+        @tabs.preview.onBack.add =>
+          @__setFile null
 
         for tabName in @settings.tabs when tabName not of @tabs
           @tabs[tabName] = @__addTab(tabName)
@@ -83,8 +91,13 @@ uploadcare.whenReady ->
         @content.fadeOut 'fast', => @content.off().remove()
 
       __setFile: (@currentFile) ->
-        # TODO: show preview
-        @dfd.resolve @currentFile
+        if @currentFile
+          @currentFile.startUpload()
+          @tabs.preview.setFile @currentFile
+          @__showTab 'preview'
+          @__switchTab 'preview'
+        else
+          @__hideTab 'preview'
 
       __addTab: (name) ->
         {tabs} = uploadcare.widget
@@ -130,4 +143,11 @@ uploadcare.whenReady ->
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
 
-        @dfd.notify @currentTab
+      __showTab: (tab) ->
+        @content.find(".uploadcare-dialog-tab-#{tab}").show()
+
+      __hideTab: (tab) ->
+        if @currentTab == tab
+          @__switchTab @settings.tabs[0]
+        @content.find(".uploadcare-dialog-tab-#{tab}").hide()
+
