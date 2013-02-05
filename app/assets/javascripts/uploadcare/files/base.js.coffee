@@ -29,24 +29,25 @@ uploadcare.whenReady ->
       __startUpload: -> throw 'not implemented'
 
       __requestInfo: =>
+        fail = =>
+          @__infoDf.reject('info', this)
+
         $.ajax "#{@settings.urlBase}/info/",
           data:
             file_id: @fileId
             pub_key: @settings.publicKey
           dataType: 'jsonp'
+        .fail(fail)
         .done (data) =>
-          if data.error
-            @__infoDf.reject('info', this)
-          else
-            @fileName = data.original_filename
-            @fileSize = data.size
-            @isImage = data.is_image
-            @isStored = data.is_stored
-            @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers}"
-            # TODO: @previewUrl
-            @__infoDf.resolve(this)
-        .fail =>
-          @__infoDf.reject('info', this)
+          return fail() if data.error
+
+          @fileName = data.original_filename
+          @fileSize = data.size
+          @isImage = data.is_image
+          @isStored = data.is_stored
+          @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers}"
+          # TODO: @previewUrl
+          @__infoDf.resolve(this)
 
       startUpload: ->
         unless @upload 
