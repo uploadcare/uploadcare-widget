@@ -16,3 +16,6 @@ uploadcare.namespace = (path, fn) ->
     target = target[part]
 
   fn(target)
+
+uploadcare.expose = (key, value) ->
+  window.uploadcare[key] = value || uploadcare[key]

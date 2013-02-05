@@ -9,8 +9,10 @@
 # = require uploadcare/widget/submit-guard
 # = require uploadcare/ui/crop/crop-widget
 
-# Exports
+{expose} = uploadcare
+
+expose 'whenReady'
 uploadcare.whenReady ->
-  window.uploadcare.fileFrom = uploadcare.fileFrom
-  window.uploadcare.openDialog = uploadcare.openDialog
-  window.uploadcare.Circle = uploadcare.ui.progress.Circle
+  expose 'fileFrom'
+  expose 'openDialog'
+  expose 'Circle', uploadcare.ui.progress.Circle
