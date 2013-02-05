@@ -77,9 +77,13 @@ uploadcare.whenReady ->
 
       __checkStatus: ->
         debug('polling status...')
+
+        fail = =>
+          @ps.__update {score: -1, state: 'error'}
+
         $.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
           dataType: 'jsonp'
-        .fail =>
-          @ps.__update {score: -1, state: 'error'}
+        .fail(fail)
         .done (data) =>
+          return fail() if data.error
           @ps.__update data

@@ -25,18 +25,23 @@ uploadcare.whenReady ->
 
         @__state('start')
 
-        $.ajax("#{@settings.urlBase}/from_url/",
-          data: {pub_key: @settings.publicKey, source_url: @__url}
+        fail = =>
+          @__state('error')
+
+        $.ajax "#{@settings.urlBase}/from_url/",
+          data:
+            pub_key: @settings.publicKey
+            source_url: @__url
           dataType: 'jsonp'
-        ).done (data) =>
+        .fail(fail)
+        .done (data) =>
+          return fail() if data.error
+
           @__token = data.token
           @__pollWatcher.watch @__token
           @__pusherWatcher.watch @__token
           $(@__pusherWatcher).on 'started', =>
             @__pollWatcher.stopWatching()
-
-        .fail (e) =>
-          @__state('error')
 
         @__uploadDf.always =>
           @__shutdown = true
@@ -109,10 +114,13 @@ uploadcare.whenReady ->
         @uploader.__state 'error', data
 
       __checkStatus: (callback) ->
+        fail = =>
+          @__error()
+
         $.ajax "#{@settings.urlBase}/status/",
           data: {'token': @token}
           dataType: 'jsonp'
-        .fail =>
-          @__error()
-
-        .done callback
+        .fail(fail)
+        .done (data) ->
+          return fail() if data.error
+          callback(data)
