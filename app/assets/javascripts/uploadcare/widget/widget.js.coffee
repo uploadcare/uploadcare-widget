@@ -44,7 +44,9 @@ uploadcare.whenReady ->
         unless keepValue
           @__setValue ''
 
-      __setFile: (newFile, keepValue=false) ->
+      __setFile: (newFile, keepValue=false) =>
+        if newFile == @currentFile
+          return
         @__reset(keepValue)
         if newFile
           @currentFile = newFile
@@ -77,15 +79,10 @@ uploadcare.whenReady ->
 
       reloadInfo: =>
         if @element.val()
-          @__setFileOfType 'uploaded', @element.val(), true
+          file = uploadcare.fileFrom @settings, 'uploaded', @element.val()
+          @__setFile file, true
         else
           @__reset()
-
-      __setEventFile: (e) =>
-        @__setFileOfType 'event', e
-
-      __setFileOfType: (type, data, keepValue=false) =>
-        @__setFile uploadcare.fileFrom(@settings, type, data), keepValue
 
       __fail: (error) =>
         @__reset()
@@ -107,27 +104,28 @@ uploadcare.whenReady ->
           dialogButton.on 'click', => @openDialog()
 
         # Enable drag and drop
-        ns.dragdrop.receiveDrop(@__setFileOfType, @template.dropArea)
+        ns.dragdrop.receiveDrop(@__openDialogWithFile, @template.dropArea)
         @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
-          unless active && @dialog()?
+          unless active && uploadcare.isDialogOpened()
             @template.dropArea.toggleClass('uploadcare-dragging', active)
 
+        @template.content.on 'click', '@uploadcare-widget-file-name', =>
+          @openDialog()
+
+      __openDialogWithFile: (type, data) =>
+        file = uploadcare.fileFrom @settings, type, data
+        uploadcare.openDialog(@settings, file).done(@__setFile)
+
       __setupFileButton: ->
-        utils.fileInput @fileButton, false, @__setEventFile
-
-      currentDialog = null
-
-      dialog: -> currentDialog
+        utils.fileInput @fileButton, false, (e) => 
+          @__openDialogWithFile 'event', e
 
       openDialog: ->
-        @closeDialog()
-        currentDialog = ns.showDialog(@settings)
-          .done(@__setFileOfType)
-          .always( -> currentDialog = null)
-
-      closeDialog: ->
-        currentDialog?.close()
-        
+        uploadcare.openDialog(@settings, @currentFile)
+          .done(@__setFile)
+          .fail (file) =>
+            unless file == @currentFile
+              @__setFile null
 
     uploadcare.initialize = ->
       dataAttr = 'uploadcareWidget'

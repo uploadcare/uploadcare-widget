@@ -8,3 +8,11 @@
 # = require uploadcare/widget/widget
 # = require uploadcare/widget/submit-guard
 # = require uploadcare/ui/crop/crop-widget
+
+{expose} = uploadcare
+
+expose 'whenReady'
+uploadcare.whenReady ->
+  expose 'fileFrom'
+  expose 'openDialog'
+  expose 'Circle', uploadcare.ui.progress.Circle

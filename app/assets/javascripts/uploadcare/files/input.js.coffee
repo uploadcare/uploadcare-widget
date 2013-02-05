@@ -9,12 +9,13 @@ uploadcare.whenReady ->
     class ns.InputFile extends ns.BaseFile
       constructor: (settings, @__input) ->
         super
+        @fileId = utils.uuid()
+        @fileName = $(@__input).val().split('\\').pop()
 
       __startUpload: ->
         targetUrl = "#{@settings.urlBase}/iframe/"
         @__uploadDf.always => @__cleanUp()
 
-        @fileId = utils.uuid()
         iframeId = "uploadcare-iframe-#{@fileId}"
 
         @__iframe = $('<iframe>')

@@ -13,6 +13,7 @@ uploadcare.whenReady ->
           modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
           if modifiers
             @cdnUrlModifiers = modifiers[0]
+          @__buildPreviewUrl()
           @__uploadDf.resolve(this)
         else
           @__uploadDf.reject('baddata', this)

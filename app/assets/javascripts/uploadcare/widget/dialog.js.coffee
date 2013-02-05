@@ -1,7 +1,9 @@
 # = require_self
+# = require ./tabs/base-file-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
 # = require ./tabs/remote-tab
+# = require ./tabs/preview-tab
 
 uploadcare.whenReady ->
   {
@@ -14,44 +16,88 @@ uploadcare.whenReady ->
   {t} = uploadcare.locale
   {tpl} = uploadcare.templates
 
-  namespace 'uploadcare.widget', (ns) ->
-    ns.showDialog = (settings = {}) ->
+  namespace 'uploadcare', (ns) ->
+
+    currentDialogPr = null
+
+    ns.isDialogOpened = -> 
+      currentDialogPr != null
+
+    ns.closeDialog = ->
+      currentDialogPr?.reject()
+
+    ns.openDialog = (settings = {}, currentFile = null) ->
+      ns.closeDialog()
       settings = utils.buildSettings settings
-      dialog = new Dialog(settings)
-      dialog.dfd.promise()
+      dialog = new Dialog(settings, currentFile)
+      return currentDialogPr = dialog.publicPromise()
+        .always ->
+          currentDialogPr = null
 
     class Dialog
-      constructor: (@settings) ->
+      constructor: (@settings, currentFile) ->
         @dfd = $.Deferred()
-        @dfd.always(=> @closeDialog())
+        @dfd.always => 
+          @__closeDialog()
 
         @content = $(tpl('dialog'))
           .hide()
           .appendTo('body')
-
-        @content.on 'click', (e) =>
-          e.stopPropagation()
-          @dfd.reject() if e.target == e.currentTarget
-
-        closeButton = @content.find('@uploadcare-dialog-close')
-        closeButton.on 'click', => @dfd.reject()
-
-        $(window).on 'keydown', (e) =>
-          @dfd.reject() if e.which == 27 # Escape
-
+        
+        @__bind()
         @__prepareTabs()
+        @__setFile currentFile
+
         @content.fadeIn('fast')
+
+      publicPromise: ->
+        promise = @dfd.promise()
+        promise.reject = @dfd.reject
+        return promise
+
+      __bind: ->
+        reject = =>
+          @dfd.reject(@currentFile)
+
+        @content.on 'click', (e) ->
+          e.stopPropagation()
+          reject() if e.target == e.currentTarget
+
+        @content.find('@uploadcare-dialog-close').on 'click', reject
+
+        $(window).on 'keydown', (e) ->
+          reject() if e.which == 27 # Escape
 
       __prepareTabs: ->
         @tabs = {}
+
+        @tabs.preview = @addTab 'preview'
+        @tabs.preview.onDone.add =>
+          @dfd.resolve @currentFile
+        @tabs.preview.onBack.add =>
+          @__setFile null
+
         for tabName in @settings.tabs when tabName not of @tabs
           @tabs[tabName] = @addTab(tabName)
-          throw "No such tab: #{tabName}" unless @tabs[tabName]
+          if @tabs[tabName]
+            @tabs[tabName].onSelected.add (fileType, data) =>
+              @__setFile ns.fileFrom @settings, fileType, data
+          else
+            throw new Error("No such tab: #{tabName}")
 
         @switchTab(@settings.tabs[0])
 
-      closeDialog: ->
+      __closeDialog: ->
         @content.fadeOut 'fast', => @content.off().remove()
+
+      __setFile: (@currentFile) ->
+        if @currentFile
+          @currentFile.startUpload()
+          @tabs.preview.setFile @currentFile
+          @__showTab 'preview'
+          @switchTab 'preview'
+        else
+          @__hideTab 'preview'
 
       addTab: (name) ->
         {tabs} = uploadcare.widget
@@ -63,26 +109,26 @@ uploadcare.whenReady ->
           # when 'dropbox' then tabs.RemoteTabFor 'dropbox'
           when 'gdrive' then tabs.RemoteTabFor 'gdrive'
           when 'instagram' then tabs.RemoteTabFor 'instagram'
+          when 'preview' then tabs.PreviewTab
 
         return false if not tabCls
 
-        tab = new tabCls @dfd.promise(), @settings, =>
-          @dfd.resolve.apply(this, arguments)
+        tab = new tabCls @dfd.promise(), @settings
 
-        if tab
-          $('<li>')
-            .addClass("uploadcare-dialog-tab-#{name}")
-            .attr('title', t("tabs.#{name}.title"))
-            .on('click', => @switchTab(name))
-            .appendTo(@content.find('.uploadcare-dialog-tabs'))
-          panel = $('<div>')
-            .hide()
-            .addClass('uploadcare-dialog-tabs-panel')
-            .addClass("uploadcare-dialog-tabs-panel-#{name}")
-            .appendTo(@content.find('.uploadcare-dialog-body'))
-          panel.append(tpl("tab-#{name}"))
-          tab.setContent(panel)
-        tab
+        $('<li>')
+          .addClass("uploadcare-dialog-tab-#{name}")
+          .attr('title', t("tabs.#{name}.title"))
+          .on('click', => @switchTab(name))
+          .appendTo(@content.find('.uploadcare-dialog-tabs'))
+        
+        tab.setContent $('<div>')
+          .hide()
+          .addClass('uploadcare-dialog-tabs-panel')
+          .addClass("uploadcare-dialog-tabs-panel-#{name}")
+          .append(tpl("tab-#{name}"))
+          .appendTo(@content.find('.uploadcare-dialog-body'))
+        
+        return tab
 
       switchTab: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
@@ -96,5 +142,13 @@ uploadcare.whenReady ->
             .hide()
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()
-
         @dfd.notify @currentTab
+
+      __showTab: (tab) ->
+        @content.find(".uploadcare-dialog-tab-#{tab}").show()
+
+      __hideTab: (tab) ->
+        if @currentTab == tab
+          @switchTab @settings.tabs[0]
+        @content.find(".uploadcare-dialog-tab-#{tab}").hide()
+

@@ -15,6 +15,8 @@ uploadcare.whenReady ->
       constructor: (settings, @__url) ->
         super
         @__shutdown = true
+        @previewUrl = @__url
+        @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
 
       __startUpload: ->
 

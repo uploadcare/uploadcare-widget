@@ -44,11 +44,11 @@ uploadcare.whenReady ->
       CONTROLS_HEIGHT = 30
 
       checkOptions = (options) ->
-        throw "options.container must be specified" unless options.container
+        throw new Error("options.container must be specified") unless options.container
         for option in ['widgetSize', 'preferedSize']
           value = options[option]
           unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
-            throw "options.#{option} must follow pattern '123x456' or be falsy"
+            throw new Error("options.#{option} must follow pattern '123x456' or be falsy")
 
       fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
         if objWidth > boxWidth or objHeight > boxHeight or upscale
@@ -89,7 +89,7 @@ uploadcare.whenReady ->
         if @__state is 'loaded'
           @__deferred.resolve @__buildUrl @getCurrentCoords()
         else
-          throw "not ready"
+          throw new Error("not ready")
 
       # Returns last selected area coords
       getCurrentCoords: ->
