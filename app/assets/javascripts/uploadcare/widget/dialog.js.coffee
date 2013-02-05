@@ -71,21 +71,21 @@ uploadcare.whenReady ->
       __prepareTabs: ->
         @tabs = {}
 
-        @tabs.preview = @__addTab 'preview'
+        @tabs.preview = @addTab 'preview'
         @tabs.preview.onDone.add =>
           @dfd.resolve @currentFile
         @tabs.preview.onBack.add =>
           @__setFile null
 
         for tabName in @settings.tabs when tabName not of @tabs
-          @tabs[tabName] = @__addTab(tabName)
+          @tabs[tabName] = @addTab(tabName)
           if @tabs[tabName]
             @tabs[tabName].onSelected.add (fileType, data) =>
               @__setFile ns.fileFrom @settings, fileType, data
           else
             throw "No such tab: #{tabName}"
 
-        @__switchTab(@settings.tabs[0])
+        @switchTab(@settings.tabs[0])
 
       __closeDialog: ->
         @content.fadeOut 'fast', => @content.off().remove()
@@ -95,7 +95,7 @@ uploadcare.whenReady ->
           @currentFile.startUpload()
           @tabs.preview.setFile @currentFile
           @__showTab 'preview'
-          @__switchTab 'preview'
+          @switchTab 'preview'
         else
           @__hideTab 'preview'
 
@@ -118,7 +118,7 @@ uploadcare.whenReady ->
         $('<li>')
           .addClass("uploadcare-dialog-tab-#{name}")
           .attr('title', t("tabs.#{name}.title"))
-          .on('click', => @__switchTab(name))
+          .on('click', => @switchTab(name))
           .appendTo(@content.find('.uploadcare-dialog-tabs'))
         
         tab.setContent $('<div>')
@@ -149,6 +149,6 @@ uploadcare.whenReady ->
 
       __hideTab: (tab) ->
         if @currentTab == tab
-          @__switchTab @settings.tabs[0]
+          @switchTab @settings.tabs[0]
         @content.find(".uploadcare-dialog-tab-#{tab}").hide()
 
