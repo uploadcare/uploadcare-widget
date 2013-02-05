@@ -10,4 +10,4 @@ uploadcare.whenReady ->
       constructor: (@dialog, @settings) ->
         @onSelected = $.Callbacks()
 
-      setContent: (content) -> throw 'not implemented'
+      setContent: (content) -> throw new Error('not implemented')

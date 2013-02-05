@@ -26,7 +26,7 @@ uploadcare.whenReady ->
         @__uploadDf.fail (error) =>
           @__infoDf.reject(error, this)
 
-      __startUpload: -> throw 'not implemented'
+      __startUpload: -> throw new Error('not implemented')
 
       __requestInfo: =>
         fail = =>

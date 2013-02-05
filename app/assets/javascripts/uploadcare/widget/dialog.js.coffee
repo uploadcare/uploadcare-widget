@@ -83,7 +83,7 @@ uploadcare.whenReady ->
             @tabs[tabName].onSelected.add (fileType, data) =>
               @__setFile ns.fileFrom @settings, fileType, data
           else
-            throw "No such tab: #{tabName}"
+            throw new Error("No such tab: #{tabName}")
 
         @switchTab(@settings.tabs[0])
 
