@@ -1,5 +1,10 @@
 uploadcare.whenReady ->
-  {namespace, jQuery: $, utils} = uploadcare
+  {
+    namespace,
+    jQuery: $,
+    utils,
+    debug
+  } = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
 
@@ -26,13 +31,6 @@ uploadcare.whenReady ->
 
         # Naked XHR for progress tracking
         xhr = new XMLHttpRequest()
-        xhr.open('POST', "#{@settings.urlBase}/iframe/?jsonerrors=1", true)
-        xhr.withCredentials = true
-        xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        xhr.addEventListener('error', fail)
-        xhr.addEventListener('abort', fail)
-        xhr.addEventListener 'load', =>
-          @__uploadDf.resolve(this)
         xhr.addEventListener 'loadend', =>
           fail() if xhr? && !xhr.status
         xhr.upload.addEventListener 'progress', =>
@@ -40,7 +38,23 @@ uploadcare.whenReady ->
           @fileSize = event.totalSize || event.total
           @__uploadDf.notify(@fileSize / @__loaded, this)
 
-        xhr.send formData
+        # jQuery Ajax wrapper for JSON and stuff
+        $.ajax
+          xhr: -> xhr # Provide our XHR to jQuery
+          crossDomain: true
+          type: 'POST'
+          url: "#{@settings.urlBase}/iframe/?jsonerrors=1"
+          xhrFields: {withCredentials: true}
+          headers: {'X-PINGOTHER': 'pingpong'}
+          contentType: false # For correct boundary string
+          processData: false
+          data: formData
+          error: fail
+          success: (data) =>
+            if data?.error
+              debug(data.error.content)
+              return fail()
+            @__uploadDf.resolve(this)
 
         @__uploadDf.always =>
           _xhr = xhr
