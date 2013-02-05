@@ -25,7 +25,6 @@ uploadcare.whenReady ->
         @__setupWidget()
         @currentFile = null
         @template.reset()
-        @__setupFileButton()
 
         @__skipChange = 0
         @element.on 'change', =>
@@ -40,7 +39,6 @@ uploadcare.whenReady ->
         @currentFile?.upload?.reject()
         @currentFile = null
         @template.reset()
-        @__setupFileButton()
         unless keepValue
           @__setValue ''
 
@@ -94,14 +92,16 @@ uploadcare.whenReady ->
         @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
         @template.addButton('remove', t('buttons.remove')).on('click',  @__reset)
 
-        # Initialize the file browse button
-        @fileButton = @template.addButton('file')
-        @__setupFileButton()
-
-        # Create the dialog and its button
+        # Create the dialog and widget buttons
         if @settings.tabs.length > 0
+          if 'file' in @settings.tabs
+            fileButton = @template.addButton('file')
+            fileButton.on 'click', =>
+              @openDialog('file')
+
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @openDialog()
+
 
         # Enable drag and drop
         ns.dragdrop.receiveDrop(@__openDialogWithFile, @template.dropArea)
@@ -116,12 +116,8 @@ uploadcare.whenReady ->
         file = uploadcare.fileFrom @settings, type, data
         uploadcare.openDialog(@settings, file).done(@__setFile)
 
-      __setupFileButton: ->
-        utils.fileInput @fileButton, false, (e) => 
-          @__openDialogWithFile 'event', e
-
-      openDialog: ->
-        uploadcare.openDialog(@settings, @currentFile)
+      openDialog: (tab) ->
+        uploadcare.openDialog(@settings, @currentFile, tab)
           .done(@__setFile)
           .fail (file) =>
             unless file == @currentFile
