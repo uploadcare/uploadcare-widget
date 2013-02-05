@@ -49,6 +49,7 @@ uploadcare.whenReady ->
           contentType: false # For correct boundary string
           processData: false
           data: formData
+          dataType: 'json'
           error: fail
           success: (data) =>
             if data?.error
