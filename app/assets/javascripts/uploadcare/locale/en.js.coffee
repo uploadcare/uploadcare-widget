@@ -40,6 +40,9 @@ uploadcare.whenReady ->
             line2: 'Just provide the link.'
             input: 'Paste your link here...'
             button: 'Upload'
+          preview:
+            back: 'Back'
+            done: 'Done'
 
 
   # Pluralization rules taken from:

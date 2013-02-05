@@ -127,13 +127,14 @@ $dragndrop-text-color: #707478;
   margin-right: 1ex;
   white-space: nowrap;
   padding: 0 5px;
-  a {
+}
+  .uploadcare-widget-file-name {
+    cursor: pointer;
     color: #1a85ad;
     border-bottom-color: #1a85ad;
     text-decoration: none;
     border-bottom: 1px dotted;
   }
-}
 
 .uploadcare-widget {
   .uploadcare-widget-dragndrop-area {
