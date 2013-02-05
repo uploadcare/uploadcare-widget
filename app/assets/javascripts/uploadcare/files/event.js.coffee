@@ -1,5 +1,10 @@
 uploadcare.whenReady ->
-  {namespace, jQuery: $, utils} = uploadcare
+  {
+    namespace,
+    jQuery: $,
+    utils,
+    debug
+  } = uploadcare
 
   namespace 'uploadcare.files', (ns) ->
 
@@ -8,8 +13,6 @@ uploadcare.whenReady ->
         super
 
       __startUpload: ->
-        targetUrl = "#{@settings.urlBase}/iframe/"
-
         @fileId = utils.uuid()
         @fileSize = @__file.size
         @fileName = @__file.name
@@ -21,27 +24,40 @@ uploadcare.whenReady ->
         formData = new FormData()
         formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
         formData.append('UPLOADCARE_FILE_ID', @fileId)
-
         formData.append('file', @__file)
 
+        fail = =>
+          @__uploadDf.reject('upload', this)
+
         # Naked XHR for progress tracking
-        @__xhr = new XMLHttpRequest()
-        @__xhr.open 'POST', targetUrl
-        @__xhr.withCredentials = true
-        @__xhr.setRequestHeader('X-PINGOTHER', 'pingpong')
-        @__xhr.addEventListener 'error timeout abort', => @__uploadDf.reject('upload', this)
-        @__xhr.addEventListener 'load', => @__uploadDf.resolve(this)
-        @__xhr.addEventListener 'loadend', =>
-          if @__xhr? && !@__xhr.status
-            @__uploadDf.reject('upload', this)
-        @__xhr.upload.addEventListener 'progress', =>
+        xhr = new XMLHttpRequest()
+        xhr.addEventListener 'loadend', =>
+          fail() if xhr? && !xhr.status
+        xhr.upload.addEventListener 'progress', =>
           @__loaded = event.loaded
           @fileSize = event.totalSize || event.total
           @__uploadDf.notify(@fileSize / @__loaded, this)
 
-        @__xhr.send formData
+        # jQuery Ajax wrapper for JSON and stuff
+        $.ajax
+          xhr: -> xhr # Provide our XHR to jQuery
+          crossDomain: true
+          type: 'POST'
+          url: "#{@settings.urlBase}/iframe/?jsonerrors=1"
+          xhrFields: {withCredentials: true}
+          headers: {'X-PINGOTHER': 'pingpong'}
+          contentType: false # For correct boundary string
+          processData: false
+          data: formData
+          dataType: 'json'
+          error: fail
+          success: (data) =>
+            if data?.error
+              debug(data.error.content)
+              return fail()
+            @__uploadDf.resolve(this)
 
         @__uploadDf.always =>
-          xhr = @__xhr
-          @__xhr = null
-          xhr.abort() # Correct order to avoid errors
+          _xhr = xhr
+          xhr = null
+          _xhr.abort() # Correct order to avoid errors
