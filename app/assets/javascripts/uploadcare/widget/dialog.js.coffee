@@ -26,16 +26,16 @@ uploadcare.whenReady ->
     ns.closeDialog = ->
       currentDialogPr?.reject()
 
-    ns.openDialog = (settings = {}, currentFile = null) ->
+    ns.openDialog = (settings = {}, currentFile = null, tab) ->
       ns.closeDialog()
       settings = utils.buildSettings settings
-      dialog = new Dialog(settings, currentFile)
+      dialog = new Dialog(settings, currentFile, tab)
       return currentDialogPr = dialog.publicPromise()
         .always ->
           currentDialogPr = null
 
     class Dialog
-      constructor: (@settings, currentFile) ->
+      constructor: (@settings, currentFile, tab) ->
         @dfd = $.Deferred()
         @dfd.always => 
           @__closeDialog()
@@ -46,6 +46,7 @@ uploadcare.whenReady ->
         
         @__bind()
         @__prepareTabs()
+        @switchTab(tab || @settings.tabs[0])
         @__setFile currentFile
 
         @content.fadeIn('fast')
@@ -84,8 +85,6 @@ uploadcare.whenReady ->
               @__setFile ns.fileFrom @settings, fileType, data
           else
             throw new Error("No such tab: #{tabName}")
-
-        @switchTab(@settings.tabs[0])
 
       __closeDialog: ->
         @content.fadeOut 'fast', => @content.off().remove()
