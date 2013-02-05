@@ -39,13 +39,8 @@ uploadcare.whenReady ->
       removeState: (state) ->
         @content.removeClass("uploadcare-widget-state-#{state}")
 
-      addButton: (name, caption) ->
-        role = "uploadcare-widget-buttons-#{name}"
-        li = $('<li>')
-          .addClass(role)
-          .attr('role', role)
-        if caption?
-          li.text(caption)
+      addButton: (name, caption='') ->
+        li = $ tpl('widget-button', {name, caption})
         @buttonsContainer.append(li)
         return li
 
@@ -78,8 +73,4 @@ uploadcare.whenReady ->
       setFileInfo: (file) ->
         name = utils.fitText(file.fileName, 16)
         size = Math.ceil(file.fileSize / 1024).toString()
-
-        role = 'uploadcare-widget-file-name'
-        caption = "<span role=\"#{role}\" class=\"#{role}\">#{name}</span>"
-
-        @statusText.html "#{caption}, #{size} kb"
+        @statusText.html tpl('widget-file-name', {name, size})
