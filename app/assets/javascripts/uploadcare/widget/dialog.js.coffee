@@ -99,7 +99,7 @@ uploadcare.whenReady ->
         else
           @__hideTab 'preview'
 
-      __addTab: (name) ->
+      addTab: (name) ->
         {tabs} = uploadcare.widget
 
         tabCls = switch name
@@ -130,7 +130,7 @@ uploadcare.whenReady ->
         
         return tab
 
-      __switchTab: (@currentTab) ->
+      switchTab: (@currentTab) ->
         @content.find('.uploadcare-dialog-body')
           .find('.uploadcare-dialog-selected-tab')
             .removeClass('uploadcare-dialog-selected-tab')
