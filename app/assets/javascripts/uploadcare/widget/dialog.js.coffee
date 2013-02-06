@@ -61,10 +61,8 @@ uploadcare.whenReady ->
           @dfd.reject(@currentFile)
 
         @content.on 'click', (e) ->
-          e.stopPropagation()
-          reject() if e.target == e.currentTarget
-
-        @content.find('@uploadcare-dialog-close').on 'click', reject
+          reject() unless $(e.target).is('a, .uploadcare-dialog-panel') or 
+            $(e.target).parents('.uploadcare-dialog-panel').size()
 
         $(window).on 'keydown', (e) ->
           reject() if e.which == 27 # Escape
