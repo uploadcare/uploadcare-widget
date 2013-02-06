@@ -23,4 +23,11 @@ uploadcare.whenReady ->
   createWidget = (el) ->
     el.data(dataAttr, new uploadcare.widget.Widget(el))
 
-  $ -> uploadcare.initialize()
+
+  if uploadcare.defaults.live
+    live = ->
+      uploadcare.initialize()
+      setTimeout(live, 500)
+    $(live)
+  else
+    $ -> uploadcare.initialize()
