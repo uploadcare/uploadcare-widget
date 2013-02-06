@@ -70,7 +70,7 @@ $dialog-body-font-size-smaller: 13px;
   overflow: hidden;
   border-radius: $dialog-corner-radius;
   background: #fff;
-  @include prefix(box-shadow, 0 5px 40px rgba(0,0,0,0.35));
+  @include prefix(box-shadow, 0 1px 2px rgba(black, 0.35));
   font-weight: normal;
 
   a {
