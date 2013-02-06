@@ -15,7 +15,7 @@ uploadcare.whenReady ->
   {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget', (ns) ->
-    ns.showDialog = (settings = {}) ->
+    ns.showDialog = (settings = {}, tab) ->
       settings = utils.buildSettings settings
 
       $ .Deferred ->
@@ -23,7 +23,7 @@ uploadcare.whenReady ->
 
           @settings = settings
 
-          @__createDialog()
+          @__createDialog(tab)
 
           @always @__closeDialog
         .pipe(files.toFiles, -> 'dialog was closed')
@@ -31,7 +31,7 @@ uploadcare.whenReady ->
 
 
     dialogUiMixin =
-      __createDialog: ->
+      __createDialog: (tab) ->
         @content = $(tpl('dialog'))
           .hide()
           .appendTo('body')
@@ -47,6 +47,7 @@ uploadcare.whenReady ->
           @reject() if e.which == 27 # Escape
 
         @__prepareTabs()
+        @__switchTab(tab || @settings.tabs[0])
 
         @content.fadeIn('fast')
 
@@ -58,8 +59,6 @@ uploadcare.whenReady ->
         for tabName in @settings.tabs when tabName not of @tabs
           @tabs[tabName] = @__addTab(tabName)
           throw "No such tab: #{tabName}" unless @tabs[tabName]
-
-        @__switchTab(@settings.tabs[0])
 
       __addTab: (name) ->
         {tabs} = uploadcare.widget

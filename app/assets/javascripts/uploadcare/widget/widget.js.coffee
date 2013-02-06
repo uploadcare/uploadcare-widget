@@ -72,18 +72,18 @@ uploadcare.whenReady ->
 
       __reset: =>
         @__resetUpload()
-        @__setupFileButton()
         @available = true
         @template.reset()
         $(this).trigger('uploadcare.widget.cancel')
 
       __setupWidget: ->
-        # Initialize the file browse button
-        @fileButton = @template.addButton('file')
-        @__setupFileButton()
-
-        # Create the dialog and its button
+        # Create the dialog and widget buttons
         if @settings.tabs.length > 0
+          if 'file' in @settings.tabs
+            fileButton = @template.addButton('file')
+            fileButton.on 'click', =>
+              @openDialog('file')
+
           dialogButton = @template.addButton('dialog')
           dialogButton.on 'click', => @openDialog()
 
@@ -92,10 +92,6 @@ uploadcare.whenReady ->
         @template.dropArea.on 'uploadcare.dragstatechange', (e, active) =>
           unless active && @dialog()?
             @template.dropArea.toggleClass('uploadcare-dragging', active)
-
-      __setupFileButton: ->
-        utils.fileInput @fileButton, false, (e) =>
-          @upload('event', e)
 
       upload: (args...) =>
         # Allow two types of calls:
@@ -125,9 +121,9 @@ uploadcare.whenReady ->
 
       dialog: -> currentDialog
 
-      openDialog: ->
+      openDialog: (tab) ->
         @closeDialog()
-        currentDialog = ns.showDialog(@settings)
+        currentDialog = ns.showDialog(@settings, tab)
           .done(@upload)
           .always( -> currentDialog = null)
 
