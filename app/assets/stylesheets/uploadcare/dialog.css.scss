@@ -28,6 +28,17 @@ $dialog-body-font-size-smaller: 13px;
   height: 100%;
   background: rgba(0,0,0,0.2);
   z-index: 10000;
+  overflow: auto;
+}
+
+.uploadcare-dialog-inner-wrap1 {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.uploadcare-dialog-inner-wrap2 {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .uploadcare-dialog-close {
@@ -53,18 +64,11 @@ $dialog-body-font-size-smaller: 13px;
 }
 
 .uploadcare-dialog-panel-wrap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  margin: 0 auto;
   width: $dialog-width;
-  height: $dialog-height;
-  margin-left: $dialog-width / -2;
-  margin-top: $dialog-height / -2;
 }
 
 .uploadcare-dialog-panel {
-  left: 50%;
-  top: 50%;
   width: $dialog-width;
   height: $dialog-height;
   overflow: hidden;
