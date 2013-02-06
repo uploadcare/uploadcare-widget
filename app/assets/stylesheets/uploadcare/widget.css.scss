@@ -83,7 +83,7 @@ $dragndrop-text-color: #707478;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  list-style-type: none;
+  list-style: none;
   > li {
     $height: 24px;
     height: $height;
@@ -94,6 +94,7 @@ $dragndrop-text-color: #707478;
     min-width: 36px;
     padding: 0 6px;
     margin: 0 3px ($widget-height - 24) 0;
+    list-style: none;
     @include prefix(box-sizing, border-box);
     border-radius: 2px;
     background: $circle-background-color;
