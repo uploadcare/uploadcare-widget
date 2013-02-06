@@ -6,6 +6,7 @@
 # = require uploadcare/templates
 # = require uploadcare/stylesheets
 # = require uploadcare/widget/widget
+# = require uploadcare/widget/live
 # = require uploadcare/widget/submit-guard
 # = require uploadcare/ui/crop/crop-widget
 
@@ -13,6 +14,7 @@
 
 expose 'whenReady'
 uploadcare.whenReady ->
+  expose 'initialize'
   expose 'fileFrom'
   expose 'openDialog'
   expose 'Circle', uploadcare.ui.progress.Circle
