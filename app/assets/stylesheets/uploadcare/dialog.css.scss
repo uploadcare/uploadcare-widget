@@ -19,6 +19,8 @@ $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
 
+$dialog-free-space-for-close-button: y(2);
+
 .uploadcare-dialog {
   font-family: $font-family;
   position: fixed;
@@ -43,10 +45,10 @@ $dialog-body-font-size-smaller: 13px;
 
 .uploadcare-dialog-close {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: $dialog-width / 2 + x(0.5);
-  margin-top: $dialog-height / -2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
   > div {
     $size: y(1.5);
     margin: 0;
@@ -60,12 +62,16 @@ $dialog-body-font-size-smaller: 13px;
     font-weight: bold;
     color: #8a8a8a;
     cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }
 
 .uploadcare-dialog-panel-wrap {
   margin: 0 auto;
   width: $dialog-width;
+  padding: 0 $dialog-free-space-for-close-button;
 }
 
 .uploadcare-dialog-panel {
