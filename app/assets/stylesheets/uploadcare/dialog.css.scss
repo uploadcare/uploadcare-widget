@@ -1,10 +1,10 @@
 $dialog-max-tabs: 8;
 $dialog-tab-width: x(3);
 $dialog-tab-height: y(3);
-$dialog-body-height: $dialog-tab-height * $dialog-max-tabs;
+$dialog-body-height: y(28);
 
 $dialog-width: x(36);
-$dialog-height: y(3) + $dialog-body-height;
+$dialog-height: $dialog-body-height;
 
 $dialog-corner-radius: 10px;
 $dialog-link-color: #1a85ad;
@@ -17,9 +17,10 @@ $dialog-body-border-color: #c5cace;
 $dialog-body-text-color: #000;
 $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
-$dialog-body-font-size-smaller: 14px;
+$dialog-body-font-size-smaller: 13px;
 
 .uploadcare-dialog {
+  font-family: $font-family;
   position: fixed;
   left: 0;
   top: 0;
@@ -51,15 +52,22 @@ $dialog-body-font-size-smaller: 14px;
   }
 }
 
-.uploadcare-dialog-panel {
+.uploadcare-dialog-panel-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
   width: $dialog-width;
   height: $dialog-height;
-  overflow: hidden;
   margin-left: $dialog-width / -2;
   margin-top: $dialog-height / -2;
+}
+
+.uploadcare-dialog-panel {
+  left: 50%;
+  top: 50%;
+  width: $dialog-width;
+  height: $dialog-height;
+  overflow: hidden;
   border-radius: $dialog-corner-radius;
   background: #fff;
   @include prefix(box-shadow, 0 5px 40px rgba(0,0,0,0.35));
@@ -76,26 +84,6 @@ $dialog-body-font-size-smaller: 14px;
       color: $dialog-link-active-color;
       border-bottom-color: $dialog-link-active-color;
     }
-  }
-}
-
-.uploadcare-dialog-header {
-  position: relative;
-  padding: y(1) x(1);
-  font-size: y(1);
-  line-height: y(1);
-
-  .uploadcare-dialog-title {
-    font-weight: 300;
-    color: #676767;
-  }
-
-  .uploadcare-dialog-powered-by {
-    position: absolute;
-    right: x(1);
-    top: y(1);
-    font-size: 0.5em;
-    color: #939393;
   }
 }
 
@@ -236,6 +224,20 @@ $dialog-body-font-size-smaller: 14px;
       padding-top: y(3.5);
       text-align: center;
       color: $dialog-body-text-color-lighter;
+    }
+  }
+}
+
+.uploadcare-dialog-footer {
+  font-size: $dialog-body-font-size-smaller;
+  text-align: center;
+  color: #7c7c7c;
+  margin-top: x(.6);
+  a {
+    color: black;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
