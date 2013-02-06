@@ -35,7 +35,7 @@ $dialog-body-font-size-smaller: 14px;
   top: 50%;
   margin-left: $dialog-width / 2 + x(0.5);
   margin-top: $dialog-height / -2;
-  button {
+  > div {
     $size: y(1.5);
     margin: 0;
     padding: 0;
@@ -88,10 +88,6 @@ $dialog-body-font-size-smaller: 14px;
   .uploadcare-dialog-title {
     font-weight: 300;
     color: #676767;
-    em {
-      font-style: italic;
-      text-decoration: none;
-    }
   }
 
   .uploadcare-dialog-powered-by {
@@ -104,7 +100,7 @@ $dialog-body-font-size-smaller: 14px;
 }
 
 .uploadcare-dialog-body {
-  ul.uploadcare-dialog-tabs {
+  .uploadcare-dialog-tabs {
     @include prefix(box-sizing, border-box);
     width: $dialog-tab-width;
     height: $dialog-body-height;
@@ -118,7 +114,7 @@ $dialog-body-font-size-smaller: 14px;
     border-right: 1px solid $dialog-body-border-color;
     border-bottom-left-radius: $dialog-corner-radius;
 
-    > li {
+    > div {
       @include prefix(box-sizing, border-box);
       width: $dialog-tab-width;
       height: $dialog-tab-height;
@@ -178,39 +174,6 @@ $dialog-body-font-size-smaller: 14px;
       font-weight: bold;
     }
 
-    ul.uploadcare-dialog-support {
-      position: absolute;
-      right: x(1);
-      top: y(1);
-      margin: 0;
-      padding: 0;
-      text-align: right;
-
-      > li {
-        float: left;
-        width: y(2);
-        height: y(2);
-        margin-left: x(0.5);
-        list-style: none;
-
-        $frame: y(-2);
-        background-image: url(data:image/png;base64,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);
-        background-repeat: no-repeat;
-        &.uploadcare-dialog-support-images {
-          background-position: 0 0;
-        }
-        &.uploadcare-dialog-support-audio {
-          background-position: 0 $frame;
-        }
-        &.uploadcare-dialog-support-video {
-          background-position: 0 $frame*2;
-        }
-        &.uploadcare-dialog-support-documents {
-          background-position: 0 $frame*3;
-        }
-      }
-    }
-
     p {
       margin: 0 0 y(1) 0;
       padding: 0;
@@ -238,7 +201,7 @@ $dialog-body-font-size-smaller: 14px;
       color: $dialog-body-text-color;
     }
 
-    button, .uploadcare-dialog-button {
+    .uploadcare-dialog-button {
       @include prefix(box-sizing, border-box);
       margin-bottom: y(1);
       padding: y(0.5) x(1);

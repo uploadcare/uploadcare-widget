@@ -114,7 +114,7 @@ uploadcare.whenReady ->
 
         tab = new tabCls @dfd.promise(), @settings
 
-        $('<li>')
+        $('<div>')
           .addClass("uploadcare-dialog-tab-#{name}")
           .attr('title', t("tabs.#{name}.title"))
           .on('click', => @switchTab(name))
@@ -137,7 +137,7 @@ uploadcare.whenReady ->
           .find(".uploadcare-dialog-tab-#{@currentTab}")
             .addClass('uploadcare-dialog-selected-tab')
             .end()
-          .find('> div')
+          .find('.uploadcare-dialog-tabs-panel')
             .hide()
             .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
               .show()

@@ -1,4 +1,5 @@
 // = depend_on uploadcare/widget.css
+// = depend_on uploadcare/dialog.css
 <%=
   raw = Rails.application.assets.find_asset('uploadcare/widget.css').body
   YUI::CssCompressor.new.compress(raw)
