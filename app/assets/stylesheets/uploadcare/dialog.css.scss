@@ -110,18 +110,28 @@ $dialog-free-space-for-close-button: y(2);
     padding: 0;
     background: $dialog-body-shadow-color;
     border-top: 1px solid $dialog-body-border-color;
-    border-right: 1px solid $dialog-body-border-color;
     border-bottom-left-radius: $dialog-corner-radius;
+    border-top-left-radius: $dialog-corner-radius;
+    overflow: hidden;
+    position: relative;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 0;
+      border-left: 1px solid $dialog-body-border-color;
+    }
 
     > div {
       @include prefix(box-sizing, border-box);
       width: $dialog-tab-width;
       height: $dialog-tab-height;
       border-bottom: 1px solid $dialog-body-border-color;
+      border-right: 1px solid $dialog-body-border-color;
       cursor: pointer;
 
       &.uploadcare-dialog-selected-tab {
-        width: x(3) + 1;
         margin-right: -1px;
         background-color: $dialog-body-background-color;
         border-right: 1px solid $dialog-body-background-color;
