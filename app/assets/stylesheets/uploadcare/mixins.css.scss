@@ -1,0 +1,17 @@
+@mixin prefix($prop, $value) {
+  -ms-#{$prop}: $value;
+  -moz-#{$prop}: $value;
+  -webkit-#{$prop}: $value;
+  -o-#{$prop}: $value;
+  #{$prop}: $value;
+}
+
+@function x($count) {
+  @return $count * 25px;
+}
+
+@function y($count) {
+  @return $count * 22px;
+}
+
+$font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
