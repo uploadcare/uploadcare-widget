@@ -1,13 +1,20 @@
-<img 
-  src="<%- file.previewUrl %>" 
-  title="<%- file.fileName %>" 
-  alt="<%- file.fileName %>"
-  style="max-height: 300px"
-/>
-<br/>
+<div class="uploadcare-dialog-title">Upload this file?</div>
 
-File name: <%- file.fileName || 'unknown' %>
-<br/>
+<div class="uploadcare-dialog-preview-image-wrap1">
+<div class="uploadcare-dialog-preview-image-wrap2">
+  <img 
+    src="<%- file.previewUrl %>" 
+    title="<%- file.fileName %>" 
+    alt="<%- file.fileName %>"
+  />
+</div>
+</div>
 
-<button role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></button>
-<button role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></button>
+<div class="uploadcare-dialog-preview-footer">
+  <div 
+    class="uploadcare-dialog-button" 
+    role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></div>
+  <div 
+    class="uploadcare-dialog-button-success" 
+    role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></div>
+</div>

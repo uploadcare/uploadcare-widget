@@ -1,7 +1,18 @@
-<h1>Regular file</h1>
+<div class="uploadcare-dialog-title">Upload this file?</div>
 
-File name: <%- file.fileName || 'unknown' %>
-<br/>
+<div class="uploadcare-dialog-label">
+  <%- file.fileName || 'unknown' %><% if (file.fileSize != null) { %>,
+  <%- file.fileSize %> KB<% } %>
+</div>
 
-<button role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></button>
-<button role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></button>
+<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
+  You are about to upload a file below.<br/>
+  Please confirm that you want to upload it.
+</div>
+
+<div 
+  class="uploadcare-dialog-button-success" 
+  role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></div>
+<div 
+  class="uploadcare-dialog-button" 
+  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></div>

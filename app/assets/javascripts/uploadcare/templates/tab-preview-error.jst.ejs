@@ -1,6 +1,15 @@
-<h1>Error</h1>
+<div class="uploadcare-dialog-title">Uploading failed</div>
 
-Something went wrong.
-<br>
+<div class="uploadcare-dialog-label">
+  <%- file.fileName || 'unknown' %><% if (file.fileSize != null) { %>,
+  <%- file.fileSize %> KB<% } %>
+</div>
 
-<button role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></button>
+<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
+  Sorry, but in process of uploading something went wrong.<br/>
+  Please try again.
+</div>
+
+<div
+  class="uploadcare-dialog-button-success" 
+  role="uploadcare-dialog-preview-back">Retry</div>

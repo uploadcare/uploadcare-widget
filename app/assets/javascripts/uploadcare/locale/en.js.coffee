@@ -41,8 +41,8 @@ uploadcare.whenReady ->
             input: 'Paste your link here...'
             button: 'Upload'
           preview:
-            back: 'Back'
-            done: 'Done'
+            back: 'Cancel'
+            done: 'Upload'
 
 
   # Pluralization rules taken from:

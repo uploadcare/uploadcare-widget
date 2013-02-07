@@ -6,6 +6,14 @@
   #{$prop}: $value;
 }
 
+@mixin gradient($from, $to) {
+  background: mix($from, $to);
+  background: -webkit-linear-gradient($from, $to);
+  background: -moz-linear-gradient($from, $to);
+  background: -o-linear-gradient($from, $to);
+  background: linear-gradient($from, $to);
+}
+
 @function x($count) {
   @return $count * 25px;
 }
