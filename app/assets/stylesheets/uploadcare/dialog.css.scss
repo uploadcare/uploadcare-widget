@@ -1,4 +1,3 @@
-$dialog-max-tabs: 8;
 $dialog-tab-width: x(3);
 $dialog-tab-height: y(3);
 $dialog-body-height: y(28);
@@ -6,18 +5,20 @@ $dialog-body-height: y(28);
 $dialog-width: x(36);
 $dialog-height: $dialog-body-height;
 
-$dialog-corner-radius: 10px;
+$dialog-corner-radius: 8px;
 $dialog-link-color: #1a85ad;
 $dialog-link-active-color: #252525;
 $dialog-button-text-color: #fff;
-$dialog-body-background-color: #f6f6f6;
-$dialog-body-shadow-color: #e5e7e9;
+$dialog-body-background-color: #efefef;
+$dialog-body-shadow-color: #dee0e1;
 $dialog-body-field-color: #fff;
 $dialog-body-border-color: #c5cace;
 $dialog-body-text-color: #000;
 $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
+$dialog-overlay-color: rgba(#a9abac, .8);
+$dialog-close-button-color: #747677;
 
 $dialog-free-space-for-close-button: y(2);
 
@@ -28,7 +29,7 @@ $dialog-free-space-for-close-button: y(2);
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.2);
+  background: $dialog-overlay-color;
   z-index: 10000;
   overflow: auto;
 }
@@ -60,7 +61,7 @@ $dialog-free-space-for-close-button: y(2);
     line-height: $size;
     font-size: $size;
     font-weight: bold;
-    color: #8a8a8a;
+    color: $dialog-close-button-color;
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -119,11 +120,6 @@ $dialog-free-space-for-close-button: y(2);
       border-bottom: 1px solid $dialog-body-border-color;
       cursor: pointer;
 
-      &:nth-child(#{$dialog-max-tabs}) {
-        border-bottom: none;
-        border-bottom-left-radius: $dialog-corner-radius;
-      }
-
       &.uploadcare-dialog-selected-tab {
         width: x(3) + 1;
         margin-right: -1px;
@@ -131,24 +127,42 @@ $dialog-free-space-for-close-button: y(2);
         border-right: 1px solid $dialog-body-background-color;
       }
 
-      $frame-x: x(-3);
-      $frame-y: y(-3);
-      background-image: url(data:image/png;base64,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);
-      background-repeat: no-repeat;
-      &.uploadcare-dialog-tab-url {
-        background-position: 0 $frame-y;
+      $frame-size: 50px;
+      position: relative;
+      &:after {
+        @extend %tab-icons-image;
+        content: '';
+        display: block;
+        position: absolute;
+        width: $frame-size;
+        height: $frame-size;
+        top: 50%; 
+        left: 50%;
+        margin-top: $frame-size / -2;
+        margin-left: $frame-size / -2;
       }
-      &.uploadcare-dialog-tab-facebook  {
-        background-position: 0 ($frame-y * 2);
+
+      &.uploadcare-dialog-selected-tab:after {
+        @extend %tab-icons-active-image;
       }
-      &.uploadcare-dialog-tab-dropbox  {
-        background-position: 0 ($frame-y * 3);
+
+      &.uploadcare-dialog-tab-file:after {
+        background-position: 0 ($frame-size * -1);
       }
-      &.uploadcare-dialog-tab-gdrive  {
-        background-position: 0 ($frame-y * 4);
+      &.uploadcare-dialog-tab-url:after {
+        background-position: 0 ($frame-size * -2);
       }
-      &.uploadcare-dialog-tab-instagram  {
-        background-position: 0 ($frame-y * 5);
+      &.uploadcare-dialog-tab-facebook:after {
+        background-position: 0 ($frame-size * -3);
+      }
+      &.uploadcare-dialog-tab-dropbox:after {
+        background-position: 0 ($frame-size * -4);
+      }
+      &.uploadcare-dialog-tab-gdrive:after {
+        background-position: 0 ($frame-size * -5);
+      }
+      &.uploadcare-dialog-tab-instagram:after {
+        background-position: 0 ($frame-size * -6);
       }
     }
   }
