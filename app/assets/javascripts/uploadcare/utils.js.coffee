@@ -11,6 +11,17 @@ uploadcare.whenReady ->
     ns.defer = (fn) ->
       setTimeout fn, 0
 
+    ns.bindAll = (source, methods) ->
+      target = {}
+      for method in methods
+        do (method) ->
+          fn = source[method]
+          target[method] = if ns.abilities.canBind(fn)
+            -> fn.apply(source, arguments)
+          else
+            fn.bind(source)
+      target
+
     ns.uuid = ->
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
         r = Math.random() * 16 | 0
@@ -19,7 +30,7 @@ uploadcare.whenReady ->
 
     ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
     ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_]+\/)+)+/i
-    
+
     ns.normalizeUrl = (url) ->
       url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
       url.replace(/\/+$/, '')
