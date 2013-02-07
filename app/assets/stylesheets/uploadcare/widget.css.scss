@@ -1,3 +1,4 @@
+@import "images";
 @import "mixins";
 @import "dialog";
 @import "crop-widget";
@@ -89,7 +90,7 @@ $dragndrop-text-color: #707478;
     &.uploadcare-widget-buttons-dialog,
     &.uploadcare-widget-buttons-file,
     &.uploadcare-widget-buttons-url {
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAB4CAYAAACaTFAUAAADn0lEQVR42u3bS2wNURjA8aLaEBp0IV5NPGJBkJBSEl1UtB5hQW0JXSIsxGMjFsRjQ9AHQtJiwUpUaVJExELi3US5JZ7FlajiJlQfPv/cfKQ5uVNuO2em9Cx+Se/MSe8/M3PnnGluU0SkR3FBLsgF7T9YXAn5S5VBBEkyY12QC3JB/0VQEiwFaUh3BBb0p3HJnjpbU4ap0s32LsgFuSAXpGzOZR0lNVb5GOT9RoOwGgdQih1Yin5BB6XjKFo0ZB4mYhrq0IhNQQVlIYKtxhumYYz+nAnBBfSxGZSOJ5AObxRFGcTDGZtBR7AX54yjUwnBZ4+o+b4H6QXcgiVGzEYIvkJwS8d9h6gHNoJWQ7DNCPqAcszFJFyDIAbpYKjfQbtRaMRkQTqI4DEELca+qX4HlWCCEVQD6URfiMq3cYSyjaAjEA95OmYsBDP8DloMQaYRFX9txLw1xrRjgN9BqfgIQUoCZyCqAinqOKps3Yc2QzyiaiGoR7VxdEbanDou41mCoHREjG2C7bbnsn44C8EIM0xtQzu2BLn8KMRdiGqGoBVVGBX4ekhlIhcLMB0DPMa5NbULckEuqLuT6xp8gSQphiILQRrTNZ9675+FTdU1V6XhXVTeRN8Lwg968bpBY3pGkBnigswQkwty15AL+qeDvnQjKGYjqAhNkCQ1ocitGF2QC3JB7rnMPZclqXcGmevnp89fyPmqS+EG1T6skyvXrsvNW7flZcMbYVu4QcT8fv2o/kl8W3HZsZCC9DRpSBxHSveHGMRpi+N1/LQdO1HeM04ZP8e3VddcCf+iRvxosU0/aSEFmbiG3I2xS8KeXN1zmVsxuiAX1LuCuK9kIKeT/bOQEdR/Ty3Ca7RibYL969GGV1ho80ExEychhhKkoj9KIYYKDPMtSGNWIArxcAqnIR6iKPQlSL+vuAVtEEM7ijFEleg2MbRhM/r4ecoK0AhRd5CdYNxM3IOoRuRbuaj5xeNxAxuQ2um3sRijY8fpditBk1GL7UjrZFyajnmASbY+ZcsRg6jHyEswbh4iEBXDMr8/ZbvwA2L4gQoMVychHuN2+hlUgJcQD+UaJh6eo8DvUzYYxQmO1B7dl4F9CW4LhzHY5tSRi3o0YyVG4y7uIwurdF8Ec4OYywowEFOQg3cQ9R5zMEXH5AcRVIJqrMU3iKEZ63ARpUEtP5ajAeLhLVYEukDTi/gQ2hPNbaGtGHUxdh+1mN0jlrC/1kNuTR2En2aqi4BnOyDfAAAAAElFTkSuQmCC);
+      @extend %widget-buttons-image;
       background-position: 0 0;
       background-repeat: no-repeat;
       padding-left: 30px;
