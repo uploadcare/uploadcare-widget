@@ -8,27 +8,24 @@ uploadcare.whenReady ->
   uploadcare.initialize = (targets) ->
     for target in $(targets || '@uploadcare-uploader')
       el = $(target)
-      widget = el.data(dataAttr)
-      if widget
-        reinitialize(el, widget).api()
-      else
-        createWidget(el).api()
+      initializeWidget(el)
 
-  reinitialize = (el, widget) ->
-    if el[0] != widget.element[0]
-      cleanup(el, widget.template)
-      createWidget(el)
-    else
-      widget
+  initializeWidget = (el) ->
+    widget = el.data(dataAttr)
+    if !widget || el[0] != widget.element[0]
+      cleanup(el)
+      widget = new uploadcare.widget.Widget(el)
+      el.data(dataAttr, widget)
+      widget.template.content.data(dataAttr, widget.template)
 
-  cleanup = (el, template) ->
+    widget.api()
+
+  cleanup = (el) ->
     el.off('.uploadcare')
-    el.next('.uploadcare-widget').remove()
-
-  createWidget = (el) ->
-    widget = new uploadcare.widget.Widget(el)
-    el.data(dataAttr, widget)
-    widget
+    el = el.next('.uploadcare-widget')
+    template = el.data(dataAttr)
+    if el.length && (!template || el[0] != template.content[0])
+      el.remove()
 
   if uploadcare.defaults.live
     live = ->
