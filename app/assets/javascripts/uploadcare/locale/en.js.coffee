@@ -31,6 +31,12 @@ uploadcare.whenReady ->
         tabs:
           file:
             button: 'Choose file from computer'
+            tabNames:
+              facebook: 'Facebook'
+              dropbox: 'Dropbox'
+              gdrive: 'Google Drive'
+              instagram: 'Instagram'
+              url: 'Arbitrary Links'
           url:
             title: 'Files from the Web'
             line1: 'Grab any file off the web.'
