@@ -41,7 +41,8 @@ uploadcare.whenReady ->
             @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
             $(@watcher).on('done', (e, state) =>
               @cleanup()
-              @onSelected.fire 'url', state.url
+              file = uploadcare.fileFrom(@settings, 'url', state.url)
+              @onSelected.fire file
             )
             @watcher.watch()
 

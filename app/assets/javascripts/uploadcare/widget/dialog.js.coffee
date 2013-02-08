@@ -79,8 +79,8 @@ uploadcare.whenReady ->
         for tabName in @settings.tabs when tabName not of @tabs
           @tabs[tabName] = @addTab(tabName)
           if @tabs[tabName]
-            @tabs[tabName].onSelected.add (fileType, data) =>
-              @__setFile ns.fileFrom @settings, fileType, data
+            @tabs[tabName].onSelected.add (file) =>
+              @__setFile file
           else
             throw new Error("No such tab: #{tabName}")
 

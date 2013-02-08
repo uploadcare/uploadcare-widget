@@ -19,6 +19,6 @@ uploadcare.whenReady ->
 
         @content.find('@uploadcare-dialog-url-form').on 'submit', =>
           url = input.val()
-          @onSelected.fire 'url', url
+          @onSelected.fire uploadcare.fileFrom(@settings, 'url', url)
 
           false
