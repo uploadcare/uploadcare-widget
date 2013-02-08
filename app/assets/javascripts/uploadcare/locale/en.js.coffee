@@ -30,10 +30,7 @@ uploadcare.whenReady ->
           documents: 'Documents'
         tabs:
           file:
-            title: 'My computer'
-            line1: 'Grab any file off your computer.'
-            line2: 'Browse for it in a dialog or drag and drop.'
-            button: 'Browse files'
+            button: 'Choose file from computer'
           url:
             title: 'Files from the Web'
             line1: 'Grab any file off the web.'

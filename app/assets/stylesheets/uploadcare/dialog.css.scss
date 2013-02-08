@@ -185,7 +185,7 @@ $dialog-free-space-for-close-button: y(2);
     position: relative;
     @include prefix(box-sizing, border-box);
     margin-left: $dialog-tab-width;
-    padding: x(1) y(1);
+    padding: y(1) x(1);
     width: $dialog-width - $dialog-tab-width;
     height: $dialog-body-height;
     line-height: y(1);
@@ -302,10 +302,23 @@ $dialog-button-height: 33px;
   }
 }
 
+.uploadcare-dialog-big-button {
+  border-radius: 100px;
+  font-size: 20px;
+  color: white;
+  line-height: y(3);
+  border: solid 1px #276fcb;
+  text-shadow: 0 -1px #2a7ce5;
+  display: inline-block;
+  padding: 0 2em;
+  @include prefix(box-shadow, inset 0 -3px #266fcb);
+  @include gradient(#4892f6, #4289e6);
+}
+
 
 // § Preview tab
 
-$dialog-preview-container-height: 449px;
+$dialog-preview-container-height: 452px;
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
   height: $dialog-preview-container-height;
@@ -329,7 +342,7 @@ $dialog-preview-container-height: 449px;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
   padding: 16px 30px;
-  margin: 0 y(-1) x(-1);
+  margin: 0 x(-1) y(-1);
   border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
     float: right;
@@ -340,3 +353,60 @@ $dialog-preview-container-height: 449px;
   }
 }
 
+
+// § Computer tab
+
+.uploadcare-dialog-file-drop-area {
+  width: 100%;
+  height: 100%;
+  @include prefix(box-sizing, border-box);
+  background: #f8f8f8;
+  border: dashed 3px #c5cacd;
+  text-align: center;
+  border-radius: 3px;
+  padding-top: y(3.5);
+  .uploadcare-dialog-big-button {
+    margin-bottom: y(2);
+  }
+}
+  .uploadcare-dialog-file-title {
+    font-size: 40px;
+    line-height: 1;
+    color: #dee0e1;
+    font-weight: bold;
+    margin-bottom: y(2);
+    text-shadow: 0 1px white;
+  }
+  .uploadcare-dialog-file-or {
+    font-size: $dialog-body-font-size-smaller;
+    color: #8f9498;
+    margin-bottom: y(2);
+  }
+  .uploadcare-dialog-file-sources {
+    position: relative;
+    display: inline-block;
+    &:before {
+      @extend %arrow-image;
+      content: '';
+      display: block;
+      position: absolute;
+      width: 43px;
+      height: 27px;
+      top: -12px;
+      left: -65px;
+    }
+  }
+    .uploadcare-dialog-file-source {
+      display: inline;
+      font-size: 15px;
+      margin-right: .2em;
+      cursor: pointer;
+      &:after {
+        content: '\00B7';
+        color: #b7babc;
+        margin-left: .5em;
+      }
+      &:last-child:after {
+        display: none;
+      }
+    }

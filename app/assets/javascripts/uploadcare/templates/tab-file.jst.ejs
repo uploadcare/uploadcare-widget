@@ -1,9 +1,15 @@
-<div class="uploadcare-dialog-title"><%- t('dialog.tabs.file.title') %></div>
-<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
-    <div><%- t('dialog.tabs.file.line1') %></div>
-    <div><%- t('dialog.tabs.file.line2') %></div>
+<div class="uploadcare-dialog-file-drop-area" role="uploadcare-drop-area">
+  <div class="uploadcare-dialog-file-title">Drag file here</div>
+  <div class="uploadcare-dialog-file-or">Or</div>
+  <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file"><%- 
+    t('dialog.tabs.file.button') 
+  %></div>
+  <div class="uploadcare-dialog-file-or">You can also choose file from</div>
+  <div class="uploadcare-dialog-file-sources">
+    <div class="uploadcare-dialog-file-source">Facebook</div>
+    <div class="uploadcare-dialog-file-source">Dropbox</div>
+    <div class="uploadcare-dialog-file-source">Google Drive</div>
+    <div class="uploadcare-dialog-file-source">Instagram</div>
+    <div class="uploadcare-dialog-file-source">Arbitrary Links</div>
+  </div>
 </div>
-<div class="uploadcare-dialog-button" role="uploadcare-dialog-browse-file"><%- t('dialog.tabs.file.button') %></div>
-<br>
-<br>
-<div class="uploadcare-dialog-drop-file" role="uploadcare-drop-area"><%- t('draghere') %></div>
