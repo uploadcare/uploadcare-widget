@@ -1,4 +1,6 @@
-<div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.error.title') %></div>
+<div class="uploadcare-dialog-title"><%- 
+  t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
+%></div>
 
 <div class="uploadcare-dialog-label">
   <%- file.fileName || t('dialog.tabs.preview.unknown') %><% if (file.fileSize != null) { %>,
@@ -6,8 +8,12 @@
 </div>
 
 <div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
-  <%- t('dialog.tabs.preview.error.line1') %><br/>
-  <%- t('dialog.tabs.preview.error.line2') %>
+  <%- 
+    t('dialog.tabs.preview.error.'+error+'.line1') || t('dialog.tabs.preview.error.default.line1')
+  %><br/>
+  <%- 
+    t('dialog.tabs.preview.error.'+error+'.line2') || t('dialog.tabs.preview.error.default.line2')
+  %>
 </div>
 
 <div

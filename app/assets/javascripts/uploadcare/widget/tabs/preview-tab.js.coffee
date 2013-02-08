@@ -31,12 +31,13 @@ uploadcare.whenReady ->
                 @__setState 'regular'
           .fail (error, file) =>
             if file == @file
-              @__setState 'error'
+              @__setState 'error', {error}
 
       # error
       # unknown
       # image
       # regular
       # TODO: crop
-      __setState: (state) ->
-        @content.empty().append tpl("tab-preview-#{state}", {@file})
+      __setState: (state, data) ->
+        data = $.extend {@file}, data
+        @content.empty().append tpl("tab-preview-#{state}", data)
