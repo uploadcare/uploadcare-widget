@@ -41,8 +41,20 @@ uploadcare.whenReady ->
             input: 'Paste your link here...'
             button: 'Upload'
           preview:
-            back: 'Cancel'
+            unknown: 'unknown'
+            back: 'Change file'
             done: 'Upload'
+            regular:
+              title: 'Upload this file?'
+              line1: 'You are about to upload a file below.'
+              line2: 'Please confirm that you want to upload it.'
+            error:
+              title: 'Uploading failed'
+              line1: 'Sorry, but in process of uploading something went wrong.'
+              line2: 'Please try again.'
+              back: 'Retry'
+            image:
+              title: 'Upload this image?'
 
 
   # Pluralization rules taken from:
