@@ -1,10 +1,16 @@
 <div class="uploadcare-dialog-file-drop-area" role="uploadcare-drop-area">
-  <div class="uploadcare-dialog-file-title">Drag file here</div>
-  <div class="uploadcare-dialog-file-or">Or</div>
+  <div class="uploadcare-dialog-file-title">
+    <%- t('dialog.tabs.file.drag') %>
+  </div>
+  <div class="uploadcare-dialog-file-or">
+    <%- t('dialog.tabs.file.or') %>
+  </div>
   <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file">
     <%- t('dialog.tabs.file.button') %>
   </div>
-  <div class="uploadcare-dialog-file-or">You can also choose file from</div>
+  <div class="uploadcare-dialog-file-or">
+    <%- t('dialog.tabs.file.also') %>
+  </div>
   <div class="uploadcare-dialog-file-sources">
     <% for (var i = 0; i < avalibleTabs.length; i++) { 
       var tab = avalibleTabs[i];
