@@ -11,6 +11,6 @@ uploadcare.whenReady ->
     socialBase: window.UPLOADCARE_SOCIAL_BASE or 'https://social.uploadcare.com'
     cdnBase: window.UPLOADCARE_CDN_BASE or 'https://ucarecdn.com'
 
-    tabs: window.UPLOADCARE_TABS or 'url file facebook gdrive instagram'
+    tabs: window.UPLOADCARE_TABS or 'file url facebook gdrive instagram'
     multiple: false
     imagesOnly: undefined
