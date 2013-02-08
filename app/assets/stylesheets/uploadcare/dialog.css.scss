@@ -196,13 +196,6 @@ $dialog-free-space-for-close-button: y(2);
     font-size: $dialog-body-font-size;
     color: $dialog-body-text-color;
 
-    // p {
-    //   margin: 0 0 y(1) 0;
-    //   padding: 0;
-    //   font-size: $dialog-body-font-size-smaller;
-    //   color: $dialog-body-text-color-lighter;
-    // }
-
     input {
       @include prefix(box-sizing, border-box);
       width: 100%;
@@ -246,7 +239,7 @@ $dialog-free-space-for-close-button: y(2);
 // § Common tab elements
 
 .uploadcare-dialog-title {
-  font-size: x(1);
+  font-size: 25px;
   line-height: 1;
   font-weight: bolder;
   margin-bottom: x(1);
@@ -261,7 +254,6 @@ $dialog-free-space-for-close-button: y(2);
 
 .uploadcare-dialog-section {
   margin-bottom: y(1);
-  p {margin: 0} // tmp
 }
 
 .uploadcare-dialog-normal-text {
@@ -269,25 +261,25 @@ $dialog-free-space-for-close-button: y(2);
   color: $dialog-body-text-color-lighter;
 }
 
-$button-color-a: #f5f5f5;
-$button-color-b: #f1f1f1;
-$success-button-color-a: #4892f6;
-$success-button-color-b: #4289e6;
-
+$dialog-button-height: 33px;
 .uploadcare-dialog-button, 
 .uploadcare-dialog-button-success {
+  $color-a: #f5f5f5;
+  $color-b: #f1f1f1;
+
   display: inline-block;
-  font-size: 13px;
-  line-height: 31px; // tmp
+  font-size: $dialog-body-font-size-smaller;
+  line-height: $dialog-button-height - 2;
   padding: 0 y(1);
+  margin-right: .5em;
   border: solid 1px #dcdcdc;
   border-radius: 2px;
   color: #444444;
   cursor: pointer;
-  @include gradient($button-color-a, $button-color-b);
+  @include gradient($color-a, $color-b);
 
   &:active {
-    @include gradient($button-color-b, $button-color-a);
+    @include gradient($color-b, $color-a);
   }
 
   &[disabled] {
@@ -297,22 +289,26 @@ $success-button-color-b: #4289e6;
 }
 
 .uploadcare-dialog-button-success {
+  $color-a: #4892f6;
+  $color-b: #4289e6;
+
   color: white;
   border-color: #2a7ce5;
 
-  @include gradient($success-button-color-a, $success-button-color-b);
+  @include gradient($color-a, $color-b);
   
   &:active {
-    @include gradient($success-button-color-b, $success-button-color-a);
+    @include gradient($color-b, $color-a);
   }
 }
 
 
 // § Preview tab
 
+$dialog-preview-container-height: 449px;
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
-  height: 449px; // tmp
+  height: $dialog-preview-container-height;
   margin-bottom: x(1);
   display: table;
 }
@@ -322,19 +318,22 @@ $success-button-color-b: #4289e6;
   text-align: center;
   img {
     max-width: 100%;
-    max-height: 449px; // tmp
+    max-height: $dialog-preview-container-height;
+    display: block;
+    margin: 0 auto;
   }
 }
 
 .uploadcare-dialog-preview-footer {
   background: #fff3be;
   border-top: 1px solid #efe2a9;
-  height: 33px; // tmp
-  padding: 16px 30px; // tmp
+  height: $dialog-button-height;
+  padding: 16px 30px;
   margin: 0 y(-1) x(-1);
   border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
     float: right;
+    margin-right: 0;
   }
   .uploadcare-dialog-button {
     float: left;
