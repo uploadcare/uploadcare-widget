@@ -42,6 +42,8 @@ uploadcare.whenReady ->
             $(@watcher).on('done', (e, state) =>
               @cleanup()
               file = uploadcare.fileFrom(@settings, 'url', state.url)
+              if state.is_image == true
+                file.isImage = true
               @onSelected.fire file
             )
             @watcher.watch()
