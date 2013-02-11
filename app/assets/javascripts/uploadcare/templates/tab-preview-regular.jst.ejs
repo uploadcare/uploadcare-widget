@@ -1,7 +1,18 @@
-<h1>Regular file</h1>
+<div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.regular.title') %></div>
 
-File name: <%- file.fileName || 'unknown' %>
-<br/>
+<div class="uploadcare-dialog-label">
+  <%- file.fileName || t('dialog.tabs.preview.unknownName') %><% if (file.fileSize != null) { %>,
+  <%- Math.round(file.fileSize/1000) %> KB<% } %>
+</div>
 
-<button role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></button>
-<button role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></button>
+<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
+  <%- t('dialog.tabs.preview.regular.line1') %><br/>
+  <%- t('dialog.tabs.preview.regular.line2') %>
+</div>
+
+<div 
+  class="uploadcare-dialog-button-success" 
+  role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></div>
+<div 
+  class="uploadcare-dialog-button" 
+  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.change') %></div>

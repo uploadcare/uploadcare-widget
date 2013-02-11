@@ -2,10 +2,10 @@ uploadcare.whenReady ->
   {
     namespace,
     utils,
+    ui: {progress},
+    templates: {tpl},
     jQuery: $
   } = uploadcare
-
-  {tpl} = uploadcare.templates
 
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.PreviewTab
@@ -31,12 +31,20 @@ uploadcare.whenReady ->
                 @__setState 'regular'
           .fail (error, file) =>
             if file == @file
-              @__setState 'error'
+              @__setState 'error', {error}
 
       # error
       # unknown
       # image
       # regular
       # TODO: crop
-      __setState: (state) ->
-        @content.empty().append tpl("tab-preview-#{state}", {@file})
+      __setState: (state, data) ->
+        data = $.extend {@file}, data
+        @content.empty().append tpl("tab-preview-#{state}", data)
+        @__initCircle()
+
+      __initCircle: ->
+        circleEl = @content.find('@uploadcare-dialog-preview-circle')
+        if circleEl.length
+          circle = new progress.Circle circleEl
+          circle.listen @file.startUpload()
