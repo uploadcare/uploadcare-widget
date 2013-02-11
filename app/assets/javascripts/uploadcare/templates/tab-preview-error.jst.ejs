@@ -1,6 +1,21 @@
-<h1>Error</h1>
+<div class="uploadcare-dialog-title"><%- 
+  t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
+%></div>
 
-Something went wrong.
-<br>
+<div class="uploadcare-dialog-label">
+  <%- file.fileName || t('dialog.tabs.preview.unknownName') %><% if (file.fileSize != null) { %>,
+  <%- Math.round(file.fileSize/1000) %> KB<% } %>
+</div>
 
-<button role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.back') %></button>
+<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
+  <%- 
+    t('dialog.tabs.preview.error.'+error+'.line1') || t('dialog.tabs.preview.error.default.line1')
+  %><br/>
+  <%- 
+    t('dialog.tabs.preview.error.'+error+'.line2') || t('dialog.tabs.preview.error.default.line2')
+  %>
+</div>
+
+<div
+  class="uploadcare-dialog-button-success" 
+  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.change') %></div>

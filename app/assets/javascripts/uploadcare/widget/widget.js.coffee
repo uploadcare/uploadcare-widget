@@ -56,16 +56,13 @@ uploadcare.whenReady ->
                 @__fail error
             .done (file) =>
               if file == @currentFile
-                if @settings.imagesOnly && !file.isImage
-                  @__fail('image')
-                else
-                  @template.setFileInfo(file)
-                  @template.loaded()
-                  unless keepValue
-                    if file.cdnUrlModifiers
-                      @__setValue file.cdnUrl
-                    else
-                      @__setValue file.fileId
+                @template.setFileInfo(file)
+                @template.loaded()
+                unless keepValue
+                  if file.cdnUrlModifiers
+                    @__setValue file.cdnUrl
+                  else
+                    @__setValue file.fileId
 
       __setValue: (value) ->
         @__skipChange++

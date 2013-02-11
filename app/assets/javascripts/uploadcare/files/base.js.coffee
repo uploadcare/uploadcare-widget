@@ -47,6 +47,11 @@ uploadcare.whenReady ->
           @isStored = data.is_stored
           @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
           @__buildPreviewUrl()
+
+          if @settings.imagesOnly && !@isImage
+            @__infoDf.reject('image', this)
+            return
+
           @__infoDf.resolve(this)
 
       __buildPreviewUrl: ->

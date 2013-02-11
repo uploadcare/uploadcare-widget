@@ -7,7 +7,7 @@ $widget-height: 25px;
 $circle-background-color: #e1e5e7;
 $button-text-color: #8f9295;
 $circle-center-color: white;
-$circle-center-width: 15%;
+$circle-center-width: 10%;
 $circle-active-background: #d0bf26;
 $dragndrop-background-color: #f0f0f0;
 $dragndrop-border-color: #b3b5b6;
@@ -30,16 +30,15 @@ $dragndrop-text-color: #707478;
   .uploadcare-widget-circle {
     width: $widget-height;
     height: $widget-height;
+    top: -1px;
+    float: left;
+    margin-right: 1ex;
   }
 }
 
 .uploadcare-widget-circle {
   position: relative;
-  top: -1px;
-  float: left;
   font-size: 0;
-  position: relative;
-  margin-right: 1ex;
   .uploadcare-widget-circle-back {
     position: relative;
     width: 100%;
