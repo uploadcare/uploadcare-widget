@@ -22,9 +22,11 @@ uploadcare.whenReady ->
 
       setFile: (@file) ->
         @__setState 'unknown'
+        if @file.isImage and @file.previewUrl
+          @__setState 'image'
         @file.info()
           .done (file) =>
-            if file == @file
+            if file == @file and @state == 'unknown'
               if @file.isImage
                 @__setState 'image'
               else
@@ -38,5 +40,5 @@ uploadcare.whenReady ->
       # image
       # regular
       # TODO: crop
-      __setState: (state) ->
+      __setState: (@state) ->
         @content.empty().append tpl("tab-preview-#{state}", {@file})
