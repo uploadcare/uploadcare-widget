@@ -16,10 +16,9 @@ uploadcare.whenReady ->
       for method in methods
         do (method) ->
           fn = source[method]
-          target[method] = if ns.abilities.canBind(fn)
-            -> fn.apply(source, arguments)
-          else
-            fn.bind(source)
+          target[method] = ->
+            result = fn.apply(source, arguments)
+            if result == source then target else result # Fix chaining
       target
 
     ns.uuid = ->
