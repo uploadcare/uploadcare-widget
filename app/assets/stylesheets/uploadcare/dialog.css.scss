@@ -245,6 +245,12 @@ $dialog-free-space-for-close-button: y(2);
   margin-bottom: x(1);
 }
 
+.uploadcare-dialog-title2 {
+  font-size: 20px;
+  line-height: 1;
+  padding-bottom: y(.5);
+}
+
 .uploadcare-dialog-label {
   font-size: 15px;
   line-height: x(1);
@@ -339,4 +345,17 @@ $dialog-preview-container-height: 449px;
     float: left;
   }
 }
+
+.uploadcare-dialog-preview-center {
+  text-align: center;
+  padding-top: y(8);
+}
+
+.uploadcare-dialog-preview-circle {
+  width: y(3);
+  height: y(3);
+  display: inline-block;
+  margin-bottom: y(1);
+}
+
 
