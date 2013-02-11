@@ -80,7 +80,6 @@ uploadcare.whenReady ->
           @__setFile file, true
         else
           @__reset()
-        null
 
       __fail: (error) =>
         @__reset()
@@ -122,10 +121,3 @@ uploadcare.whenReady ->
           .fail (file) =>
             unless file == @currentFile
               @__setFile null
-
-      api: ->
-        @__api ||= utils.bindAll this, [
-          'setValue'
-          'reloadInfo'
-          'openDialog'
-        ]
