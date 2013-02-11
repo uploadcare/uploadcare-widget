@@ -41,29 +41,34 @@ uploadcare.whenReady ->
             input: 'Paste your link here...'
             button: 'Upload'
           preview:
-            unknown: 'unknown'
-            back: 'Change file'
+            unknownName: 'unknown'
+            change: 'Change file'
+            back: 'Back'
             done: 'Upload'
+            unknown:
+              title: 'Uploading'
+              line1: 'You are about to upload the file above.'
+              line2: 'Please wait.'
             regular:
               title: 'Upload this file?'
-              line1: 'You are about to upload a file below.'
-              line2: 'Please confirm that you want to upload it.'
+              line1: 'You are about to upload the file above.'
+              line2: 'Please confirm.'
+            image:
+              title: 'Upload this image?'
+              change: 'Change image'
             error:
               default:
                 title: 'Uploading failed'
-                line1: 'Sorry, but in process of uploading something went wrong.'
+                line1: 'Something went wrong during uploading.'
                 line2: 'Please try again.'
-              image: 
-                title: 'Only images allowed'
-                line1: 'Only file that is an image can be accepted.'
-                line2: 'Please try with another file.'
+              image:
+                title: 'Images only'
+                line1: 'Only image files can be accepted.'
+                line2: 'Please try again with another file.'
               size:
-                title: 'Too big'
-                line1: 'File you try to upload is to big.'
-                line2: 'Please try with another file.'
-              back: 'Retry'
-            image:
-              title: 'Upload this image?'
+                title: 'Size limit'
+                line1: 'The file you selected exceed the 100MB limit.'
+                line2: 'Please try again with another file.'
 
 
   # Pluralization rules taken from:

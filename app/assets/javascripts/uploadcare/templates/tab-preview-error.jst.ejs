@@ -3,7 +3,7 @@
 %></div>
 
 <div class="uploadcare-dialog-label">
-  <%- file.fileName || t('dialog.tabs.preview.unknown') %><% if (file.fileSize != null) { %>,
+  <%- file.fileName || t('dialog.tabs.preview.unknownName') %><% if (file.fileSize != null) { %>,
   <%- Math.round(file.fileSize/1000) %> KB<% } %>
 </div>
 
@@ -18,4 +18,4 @@
 
 <div
   class="uploadcare-dialog-button-success" 
-  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.error.back') %></div>
+  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.change') %></div>
