@@ -6,7 +6,6 @@
 uploadcare.whenReady ->
   {
     namespace,
-    initialize,
     utils,
     uploads,
     files,
@@ -27,7 +26,7 @@ uploadcare.whenReady ->
         @template.reset()
 
         @__skipChange = 0
-        @element.on 'change', =>
+        @element.on 'change.uploadcare', =>
           if @__skipChange == 0
             @reloadInfo()
           else
@@ -119,9 +118,3 @@ uploadcare.whenReady ->
           .fail (file) =>
             unless file == @currentFile
               @__setFile null
-
-    uploadcare.initialize = ->
-      dataAttr = 'uploadcareWidget'
-      for el in $ '@uploadcare-uploader' when not $(el).data(dataAttr)
-        $(el).data dataAttr, new ns.Widget $(el)
-    $(document).on('ready ajaxSuccess htmlInserted', uploadcare.initialize)

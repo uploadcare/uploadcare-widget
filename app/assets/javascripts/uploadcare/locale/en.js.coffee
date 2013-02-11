@@ -50,11 +50,10 @@ uploadcare.whenReady ->
             unknownName: 'unknown'
             change: 'Change file'
             back: 'Back'
-            done: 'Upload'
+            done: 'Select'
             unknown:
-              title: 'Uploading'
-              line1: 'You are about to upload the file above.'
-              line2: 'Please wait.'
+              title: 'Uploading. Please wait for a preview.'
+              done: 'Skip preview and accept'
             regular:
               title: 'Upload this file?'
               line1: 'You are about to upload the file above.'
