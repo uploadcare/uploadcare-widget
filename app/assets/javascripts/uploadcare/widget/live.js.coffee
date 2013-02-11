@@ -32,7 +32,7 @@ uploadcare.whenReady ->
   if uploadcare.defaults.live
     live = ->
       uploadcare.initialize()
-      setTimeout(live, 500)
+      setTimeout(live, 100)
     $(live)
   else
     $ -> uploadcare.initialize()
