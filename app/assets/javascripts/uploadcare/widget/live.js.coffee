@@ -9,6 +9,7 @@ uploadcare.whenReady ->
     for target in $(targets || '@uploadcare-uploader')
       el = $(target)
       initializeWidget(el)
+    return
 
   initializeWidget = (el) ->
     widget = el.data(dataAttr)
@@ -18,7 +19,8 @@ uploadcare.whenReady ->
       el.data(dataAttr, widget)
       widget.template.content.data(dataAttr, widget.template)
 
-    widget.api()
+    widget # FIXME Supposed to be API wrapper
+
 
   cleanup = (el) ->
     el.off('.uploadcare')
