@@ -13,6 +13,7 @@
 
 expose 'whenReady'
 uploadcare.whenReady ->
+  expose 'defaults'
   expose 'fileFrom'
   expose 'openDialog'
   expose 'Circle', uploadcare.ui.progress.Circle
