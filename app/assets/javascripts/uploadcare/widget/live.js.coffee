@@ -29,10 +29,8 @@ uploadcare.whenReady ->
     if el.length && (!template || el[0] != template.content[0])
       el.remove()
 
+  live = -> uploadcare.initialize()
   if uploadcare.defaults.live
-    live = ->
-      uploadcare.initialize()
-      setTimeout(live, 100)
-    $(live)
+    $ -> setInterval(live, 100)
   else
-    $ -> uploadcare.initialize()
+    $(live)
