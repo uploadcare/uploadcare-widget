@@ -1,9 +1,25 @@
-<div class="uploadcare-dialog-title"><%- t('dialog.tabs.file.title') %></div>
-<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
-    <div><%- t('dialog.tabs.file.line1') %></div>
-    <div><%- t('dialog.tabs.file.line2') %></div>
+<div class="uploadcare-dialog-file-drop-area" role="uploadcare-drop-area">
+  <div class="uploadcare-dialog-file-title">
+    <%- t('dialog.tabs.file.drag') %>
+  </div>
+  <div class="uploadcare-dialog-file-or">
+    <%- t('dialog.tabs.file.or') %>
+  </div>
+  <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file">
+    <%- t('dialog.tabs.file.button') %>
+  </div>
+  <div class="uploadcare-dialog-file-or">
+    <%- t('dialog.tabs.file.also') %>
+  </div>
+  <div class="uploadcare-dialog-file-sources">
+    <% for (var i = 0; i < avalibleTabs.length; i++) { 
+      var tab = avalibleTabs[i];
+      if (tab == 'file') continue; %>
+      <div 
+        class="uploadcare-dialog-file-source"
+        role="uploadcare-dialog-switch-tab"
+        data-tab="<%- tab %>"
+      ><%- t('dialog.tabs.file.tabNames.' + tab) %></div>
+    <% } %>
+  </div>
 </div>
-<div class="uploadcare-dialog-button" role="uploadcare-dialog-browse-file"><%- t('dialog.tabs.file.button') %></div>
-<br>
-<br>
-<div class="uploadcare-dialog-drop-file" role="uploadcare-drop-area"><%- t('draghere') %></div>
