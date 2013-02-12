@@ -12,6 +12,6 @@ uploadcare.whenReady ->
     cdnBase: window.UPLOADCARE_CDN_BASE or 'https://ucarecdn.com'
 
     live: window.UPLOADCARE_LIVE or true
-    tabs: window.UPLOADCARE_TABS or 'url file facebook dropbox gdrive instagram'
+    tabs: window.UPLOADCARE_TABS or 'file url facebook dropbox gdrive instagram'
     multiple: false
     imagesOnly: undefined

@@ -67,6 +67,9 @@ uploadcare.whenReady ->
         $(window).on 'keydown', (e) ->
           reject() if e.which == 27 # Escape
 
+        @content.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
+          @switchTab $(e.target).data('tab')
+
       __prepareTabs: ->
         @tabs = {}
 
@@ -122,7 +125,7 @@ uploadcare.whenReady ->
           .hide()
           .addClass('uploadcare-dialog-tabs-panel')
           .addClass("uploadcare-dialog-tabs-panel-#{name}")
-          .append(tpl("tab-#{name}"))
+          .append(tpl("tab-#{name}", {avalibleTabs: @settings.tabs}))
           .appendTo(@content.find('.uploadcare-dialog-body'))
         
         return tab
