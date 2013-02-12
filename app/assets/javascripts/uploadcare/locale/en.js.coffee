@@ -30,10 +30,10 @@ uploadcare.whenReady ->
           documents: 'Documents'
         tabs:
           file:
-            drag: 'Drag file here'
-            or: 'Or'
-            button: 'Choose file from computer'
-            also: 'You can also choose file from'
+            drag: 'Drop a file here'
+            or: 'or'
+            button: 'Choose a file from your computer'
+            also: 'You can also choose it from'
             tabNames:
               facebook: 'Facebook'
               dropbox: 'Dropbox'
