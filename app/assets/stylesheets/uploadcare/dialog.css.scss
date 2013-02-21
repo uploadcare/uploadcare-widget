@@ -219,6 +219,17 @@ $dialog-free-space-for-close-button: y(2);
       color: $dialog-body-text-color-lighter;
     }
   }
+
+  .uploadcare-dialog-tabs-panel-facebook,
+  .uploadcare-dialog-tabs-panel-dropbox,
+  .uploadcare-dialog-tabs-panel-gdrive,
+  .uploadcare-dialog-tabs-panel-instagram {
+    padding: 0;
+    iframe {
+      border-bottom-right-radius: $dialog-corner-radius;
+      border-top-right-radius: $dialog-corner-radius;
+    }
+  }
 }
 
 .uploadcare-dialog-footer {
