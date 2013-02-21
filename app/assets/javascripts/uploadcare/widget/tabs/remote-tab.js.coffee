@@ -28,7 +28,7 @@ uploadcare.whenReady ->
             src =
               "#{@settings.socialBase}/window/#{@windowId}/" +
               "#{service}?lang=#{locale.lang}&public_key=#{@settings.publicKey}" +
-              "&version=#{encodeURIComponent(uploadcare.version)}"
+              "&widget_version=#{encodeURIComponent(uploadcare.version)}"
             @iframe = $('<iframe>')
               .attr('src', src)
               .css
