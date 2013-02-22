@@ -55,7 +55,10 @@ uploadcare.whenReady ->
           @__infoDf.resolve(this)
 
       __buildPreviewUrl: ->
-        @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+        if @__tmpFinalPreviewUrl
+          @previewUrl = @__tmpFinalPreviewUrl
+        else
+          @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
 
       startUpload: ->
         unless @upload 
