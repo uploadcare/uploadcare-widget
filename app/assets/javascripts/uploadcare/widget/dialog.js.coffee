@@ -49,6 +49,7 @@ uploadcare.whenReady ->
         @switchTab(tab || @settings.tabs[0])
         @__setFile currentFile
 
+        @__updateFirstTab()
         @content.fadeIn('fast')
 
       publicPromise: ->
@@ -116,7 +117,7 @@ uploadcare.whenReady ->
         tab = new tabCls @dfd.promise(), @settings
 
         $('<div>')
-          .addClass("uploadcare-dialog-tab-#{name}")
+          .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
           .attr('title', t("tabs.#{name}.title"))
           .on('click', => @switchTab(name))
           .appendTo(@content.find('.uploadcare-dialog-tabs'))
@@ -144,11 +145,23 @@ uploadcare.whenReady ->
               .show()
         @dfd.notify @currentTab
 
+      __updateFirstTab: ->
+        # Needs to solve issue with border-radius in CSS
+        # (WebKit bug: http://tech.bluesmoon.info/2011/04/overflowhidden-border-radius-and.html)
+        className = 'uploadcare-dialog-first-tab'
+        @content.find(".#{className}").removeClass className
+        @content.find(".uploadcare-dialog-tab").filter( ->
+          # :visible selector doesn't work because whole dialog might be hidden
+          $(this).css('display') != 'none'
+        ).first().addClass className
+
       __showTab: (tab) ->
         @content.find(".uploadcare-dialog-tab-#{tab}").show()
+        @__updateFirstTab()
 
       __hideTab: (tab) ->
         if @currentTab == tab
           @switchTab @settings.tabs[0]
         @content.find(".uploadcare-dialog-tab-#{tab}").hide()
+        @__updateFirstTab()
 
