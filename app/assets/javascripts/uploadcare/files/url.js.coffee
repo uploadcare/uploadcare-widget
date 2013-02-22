@@ -116,7 +116,7 @@ uploadcare.whenReady ->
 
       __error: ->
         @stopWatching()
-        @uploader.__state 'error', data
+        @uploader.__state 'error'
 
       __checkStatus: (callback) ->
         fail = =>
