@@ -127,19 +127,13 @@ $dialog-free-space-for-close-button: y(2);
       border-left: 1px solid $dialog-body-border-color;
     }
 
-    > div {
+    .uploadcare-dialog-tab {
       @include prefix(box-sizing, border-box);
       width: $dialog-tab-width;
       height: $dialog-tab-height;
       border-bottom: 1px solid $dialog-body-border-color;
       border-right: 1px solid $dialog-body-border-color;
       cursor: pointer;
-
-      &.uploadcare-dialog-selected-tab {
-        margin-right: -1px;
-        background-color: $dialog-body-background-color;
-        border-right: 1px solid $dialog-body-background-color;
-      }
 
       $frame-size: 50px;
       position: relative;
@@ -156,8 +150,22 @@ $dialog-free-space-for-close-button: y(2);
         margin-left: $frame-size / -2;
       }
 
-      &.uploadcare-dialog-selected-tab:after {
-        @extend %tab-icons-active-image;
+      &:hover {
+        background-color: #ebeced;
+        &:after {
+          @extend %tab-icons-hover-image;
+        }
+      }
+
+      &.uploadcare-dialog-selected-tab {
+        margin-right: -1px;
+        border-right: 1px solid $dialog-body-background-color;
+        &, &:hover {
+          background-color: $dialog-body-background-color;
+        }
+        &:after {
+          @extend %tab-icons-active-image;
+        }
       }
 
       &.uploadcare-dialog-tab-file:after {
@@ -177,6 +185,10 @@ $dialog-free-space-for-close-button: y(2);
       }
       &.uploadcare-dialog-tab-instagram:after {
         background-position: 0 ($frame-size * -6);
+      }
+
+      &.uploadcare-dialog-first-tab {
+        border-top-left-radius: $dialog-corner-radius;
       }
     }
   }
