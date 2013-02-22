@@ -16,6 +16,11 @@ uploadcare.whenReady ->
         super
         @__shutdown = true
         @previewUrl = @__url
+
+        # Temporary solution 
+        # while server preview servise doesn't work with URL-files
+        @__tmpFinalPreviewUrl = @__url
+
         @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
 
       __startUpload: ->
