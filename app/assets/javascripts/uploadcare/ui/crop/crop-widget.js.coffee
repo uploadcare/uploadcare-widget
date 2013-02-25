@@ -70,6 +70,7 @@ uploadcare.whenReady ->
         @__options = $.extend {}, defaultOptions, options
         option.scale = false unless options.preferedSize
         checkOptions @__options
+        @onStateChange = $.Callbacks()
         @__buildWidget()
         
       # Example:
@@ -202,7 +203,7 @@ uploadcare.whenReady ->
         @__widgetElement
           .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
           .addClass(prefix + state)
-          .trigger('uploadcare.crop.statechange', state)
+        @onStateChange.fire state
         @__doneButton.prop 'disabled', state != 'loaded'
 
       __initJcrop: ->
