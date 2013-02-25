@@ -45,6 +45,10 @@ uploadcare.whenReady ->
       for key in ['urlBase', 'socialBase', 'cdnBase']
         settings[key] = ns.normalizeUrl(settings[key])
 
+      for key in ['cropEnabled', 'cropScale', 'cropUpscale']
+        if typeof settings[key] is 'string'
+          settings[key] = (settings[key].toLowerCase() == 'true')
+
       for key in ['multiple', 'imagesOnly']
         if settings[key] != false
           settings[key] = settings[key]?
