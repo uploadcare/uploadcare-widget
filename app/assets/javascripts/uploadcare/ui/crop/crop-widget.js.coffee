@@ -62,13 +62,12 @@ uploadcare.whenReady ->
       # Example:
       #   new CropWidget
       #     container: '.crop-widget-home'
-      #     url: 'http://ucarecdn.com/%something%/'
       #     upscale: true
       #     widgetSize: '500x300'
       #     preferedSize: '100x100'
       constructor: (options) ->
         @__options = $.extend {}, defaultOptions, options
-        option.scale = false unless options.preferedSize
+        @__options.scale = false unless @__options.preferedSize
         checkOptions @__options
         @onStateChange = $.Callbacks()
         @__buildWidget()
