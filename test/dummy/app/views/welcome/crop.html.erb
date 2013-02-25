@@ -4,9 +4,11 @@
     width: 500px;
     height: 300px;
   }
-  #source-url, 
-  .long-input {
+  #source-url {
     width: 400px;
+  }
+  .long-input {
+    width: 800px;
   }
 </style>
 
@@ -69,6 +71,11 @@ widget.<button id="destroy">destroy()</button>;
       $('#force-done').off().click(function(){
         widget.forceDone();
       });
+
+      widget.onStateChange.add(function(state){
+        log('STATE: ' + state)
+        $('#force-done').prop('disabled', state != 'loaded');
+      });
     }
 
     function setUrl() {
@@ -82,11 +89,6 @@ widget.<button id="destroy">destroy()</button>;
           log('FAIL: ' + error);
         })
     }
-
-    $('#widget-container').on('uploadcare.crop.statechange', function(__, state){
-      log('STATE: ' + state)
-      $('#force-done').prop('disabled', state != 'loaded');
-    });
 
     $('#new').click(create);
     $('#cropped-image-url').click(setUrl);
