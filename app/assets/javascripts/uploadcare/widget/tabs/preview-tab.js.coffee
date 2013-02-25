@@ -4,7 +4,8 @@ uploadcare.whenReady ->
     utils,
     ui: {progress},
     templates: {tpl},
-    jQuery: $
+    jQuery: $,
+    crop: {CropWidget}
   } = uploadcare
 
   namespace 'uploadcare.widget.tabs', (ns) ->
@@ -15,6 +16,7 @@ uploadcare.whenReady ->
       constructor: (@dialog, @settings) ->
         @onDone = $.Callbacks()
         @onBack = $.Callbacks()
+        @__doCrop =  @settings.cropEnabled
 
       setContent: (@content) ->
         @content.on('click', PREFIX + 'back', @onBack.fire)
@@ -37,11 +39,38 @@ uploadcare.whenReady ->
       # unknown
       # image
       # regular
-      # TODO: crop
       __setState: (state, data) ->
         data = $.extend {@file}, data
         @content.empty().append tpl("tab-preview-#{state}", data)
-        @__initCircle()
+        @__afterRender state
+
+      __afterRender: (state) ->
+        if state is 'unknown'
+          @__initCircle()
+          if @__doCrop
+            @__hideDoneButton()
+        if state is 'image' and @__doCrop
+          @__initCrop()
+
+      __hideDoneButton: ->
+        @content.find(PREFIX + 'done').hide()
+
+      __initCrop: ->
+        img = @content.find(PREFIX + 'image')
+        container = img.parent()
+        doneButton = @content.find(PREFIX + 'done')
+        widget = new CropWidget {container, controls: false}
+        img.remove()
+        widget.croppedImageModifiers(img.attr 'src')
+          .done (modifiers) =>
+            @file.updateCdnUrlModifiers modifiers
+          .fail =>
+            # TODO
+        doneButton
+          .prop('disabled', true)
+          .click -> widget.forceDone()
+        widget.onStateChange.add (state) => 
+          doneButton.prop('disabled', state != 'loaded')
 
       __initCircle: ->
         circleEl = @content.find('@uploadcare-dialog-preview-circle')
