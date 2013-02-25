@@ -4,11 +4,16 @@
     width: 500px;
     height: 300px;
   }
-  #source-url {
+  #source-url, 
+  .long-input {
     width: 400px;
   }
 </style>
 
+<h2>Widget with crop</h2>
+<input class="long-input" role="uploadcare-uploader" data-crop-enabled="true">
+
+<h2>Crop widget itself</h2>
 <pre><code>
 widget = <button id="new">new</button> CropWidget({
   container: '#widget-container',
