@@ -305,15 +305,20 @@ $dialog-button-height: 33px;
   border-radius: 2px;
   color: #444444;
   cursor: pointer;
-  @include gradient($color-a, $color-b);
+
+  &, 
+  &[disabled]:active, 
+  &.uploadcare-disabled-el:active {
+    @include gradient($color-a, $color-b);
+  }
 
   &:active {
     @include gradient($color-b, $color-a);
   }
 
-  &[disabled] {
-    cursor: text;
-    opacity: .7;
+  &[disabled], &.uploadcare-disabled-el {
+    cursor: default;
+    opacity: .6;
   }
 }
 
@@ -324,7 +329,11 @@ $dialog-button-height: 33px;
   color: white;
   border-color: #2a7ce5;
 
-  @include gradient($color-a, $color-b);
+  &, 
+  &[disabled]:active, 
+  &.uploadcare-disabled-el:active {
+    @include gradient($color-a, $color-b);
+  }
   
   &:active {
     @include gradient($color-b, $color-a);

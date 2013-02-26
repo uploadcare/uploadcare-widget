@@ -19,8 +19,9 @@ uploadcare.whenReady ->
         @__doCrop =  @settings.cropEnabled
 
       setContent: (@content) ->
-        @content.on('click', PREFIX + 'back', @onBack.fire)
-        @content.on('click', PREFIX + 'done', @onDone.fire)
+        notDisabled = ':not(.uploadcare-disabled-el)'
+        @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
+        @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
 
       setFile: (@file) ->
         @__setState 'unknown'
@@ -67,13 +68,12 @@ uploadcare.whenReady ->
           widget.croppedImageModifiers(img.attr 'src')
             .done (modifiers) =>
               @file.updateCdnUrlModifiers modifiers
-            .fail =>
-              # TODO
-          doneButton
-            .prop('disabled', true)
-            .click -> widget.forceDone()
+          doneButton.addClass('uploadcare-disabled-el')
           widget.onStateChange.add (state) => 
-            doneButton.prop('disabled', state != 'loaded')
+            if state == 'loaded'
+              doneButton
+                .removeClass('uploadcare-disabled-el')
+                .click -> widget.forceDone()
         ), 100
 
       __initCircle: ->
