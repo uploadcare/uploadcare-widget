@@ -13,7 +13,24 @@
 </style>
 
 <h2>Widget with crop</h2>
-<input class="long-input" role="uploadcare-uploader" data-crop-enabled="true">
+<pre><code>&lt;input class="long-input" role="uploadcare-uploader" data-crop="<input
+  id="widget-with-crop-option"
+  placeholder="4/3, 100x200 upscale, etc"
+>"&gt;</code></pre>
+
+Try: 
+<code><ul>
+  <li>disabled</li>
+  <li>4/3</li>
+  <li>100x200</li>
+  <li>100x200 upscale</li>
+  <li>or empty string</li>
+</ul></code>
+
+Result:
+<div id="widget-with-crop-wrap">
+  <input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url" data-crop>
+</div>
 
 <h2>Crop widget itself</h2>
 <pre><code>
@@ -93,6 +110,14 @@ widget.<button id="destroy">destroy()</button>;
     $('#new').click(create);
     $('#cropped-image-url').click(setUrl);
     $('#destroy').click(destroy);
+
+    // ---
+
+    $('#widget-with-crop-option').change(function(){
+      var newInput = $($('#widget-with-crop-wrap').html());
+      newInput.attr('data-crop', $('#widget-with-crop-option').val());
+      $('#widget-with-crop-wrap').empty().append(newInput);
+    });
 
   });
 </script>
