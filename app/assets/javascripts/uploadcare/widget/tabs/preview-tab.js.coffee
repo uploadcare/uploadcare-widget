@@ -65,7 +65,7 @@ uploadcare.whenReady ->
           doneButton = @content.find(PREFIX + 'done')
           widget = new CropWidget {container, controls: false}
           img.remove()
-          widget.croppedImageModifiers(img.attr 'src')
+          widget.croppedImageModifiers(img.attr('src'), @file.cdnUrlModifiers)
             .done (modifiers) =>
               @file.updateCdnUrlModifiers modifiers
           doneButton.addClass('uploadcare-disabled-el')

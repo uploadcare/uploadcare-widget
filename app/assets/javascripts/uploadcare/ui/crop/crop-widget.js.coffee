@@ -80,18 +80,42 @@ uploadcare.whenReady ->
       #     .fail (error) ->
       #       # ...
       croppedImageUrl: (originalUrl) ->
+        #TODO: add currentUrl argument, 
+        #      or split URL to originalUrl and currentModifiers
         @croppedImageModifiers(originalUrl)
           .pipe (modifiers) => @__url + modifiers
 
-      croppedImageModifiers: (originalUrl) ->
+      cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
+
+      croppedImageModifiers: (originalUrl, currentModifiers) ->
+        previousCoords = null
+        if raw = currentModifiers?.match(cropModifierRegExp)
+          previousCoords = 
+            width: parseInt(raw[1])
+            height: parseInt(raw[2])
+            center: raw[4] == 'center'
+            top: parseInt(raw[5]) or undefined
+            left: parseInt(raw[6]) or undefined
+        @croppedImageCoords(originalUrl, previousCoords)
+          .pipe (coords) =>
+            size = "#{coords.w}x#{coords.h}"
+            topLeft = "#{coords.x},#{coords.y}"
+            modifiers = "-/crop/#{size}/#{topLeft}/"
+            if @__options.scale
+              pWidth = @__options.preferedSize.split('x')[0]
+              if coords.w > pWidth or @__options.upscale
+                modifiers += "-/resize/#{@__options.preferedSize}/"
+            modifiers
+
+      croppedImageCoords: (originalUrl, previousCoords) ->
         @__clearImage()
-        @__setImage originalUrl
+        @__setImage originalUrl, previousCoords
         @__deferred.promise()
 
       # This method could be usefull if you want to make your own done button.
       forceDone: ->
         if @__state is 'loaded'
-          @__deferred.resolve @__buildModifiers @getCurrentCoords()
+          @__deferred.resolve @getCurrentCoords()
         else
           throw new Error("not ready")
 
@@ -107,17 +131,7 @@ uploadcare.whenReady ->
       destroy: ->
         @__clearImage()
         @__widgetElement.remove()
-        @__widgetElement = @__imageWrap = @__doneButton = null
-
-      __buildModifiers: (coords) ->
-        size = "#{coords.w}x#{coords.h}"
-        topLeft = "#{coords.x},#{coords.y}"
-        url = "-/crop/#{size}/#{topLeft}/"
-        if @__options.scale
-          pWidth = @__options.preferedSize.split('x')[0]
-          if coords.w > pWidth or @__options.upscale
-            url += "-/resize/#{@__options.preferedSize}/"
-        url
+        @__widgetElement = @__imageWrap = @__doneButton = null        
 
       __buildWidget: ->
         @container = $ @__options.container
@@ -153,7 +167,7 @@ uploadcare.whenReady ->
         @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
         @__setState 'waiting'
 
-      __setImage: (@__url) ->
+      __setImage: (@__url, previousCoords) ->
         @__deferred = $.Deferred()
         @__setState 'loading'
         @__img = $ '<img/>'
@@ -163,7 +177,7 @@ uploadcare.whenReady ->
             @__setState 'loaded'
             @__calcImgSizes()
             @__img.appendTo @__imageWrap
-            @__initJcrop()
+            @__initJcrop previousCoords
           error: =>
             @__setState 'error'
             @__deferred.reject LOADING_ERROR
@@ -205,14 +219,35 @@ uploadcare.whenReady ->
         @onStateChange.fire state
         @__doneButton.prop 'disabled', state != 'loaded'
 
-      __initJcrop: ->
+      __initJcrop: (previousCoords) ->
         jCropOptions =
           onSelect: (coords) => @__currentCoords = coords
         if @__options.preferedSize
           [width, height] = @__options.preferedSize.split 'x'
           jCropOptions.aspectRatio = width / height
-          jCropOptions.setSelect = [0, 0, width, height]
+
+        if previousCoords
+          if previousCoords.center
+            top = (@__originalWidth - previousCoords.width) / 2
+            left = (@__originalHeight - previousCoords.height) / 2
+          else
+            top = previousCoords.top or 0
+            left = previousCoords.left or 0
+          jCropOptions.setSelect = [
+            top
+            left
+            previousCoords.width + top
+            previousCoords.height + left
+          ]
         else
-          jCropOptions.setSelect = [0, 0, @__resizedWidth, @__resizedHeight]
+          if @__options.preferedSize
+            jCropOptions.setSelect = [0, 0, width, height]
+          else
+            jCropOptions.setSelect = [0, 0, @__originalWidth, @__originalHeight]
+
+        scaleRatio = @__resizedWidth / @__originalWidth
+        for val, i in jCropOptions.setSelect
+          jCropOptions.setSelect[i] = val * scaleRatio
+
         setApi = (api) => @__jCropApi = api
         @__img.Jcrop jCropOptions, -> setApi this
