@@ -16,8 +16,5 @@ uploadcare.whenReady ->
     multiple: false
     imagesOnly: undefined
 
-    cropEnabled: window.UPLOADCARE_CROP_ENABLED or false
-    cropSize: window.UPLOADCARE_CROP_SIZE or ''
-    cropScale: if window.UPLOADCARE_CROP_SCALE == undefined then true else window.UPLOADCARE_CROP_SCALE
-    cropUpscale: window.UPLOADCARE_CROP_UPSCALE or false
+    crop: if window.UPLOADCARE_CROP? then window.UPLOADCARE_CROP else 'disabled'
 

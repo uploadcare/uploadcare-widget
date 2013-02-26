@@ -45,10 +45,6 @@ uploadcare.whenReady ->
       for key in ['urlBase', 'socialBase', 'cdnBase']
         settings[key] = ns.normalizeUrl(settings[key])
 
-      for key in ['cropEnabled', 'cropScale', 'cropUpscale']
-        if typeof settings[key] is 'string'
-          settings[key] = (settings[key].toLowerCase() == 'true')
-
       for key in ['multiple', 'imagesOnly']
         if settings[key] != false
           settings[key] = settings[key]?
@@ -56,6 +52,21 @@ uploadcare.whenReady ->
       if settings.multiple
         console.log 'Sorry, the multiupload is not working now'
         settings.multiple = false
+
+      # disabled 300x200 → disabled
+      # 300x200 3/2 → 3/2
+      # 300x200 UPscale abc → 300x200 upscale
+      # upscale → ""
+      crop = '' + settings.crop
+      if crop.match /disabled/i
+        crop = 'disabled'
+      else if ratio = crop.match /[0-9]+\/[0-9]+/
+        crop = ratio[0]
+      else if size = crop.match /[0-9]+x[0-9]+/i
+        crop = size[0] + if crop.match(/upscale/i) then ' upscale' else ''
+      else
+        crop = ''
+      settings.crop = crop
 
       settings
 
