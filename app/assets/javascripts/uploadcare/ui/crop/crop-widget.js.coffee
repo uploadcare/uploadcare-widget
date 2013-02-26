@@ -22,7 +22,7 @@ uploadcare.whenReady ->
         scale: true
 
         # If set to `true` "-/resize/%preferedSize%/" will be added 
-        # even if selected area smaller than `preferedSize`
+        # even if selected area smaller than `preferedSize` (optional)
         upscale: false
 
         # Defines widget size. if set to `null` widget size will be equal 
@@ -226,25 +226,29 @@ uploadcare.whenReady ->
           [width, height] = @__options.preferedSize.split 'x'
           jCropOptions.aspectRatio = width / height
 
-        if previousCoords
-          if previousCoords.center
-            top = (@__originalWidth - previousCoords.width) / 2
-            left = (@__originalHeight - previousCoords.height) / 2
-          else
-            top = previousCoords.top or 0
-            left = previousCoords.left or 0
-          jCropOptions.setSelect = [
-            top
-            left
-            previousCoords.width + top
-            previousCoords.height + left
-          ]
-        else
+        unless previousCoords
+          previousCoords = {center: true}
           if @__options.preferedSize
-            jCropOptions.setSelect = [0, 0, width, height]
+            [
+              previousCoords.width
+              previousCoords.height
+            ] = fitSize(width, height, @__originalWidth, @__originalHeight, true)
           else
-            jCropOptions.setSelect = [0, 0, @__originalWidth, @__originalHeight]
+            previousCoords.width = @__originalWidth
+            previousCoords.height = @__originalHeight
 
+        if previousCoords.center
+          top = (@__originalWidth - previousCoords.width) / 2
+          left = (@__originalHeight - previousCoords.height) / 2
+        else
+          top = previousCoords.top or 0
+          left = previousCoords.left or 0
+        jCropOptions.setSelect = [
+          top
+          left
+          previousCoords.width + top
+          previousCoords.height + left
+        ]
         scaleRatio = @__resizedWidth / @__originalWidth
         for val, i in jCropOptions.setSelect
           jCropOptions.setSelect[i] = val * scaleRatio
