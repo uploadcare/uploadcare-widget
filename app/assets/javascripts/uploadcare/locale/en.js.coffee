@@ -70,6 +70,11 @@ uploadcare.whenReady ->
         footer:
           text: 'Uploading, Storing and Processing files by'
           link: 'Uploadcare.com'
+      crop:
+        error:
+          title: 'Error'
+          text: 'Can\'t load image'
+        done: 'Done' 
 
 
   # Pluralization rules taken from:
