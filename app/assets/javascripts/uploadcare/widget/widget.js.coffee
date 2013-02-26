@@ -43,7 +43,8 @@ uploadcare.whenReady ->
 
       __setFile: (newFile, keepValue=false) =>
         if newFile == @currentFile
-          @__updateValue() unless keepValue
+          if newFile
+            @__updateValue() unless keepValue
           return
         @__reset(keepValue)
         if newFile
