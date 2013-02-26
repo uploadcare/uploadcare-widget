@@ -56,21 +56,25 @@ uploadcare.whenReady ->
         @content.find(PREFIX + 'done').hide()
 
       __initCrop: ->
-        img = @content.find(PREFIX + 'image')
-        container = img.parent()
-        doneButton = @content.find(PREFIX + 'done')
-        widget = new CropWidget {container, controls: false}
-        img.remove()
-        widget.croppedImageModifiers(img.attr 'src')
-          .done (modifiers) =>
-            @file.updateCdnUrlModifiers modifiers
-          .fail =>
-            # TODO
-        doneButton
-          .prop('disabled', true)
-          .click -> widget.forceDone()
-        widget.onStateChange.add (state) => 
-          doneButton.prop('disabled', state != 'loaded')
+        # crop widget can't get container size when container hidden 
+        # (dialog hidden) so we need timer here 
+        setTimeout (=>
+          img = @content.find(PREFIX + 'image')
+          container = img.parent()
+          doneButton = @content.find(PREFIX + 'done')
+          widget = new CropWidget {container, controls: false}
+          img.remove()
+          widget.croppedImageModifiers(img.attr 'src')
+            .done (modifiers) =>
+              @file.updateCdnUrlModifiers modifiers
+            .fail =>
+              # TODO
+          doneButton
+            .prop('disabled', true)
+            .click -> widget.forceDone()
+          widget.onStateChange.add (state) => 
+            doneButton.prop('disabled', state != 'loaded')
+        ), 100
 
       __initCircle: ->
         circleEl = @content.find('@uploadcare-dialog-preview-circle')
