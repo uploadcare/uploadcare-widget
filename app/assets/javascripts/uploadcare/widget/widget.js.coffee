@@ -85,8 +85,8 @@ uploadcare.whenReady ->
       __setupWidget: ->
         @template = new ns.Template(@settings, @element)
 
-        @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
-        @template.addButton('remove', t('buttons.remove')).on('click',  @__reset)
+        @template.addButton('cancel', t('buttons.cancel')).on('click', => @__reset())
+        @template.addButton('remove', t('buttons.remove')).on('click', => @__reset())
 
         # Create the dialog and widget buttons
         if @settings.tabs.length > 0
