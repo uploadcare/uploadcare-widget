@@ -21,8 +21,8 @@ uploadcare.whenReady ->
         # like "-/resize/%preferedSize%/". (optional)
         scale: true
 
-        # If set to `true` image in widget will be scaled up 
-        # to widget size if necessary. (optional)
+        # If set to `true` "-/resize/%preferedSize%/" will be added 
+        # even if selected area smaller than `preferedSize`
         upscale: false
 
         # Defines widget size. if set to `null` widget size will be equal 
@@ -171,7 +171,7 @@ uploadcare.whenReady ->
       __calcImgSizes: ->
         {width: @__originalWidth, height: @__originalHeight} = @__img[0]
         [@__resizedWidth, @__resizedHeight] = 
-          fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight, @__options.upscale
+          fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight
         paddingTop = (@__wrapHeight - @__resizedHeight) / 2
         paddingLeft = (@__wrapWidth - @__resizedWidth) / 2
 
