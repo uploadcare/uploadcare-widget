@@ -16,21 +16,7 @@ uploadcare.whenReady ->
       constructor: (@dialog, @settings) ->
         @onDone = $.Callbacks()
         @onBack = $.Callbacks()
-
-        # @settings.crop is something like:
-        #   disabled
-        #   4/3
-        #   100x200
-        #   100x200 upscale
-        #   or empty string
-        @__doCrop = @settings.crop != 'disabled'
-        if @__doCrop
-          @__cropSettings =
-            scale: @settings.crop.indexOf('x') != -1 # 100x200
-            upscale: @settings.crop.indexOf('upscale') != -1
-          if size = @settings.crop.match /[0-9]+[x\/][0-9]+/
-            @__cropSettings.preferedSize = size[0].replace('/', 'x')
-
+        @__doCrop = @settings.__cropParsed.enabled
 
       setContent: (@content) ->
         notDisabled = ':not(.uploadcare-disabled-el)'
@@ -77,7 +63,7 @@ uploadcare.whenReady ->
           img = @content.find(PREFIX + 'image')
           container = img.parent()
           doneButton = @content.find(PREFIX + 'done')
-          widget = new CropWidget $.extend({}, @__cropSettings, {
+          widget = new CropWidget $.extend({}, @settings.__cropParsed, {
             container
             controls: false
           })

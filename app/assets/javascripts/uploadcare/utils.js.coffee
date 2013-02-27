@@ -53,6 +53,13 @@ uploadcare.whenReady ->
         console.log 'Sorry, the multiupload is not working now'
         settings.multiple = false
 
+      settings.__cropParsed = {
+        enabled: true
+        scale: false
+        upscale: false
+        preferedSize: null
+      }
+
       # disabled 300x200 → disabled
       # 300x200 3/2 → 3/2
       # 300x200 UPscale abc → 300x200 upscale
@@ -60,10 +67,18 @@ uploadcare.whenReady ->
       crop = '' + settings.crop
       if crop.match /disabled/i
         crop = 'disabled'
+        settings.__cropParsed.enabled = false
       else if ratio = crop.match /[0-9]+\/[0-9]+/
         crop = ratio[0]
+        settings.__cropParsed.preferedSize = ratio[0].replace('/', 'x')
       else if size = crop.match /[0-9]+x[0-9]+/i
-        crop = size[0] + if crop.match(/upscale/i) then ' upscale' else ''
+        settings.__cropParsed.preferedSize = size[0]
+        settings.__cropParsed.scale = true
+        if crop.match(/upscale/i)
+          crop = size[0] + ' upscale'
+          settings.__cropParsed.upscale = true
+        else
+          crop = size[0]
       else
         crop = ''
       settings.crop = crop
