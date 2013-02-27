@@ -15,3 +15,6 @@ uploadcare.whenReady ->
     tabs: window.UPLOADCARE_TABS or 'file url facebook dropbox gdrive instagram'
     multiple: false
     imagesOnly: undefined
+
+    crop: if window.UPLOADCARE_CROP? then window.UPLOADCARE_CROP else 'disabled'
+
