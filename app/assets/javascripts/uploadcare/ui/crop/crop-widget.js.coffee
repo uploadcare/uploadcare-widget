@@ -91,11 +91,11 @@ uploadcare.whenReady ->
         previousCoords = null
         if raw = currentModifiers?.match(cropModifierRegExp)
           previousCoords = 
-            width: parseInt(raw[1])
-            height: parseInt(raw[2])
+            width: parseInt(raw[1], 10)
+            height: parseInt(raw[2], 10)
             center: raw[4] == 'center'
-            top: parseInt(raw[5]) or undefined
-            left: parseInt(raw[6]) or undefined
+            top: parseInt(raw[5], 10) or undefined
+            left: parseInt(raw[6], 10) or undefined
         @croppedImageCoords(originalUrl, previousCoords)
           .pipe (coords) =>
             size = "#{coords.w}x#{coords.h}"
