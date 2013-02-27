@@ -12,7 +12,7 @@ uploadcare.whenReady ->
           @fileId = id[0]
           modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
           if modifiers
-            @cdnUrlModifiers = modifiers[0]
+            @updateCdnUrlModifiers modifiers[0]
           @__buildPreviewUrl()
           @__uploadDf.resolve(this)
         else

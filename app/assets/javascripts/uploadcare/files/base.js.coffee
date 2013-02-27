@@ -26,6 +26,8 @@ uploadcare.whenReady ->
         @__uploadDf.fail (error) =>
           @__infoDf.reject(error, this)
 
+        @updateCdnUrlModifiers null
+
       __startUpload: -> throw new Error('not implemented')
 
       __requestInfo: =>
@@ -45,7 +47,6 @@ uploadcare.whenReady ->
           @fileSize = data.size
           @isImage = data.is_image
           @isStored = data.is_stored
-          @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
           @__buildPreviewUrl()
 
           if @settings.imagesOnly && !@isImage
@@ -59,6 +60,10 @@ uploadcare.whenReady ->
           @previewUrl = @__tmpFinalPreviewUrl
         else
           @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+
+      updateCdnUrlModifiers: (@cdnUrlModifiers) ->
+        @__infoDf.done =>
+          @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
 
       startUpload: ->
         unless @upload 

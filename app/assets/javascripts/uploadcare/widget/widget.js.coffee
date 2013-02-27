@@ -43,6 +43,8 @@ uploadcare.whenReady ->
 
       __setFile: (newFile, keepValue=false) =>
         if newFile == @currentFile
+          if newFile
+            @__updateValue() unless keepValue
           return
         @__reset(keepValue)
         if newFile
@@ -58,11 +60,15 @@ uploadcare.whenReady ->
               if file == @currentFile
                 @template.setFileInfo(file)
                 @template.loaded()
-                unless keepValue
-                  if file.cdnUrlModifiers
-                    @__setValue file.cdnUrl
-                  else
-                    @__setValue file.fileId
+          @__updateValue() unless keepValue
+
+      __updateValue: ->
+        @currentFile.info().done (file) =>
+          if file == @currentFile
+            if file.cdnUrlModifiers
+              @__setValue file.cdnUrl
+            else
+              @__setValue file.fileId
 
       __setValue: (value) ->
         @__skipChange++

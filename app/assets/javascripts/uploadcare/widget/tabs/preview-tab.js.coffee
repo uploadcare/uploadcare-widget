@@ -4,7 +4,8 @@ uploadcare.whenReady ->
     utils,
     ui: {progress},
     templates: {tpl},
-    jQuery: $
+    jQuery: $,
+    crop: {CropWidget}
   } = uploadcare
 
   namespace 'uploadcare.widget.tabs', (ns) ->
@@ -15,10 +16,12 @@ uploadcare.whenReady ->
       constructor: (@dialog, @settings) ->
         @onDone = $.Callbacks()
         @onBack = $.Callbacks()
+        @__doCrop = @settings.__cropParsed.enabled
 
       setContent: (@content) ->
-        @content.on('click', PREFIX + 'back', @onBack.fire)
-        @content.on('click', PREFIX + 'done', @onDone.fire)
+        notDisabled = ':not(.uploadcare-disabled-el)'
+        @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
+        @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
 
       setFile: (@file) ->
         @__setState 'unknown'
@@ -37,11 +40,44 @@ uploadcare.whenReady ->
       # unknown
       # image
       # regular
-      # TODO: crop
       __setState: (state, data) ->
         data = $.extend {@file}, data
         @content.empty().append tpl("tab-preview-#{state}", data)
-        @__initCircle()
+        @__afterRender state
+
+      __afterRender: (state) ->
+        if state is 'unknown'
+          @__initCircle()
+          if @__doCrop
+            @__hideDoneButton()
+        if state is 'image' and @__doCrop
+          @__initCrop()
+
+      __hideDoneButton: ->
+        @content.find(PREFIX + 'done').hide()
+
+      __initCrop: ->
+        # crop widget can't get container size when container hidden 
+        # (dialog hidden) so we need timer here 
+        setTimeout (=>
+          img = @content.find(PREFIX + 'image')
+          container = img.parent()
+          doneButton = @content.find(PREFIX + 'done')
+          widget = new CropWidget $.extend({}, @settings.__cropParsed, {
+            container
+            controls: false
+          })
+          img.remove()
+          widget.croppedImageModifiers(img.attr('src'), @file.cdnUrlModifiers)
+            .done (modifiers) =>
+              @file.updateCdnUrlModifiers modifiers
+          doneButton.addClass('uploadcare-disabled-el')
+          widget.onStateChange.add (state) => 
+            if state == 'loaded'
+              doneButton
+                .removeClass('uploadcare-disabled-el')
+                .click -> widget.forceDone()
+        ), 100
 
       __initCircle: ->
         circleEl = @content.find('@uploadcare-dialog-preview-circle')

@@ -2,28 +2,52 @@
 
 /*
 <div class="uploadcare-crop-widget">
-  <div class="uploadcare-crop-widget__image-wrap"></div>
+  <div class="uploadcare-crop-widget__image-wrap">
+    <div class="uploadcare-crop-widget__error">
+      <div class="uploadcare-crop-widget__error__title">Error</div>
+      <div class="uploadcare-crop-widget__error__text">Can't load image</div>
+    </div>
+  </div>
   <div class="uploadcare-crop-widget__controls">
     <button class="uploadcare-crop-widget__done-button">done</button>
   </div>
 </div>
+
 */
-.uploadcare-crop-widget {}
+.uploadcare-crop-widget {
+  font-family: $font-family;
+}
 .uploadcare-crop-widget--loading {}
 .uploadcare-crop-widget--loaded {}
 .uploadcare-crop-widget--error {}
 .uploadcare-crop-widget--no-controls {}
   .uploadcare-crop-widget__image-wrap {
-    background: black;
+    position: relative;
     .uploadcare-crop-widget--loading & {
-      background: green;
-    }
-    .uploadcare-crop-widget--error & {
-      background: red;
+      @extend %loading-image;
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
     .uploadcare-crop-widget__image-wrap img {
       display: block;
+    }
+  .uploadcare-crop-widget__error {
+    @include prefix(box-sizing, border-box);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-top: -1em;
+    display: none;
+    .uploadcare-crop-widget--error & {display: block}
+  }
+    .uploadcare-crop-widget__error__title {
+      font-size: 20px;
+    }
+    .uploadcare-crop-widget__error__text {
+      font-size: 15px;
     }
   .uploadcare-crop-widget__controls {
     height: 30px;

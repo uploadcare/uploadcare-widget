@@ -21,13 +21,6 @@ uploadcare.whenReady ->
         remove: 'Remove'
         file: 'Computer'
       dialog:
-        title: 'Upload anything from anywhere'
-        poweredby: 'Powered by'
-        support:
-          images: 'Images'
-          audio: 'Audio'
-          video: 'Video'
-          documents: 'Documents'
         tabs:
           file:
             drag: 'Drop a file here'
@@ -74,6 +67,14 @@ uploadcare.whenReady ->
                 title: 'Size limit'
                 line1: 'The file you selected exceed the 100MB limit.'
                 line2: 'Please try again with another file.'
+        footer:
+          text: 'Uploading, Storing and Processing files by'
+          link: 'Uploadcare.com'
+      crop:
+        error:
+          title: 'Error'
+          text: 'Can\'t load image'
+        done: 'Done' 
 
 
   # Pluralization rules taken from:
