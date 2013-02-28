@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency "ejs"
   s.add_dependency "spans", '0.0.7'
   s.add_dependency "bourbon"
+  s.add_dependency "yui-compressor", '0.9.6'
 end
