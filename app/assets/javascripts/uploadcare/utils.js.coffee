@@ -111,7 +111,7 @@ uploadcare.whenReady ->
           height: '100%'
           cursor: 'default'
           display: 'block'
-          fontSize: '2em'
+          fontSize: '10em'
         )
       container
         .css(
