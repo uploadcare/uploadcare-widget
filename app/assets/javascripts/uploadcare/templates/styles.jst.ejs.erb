@@ -5,6 +5,7 @@
 // = depend_on uploadcare/crop-widget.css
 // = depend_on uploadcare/jCrop.css
 <%=
+  require 'yui/compressor' # if not already
   raw = Rails.application.assets.find_asset('uploadcare/widget.css').body
   YUI::CssCompressor.new.compress(raw)
 %>
