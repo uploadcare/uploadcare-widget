@@ -24,6 +24,7 @@ uploadcare.whenReady ->
         tabs:
           file:
             drag: 'Drop a file here'
+            noDndTitle: 'Upload files from your computer'
             or: 'or'
             button: 'Choose a file from your computer'
             also: 'You can also choose it from'
