@@ -103,15 +103,14 @@ uploadcare.whenReady ->
       input
         .on('change', fn)
         .css(
-          opacity: 0
           position: 'absolute'
           top: 0
-          left: 0
-          width: '100%'
-          height: '100%'
-          cursor: 'default'
-          display: 'block'
-          fontSize: '10em'
+          opacity: 0
+          margin: 0
+          padding: 0
+          width: 'auto'
+          height: 'auto'
+          cursor: container.css('cursor')
         )
       container
         .css(
@@ -119,6 +118,16 @@ uploadcare.whenReady ->
           overflow: 'hidden'
         )
         .append(input)
+
+      # to make it posible to set `cursor:pointer` on button
+      # http://stackoverflow.com/a/9182787/478603
+      container.mousemove (e) ->
+        {left, top} = $(this).offset()
+        width = input.width()
+        input.css
+          left: e.pageX - left - width + 10
+          top: e.pageY - top - 10
+ 
 
     # url = parseUrl('http://example.com/page/123?foo=bar#top')
     # url.href == 'http://example.com/page/123?foo=bar#top'
