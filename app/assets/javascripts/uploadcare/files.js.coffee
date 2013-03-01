@@ -19,7 +19,7 @@ uploadcare.whenReady ->
 
     converters =
       event: (settings, e) ->
-        if utils.abilities.canFileAPI()
+        if utils.abilities.canFileAPI
           files = if e.type == 'drop'
             e.originalEvent.dataTransfer.files
           else
