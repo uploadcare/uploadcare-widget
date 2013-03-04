@@ -7,7 +7,7 @@ uploadcare.whenReady ->
 
   namespace 'uploadcare.widget.dragdrop', (ns) ->
     # Without File API all drag and drop functions fallback to noop
-    noFileAPI = if utils.abilities.canFileAPI() then false else ->
+    noFileAPI = if utils.abilities.canFileAPI then false else ->
 
     ns.receiveDrop = noFileAPI or (upload, el) ->
       $(el)
