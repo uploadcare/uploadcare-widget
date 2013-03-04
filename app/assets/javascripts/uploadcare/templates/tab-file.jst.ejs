@@ -1,8 +1,11 @@
 <div class="uploadcare-dialog-file-drop-area" role="uploadcare-drop-area">
-  <div class="uploadcare-dialog-file-title">
+  <div class="uploadcare-dialog-file-title uploadcare-if-draganddrop">
     <%- t('dialog.tabs.file.drag') %>
   </div>
-  <div class="uploadcare-dialog-file-or">
+  <div class="uploadcare-dialog-file-title uploadcare-if-no-draganddrop">
+    <%- t('dialog.tabs.file.nodrop') %>
+  </div>
+  <div class="uploadcare-dialog-file-or uploadcare-if-draganddrop">
     <%- t('dialog.tabs.file.or') %>
   </div>
   <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file">
