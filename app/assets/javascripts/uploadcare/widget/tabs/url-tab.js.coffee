@@ -6,29 +6,31 @@ uploadcare.whenReady ->
 
   {t} = uploadcare.locale
 
-  urlRegexp = ///^
-    ((http|https)://)?                          # http(s)://
-    [a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}  # site.com
-    (:[0-9]{1,5})?                              # :8080
-    (/.*)?                                      # /path?and=query&string
-  $///i
-
   namespace 'uploadcare.widget.tabs', (ns) ->
     class ns.UrlTab extends ns.BaseFileTab
+
+      # starts with "http(s)://" and has at least one dot
+      urlRegexp = /^(http|https):\/\/.+\..+$/i
+
+      fixUrl = (url) ->
+        url = $.trim url
+        if urlRegexp.test url
+          url
+        else if urlRegexp.test 'http://' + url
+          'http://' + url
+        else
+          null
 
       setContent: (@content) ->
         input = @content.find('@uploadcare-dialog-url-input')
         input.on 'change keyup input', ->
-          button.attr('disabled', not $(this).val().match(urlRegexp))
+          button.attr('disabled', !fixUrl $(this).val())
 
         button = @content.find('@uploadcare-dialog-url-submit')
           .attr('disabled', true)
 
         @content.find('@uploadcare-dialog-url-form').on 'submit', =>
-          url = input.val()
-          parsed = url.match urlRegexp
-          if parsed
-            url = 'http://' + url if not parsed[1]
+          if url = fixUrl input.val()
             @onSelected.fire 'url', url
 
           false
