@@ -408,17 +408,28 @@ $dialog-preview-container-width: 775px;
 
 // § Computer tab
 
+.uploadcare-no-draganddrop .uploadcare-if-draganddrop {display: none}
+.uploadcare-draganddrop .uploadcare-if-no-draganddrop {display: none}
+
 .uploadcare-dialog-file-drop-area {
+  $padding-top: y(3.5);
+  $border-width: 3px;
+
   width: 100%;
   height: 100%;
   @include prefix(box-sizing, border-box);
   background: #f8f8f8;
-  border: dashed 3px #c5cacd;
+  border: dashed $border-width #c5cacd;
   text-align: center;
   border-radius: 3px;
-  padding-top: y(3.5);
+  padding-top: $padding-top;
   .uploadcare-dialog-big-button {
     margin-bottom: y(2);
+  }
+  .uploadcare-no-draganddrop & {
+    border: none;
+    padding-top: $padding-top + $border-width;
+    background: transparent;
   }
 }
   .uploadcare-dialog-file-title {
@@ -428,6 +439,11 @@ $dialog-preview-container-width: 775px;
     font-weight: bold;
     margin-bottom: y(2);
     text-shadow: 0 1px white;
+    .uploadcare-no-draganddrop & {
+      text-shadow: none;
+      color: black;
+      margin-top: y(3);
+    }
   }
   .uploadcare-dialog-file-or {
     font-size: $dialog-body-font-size-smaller;
