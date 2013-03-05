@@ -26,7 +26,7 @@ uploadcare.whenReady ->
             drag: 'Drop a file here'
             nodrop: 'Upload files from your computer'
             or: 'or'
-            button: 'Choose a file from your computer'
+            button: 'Choose a file from computer'
             also: 'You can also choose it from'
             tabNames:
               facebook: 'Facebook'
