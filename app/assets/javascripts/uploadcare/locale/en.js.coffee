@@ -26,7 +26,7 @@ uploadcare.whenReady ->
             drag: 'Drop a file here'
             nodrop: 'Upload files from your computer'
             or: 'or'
-            button: 'Choose a file from your computer'
+            button: 'Choose a file from computer'
             also: 'You can also choose it from'
             tabNames:
               facebook: 'Facebook'
@@ -42,9 +42,9 @@ uploadcare.whenReady ->
             button: 'Upload'
           preview:
             unknownName: 'unknown'
-            change: 'Change file'
+            change: 'Cancel'
             back: 'Back'
-            done: 'Select'
+            done: 'Upload'
             unknown:
               title: 'Uploading. Please wait for a preview.'
               done: 'Skip preview and accept'
@@ -54,7 +54,9 @@ uploadcare.whenReady ->
               line2: 'Please confirm.'
             image:
               title: 'Upload this image?'
-              change: 'Change image'
+              change: 'Cancel'
+            crop:
+              title: 'Crop and upload this image'
             error:
               default:
                 title: 'Uploading failed'

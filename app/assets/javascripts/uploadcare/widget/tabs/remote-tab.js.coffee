@@ -35,7 +35,10 @@ uploadcare.whenReady ->
                 width: '100%'
                 height: '100%'
                 border: 0
+                visibility: 'hidden'
               .appendTo(@content)
+              .on 'load', -> $(this).css 'visibility', 'visible'
+
 
         createWatcher: ->
           unless @watcher

@@ -61,9 +61,15 @@ uploadcare.whenReady ->
         reject = =>
           @dfd.reject(@currentFile)
 
+        isPartOfWindow = (el) ->
+          $(el).is('.uploadcare-dialog-panel') or
+            $(el).parents('.uploadcare-dialog-panel').size()
+
         @content.on 'click', (e) ->
-          reject() unless $(e.target).is('a, .uploadcare-dialog-panel') or 
-            $(e.target).parents('.uploadcare-dialog-panel').size()
+          reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
+
+        @content.on 'mousemove', (e) =>
+          @content.toggleClass 'uploadcare-dialog-overlay-hover', not isPartOfWindow(e.target)
 
         $(window).on 'keydown', (e) ->
           reject() if e.which == 27 # Escape
