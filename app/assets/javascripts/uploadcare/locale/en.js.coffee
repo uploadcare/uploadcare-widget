@@ -55,6 +55,8 @@ uploadcare.whenReady ->
             image:
               title: 'Upload this image?'
               change: 'Cancel'
+            crop:
+              title: 'Crop and upload this image'
             error:
               default:
                 title: 'Uploading failed'

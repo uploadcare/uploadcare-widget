@@ -5,7 +5,8 @@ uploadcare.whenReady ->
     ui: {progress},
     templates: {tpl},
     jQuery: $,
-    crop: {CropWidget}
+    crop: {CropWidget},
+    locale: {t}
   } = uploadcare
 
   namespace 'uploadcare.widget.tabs', (ns) ->
@@ -67,7 +68,6 @@ uploadcare.whenReady ->
             container
             controls: false
           })
-          img.remove()
           widget.croppedImageModifiers(img.attr('src'), @file.cdnUrlModifiers)
             .done (modifiers) =>
               @file.updateCdnUrlModifiers modifiers
@@ -77,6 +77,10 @@ uploadcare.whenReady ->
               doneButton
                 .removeClass('uploadcare-disabled-el')
                 .click -> widget.forceDone()
+
+          # REFACTOR: separate templates?
+          img.remove()
+          @content.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
         ), 100
 
       __initCircle: ->
