@@ -17,8 +17,6 @@ $dialog-body-text-color: #000;
 $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
-$dialog-overlay-color: rgba(#a9abac, .8);
-$dialog-close-button-color: #747677;
 
 $dialog-free-space-for-close-button: y(2);
 
@@ -29,9 +27,17 @@ $dialog-free-space-for-close-button: y(2);
   top: 0;
   width: 100%;
   height: 100%;
-  background: $dialog-overlay-color;
+  background: rgba(#313131, .95);
   z-index: 10000;
   overflow: auto;
+
+  &.uploadcare-dialog-overlay-hover {
+    background: rgba(#313131, .97);
+    .uploadcare-dialog-close > div {
+      color: black;
+    }
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -50,7 +56,7 @@ $dialog-free-space-for-close-button: y(2);
 
 .uploadcare-dialog-close {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
   width: 100%;
   min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
@@ -63,9 +69,9 @@ $dialog-free-space-for-close-button: y(2);
     width: $size;
     height: $size;
     line-height: $size;
-    font-size: $size;
+    font-size: $size * .9;
     font-weight: bold;
-    color: $dialog-close-button-color;
+    color: #1d1d1d;
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -245,10 +251,10 @@ $dialog-free-space-for-close-button: y(2);
 .uploadcare-dialog-footer {
   font-size: $dialog-body-font-size-smaller;
   text-align: center;
-  color: #7c7c7c;
+  color: #888888;
   margin-top: x(.6);
   a {
-    color: black;
+    color: #c2c2c2;
     text-decoration: none;
     &:hover {
       text-decoration: underline;
