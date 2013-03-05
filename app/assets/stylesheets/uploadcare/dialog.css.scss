@@ -426,7 +426,7 @@ $dialog-preview-container-width: 775px;
 .uploadcare-draganddrop .uploadcare-if-no-draganddrop {display: none}
 
 .uploadcare-dialog-file-drop-area {
-  $padding-top: y(3.5);
+  $padding-top: 70px;
   $border-width: 3px;
 
   width: 100%;
@@ -438,7 +438,8 @@ $dialog-preview-container-width: 775px;
   border-radius: 3px;
   padding-top: $padding-top;
   .uploadcare-dialog-big-button {
-    margin-bottom: y(2);
+    margin-top: y(.5);
+    margin-bottom: y(2.5);
   }
   .uploadcare-no-draganddrop & {
     border: none;
@@ -451,7 +452,7 @@ $dialog-preview-container-width: 775px;
     line-height: 1;
     color: #dee0e1;
     font-weight: bold;
-    margin-bottom: y(2);
+    margin-bottom: y(3);
     text-shadow: 0 1px white;
     .uploadcare-no-draganddrop & {
       text-shadow: none;
