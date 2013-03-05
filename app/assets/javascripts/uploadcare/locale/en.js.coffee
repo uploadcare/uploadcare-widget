@@ -42,9 +42,9 @@ uploadcare.whenReady ->
             button: 'Upload'
           preview:
             unknownName: 'unknown'
-            change: 'Change file'
+            change: 'Cancel'
             back: 'Back'
-            done: 'Select'
+            done: 'Upload'
             unknown:
               title: 'Uploading. Please wait for a preview.'
               done: 'Skip preview and accept'
@@ -54,7 +54,7 @@ uploadcare.whenReady ->
               line2: 'Please confirm.'
             image:
               title: 'Upload this image?'
-              change: 'Change image'
+              change: 'Cancel'
             error:
               default:
                 title: 'Uploading failed'
