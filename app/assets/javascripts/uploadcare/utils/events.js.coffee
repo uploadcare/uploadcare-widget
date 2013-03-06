@@ -12,9 +12,10 @@ uploadcare.whenReady ->
         this
 
       once: (name, fn) ->
-        @on name, ->
-          @off name, fn
+        once = ->
+          @off name, once
           fn.apply(this, arguments)
+        @on name, once
         this
 
       off: (name, fn) ->
