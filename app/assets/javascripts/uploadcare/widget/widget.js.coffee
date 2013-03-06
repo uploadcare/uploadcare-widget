@@ -72,10 +72,14 @@ uploadcare.whenReady ->
 
       __setValue: (value) ->
         @__skipChange++
-        @setValue value
+        @value value
 
-      setValue: (value) ->
-        @element.val(value).change()
+      value: (value) ->
+        if value?
+          @element.val(value).change()
+          this
+        else
+          @element.val()
 
       reloadInfo: =>
         if @element.val()
@@ -83,6 +87,7 @@ uploadcare.whenReady ->
           @__setFile file, true
         else
           @__reset()
+        this
 
       __fail: (error) =>
         @__reset()
@@ -124,3 +129,10 @@ uploadcare.whenReady ->
           .fail (file) =>
             unless file == @currentFile
               @__setFile null
+
+      api: ->
+        @__api ||= utils.bindAll this, [
+          'openDialog'
+          'reloadInfo'
+          'value'
+        ]
