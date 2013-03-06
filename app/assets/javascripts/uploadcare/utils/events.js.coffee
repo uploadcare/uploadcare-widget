@@ -18,7 +18,7 @@ uploadcare.whenReady ->
         this
 
       off: (name, fn) ->
-        unless name? || fn?
+        unless @__events? && (name? || fn?)
           @__events = {}
           return this
 
@@ -33,5 +33,5 @@ uploadcare.whenReady ->
         this
 
       trigger: (name, args...) ->
-        for cb in @__events[name] || []
-          cb.apply(this, args)
+        cbs = @__events?[name]
+        cb.apply(this, args) for cb in cbs if cbs

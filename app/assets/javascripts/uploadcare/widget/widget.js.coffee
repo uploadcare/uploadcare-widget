@@ -67,8 +67,9 @@ uploadcare.whenReady ->
 
       value: (value) ->
         if value?
-          @element.val(value)
-          @trigger('change', value)
+          if @element.val() != value
+            @element.val(value)
+            @trigger('change', value)
           this
         else
           @element.val()
