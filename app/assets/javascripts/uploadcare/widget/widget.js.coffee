@@ -33,7 +33,8 @@ uploadcare.whenReady ->
         @currentFile?.upload?.reject()
         @currentFile = null
         @template.reset()
-        @value('') unless keepValue
+        unless keepValue
+          @__setValue ''
 
       __setFile: (newFile, keepValue=false) =>
         if newFile == @currentFile
@@ -60,15 +61,22 @@ uploadcare.whenReady ->
         @currentFile.info().done (file) =>
           if file == @currentFile
             if file.cdnUrlModifiers
-              @value(file.cdnUrl)
+              @__setValue file.cdnUrl
             else
-              @value(file.fileId)
+              @__setValue file.fileId
+
+      __setValue: (value) ->
+        if @element.val() != value
+          @element.val(value)
+          @__onChange.fire(value)
 
       value: (value) ->
         if value?
-          if @element.val() != value
+          if value.info
+            @__setFile(value)
+          else if @element.val() != value
             @element.val(value)
-            @__onChange.fire(value)
+            @reloadInfo()
           this
         else
           @element.val()
