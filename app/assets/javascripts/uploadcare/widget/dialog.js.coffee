@@ -68,10 +68,6 @@ uploadcare.whenReady ->
         @content.on 'click', (e) ->
           reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
 
-        toggle = (mode) => 
-          => @content.toggleClass 'uploadcare-dialog-overlay-hover', mode
-        @content.find('.uploadcare-dialog-panel').hover toggle(off), toggle(on)
-
         $(window).on 'keydown', (e) ->
           reject() if e.which == 27 # Escape
 

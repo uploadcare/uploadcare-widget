@@ -31,13 +31,6 @@ $dialog-free-space-for-close-button: y(2);
   z-index: 10000;
   overflow: auto;
 
-  &.uploadcare-dialog-overlay-hover {
-    background: rgba(#313131, .97);
-    .uploadcare-dialog-close > div {
-      color: black;
-    }
-  }
-
   * {
     margin: 0;
     padding: 0;
