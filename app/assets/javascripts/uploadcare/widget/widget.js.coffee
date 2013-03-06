@@ -18,10 +18,9 @@ uploadcare.whenReady ->
     class ns.Widget
 
       constructor: (element) ->
-        $.extend this, utils.eventsMixin
-
         @element = $(element)
         @settings = utils.buildSettings @element.data()
+        @__onChange = $.Callbacks()
 
         @__setupWidget()
         @currentFile = null
@@ -69,7 +68,7 @@ uploadcare.whenReady ->
         if value?
           if @element.val() != value
             @element.val(value)
-            @trigger('change', value)
+            @__onChange.fire(value)
           this
         else
           @element.val()
@@ -124,10 +123,14 @@ uploadcare.whenReady ->
               @__setFile null
 
       api: ->
+        @onChange ||= utils.bindAll @__onChange, [
+          'add'
+          'empty'
+          'has'
+          'remove'
+        ]
         @__api ||= utils.bindAll this, [
-          'off'
-          'on'
-          'once'
+          'onChange'
           'openDialog'
           'reloadInfo'
           'value'
