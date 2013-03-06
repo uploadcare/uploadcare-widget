@@ -5,11 +5,13 @@ uploadcare.whenReady ->
 
   dataAttr = 'uploadcareWidget'
 
-  uploadcare.initialize = (targets) ->
-    for target in $(targets || '@uploadcare-uploader')
-      el = $(target)
-      initializeWidget(el)
-    return
+  uploadcare.initialize = (container) ->
+    for target in $(container).find('@uploadcare-uploader')
+      uploadcare.widget(target)
+
+  uploadcare.widget = (target) ->
+    el = $(target)
+    initializeWidget(el)
 
   initializeWidget = (el) ->
     widget = el.data(dataAttr)
