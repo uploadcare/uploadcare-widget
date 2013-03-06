@@ -1,4 +1,5 @@
 # = require uploadcare/utils/abilities
+# = require uploadcare/utils/events
 # = require uploadcare/utils/pubsub
 
 uploadcare.whenReady ->

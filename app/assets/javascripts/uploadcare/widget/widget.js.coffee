@@ -18,6 +18,8 @@ uploadcare.whenReady ->
     class ns.Widget
 
       constructor: (element) ->
+        $.extend this, utils.eventsMixin
+
         @element = $(element)
         @settings = utils.buildSettings @element.data()
 
@@ -25,21 +27,14 @@ uploadcare.whenReady ->
         @currentFile = null
         @template.reset()
 
-        @__skipChange = 0
-        @element.on 'change.uploadcare', =>
-          if @__skipChange == 0
-            @reloadInfo()
-          else
-            @__skipChange--
-
+        @element.on 'change.uploadcare', => @reloadInfo()
         @reloadInfo()
 
       __reset: (keepValue=false) =>
         @currentFile?.upload?.reject()
         @currentFile = null
         @template.reset()
-        unless keepValue
-          @__setValue ''
+        @value('') unless keepValue
 
       __setFile: (newFile, keepValue=false) =>
         if newFile == @currentFile
@@ -66,17 +61,14 @@ uploadcare.whenReady ->
         @currentFile.info().done (file) =>
           if file == @currentFile
             if file.cdnUrlModifiers
-              @__setValue file.cdnUrl
+              @value(file.cdnUrl)
             else
-              @__setValue file.fileId
-
-      __setValue: (value) ->
-        @__skipChange++
-        @value value
+              @value(file.fileId)
 
       value: (value) ->
         if value?
-          @element.val(value).change()
+          @element.val(value)
+          @trigger('change', value)
           this
         else
           @element.val()
@@ -132,6 +124,9 @@ uploadcare.whenReady ->
 
       api: ->
         @__api ||= utils.bindAll this, [
+          'off'
+          'on'
+          'once'
           'openDialog'
           'reloadInfo'
           'value'
