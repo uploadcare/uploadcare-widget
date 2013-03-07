@@ -49,6 +49,12 @@ uploadcare.whenReady ->
         if settings[key] != false
           settings[key] = settings[key]?
 
+      for key in ['previewStep']
+        if typeof settings[key] is 'string'
+          settings[key] = settings[key] isnt 'false'
+        else
+          settings[key] = !!settings[key]
+
       if settings.multiple
         console.log 'Sorry, the multiupload is not working now'
         settings.multiple = false
@@ -82,6 +88,11 @@ uploadcare.whenReady ->
       else
         crop = ''
       settings.crop = crop
+
+      if settings.__cropParsed.enabled and settings.previewStep is false
+        settings.previewStep = true
+        console.log '"Preview step" can\'t be disabled when "crop" is enabled.'
+
 
       settings
 
