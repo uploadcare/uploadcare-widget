@@ -8,7 +8,6 @@ uploadcare.whenReady ->
     namespace,
     utils,
     uploads,
-    files,
     jQuery: $
   } = uploadcare
 
@@ -72,11 +71,13 @@ uploadcare.whenReady ->
 
       value: (value) ->
         if value?
-          if value.info
-            @__setFile(value)
-          else if @element.val() != value
-            @element.val(value)
-            @reloadInfo()
+          if @element.val() != value
+            @__setFile(
+              if value.info
+                value
+              else
+                uploadcare.fileFrom(@settings, 'uploaded', value)
+            )
           this
         else
           @element.val()
