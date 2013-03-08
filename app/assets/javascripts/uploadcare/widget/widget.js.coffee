@@ -8,7 +8,6 @@ uploadcare.whenReady ->
     namespace,
     utils,
     uploads,
-    files,
     jQuery: $
   } = uploadcare
 
@@ -20,18 +19,13 @@ uploadcare.whenReady ->
       constructor: (element) ->
         @element = $(element)
         @settings = utils.buildSettings @element.data()
+        @__onChange = $.Callbacks()
 
         @__setupWidget()
         @currentFile = null
         @template.reset()
 
-        @__skipChange = 0
-        @element.on 'change.uploadcare', =>
-          if @__skipChange == 0
-            @reloadInfo()
-          else
-            @__skipChange--
-
+        @element.on 'change.uploadcare', => @reloadInfo()
         @reloadInfo()
 
       __reset: (keepValue=false) =>
@@ -71,11 +65,22 @@ uploadcare.whenReady ->
               @__setValue file.fileId
 
       __setValue: (value) ->
-        @__skipChange++
-        @setValue value
+        if @element.val() != value
+          @element.val(value)
+          @__onChange.fire @currentFile
 
-      setValue: (value) ->
-        @element.val(value).change()
+      value: (value) ->
+        if value?
+          if @element.val() != value
+            @__setFile(
+              if value.info
+                value
+              else
+                uploadcare.fileFrom(@settings, 'uploaded', value)
+            )
+          this
+        else
+          @currentFile
 
       reloadInfo: =>
         if @element.val()
@@ -83,6 +88,7 @@ uploadcare.whenReady ->
           @__setFile file, true
         else
           @__reset()
+        this
 
       __fail: (error) =>
         @__reset()
@@ -124,3 +130,17 @@ uploadcare.whenReady ->
           .fail (file) =>
             unless file == @currentFile
               @__setFile null
+
+      api: ->
+        @onChange ||= utils.bindAll @__onChange, [
+          'add'
+          'empty'
+          'has'
+          'remove'
+        ]
+        @__api ||= utils.bindAll this, [
+          'onChange'
+          'openDialog'
+          'reloadInfo'
+          'value'
+        ]
