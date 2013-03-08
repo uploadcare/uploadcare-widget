@@ -67,7 +67,7 @@ uploadcare.whenReady ->
       __setValue: (value) ->
         if @element.val() != value
           @element.val(value)
-          @__onChange.fire(value)
+          @__onChange.fire @currentFile
 
       value: (value) ->
         if value?
@@ -80,7 +80,7 @@ uploadcare.whenReady ->
             )
           this
         else
-          @element.val()
+          @currentFile
 
       reloadInfo: =>
         if @element.val()
