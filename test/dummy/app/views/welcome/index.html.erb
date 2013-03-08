@@ -4,24 +4,6 @@ We’ve developed a beautiful widget for the web.
 It can do everything from drag-and-drop to selecting photos from various social networking sites like Facebook.
 <input type="hidden" role="uploadcare-uploader" data-tabs="facebook file url" />
 </p>
-
-<p>
-  With URL value: <input type="hidden" role="uploadcare-uploader" value="http://staging0.ucarecdn.com/d3680b56-bd40-4d41-84ac-f50c707c0944/-/scale_crop/100x100/center/" />
-</p>
-
-<p>
-  With value: <input type="hidden" role="uploadcare-uploader" value="d3680b56-bd40-4d41-84ac-f50c707c0944" />
-</p>
-
-<p>
-  With invalid value: <input type="hidden" role="uploadcare-uploader" value="error" />
-</p>
-
-<p>
-  With invalid UUID value: <input type="hidden" role="uploadcare-uploader" value="error/d3680b56-6666-6666-84ac-f50c707c0944" />
-</p>
-
-
 <p>
 Draggable:<br>
 <img src="https://secure.gravatar.com/avatar/afec5e3f528823759c4b1eb2d26bc0a2" alt="" />
@@ -35,16 +17,12 @@ window.onload = function() {
       var time = (new Date()).toLocaleTimeString();
       $('<li>').appendTo('#events').text(time + ' ' + text);
     };
-    $.each(['ready', 'started', 'loaded', 'error'], function(__, event) {
-      var fullEvent = 'uploadcare.uploader.' + event;
-      $('@uploadcare-uploader').on(fullEvent, function() {
-        log(fullEvent);
+    var widgets = uploadcare.initialize();
+    for (var i = 0; i < widgets.length; i++) {
+      widgets[i].onChange.add(function(file) {
+          log('change: ' + (file ? file.fileId : '(empty)') + '');
       });
-    });
-    $('@uploadcare-uploader').on('change', function() {
-      var value = $(this).val();
-      log('change: "' + value + '"');
-    });
+    }
   });
 };
 </script>

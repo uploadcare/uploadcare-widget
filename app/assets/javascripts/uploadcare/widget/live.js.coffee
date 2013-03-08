@@ -5,11 +5,13 @@ uploadcare.whenReady ->
 
   dataAttr = 'uploadcareWidget'
 
-  uploadcare.initialize = (targets) ->
-    for target in $(targets || '@uploadcare-uploader')
-      el = $(target)
-      initializeWidget(el)
-    return
+  uploadcare.initialize = (container = 'body') ->
+    for target in $(container).find('@uploadcare-uploader')
+      uploadcare.Widget(target)
+
+  uploadcare.Widget = (target) ->
+    el = $(target).eq(0)
+    initializeWidget(el)
 
   initializeWidget = (el) ->
     widget = el.data(dataAttr)
@@ -19,7 +21,7 @@ uploadcare.whenReady ->
       el.data(dataAttr, widget)
       widget.template.content.data(dataAttr, widget.template)
 
-    widget # FIXME Supposed to be API wrapper
+    widget.api()
 
 
   cleanup = (el) ->
