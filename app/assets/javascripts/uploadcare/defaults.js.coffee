@@ -11,10 +11,11 @@ uploadcare.whenReady ->
     socialBase: window.UPLOADCARE_SOCIAL_BASE or 'https://social.uploadcare.com'
     cdnBase: window.UPLOADCARE_CDN_BASE or 'https://ucarecdn.com'
 
-    live: window.UPLOADCARE_LIVE or true
+    live: if window.UPLOADCARE_LIVE? then window.UPLOADCARE_LIVE else true
     tabs: window.UPLOADCARE_TABS or 'file url facebook dropbox gdrive instagram'
     multiple: false
     imagesOnly: undefined
 
     crop: if window.UPLOADCARE_CROP? then window.UPLOADCARE_CROP else 'disabled'
 
+    previewStep: if window.UPLOADCARE_PREVIEW_STEP? then window.UPLOADCARE_PREVIEW_STEP else false
