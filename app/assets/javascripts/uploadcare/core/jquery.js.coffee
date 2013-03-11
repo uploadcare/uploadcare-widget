@@ -2,12 +2,13 @@
 
 namespace 'uploadcare', (ns) ->
   fns = []
-  window.uploadcare.whenReady = (callback) ->
-    fns.push(callback)
+  ns.whenReady = (callback) -> fns.push(callback)
+  ns.expose 'whenReady'
 
   ns.ready = ->
     fn() for fn in fns
-    window.uploadcare.whenReady = (fn) -> fn()
+    ns.whenReady = (fn) -> fn()
+    ns.expose 'whenReady'
 
 
 
