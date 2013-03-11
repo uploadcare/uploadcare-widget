@@ -36,6 +36,10 @@ uploadcare.whenReady ->
 
     class Dialog
       constructor: (@settings, currentFile, tab) ->
+
+        if currentFile
+          @settings = $.extend {}, @settings, {previewStep: true}
+
         @dfd = $.Deferred()
         @dfd.always => 
           @__closeDialog()
@@ -95,13 +99,16 @@ uploadcare.whenReady ->
         @content.fadeOut 'fast', => @content.off().remove()
 
       __setFile: (@currentFile) ->
-        if @currentFile
-          @currentFile.startUpload()
-          @tabs.preview.setFile @currentFile
-          @__showTab 'preview'
-          @switchTab 'preview'
+        if @settings.previewStep
+          if @currentFile
+            @currentFile.startUpload()
+            @tabs.preview.setFile @currentFile
+            @__showTab 'preview'
+            @switchTab 'preview'
+          else
+            @__hideTab 'preview'
         else
-          @__hideTab 'preview'
+          @dfd.resolve(@currentFile) if @currentFile
 
       addTab: (name) ->
         {tabs} = uploadcare.widget
