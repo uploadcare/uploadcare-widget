@@ -16,7 +16,7 @@ uploadcare.whenReady ->
       for method in methods
         do (method) ->
           fn = source[method]
-          target[method] = ->
+          target[method] = unless $.isFunction(fn) then fn else ->
             result = fn.apply(source, arguments)
             if result == source then target else result # Fix chaining
       target
