@@ -30,6 +30,12 @@ uploadcare.whenReady ->
       input: (settings, input) ->
         new f.InputFile settings, input
       url: (settings, url) ->
-        new f.UrlFile settings, url
-      uploaded: (settings, fileIdOrUrl) ->
-        new f.UploadedFile settings, fileIdOrUrl
+        # We also accept plain UUIDs here for an internally used shortcut.
+        # Typically, you should use the `uploaded` converter for clarity.
+        cdn = new RegExp("^#{settings.cdnBase}/#{utils.uuidRegex.source}", 'i')
+        if utils.fullUuidRegex.test(url) || cdn.test(url)
+          new f.UploadedFile settings, url
+        else
+          new f.UrlFile settings, url
+      uploaded: (settings, uuid) ->
+        new f.UploadedFile settings, uuid
