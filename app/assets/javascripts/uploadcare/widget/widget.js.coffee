@@ -69,22 +69,23 @@ uploadcare.whenReady ->
           @element.val(value)
           @__onChange.fire @currentFile
 
+      __fileFromString: (s) ->
+        if utils.uuidRegex.exec(s)
+          uploadcare.fileFrom(@settings, 'uploaded', s)
+        else
+          uploadcare.fileFrom(@settings, 'url', s)
+
       value: (value) ->
         if value?
           if @element.val() != value
-            @__setFile(
-              if value.info
-                value
-              else
-                uploadcare.fileFrom(@settings, 'uploaded', value)
-            )
+            @__setFile(if value.info value else @__fileFromString(value))
           this
         else
           @currentFile
 
       reloadInfo: =>
         if @element.val()
-          file = uploadcare.fileFrom @settings, 'uploaded', @element.val()
+          file = @__fileFromString @element.val()
           @__setFile file, true
         else
           @__reset()
