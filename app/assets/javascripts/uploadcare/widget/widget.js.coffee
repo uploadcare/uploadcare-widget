@@ -76,7 +76,7 @@ uploadcare.whenReady ->
               if value.info
                 value
               else
-                uploadcare.fileFrom(@settings, 'uploaded', value)
+                uploadcare.fileFrom(@settings, 'url', value)
             )
           this
         else
@@ -84,7 +84,7 @@ uploadcare.whenReady ->
 
       reloadInfo: =>
         if @element.val()
-          file = uploadcare.fileFrom @settings, 'uploaded', @element.val()
+          file = uploadcare.fileFrom @settings, 'url', @element.val()
           @__setFile file, true
         else
           @__reset()
