@@ -15,10 +15,9 @@ uploadcare.version = '<%= UploadcareWidget::VERSION %>'
 {expose} = uploadcare
 
 expose 'whenReady'
-uploadcare.whenReady ->
-  expose 'defaults'
-  expose 'initialize'
-  expose 'fileFrom'
-  expose 'openDialog'
-  expose 'Circle', uploadcare.ui.progress.Circle
-  expose 'Widget'
+expose 'defaults'
+expose 'initialize'
+expose 'fileFrom'
+expose 'openDialog'
+expose 'Circle', uploadcare.ui.progress.Circle
+expose 'Widget'
