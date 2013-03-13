@@ -33,9 +33,9 @@ namespace 'uploadcare.widget.dragdrop', (ns) ->
   onDelay = 0
   offDelay = if $.browser.opera then 200 else 1
 
+  active = false
   $ ->
     # Trigger an event on watched elements when dragging
-    active = false
     $(window).on 'mouseenter dragend', => delayedDragState off, offDelay
     $('body').on 'dragenter', (e) => delayedDragState on, onDelay
     $('body').on 'dragleave', (e) =>
