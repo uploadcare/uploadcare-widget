@@ -12,7 +12,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
       # should work with other jqueries
       @element = $(@element)
 
-      @element.append(tpl('circle'))
+      @element.html(tpl('circle'))
       @pie = @element.find('@uploadcare-widget-status')
       @element.addClass 'uploadcare-widget-circle'
 
