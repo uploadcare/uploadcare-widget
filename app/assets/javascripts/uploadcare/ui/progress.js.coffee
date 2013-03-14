@@ -36,15 +36,18 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
       @observed = uploadDeferred
 
-      @observed
-        .progress (progress) =>
-          # if we are still listening to this one
-          if uploadDeferred == @observed
-            @__update progress
+      if @observed.state() is "resolved"
+        @__update 1, true
+      else
+        @observed
+          .progress (progress) =>
+            # if we are still listening to this one
+            if uploadDeferred == @observed
+              @__update progress
 
-        .done (uploadedFile) =>
-          if uploadDeferred == @observed
-            @__update 1, false
+          .done (uploadedFile) =>
+            if uploadDeferred == @observed
+              @__update 1, false
 
 
     reset: (filled = false) ->
