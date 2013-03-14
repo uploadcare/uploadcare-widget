@@ -1,131 +1,130 @@
 # = require uploadcare/utils/pusher
 
-uploadcare.whenReady ->
-  {
-    namespace,
-    jQuery: $,
-    utils,
-    debug
-  } = uploadcare
-  {pusher} = uploadcare.utils
+{
+  namespace,
+  jQuery: $,
+  utils,
+  debug
+} = uploadcare
+{pusher} = uploadcare.utils
 
-  namespace 'uploadcare.files', (ns) ->
+namespace 'uploadcare.files', (ns) ->
 
-    class ns.UrlFile extends ns.BaseFile
-      constructor: (settings, @__url) ->
-        super
-        @__shutdown = true
-        @previewUrl = @__url
+  class ns.UrlFile extends ns.BaseFile
+    constructor: (settings, @__url) ->
+      super
+      @__shutdown = true
+      @previewUrl = @__url
 
-        # Temporary solution 
-        # while server preview servise doesn't work with URL-files
-        @__tmpFinalPreviewUrl = @__url
+      # Temporary solution 
+      # while server preview servise doesn't work with URL-files
+      @__tmpFinalPreviewUrl = @__url
 
-        @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
+      @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
 
-      __startUpload: ->
+    __startUpload: ->
 
-        @__pollWatcher = new PollWatcher(this, @settings)
-        @__pusherWatcher = new PusherWatcher(this, @settings)
+      @__pollWatcher = new PollWatcher(this, @settings)
+      @__pusherWatcher = new PusherWatcher(this, @settings)
 
-        @__state('start')
+      @__state('start')
 
-        fail = =>
-          @__state('error')
+      fail = =>
+        @__state('error')
 
-        $.ajax "#{@settings.urlBase}/from_url/",
-          data:
-            pub_key: @settings.publicKey
-            source_url: @__url
-          dataType: 'jsonp'
-        .fail(fail)
-        .done (data) =>
-          return fail() if data.error
+      $.ajax "#{@settings.urlBase}/from_url/",
+        data:
+          pub_key: @settings.publicKey
+          source_url: @__url
+        dataType: 'jsonp'
+      .fail(fail)
+      .done (data) =>
+        return fail() if data.error
 
-          @__token = data.token
-          @__pollWatcher.watch @__token
-          @__pusherWatcher.watch @__token
-          $(@__pusherWatcher).on 'started', =>
-            @__pollWatcher.stopWatching()
-
-        @__uploadDf.always =>
-          @__shutdown = true
-          @__pusherWatcher.stopWatching()
+        @__token = data.token
+        @__pollWatcher.watch @__token
+        @__pusherWatcher.watch @__token
+        $(@__pusherWatcher).on 'started', =>
           @__pollWatcher.stopWatching()
 
-        @__uploadDf.promise()
+      @__uploadDf.always =>
+        @__shutdown = true
+        @__pusherWatcher.stopWatching()
+        @__pollWatcher.stopWatching()
 
-      
-      ####### Four States of uploader
-      __state: (state, data) ->
-        (
-          start: =>
-            @__shutdown = false
+      @__uploadDf.promise()
 
-          progress: (data) =>
-            return if @__shutdown
-            @fileSize = data.total
-            @__uploadDf.notify(data.total / data.done, this)
+    
+    ####### Four States of uploader
+    __state: (state, data) ->
+      (
+        start: =>
+          @__shutdown = false
 
-          success: (data) =>
-            return if @__shutdown
-            @__state('progress', data)
-            [@fileName, @fileId] = [data.original_filename, data.file_id]
-            @__uploadDf.resolve(this)
+        progress: (data) =>
+          return if @__shutdown
+          @fileSize = data.total
+          @__uploadDf.notify(data.total / data.done, this)
 
-          error: =>
-            @__uploadDf.reject('upload', this)
-        )[state](data)
+        success: (data) =>
+          return if @__shutdown
+          @__state('progress', data)
+          [@fileName, @fileId] = [data.original_filename, data.file_id]
+          @__uploadDf.resolve(this)
+
+        error: =>
+          @__uploadDf.reject('upload', this)
+      )[state](data)
 
 
-    class PusherWatcher
-      constructor: (@uploader, @settings) ->
-        @pusher = pusher.getPusher(@settings.pusherKey, 'url-upload')
+  class PusherWatcher
+    constructor: (@uploader, @settings) ->
+      @pusher = pusher.getPusher(@settings.pusherKey, 'url-upload')
 
-      watch: (@token) ->
-        debug('started url watching with pusher')
-        @channel = @pusher.subscribe("task-status-#{@token}")
+    watch: (@token) ->
+      debug('started url watching with pusher')
+      @channel = @pusher.subscribe("task-status-#{@token}")
 
-        onStarted = =>
-          $(this).trigger 'started'
-          @channel.unbind ev, onStarted for ev in ['progress', 'success']
+      onStarted = =>
+        $(this).trigger 'started'
+        @channel.unbind ev, onStarted for ev in ['progress', 'success']
 
-        for ev in ['progress', 'success']
-          do (ev) =>
-            @channel.bind ev, onStarted
-            @channel.bind ev, (data) => @uploader.__state ev, data
+      for ev in ['progress', 'success']
+        do (ev) =>
+          @channel.bind ev, onStarted
+          @channel.bind ev, (data) => @uploader.__state ev, data
 
-        @channel.bind 'fail', (data) => @uploader.__state('error')
+      @channel.bind 'fail', (data) => @uploader.__state('error')
 
-      stopWatching: ->
-        @pusher.release() if @pusher
-        @pusher = null
+    stopWatching: ->
+      @pusher.release() if @pusher
+      @pusher = null
 
-    class PollWatcher
-      constructor: (@uploader, @settings) ->
+  class PollWatcher
+    constructor: (@uploader, @settings) ->
 
-      watch: (@token) ->
-        @interval = setInterval(
-          => @__checkStatus (data) =>
-            @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
-        250)
+    watch: (@token) ->
+      @interval = setInterval(
+        => @__checkStatus (data) =>
+          @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
+      250)
 
-      stopWatching: ->
-        clearInterval @interval if @interval
-        @interval = null
+    stopWatching: ->
+      clearInterval @interval if @interval
+      @interval = null
 
-      __error: ->
-        @stopWatching()
-        @uploader.__state 'error'
+    __error: ->
+      @stopWatching()
+      @uploader.__state 'error'
 
-      __checkStatus: (callback) ->
-        fail = =>
-          @__error()
+    __checkStatus: (callback) ->
+      fail = =>
+        @__error()
 
-        $.ajax "#{@settings.urlBase}/status/",
-          data: {'token': @token}
-          dataType: 'jsonp'
-        .fail(fail)
-        .done (data) ->
-          return fail() if data.error
-          callback(data)
+      $.ajax "#{@settings.urlBase}/status/",
+        data: {'token': @token}
+        dataType: 'jsonp'
+      .fail(fail)
+      .done (data) ->
+        return fail() if data.error
+        callback(data)

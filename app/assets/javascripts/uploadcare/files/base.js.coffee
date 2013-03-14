@@ -1,84 +1,83 @@
-uploadcare.whenReady ->
-  {namespace, jQuery: $, utils} = uploadcare
+{namespace, jQuery: $, utils} = uploadcare
 
-  namespace 'uploadcare.files', (ns) ->
+namespace 'uploadcare.files', (ns) ->
 
-    class ns.BaseFile
+  class ns.BaseFile
 
-      constructor: (settings) ->
+    constructor: (settings) ->
 
-        @settings = utils.buildSettings settings
+      @settings = utils.buildSettings settings
 
-        @fileId = null
-        @fileName = null
-        @fileSize = null
-        @isStored = null
-        @cdnUrl = null
-        @cdnUrlModifiers = null
-        @previewUrl = null
-        @isImage = null
+      @fileId = null
+      @fileName = null
+      @fileSize = null
+      @isStored = null
+      @cdnUrl = null
+      @cdnUrlModifiers = null
+      @previewUrl = null
+      @isImage = null
 
-        @upload = null
+      @upload = null
 
-        @__uploadDf = $.Deferred()
-        @__infoDf = $.Deferred()
+      @__uploadDf = $.Deferred()
+      @__infoDf = $.Deferred()
 
-        @__uploadDf.fail (error) =>
-          @__infoDf.reject(error, this)
+      @__uploadDf.fail (error) =>
+        @__infoDf.reject(error, this)
 
-        @updateCdnUrlModifiers null
+      @updateCdnUrlModifiers null
 
-      __startUpload: -> throw new Error('not implemented')
+    __startUpload: -> throw new Error('not implemented')
 
-      __requestInfo: =>
-        fail = =>
-          @__infoDf.reject('info', this)
+    __requestInfo: =>
+      fail = =>
+        @__infoDf.reject('info', this)
 
-        $.ajax "#{@settings.urlBase}/info/",
-          data:
-            file_id: @fileId
-            pub_key: @settings.publicKey
-          dataType: 'jsonp'
-        .fail(fail)
-        .done (data) =>
-          return fail() if data.error
+      $.ajax "#{@settings.urlBase}/info/",
+        data:
+          file_id: @fileId
+          pub_key: @settings.publicKey
+        dataType: 'jsonp'
+      .fail(fail)
+      .done (data) =>
+        return fail() if data.error
 
-          @fileName = data.original_filename
-          @fileSize = data.size
-          @isImage = data.is_image
-          @isStored = data.is_stored
-          @__buildPreviewUrl()
+        @fileName = data.original_filename
+        @fileSize = data.size
+        @isImage = data.is_image
+        @isStored = data.is_stored
+        @__buildPreviewUrl()
 
-          if @settings.imagesOnly && !@isImage
-            @__infoDf.reject('image', this)
-            return
+        if @settings.imagesOnly && !@isImage
+          @__infoDf.reject('image', this)
+          return
 
-          @__infoDf.resolve(this)
+        @__infoDf.resolve(this)
 
-      __buildPreviewUrl: ->
-        if @__tmpFinalPreviewUrl
-          @previewUrl = @__tmpFinalPreviewUrl
-        else
-          @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+    __buildPreviewUrl: ->
+      if @__tmpFinalPreviewUrl
+        @previewUrl = @__tmpFinalPreviewUrl
+      else
+        @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
 
-      updateCdnUrlModifiers: (@cdnUrlModifiers) ->
-        @__infoDf.done =>
-          @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+    updateCdnUrlModifiers: (@cdnUrlModifiers) ->
+      @__infoDf.done =>
+        @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
 
-      startUpload: ->
-        unless @upload 
-          if @__uploadDf.state() == 'pending'
-            @__startUpload()
-          @__createPublicUploadDf()
-        return @upload
+    startUpload: ->
+      unless @upload 
+        if @__uploadDf.state() == 'pending'
+          @__startUpload()
+        @__createPublicUploadDf()
+      return @upload
 
-      __createPublicUploadDf: ->
-        @upload = @__uploadDf.promise()
-        @upload.reject = =>
-          @__uploadDf.reject('user', this)
+    __createPublicUploadDf: ->
+      @upload = @__uploadDf.promise()
+      @upload.reject = =>
+        @__uploadDf.reject('user', this)
 
-      info: ->
-        unless @__requestInfoPlanned
-          @__requestInfoPlanned = true
-          @__uploadDf.done @__requestInfo
-        @__infoDf.promise()
+    info: ->
+      unless @__requestInfoPlanned
+        @__requestInfoPlanned = true
+        @__uploadDf.done @__requestInfo
+      @__infoDf.promise()
