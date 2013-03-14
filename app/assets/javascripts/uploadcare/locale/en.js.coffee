@@ -3,6 +3,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.en =
     ready: 'Upload from'
     uploading: 'Uploading... Please wait.'
+    loadingInfo: 'Loading info...'
     errors:
       default: 'Error'
       baddata: 'Incorrect value'
