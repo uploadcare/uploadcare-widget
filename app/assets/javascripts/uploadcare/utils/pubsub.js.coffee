@@ -9,81 +9,80 @@
 #     w.stop() # don't forget, in the end :D
 #
 
-uploadcare.whenReady ->
-  {jQuery: $, debug} = uploadcare
-  {pusher} = uploadcare.utils
+{jQuery: $, debug} = uploadcare
+{pusher} = uploadcare.utils
 
-  uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
-    class ns.PubSub
-      constructor: (@settings, @channel, @topic) ->
-        @pollUrlConstructor = (channel, topic) ->
-          "#{@settings.socialBase}/pubsub/status/#{@channel}/#{@topic}"
+uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
+  class ns.PubSub
+    constructor: (@settings, @channel, @topic) ->
+      @pollUrlConstructor = (channel, topic) ->
+        "#{@settings.socialBase}/pubsub/status/#{@channel}/#{@topic}"
 
-        @pusherw = new PusherWatcher(this, @settings.pusherKey)
-        @pollw = new PollWatcher(this)
+      @pusherw = new PusherWatcher(this, @settings.pusherKey)
+      @pollw = new PollWatcher(this)
 
-      watch: ->
-        @pusherw.watch()
-        @pollw.watch()
-        $(@pusherw).on 'started', =>
-          @pollw.stop()
-
-      stop: ->
-        @pusherw.stop()
+    watch: ->
+      @pusherw.watch()
+      @pollw.watch()
+      $(@pusherw).on 'started', =>
         @pollw.stop()
 
-      __update: (status) ->
-        if not @status or @status.score < status.score
-          @status = status
-          @__notify()
+    stop: ->
+      @pusherw.stop()
+      @pollw.stop()
 
-      __notify: ->
-        debug('status', @status.score, @status.state, @status)
-        $(this).trigger(@status.state, [@status])
+    __update: (status) ->
+      if not @status or @status.score < status.score
+        @status = status
+        @__notify()
 
-    class PusherWatcher
-      constructor: (@ps, pusherKey) ->
-        @pusher = pusher.getPusher(pusherKey, @__channelName())
+    __notify: ->
+      debug('status', @status.score, @status.state, @status)
+      $(this).trigger(@status.state, [@status])
 
-      __channelName: () ->
-        "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
+  class PusherWatcher
+    constructor: (@ps, pusherKey) ->
+      @pusher = pusher.getPusher(pusherKey, @__channelName())
 
-      watch: ->
+    __channelName: () ->
+      "pubsub.channel.#{@ps.channel}.#{@ps.topic}"
 
-        @channel = @pusher.subscribe(@__channelName())
+    watch: ->
 
-        @channel.bind 'event', (data) => @ps.__update $.parseJSON(data)
+      @channel = @pusher.subscribe(@__channelName())
 
-        # a little thingy to avoid polling
-        onStarted = =>
-          debug('wow, listening with pusher')
-          $(this).trigger 'started'
-          @channel.unbind 'event', onStarted
-        @channel.bind 'event', onStarted
+      @channel.bind 'event', (data) => @ps.__update $.parseJSON(data)
 
-      stop: ->
-        @pusher.release() if @pusher
-        @pusher = null
+      # a little thingy to avoid polling
+      onStarted = =>
+        debug('wow, listening with pusher')
+        $(this).trigger 'started'
+        @channel.unbind 'event', onStarted
+      @channel.bind 'event', onStarted
 
-    class PollWatcher
-      constructor: (@ps) ->
+    stop: ->
+      @pusher.release() if @pusher
+      @pusher = null
 
-      watch: ->
-        @interval = setInterval (=> @__checkStatus()), 2000
+  class PollWatcher
+    constructor: (@ps) ->
 
-      stop: ->
-        clearInterval @interval if @interval
-        @interval = null
+    watch: ->
+      @interval = setInterval (=> @__checkStatus()), 2000
 
-      __checkStatus: ->
-        debug('polling status...')
+    stop: ->
+      clearInterval @interval if @interval
+      @interval = null
 
-        fail = =>
-          @ps.__update {score: -1, state: 'error'}
+    __checkStatus: ->
+      debug('polling status...')
 
-        $.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
-          dataType: 'jsonp'
-        .fail(fail)
-        .done (data) =>
-          return fail() if data.error
-          @ps.__update data
+      fail = =>
+        @ps.__update {score: -1, state: 'error'}
+
+      $.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
+        dataType: 'jsonp'
+      .fail(fail)
+      .done (data) =>
+        return fail() if data.error
+        @ps.__update data
