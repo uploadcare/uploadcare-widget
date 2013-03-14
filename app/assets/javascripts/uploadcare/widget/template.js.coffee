@@ -58,7 +58,11 @@ namespace 'uploadcare.widget', (ns) ->
       @circle.reset true
 
     listen: (uploadDeferred) ->
+      @__uploadDeferred = uploadDeferred
       @circle.listen uploadDeferred
+      uploadDeferred.done =>
+        if uploadDeferred == @__uploadDeferred
+          @statusText.text(t('loadingInfo'))
 
     error: (type) ->
       @statusText.text(t("errors.#{type || 'default'}"))
