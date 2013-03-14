@@ -5,8 +5,10 @@
 dataAttr = 'uploadcareWidget'
 
 uploadcare.initialize = (container = 'body') ->
-  for target in $(container).find('@uploadcare-uploader')
-    uploadcare.Widget(target)
+  initialize $(container).find('@uploadcare-uploader')
+
+initialize = (targets) ->
+  uploadcare.Widget(target) for target in targets
 
 uploadcare.Widget = (target) ->
   el = $(target).eq(0)
@@ -30,7 +32,7 @@ cleanup = (el) ->
   if el.length && (!template || el[0] != template.content[0])
     el.remove()
 
-live = -> uploadcare.initialize()
+live = -> initialize $('@uploadcare-uploader')
 if uploadcare.defaults.live
   $ -> setInterval(live, 100)
 else
