@@ -75,7 +75,7 @@ namespace 'uploadcare.widget', (ns) ->
             if value.info
               value
             else
-              uploadcare.fileFrom(@settings, 'url', value)
+              uploadcare.fileFrom('url', value, @settings)
           )
         this
       else
@@ -83,7 +83,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     reloadInfo: =>
       if @element.val()
-        file = uploadcare.fileFrom @settings, 'url', @element.val()
+        file = uploadcare.fileFrom('url', @element.val(), @settings)
         @__setFile file, true
       else
         @__reset()
@@ -120,7 +120,7 @@ namespace 'uploadcare.widget', (ns) ->
         @openDialog()
 
     __openDialogWithFile: (type, data) =>
-      file = uploadcare.fileFrom @settings, type, data
+      file = uploadcare.fileFrom(type, data, @settings)
       uploadcare.openDialog(@settings, file).done(@__setFile)
 
     openDialog: (tab) ->

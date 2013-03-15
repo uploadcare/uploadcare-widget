@@ -90,7 +90,7 @@ namespace 'uploadcare', (ns) ->
         @tabs[tabName] = @addTab(tabName)
         if @tabs[tabName]
           @tabs[tabName].onSelected.add (fileType, data) =>
-            @__setFile ns.fileFrom @settings, fileType, data
+            @__setFile ns.fileFrom(fileType, data, @settings)
         else
           throw new Error("No such tab: #{tabName}")
 
