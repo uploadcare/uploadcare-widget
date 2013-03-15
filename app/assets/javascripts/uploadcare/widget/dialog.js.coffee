@@ -25,7 +25,11 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (settings = {}, currentFile = null, tab) ->
+  ns.openDialog = (currentFile, tab, settings) ->
+    if $.isPlainObject(tab)
+      settings = tab
+      tab = null
+
     ns.closeDialog()
     settings = utils.buildSettings settings
     dialog = new Dialog(settings, currentFile, tab)
