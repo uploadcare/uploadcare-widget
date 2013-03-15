@@ -85,6 +85,7 @@ namespace 'uploadcare', (ns) ->
         @dfd.resolve @currentFile
       @tabs.preview.onBack.add =>
         @__setFile null
+      @__hideTab 'preview'
 
       for tabName in @settings.tabs when tabName not of @tabs
         @tabs[tabName] = @addTab(tabName)
