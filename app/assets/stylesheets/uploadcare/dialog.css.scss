@@ -17,8 +17,6 @@ $dialog-body-text-color: #000;
 $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
-$dialog-overlay-color: rgba(#a9abac, .8);
-$dialog-close-button-color: #747677;
 
 $dialog-free-space-for-close-button: y(2);
 
@@ -29,9 +27,10 @@ $dialog-free-space-for-close-button: y(2);
   top: 0;
   width: 100%;
   height: 100%;
-  background: $dialog-overlay-color;
+  background: rgba(#313131, .95);
   z-index: 10000;
   overflow: auto;
+
   * {
     margin: 0;
     padding: 0;
@@ -50,7 +49,7 @@ $dialog-free-space-for-close-button: y(2);
 
 .uploadcare-dialog-close {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
   width: 100%;
   min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
@@ -63,9 +62,9 @@ $dialog-free-space-for-close-button: y(2);
     width: $size;
     height: $size;
     line-height: $size;
-    font-size: $size;
+    font-size: $size * .9;
     font-weight: bold;
-    color: $dialog-close-button-color;
+    color: #1d1d1d;
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -113,7 +112,6 @@ $dialog-free-space-for-close-button: y(2);
     margin: 0;
     padding: 0;
     background: $dialog-body-shadow-color;
-    border-top: 1px solid $dialog-body-border-color;
     border-bottom-left-radius: $dialog-corner-radius;
     border-top-left-radius: $dialog-corner-radius;
     overflow: hidden;
@@ -202,7 +200,6 @@ $dialog-free-space-for-close-button: y(2);
     height: $dialog-body-height;
     line-height: y(1);
     background: $dialog-body-background-color;
-    border-top: 1px solid $dialog-body-border-color;
     border-bottom-right-radius: $dialog-corner-radius;
     border-top-right-radius: $dialog-corner-radius;
     font-size: $dialog-body-font-size;
@@ -247,10 +244,10 @@ $dialog-free-space-for-close-button: y(2);
 .uploadcare-dialog-footer {
   font-size: $dialog-body-font-size-smaller;
   text-align: center;
-  color: #7c7c7c;
+  color: #888888;
   margin-top: x(.6);
   a {
-    color: black;
+    color: #c2c2c2;
     text-decoration: none;
     &:hover {
       text-decoration: underline;
@@ -277,7 +274,6 @@ $dialog-free-space-for-close-button: y(2);
 .uploadcare-dialog-label {
   font-size: 15px;
   line-height: x(1);
-  font-weight: bolder;
   margin-bottom: x(.5);
 }
 
@@ -291,29 +287,41 @@ $dialog-free-space-for-close-button: y(2);
 }
 
 $dialog-button-height: 33px;
-.uploadcare-dialog-button, 
-.uploadcare-dialog-button-success {
-  $color-a: #f5f5f5;
-  $color-b: #f1f1f1;
-
+@mixin dialog-button-constructor (
+  $default-a, $default-b, 
+  $hover-a, $hover-b,
+  $active-a, $active-b,
+  $text-color, 
+  $border-color
+) {
   display: inline-block;
   font-size: $dialog-body-font-size-smaller;
   line-height: $dialog-button-height - 2;
   padding: 0 y(1);
   margin-right: .5em;
-  border: solid 1px #dcdcdc;
-  border-radius: 2px;
-  color: #444444;
+  border: solid 1px;
+  border-radius: 3px;
   cursor: pointer;
+  color: $text-color;
 
-  &, 
-  &[disabled]:active, 
-  &.uploadcare-disabled-el:active {
-    @include gradient($color-a, $color-b);
+  &,
+  &[disabled]:active,
+  &.uploadcare-disabled-el:active,
+  &[disabled]:hover,
+  &.uploadcare-disabled-el:hover {
+    @include gradient($default-a, $default-b);
+    @include prefix(box-shadow, none);
+    border-color: $border-color;
   }
 
+  &:hover {
+    @include gradient($hover-a, $hover-b);
+    @include prefix(box-shadow, inset 0 -1px 3px rgba(black, .05));
+  }
+  
   &:active {
-    @include gradient($color-b, $color-a);
+    @include gradient($active-a, $active-b);
+    @include prefix(box-shadow, inset 0 2px 2px rgba(black, .05));
   }
 
   &[disabled], &.uploadcare-disabled-el {
@@ -322,36 +330,64 @@ $dialog-button-height: 33px;
   }
 }
 
-.uploadcare-dialog-button-success {
-  $color-a: #4892f6;
-  $color-b: #4289e6;
-
-  color: white;
-  border-color: #2a7ce5;
-
-  &, 
-  &[disabled]:active, 
-  &.uploadcare-disabled-el:active {
-    @include gradient($color-a, $color-b);
+.uploadcare-dialog-button {
+  @include dialog-button-constructor(
+    #f5f5f5, #f1f1f1, 
+    #fbfbfb, #f6f6f6,
+    #f5f5f5, #f1f1f1,
+    #444444, 
+    #dcdcdc 
+  );
+  &:active, &:hover {
+    border-color: #cbcbcb;
   }
-  
+}
+
+.uploadcare-dialog-button-success {
+  @include dialog-button-constructor(
+    #3b8df7, #347fdf, 
+    #3986ea, #2c6dc2,
+    #3680e1, #2c6fc5,
+    #fff, 
+    #266fcb
+  );
+  &:active, &:hover {
+    border-color: #266eca #1f62b7 #1753a1;
+  }
+  &:hover {
+    @include prefix(box-shadow, inset 0 -1px 3px rgba(#1652a0, .5));
+  }
   &:active {
-    @include gradient($color-b, $color-a);
+    @include prefix(box-shadow, inset 0 1px 3px rgba(#1652a0, .4));
   }
 }
 
 .uploadcare-dialog-big-button {
   border-radius: 100px;
   font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 1px;
   color: white;
-  line-height: y(3);
+  line-height: y(3) - 2px;
   border: solid 1px #276fcb;
   text-shadow: 0 -1px #2a7ce5;
   display: inline-block;
   padding: 0 2em;
   cursor: pointer;
-  @include prefix(box-shadow, inset 0 -3px #266fcb);
+  @include prefix(box-shadow, inset 0 -2px #1f66c1);
   @include gradient(#4892f6, #4289e6);
+
+  &:hover {
+    @include prefix(box-shadow, inset 0 -2px #1652a0);
+    @include gradient(#3986eb, #2c6dc2);
+  }
+
+  &:active {
+    border: none;
+    line-height: y(3);
+    @include prefix(box-shadow, inset 0 2px #2561b9);
+    @include gradient(#2c6ec3, #2c6ec3);
+  }
 }
 
 
@@ -412,7 +448,7 @@ $dialog-preview-container-width: 775px;
 .uploadcare-draganddrop .uploadcare-if-no-draganddrop {display: none}
 
 .uploadcare-dialog-file-drop-area {
-  $padding-top: y(3.5);
+  $padding-top: 70px;
   $border-width: 3px;
 
   width: 100%;
@@ -424,7 +460,8 @@ $dialog-preview-container-width: 775px;
   border-radius: 3px;
   padding-top: $padding-top;
   .uploadcare-dialog-big-button {
-    margin-bottom: y(2);
+    margin-top: y(.5);
+    margin-bottom: y(2.5);
   }
   .uploadcare-no-draganddrop & {
     border: none;
@@ -437,7 +474,7 @@ $dialog-preview-container-width: 775px;
     line-height: 1;
     color: #dee0e1;
     font-weight: bold;
-    margin-bottom: y(2);
+    margin-bottom: y(3);
     text-shadow: 0 1px white;
     .uploadcare-no-draganddrop & {
       text-shadow: none;
@@ -458,10 +495,10 @@ $dialog-preview-container-width: 775px;
       content: '';
       display: block;
       position: absolute;
-      width: 43px;
-      height: 27px;
-      top: -12px;
-      left: -65px;
+      width: 67px;
+      height: 44px;
+      top: -32px;
+      left: -90px;
     }
   }
     .uploadcare-dialog-file-source {
@@ -469,6 +506,7 @@ $dialog-preview-container-width: 775px;
       font-size: 15px;
       margin-right: .2em;
       cursor: pointer;
+      font-weight: 300;
       &:after {
         content: '\00B7';
         color: #b7babc;
@@ -478,3 +516,22 @@ $dialog-preview-container-width: 775px;
         display: none;
       }
     }
+
+.uploadcare-draging {
+
+  .uploadcare-dialog-file-or,
+  .uploadcare-dialog-file-sources,
+  .uploadcare-dialog-file-drop-area .uploadcare-dialog-big-button {
+    display: none;
+  }
+
+  .uploadcare-dialog-file-drop-area {
+    background: #f2f7fe;
+    border-color: #438ae7;
+    padding-top: y(12);
+  }
+
+  .uploadcare-dialog-file-title {
+    color: #438ae7;
+  }
+}

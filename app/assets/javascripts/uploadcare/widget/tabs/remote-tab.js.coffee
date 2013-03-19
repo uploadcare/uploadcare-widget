@@ -1,53 +1,55 @@
-uploadcare.whenReady ->
-  {
-    namespace,
-    locale,
-    utils,
-    jQuery: $
-  } = uploadcare
+{
+  namespace,
+  locale,
+  utils,
+  jQuery: $
+} = uploadcare
 
-  namespace 'uploadcare.widget.tabs', (ns) ->
-    ns.RemoteTabFor = (service) ->
-      class RemoteTab extends ns.BaseFileTab
+namespace 'uploadcare.widget.tabs', (ns) ->
+  ns.RemoteTabFor = (service) ->
+    class RemoteTab extends ns.BaseFileTab
 
-        setContent: (@content) ->
+      setContent: (@content) ->
 
-          @dialog.progress (tab) =>
-            if tab == service
-              @createIframe()
+        @dialog.progress (tab) =>
+          if tab == service
+            @createIframe()
 
-          @dialog.fail =>
+        @dialog.fail =>
+          @cleanup()
+
+
+      createIframe: ->
+        unless @iframe
+          @windowId = utils.uuid()
+          @createWatcher()
+
+          src =
+            "#{@settings.socialBase}/window/#{@windowId}/" +
+            "#{service}?lang=#{locale.lang}&public_key=#{@settings.publicKey}" +
+            "&widget_version=#{encodeURIComponent(uploadcare.version)}"
+          @iframe = $('<iframe>')
+            .attr('src', src)
+            .css
+              width: '100%'
+              height: '100%'
+              border: 0
+              visibility: 'hidden'
+            .appendTo(@content)
+            .on 'load', -> $(this).css 'visibility', 'visible'
+
+
+      createWatcher: ->
+        unless @watcher
+          @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
+          $(@watcher).on('done', (e, state) =>
             @cleanup()
+            @onSelected.fire 'url', state.url
+          )
+          @watcher.watch()
 
-
-        createIframe: ->
-          unless @iframe
-            @windowId = utils.uuid()
-            @createWatcher()
-
-            src =
-              "#{@settings.socialBase}/window/#{@windowId}/" +
-              "#{service}?lang=#{locale.lang}&public_key=#{@settings.publicKey}" +
-              "&widget_version=#{encodeURIComponent(uploadcare.version)}"
-            @iframe = $('<iframe>')
-              .attr('src', src)
-              .css
-                width: '100%'
-                height: '100%'
-                border: 0
-              .appendTo(@content)
-
-        createWatcher: ->
-          unless @watcher
-            @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
-            $(@watcher).on('done', (e, state) =>
-              @cleanup()
-              @onSelected.fire 'url', state.url
-            )
-            @watcher.watch()
-
-        cleanup: ->
-          @watcher?.stop()
-          @watcher = null
-          @iframe?.remove()
-          @iframe = null
+      cleanup: ->
+        @watcher?.stop()
+        @watcher = null
+        @iframe?.remove()
+        @iframe = null

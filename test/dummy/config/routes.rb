@@ -7,6 +7,9 @@ Dummy::Application.routes.draw do
   get "welcome/form"
   post "welcome/form"
   get "welcome/crop"
+  get "welcome/with_value"
+  get "welcome/preview_step"
+  get "welcome/ui"
 
 
   # The priority is based upon order of creation:

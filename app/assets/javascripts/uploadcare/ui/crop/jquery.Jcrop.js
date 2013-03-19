@@ -29,10 +29,6 @@
  * }}}
  */
 
-uploadcare.whenReady(function(){
-var jQuery = uploadcare.jQuery;
-
-
 (function ($) {
 
   $.Jcrop = function (obj, opt) {
@@ -1701,7 +1697,4 @@ var jQuery = uploadcare.jQuery;
   };
 
   // }}}
-}(jQuery));
-
-
-}); // end uploadcare.whenReady()
+}(uploadcare.jQuery));
