@@ -38,7 +38,7 @@ namespace 'uploadcare.files', (ns) ->
       xhr.upload.addEventListener 'progress', =>
         @__loaded = event.loaded
         @fileSize = event.totalSize || event.total
-        @__uploadDf.notify(@fileSize / @__loaded, this)
+        @__uploadDf.notify(@__loaded / @fileSize, this)
 
       # jQuery Ajax wrapper for JSON and stuff
       $.ajax

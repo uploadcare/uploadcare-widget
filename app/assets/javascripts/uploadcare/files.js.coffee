@@ -14,7 +14,7 @@
 namespace 'uploadcare', (ns) ->
 
   ns.fileFrom = (type, data, settings = {}) ->
-    return converters[type](settings, data)
+    return converters[type](settings, data) # TODO .promise()
 
   converters =
     event: (settings, e) ->
