@@ -5,8 +5,8 @@
     role="uploadcare-dialog-preview-circle"></div>
   <div class="uploadcare-dialog-title2"><%- t('dialog.tabs.preview.unknown.title') %></div>
   <div class="uploadcare-dialog-label">
-    <%- (file.fileName || t('dialog.tabs.preview.unknownName')) %><% if (file.fileSize != null) { %>,
-    <%- Math.round(file.fileSize/1000) %> KB<% } %>
+    <%- (file.name || t('dialog.tabs.preview.unknownName')) %><% if (file.size != null) { %>,
+    <%- Math.round(file.size/1000) %> KB<% } %>
   </div>
   <div 
     class="uploadcare-dialog-button-success" 
