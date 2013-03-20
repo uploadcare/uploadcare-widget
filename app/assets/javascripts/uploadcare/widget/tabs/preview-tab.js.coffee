@@ -68,7 +68,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           container
           controls: false
         })
-        widget.croppedImageModifiers(img.attr('src'), @file.cdnUrlModifiers)
+        modifiers = @file.current().cdnUrlModifiers
+        widget.croppedImageModifiers(img.attr('src'), modifiers)
           .done (modifiers) =>
             @file = @file.then (info) =>
               info.cdnUrlModifiers = modifiers

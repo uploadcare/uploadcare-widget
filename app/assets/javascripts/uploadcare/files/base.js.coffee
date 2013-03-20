@@ -79,15 +79,26 @@ namespace 'uploadcare.files', (ns) ->
     __cancel: =>
       @__uploadDf.reject('user', this)
 
+    # Empty deferred to use as proto
+    __df = $.Deferred()
+
+    __extendPromise: (p) =>
+      p.cancel = @__cancel
+      p.current = @__fileInfo
+
+      p.progress = (fns) =>
+        $.Callbacks().add(fns).fire @__progressInfo() # notify at least once
+        __df.progress.call(p, fns)
+
+      p.pipe = => @__extendPromise __df.pipe.apply(p, arguments)
+      p.then = => @__extendPromise __df.then.apply(p, arguments)
+
+      p # extended promise
+
     promise: ->
       return @__promise if @__promise?
       df = $.Deferred()
-      @__promise = df.promise()
-      @__promise.cancel = @__cancel
-      @__promise.current = @__fileInfo
-      @__promise.progress = (fns) =>
-        $.Callbacks().add(fns).fire @__progressInfo() # notify at least once
-        df.progress(fns)
+      @__promise = @__extendPromise df.promise()
 
       @__uploadDf.progress (progress) =>
         @__progress = progress
