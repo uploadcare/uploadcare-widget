@@ -66,7 +66,7 @@ namespace 'uploadcare.files', (ns) ->
       uploadProgress: @__progress
       progress: if @__progressState == 'ready' then 1 else @__progress * 0.9
 
-    __fileInfo: ->
+    __fileInfo: =>
       uuid: @fileId
       name: @fileName
       size: @fileSize
@@ -76,12 +76,15 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
 
+    __cancel: =>
+      @__uploadDf.reject('user', this)
+
     promise: ->
       return @__promise if @__promise?
       df = $.Deferred()
       @__promise = df.promise()
-      @__promise.cancel = =>
-        @__uploadDf.reject('user', this)
+      @__promise.cancel = @__cancel
+      @__promise.current = @__fileInfo
       @__promise.progress = (fns) =>
         $.Callbacks().add(fns).fire @__progressInfo() # notify at least once
         df.progress(fns)

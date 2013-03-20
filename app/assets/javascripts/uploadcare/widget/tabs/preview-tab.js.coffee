@@ -42,7 +42,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
-      data = $.extend {@file}, data
+      data = $.extend {file: @file.current()}, data
       @content.empty().append tpl("tab-preview-#{state}", data)
       @__afterRender state
 
