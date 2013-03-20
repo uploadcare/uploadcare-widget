@@ -29,12 +29,14 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
       @observed = null
 
-    listen: (uploadDeferred) ->
+    listen: (file, selector = 'uploadProgress') ->
       @reset()
+      selectorFn = if selector?
+        (info) -> info[selector]
+      else
+        (x) -> x
 
-      uploadDeferred = uploadDeferred.promise()
-
-      @observed = uploadDeferred
+      @observed = file
 
       if @observed.state() is "resolved"
         @__update 1, true
@@ -42,11 +44,11 @@ namespace 'uploadcare.ui.progress', (ns) ->
         @observed
           .progress (progress) =>
             # if we are still listening to this one
-            if uploadDeferred == @observed
-              @__update progress
+            if file == @observed
+              @__update selectorFn(progress)
 
           .done (uploadedFile) =>
-            if uploadDeferred == @observed
+            if file == @observed
               @__update 1, false
 
 

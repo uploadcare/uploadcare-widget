@@ -104,7 +104,6 @@ namespace 'uploadcare', (ns) ->
     __setFile: (@currentFile) ->
       if @settings.previewStep
         if @currentFile
-          @currentFile.startUpload()
           @tabs.preview.setFile @currentFile
           @__showTab 'preview'
           @switchTab 'preview'

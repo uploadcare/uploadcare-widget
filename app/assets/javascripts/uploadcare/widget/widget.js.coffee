@@ -28,7 +28,7 @@ namespace 'uploadcare.widget', (ns) ->
       @reloadInfo()
 
     __reset: (keepValue=false) =>
-      @currentFile?.upload?.reject()
+      @currentFile?.cancel()
       @currentFile = null
       @template.reset()
       unless keepValue
@@ -42,26 +42,25 @@ namespace 'uploadcare.widget', (ns) ->
       @__reset(keepValue)
       if newFile
         @currentFile = newFile
-        @template.started()
-        @currentFile.startUpload()
-        @template.listen @currentFile.upload
-        @currentFile.info()
-          .fail (error, file) =>
-            if file == @currentFile
+        @template.listen @currentFile
+        @currentFile
+          .fail (error) =>
+            if newFile == @currentFile
               @__fail error
-          .done (file) =>
-            if file == @currentFile
-              @template.setFileInfo(file)
+          .done (info) =>
+            if newFile == @currentFile
+              @template.setFileInfo(info)
               @template.loaded()
         @__updateValue() unless keepValue
 
     __updateValue: ->
-      @currentFile.info().done (file) =>
+      file = @currentFile
+      @currentFile.done (info) =>
         if file == @currentFile
-          if file.cdnUrlModifiers
-            @__setValue file.cdnUrl
+          if info.cdnUrlModifiers
+            @__setValue info.cdnUrl
           else
-            @__setValue file.fileId
+            @__setValue info.fileId
 
     __setValue: (value) ->
       if @element.val() != value
@@ -72,7 +71,7 @@ namespace 'uploadcare.widget', (ns) ->
       if value?
         if @element.val() != value
           @__setFile(
-            if value.info
+            if value.done && value.fail
               value
             else
               uploadcare.fileFrom('url', value, @settings)
