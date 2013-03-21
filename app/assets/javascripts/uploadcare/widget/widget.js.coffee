@@ -21,6 +21,15 @@ namespace 'uploadcare.widget', (ns) ->
       @__onChange = $.Callbacks()
       @onChange = utils.publicCallbacks @__onChange
 
+      # Shortcat for:
+      #   widget.onChange (file) ->
+      #     file.done (info) -> ...
+      __onUploadComplete = $.Callbacks()
+      @onUploadComplete = utils.publicCallbacks __onUploadComplete
+      @__onChange.add (file) =>
+        file?.done (info) =>
+          __onUploadComplete.fire info
+
       @__setupWidget()
       @currentFile = null
       @template.reset()
@@ -138,4 +147,5 @@ namespace 'uploadcare.widget', (ns) ->
           'value'
         ]
         @__api.onChange = @onChange
+        @__api.onUploadComplete = @onUploadComplete
       @__api
