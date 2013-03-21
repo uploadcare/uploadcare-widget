@@ -19,6 +19,7 @@ namespace 'uploadcare.widget', (ns) ->
       @element = $(element)
       @settings = utils.buildSettings @element.data()
       @__onChange = $.Callbacks()
+      @onChange = utils.publicCallbacks @__onChange
 
       @__setupWidget()
       @currentFile = null
@@ -130,15 +131,11 @@ namespace 'uploadcare.widget', (ns) ->
             @__setFile null
 
     api: ->
-      @onChange ||= utils.bindAll @__onChange, [
-        'add'
-        'empty'
-        'has'
-        'remove'
-      ]
-      @__api ||= utils.bindAll this, [
-        'onChange'
-        'openDialog'
-        'reloadInfo'
-        'value'
-      ]
+      unless @__api
+        @__api = utils.bindAll this, [
+          'openDialog'
+          'reloadInfo'
+          'value'
+        ]
+        @__api.onChange = @onChange
+      @__api
