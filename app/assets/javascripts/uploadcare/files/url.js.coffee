@@ -64,7 +64,7 @@ namespace 'uploadcare.files', (ns) ->
         progress: (data) =>
           return if @__shutdown
           @fileSize = data.total
-          @__uploadDf.notify(data.total / data.done, this)
+          @__uploadDf.notify(data.done / data.total, this)
 
         success: (data) =>
           return if @__shutdown
