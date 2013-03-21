@@ -25,7 +25,11 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (settings = {}, currentFile = null, tab) ->
+  ns.openDialog = (currentFile, tab, settings) ->
+    if $.isPlainObject(tab)
+      settings = tab
+      tab = null
+
     ns.closeDialog()
     settings = utils.buildSettings settings
     dialog = new Dialog(settings, currentFile, tab)
@@ -91,7 +95,7 @@ namespace 'uploadcare', (ns) ->
         @tabs[tabName] = @addTab(tabName)
         if @tabs[tabName]
           @tabs[tabName].onSelected.add (fileType, data) =>
-            @__setFile ns.fileFrom @settings, fileType, data
+            @__setFile ns.fileFrom(fileType, data, @settings)
         else
           throw new Error("No such tab: #{tabName}")
 
@@ -101,7 +105,6 @@ namespace 'uploadcare', (ns) ->
     __setFile: (@currentFile) ->
       if @settings.previewStep
         if @currentFile
-          @currentFile.startUpload()
           @tabs.preview.setFile @currentFile
           @__showTab 'preview'
           @switchTab 'preview'

@@ -1,4 +1,4 @@
-# = require uploadcare/core/jquery.1.7.2.js
+# = require uploadcare/core/jquery.1.8.3.js
 
 {namespace} = uploadcare
 

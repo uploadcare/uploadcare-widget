@@ -19,6 +19,16 @@ namespace 'uploadcare.widget', (ns) ->
       @element = $(element)
       @settings = utils.buildSettings @element.data()
       @__onChange = $.Callbacks()
+      @onChange = utils.publicCallbacks @__onChange
+
+      # Shortcat for:
+      #   widget.onChange (file) ->
+      #     file.done (info) -> ...
+      __onUploadComplete = $.Callbacks()
+      @onUploadComplete = utils.publicCallbacks __onUploadComplete
+      @__onChange.add (file) =>
+        file?.done (info) =>
+          __onUploadComplete.fire info
 
       @__setupWidget()
       @currentFile = null
@@ -28,7 +38,7 @@ namespace 'uploadcare.widget', (ns) ->
       @reloadInfo()
 
     __reset: (keepValue=false) =>
-      @currentFile?.upload?.reject()
+      @currentFile?.cancel()
       @currentFile = null
       @template.reset()
       unless keepValue
@@ -42,26 +52,25 @@ namespace 'uploadcare.widget', (ns) ->
       @__reset(keepValue)
       if newFile
         @currentFile = newFile
-        @template.started()
-        @currentFile.startUpload()
-        @template.listen @currentFile.upload
-        @currentFile.info()
-          .fail (error, file) =>
-            if file == @currentFile
+        @template.listen @currentFile
+        @currentFile
+          .fail (error) =>
+            if newFile == @currentFile
               @__fail error
-          .done (file) =>
-            if file == @currentFile
-              @template.setFileInfo(file)
+          .done (info) =>
+            if newFile == @currentFile
+              @template.setFileInfo(info)
               @template.loaded()
         @__updateValue() unless keepValue
 
     __updateValue: ->
-      @currentFile.info().done (file) =>
+      file = @currentFile
+      @currentFile.done (info) =>
         if file == @currentFile
-          if file.cdnUrlModifiers
-            @__setValue file.cdnUrl
+          if info.cdnUrlModifiers
+            @__setValue info.cdnUrl
           else
-            @__setValue file.fileId
+            @__setValue info.fileId
 
     __setValue: (value) ->
       if @element.val() != value
@@ -72,10 +81,10 @@ namespace 'uploadcare.widget', (ns) ->
       if value?
         if @element.val() != value
           @__setFile(
-            if value.info
+            if value.done && value.fail
               value
             else
-              uploadcare.fileFrom(@settings, 'url', value)
+              uploadcare.fileFrom('url', value, @settings)
           )
         this
       else
@@ -83,7 +92,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     reloadInfo: =>
       if @element.val()
-        file = uploadcare.fileFrom @settings, 'url', @element.val()
+        file = uploadcare.fileFrom('url', @element.val(), @settings)
         @__setFile file, true
       else
         @__reset()
@@ -120,26 +129,23 @@ namespace 'uploadcare.widget', (ns) ->
         @openDialog()
 
     __openDialogWithFile: (type, data) =>
-      file = uploadcare.fileFrom @settings, type, data
-      uploadcare.openDialog(@settings, file).done(@__setFile)
+      file = uploadcare.fileFrom(type, data, @settings)
+      uploadcare.openDialog(file, @settings).done(@__setFile)
 
     openDialog: (tab) ->
-      uploadcare.openDialog(@settings, @currentFile, tab)
+      uploadcare.openDialog(@currentFile, tab, @settings)
         .done(@__setFile)
         .fail (file) =>
           unless file == @currentFile
             @__setFile null
 
     api: ->
-      @onChange ||= utils.bindAll @__onChange, [
-        'add'
-        'empty'
-        'has'
-        'remove'
-      ]
-      @__api ||= utils.bindAll this, [
-        'onChange'
-        'openDialog'
-        'reloadInfo'
-        'value'
-      ]
+      unless @__api
+        @__api = utils.bindAll this, [
+          'openDialog'
+          'reloadInfo'
+          'value'
+        ]
+        @__api.onChange = @onChange
+        @__api.onUploadComplete = @onUploadComplete
+      @__api
