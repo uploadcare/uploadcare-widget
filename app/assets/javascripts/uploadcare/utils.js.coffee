@@ -53,11 +53,12 @@ namespace 'uploadcare.utils', (ns) ->
 
     # Boolean settings
     # <... foo>, <... foo="true">, <... foo="foo"> — On
-    # <... foo="false"> - Off
+    # <... foo="false">, <... foo="disabled"> - Off
     # <... > - Default using
     for key in ['previewStep', 'multiple', 'imagesOnly']
       if typeof settings[key] is 'string'
-        settings[key] = settings[key] isnt 'false'
+        settings[key] = not ($.trim(settings[key].toLowerCase()) 
+          in ['false', 'disabled'])
       else
         settings[key] = !!settings[key]
 
