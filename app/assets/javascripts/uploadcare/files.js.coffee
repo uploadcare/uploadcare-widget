@@ -13,8 +13,8 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.fileFrom = (settings, type, data) ->
-    return converters[type](settings, data)
+  ns.fileFrom = (type, data, settings = {}) ->
+    return converters[type](settings, data).promise()
 
   converters =
     event: (settings, e) ->

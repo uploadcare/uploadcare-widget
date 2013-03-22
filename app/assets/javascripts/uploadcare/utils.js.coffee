@@ -20,6 +20,12 @@ namespace 'uploadcare.utils', (ns) ->
           if result == source then target else result # Fix chaining
     target
 
+  ns.publicCallbacks = (callbacks) ->
+    result = callbacks.add
+    result.add = callbacks.add
+    result.remove = callbacks.remove
+    result
+
   ns.uuid = ->
     'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
       r = Math.random() * 16 | 0

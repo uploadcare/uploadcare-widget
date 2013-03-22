@@ -57,23 +57,22 @@ namespace 'uploadcare.widget', (ns) ->
       @setStatus 'loaded'
       @circle.reset true
 
-    listen: (uploadDeferred) ->
-      @__uploadDeferred = uploadDeferred
-      @circle.listen uploadDeferred
-      uploadDeferred.done =>
-        if uploadDeferred == @__uploadDeferred
-          @statusText.text(t('loadingInfo'))
+    listen: (file) ->
+      @__file = file
+      @circle.listen file
+      @setStatus 'started'
+      file.progress (info) =>
+        if file == @__file
+          switch info.state
+            when 'uploading' then @statusText.text(t('uploading'))
+            when 'uploaded' then @statusText.text(t('loadingInfo'))
 
     error: (type) ->
       @statusText.text(t("errors.#{type || 'default'}"))
       @circle.reset()
       @setStatus 'error'
 
-    started: ->
-      @statusText.text(t('uploading'))
-      @setStatus 'started'
-
-    setFileInfo: (file) ->
-      name = utils.fitText(file.fileName, 16)
-      size = Math.ceil(file.fileSize / 1024).toString()
+    setFileInfo: (info) ->
+      name = utils.fitText(info.name, 16)
+      size = Math.ceil(info.size / 1024).toString()
       @statusText.html tpl('widget-file-name', {name, size})

@@ -25,14 +25,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     setFile: (@file) ->
       @__setState 'unknown'
-      @file.info()
-        .done (file) =>
+      file = @file
+      @file
+        .done (info) =>
           if file == @file
-            if @file.isImage
+            if info.isImage
               @__setState 'image'
             else
               @__setState 'regular'
-        .fail (error, file) =>
+        .fail (error) =>
           if file == @file
             @__setState 'error', {error}
 
@@ -41,7 +42,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
-      data = $.extend {@file}, data
+      data = $.extend {file: @file.current()}, data
       @content.empty().append tpl("tab-preview-#{state}", data)
       @__afterRender state
 
@@ -67,9 +68,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           container
           controls: false
         })
-        widget.croppedImageModifiers(img.attr('src'), @file.cdnUrlModifiers)
-          .done (modifiers) =>
-            @file.updateCdnUrlModifiers modifiers
+        @file.done (info) =>
+          widget.croppedImageModifiers(img.attr('src'), info.cdnUrlModifiers)
+            .done (modifiers) =>
+              @file = @file.then (info) =>
+                info.cdnUrlModifiers = modifiers
+                info.cdnUrl = "#{@settings.cdnBase}/#{info.uuid}/#{modifiers or ''}"
+                info
         doneButton.addClass('uploadcare-disabled-el')
         widget.onStateChange.add (state) => 
           if state == 'loaded'
@@ -86,4 +91,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       circleEl = @content.find('@uploadcare-dialog-preview-circle')
       if circleEl.length
         circle = new progress.Circle circleEl
-        circle.listen @file.startUpload()
+        circle.listen @file
