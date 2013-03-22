@@ -51,19 +51,15 @@ namespace 'uploadcare.utils', (ns) ->
     for key in ['urlBase', 'socialBase', 'cdnBase']
       settings[key] = ns.normalizeUrl(settings[key])
 
-    for key in ['multiple', 'imagesOnly']
-      if settings[key] != false
-        settings[key] = settings[key]?
-
-    for key in ['previewStep']
+    # Boolean settings
+    # <... foo>, <... foo="true">, <... foo="foo"> — On
+    # <... foo="false"> - Off
+    # <... > - Default using
+    for key in ['previewStep', 'multiple', 'imagesOnly']
       if typeof settings[key] is 'string'
         settings[key] = settings[key] isnt 'false'
       else
         settings[key] = !!settings[key]
-
-    if settings.multiple
-      console.log 'Sorry, the multiupload is not working now'
-      settings.multiple = false
 
     settings.__cropParsed = {
       enabled: true
@@ -97,8 +93,6 @@ namespace 'uploadcare.utils', (ns) ->
 
     if settings.__cropParsed.enabled and settings.previewStep is false
       settings.previewStep = true
-      console.log '"Preview step" can\'t be disabled when "crop" is enabled.'
-
 
     settings
 
