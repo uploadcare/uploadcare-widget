@@ -1,20 +1,16 @@
 This is the [Uploadcare](http://uploadcare.com) widget source.
-It can also be used as an ordinary Rails plugin.
 
 ## Embedding
 
-Try reading our [embedding docs](https://github.com/uploadcare/uploadcare-widget/blob/master/EMBEDDING.markdown).
+Add following code to your document's `<head>`.
 
-## Rails Plugin
-
-Add `uploadcare-widget` to your Gemfile in the `assets` section
-and add this line to your JavaScript:
-
-    // = require uploadcare/widget
-
-... and to your CSS:
-
-    // = require uploadcare/widget
+```html
+<script>
+  // Widget settings
+  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+</script>
+<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare-x.y.z.min.js"></script>
+```
 
 The official [Uploadcare documentation](http://uploadcare.com/documentation/)
 has more information on using the widget itself.
