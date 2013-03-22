@@ -12,7 +12,7 @@ Add following code to your document's `<head>`.
 <script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare-x.y.z.min.js"></script>
 ```
 
-The official [Uploadcare documentation](http://uploadcare.com/documentation/)
+The official [Widget documentation](https://uploadcare.com/documentation/widget/)
 has more information on using the widget itself.
 
 ## Building Your Own
