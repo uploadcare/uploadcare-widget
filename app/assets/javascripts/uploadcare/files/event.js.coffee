@@ -35,7 +35,7 @@ namespace 'uploadcare.files', (ns) ->
       xhr = new XMLHttpRequest()
       xhr.addEventListener 'loadend', =>
         fail() if xhr? && !xhr.status
-      xhr.upload.addEventListener 'progress', =>
+      xhr.upload.addEventListener 'progress', (event) =>
         @__loaded = event.loaded
         @fileSize = event.totalSize || event.total
         @__uploadDf.notify(@__loaded / @fileSize, this)
