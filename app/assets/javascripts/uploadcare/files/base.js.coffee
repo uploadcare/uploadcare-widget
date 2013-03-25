@@ -72,7 +72,7 @@ namespace 'uploadcare.files', (ns) ->
       size: @fileSize
       isStored: @isStored
       isImage: @isImage
-      cdnUrl: @cdnUrl
+      cdnUrl: "#{if @settings.pathValue then '' else @settings.cdnBase}#{@cdnUrl}"
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
 

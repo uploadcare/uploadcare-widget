@@ -18,3 +18,5 @@ uploadcare.defaults =
   crop: if window.UPLOADCARE_CROP? then window.UPLOADCARE_CROP else 'disabled'
 
   previewStep: if window.UPLOADCARE_PREVIEW_STEP? then window.UPLOADCARE_PREVIEW_STEP else false
+
+  pathValue: false
