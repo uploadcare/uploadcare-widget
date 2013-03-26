@@ -52,13 +52,13 @@ namespace 'uploadcare.utils', (ns) ->
       settings[key] = ns.normalizeUrl(settings[key])
 
     # Boolean settings
-    # <... foo>, <... foo="true">, <... foo="foo"> — On
+    # <... foo>, <... foo="true">, <... foo="enabled">, <... foo="foo"> — On
     # <... foo="false">, <... foo="disabled"> - Off
-    # <... > - Default using
+    # <... > - Default used
     for key in ['previewStep', 'multiple', 'imagesOnly']
       if typeof settings[key] is 'string'
-        settings[key] = not ($.trim(settings[key].toLowerCase()) 
-          in ['false', 'disabled'])
+        value = $.trim(settings[key]).toLowerCase()
+        settings[key] = not (value in ['false', 'disabled'])
       else
         settings[key] = !!settings[key]
 
@@ -92,7 +92,7 @@ namespace 'uploadcare.utils', (ns) ->
       crop = ''
     settings.crop = crop
 
-    if settings.__cropParsed.enabled and settings.previewStep is false
+    if settings.__cropParsed.enabled
       settings.previewStep = true
 
     settings
