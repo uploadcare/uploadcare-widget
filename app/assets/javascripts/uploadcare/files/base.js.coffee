@@ -17,8 +17,6 @@ namespace 'uploadcare.files', (ns) ->
       @previewUrl = null
       @isImage = null
 
-      @upload = null
-
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
       @__promise = null
@@ -85,7 +83,6 @@ namespace 'uploadcare.files', (ns) ->
 
       __progress = p.progress
       p.progress = (fns) =>
-        $.Callbacks().add(fns).fire @__progressInfo() # notify at least once
         __progress.call(p, fns)
 
       __pipe = p.pipe
