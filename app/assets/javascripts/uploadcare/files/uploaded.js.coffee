@@ -12,7 +12,7 @@ namespace 'uploadcare.files', (ns) ->
         modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
         if modifiers
           @cdnUrlModifiers = modifiers
-          @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+          @cdnUrl = "/#{@fileId}/#{@cdnUrlModifiers or ''}"
         @__buildPreviewUrl()
         @__uploadDf.resolve(this)
       else

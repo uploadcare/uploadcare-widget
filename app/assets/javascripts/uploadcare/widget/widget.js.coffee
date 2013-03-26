@@ -67,10 +67,12 @@ namespace 'uploadcare.widget', (ns) ->
       file = @currentFile
       @currentFile.done (info) =>
         if file == @currentFile
-          if info.cdnUrlModifiers
-            @__setValue info.cdnUrl
+          @__setValue if info.cdnUrlModifiers
+            info.cdnUrl
+          else if @settings.pathValue
+            "/#{info.uuid}/"
           else
-            @__setValue info.fileId
+            info.uuid
 
     __setValue: (value) ->
       if @element.val() != value
