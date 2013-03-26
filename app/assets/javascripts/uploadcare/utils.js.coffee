@@ -55,7 +55,7 @@ namespace 'uploadcare.utils', (ns) ->
     # <... foo>, <... foo="true">, <... foo="enabled">, <... foo="foo"> — On
     # <... foo="false">, <... foo="disabled"> - Off
     # <... > - Default used
-    for key in ['previewStep', 'multiple', 'imagesOnly']
+    for key in ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
       if typeof settings[key] is 'string'
         value = $.trim(settings[key]).toLowerCase()
         settings[key] = not (value in ['false', 'disabled'])
