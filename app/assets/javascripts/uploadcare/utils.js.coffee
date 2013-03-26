@@ -51,7 +51,7 @@ namespace 'uploadcare.utils', (ns) ->
     for key in ['urlBase', 'socialBase', 'cdnBase']
       settings[key] = ns.normalizeUrl(settings[key])
 
-    for key in ['multiple', 'imagesOnly']
+    for key in ['multiple', 'imagesOnly', 'pathValue']
       if settings[key] != false
         settings[key] = settings[key]?
 
