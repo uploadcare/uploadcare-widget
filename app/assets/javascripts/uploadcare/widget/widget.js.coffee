@@ -21,7 +21,7 @@ namespace 'uploadcare.widget', (ns) ->
       @__onChange = $.Callbacks()
       @onChange = utils.publicCallbacks @__onChange
 
-      # Shortcat for:
+      # Shortcut for:
       #   widget.onChange (file) ->
       #     file.done (info) -> ...
       __onUploadComplete = $.Callbacks()
