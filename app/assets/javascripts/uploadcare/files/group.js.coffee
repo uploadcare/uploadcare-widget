@@ -12,6 +12,11 @@ namespace 'uploadcare.files', (ns) ->
       @settings = utils.buildSettings settings
       @__files = []
 
+      @finalized = false
+
+      @onFileAdded = $.Callbacks()
+      @onFileRemoved = $.Callbacks()
+
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
 
@@ -37,15 +42,27 @@ namespace 'uploadcare.files', (ns) ->
       file for file in @__files # returns copy of @__files
 
     add: (file) ->
-      @__files.push file
-      file.progress (progressInfo) =>
-        @__fileProgresses[file] = progressInfo.progress
-        @__singleFileDf.notify @__progressInfo()
+      if file
+        @__files.push file
+        file.progress (progressInfo) =>
+          @__fileProgresses[file] = progressInfo.progress
+          @__singleFileDf.notify @__progressInfo()
+        @onFileAdded.fire file
+
+    removeAll: ->
+      @remove(file) for file in @__files
+
+    # creates copy of group, but not finalized
+    newGroup: ->
+      gr = new ns.FileGroup
+      gr.add(file) for file in @__files
+      gr
 
     remove: (file) ->
-      if (index = files.indexOf(file)) isnt -1
-        file.splice(index, 1)
+      if (index = @__files.indexOf(file)) isnt -1
+        @__files.splice(index, 1)
         # TODO unsubsribe progress
+        @onFileRemoved.fire file
 
     save: ->
       @__finalize()
@@ -61,10 +78,14 @@ namespace 'uploadcare.files', (ns) ->
           .fail =>
             @__infoDf.reject('info')
 
+    cancel: =>
+      @__finalize()
+      file.cancel() for file in @__files
+
     # returns object that act like single file
     asSingle: ->
       pr = @__singleFileDf.promise()
-      pr.cancel = @__cancel
+      pr.cancel = @cancel
 
     __progressInfo: ->
       progress = 0
@@ -75,9 +96,9 @@ namespace 'uploadcare.files', (ns) ->
       progress: if @__progressState == 'ready' then 1 else progress * 0.9
 
     __fileInfos: (cb) ->
-      $.when(@__files...).then(null, (errorsAndInfos...) ->
-        errorAndInfo[1] for errorAndInfo in errorsAndInfos
-      ).always cb
+      files = for file in @__files
+        file.when null, (err, info) -> $.when(info)
+      $.when(files...).done cb
 
     __buildInfo: (cb) ->
       info = 
@@ -94,32 +115,27 @@ namespace 'uploadcare.files', (ns) ->
         cb(info)
 
     __finalize: ->
-      unless @__finalized
-        @__finalized = true
+      unless @finalized
+        @finalized = true
         @add = @remove = ->
           throw new Error("group can't be changed after save")
         $.when(@__files...)
           .then(@__uploadDf.resolve, @__uploadDf.reject)
         # if one file fails all fails
-        @__uploadDf.reject @__cancel
-
-    __cancel: =>
-      @__finalize()
-      file.cancel() for file in @__files
-        
+        @__uploadDf.fail @cancel
 
     __createGroup: ->
       # tmp
       return $.when({group_id: '123~4'})
 
-      df = $.Deferred()
-      @__fileInfos (infos...) ->
-        data =
-          pub_key: @settings.publicKey
-        for info, i in infos
-          data["file_id[#{i}]"] = info.fileId
-        $.ajax("#{@settings.urlBase}/group/create/", {data, dataType: 'jsonp'})
-          .then(df.resolve, df.reject)
-      return df.promise()
+      # df = $.Deferred()
+      # @__fileInfos (infos...) ->
+      #   data =
+      #     pub_key: @settings.publicKey
+      #   for info, i in infos
+      #     data["file_id[#{i}]"] = info.fileId
+      #   $.ajax("#{@settings.urlBase}/group/create/", {data, dataType: 'jsonp'})
+      #     .then(df.resolve, df.reject)
+      # return df.promise()
 
 
