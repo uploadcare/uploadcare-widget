@@ -92,7 +92,7 @@ namespace 'uploadcare.utils', (ns) ->
       crop = ''
     settings.crop = crop
 
-    if settings.__cropParsed.enabled
+    if settings.__cropParsed.enabled or settings.multiple
       settings.previewStep = true
 
     settings
