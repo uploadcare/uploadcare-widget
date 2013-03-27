@@ -25,22 +25,22 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (currentFile, tab, settings) ->
+  ns.openDialog = (currentFiles, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
 
     ns.closeDialog()
     settings = utils.buildSettings settings
-    dialog = new Dialog(settings, currentFile, tab)
+    dialog = new Dialog(settings, currentFiles, tab)
     return currentDialogPr = dialog.publicPromise()
       .always ->
         currentDialogPr = null
 
   class Dialog
-    constructor: (@settings, currentFile, tab) ->
+    constructor: (@settings, currentFiles, tab) ->
 
-      if currentFile
+      if currentFiles
         @settings = $.extend {}, @settings, {previewStep: true}
 
       @dfd = $.Deferred()
@@ -51,10 +51,14 @@ namespace 'uploadcare', (ns) ->
         .hide()
         .appendTo('body')
       
+      @__initFileGroup()
       @__bind()
       @__prepareTabs()
       @switchTab(tab || @settings.tabs[0])
-      @__setFile currentFile
+
+      unless $.isArray(currentFiles)
+        currentFiles = [currentFiles]
+      @fileGroup.add(file) for file in currentFiles
 
       @__updateFirstTab()
       @content.fadeIn('fast')
@@ -64,19 +68,39 @@ namespace 'uploadcare', (ns) ->
       promise.reject = @dfd.reject
       return promise
 
-    __bind: ->
-      reject = =>
-        @dfd.reject(@currentFile)
+    __initFileGroup: ->
+      @fileGroup = new files.FileGroup(@settings)
+      @fileGroup.onFileAdded.add =>
+        if @settings.previewStep
+          @__showTab 'preview'
+          @switchTab 'preview'
+      @fileGroup.onFileRemoved.add =>
+        if @fileGroup.get().length == 0
+          @__hideTab 'preview'
+      @dfd.fail @fileGroup.cancel
 
+    # TMP
+    __fileForWidget: ->
+      if @settings.multiple
+        @fileGroup.save()
+        @fileGroup.asSingle() 
+      else 
+        @fileGroup.get()[0]
+    __resolve: =>
+      @dfd.resolve @__fileForWidget()
+    __reject: =>
+      @dfd.reject  @__fileForWidget()
+
+    __bind: ->
       isPartOfWindow = (el) ->
         $(el).is('.uploadcare-dialog-panel') or
           $(el).parents('.uploadcare-dialog-panel').size()
 
-      @content.on 'click', (e) ->
-        reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
+      @content.on 'click', (e) =>
+        @__reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
 
-      $(window).on 'keydown', (e) ->
-        reject() if e.which == 27 # Escape
+      $(window).on 'keydown', (e) =>
+        @__reject() if e.which == 27 # Escape
 
       @content.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
         @switchTab $(e.target).data('tab')
@@ -85,33 +109,25 @@ namespace 'uploadcare', (ns) ->
       @tabs = {}
 
       @tabs.preview = @addTab 'preview'
-      @tabs.preview.onDone.add =>
-        @dfd.resolve @currentFile
-      @tabs.preview.onBack.add =>
-        @__setFile null
+      @tabs.preview.setGroup @fileGroup
+      @tabs.preview.onDone.add @__resolve
+      @tabs.preview.onBack.add => @fileGroup.removeAll()
       @__hideTab 'preview'
 
       for tabName in @settings.tabs when tabName not of @tabs
         @tabs[tabName] = @addTab(tabName)
         if @tabs[tabName]
           @tabs[tabName].onSelected.add (fileType, data) =>
-            @__setFile ns.fileFrom(fileType, data, @settings)
+            if @settings.multiple
+              @fileGroup.add(file) for file in ns.filesFrom(fileType, data, @settings)
+            else
+              @fileGroup.removeAll()
+              @fileGroup.add(ns.fileFrom(fileType, data, @settings))
         else
           throw new Error("No such tab: #{tabName}")
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()
-
-    __setFile: (@currentFile) ->
-      if @settings.previewStep
-        if @currentFile
-          @tabs.preview.setFile @currentFile
-          @__showTab 'preview'
-          @switchTab 'preview'
-        else
-          @__hideTab 'preview'
-      else
-        @dfd.resolve(@currentFile) if @currentFile
 
     addTab: (name) ->
       {tabs} = uploadcare.widget

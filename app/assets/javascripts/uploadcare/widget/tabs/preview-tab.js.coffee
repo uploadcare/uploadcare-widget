@@ -23,7 +23,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
       @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
 
-    setFile: (@file) ->
+    setGroup: (fileGroup) ->
+      if @settings.multiple
+        1 # TODO
+      else
+        fileGroup.onFileAdded.add @setFile
+
+    setFile: (@file) =>
       @__setState 'unknown'
       file = @file
       @file
