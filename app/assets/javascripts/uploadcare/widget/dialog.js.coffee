@@ -25,7 +25,7 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (currentFiles, tab, settings) ->
+  ns.__openDialog = (currentFiles, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
@@ -36,6 +36,22 @@ namespace 'uploadcare', (ns) ->
     return currentDialogPr = dialog.publicPromise()
       .always ->
         currentDialogPr = null
+
+  ns.openDialog = (currentFiles, tab, settings) ->
+    settings = utils.buildSettings settings
+    groupToSingle = (group) ->
+      if settings.multiple
+        group.save() # TMP?
+        group.asSingle()
+      else
+        group.get()[0]
+    df = $.Deferred()
+    ns.__openDialog(currentFiles, tab, settings)
+      .done (gr) -> 
+        df.resolve groupToSingle gr
+      .fail (gr) -> 
+        df.reject groupToSingle gr
+    df.promise()
 
   class Dialog
     constructor: (@settings, currentFiles, tab) ->
@@ -79,17 +95,10 @@ namespace 'uploadcare', (ns) ->
           @__hideTab 'preview'
       @dfd.fail @fileGroup.cancel
 
-    # TMP
-    __fileForWidget: ->
-      if @settings.multiple
-        @fileGroup.save()
-        @fileGroup.asSingle() 
-      else 
-        @fileGroup.get()[0]
     __resolve: =>
-      @dfd.resolve @__fileForWidget()
+      @dfd.resolve @fileGroup
     __reject: =>
-      @dfd.reject  @__fileForWidget()
+      @dfd.reject @fileGroup
 
     __bind: ->
       panel = @content.find('.uploadcare-dialog-panel')

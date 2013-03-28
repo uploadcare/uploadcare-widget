@@ -12,7 +12,7 @@ namespace 'uploadcare.files', (ns) ->
       @settings = utils.buildSettings settings
       @__files = []
 
-      @finalized = false
+      @__finalized = false
 
       @onFileAdded = $.Callbacks()
       @onFileRemoved = $.Callbacks()
@@ -26,10 +26,10 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf.done =>
         @__progressState = 'uploaded'
         @__singleFileDf.notify @__progressInfo()
-      @__infoDf.done =>
+      @__infoDf.done (info) =>
         @__progressState = 'ready'
         @__singleFileDf.notify @__progressInfo()
-        @__singleFileDf.resolve @__fileInfo()
+        @__singleFileDf.resolve info
       fail = (err) =>
         @__buildInfo (info) =>
           @__singleFileDf.reject err, info
@@ -38,8 +38,18 @@ namespace 'uploadcare.files', (ns) ->
 
       @__fileProgresses = {}
 
+    # check if two groups contains same files in same order
+    equal: (group) ->
+      filesA = @__files
+      filesB = group.get()
+      return false if filesA.length isnt filesB.length
+      for file, i in filesA
+        return false if file isnt filesB[i]
+      return true 
+
+    # returns copy of @__files
     get: ->
-      file for file in @__files # returns copy of @__files
+      file for file in @__files 
 
     add: (file) ->
       if file
@@ -66,11 +76,11 @@ namespace 'uploadcare.files', (ns) ->
 
     save: ->
       @__finalize()
-      @__uploadDf.done ->
+      @__uploadDf.done =>
         @__createGroup()
           .done (groupInfo) =>
             @__uuid = groupInfo.group_id
-            @__buildInfo (info) ->
+            @__buildInfo (info) =>
               if @settings.imagesOnly && !info.isImage
                 @__infoDf.reject('image', info)
               else
@@ -86,6 +96,9 @@ namespace 'uploadcare.files', (ns) ->
     asSingle: ->
       pr = @__singleFileDf.promise()
       pr.cancel = @cancel
+      pr
+
+    isFinalized: -> @__finalized
 
     __progressInfo: ->
       progress = 0
@@ -97,26 +110,26 @@ namespace 'uploadcare.files', (ns) ->
 
     __fileInfos: (cb) ->
       files = for file in @__files
-        file.when null, (err, info) -> $.when(info)
+        file.then null, (err, info) -> $.when(info)
       $.when(files...).done cb
 
     __buildInfo: (cb) ->
       info = 
         fileId: @__uuid
-        fileName: @__files.length + ' files' #FIXME
-        fileSize: 0
+        name: @__files.length + ' files' #FIXME
+        size: 0
         isImage: true
         isStored: true
       @__fileInfos (infos...) ->
-        for info in infos
-          info.fileSize += info.fileSize
-          info.isImage = false if !info.isImage
-          info.isStored = false if !info.isStored
+        for _info in infos
+          info.size += _info.size
+          info.isImage = false if !_info.isImage
+          info.isStored = false if !_info.isStored
         cb(info)
 
     __finalize: ->
-      unless @finalized
-        @finalized = true
+      unless @__finalized
+        @__finalized = true
         @add = @remove = ->
           throw new Error("group can't be changed after save")
         $.when(@__files...)
