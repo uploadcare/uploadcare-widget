@@ -19,12 +19,17 @@ namespace 'uploadcare.files', (ns) ->
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
-      @__promise = null
       @__progressState = 'uploading'
       @__progress = 0
 
-      @__uploadDf.fail (error) =>
-        @__infoDf.reject(error, this)
+      @__uploadDf
+        .fail (error) =>
+          @__infoDf.reject(error, this)
+        .done =>
+          @__requestInfo()
+
+      @__initApi()
+      @__notifyApi()
 
     __startUpload: -> throw new Error('not implemented')
 
@@ -63,6 +68,7 @@ namespace 'uploadcare.files', (ns) ->
       state: @__progressState
       uploadProgress: @__progress
       progress: if @__progressState == 'ready' then 1 else @__progress * 0.9
+      incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
       uuid: @fileId
@@ -79,11 +85,6 @@ namespace 'uploadcare.files', (ns) ->
 
     __extendPromise: (p) =>
       p.cancel = @__cancel
-      p.current = @__fileInfo
-
-      __progress = p.progress
-      p.progress = (fns) =>
-        __progress.call(p, fns)
 
       __pipe = p.pipe
       p.pipe = => @__extendPromise __pipe.apply(p, arguments)
@@ -93,25 +94,36 @@ namespace 'uploadcare.files', (ns) ->
 
       p # extended promise
 
-    promise: ->
-      return @__promise if @__promise?
-      df = $.Deferred()
-      @__promise = @__extendPromise df.promise()
+    __notifyApi: =>
+      @apiDeferred.notify @__progressInfo()
+
+    __rejectApi: (err) =>
+      @apiDeferred.reject err, @__fileInfo()
+
+    __resolveApi: =>
+      @apiDeferred.resolve @__fileInfo()
+
+    __initApi: ->
+      @apiDeferred = $.Deferred()
+      @apiPromise = @__extendPromise @apiDeferred.promise()
 
       @__uploadDf.progress (progress) =>
         @__progress = progress
-        df.notify @__progressInfo()
+        @__notifyApi()
       @__uploadDf.done =>
         @__progressState = 'uploaded'
         @__progress = 1
-        df.notify @__progressInfo()
-        @__requestInfo()
+        @__notifyApi()
       @__infoDf.done =>
         @__progressState = 'ready'
-        df.notify @__progressInfo()
-        df.resolve @__fileInfo()
-      @__infoDf.fail (err) => df.reject err, @__fileInfo()
-      @__uploadDf.fail (err) => df.reject err, @__fileInfo()
+        @__notifyApi()
+        @__resolveApi()
+      @__infoDf.fail @__rejectApi
+      @__uploadDf.fail @__rejectApi
 
-      @__startUpload()
-      @__promise
+    promise: ->
+      unless @__uploadStarted
+        @__uploadStarted = true
+        @__startUpload()
+      @apiPromise
+      
