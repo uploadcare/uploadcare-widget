@@ -1,3 +1,5 @@
+# = require ./preview-tab-multiple
+
 {
   namespace,
   utils,
@@ -25,7 +27,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     setGroup: (fileGroup) ->
       if @settings.multiple
-        1 # TODO
+        new ns.GroupView(@content, fileGroup)
       else
         fileGroup.onFileAdded.add @setFile
 
