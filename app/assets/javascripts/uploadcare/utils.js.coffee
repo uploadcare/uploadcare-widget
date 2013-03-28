@@ -158,3 +158,8 @@ namespace 'uploadcare.utils', (ns) ->
     if URL
       return URL.createObjectURL(object)
     return null
+
+  ns.inDom = (el) ->
+    if el.jquery
+      el = el.get(0)
+    $.contains(document.documentElement, el)

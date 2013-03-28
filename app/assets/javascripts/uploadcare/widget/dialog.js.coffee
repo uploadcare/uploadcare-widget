@@ -92,12 +92,13 @@ namespace 'uploadcare', (ns) ->
       @dfd.reject  @__fileForWidget()
 
     __bind: ->
+      panel = @content.find('.uploadcare-dialog-panel')
+
       isPartOfWindow = (el) ->
-        $(el).is('.uploadcare-dialog-panel') or
-          $(el).parents('.uploadcare-dialog-panel').size()
+        $(el).is(panel) or $.contains(panel.get(0), el)
 
       @content.on 'click', (e) =>
-        @__reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
+        @__reject() unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
 
       $(window).on 'keydown', (e) =>
         @__reject() if e.which == 27 # Escape
