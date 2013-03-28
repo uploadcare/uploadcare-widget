@@ -14,7 +14,6 @@
 
 namespace 'uploadcare', (ns) ->
 
-  # backwards compatibility
   ns.fileFrom = (type, data, settings) ->
     converters[type](settings, data)[0].promise()
 
