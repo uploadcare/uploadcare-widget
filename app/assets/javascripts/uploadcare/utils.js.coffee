@@ -69,6 +69,9 @@ namespace 'uploadcare.utils', (ns) ->
       preferedSize: null
     }
 
+    if settings.multiple
+      settings.crop = 'disabled'
+
     # disabled 300x200 → disabled
     # 300x200 3:2 → 3:2
     # 300x200 UPscale abc → 300x200 upscale
