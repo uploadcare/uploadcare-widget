@@ -27,9 +27,11 @@ window.onload = function() {
     var widgets = uploadcare.initialize();
     for (var i = 0; i < widgets.length; i++) {
       widgets[i].onChange.add(function(file) {
-        file.done(function(info) {
-          log('change: ' + (info ? info.uuid : '(empty)') + '');
-        });
+        if (file) {
+          file.done(function(info) {
+            log('change: ' + (info ? info.uuid : '(empty)') + '');
+          });
+        }
       });
     }
   });
