@@ -1,4 +1,5 @@
 // = require_self
+// = require jquery
 // = require uploadcare/widget
 
 UPLOADCARE_PUBLIC_KEY = 'demopublickey';

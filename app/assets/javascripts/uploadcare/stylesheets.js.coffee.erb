@@ -1,13 +1,12 @@
-uploadcare.jQuery ->  
-  {jQuery: $} = uploadcare
-  {tpl} = uploadcare.templates
+{jQuery: $} = uploadcare
+{tpl} = uploadcare.templates
 
-  css = tpl('styles')
+css = tpl('styles')
 
-  style = document.createElement('style')
-  style.setAttribute('type', 'text/css')
-  if style.styleSheet?
-    style.styleSheet.cssText = css
-  else
-    style.appendChild(document.createTextNode(css))
-  $('head').append(style)
+style = document.createElement('style')
+style.setAttribute('type', 'text/css')
+if style.styleSheet?
+  style.styleSheet.cssText = css
+else
+  style.appendChild(document.createTextNode(css))
+$('head').append(style)

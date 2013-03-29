@@ -1,0 +1,15 @@
+
+<div id="hidden-div" style="display:none">
+  <input type="hidden" role="uploadcare-uploader" />
+</div>
+
+<button onclick="$('#hidden-div').show()">show</button>
+
+<hr>
+
+use uploadcare.Widget() before document ready:
+
+<input type="hidden" id="init-before-document-ready" role="uploadcare-uploader" />
+<script>
+  uploadcare.Widget('#init-before-document-ready')
+</script>
