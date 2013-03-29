@@ -71,15 +71,15 @@ namespace 'uploadcare.utils', (ns) ->
       else
         settings[key] = !!settings[key]
 
+    if settings.multiple
+      settings.crop = 'disabled'
+
     settings.__cropParsed = {
       enabled: true
       scale: false
       upscale: false
       preferedSize: null
     }
-
-    if settings.multiple
-      settings.crop = 'disabled'
 
     # disabled 300x200 → disabled
     # 300x200 3:2 → 3:2
