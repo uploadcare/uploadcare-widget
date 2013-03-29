@@ -42,9 +42,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
-      data = $.extend {file: @file.current()}, data
-      @content.empty().append tpl("tab-preview-#{state}", data)
-      @__afterRender state
+      @file.progress utils.once (progressInfo) =>
+        data = $.extend {file: progressInfo.incompleteFileInfo}, data
+        @content.empty().append tpl("tab-preview-#{state}", data)
+        @__afterRender state
 
     __afterRender: (state) ->
       if state is 'unknown'
