@@ -15,6 +15,7 @@ namespace 'uploadcare.files', (ns) ->
       @fileSize = @__file.size
       @fileName = @__file.name
       @previewUrl = utils.createObjectUrl @__file
+      @__notifyApi()
 
     __startUpload: ->
       targetUrl = "#{@settings.urlBase}/iframe/"
