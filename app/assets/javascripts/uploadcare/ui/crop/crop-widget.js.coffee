@@ -100,11 +100,21 @@ namespace 'uploadcare.crop', (ns) ->
           size = "#{coords.w}x#{coords.h}"
           topLeft = "#{coords.x},#{coords.y}"
           modifiers = "-/crop/#{size}/#{topLeft}/"
+
+          opts =
+            crop: $.extend({}, coords)
+            modifiers: modifiers
+
           if @__options.scale
-            pWidth = @__options.preferedSize.split('x')[0]
-            if coords.w > pWidth or @__options.upscale
+            scale = @__options.preferedSize.split('x')
+            sw = scale[0] - 0 if scale[0]
+            sh = scale[1] - 0 if scale[1]
+            if coords.w > sw or @__options.upscale
+              opts.crop.sw = sw
+              opts.crop.sh = sh
               modifiers += "-/resize/#{@__options.preferedSize}/"
-          modifiers
+
+          opts
 
     croppedImageCoords: (originalUrl, previousCoords) ->
       @__clearImage()

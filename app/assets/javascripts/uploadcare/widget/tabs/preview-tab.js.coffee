@@ -71,10 +71,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         prefix = if @settings.pathValue then '' else @settings.cdnBase
         @file.done (info) =>
           widget.croppedImageModifiers(img.attr('src'), info.cdnUrlModifiers)
-            .done (modifiers) =>
+            .done (opts) =>
               @file = @file.then (info) =>
-                info.cdnUrlModifiers = modifiers
-                info.cdnUrl = "#{prefix}/#{info.uuid}/#{modifiers or ''}"
+                info.cdnUrlModifiers = opts.modifiers
+                info.cdnUrl = "#{prefix}/#{info.uuid}/#{opts.modifiers or ''}"
+                info.crop = opts.crop
                 info
         doneButton.addClass('uploadcare-disabled-el')
         widget.onStateChange.add (state) => 
