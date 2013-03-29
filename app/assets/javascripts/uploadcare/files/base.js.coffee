@@ -71,12 +71,15 @@ namespace 'uploadcare.files', (ns) ->
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
+      cdnUrlPrefix = if @settings.pathValue then '' else @settings.cdnBase
+      @cdnUrl ||= "/#{@fileId}/#{@cdnUrlModifiers or ''}"
+
       uuid: @fileId
       name: @fileName
       size: @fileSize
       isStored: @isStored
       isImage: @isImage
-      cdnUrl: "#{if @settings.pathValue then '' else @settings.cdnBase}#{@cdnUrl}"
+      cdnUrl: "#{cdnUrlPrefix}#{@cdnUrl}"
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
 
