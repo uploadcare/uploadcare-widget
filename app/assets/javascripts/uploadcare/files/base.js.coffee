@@ -77,9 +77,65 @@ namespace 'uploadcare.files', (ns) ->
     __cancel: =>
       @__uploadDf.reject('user', this)
 
+    __preview: (p, selector) =>
+      p.done (info) =>
+        return $(selector).empty() unless info.isImage
+
+        img = new Image()
+        img.src = @previewUrl
+        img.onload = ->
+          opts =
+            x: 0
+            y: 0
+            w: img.width
+            h: img.height
+            cw: img.width
+            ch: img.height
+
+          modifiers = info.cdnUrlModifiers.split('-/').slice(1)
+          for modifier in modifiers
+            parts = modifier.split('/')
+            switch parts[0]
+              when 'resize'
+                dims = parts[1].split('x')
+                dims[0] = dims[1] * opts.w / opts.h unless dims[0]
+                dims[1] = dims[0] * opts.h / opts.w unless dims[1]
+                opts.w *= dims[0] / opts.cw
+                opts.h *= dims[1] / opts.ch
+              when 'crop'
+                # -/crop/118x113/
+                # -/crop/118x113/53,47/
+                # -/crop/118x113/center/
+                pt = switch parts[2]
+                  when 'center'
+                    [(opts.cw - dims[0]) / 2, (opts.ch - dims[1]) / 2]
+                  when '' then [0, 0]
+                  else parts[2].split(',')
+                opts.x += (pt[0] - 0)
+                opts.y += (pt[1] - 0)
+
+                dims = parts[1].split('x')
+                opts.cw = (dims[0] - 0)
+                opts.ch = (dims[1] - 0)
+
+          el = $('<div>').css({
+            position: 'relative'
+            overflow: 'hidden'
+            width: opts.cw
+            height: opts.ch
+          }).append($(img).css({
+            position: 'absolute'
+            left: -opts.x
+            top: -opts.y
+            width: opts.w
+            height: opts.h
+          }))
+          $(selector).html(el)
+
     __extendPromise: (p) =>
       p.cancel = @__cancel
       p.current = @__fileInfo
+      p.preview = (selector) => @__preview(p, selector)
 
       __progress = p.progress
       p.progress = (fns) =>
