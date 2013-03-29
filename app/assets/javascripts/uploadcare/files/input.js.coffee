@@ -10,6 +10,7 @@ namespace 'uploadcare.files', (ns) ->
       super
       @fileId = utils.uuid()
       @fileName = $(@__input).val().split('\\').pop()
+      @__notifyApi()
 
     __startUpload: ->
       targetUrl = "#{@settings.urlBase}/iframe/"

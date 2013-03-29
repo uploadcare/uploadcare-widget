@@ -10,6 +10,15 @@ namespace 'uploadcare.utils', (ns) ->
   ns.defer = (fn) ->
     setTimeout fn, 0
 
+  ns.once = (fn) ->
+    called = false
+    result = null
+    ->
+      unless called
+        result = fn.apply(this, arguments)
+        called = true
+      result
+
   ns.bindAll = (source, methods) ->
     target = {}
     for method in methods

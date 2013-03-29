@@ -21,6 +21,7 @@ namespace 'uploadcare.files', (ns) ->
       @__tmpFinalPreviewUrl = @__url
 
       @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
+      @__notifyApi()
 
     __startUpload: ->
 
