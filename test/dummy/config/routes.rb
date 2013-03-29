@@ -10,6 +10,7 @@ Dummy::Application.routes.draw do
   get "welcome/with_value"
   get "welcome/preview_step"
   get "welcome/ui"
+  get "welcome/in_hidden_el"
 
 
   # The priority is based upon order of creation:
