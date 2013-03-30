@@ -70,19 +70,6 @@ namespace 'uploadcare.crop', (ns) ->
       checkOptions @__options
       @onStateChange = $.Callbacks()
       @__buildWidget()
-      
-    # Example:
-    #   cropWidget = new CropWidget( ... )
-    #   cropWidget.croppedImageUrl(originalUrl)
-    #     .done (url) ->
-    #       # ...
-    #     .fail (error) ->
-    #       # ...
-    croppedImageUrl: (originalUrl) ->
-      #TODO: add currentUrl argument, 
-      #      or split URL to originalUrl and currentModifiers
-      @croppedImageModifiers(originalUrl)
-        .pipe (modifiers) => @__url + modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
