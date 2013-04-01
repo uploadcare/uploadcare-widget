@@ -8,7 +8,7 @@ namespace 'uploadcare.files', (ns) ->
 
   class ns.FileGroup
 
-    constructor: (settings) ->
+    constructor: (settings, files) ->
       @settings = utils.buildSettings settings
       @__files = []
 
@@ -20,23 +20,10 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
 
-      # asSingle() stuff
-      @__singleFileDf = $.Deferred()
-      @__progressState = 'uploading'
-      @__uploadDf.done =>
-        @__progressState = 'uploaded'
-        @__singleFileDf.notify @__progressInfo()
-      @__infoDf.done (info) =>
-        @__progressState = 'ready'
-        @__singleFileDf.notify @__progressInfo()
-        @__singleFileDf.resolve info
-      fail = (err) =>
-        @__buildInfo (info) =>
-          @__singleFileDf.reject err, info
-      @__infoDf.fail fail
-      @__uploadDf.fail fail
+      @__initAsSingle()
 
-      @__fileProgresses = {}
+      if files
+        @add(file) for file in files
 
     # check if two groups contains same files in same order
     equal: (group) ->
@@ -55,7 +42,7 @@ namespace 'uploadcare.files', (ns) ->
       if file
         @__files.push file
         file.progress (progressInfo) =>
-          @__fileProgresses[file] = progressInfo.progress
+          $(file).data('progress', progressInfo.progress)
           @__singleFileDf.notify @__progressInfo()
         @onFileAdded.fire file
 
@@ -75,18 +62,19 @@ namespace 'uploadcare.files', (ns) ->
         @onFileRemoved.fire file
 
     save: ->
-      @__finalize()
-      @__uploadDf.done =>
-        @__createGroup()
-          .done (groupInfo) =>
-            @__uuid = groupInfo.group_id
-            @__buildInfo (info) =>
-              if @settings.imagesOnly && !info.isImage
-                @__infoDf.reject('image', info)
-              else
-                @__infoDf.resolve(info)
-          .fail =>
-            @__infoDf.reject('info')
+      unless @__finalized
+        @__finalize()
+        @__uploadDf.done =>
+          @__createGroup()
+            .done (groupInfo) =>
+              @__uuid = groupInfo.group_id
+              @__buildInfo (info) =>
+                if @settings.imagesOnly && !info.isImage
+                  @__infoDf.reject('image', info)
+                else
+                  @__infoDf.resolve(info)
+            .fail =>
+              @__infoDf.reject('info')
 
     cancel: =>
       @__finalize()
@@ -100,10 +88,26 @@ namespace 'uploadcare.files', (ns) ->
 
     isFinalized: -> @__finalized
 
+    __initAsSingle: ->
+      @__singleFileDf = $.Deferred()
+      @__progressState = 'uploading'
+      @__uploadDf.done =>
+        @__progressState = 'uploaded'
+        @__singleFileDf.notify @__progressInfo()
+      @__infoDf.done (info) =>
+        @__progressState = 'ready'
+        @__singleFileDf.notify @__progressInfo()
+        @__singleFileDf.resolve info
+      fail = (err) =>
+        @__buildInfo (info) =>
+          @__singleFileDf.reject err, info
+      @__infoDf.fail fail
+      @__uploadDf.fail fail
+
     __progressInfo: ->
       progress = 0
       for file in @__files
-        progress += (@__fileProgresses[file] or 0) / @__files.length
+        progress += ($(file).data('progress') or 0) / @__files.length
       state: @__progressState
       uploadProgress: progress
       progress: if @__progressState == 'ready' then 1 else progress * 0.9
