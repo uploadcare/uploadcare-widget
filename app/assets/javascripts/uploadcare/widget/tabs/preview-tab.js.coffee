@@ -77,11 +77,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           container
           controls: false
         })
-        prefix = if @settings.pathValue then '' else @settings.cdnBase
         @file.done (info) =>
           widget.croppedImageModifiers(img.attr('src'), info.cdnUrlModifiers)
             .done (modifiers) =>
               @file = @file.then (info) =>
+                prefix = @settings.cdnBase
                 info.cdnUrlModifiers = modifiers
                 info.cdnUrl = "#{prefix}/#{info.uuid}/#{modifiers or ''}"
                 info
