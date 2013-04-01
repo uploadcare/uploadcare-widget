@@ -19,4 +19,4 @@ uploadcare.defaults =
 
   previewStep: if window.UPLOADCARE_PREVIEW_STEP? then window.UPLOADCARE_PREVIEW_STEP else false
 
-  pathValue: false
+  pathValue: window.UPLOADCARE_PATH_VALUE
