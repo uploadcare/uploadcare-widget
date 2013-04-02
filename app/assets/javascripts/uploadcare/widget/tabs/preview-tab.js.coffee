@@ -25,11 +25,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
       @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
 
-    setGroup: (fileGroup) ->
+    setFiles: (filesColl) ->
       if @settings.multiple
-        new ns.GroupView(@content, fileGroup)
+        new ns.GroupView(@content, filesColl)
       else
-        fileGroup.onFileAdded.add @setFile
+        filesColl.onAdd.add @setFile
 
     setFile: (@file) =>
       @__setState 'unknown'

@@ -15,11 +15,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # dmp — abbreviation of dialog-preview-multiple
     PREFIX = '@uploadcare-dmp-'
 
-    constructor: (@container, @fileGroup) ->
+    constructor: (@container, @fileColl) ->
       @container.append tpl('tab-preview-multiple')
       @fileListEl = @container.find(PREFIX + 'file-list')
-      @fileGroup.onFileAdded.add @__addFile
-      @fileGroup.onFileRemoved.add @__removeFile
+      @__addFile(file) for file in @fileColl.get()
+      @fileColl.onAdd.add @__addFile
+      @fileColl.onRemove.add @__removeFile
 
     __addFile: (file) =>
       @__createFileEl(file)
@@ -37,8 +38,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl.data {file}
       @fileListEl.append fileEl
       fileEl.find(PREFIX + 'file-remove').click =>
-        @fileGroup.remove(file)
+        @fileColl.remove(file)
       file.progress (progressInfo) -> 
         # TODO
-
-

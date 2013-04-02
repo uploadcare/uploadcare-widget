@@ -25,38 +25,34 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.__openDialog = (currentFiles, tab, settings) ->
+  ns.__openDialog = (files, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
 
     ns.closeDialog()
     settings = utils.buildSettings settings
-    dialog = new Dialog(settings, currentFiles, tab)
+    dialog = new Dialog(settings, files, tab)
     return currentDialogPr = dialog.publicPromise()
       .always ->
         currentDialogPr = null
 
-  ns.openDialog = (currentFiles, tab, settings) ->
-    settings = utils.buildSettings settings
-    groupToSingle = (group) ->
-      if settings.multiple
-        group.save() # TMP?
-        group.asSingle()
-      else
-        group.get()[0]
-    df = $.Deferred()
-    ns.__openDialog(currentFiles, tab, settings)
-      .done (gr) -> 
-        df.resolve groupToSingle gr
-      .fail (gr) -> 
-        df.reject groupToSingle gr
-    df.promise()
+  ns.openDialog = (file, tab, settings) ->
+    first = (arr) -> arr[0]
+    dialog = ns.__openDialog(file, tab, settings)
+    dialog2 = utils.then(dialog, first, first)
+    dialog2.reject = dialog.reject
+    dialog2
 
   class Dialog
-    constructor: (@settings, currentFiles, tab) ->
+    constructor: (@settings, files, tab) ->
 
-      if currentFiles
+      if files and not $.isArray(files)
+        files = [files]
+      else
+        files = []
+
+      if files.length
         @settings = $.extend {}, @settings, {previewStep: true}
 
       @dfd = $.Deferred()
@@ -67,16 +63,23 @@ namespace 'uploadcare', (ns) ->
         .hide()
         .appendTo('body')
       
-      @__initFileGroup()
+      @files = new utils.Collection()
+      @files.onAdd.add =>
+        if @settings.previewStep
+          @__showTab 'preview'
+          @switchTab 'preview'
+      @files.onRemove.add =>
+        if @files.length() == 0
+          @__hideTab 'preview'
+
       @__bind()
       @__prepareTabs()
       @switchTab(tab || @settings.tabs[0])
-
-      unless $.isArray(currentFiles)
-        currentFiles = [currentFiles]
-      @fileGroup.add(file) for file in currentFiles
+      
+      @files.add(file) for file in files
 
       @__updateFirstTab()
+
       @content.fadeIn('fast')
 
     publicPromise: ->
@@ -84,21 +87,11 @@ namespace 'uploadcare', (ns) ->
       promise.reject = @dfd.reject
       return promise
 
-    __initFileGroup: ->
-      @fileGroup = new files.FileGroup(@settings)
-      @fileGroup.onFileAdded.add =>
-        if @settings.previewStep
-          @__showTab 'preview'
-          @switchTab 'preview'
-      @fileGroup.onFileRemoved.add =>
-        if @fileGroup.get().length == 0
-          @__hideTab 'preview'
-      @dfd.fail @fileGroup.cancel
-
     __resolve: =>
-      @dfd.resolve @fileGroup
+      @dfd.resolve @files.get()
+
     __reject: =>
-      @dfd.reject @fileGroup
+      @dfd.reject @files.get()
 
     __bind: ->
       panel = @content.find('.uploadcare-dialog-panel')
@@ -119,9 +112,9 @@ namespace 'uploadcare', (ns) ->
       @tabs = {}
 
       @tabs.preview = @addTab 'preview'
-      @tabs.preview.setGroup @fileGroup
+      @tabs.preview.setFiles @files
       @tabs.preview.onDone.add @__resolve
-      @tabs.preview.onBack.add => @fileGroup.removeAll()
+      @tabs.preview.onBack.add => @files.clear()
       @__hideTab 'preview'
 
       for tabName in @settings.tabs when tabName not of @tabs
@@ -129,10 +122,10 @@ namespace 'uploadcare', (ns) ->
         if @tabs[tabName]
           @tabs[tabName].onSelected.add (fileType, data) =>
             if @settings.multiple
-              @fileGroup.add(file) for file in ns.filesFrom(fileType, data, @settings)
+              @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
             else
-              @fileGroup.removeAll()
-              @fileGroup.add(ns.fileFrom(fileType, data, @settings))
+              @files.clear()
+              @files.add(ns.fileFrom(fileType, data, @settings))
         else
           throw new Error("No such tab: #{tabName}")
 

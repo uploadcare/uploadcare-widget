@@ -1,5 +1,6 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pubsub
+# = require uploadcare/utils/collection
 
 {
   namespace,
@@ -18,6 +19,29 @@ namespace 'uploadcare.utils', (ns) ->
         result = fn.apply(this, arguments)
         called = true
       result
+
+  ns.remove = (array, item) ->
+    if (index = array.indexOf(item)) isnt -1
+      array.splice(index, 1)
+      true
+    else
+      false
+
+  # same as promise.then(), but if filter returns promise
+  # it will be just passed forward without any special behaviors
+  ns.then = (pr, doneFilter, failFilter, progressFilter) ->
+    df = $.Deferred()
+    compose = (fn1, fn2) ->
+      if fn1 and fn2
+        -> fn2.call(this, fn1.apply(this, arguments))
+      else
+        fn1 or fn2
+    pr.then(
+      compose(doneFilter, df.resolve), 
+      compose(failFilter, df.reject), 
+      compose(progressFilter, df.notify)
+    )
+    df.promise()
 
   ns.bindAll = (source, methods) ->
     target = {}
