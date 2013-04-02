@@ -12,11 +12,10 @@ uploadcare.defaults =
 
   live: if window.UPLOADCARE_LIVE? then window.UPLOADCARE_LIVE else true
   tabs: window.UPLOADCARE_TABS or 'file url facebook dropbox gdrive instagram'
-  multiple: if window.UPLOADCARE_MULTIPLE? then window.UPLOADCARE_MULTIPLE else false
-  imagesOnly: if window.UPLOADCARE_IMAGES_ONLY? then window.UPLOADCARE_IMAGES_ONLY else false
 
   crop: if window.UPLOADCARE_CROP? then window.UPLOADCARE_CROP else 'disabled'
 
-  previewStep: if window.UPLOADCARE_PREVIEW_STEP? then window.UPLOADCARE_PREVIEW_STEP else false
-
-  pathValue: window.UPLOADCARE_PATH_VALUE
+  multiple: !!window.UPLOADCARE_MULTIPLE
+  previewStep: !!window.UPLOADCARE_PREVIEW_STEP 
+  imagesOnly: !!window.UPLOADCARE_IMAGES_ONLY
+  pathValue: !!window.UPLOADCARE_PATH_VALUE

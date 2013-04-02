@@ -19,6 +19,7 @@ It can do everything from drag-and-drop to selecting photos from various social 
 Draggable:<br>
 <img src="https://secure.gravatar.com/avatar/afec5e3f528823759c4b1eb2d26bc0a2" alt="" />
 </p>
+<div id="last-result"></div>
 <ul id="events"></ul>
 <script>
 window.onload = function() {
@@ -32,9 +33,13 @@ window.onload = function() {
     for (var i = 0; i < widgets.length; i++) {
       widgets[i].onChange.add(function(file) {
         if (file) {
+          file.preview('#last-result');
           file.done(function(info) {
-            log('change: ' + (info ? info.uuid : '(empty)') + '');
+            log('change: ' + info.uuid);
           });
+        } else {
+          $('#last-result').empty();
+          log('change: (empty)');
         }
       });
     }

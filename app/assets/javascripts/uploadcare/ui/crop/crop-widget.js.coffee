@@ -70,19 +70,10 @@ namespace 'uploadcare.crop', (ns) ->
       checkOptions @__options
       @onStateChange = $.Callbacks()
       @__buildWidget()
-      
-    # Example:
-    #   cropWidget = new CropWidget( ... )
-    #   cropWidget.croppedImageUrl(originalUrl)
-    #     .done (url) ->
-    #       # ...
-    #     .fail (error) ->
-    #       # ...
+
     croppedImageUrl: (originalUrl) ->
-      #TODO: add currentUrl argument, 
-      #      or split URL to originalUrl and currentModifiers
       @croppedImageModifiers(originalUrl)
-        .pipe (modifiers) => @__url + modifiers
+        .pipe (opts) => @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
@@ -100,11 +91,21 @@ namespace 'uploadcare.crop', (ns) ->
           size = "#{coords.w}x#{coords.h}"
           topLeft = "#{coords.x},#{coords.y}"
           modifiers = "-/crop/#{size}/#{topLeft}/"
+
+          opts =
+            crop: $.extend({}, coords)
+            modifiers: modifiers
+
           if @__options.scale
-            pWidth = @__options.preferedSize.split('x')[0]
-            if coords.w > pWidth or @__options.upscale
+            scale = @__options.preferedSize.split('x')
+            sw = scale[0] - 0 if scale[0]
+            sh = scale[1] - 0 if scale[1]
+            if coords.w > sw or @__options.upscale
+              opts.crop.sw = sw
+              opts.crop.sh = sh
               modifiers += "-/resize/#{@__options.preferedSize}/"
-          modifiers
+
+          opts
 
     croppedImageCoords: (originalUrl, previousCoords) ->
       @__clearImage()

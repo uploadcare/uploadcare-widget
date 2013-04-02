@@ -98,6 +98,9 @@ namespace 'uploadcare.utils', (ns) ->
     if settings.multiple
       settings.crop = 'disabled'
 
+    if settings.multiple
+      settings.crop = 'disabled'
+
     settings.__cropParsed = {
       enabled: true
       scale: false
@@ -110,7 +113,7 @@ namespace 'uploadcare.utils', (ns) ->
     # 300x200 UPscale abc → 300x200 upscale
     # upscale → ""
     crop = '' + settings.crop
-    if crop.match /disabled/i
+    if crop.match /(disabled|false)/i
       crop = 'disabled'
       settings.__cropParsed.enabled = false
     else if ratio = crop.match /[0-9]+\:[0-9]+/
