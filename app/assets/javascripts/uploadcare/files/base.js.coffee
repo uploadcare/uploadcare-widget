@@ -83,8 +83,42 @@ namespace 'uploadcare.files', (ns) ->
     __cancel: =>
       @__uploadDf.reject('user', this)
 
+    __preview: (p, selector) =>
+      p.done (info) =>
+        return $(selector).empty() unless info.crop
+
+        opts = info.crop
+
+        img = new Image()
+        img.src = @previewUrl
+        img.onload = ->
+          if opts.sw || opts.sh # Resized?
+            sw = opts.sw || opts.sh * opts.w / opts.h
+            sh = opts.sh || opts.sw * opts.h / opts.w
+          else
+            sw = opts.w
+            sh = opts.h
+
+          sx = sw / opts.w
+          sy = sh / opts.h
+
+          el = $('<div>').css({
+            position: 'relative'
+            overflow: 'hidden'
+            width: sw
+            height: sh
+          }).append($(img).css({
+            position: 'absolute'
+            left: opts.x * -sx
+            top: opts.y * -sy
+            width: img.width * sx
+            height: img.height * sy
+          }))
+          $(selector).html(el)
+
     __extendPromise: (p) =>
       p.cancel = @__cancel
+      p.preview = (selector) => @__preview(p, selector)
 
       __pipe = p.pipe
       p.pipe = => @__extendPromise __pipe.apply(p, arguments)
