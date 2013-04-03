@@ -130,7 +130,10 @@ namespace 'uploadcare.widget', (ns) ->
 
     __openDialogWithFile: (type, data) =>
       file = uploadcare.fileFrom(type, data, @settings)
-      uploadcare.openDialog(file, @settings).done(@__setFile)
+      if @settings.previewStep
+        uploadcare.openDialog(file, @settings).done(@__setFile)
+      else
+        @__setFile file
 
     openDialog: (tab) ->
       uploadcare.openDialog(@currentFile, tab, @settings)
