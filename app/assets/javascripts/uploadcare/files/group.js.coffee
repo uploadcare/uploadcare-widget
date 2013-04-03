@@ -8,20 +8,25 @@ namespace 'uploadcare.files', (ns) ->
 
   class ns.FileGroup
 
-    constructor: (@__files, settings) ->
+    constructor: (files, settings) ->
       @settings = utils.buildSettings settings
+      @__files = (file for file in files when file)
+
       @__createGroupDf = $.Deferred()
       @__initAsSingle()
       @__save()
 
     # check if two groups contains same files in same order
     equal: (group) ->
-      filesA = @__files
-      filesB = group.files()
-      return false if filesA.length isnt filesB.length
-      for file, i in filesA
-        return false if file isnt filesB[i]
-      return true 
+      if group
+        filesA = @__files
+        filesB = group.files()
+        return false if filesA.length isnt filesB.length
+        for file, i in filesA
+          return false if file isnt filesB[i]
+        return true 
+      else
+        return false
 
     # returns copy of @__files
     files: ->
@@ -38,7 +43,7 @@ namespace 'uploadcare.files', (ns) ->
     __save: ->
       unless @__saved
         @__saved = true
-        @__uploadDf.done =>
+        $.when(@__files...).done =>
           @__createGroup()
             .done (groupInfo) =>
               @__uuid = groupInfo.group_id

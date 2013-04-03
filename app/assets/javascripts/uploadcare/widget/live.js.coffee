@@ -1,4 +1,5 @@
 {
+  utils,
   jQuery: $
 } = uploadcare
 
@@ -18,7 +19,11 @@ initializeWidget = (el) ->
   widget = el.data(dataAttr)
   if !widget || el[0] != widget.element[0]
     cleanup(el)
-    widget = new uploadcare.widget.Widget(el)
+    settings = utils.buildSettings el.data()
+    if settings.multiple
+      widget = new uploadcare.widget.MultipleWidget(el)
+    else
+      widget = new uploadcare.widget.Widget(el)
     el.data(dataAttr, widget)
     widget.template.content.data(dataAttr, widget.template)
 

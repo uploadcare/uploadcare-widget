@@ -28,7 +28,7 @@ namespace 'uploadcare.utils', (ns) ->
       false
 
   # same as promise.then(), but if filter returns promise
-  # it will be just passed forward without any special behaviors
+  # it will be just passed forward without any special behavior
   ns.then = (pr, doneFilter, failFilter, progressFilter) ->
     df = $.Deferred()
     compose = (fn1, fn2) ->
@@ -72,6 +72,9 @@ namespace 'uploadcare.utils', (ns) ->
   ns.normalizeUrl = (url) ->
     url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
     url.replace(/\/+$/, '')
+
+  ns.extractSettings = (el) ->
+    ns.buildSettings $(el).data()
 
   ns.buildSettings = (settings) ->
     settings = $.extend({}, uploadcare.defaults, settings or {})

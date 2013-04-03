@@ -5,10 +5,9 @@
   jQuery: $,
   utils,
   ui: {progress},
+  locale: {t},
+  templates: {tpl}
 } = uploadcare
-
-{t} = uploadcare.locale
-{tpl} = uploadcare.templates
 
 namespace 'uploadcare.widget', (ns) ->
   class ns.Template

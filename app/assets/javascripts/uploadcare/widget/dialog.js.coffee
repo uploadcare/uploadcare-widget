@@ -8,12 +8,10 @@
 {
   namespace,
   utils,
-  files,
+  locale: {t},
+  templates: {tpl},
   jQuery: $
 } = uploadcare
-
-{t} = uploadcare.locale
-{tpl} = uploadcare.templates
 
 namespace 'uploadcare', (ns) ->
 
@@ -25,30 +23,45 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.__openDialog = (files, tab, settings) ->
+  # files - null, or File object, or array of File objects, or FileGroup object
+  # result - File objects or FileGroup object (depends on settings.multiple)
+  ns.openDialog = (files, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
 
     ns.closeDialog()
+
+    if files?.asSingle # FileGroup
+      files = files.files()
+
     settings = utils.buildSettings settings
     dialog = new Dialog(settings, files, tab)
-    return currentDialogPr = dialog.publicPromise()
+
+    currentDialogPr = dialog.publicPromise()
       .always ->
         currentDialogPr = null
 
-  ns.openDialog = (file, tab, settings) ->
-    first = (arr) -> arr[0]
-    dialog = ns.__openDialog(file, tab, settings)
-    dialog2 = utils.then(dialog, first, first)
-    dialog2.reject = dialog.reject
-    dialog2
+    filter = if settings.multiple
+      (files) ->
+        if files and files.length
+          uploadcare.fileGroupFrom('files', files, settings)
+        else
+          null
+    else
+      (files) -> files[0]
+
+    promise = utils.then(currentDialogPr, filter, filter)
+    promise.reject = currentDialogPr.reject
+
+    return promise
 
   class Dialog
     constructor: (@settings, files, tab) ->
 
-      if files and not $.isArray(files)
-        files = [files]
+      if files 
+        unless $.isArray(files)
+          files = [files]
       else
         files = []
 
@@ -68,6 +81,8 @@ namespace 'uploadcare', (ns) ->
         if @settings.previewStep
           @__showTab 'preview'
           @switchTab 'preview'
+        else
+          @__resolve()
       @files.onRemove.add =>
         if @files.length() == 0
           @__hideTab 'preview'
