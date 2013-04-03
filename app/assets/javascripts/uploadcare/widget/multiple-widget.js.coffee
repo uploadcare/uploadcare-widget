@@ -69,18 +69,12 @@ namespace 'uploadcare.widget', (ns) ->
       @value @element.val()
       this
 
-    __filesToGrop: (files) =>
-      if files and files.length
-        uploadcare.fileGroupFrom('files', files, @settings)
-      else
-        null
-
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
       if @settings.previewStep
-        uploadcare.openDialog(file, @settings).done(@__setGroup)
+        uploadcare.openDialog(files, @settings).done(@__setGroup)
       else
-        @__setFile file
+        @__setGroup uploadcare.fileGroupFrom('files', files, @settings)
 
     openDialog: (tab) ->
       uploadcare.openDialog(@currentGroup, tab, @settings)
