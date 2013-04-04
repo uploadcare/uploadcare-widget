@@ -110,3 +110,9 @@ namespace 'uploadcare.utils', (ns) ->
     if URL
       return URL.createObjectURL(object)
     return null
+
+  messages = {}
+  ns.warnOnce = (msg) ->
+    unless messages[msg]?
+      messages[msg] = true
+      console.warn(msg)

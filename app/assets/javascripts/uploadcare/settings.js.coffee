@@ -26,6 +26,17 @@ namespace 'uploadcare.settings', (ns) ->
     for own key, fallback of defaults
       value = $("meta[name=uploadcare-#{key}]").attr('content')
       values[$.camelCase(key)] = if value? then value else fallback
+
+    unless values.publicKey
+      utils.warnOnce """
+        Global public key not set!
+        Falling back to "demopublickey".
+
+        Add this to <head> tag to set your key:
+        <meta name="uploadcare-public-key" content="your_public_key">
+        """
+      values.publicKey = 'demopublickey'
+
     values
 
 
@@ -55,12 +66,8 @@ namespace 'uploadcare.settings', (ns) ->
     urlOptions settings, ['urlBase', 'socialBase', 'cdnBase']
     flagOptions settings, ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
 
-    unless settings.publicKey
-      console.warn 'Public key not set! Using "demopublickey".'
-      settings.publicKey = 'demopublickey'
-
     if settings.multiple
-      console.log 'Sorry, the multiupload is not working now'
+      utils.warnOnce 'Sorry, the multiupload is not working now.'
       settings.multiple = false
 
     if settings.multiple
