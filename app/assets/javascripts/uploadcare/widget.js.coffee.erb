@@ -15,7 +15,7 @@ uploadcare.version = '<%= UploadcareWidget::VERSION %>'
 {expose} = uploadcare
 
 expose 'whenReady'
-expose 'globals'
+expose 'settings', uploadcare.settings.build
 expose 'initialize'
 expose 'fileFrom'
 expose 'locales', (key for own key of uploadcare.locale.translations)
