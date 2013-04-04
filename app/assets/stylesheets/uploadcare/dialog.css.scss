@@ -393,12 +393,12 @@ $dialog-button-height: 33px;
 
 // § Preview tab
 
-$dialog-preview-container-height: 452px;
+$dialog-preview-container-height: 455px;
 $dialog-preview-container-width: 775px;
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
   height: $dialog-preview-container-height;
-  margin-bottom: x(1);
+  margin-bottom: y(1);
   display: table;
 }
 .uploadcare-dialog-preview-image-wrap2 {
@@ -535,3 +535,64 @@ $dialog-preview-container-width: 775px;
     color: #438ae7;
   }
 }
+
+
+// § Multiple preview
+
+// TODO: fix colors
+
+.uploadcare-dpm-file-list {
+  height: $dialog-preview-container-height + y(1);
+  overflow: scroll;
+}
+  .uploadcare-dpm-file-item {
+    $border: 1px solid #e3e3e3;
+    border-top: $border;
+    height: 65px;
+    &:before {
+      content: ' ';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+    &:last-child {
+      border-bottom: $border;
+    }
+    &:hover {
+      background: #f1f1f1;
+      .uploadcare-dpm-file-remove {
+        display: inline-block;
+      }
+    }
+  }
+  .uploadcare-dpm-file-preview {
+    max-width: 45px;
+    max-height: 45px;
+    vertical-align: middle;
+  }
+  .uploadcare-dpm-file-name {
+    vertical-align: middle;
+    display: inline-block;
+  }
+  .uploadcare-dpm-file-size {
+    vertical-align: middle;
+    display: inline-block;
+  }
+  .uploadcare-dpm-file-progressbar {
+    display: inline-block;
+    width: 80px;
+    height: 8px;
+    background: #e0e0e0;
+  }
+    .uploadcare-dpm-file-progressbar-value {
+      height: 100%;
+      background: #d6b849; // #8ac54c
+    }
+  .uploadcare-dpm-file-remove {
+    @extend %remove-button-image;
+    display: none;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+

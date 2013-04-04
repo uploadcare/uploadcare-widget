@@ -76,7 +76,7 @@ namespace 'uploadcare', (ns) ->
         .hide()
         .appendTo('body')
       
-      @files = new utils.Collection()
+      @files = new utils.CollectionOfPromises()
       @files.onAdd.add =>
         if @settings.previewStep
           @__showTab 'preview'

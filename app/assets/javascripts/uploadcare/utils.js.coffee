@@ -205,3 +205,12 @@ namespace 'uploadcare.utils', (ns) ->
     if el.jquery
       el = el.get(0)
     $.contains(document.documentElement, el)
+
+  ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
+    value = parseInt(value, 10)
+    return onNaN if isNaN(value)
+    labels = 'B KB MB GB TB PB EB ZB YB'.split ' '
+    for label, i in labels
+      if value < 512 or i is labels.length - 1
+        return "#{prefix}#{value} #{label}#{postfix}" 
+      value = Math.round(value / 1024)

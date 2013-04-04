@@ -35,6 +35,12 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: ''
           input: 'Укажите здесь ссылку...'
           button: 'Загрузить'
+        preview:
+          multiple:
+            title: 'Вы выбрали'
+            question: 'Вы хотите добавить все эти файлы?'
+            clear: 'Удалить все'
+            done: 'Да'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

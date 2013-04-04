@@ -2,7 +2,8 @@
 
 {
   namespace,
-  locale
+  locale,
+  utils
 } = uploadcare
 
 namespace 'uploadcare.templates', (ns) ->
@@ -10,6 +11,7 @@ namespace 'uploadcare.templates', (ns) ->
     fn = JST["uploadcare/templates/#{key}"]
     if fn?
       ctx.t = locale.t
+      ctx.utils = utils
       fn(ctx)
     else
       ''

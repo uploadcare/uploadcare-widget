@@ -8,9 +8,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       default: 'Error'
       baddata: 'Incorrect value'
       size: 'Too big'
-      upload: 'Can\'t upload'
+      upload: 'Can’t upload'
       user: 'Upload canceled'
-      info: 'Can\'t load info'
+      info: 'Can’t load info'
       image: 'Only images allowed'
     draghere: 'Drop the file here'
     file:
@@ -70,13 +70,18 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Size limit'
               line1: 'The file you selected exceeds the 100 MB limit.'
               line2: 'Please try again with another file.'
+          multiple:
+            title: 'You’ve choosen'
+            question: 'Would you like to add all of these files?'
+            clear: 'Remove all'
+            done: 'Yes'
       footer:
         text: 'Uploading, storing and processing files by'
         link: 'Uploadcare.com'
     crop:
       error:
         title: 'Error'
-        text: 'Can\'t load image'
+        text: 'Can’t load image'
       done: 'Done'
 
 
