@@ -1,7 +1,7 @@
 # = require uploadcare/core/boot
 # = require uploadcare/debug
 # = require uploadcare/utils
-# = require uploadcare/defaults
+# = require uploadcare/settings
 # = require uploadcare/locale
 # = require uploadcare/templates
 # = require uploadcare/stylesheets
@@ -15,7 +15,7 @@ uploadcare.version = '<%= UploadcareWidget::VERSION %>'
 {expose} = uploadcare
 
 expose 'whenReady'
-expose 'defaults'
+expose 'globals'
 expose 'initialize'
 expose 'fileFrom'
 expose 'locales', (key for own key of uploadcare.locale.translations)

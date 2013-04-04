@@ -2,15 +2,12 @@
 
 {
   namespace,
+  settings,
   jQuery: $
 } = uploadcare
 
 namespace 'uploadcare.locale', (ns) ->
   defaultLocale = 'en'
-  ns.lang = uploadcare.defaults.locale || defaultLocale
-
-  ns.translations[ns.lang] ||= {}
-  $.extend(ns.translations[ns.lang], uploadcare.defaults.translations)
 
   translate = (key, locale=defaultLocale) ->
     path = key.split('.')
@@ -21,7 +18,7 @@ namespace 'uploadcare.locale', (ns) ->
     node
 
   ns.t = (key, n) ->
-    lang = ns.lang
+    lang = settings.build() || defaultLocale
     value = translate(key, lang)
     if not value? && lang != defaultLocale
       lang = defaultLocale

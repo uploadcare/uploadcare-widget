@@ -1,4 +1,5 @@
 {
+  settings,
   jQuery: $
 } = uploadcare
 
@@ -32,8 +33,9 @@ cleanup = (el) ->
   if el.length && (!template || el[0] != template.content[0])
     el.remove()
 
-live = -> initialize $('@uploadcare-uploader')
-if uploadcare.defaults.live
-  $ -> setInterval(live, 100)
-else
-  $(live)
+$ ->
+  live = -> initialize $('@uploadcare-uploader')
+  if settings.build().live
+    setInterval(live, 100)
+  else
+    live()
