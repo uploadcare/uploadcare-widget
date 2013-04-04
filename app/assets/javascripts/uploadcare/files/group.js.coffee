@@ -1,7 +1,8 @@
 {
   namespace,
   jQuery: $,
-  utils
+  utils,
+  locale: {t}
 } = uploadcare
 
 namespace 'uploadcare.files', (ns) ->
@@ -30,15 +31,20 @@ namespace 'uploadcare.files', (ns) ->
 
     # returns copy of @__files
     files: ->
-      file for file in @__files 
+      @__files.slice(0)
 
     add: (file) ->
-      return new ns.FileGroup @files().push(file), @settings
+      if file
+        new ns.FileGroup @files().push(file), @settings
+      else
+        this
 
     remove: (file) ->
       files = @files()
-      utils.remove(files, file)
-      return new ns.FileGroup files, @settings
+      if utils.remove(files, file)
+        return new ns.FileGroup files, @settings
+      else
+        this
 
     __save: ->
       unless @__saved
@@ -46,7 +52,7 @@ namespace 'uploadcare.files', (ns) ->
         $.when(@__files...).done =>
           @__createGroup()
             .done (groupInfo) =>
-              @__uuid = groupInfo.group_id
+              @__uuid = groupInfo.id
               @__buildInfo (info) =>
                 if @settings.imagesOnly && !info.isImage
                   @__createGroupDf.reject('image', info)
@@ -96,7 +102,7 @@ namespace 'uploadcare.files', (ns) ->
       state: @__progressState
       uploadProgress: progress
       progress: if @__progressState == 'ready' then 1 else progress * 0.9
-      # TODO: incompleteFileInfo?
+      incompleteFileInfo: {}
 
     __fileInfos: (cb) ->
       files = for file in @__files
@@ -107,7 +113,7 @@ namespace 'uploadcare.files', (ns) ->
       info = 
         uuid: @__uuid
         cdnUrl: "#{@settings.cdnBase}/#{@__uuid}/"
-        name: @__files.length + ' files' #FIXME
+        name: t('file', @__files.length)
         size: 0
         isImage: true
         isStored: true
