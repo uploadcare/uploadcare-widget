@@ -18,7 +18,7 @@ namespace 'uploadcare.locale', (ns) ->
     node
 
   ns.t = (key, n) ->
-    lang = settings.build() || defaultLocale
+    lang = settings.build().locale || defaultLocale
     value = translate(key, lang)
     if not value? && lang != defaultLocale
       lang = defaultLocale
