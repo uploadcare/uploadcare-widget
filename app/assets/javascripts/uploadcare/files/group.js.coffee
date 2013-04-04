@@ -119,15 +119,12 @@ namespace 'uploadcare.files', (ns) ->
         cb(info)
 
     __createGroup: ->
-      # tmp
-      return $.when({group_id: '123~4'})
-
-      # df = $.Deferred()
-      # @__fileInfos (infos...) ->
-      #   data =
-      #     pub_key: @settings.publicKey
-      #   for info, i in infos
-      #     data["file_id[#{i}]"] = info.fileId
-      #   $.ajax("#{@settings.urlBase}/group/create/", {data, dataType: 'jsonp'})
-      #     .then(df.resolve, df.reject)
-      # return df.promise()
+      df = $.Deferred()
+      @__fileInfos (infos...) =>
+        data =
+          pub_key: @settings.publicKey
+        for info, i in infos
+          data["files[#{i}]"] = info.cdnUrl
+        $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
+          .then(df.resolve, df.reject)
+      return df.promise()
