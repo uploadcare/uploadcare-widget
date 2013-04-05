@@ -30,10 +30,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @fileColl.onAnyProgress.add @__updateFileView
 
-      @fileColl.onAnyFail.add (file, error) ->
+      @fileColl.onAnyFail.add (file, error) =>
         @__fileToEl(file).addClass(CLASS_PREFIX + 'error')
 
-      @fileColl.onAnyDone.add (file, info) ->
+      @fileColl.onAnyDone.add (file, info) =>
         @__fileToEl(file).addClass(CLASS_PREFIX + 'uploaded')
 
     __find: (s, context = @container) ->
