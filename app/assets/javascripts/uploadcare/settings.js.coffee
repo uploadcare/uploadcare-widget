@@ -42,7 +42,10 @@ namespace 'uploadcare.settings', (ns) ->
 
   arrayOptions = (settings, keys) ->
     for key in keys
-      settings[key] = settings[key]?.split(' ') or []
+      value = settings[key]
+      unless $.isArray(value)
+        value = $.trim(value)
+        settings[key] = if value then value.split(' ') else []
     settings
 
   urlOptions = (settings, keys) ->
