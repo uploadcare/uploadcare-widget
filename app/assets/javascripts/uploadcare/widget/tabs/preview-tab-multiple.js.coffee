@@ -28,13 +28,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @fileColl.onAdd.add [@__addFile, @__updateContainerView]
       @fileColl.onRemove.add [@__removeFile, @__updateContainerView]
 
-      @fileColl.onAnyProgress.add @__updateFileView
-
-      @fileColl.onAnyFail.add (file, error) =>
-        @__fileToEl(file).addClass(CLASS_PREFIX + 'error')
-
-      @fileColl.onAnyDone.add (file, info) =>
-        @__fileToEl(file).addClass(CLASS_PREFIX + 'uploaded')
+      @fileColl.onAnyProgress.add @__fileProgress
+      @fileColl.onAnyDone.add @__fileDone
+      @fileColl.onAnyFail.add @__fileFailed
 
     __find: (s, context = @container) ->
       $(ROLE_PREFIX + s, context)
@@ -43,11 +39,28 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @filesCountEl.text t('file', @fileColl.length())
       # @doneBtnEl.toggleClass('uploadcare-disabled-el', @fileColl.length() == 0)
 
-    __updateFileView: (file, progressInfo) =>
-      info = progressInfo.incompleteFileInfo
+    __fileProgress: (file, progressInfo) =>
+      fileEl = @__fileToEl(file)
+      @__find('file-progressbar-value', fileEl)
+        .css('width', Math.round(progressInfo.progress * 100) + '%')
+      @__updateFileInfo(file, progressInfo.incompleteFileInfo)
+      console.log('ggggg', progressInfo)
+
+    __fileDone: (file, info) =>
+      @__fileToEl(file).addClass(CLASS_PREFIX + 'uploaded')
+      @__updateFileInfo(file, info)
+
+    __fileFailed: (file, error, info) =>
+      fileEl = @__fileToEl(file)
+      fileEl.addClass(CLASS_PREFIX + 'error')
+      @__find('file-error', fileEl)
+        .text t("errors.#{error}")
+      @__updateFileInfo(file, info)
+
+    __updateFileInfo: (file, info) =>
       fileEl = @__fileToEl(file)
 
-      fileEl.toggleClass(CLASS_PREFIX + 'image', info.isImage)
+      fileEl.toggleClass(CLASS_PREFIX + 'image', !!info.isImage)
       if info.isImage
         @__find('file-preview', fileEl).attr('src', info.previewUrl)
 
@@ -56,9 +69,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @__find('file-size', fileEl)
         .text(utils.readableFileSize(info.size, '–'))
-
-      @__find('file-progressbar-value', fileEl)
-        .css('width', Math.round(progressInfo.progress * 100) + '%')
 
     __addFile: (file) =>
       $(file).data 'dmp-el', @__createFileEl(file)

@@ -539,7 +539,9 @@ $dialog-preview-container-width: 775px;
 
 // § Multiple preview
 
-// TODO: fix colors
+// TODO:
+//   - fix colors
+//   - better scroll
 
 .uploadcare-dpm-file-list {
   height: $dialog-preview-container-height + y(1);
@@ -548,51 +550,98 @@ $dialog-preview-container-width: 775px;
   .uploadcare-dpm-file-item {
     $border: 1px solid #e3e3e3;
     border-top: $border;
-    height: 65px;
-    &:before {
-      content: ' ';
-      display: inline-block;
-      height: 100%;
-      vertical-align: middle;
-    }
+    padding: 10px 0;
+    font-size: $dialog-body-font-size-smaller;
+    line-height: 1;
+    word-wrap: break-word;
     &:last-child {
       border-bottom: $border;
     }
     &:hover {
       background: #f1f1f1;
-      .uploadcare-dpm-file-remove {
-        display: inline-block;
-      }
+      .uploadcare-dpm-file-remove {display: inline-block}
+    }
+    &.uploadcare-dpm-image {
+      .uploadcare-dpm-file-preview-wrap {display: inline-block}
+      .uploadcare-dpm-file-name {width: 60%}
+    }
+    &.uploadcare-dpm-uploaded {
+      .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
+    }
+    &.uploadcare-dpm-error {
+      .uploadcare-dpm-file-error {display: inline-block}
+      .uploadcare-dpm-file-size,
+      .uploadcare-dpm-file-progressbar-wrap {display: none}
     }
   }
-  .uploadcare-dpm-file-preview {
-    max-width: 45px;
-    max-height: 45px;
-    vertical-align: middle;
+  %file-row-part {
+    @include vertical-centered;
+    @include prefix(box-sizing, border-box);
+    padding: 0 10px;
+  }
+  .uploadcare-dpm-file-preview-wrap {
+    @extend %file-row-part;
+    $size: 45px;
+    text-align: center;
+    width: 8%;
+    display: none;
+    padding: 0;
+    line-height: 0;
+    img {
+      max-width: $size;
+      max-height: $size;
+    }
+  }
+  .uploadcare-dpm-file-name,
+  .uploadcare-dpm-file-size,
+  .uploadcare-dpm-file-error {
+    
   }
   .uploadcare-dpm-file-name {
-    vertical-align: middle;
-    display: inline-block;
+    @extend %file-row-part;
+    width: 60% + 8%;
   }
   .uploadcare-dpm-file-size {
-    vertical-align: middle;
-    display: inline-block;
+    @extend %file-row-part;
+    width: 9%;
+    padding-right: 0;
+    text-align: left;
   }
-  .uploadcare-dpm-file-progressbar {
-    display: inline-block;
-    width: 80px;
-    height: 8px;
-    background: #e0e0e0;
+  .uploadcare-dpm-file-progressbar-wrap {
+    @extend %file-row-part;
+    width: 15%;
   }
-    .uploadcare-dpm-file-progressbar-value {
-      height: 100%;
-      background: #d6b849; // #8ac54c
+    .uploadcare-dpm-file-progressbar {
+      width: 80px;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 100px;
     }
-  .uploadcare-dpm-file-remove {
-    @extend %remove-button-image;
+      .uploadcare-dpm-file-progressbar-value {
+        height: 100%;
+        background: #d6b849;
+        border-radius: 100px;
+      }
+  .uploadcare-dpm-file-error {
+    @extend %file-row-part;
+    width: 9% + 15%;
     display: none;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
+    color: red;
   }
-
+  .uploadcare-dpm-file-remove-wrap {
+    @extend %file-row-part;
+    padding: 0;
+    padding-right: 10px;
+    width: 8%;
+    text-align: right;
+    line-height: 0;
+    height: $dialog-body-font-size-smaller;
+  }
+    .uploadcare-dpm-file-remove {
+      @extend %remove-button-image;
+      display: none;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      margin-top: (20px - $dialog-body-font-size-smaller) / -2;
+    }
