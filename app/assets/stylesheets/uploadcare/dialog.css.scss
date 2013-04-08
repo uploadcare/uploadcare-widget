@@ -166,6 +166,9 @@ $dialog-free-space-for-close-button: y(2);
         }
       }
 
+      &.uploadcare-dialog-tab-preview:after {
+        display: none;
+      }
       &.uploadcare-dialog-tab-file:after {
         background-position: 0 ($frame-size * -1);
       }

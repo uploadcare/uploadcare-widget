@@ -10,7 +10,8 @@
   utils,
   locale: {t},
   templates: {tpl},
-  jQuery: $
+  jQuery: $,
+  ui: {progress: {Circle}}
 } = uploadcare
 
 namespace 'uploadcare', (ns) ->
@@ -126,14 +127,10 @@ namespace 'uploadcare', (ns) ->
     __prepareTabs: ->
       @tabs = {}
 
-      @tabs.preview = @addTab 'preview'
-      @tabs.preview.setFiles @files
-      @tabs.preview.onDone.add @__resolve
-      @tabs.preview.onBack.add => @files.clear()
-      @__hideTab 'preview'
+      @__preparePreviewTab()
 
       for tabName in @settings.tabs when tabName not of @tabs
-        @tabs[tabName] = @addTab(tabName)
+        @tabs[tabName] = @addTab(tabName).tab
         if @tabs[tabName]
           @tabs[tabName].onSelected.add (fileType, data) =>
             if @settings.multiple
@@ -143,6 +140,41 @@ namespace 'uploadcare', (ns) ->
               @files.add(ns.fileFrom(fileType, data, @settings))
         else
           throw new Error("No such tab: #{tabName}")
+
+    __preparePreviewTab: ->
+      {tabButton, tab: @tabs.preview} = @addTab 'preview'
+      @tabs.preview.setFiles @files
+      @tabs.preview.onDone.add @__resolve
+      @tabs.preview.onBack.add => @files.clear()
+      @__hideTab 'preview'
+
+      size = 28
+      circleEl = $('<div>')
+        .appendTo(tabButton)
+        .css(
+          position: 'absolute'
+          top: '50%'
+          left: '50%'
+          marginTop: size / -2
+          marginLeft: size / -2
+          width: size
+          height: size
+        )
+
+      circleDf = $.Deferred()
+
+      update = =>
+        infos = @files.lastProgresses()
+        progress = 0
+        for progressInfo in infos
+          progress += (progressInfo?.progress or 0) / infos.length
+        circleDf.notify {progress}
+
+      @files.onAnyProgress.add update
+      @files.onAdd.add update
+      @files.onRemove.add update
+
+      new Circle(circleEl).listen circleDf.promise(), 'progress'
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()
@@ -163,7 +195,7 @@ namespace 'uploadcare', (ns) ->
 
       tab = new tabCls @dfd.promise(), @settings
 
-      $('<div>')
+      tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .attr('title', t("tabs.#{name}.title"))
         .on('click', => @switchTab(name))
@@ -176,7 +208,7 @@ namespace 'uploadcare', (ns) ->
         .append(tpl("tab-#{name}", {avalibleTabs: @settings.tabs}))
         .appendTo(@content.find('.uploadcare-dialog-body'))
       
-      return tab
+      return {tab, tabButton}
 
     switchTab: (@currentTab) ->
       @content.find('.uploadcare-dialog-body')
