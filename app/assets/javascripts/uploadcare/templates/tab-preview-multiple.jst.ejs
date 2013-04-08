@@ -1,15 +1,21 @@
-<div class="uploadcare-dialog-title">
-  <%- t('dialog.tabs.preview.multiple.title') %>
-  <span role="uploadcare-dpm-files-count"></span>
+<div class="uploadcare-dpm-wrap">
+
+  <div class="uploadcare-dialog-title">
+    <%- t('dialog.tabs.preview.multiple.title') %>
+    <span role="uploadcare-dpm-files-count"></span>
+  </div>
+
+  <div role="uploadcare-dpm-file-list" class="uploadcare-dpm-file-list"></div>
+
+  <div class="uploadcare-dialog-preview-footer">
+    <div 
+      class="uploadcare-dialog-button" 
+      role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.multiple.clear') %></div>
+    <div 
+      class="uploadcare-dialog-button-success" 
+      role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.multiple.done') %></div>
+  </div>
+
 </div>
 
-<div role="uploadcare-dpm-file-list" class="uploadcare-dpm-file-list"></div>
 
-<div class="uploadcare-dialog-preview-footer">
-  <div 
-    class="uploadcare-dialog-button" 
-    role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.multiple.clear') %></div>
-  <div 
-    class="uploadcare-dialog-button-success" 
-    role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.multiple.done') %></div>
-</div>
