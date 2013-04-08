@@ -541,9 +541,8 @@ $dialog-preview-container-width: 775px;
 
 // TODO:
 //   - better scroll
-//   - file icon
-//   - error icon
 //   - check sizes/distances
+//   - text below
 
 $dpm-columns: 8%, 60%, 9%, 15%, 8%;
 
@@ -567,7 +566,10 @@ $dpm-columns: 8%, 60%, 9%, 15%, 8%;
     }
     &.uploadcare-dpm-image {
       .uploadcare-dpm-file-preview-wrap {display: inline-block}
-      .uploadcare-dpm-file-name {width: nth($dpm-columns, 2)}
+      .uploadcare-dpm-file-name {
+        width: nth($dpm-columns, 2);
+        &:before {display: none}
+      }
     }
     &.uploadcare-dpm-uploaded {
       .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
@@ -602,9 +604,22 @@ $dpm-columns: 8%, 60%, 9%, 15%, 8%;
     padding-top: 4px;
     padding-bottom: 4px;
   }
+  %file-inline-icon {
+    $height: 20px;
+    $margin: ($height - $dialog-body-font-size-smaller) / -2;
+    content: '';
+    display: inline-block;
+    width: $height;
+    height: $height;
+    margin: $margin .7em $margin 0;
+  }
   .uploadcare-dpm-file-name {
     @extend %file-row-part;
     width: nth($dpm-columns, 2) + nth($dpm-columns, 1);
+    &:before {
+      @extend %file-inline-icon, %file-icon-image;
+      width: 16px;
+    }
   }
   .uploadcare-dpm-file-size {
     @extend %file-row-part;
@@ -632,6 +647,9 @@ $dpm-columns: 8%, 60%, 9%, 15%, 8%;
     width: nth($dpm-columns, 3) + nth($dpm-columns, 4);
     display: none;
     color: #f5444b;
+    &:before {
+      @extend %file-inline-icon, %error-icon-image;
+    }
   }
   .uploadcare-dpm-file-remove-wrap {
     @extend %file-row-part;
