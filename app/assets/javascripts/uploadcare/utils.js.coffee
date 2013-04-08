@@ -1,6 +1,7 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pubsub
 # = require uploadcare/utils/collection
+# = require uploadcare/utils/square-image
 
 {
   namespace,

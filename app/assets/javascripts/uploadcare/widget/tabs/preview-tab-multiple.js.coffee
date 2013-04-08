@@ -44,7 +44,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__find('file-progressbar-value', fileEl)
         .css('width', Math.round(progressInfo.progress * 100) + '%')
       @__updateFileInfo(file, progressInfo.incompleteFileInfo)
-      console.log('ggggg', progressInfo)
 
     __fileDone: (file, info) =>
       @__fileToEl(file).addClass(CLASS_PREFIX + 'uploaded')
@@ -62,7 +61,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       fileEl.toggleClass(CLASS_PREFIX + 'image', !!info.isImage)
       if info.isImage
-        @__find('file-preview', fileEl).attr('src', info.previewUrl)
+        pWrapEl = @__find('file-preview-wrap', fileEl)
+        utils.squareImage pWrapEl, info.previewUrl
 
       @__find('file-name', fileEl)
         .text(info.name or t('dialog.tabs.preview.unknownName'))

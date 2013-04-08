@@ -540,8 +540,12 @@ $dialog-preview-container-width: 775px;
 // § Multiple preview
 
 // TODO:
-//   - fix colors
 //   - better scroll
+//   - file icon
+//   - error icon
+//   - check sizes/distances
+
+$dpm-columns: 8%, 60%, 9%, 15%, 8%;
 
 .uploadcare-dpm-file-list {
   height: $dialog-preview-container-height + y(1);
@@ -558,12 +562,12 @@ $dialog-preview-container-width: 775px;
       border-bottom: $border;
     }
     &:hover {
-      background: #f1f1f1;
+      background: #ececec;
       .uploadcare-dpm-file-remove {display: inline-block}
     }
     &.uploadcare-dpm-image {
       .uploadcare-dpm-file-preview-wrap {display: inline-block}
-      .uploadcare-dpm-file-name {width: 60%}
+      .uploadcare-dpm-file-name {width: nth($dpm-columns, 2)}
     }
     &.uploadcare-dpm-uploaded {
       .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
@@ -581,35 +585,36 @@ $dialog-preview-container-width: 775px;
   }
   .uploadcare-dpm-file-preview-wrap {
     @extend %file-row-part;
-    $size: 45px;
     text-align: center;
-    width: 8%;
+    width: nth($dpm-columns, 1);
     display: none;
     padding: 0;
     line-height: 0;
-    img {
-      max-width: $size;
-      max-height: $size;
-    }
   }
+    .uploadcare-dpm-file-preview-wrap2 {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+    }
   .uploadcare-dpm-file-name,
   .uploadcare-dpm-file-size,
   .uploadcare-dpm-file-error {
-    
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
   .uploadcare-dpm-file-name {
     @extend %file-row-part;
-    width: 60% + 8%;
+    width: nth($dpm-columns, 2) + nth($dpm-columns, 1);
   }
   .uploadcare-dpm-file-size {
     @extend %file-row-part;
-    width: 9%;
+    width: nth($dpm-columns, 3);
     padding-right: 0;
     text-align: left;
   }
   .uploadcare-dpm-file-progressbar-wrap {
     @extend %file-row-part;
-    width: 15%;
+    width: nth($dpm-columns, 4);
   }
     .uploadcare-dpm-file-progressbar {
       width: 80px;
@@ -624,18 +629,17 @@ $dialog-preview-container-width: 775px;
       }
   .uploadcare-dpm-file-error {
     @extend %file-row-part;
-    width: 9% + 15%;
+    width: nth($dpm-columns, 3) + nth($dpm-columns, 4);
     display: none;
-    color: red;
+    color: #f5444b;
   }
   .uploadcare-dpm-file-remove-wrap {
     @extend %file-row-part;
     padding: 0;
     padding-right: 10px;
-    width: 8%;
+    width: nth($dpm-columns, 5);
     text-align: right;
     line-height: 0;
-    height: $dialog-body-font-size-smaller;
   }
     .uploadcare-dpm-file-remove {
       @extend %remove-button-image;
@@ -643,5 +647,4 @@ $dialog-preview-container-width: 775px;
       width: 20px;
       height: 20px;
       cursor: pointer;
-      margin-top: (20px - $dialog-body-font-size-smaller) / -2;
     }
