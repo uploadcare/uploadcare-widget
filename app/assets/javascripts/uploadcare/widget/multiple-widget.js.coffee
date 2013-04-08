@@ -28,23 +28,19 @@ namespace 'uploadcare.widget', (ns) ->
       equal = group and @currentGroup and @currentGroup.equal(group)
       bothNull = not group and not @currentGroup
       unless equal or bothNull
+        @__clearCurrentObj()
         @__reset()
         if group
           @currentGroup = group
           @__watchCurrentObject()
 
-    __reset: =>
+    __clearCurrentObj: ->
       @currentGroup = null
-      @template.reset()
-      @__setValue ''
 
     # value() - get current group
     # value('') - reset
-    # value(%group_id% or %group_cdn_url% or groupObject) - set group
-    # value([%file1_cdn_url%, %file2_url%, fileObject, ...]) - set files by:
-    #   * URL,
-    #   * CDN URL
-    #   * or File object
+    # value("group_id" or "group_cdn_url" or groupObject) - set group
+    # value(["file1_cdn_url", "file2_url", fileObject, ...]) - set files
     value: (value) ->
       if value?
         if @element.val() != value
@@ -61,7 +57,9 @@ namespace 'uploadcare.widget', (ns) ->
                   uploadcare.fileGroupFrom('uploaded', value, @settings)
             )
           else
+            @__clearCurrentObj()
             @__reset()
+        this
       else
         @currentGroup
 

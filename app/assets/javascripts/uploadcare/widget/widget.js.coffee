@@ -24,23 +24,30 @@ namespace 'uploadcare.widget', (ns) ->
     __currentFile: ->
       @currentFile
 
-    __reset: =>
+    __clearCurrentObj: ->
       @currentFile?.cancel()
       @currentFile = null
-      @template.reset()
-      @__setValue ''
 
     __setFile: (newFile) =>
       unless newFile == @currentFile
+        @__clearCurrentObj()
         @__reset()
         if newFile
           @currentFile = newFile
           @__watchCurrentObject()
 
+    __onUploadingFailed: ->
+      @__clearCurrentObj()
+      super
+
     value: (value) ->
       if value?
         if @element.val() != value
-          @__setFile @__anyToFile(value)
+          if value isnt ''
+            @__setFile @__anyToFile(value)
+          else
+            @__clearCurrentObj()
+            @__reset()
         this
       else
         @currentFile

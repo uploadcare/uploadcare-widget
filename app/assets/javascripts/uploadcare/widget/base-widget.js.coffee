@@ -33,8 +33,12 @@ namespace 'uploadcare.widget', (ns) ->
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
 
-      @template.addButton('cancel', t('buttons.cancel')).on('click', => @__reset())
-      @template.addButton('remove', t('buttons.remove')).on('click', => @__reset())
+      clear = =>
+        @__clearCurrentObj()
+        @__reset()
+
+      @template.addButton('cancel', t('buttons.cancel')).on('click', clear)
+      @template.addButton('remove', t('buttons.remove')).on('click', clear)
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
@@ -66,20 +70,28 @@ namespace 'uploadcare.widget', (ns) ->
         @element.val(value)
         @__onChange.fire @__currentObject()
 
+    __reset: =>
+      @template.reset()
+      @__setValue ''
+
     __watchCurrentObject: ->
       object = @__currentFile()
       if object
         @template.listen object
         object
           .fail (error) =>
-            if object == @__currentFile()
-              @__reset()
-              @template.error error
+            @__onUploadingFailed(error) if object == @__currentFile()
           .done (info) =>
-            if object == @__currentFile()
-              @__setValue @__infoToValue(info)
-              @template.setFileInfo(info)
-              @template.loaded()
+            @__onUploadingDone(info) if object == @__currentFile()
+
+    __onUploadingDone: (info) ->
+      @__setValue @__infoToValue(info)
+      @template.setFileInfo(info)
+      @template.loaded()
+
+    __onUploadingFailed: (error) ->
+      @__reset()
+      @template.error error
 
     # converts URL, CDN URL, or File object to File object
     __anyToFile: (value) ->
