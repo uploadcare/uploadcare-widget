@@ -428,6 +428,12 @@ $dialog-preview-container-width: 775px;
     float: left;
   }
 }
+  .uploadcare-dialog-preview-footer-text {
+    text-align: center;
+    color: #85732c;
+    font-size: 15px;
+    line-height: $dialog-button-height;
+  }
 
 .uploadcare-dialog-preview-center {
   text-align: center;
@@ -539,12 +545,7 @@ $dialog-preview-container-width: 775px;
 
 // § Multiple preview
 
-// TODO:
-//   - better scroll
-//   - check sizes/distances
-//   - text below
-
-$dpm-columns: 8%, 60%, 9%, 15%, 8%;
+$dpm-columns: 8%, 60%, 10%, 14%, 8%;
 
 .uploadcare-dpm-file-list {
   height: $dialog-preview-container-height + y(1);
