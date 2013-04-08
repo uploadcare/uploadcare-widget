@@ -258,10 +258,8 @@ $dialog-free-space-for-close-button: y(2);
 
 // § Common tab elements
 
-$dialog-title-font-size: 25px;
-
 .uploadcare-dialog-title {
-  font-size: $dialog-title-font-size;
+  font-size: 25px;
   line-height: 1;
   font-weight: bolder;
   margin-bottom: x(1);
@@ -415,14 +413,11 @@ $dialog-preview-container-width: 775px;
   }
 }
 
-$dialog-footer-padding: 16px;
-$dialog-footer-height: $dialog-button-height + ($dialog-footer-padding * 2) + 1px;
-
 .uploadcare-dialog-preview-footer {
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
-  padding: $dialog-footer-padding 30px;
+  padding: 16px 30px;
   margin: 0 x(-1) y(-1);
   border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
@@ -551,46 +546,11 @@ $dialog-footer-height: $dialog-button-height + ($dialog-footer-padding * 2) + 1p
 
 $dpm-columns: 8%, 60%, 9%, 15%, 8%;
 
-.uploadcare-dpm-wrap {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-top-right-radius: $dialog-corner-radius;
-  border-bottom-right-radius: $dialog-corner-radius;
-
-  .uploadcare-dialog-title {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    padding: y(1) x(1);
-    z-index: 1;
-    background: $dialog-body-background-color;
-    border-top-right-radius: $dialog-corner-radius;
-  }
-
-  .uploadcare-dialog-preview-footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: 0;
-    border-bottom-right-radius: $dialog-corner-radius;
-  }
-}
-
 .uploadcare-dpm-file-list {
-  position: absolute;
-  width: 100%;
-  top: ($dialog-title-font-size + y(2));
-  bottom: $dialog-footer-height;
-  padding: 0 x(1);
+  height: $dialog-preview-container-height + y(1);
   overflow: auto;
-  border-top-right-radius: $dialog-corner-radius;
-  border-bottom-right-radius: $dialog-corner-radius;
-  @include prefix(box-sizing, border-box);
+  margin: 0 x(-1);
+  padding: 0 x(1);
 }
   .uploadcare-dpm-file-item {
     $border: 1px solid #e3e3e3;
