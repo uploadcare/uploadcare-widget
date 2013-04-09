@@ -36,4 +36,16 @@ Clone the repository, and go to `test/dummy/`. There is a simple Rails site. Run
     bundle update
     bundle exec rails server
     
-Open http://0.0.0.0:3000/ . Follow any link. There's going to be a widget or three. Edit code and reload page :-)
+Open http://0.0.0.0:3000/ . Follow any link. 
+There's going to be a widget or three. Edit code and reload page :-)
+
+
+## Tests
+
+[Jasminerice](https://github.com/bradphelan/jasminerice) 
+instaled under `test/dummy/` rails application.
+
+To run tests in your browser go to http://0.0.0.0:3000/jasmine.
+
+For more information see 
+[jasminerice docs](https://github.com/bradphelan/jasminerice).
