@@ -30,14 +30,13 @@ namespace 'uploadcare.widget', (ns) ->
 
     __setFile: (newFile) =>
       unless newFile == @currentFile
-        @__clearCurrentObj()
         @__reset()
         if newFile
           @currentFile = newFile
           @__watchCurrentObject()
 
     __onUploadingFailed: ->
-      @__clearCurrentObj()
+      @__reset()
       super
 
     value: (value) ->

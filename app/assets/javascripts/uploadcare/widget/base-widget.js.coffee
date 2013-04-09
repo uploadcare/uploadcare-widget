@@ -33,12 +33,8 @@ namespace 'uploadcare.widget', (ns) ->
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
 
-      clear = =>
-        @__clearCurrentObj()
-        @__reset()
-
-      @template.addButton('cancel', t('buttons.cancel')).on('click', clear)
-      @template.addButton('remove', t('buttons.remove')).on('click', clear)
+      @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
+      @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
@@ -71,6 +67,7 @@ namespace 'uploadcare.widget', (ns) ->
         @__onChange.fire @__currentObject()
 
     __reset: =>
+      @__clearCurrentObj()
       @template.reset()
       @__setValue ''
 
@@ -90,7 +87,6 @@ namespace 'uploadcare.widget', (ns) ->
       @template.loaded()
 
     __onUploadingFailed: (error) ->
-      @__reset()
       @template.error error
 
     api: ->

@@ -28,7 +28,6 @@ namespace 'uploadcare.widget', (ns) ->
       equal = group and @currentGroup and @currentGroup.equal(group)
       bothNull = not group and not @currentGroup
       unless equal or bothNull
-        @__clearCurrentObj()
         @__reset()
         if group
           @currentGroup = group

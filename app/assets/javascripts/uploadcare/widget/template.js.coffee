@@ -68,7 +68,6 @@ namespace 'uploadcare.widget', (ns) ->
 
     error: (type) ->
       @statusText.text(t("errors.#{type || 'default'}"))
-      @circle.reset()
       @setStatus 'error'
 
     setFileInfo: (info) ->
