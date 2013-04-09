@@ -15,14 +15,14 @@ namespace 'uploadcare.widget', (ns) ->
       __onUploadComplete = $.Callbacks()
       @onUploadComplete = utils.publicCallbacks __onUploadComplete
       @__onChange.add (group) =>
-        group?.asSingle().done (info) =>
+        group?.promise().done (info) =>
           __onUploadComplete.fire info
 
     __currentObject: ->
       @currentGroup
 
     __currentFile: ->
-      @currentGroup?.asSingle()
+      @currentGroup?.promise()
 
     __setGroup: (group) =>
       equal = group and @currentGroup and @currentGroup.equal(group)

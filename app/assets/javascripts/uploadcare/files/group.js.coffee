@@ -14,8 +14,7 @@ namespace 'uploadcare.files', (ns) ->
       @__files = (file for file in files when file)
 
       @__createGroupDf = $.Deferred()
-      @__initAsSingle()
-      @__save()
+      @__initApiDeferred()
 
     # check if two groups contains same files in same order
     equal: (group) ->
@@ -61,23 +60,23 @@ namespace 'uploadcare.files', (ns) ->
             .fail =>
               @__createGroupDf.reject('info')
 
-    # returns object that act like single file
-    asSingle: ->
-      # FIXME: add fake .cancel()?
-      @__singleFileDf.promise()      
+    # returns object similar to File object
+    promise: ->
+      @__save()
+      @__apiDf.promise()      
 
-    __initAsSingle: ->
-      @__singleFileDf = $.Deferred()
+    __initApiDeferred: ->
+      @__apiDf = $.Deferred()
       @__progressState = 'uploading'
       @__progressInfos = []
 
       reject = (err) =>
         @__buildInfo (info) =>
-          @__singleFileDf.reject err, info
+          @__apiDf.reject err, info
       resolve = (info) =>
-        @__singleFileDf.resolve info
+        @__apiDf.resolve info
       notify = =>
-        @__singleFileDf.notify @__progressInfo()
+        @__apiDf.notify @__progressInfo()
         
       $.when(@__files...)
         .progress (prpgressInfos...) =>
@@ -139,7 +138,7 @@ namespace 'uploadcare.files', (ns) ->
 namespace 'uploadcare.utils', (utils) ->
 
   utils.isFileGroup = (obj) ->
-    return obj and obj.add and obj.equal and obj.asSingle
+    return obj and obj.add and obj.equal and obj.promise
 
   # Converts any of:
   #   group ID
