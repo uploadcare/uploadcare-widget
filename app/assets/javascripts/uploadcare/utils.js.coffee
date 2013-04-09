@@ -215,3 +215,10 @@ namespace 'uploadcare.utils', (ns) ->
       if value < 512 or i is labels.length - 1
         return "#{prefix}#{value} #{label}#{postfix}" 
       value = Math.round(value / 1024)
+
+  ns.warn = (message) ->
+    if console
+      if typeof console.warn is 'function'
+        console.warn message
+      else if typeof console.log is 'function'
+        console.log message
