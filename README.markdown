@@ -43,7 +43,7 @@ There's going to be a widget or three. Edit code and reload page :-)
 ## Tests
 
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
-instaled under `test/dummy/` rails application.
+installed under `test/dummy/` Rails application.
 
 To run tests in your browser go to http://0.0.0.0:3000/jasmine.
 
