@@ -37,34 +37,16 @@ namespace 'uploadcare.widget', (ns) ->
     __clearCurrentObj: ->
       @currentGroup = null
 
-    # value() - get current group
-    # value('') - reset
-    # value("group_id" or "group_cdn_url" or groupObject) - set group
-    # value(["file1_cdn_url", "file2_url", fileObject, ...]) - set files
     value: (value) ->
       if value?
         if @element.val() != value
-          if value isnt ''
-            @__setFile @__anyToFile(value)
-            __setGroup(
-              if $.isArray(value)
-                files = @__anyToFile(item) for item in value
-                @__filesToGrop files
-              else
-                if value.asSingle
-                  value
-                else
-                  uploadcare.fileGroupFrom('uploaded', value, @settings)
-            )
-          else
-            @__clearCurrentObj()
-            @__reset()
+          @__setGroup utils.anyToFileGroup(value, @settings)
         this
       else
         @currentGroup
 
     reloadInfo: =>
-      @value @element.val()
+      @__setGroup utils.anyToFileGroup(@element.val(), @settings)
       this
 
     __handleDirectSelection: (type, data) =>

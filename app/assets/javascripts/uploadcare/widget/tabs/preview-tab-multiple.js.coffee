@@ -83,13 +83,3 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       $(tpl 'tab-preview-multiple-file')
         .appendTo(@fileListEl)
         .on('click', ROLE_PREFIX + 'file-remove', (=> @fileColl.remove file))
-
-# TODO:
-#   disable done button if:
-#     - no files
-#     - some files in progress ??? (No, instead 
-#          add ability to open dialog with that files again)
-#     - all files failed
-#   update file view (also error state)
-#   update container view
-#   total progress

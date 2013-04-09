@@ -93,16 +93,6 @@ namespace 'uploadcare.widget', (ns) ->
       @__reset()
       @template.error error
 
-    # converts URL, CDN URL, or File object to File object
-    __anyToFile: (value) ->
-      if value
-        if value.done && value.fail
-          value
-        else
-          uploadcare.fileFrom('url', value, @settings)
-      else
-        null
-
     api: ->
       unless @__api
         @__api = utils.bindAll this, [

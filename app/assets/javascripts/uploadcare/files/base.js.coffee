@@ -161,3 +161,24 @@ namespace 'uploadcare.files', (ns) ->
         @__startUpload()
       @apiPromise
       
+
+namespace 'uploadcare.utils', (utils) ->
+
+  # Check if given obj is file API promise (aka File object)
+  utils.isFile = (obj) ->
+    return obj and obj.done and obj.fail and obj.cancel
+
+  # Converts any of:
+  #   URL
+  #   CDN-URL
+  #   UUID
+  #   File object
+  # to File object
+  utils.anyToFile = (value, settings) ->
+    if value
+      if utils.isFile(value)
+        value
+      else
+        uploadcare.fileFrom('url', value, settings)
+    else
+      null

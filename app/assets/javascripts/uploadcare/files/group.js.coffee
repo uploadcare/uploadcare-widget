@@ -134,3 +134,28 @@ namespace 'uploadcare.files', (ns) ->
         $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
           .then(df.resolve, df.reject)
       return df.promise()
+
+
+namespace 'uploadcare.utils', (utils) ->
+
+  utils.isFileGroup = (obj) ->
+    return obj and obj.add and obj.equal and obj.asSingle
+
+  # Converts any of:
+  #   group ID
+  #   group CDN-URL
+  #   array of what utils.anyToFile() can take
+  #   FileGroup object
+  # to FileGroup object
+  utils.anyToFileGroup = (value, settings) ->
+    if value
+      if $.isArray(value)
+        files = utils.anyToFile(item, settings) for item in value
+        uploadcare.fileGroupFrom('files', files, settings)
+      else
+        if utils.isFileGroup(value)
+          value
+        else
+          uploadcare.fileGroupFrom('uploaded', value, settings)
+    else
+      null

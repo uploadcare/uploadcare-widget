@@ -33,7 +33,7 @@ namespace 'uploadcare', (ns) ->
 
     ns.closeDialog()
 
-    if files?.asSingle # FileGroup
+    if utils.isFileGroup(files)
       files = files.files()
 
     settings = utils.buildSettings settings

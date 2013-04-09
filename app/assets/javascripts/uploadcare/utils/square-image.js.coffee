@@ -5,7 +5,7 @@
 
 namespace 'uploadcare.utils', (utils) ->
 
-  utils.squareImage = (container, src, size, __attempts = 5) ->
+  utils.squareImage = (container, src, size, attempts = 5) ->
     container = $ container
 
     unless size?
@@ -33,6 +33,6 @@ namespace 'uploadcare.utils', (utils) ->
             left: Math.round (@width - size) / -2
           ).fadeIn()
       error: ->
-        if __attempts > 0
-          __attempts--
-          this.src = "#{src}&#{new Date().getTime()}"
+        if attempts-- > 0
+          d = if src.split('?')[1] then '&' else '?'
+          this.src = "#{src}#{d}#{new Date().getTime()}"
