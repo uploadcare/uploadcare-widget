@@ -6,40 +6,6 @@
 
 namespace 'uploadcare.settings', (ns) ->
 
-  globals = utils.once ->
-    defaults =
-      'cdn-base': 'https://ucarecdn.com'
-      'crop': 'false'
-      'images-only': 'false'
-      'live': 'true'
-      'locale': null
-      'multiple': 'false'
-      'path-value': 'false'
-      'preview-step': 'false'
-      'public-key': null
-      'pusher-key': '79ae88bd931ea68464d9'
-      'social-base': 'https://social.uploadcare.com'
-      'tabs': 'file url facebook dropbox gdrive instagram'
-      'url-base': 'https://upload.uploadcare.com'
-
-    values = {}
-    for own key, fallback of defaults
-      value = $("meta[name=uploadcare-#{key}]").attr('content')
-      values[$.camelCase(key)] = if value? then value else fallback
-
-    unless values.publicKey
-      utils.warnOnce """
-        Global public key not set!
-        Falling back to "demopublickey".
-
-        Add this to <head> tag to set your key:
-        <meta name="uploadcare-public-key" content="your_public_key">
-        """
-      values.publicKey = 'demopublickey'
-
-    values
-
-
   arrayOptions = (settings, keys) ->
     for key in keys
       value = settings[key]
@@ -54,17 +20,19 @@ namespace 'uploadcare.settings', (ns) ->
     settings
 
   flagOptions = (settings, keys) ->
-    # "", "..." -> true
-    # "false", "disabled" -> false
     for key in keys when settings[key]?
-      value = $.trim(settings[key]).toLowerCase()
-      settings[key] = not (value in ['false', 'disabled'])
+      value = settings[key]
+      if $.type(value) == 'string'
+        # "", "..." -> true
+        # "false", "disabled" -> false
+        value = $.trim(value).toLowerCase()
+        settings[key] = not (value in ['false', 'disabled'])
+      else
+        settings[key] = !!value
     settings
 
 
-  ns.build = (settings) ->
-    settings = $.extend({}, globals(), settings or {})
-
+  normalize = (settings) ->
     arrayOptions settings, ['tabs']
     urlOptions settings, ['urlBase', 'socialBase', 'cdnBase']
     flagOptions settings, ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
@@ -110,3 +78,45 @@ namespace 'uploadcare.settings', (ns) ->
       settings.previewStep = true
 
     settings
+
+
+  ns.globals = utils.once ->
+    defaults =
+      'cdn-base': 'https://ucarecdn.com'
+      'crop': false
+      'images-only': false
+      'live': true
+      'locale': null
+      'manual-start': false
+      'multiple': false
+      'path-value': false
+      'preview-step': false
+      'public-key': null
+      'pusher-key': '79ae88bd931ea68464d9'
+      'social-base': 'https://social.uploadcare.com'
+      'tabs': 'file url facebook dropbox gdrive instagram'
+      'url-base': 'https://upload.uploadcare.com'
+
+    values = {}
+    for own key, fallback of defaults
+      value = window["UPLOADCARE_#{utils.upperCase(key)}"]
+      values[$.camelCase(key)] = if value? then value else fallback
+
+    unless values.publicKey
+      utils.warnOnce """
+        Global public key not set!
+        Falling back to "demopublickey".
+
+        Add this to <head> tag to set your key:
+        <meta name="uploadcare-public-key" content="your_public_key">
+        """
+      values.publicKey = 'demopublickey'
+
+    normalize(values)
+
+
+  ns.defaults = utils.once (settings) ->
+    normalize $.extend({}, ns.globals(), settings or {})
+
+  ns.build = (settings) ->
+    normalize $.extend({}, ns.defaults(), settings or {})

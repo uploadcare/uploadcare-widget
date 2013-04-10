@@ -29,6 +29,9 @@ namespace 'uploadcare.utils', (ns) ->
           if result == source then target else result # Fix chaining
     target
 
+  ns.upperCase = (s) ->
+    s.replace(/-/g, '_').toUpperCase()
+
   ns.publicCallbacks = (callbacks) ->
     result = callbacks.add
     result.add = callbacks.add
