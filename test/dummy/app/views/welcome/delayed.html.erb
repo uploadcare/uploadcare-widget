@@ -1,0 +1,23 @@
+<% content_for :head do %>
+<script>
+UPLOADCARE_MANUAL_START = true;
+
+uploadcare.jQuery(function($) {
+  var countdown = 5;
+  var counter = $('#countdown').html(countdown);
+  var tick = function() {
+    countdown--;
+    if (countdown > 0) {
+      counter.html(countdown);
+      setTimeout(tick, 1000);
+    } else {
+      counter.remove();
+      uploadcare.start({localeTranslations: {ready: 'BANG!'}});
+    }
+  };
+  setTimeout(tick, 1000);
+});
+</script>
+<% end %>
+<div id="countdown" style="font-size: 60px;"></div>
+<p><input type="hidden" role="uploadcare-uploader" /></p>
