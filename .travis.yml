@@ -2,6 +2,5 @@ language: ruby
 rvm: "1.9.3"
 script:
   - cd test/dummy
-  - pwd
-  # - bundle install
-  # - bundle exec guard-jasmine --server-timeout=60
+  - RAILS_ENV=test bundle install
+  - RAILS_ENV=test bundle exec guard-jasmine --server-timeout=60
