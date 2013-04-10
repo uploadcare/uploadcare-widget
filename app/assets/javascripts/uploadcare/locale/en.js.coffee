@@ -12,6 +12,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       user: 'Upload canceled'
       info: 'Can’t load info'
       image: 'Only images allowed'
+      createGroup: 'Can’t create file group'
     draghere: 'Drop the file here'
     file:
       one: '1 file'

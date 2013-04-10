@@ -36,6 +36,11 @@ namespace 'uploadcare.widget', (ns) ->
     __clearCurrentObj: ->
       @currentGroup = null
 
+    __onUploadingFailed: (error) ->
+      if error is 'createGroup'
+        @__reset()
+      super
+
     value: (value) ->
       if value?
         if @element.val() != value

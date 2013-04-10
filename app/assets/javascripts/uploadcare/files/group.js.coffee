@@ -58,7 +58,7 @@ namespace 'uploadcare.files', (ns) ->
                 else
                   @__createGroupDf.resolve(info)
             .fail =>
-              @__createGroupDf.reject('info')
+              @__createGroupDf.reject('createGroup')
 
     # returns object similar to File object
     promise: ->
