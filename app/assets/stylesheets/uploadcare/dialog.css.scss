@@ -436,6 +436,9 @@ $dialog-preview-container-width: 775px;
     color: #85732c;
     font-size: 15px;
     line-height: $dialog-button-height;
+    &.uploadcare-error {
+      color: red;
+    }
   }
 
 .uploadcare-dialog-preview-center {

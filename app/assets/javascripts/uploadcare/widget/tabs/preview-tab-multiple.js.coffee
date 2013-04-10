@@ -16,12 +16,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     CLASS_PREFIX = 'uploadcare-dpm-'
     ROLE_PREFIX = '@' + CLASS_PREFIX
 
+    FILES_LIMIT = 30
+
     constructor: (@container, @fileColl) ->
       @container.append tpl('tab-preview-multiple')
 
       @fileListEl = @__find('file-list')
       @filesCountEl = @__find('files-count')
-      # @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
+      @footerText = @__find('footer-text')
+      @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
       
       @__addFile(file) for file in @fileColl.get()
 
@@ -37,7 +40,17 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __updateContainerView: =>
       @filesCountEl.text t('file', @fileColl.length())
-      # @doneBtnEl.toggleClass('uploadcare-disabled-el', @fileColl.length() == 0)
+
+      toManyFiles = @fileColl.length() > FILES_LIMIT
+      @doneBtnEl.toggleClass('uploadcare-disabled-el', toManyFiles)
+      @footerText.toggleClass('uploadcare-error', toManyFiles)
+      @footerText.text(
+        if toManyFiles
+          t('dialog.tabs.preview.multiple.toManyFiles')
+            .replace('%max%', FILES_LIMIT)
+        else
+          t('dialog.tabs.preview.multiple.question')
+      )
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
