@@ -27,16 +27,14 @@ namespace 'uploadcare', (ns) ->
     unless getSettings(el).multiple
       initializeWidget(el, ns.widget.Widget)
     else
-      utils.warn 'Widget can\'t be initialized on this element'
-      null
+      throw new Error 'Widget can\'t be initialized on this element'
 
   ns.MultipleWidget = (target) ->
     el = $(target).eq(0)
     if getSettings(el).multiple
       initializeWidget(el, ns.widget.MultipleWidget)
     else
-      utils.warn 'MultipleWidget can\'t be initialized on this element'
-      null
+      throw new Error 'MultipleWidget can\'t be initialized on this element'
 
   initializeWidget = (el, Widget) ->
     widget = el.data(dataAttr)
