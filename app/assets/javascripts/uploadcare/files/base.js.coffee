@@ -1,4 +1,8 @@
-{namespace, jQuery: $, utils} = uploadcare
+{
+  namespace,
+  settings: s,
+  jQuery: $
+} = uploadcare
 
 namespace 'uploadcare.files', (ns) ->
 
@@ -6,7 +10,7 @@ namespace 'uploadcare.files', (ns) ->
 
     constructor: (settings) ->
 
-      @settings = utils.buildSettings settings
+      @settings = s.build settings
 
       @fileId = null
       @fileName = null

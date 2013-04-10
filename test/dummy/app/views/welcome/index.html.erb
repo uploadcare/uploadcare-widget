@@ -22,27 +22,24 @@ Draggable:<br>
 <div id="last-result"></div>
 <ul id="events"></ul>
 <script>
-window.onload = function() {
-  uploadcare.whenReady(function() {
-    var $ = uploadcare.jQuery;
-    var log = function(text) {
-      var time = (new Date()).toLocaleTimeString();
-      $('<li>').appendTo('#events').text(time + ' ' + text);
-    };
-    var widgets = uploadcare.initialize();
-    for (var i = 0; i < widgets.length; i++) {
-      widgets[i].onChange.add(function(file) {
-        if (file) {
-          file.preview('#last-result');
-          file.done(function(info) {
-            log('change: ' + info.uuid);
-          });
-        } else {
-          $('#last-result').empty();
-          log('change: (empty)');
-        }
-      });
-    }
-  });
-};
+jQuery(function($) {
+  var log = function(text) {
+    var time = (new Date()).toLocaleTimeString();
+    $('<li>').appendTo('#events').text(time + ' ' + text);
+  };
+  var widgets = uploadcare.initialize();
+  for (var i = 0; i < widgets.length; i++) {
+    widgets[i].onChange.add(function(file) {
+      if (file) {
+        file.preview('#last-result');
+        file.done(function(info) {
+          log('change: ' + info.uuid);
+        });
+      } else {
+        $('#last-result').empty();
+        log('change: (empty)');
+      }
+    });
+  }
+});
 </script>

@@ -7,8 +7,8 @@
 
 {
   namespace,
-  utils,
   files,
+  settings: s,
   jQuery: $
 } = uploadcare
 
@@ -31,7 +31,7 @@ namespace 'uploadcare', (ns) ->
       tab = null
 
     ns.closeDialog()
-    settings = utils.buildSettings settings
+    settings = s.build settings
     dialog = new Dialog(settings, currentFile, tab)
     return currentDialogPr = dialog.publicPromise()
       .always ->
