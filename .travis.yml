@@ -1,6 +1,7 @@
 language: ruby
 rvm: "1.9.3"
 script:
-  - bundle install --gemfile=test/dummy/Gemfile
   - cd test/dummy
+  - BUNDLE_GEMFILE=test/dummy/Gemfile
+  - bundle install
   - bundle exec guard-jasmine --server-timeout=60
