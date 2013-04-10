@@ -79,8 +79,8 @@ namespace 'uploadcare.files', (ns) ->
         @__apiDf.notify @__progressInfo()
         
       $.when(@__files...)
-        .progress (prpgressInfos...) =>
-          @__progressInfos = prpgressInfos
+        .progress (progressInfos...) =>
+          @__progressInfos = progressInfos
           notify()
         .done =>
           @__progressState = 'uploaded'
