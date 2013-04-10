@@ -33,9 +33,21 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   normalize = (settings) ->
-    arrayOptions settings, ['tabs']
-    urlOptions settings, ['urlBase', 'socialBase', 'cdnBase']
-    flagOptions settings, ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
+    arrayOptions settings, [
+      'tabs'
+    ]
+    urlOptions settings, [
+      'cdnBase',
+      'socialBase',
+      'urlBase'
+    ]
+    flagOptions settings, [
+      'autostore',
+      'imagesOnly',
+      'multiple',
+      'pathValue',
+      'previewStep'
+    ]
 
     if settings.multiple
       utils.warnOnce 'Sorry, the multiupload is not working now.'
@@ -82,6 +94,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   ns.globals = utils.once ->
     defaults =
+      'autostore': false
       'cdn-base': 'https://ucarecdn.com'
       'crop': false
       'images-only': false

@@ -37,6 +37,7 @@ namespace 'uploadcare.files', (ns) ->
         data:
           pub_key: @settings.publicKey
           source_url: @__url
+          store: +@settings.autostore
         dataType: 'jsonp'
       .fail(fail)
       .done (data) =>
