@@ -129,7 +129,7 @@ namespace 'uploadcare.files', (ns) ->
         data =
           pub_key: @settings.publicKey
         for info, i in infos
-          data["files[#{i}]"] = info.cdnUrl
+          data["files[#{i}]"] = info.uuid
         $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
           .then(df.resolve, df.reject)
       return df.promise()
