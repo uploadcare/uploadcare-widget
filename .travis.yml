@@ -1,0 +1,6 @@
+language: ruby
+rvm: "1.9.3"
+script:
+  - cd test/dummy
+  - bundle install
+  - bundle exec guard-jasmine --server-timeout=60
