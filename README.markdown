@@ -1,5 +1,7 @@
 This is the [Uploadcare](http://uploadcare.com) widget source.
 
+[![Build Status](https://travis-ci.org/uploadcare/uploadcare-widget.png?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
+
 ## Embedding
 
 Add following code to your document's `<head>`.
