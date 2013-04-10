@@ -1,6 +1,10 @@
 <% content_for :head do %>
 <script>
 UPLOADCARE_LOCALE = 'ru';
+UPLOADCARE_LOCALE_TRANSLATIONS = {
+  ready: ':)',
+  dialog: {tabs: {file: {button: ':D'}}}
+};
 </script>
 <% end %>
 <p><input type="hidden" data-multiple role="uploadcare-uploader" /></p>

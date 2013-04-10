@@ -87,6 +87,8 @@ namespace 'uploadcare.settings', (ns) ->
       'images-only': false
       'live': true
       'locale': null
+      'locale-pluralize': null
+      'locale-translations': null
       'manual-start': false
       'multiple': false
       'path-value': false

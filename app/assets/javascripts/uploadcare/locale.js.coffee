@@ -2,32 +2,50 @@
 
 {
   namespace,
-  settings,
+  utils,
+  settings: s,
   jQuery: $
 } = uploadcare
 
 namespace 'uploadcare.locale', (ns) ->
-  defaultLocale = 'en'
+  defaultLang = 'en'
+  defaults =
+    lang: defaultLang
+    translations: ns.translations[defaultLang]
+    pluralize: ns.pluralize[defaultLang]
 
-  translate = (key, locale=defaultLocale) ->
+  build = utils.once ->
+    settings = s.build()
+    lang = settings.locale || defaults.lang
+    translations = $.extend(true, {},
+      ns.translations[lang],
+      settings.localeTranslations
+    )
+    pluralize = if $.isFunction(settings.localePluralize)
+      settings.localePluralize
+    else
+      ns.pluralize[lang]
+
+    {lang, translations, pluralize}
+
+
+  translate = (key, node) ->
     path = key.split('.')
-    node = ns.translations[locale]
     for subkey in path
       return null unless node?
       node = node[subkey]
     node
 
   ns.t = (key, n) ->
-    lang = settings.build().locale || defaultLocale
-    value = translate(key, lang)
-    if not value? && lang != defaultLocale
-      lang = defaultLocale
-      value = translate(key, lang)
+    locale = build()
+    value = translate(key, locale.translations)
+    if not value? && locale.lang != defaults.lang
+      locale = defaults
+      value = translate(key, locale.translations)
 
     if n?
-      pluralize = ns.pluralize[lang]
-      if pluralize?
-        value = value[pluralize(n)]?.replace('%1', n) || n
+      if locale.pluralize?
+        value = value[locale.pluralize(n)]?.replace('%1', n) || n
       else
         value = ''
 
