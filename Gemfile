@@ -28,3 +28,9 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'yui-compressor', '0.9.6'
 gem 'fog'
+
+group :test do
+  gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
+  gem 'rb-fsevent', '~> 0.9'
+  gem 'guard-jasmine'
+end
