@@ -2,7 +2,8 @@
   namespace,
   jQuery: $,
   utils,
-  locale: {t}
+  locale: {t},
+  settings: s
 } = uploadcare
 
 namespace 'uploadcare.files', (ns) ->
@@ -10,7 +11,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.FileGroup
 
     constructor: (files, settings) ->
-      @settings = utils.buildSettings settings
+      @settings = s.build settings
       @__files = (file for file in files when file)
 
       @__createGroupDf = $.Deferred()

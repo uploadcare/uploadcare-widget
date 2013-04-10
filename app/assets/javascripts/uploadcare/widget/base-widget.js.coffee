@@ -9,6 +9,7 @@
 {
   namespace,
   utils,
+  settings: s,
   jQuery: $,
   locale: {t}
 } = uploadcare
@@ -18,7 +19,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     constructor: (element) ->
       @element = $(element)
-      @settings = utils.buildSettings @element.data()
+      @settings = s.build @element.data()
 
       @__onChange = $.Callbacks()
       @onChange = utils.publicCallbacks @__onChange

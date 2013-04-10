@@ -1,6 +1,7 @@
 {
   namespace,
   utils,
+  settings: s,
   jQuery: $
 } = uploadcare
 

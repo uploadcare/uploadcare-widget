@@ -10,8 +10,10 @@
   utils,
   locale: {t},
   templates: {tpl},
-  jQuery: $,
   ui: {progress: {Circle}}
+  files,
+  settings: s,
+  jQuery: $
 } = uploadcare
 
 namespace 'uploadcare', (ns) ->
@@ -36,7 +38,7 @@ namespace 'uploadcare', (ns) ->
     if utils.isFileGroup(files)
       files = files.files()
 
-    settings = utils.buildSettings settings
+    settings = s.build settings
     dialog = new Dialog(settings, files, tab)
 
     currentDialogPr = dialog.publicPromise()

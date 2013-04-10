@@ -54,6 +54,9 @@ namespace 'uploadcare.utils', (ns) ->
           if result == source then target else result # Fix chaining
     target
 
+  ns.upperCase = (s) ->
+    s.replace(/-/g, '_').toUpperCase()
+
   ns.publicCallbacks = (callbacks) ->
     result = callbacks.add
     result.add = callbacks.add
@@ -73,72 +76,6 @@ namespace 'uploadcare.utils', (ns) ->
   ns.normalizeUrl = (url) ->
     url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
     url.replace(/\/+$/, '')
-
-  ns.extractSettings = (el) ->
-    ns.buildSettings $(el).data()
-
-  ns.buildSettings = (settings) ->
-    settings = $.extend({}, uploadcare.defaults, settings or {})
-
-    if $.type(settings.tabs) == "string"
-      settings.tabs = settings.tabs.split(' ')
-
-    settings.tabs = settings.tabs or []
-
-    for key in ['urlBase', 'socialBase', 'cdnBase']
-      settings[key] = ns.normalizeUrl(settings[key])
-
-    # Boolean settings
-    # <... foo>, <... foo="true">, <... foo="enabled">, <... foo="foo"> — On
-    # <... foo="false">, <... foo="disabled"> - Off
-    # <... > - Default used
-    for key in ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
-      if typeof settings[key] is 'string'
-        value = $.trim(settings[key]).toLowerCase()
-        settings[key] = not (value in ['false', 'disabled'])
-      else
-        settings[key] = !!settings[key]
-
-    if settings.multiple
-      settings.crop = 'disabled'
-
-    if settings.multiple
-      settings.crop = 'disabled'
-
-    settings.__cropParsed = {
-      enabled: true
-      scale: false
-      upscale: false
-      preferedSize: null
-    }
-
-    # disabled 300x200 → disabled
-    # 300x200 3:2 → 3:2
-    # 300x200 UPscale abc → 300x200 upscale
-    # upscale → ""
-    crop = '' + settings.crop
-    if crop.match /(disabled|false)/i
-      crop = 'disabled'
-      settings.__cropParsed.enabled = false
-    else if ratio = crop.match /[0-9]+\:[0-9]+/
-      crop = ratio[0]
-      settings.__cropParsed.preferedSize = ratio[0].replace(':', 'x')
-    else if size = crop.match /[0-9]+x[0-9]+/i
-      settings.__cropParsed.preferedSize = size[0]
-      settings.__cropParsed.scale = true
-      if crop.match(/upscale/i)
-        crop = size[0] + ' upscale'
-        settings.__cropParsed.upscale = true
-      else
-        crop = size[0]
-    else
-      crop = ''
-    settings.crop = crop
-
-    if settings.__cropParsed.enabled or settings.multiple
-      settings.previewStep = true
-
-    settings
 
   ns.fitText = (text, max) ->
     if text.length > max
@@ -222,3 +159,10 @@ namespace 'uploadcare.utils', (ns) ->
         console.warn message
       else if typeof console.log is 'function'
         console.log message
+
+  messages = {}
+  ns.warnOnce = (msg) ->
+    unless messages[msg]?
+      messages[msg] = true
+      ns.warn(msg)
+
