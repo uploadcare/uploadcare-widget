@@ -49,3 +49,19 @@ To run tests in your browser go to http://0.0.0.0:3000/jasmine.
 
 For more information see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
+
+### guard-jasmine
+
+To run tests in console you must first 
+[install phantomjs](https://github.com/netzpirat/guard-jasmine#phantomjs).
+
+Then you have two options:
+
+  - run `bundle exec guard start`
+  - run `bundle exec guard-jasmine`
+
+First for continuous tests execution, second runs tests just once.
+Both should be ran from `test/dummy/` directory.
+
+Read [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
+for more information.
