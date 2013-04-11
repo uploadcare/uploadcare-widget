@@ -1,5 +1,7 @@
 This is the [Uploadcare](http://uploadcare.com) widget source.
 
+[![Build Status](https://travis-ci.org/uploadcare/uploadcare-widget.png?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
+
 ## Embedding
 
 Add following code to your document's `<head>`.
@@ -30,10 +32,39 @@ with [Bundler](http://gembundler.com/).
 
 ## Development
 
-Clone the repository, and go to `test/dummy/`. There is a simple Rails site. Run it:
+Clone the repository, and go to `test/dummy/`. There is a simple Rails app. Run it:
 
     bundle install
     bundle update
     bundle exec rails server
     
-Open http://0.0.0.0:3000/ . Follow any link. There's going to be a widget or three. Edit code and reload page :-)
+Open http://0.0.0.0:3000/ . Follow any link. 
+There's going to be a widget or three. Edit code and reload page :-)
+
+
+## Testing
+
+[Jasminerice](https://github.com/bradphelan/jasminerice) 
+installed under the `test/dummy/` Rails app.
+
+To run tests in your browser go to http://0.0.0.0:3000/jasmine.
+
+For more information see 
+[jasminerice docs](https://github.com/bradphelan/jasminerice).
+
+### guard-jasmine
+
+To run tests in a terminal you must first 
+[install phantomjs](https://github.com/netzpirat/guard-jasmine#phantomjs).
+
+Then you have two options:
+
+  - run `bundle exec guard start`
+  - run `bundle exec guard-jasmine`
+
+The first one is for continuous tests execution,
+the second one runs tests just once.
+Both should be executed from the `test/dummy/` directory.
+
+See [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
+for more information.
