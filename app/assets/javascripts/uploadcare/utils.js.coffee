@@ -1,5 +1,6 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pubsub
+# = require uploadcare/utils/warnings
 
 {
   namespace,
@@ -113,9 +114,3 @@ namespace 'uploadcare.utils', (ns) ->
     if URL
       return URL.createObjectURL(object)
     return null
-
-  messages = {}
-  ns.warnOnce = (msg) ->
-    unless messages[msg]?
-      messages[msg] = true
-      console.warn(msg)

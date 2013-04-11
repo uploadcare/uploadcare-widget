@@ -56,6 +56,8 @@ namespace 'uploadcare.files', (ns) ->
         error: fail
         success: (data) =>
           if data?.error
+            if @settings.autostore && /autostore/i.test(data.error.content)
+              utils.commonWarning('autostore')
             return fail()
           @__uploadDf.resolve(this)
 

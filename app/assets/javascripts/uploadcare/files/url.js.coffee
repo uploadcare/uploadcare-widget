@@ -40,7 +40,10 @@ namespace 'uploadcare.files', (ns) ->
         dataType: 'jsonp'
       .fail(fail)
       .done (data) =>
-        return fail() if data.error
+        if data.error
+          if @settings.autostore && /autostore/i.test(data.error.content)
+            utils.commonWarning('autostore')
+          return fail()
 
         @__token = data.token
         @__pollWatcher.watch @__token
