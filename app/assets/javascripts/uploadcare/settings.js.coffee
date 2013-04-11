@@ -80,25 +80,30 @@ namespace 'uploadcare.settings', (ns) ->
     settings
 
 
-  ns.globals = utils.once ->
-    defaults =
-      'cdn-base': 'https://ucarecdn.com'
-      'crop': false
-      'images-only': false
-      'live': true
-      'locale': null
-      'locale-pluralize': null
-      'locale-translations': null
-      'manual-start': false
-      'multiple': false
-      'path-value': false
-      'preview-step': false
-      'public-key': null
-      'pusher-key': '79ae88bd931ea68464d9'
-      'social-base': 'https://social.uploadcare.com'
-      'tabs': 'file url facebook dropbox gdrive instagram'
-      'url-base': 'https://upload.uploadcare.com'
+  defaults =
+    'cdn-base': 'https://ucarecdn.com'
+    'crop': false
+    'images-only': false
+    'live': true
+    'locale': null
+    'locale-pluralize': null
+    'locale-translations': null
+    'manual-start': false
+    'multiple': false
+    'path-value': false
+    'preview-step': false
+    'public-key': null
+    'pusher-key': '79ae88bd931ea68464d9'
+    'social-base': 'https://social.uploadcare.com'
+    'tabs': 'file url facebook dropbox gdrive instagram'
+    'url-base': 'https://upload.uploadcare.com'
 
+  # Default settings
+  ns.defaults = utils.once ->
+    normalize(defaults)
+
+  # Defaults + global variables
+  ns.globals = utils.once ->
     values = {}
     for own key, fallback of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
@@ -117,8 +122,11 @@ namespace 'uploadcare.settings', (ns) ->
     normalize(values)
 
 
-  ns.defaults = utils.once (settings) ->
+  # Defaults + global variables + global overrides (once from uploadcare.start)
+  # Not publicly-accessible
+  ns.common = utils.once (settings) ->
     normalize $.extend({}, ns.globals(), settings or {})
 
+  # Defaults + global variables + global overrides + local overrides
   ns.build = (settings) ->
-    normalize $.extend({}, ns.defaults(), settings or {})
+    normalize $.extend({}, ns.common(), settings or {})
