@@ -129,6 +129,11 @@ namespace 'uploadcare', (ns) ->
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
     # TODO
 
+    # fake
+    df = $.Deferred()
+    setTimeout (-> df.resolve new uploadcare.files.FileGroup [], settings), 2000
+    df.promise()
+
 
 namespace 'uploadcare.utils', (utils) ->
 
@@ -140,19 +145,19 @@ namespace 'uploadcare.utils', (utils) ->
   #   group CDN-URL
   #   array of what utils.anyToFile() can take
   #   FileGroup object
-  # to FileGroup object (or promise with FileGroup object)
+  # to FileGroup object (returned through promise)
   utils.anyToFileGroup = (value, settings) ->
     if value
       if $.isArray(value)
         files = utils.anyToFile(item, settings) for item in value
-        uploadcare.FileGroup(files, settings)
+        utils.wrapToPromise(uploadcare.FileGroup files, settings)
       else
         if utils.isFileGroup(value)
-          value
+          utils.wrapToPromise(value)
         else
           uploadcare.loadFileGroup(value, settings)
     else
-      null
+      utils.wrapToPromise(null)
 
   # check if two groups contains same files in same order
   utils.isFileGroupsEqual = (group1, group2) ->

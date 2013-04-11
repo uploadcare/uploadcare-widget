@@ -21,6 +21,9 @@ namespace 'uploadcare.utils', (ns) ->
         called = true
       result
 
+  ns.wrapToPromise = (value) ->
+    $.Deferred().resolve(value).promise()
+
   ns.remove = (array, item) ->
     if (index = array.indexOf(item)) isnt -1
       array.splice(index, 1)

@@ -1,7 +1,8 @@
 {
   namespace,
   utils,
-  jQuery: $
+  jQuery: $,
+  locale: {t}
 } = uploadcare
 
 namespace 'uploadcare.widget', (ns) ->
@@ -31,6 +32,20 @@ namespace 'uploadcare.widget', (ns) ->
           @currentGroup = group
           @__watchCurrentObject()
 
+    __setGroupByPromise: (groupPr) ->
+      @__lastGroupPr = groupPr
+      @__reset()
+      @template.setStatus 'started'
+      @template.statusText.text t('loadingInfo')
+      groupPr
+        .done (group) =>
+          if @__lastGroupPr == groupPr
+            @__reset()
+            @__setGroup group
+        .fail =>
+          if @__lastGroupPr == groupPr
+            @template.error 'createGroup'
+
     __clearCurrentObj: ->
       @currentGroup = null
 
@@ -42,13 +57,13 @@ namespace 'uploadcare.widget', (ns) ->
     value: (value) ->
       if value?
         if @element.val() != value
-          @__setGroup utils.anyToFileGroup(value, @settings)
+          @__setGroupByPromise utils.anyToFileGroup(value, @settings)
         this
       else
         @currentGroup
 
     reloadInfo: =>
-      @__setGroup utils.anyToFileGroup(@element.val(), @settings)
+      @__setGroupByPromise utils.anyToFileGroup(@element.val(), @settings)
       this
 
     __handleDirectSelection: (type, data) =>
