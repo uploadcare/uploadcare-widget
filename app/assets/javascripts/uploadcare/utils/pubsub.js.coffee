@@ -9,7 +9,7 @@
 #     w.stop() # don't forget, in the end :D
 #
 
-{jQuery: $, debug} = uploadcare
+{jQuery: $} = uploadcare
 {pusher} = uploadcare.utils
 
 uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
@@ -37,7 +37,6 @@ uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
         @__notify()
 
     __notify: ->
-      debug('status', @status.score, @status.state, @status)
       $(this).trigger(@status.state, [@status])
 
   class PusherWatcher
@@ -55,7 +54,6 @@ uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
 
       # a little thingy to avoid polling
       onStarted = =>
-        debug('wow, listening with pusher')
         $(this).trigger 'started'
         @channel.unbind 'event', onStarted
       @channel.bind 'event', onStarted
@@ -75,7 +73,6 @@ uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
       @interval = null
 
     __checkStatus: ->
-      debug('polling status...')
 
       fail = =>
         @ps.__update {score: -1, state: 'error'}

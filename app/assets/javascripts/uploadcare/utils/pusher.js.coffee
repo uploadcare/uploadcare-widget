@@ -8,8 +8,6 @@
 #     pusher.release()
 # 
 
-{debug} = uploadcare
-
 uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
   pushers = {}
 
@@ -28,10 +26,7 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
 
 
   releasePusher = (key, owner) ->
-    debug('releasing', owner)
-
     if not pushers[key].owners[owner]
-      debug('this pusher has already been released')
       return 
 
     pushers[key].owners[owner] = false
@@ -50,12 +45,8 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     if hasOwners(key)
       instance.connect()
     else
-      debug('disconnect timeout started', key)
       setTimeout (->
-        if hasOwners(key)
-          debug('not disconnecting in the end')
-        else
-          debug('actual disconnect', key)
+        unless hasOwners(key)
           instance.disconnect()
         ), 5000
       
@@ -64,7 +55,6 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     if pushers[key]?.instance?
       return pushers[key].instance
     
-    debug('new actual Pusher')
     pushers[key].instance = new Pusher(key)
 
 

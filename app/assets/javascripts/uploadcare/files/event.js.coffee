@@ -1,8 +1,7 @@
 {
   namespace,
   jQuery: $,
-  utils,
-  debug
+  utils
 } = uploadcare
 
 namespace 'uploadcare.files', (ns) ->
@@ -56,7 +55,6 @@ namespace 'uploadcare.files', (ns) ->
         error: fail
         success: (data) =>
           if data?.error
-            debug(data.error.content)
             return fail()
           @__uploadDf.resolve(this)
 
