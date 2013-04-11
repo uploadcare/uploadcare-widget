@@ -100,7 +100,10 @@ namespace 'uploadcare.settings', (ns) ->
 
   # Default settings
   ns.defaults = utils.once ->
-    normalize(defaults)
+    values = {}
+    for own key, value of defaults
+      values[$.camelCase(key)] = value
+    normalize(values)
 
   # Defaults + global variables
   ns.globals = utils.once ->
