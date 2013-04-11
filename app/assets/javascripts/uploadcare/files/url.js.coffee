@@ -3,8 +3,7 @@
 {
   namespace,
   jQuery: $,
-  utils,
-  debug
+  utils
 } = uploadcare
 {pusher} = uploadcare.utils
 
@@ -84,7 +83,6 @@ namespace 'uploadcare.files', (ns) ->
       @pusher = pusher.getPusher(@settings.pusherKey, 'url-upload')
 
     watch: (@token) ->
-      debug('started url watching with pusher')
       @channel = @pusher.subscribe("task-status-#{@token}")
 
       onStarted = =>
