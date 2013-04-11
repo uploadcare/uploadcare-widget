@@ -1,4 +1,5 @@
 {
+  expose
   namespace,
   utils,
   jQuery: $
@@ -98,12 +99,11 @@ namespace 'uploadcare.settings', (ns) ->
     'tabs': 'file url facebook dropbox gdrive instagram'
     'url-base': 'https://upload.uploadcare.com'
 
-  # Default settings
-  ns.defaults = utils.once ->
-    values = {}
-    for own key, value of defaults
-      values[$.camelCase(key)] = value
-    normalize(values)
+  # Defaults (not normalized)
+  publicDefaults = {}
+  for own key, value of defaults
+    publicDefaults[$.camelCase(key)] = value
+  expose 'defaults', publicDefaults
 
   # Defaults + global variables
   ns.globals = utils.once ->
