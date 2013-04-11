@@ -42,14 +42,7 @@ namespace 'uploadcare.utils', (utils) ->
       super
 
 
-  class utils.NotNullUniqCollection extends utils.UniqCollection
-
-    add: (item) ->
-      return unless item?
-      super
-
-
-  class utils.CollectionOfPromises extends utils.NotNullUniqCollection
+  class utils.CollectionOfPromises extends utils.UniqCollection
 
     constructor: ->
       @onAnyDone = $.Callbacks()
@@ -66,7 +59,7 @@ namespace 'uploadcare.utils', (utils) ->
 
     add: (item) ->
       unless item and item.done and item.fail and item.then
-        throw new Error('only promises can be added to CollectionOfPromises')
+        return
 
       super
 
@@ -81,4 +74,3 @@ namespace 'uploadcare.utils', (utils) ->
         handler(@onAnyFail),
         handler(@onAnyProgress)
       )
-
