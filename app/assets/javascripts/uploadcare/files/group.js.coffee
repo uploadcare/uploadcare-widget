@@ -126,13 +126,16 @@ namespace 'uploadcare.files', (ns) ->
 
     __createGroup: ->
       df = $.Deferred()
-      @__fileInfos (infos...) =>
-        data =
-          pub_key: @settings.publicKey
-        for info, i in infos
-          data["files[#{i}]"] = info.uuid
-        $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
-          .then(df.resolve, df.reject)
+      if @__files.length
+        @__fileInfos (infos...) =>
+          data =
+            pub_key: @settings.publicKey
+          for info, i in infos
+            data["files[#{i}]"] = info.uuid
+          $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
+            .then(df.resolve, df.reject)
+      else
+        df.reject()
       return df.promise()
 
 
