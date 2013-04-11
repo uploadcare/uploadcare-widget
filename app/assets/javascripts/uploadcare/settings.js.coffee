@@ -83,7 +83,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   defaults =
     'cdn-base': 'https://ucarecdn.com'
-    'crop': false
+    'crop': 'disabled'
     'images-only': false
     'live': true
     'locale': null
