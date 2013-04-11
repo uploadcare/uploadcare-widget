@@ -47,12 +47,3 @@ namespace 'uploadcare', (ns) ->
       unless $.isArray(uuids)
         uuids = [uuids]
       new f.UploadedFile(settings, uuid) for uuid in uuids
-
-  ns.fileGroupFrom = (type, data, settings) ->
-    switch type
-      when 'files'
-        return new f.FileGroup(data)
-      when 'uploaded'
-        return null # TODO: restore group from group id/url
-      
-    

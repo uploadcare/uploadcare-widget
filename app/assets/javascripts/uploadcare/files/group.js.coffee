@@ -114,6 +114,22 @@ namespace 'uploadcare.files', (ns) ->
       return df.promise()
 
 
+namespace 'uploadcare', (ns) ->
+
+  ns.FileGroup = (filesAndGroups = [], settings) ->
+    files = []
+    for item in filesAndGroups
+      if utils.isFile(item)
+        files.push item
+      else if utils.isFileGroup(item)
+        for file in item.file
+          files.push file
+    return new uploadcare.files.FileGroup files, settings
+
+  ns.loadFileGroup = (groupIdOrUrl, settings) ->
+    # TODO
+
+
 namespace 'uploadcare.utils', (utils) ->
 
   utils.isFileGroup = (obj) ->
@@ -124,17 +140,17 @@ namespace 'uploadcare.utils', (utils) ->
   #   group CDN-URL
   #   array of what utils.anyToFile() can take
   #   FileGroup object
-  # to FileGroup object
+  # to FileGroup object (or promise with FileGroup object)
   utils.anyToFileGroup = (value, settings) ->
     if value
       if $.isArray(value)
         files = utils.anyToFile(item, settings) for item in value
-        uploadcare.fileGroupFrom('files', files, settings)
+        uploadcare.FileGroup(files, settings)
       else
         if utils.isFileGroup(value)
           value
         else
-          uploadcare.fileGroupFrom('uploaded', value, settings)
+          uploadcare.loadFileGroup(value, settings)
     else
       null
 

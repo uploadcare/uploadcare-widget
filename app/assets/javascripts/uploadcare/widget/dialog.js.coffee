@@ -46,11 +46,7 @@ namespace 'uploadcare', (ns) ->
         currentDialogPr = null
 
     filter = if settings.multiple
-      (files) ->
-        if files and files.length
-          uploadcare.fileGroupFrom('files', files, settings)
-        else
-          null
+      (files) -> uploadcare.FileGroup(files, settings)
     else
       (files) -> files[0]
 

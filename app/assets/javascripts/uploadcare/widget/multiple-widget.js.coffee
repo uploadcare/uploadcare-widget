@@ -27,7 +27,7 @@ namespace 'uploadcare.widget', (ns) ->
     __setGroup: (group) =>
       unless utils.isFileGroupsEqual @currentGroup, group
         @__reset()
-        if group
+        if group and group.files().length
           @currentGroup = group
           @__watchCurrentObject()
 
@@ -56,7 +56,7 @@ namespace 'uploadcare.widget', (ns) ->
       if @settings.previewStep
         uploadcare.openDialog(files, @settings).done(@__setGroup)
       else
-        @__setGroup uploadcare.fileGroupFrom('files', files, @settings)
+        @__setGroup uploadcare.FileGroup(files, @settings)
 
     openDialog: (tab) ->
       uploadcare.openDialog(@currentGroup, tab, @settings)
