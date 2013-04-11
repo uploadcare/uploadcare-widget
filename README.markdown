@@ -32,7 +32,7 @@ with [Bundler](http://gembundler.com/).
 
 ## Development
 
-Clone the repository, and go to `test/dummy/`. There is a simple Rails site. Run it:
+Clone the repository, and go to `test/dummy/`. There is a simple Rails app. Run it:
 
     bundle install
     bundle update
@@ -42,10 +42,10 @@ Open http://0.0.0.0:3000/ . Follow any link.
 There's going to be a widget or three. Edit code and reload page :-)
 
 
-## Tests
+## Testing
 
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
-installed under `test/dummy/` Rails application.
+installed under the `test/dummy/` Rails app.
 
 To run tests in your browser go to http://0.0.0.0:3000/jasmine.
 
@@ -54,7 +54,7 @@ For more information see
 
 ### guard-jasmine
 
-To run tests in console you must first 
+To run tests in a terminal you must first 
 [install phantomjs](https://github.com/netzpirat/guard-jasmine#phantomjs).
 
 Then you have two options:
@@ -62,8 +62,9 @@ Then you have two options:
   - run `bundle exec guard start`
   - run `bundle exec guard-jasmine`
 
-First for continuous tests execution, second runs tests just once.
-Both should be ran from `test/dummy/` directory.
+The first one is for continuous tests execution,
+the second one runs tests just once.
+Both should be executed from the `test/dummy/` directory.
 
-Read [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
+See [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
 for more information.
