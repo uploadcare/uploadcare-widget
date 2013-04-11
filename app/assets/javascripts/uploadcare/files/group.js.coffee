@@ -12,44 +12,24 @@ namespace 'uploadcare.files', (ns) ->
 
     constructor: (files, settings) ->
       @settings = s.build settings
-      @__files = (file for file in files when file)
+      @__fileColl = new utils.CollectionOfPromises(files)
+
+      @__allFilesDf = $.when @__fileColl.get()...
+      @__fileInfosDf = do =>
+        files = for file in @__fileColl.get()
+          file.then null, (err, info) -> $.when(info)
+        $.when(files...)
 
       @__createGroupDf = $.Deferred()
       @__initApiDeferred()
 
-    # check if two groups contains same files in same order
-    equal: (group) ->
-      if group
-        filesA = @__files
-        filesB = group.files()
-        return false if filesA.length isnt filesB.length
-        for file, i in filesA
-          return false if file isnt filesB[i]
-        return true 
-      else
-        return false
-
-    # returns copy of @__files
     files: ->
-      @__files.slice(0)
-
-    add: (file) ->
-      if file
-        new ns.FileGroup @files().push(file), @settings
-      else
-        this
-
-    remove: (file) ->
-      files = @files()
-      if utils.remove(files, file)
-        return new ns.FileGroup files, @settings
-      else
-        this
+      @__fileColl.get()
 
     __save: ->
       unless @__saved
         @__saved = true
-        $.when(@__files...).done =>
+        @__allFilesDf.done =>
           @__createGroup()
             .done (groupInfo) =>
               @__uuid = groupInfo.id
@@ -64,12 +44,11 @@ namespace 'uploadcare.files', (ns) ->
     # returns object similar to File object
     promise: ->
       @__save()
-      @__apiDf.promise()      
+      @__apiDf.promise()
 
     __initApiDeferred: ->
       @__apiDf = $.Deferred()
       @__progressState = 'uploading'
-      @__progressInfos = []
 
       reject = (err) =>
         @__buildInfo (info) =>
@@ -79,10 +58,10 @@ namespace 'uploadcare.files', (ns) ->
       notify = =>
         @__apiDf.notify @__progressInfo()
         
-      $.when(@__files...)
-        .progress (progressInfos...) =>
-          @__progressInfos = progressInfos
-          notify()
+      notify()
+      @__fileColl.onAnyProgress.add notify
+
+      @__allFilesDf
         .done =>
           @__progressState = 'uploaded'
           notify()
@@ -97,27 +76,23 @@ namespace 'uploadcare.files', (ns) ->
 
     __progressInfo: ->
       progress = 0
-      for progressInfo in @__progressInfos
-        progress += (progressInfo?.progress or 0) / @__progressInfos.length
+      progressInfos = @__fileColl.lastProgresses()
+      for progressInfo in progressInfos
+        progress += (progressInfo?.progress or 0) / progressInfos.length
       state: @__progressState
       uploadProgress: progress
       progress: if @__progressState == 'ready' then 1 else progress * 0.9
       incompleteFileInfo: {}
 
-    __fileInfos: (cb) ->
-      files = for file in @__files
-        file.then null, (err, info) -> $.when(info)
-      $.when(files...).done cb
-
     __buildInfo: (cb) ->
       info = 
         uuid: @__uuid
         cdnUrl: "#{@settings.cdnBase}/#{@__uuid}/"
-        name: t('file', @__files.length)
+        name: t('file', @__fileColl.length())
         size: 0
         isImage: true
         isStored: true
-      @__fileInfos (infos...) ->
+      @__fileInfosDf.done (infos...) ->
         for _info in infos
           info.size += _info.size
           info.isImage = false if !_info.isImage
@@ -126,8 +101,8 @@ namespace 'uploadcare.files', (ns) ->
 
     __createGroup: ->
       df = $.Deferred()
-      if @__files.length
-        @__fileInfos (infos...) =>
+      if @__fileColl.length()
+        @__fileInfosDf.done (infos...) =>
           data =
             pub_key: @settings.publicKey
           for info, i in infos
@@ -142,7 +117,7 @@ namespace 'uploadcare.files', (ns) ->
 namespace 'uploadcare.utils', (utils) ->
 
   utils.isFileGroup = (obj) ->
-    return obj and obj.add and obj.equal and obj.promise
+    return obj and obj.files and obj.promise
 
   # Converts any of:
   #   group ID
@@ -162,3 +137,22 @@ namespace 'uploadcare.utils', (utils) ->
           uploadcare.fileGroupFrom('uploaded', value, settings)
     else
       null
+
+  # check if two groups contains same files in same order
+  utils.isFileGroupsEqual = (group1, group2) ->
+    if group1 == group2
+      true
+    else
+      if utils.isFileGroup(group1) and utils.isFileGroup(group2)
+        files1 = group1.files()
+        files2 = group2.files()
+        if files1.length isnt files2.length
+          false
+        else
+          mismatches = (1 for file, i in files1 when file isnt files2[i])
+          if mismatches.length
+            false
+          else
+            true
+      else
+        false

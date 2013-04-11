@@ -35,7 +35,21 @@ namespace 'uploadcare.utils', (utils) ->
       @__items.length
 
 
-  class utils.CollectionOfPromises extends utils.Collection
+  class utils.UniqCollection extends utils.Collection
+
+    add: (item) ->
+      return if item in @__items
+      super
+
+
+  class utils.NotNullUniqCollection extends utils.UniqCollection
+
+    add: (item) ->
+      return unless item?
+      super
+
+
+  class utils.CollectionOfPromises extends utils.NotNullUniqCollection
 
     constructor: ->
       @onAnyDone = $.Callbacks()

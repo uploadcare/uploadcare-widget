@@ -25,9 +25,7 @@ namespace 'uploadcare.widget', (ns) ->
       @currentGroup?.promise()
 
     __setGroup: (group) =>
-      equal = group and @currentGroup and @currentGroup.equal(group)
-      bothNull = not group and not @currentGroup
-      unless equal or bothNull
+      unless utils.isFileGroupsEqual @currentGroup, group
         @__reset()
         if group
           @currentGroup = group
@@ -64,7 +62,7 @@ namespace 'uploadcare.widget', (ns) ->
       uploadcare.openDialog(@currentGroup, tab, @settings)
         .done(@__setGroup)
         .fail (group) =>
-          unless group?.equal(@currentGroup)
+          unless utils.isFileGroupsEqual group, @currentGroup
             @__setGroup null
     
 
