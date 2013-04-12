@@ -22,13 +22,13 @@ namespace 'uploadcare.files', (ns) ->
 
 
   class ns.ReadyFile extends ns.BaseFile
-    constructor: (settings, @fileData) ->
+    constructor: (settings, @__fileData) ->
       super
-      @fileId = @fileData.file_id
+      @fileId = @__fileData.file_id
       @__uploadDf.resolve()
 
     __startUpload: ->
       # nothing to do
 
     __requestInfo: ->
-      @__handleFileData(@fileData)
+      @__handleFileData(@__fileData)

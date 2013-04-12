@@ -132,7 +132,6 @@ namespace 'uploadcare.files', (ns) ->
 namespace 'uploadcare', (ns) ->
 
   ns.FileGroup = (filesAndGroups = [], settings) ->
-    settings = s.build settings
     files = []
     for item in filesAndGroups
       if utils.isFile(item)
@@ -145,9 +144,7 @@ namespace 'uploadcare', (ns) ->
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
     settings = s.build settings
     df = $.Deferred()
-
     id = utils.groupIdRegex.exec(groupIdOrUrl)
-
     if id
       data =
         pub_key: settings.publicKey
@@ -161,7 +158,6 @@ namespace 'uploadcare', (ns) ->
             df.resolve(new uploadcare.files.SavedFileGroup data, settings)
     else
       df.reject()
-
     df.promise()
 
 
@@ -177,7 +173,6 @@ namespace 'uploadcare.utils', (utils) ->
   #   FileGroup object
   # to FileGroup object (returned through promise)
   utils.anyToFileGroup = (value, settings) ->
-    settings = s.build settings
     if value
       if $.isArray(value)
         files = utils.anyToFile(item, settings) for item in value
