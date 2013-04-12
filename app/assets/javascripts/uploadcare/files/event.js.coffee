@@ -26,6 +26,7 @@ namespace 'uploadcare.files', (ns) ->
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
       formData.append('UPLOADCARE_FILE_ID', @fileId)
+      formData.append('UPLOADCARE_STORE', +@settings.autostore)
       formData.append('file', @__file)
 
       fail = =>
@@ -55,6 +56,8 @@ namespace 'uploadcare.files', (ns) ->
         error: fail
         success: (data) =>
           if data?.error
+            if @settings.autostore && /autostore/i.test(data.error.content)
+              utils.commonWarning('autostore')
             return fail()
           @__uploadDf.resolve(this)
 
