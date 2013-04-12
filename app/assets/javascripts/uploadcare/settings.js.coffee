@@ -1,4 +1,5 @@
 {
+  expose
   namespace,
   utils,
   jQuery: $
@@ -33,9 +34,21 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   normalize = (settings) ->
-    arrayOptions settings, ['tabs']
-    urlOptions settings, ['urlBase', 'socialBase', 'cdnBase']
-    flagOptions settings, ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
+    arrayOptions settings, [
+      'tabs'
+    ]
+    urlOptions settings, [
+      'cdnBase',
+      'socialBase',
+      'urlBase'
+    ]
+    flagOptions settings, [
+      'autostore',
+      'imagesOnly',
+      'multiple',
+      'pathValue',
+      'previewStep'
+    ]
 
     if settings.multiple
       settings.crop = 'disabled'
@@ -76,45 +89,50 @@ namespace 'uploadcare.settings', (ns) ->
     settings
 
 
-  ns.globals = utils.once ->
-    defaults =
-      'cdn-base': 'https://ucarecdn.com'
-      'crop': false
-      'images-only': false
-      'live': true
-      'locale': null
-      'locale-pluralize': null
-      'locale-translations': null
-      'manual-start': false
-      'multiple': false
-      'path-value': false
-      'preview-step': false
-      'public-key': null
-      'pusher-key': '79ae88bd931ea68464d9'
-      'social-base': 'https://social.uploadcare.com'
-      'tabs': 'file url facebook dropbox gdrive instagram'
-      'url-base': 'https://upload.uploadcare.com'
+  defaults =
+    'autostore': false
+    'cdn-base': 'https://ucarecdn.com'
+    'crop': 'disabled'
+    'images-only': false
+    'live': true
+    'locale': null
+    'locale-pluralize': null
+    'locale-translations': null
+    'manual-start': false
+    'multiple': false
+    'path-value': false
+    'preview-step': false
+    'public-key': null
+    'pusher-key': '79ae88bd931ea68464d9'
+    'social-base': 'https://social.uploadcare.com'
+    'tabs': 'file url facebook dropbox gdrive instagram'
+    'url-base': 'https://upload.uploadcare.com'
 
+  # Defaults (not normalized)
+  publicDefaults = {}
+  for own key, value of defaults
+    publicDefaults[$.camelCase(key)] = value
+  expose 'defaults', publicDefaults
+
+  # Defaults + global variables
+  ns.globals = utils.once ->
     values = {}
     for own key, fallback of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       values[$.camelCase(key)] = if value? then value else fallback
 
     unless values.publicKey
-      utils.warnOnce """
-        Global public key not set!
-        Falling back to "demopublickey".
-
-        Add this to <head> tag to set your key:
-        <meta name="uploadcare-public-key" content="your_public_key">
-        """
+      utils.commonWarning('publicKey')
       values.publicKey = 'demopublickey'
 
     normalize(values)
 
 
-  ns.defaults = utils.once (settings) ->
+  # Defaults + global variables + global overrides (once from uploadcare.start)
+  # Not publicly-accessible
+  ns.common = utils.once (settings) ->
     normalize $.extend({}, ns.globals(), settings or {})
 
+  # Defaults + global variables + global overrides + local overrides
   ns.build = (settings) ->
-    normalize $.extend({}, ns.defaults(), settings or {})
+    normalize $.extend({}, ns.common(), settings or {})

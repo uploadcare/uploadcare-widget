@@ -36,10 +36,14 @@ namespace 'uploadcare.files', (ns) ->
         data:
           pub_key: @settings.publicKey
           source_url: @__url
+          store: +@settings.autostore
         dataType: 'jsonp'
       .fail(fail)
       .done (data) =>
-        return fail() if data.error
+        if data.error
+          if @settings.autostore && /autostore/i.test(data.error.content)
+            utils.commonWarning('autostore')
+          return fail()
 
         @__token = data.token
         @__pollWatcher.watch @__token
