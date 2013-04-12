@@ -34,12 +34,24 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   normalize = (settings) ->
-    arrayOptions settings, ['tabs']
-    urlOptions settings, ['urlBase', 'socialBase', 'cdnBase']
-    flagOptions settings, ['previewStep', 'multiple', 'imagesOnly', 'pathValue']
+    arrayOptions settings, [
+      'tabs'
+    ]
+    urlOptions settings, [
+      'cdnBase',
+      'socialBase',
+      'urlBase'
+    ]
+    flagOptions settings, [
+      'autostore',
+      'imagesOnly',
+      'multiple',
+      'pathValue',
+      'previewStep'
+    ]
 
     if settings.multiple
-      utils.warnOnce 'Sorry, the multiupload is not working now.'
+      utils.commonWarning('multiupload')
       settings.multiple = false
 
     if settings.multiple
@@ -82,6 +94,7 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   defaults =
+    'autostore': false
     'cdn-base': 'https://ucarecdn.com'
     'crop': 'disabled'
     'images-only': false
@@ -113,13 +126,7 @@ namespace 'uploadcare.settings', (ns) ->
       values[$.camelCase(key)] = if value? then value else fallback
 
     unless values.publicKey
-      utils.warnOnce """
-        Global public key not set!
-        Falling back to "demopublickey".
-
-        Add this to <head> tag to set your key:
-        <meta name="uploadcare-public-key" content="your_public_key">
-        """
+      utils.commonWarning('publicKey')
       values.publicKey = 'demopublickey'
 
     normalize(values)
