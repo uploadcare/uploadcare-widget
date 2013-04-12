@@ -137,7 +137,7 @@ namespace 'uploadcare', (ns) ->
       if utils.isFile(item)
         files.push item
       else if utils.isFileGroup(item)
-        for file in item.file
+        for file in item.files()
           files.push file
     return new uploadcare.files.FileGroup files, settings
 
