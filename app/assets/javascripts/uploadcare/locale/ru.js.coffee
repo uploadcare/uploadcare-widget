@@ -27,7 +27,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           drag: 'Перетащите файл сюда'
           nodrop: 'Загрузка файлов с вашего компьютера'
           or: 'или'
-          button: 'Выбрать файлы'
+          button: 'Выберите файл c компьютера'
           also: 'Вы также можете загрузить файлы используя'
           tabNames:
             facebook: 'Facebook'
