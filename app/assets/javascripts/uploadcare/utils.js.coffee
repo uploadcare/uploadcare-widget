@@ -73,6 +73,7 @@ namespace 'uploadcare.utils', (ns) ->
       v.toString(16)
 
   ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
+  ns.groupIdRegex = new RegExp("#{ns.uuidRegex.source}~[0-9]+", 'i')
   ns.fullUuidRegex = new RegExp("^#{ns.uuidRegex.source}$", 'i')
   ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_,]+\/)+)+/i
 

@@ -19,3 +19,16 @@ namespace 'uploadcare.files', (ns) ->
 
     __startUpload: ->
       # nothing to do
+
+
+  class ns.ReadyFile extends ns.BaseFile
+    constructor: (settings, @fileData) ->
+      super
+      @fileId = @fileData.file_id
+      @__uploadDf.resolve()
+
+    __startUpload: ->
+      # nothing to do
+
+    __requestInfo: ->
+      @__handleFileData(@fileData)

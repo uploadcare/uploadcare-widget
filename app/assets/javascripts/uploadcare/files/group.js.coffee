@@ -108,15 +108,31 @@ namespace 'uploadcare.files', (ns) ->
           for info, i in infos
             data["files[#{i}]"] = info.uuid
           $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
-            .then(df.resolve, df.reject)
+            .fail(df.reject)
+            .done (data) ->
+              if data.error
+                df.reject()
+              else
+                df.resolve(data)
       else
         df.reject()
       return df.promise()
 
 
+  class ns.SavedFileGroup extends ns.FileGroup
+
+    constructor: (@__data, settings) ->
+      files = uploadcare.filesFrom('ready', @__data.files, settings)
+      super(files, settings)
+
+    __createGroup: ->
+      utils.wrapToPromise(@__data)
+
+
 namespace 'uploadcare', (ns) ->
 
   ns.FileGroup = (filesAndGroups = [], settings) ->
+    settings = s.build settings
     files = []
     for item in filesAndGroups
       if utils.isFile(item)
@@ -127,11 +143,25 @@ namespace 'uploadcare', (ns) ->
     return new uploadcare.files.FileGroup files, settings
 
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
-    # TODO
-
-    # fake
+    settings = s.build settings
     df = $.Deferred()
-    setTimeout (-> df.resolve new uploadcare.files.FileGroup [], settings), 2000
+
+    id = utils.groupIdRegex.exec(groupIdOrUrl)
+
+    if id
+      data =
+        pub_key: settings.publicKey
+        group_id: id[0]
+      $.ajax("#{settings.urlBase}/group/info/", {data, dataType: 'jsonp'})
+        .fail(df.reject)
+        .done (data) ->
+          if data.error
+            df.reject()
+          else
+            df.resolve(new uploadcare.files.SavedFileGroup data, settings)
+    else
+      df.reject()
+
     df.promise()
 
 
@@ -147,6 +177,7 @@ namespace 'uploadcare.utils', (utils) ->
   #   FileGroup object
   # to FileGroup object (returned through promise)
   utils.anyToFileGroup = (value, settings) ->
+    settings = s.build settings
     if value
       if $.isArray(value)
         files = utils.anyToFile(item, settings) for item in value

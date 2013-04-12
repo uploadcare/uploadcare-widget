@@ -37,6 +37,19 @@ namespace 'uploadcare.files', (ns) ->
 
     __startUpload: -> throw new Error('not implemented')
 
+    __handleFileData: (data) ->
+      @fileName = data.original_filename
+      @fileSize = data.size
+      @isImage = data.is_image
+      @isStored = data.is_stored or data.is_public
+      @__buildPreviewUrl()
+
+      if @settings.imagesOnly && !@isImage
+        @__infoDf.reject('image', this)
+        return
+
+      @__infoDf.resolve(this)
+
     __requestInfo: =>
       fail = =>
         @__infoDf.reject('info', this)
@@ -48,19 +61,10 @@ namespace 'uploadcare.files', (ns) ->
         dataType: 'jsonp'
       .fail(fail)
       .done (data) =>
-        return fail() if data.error
-
-        @fileName = data.original_filename
-        @fileSize = data.size
-        @isImage = data.is_image
-        @isStored = data.is_stored
-        @__buildPreviewUrl()
-
-        if @settings.imagesOnly && !@isImage
-          @__infoDf.reject('image', this)
-          return
-
-        @__infoDf.resolve(this)
+        if data.error
+          fail()
+        else
+          @__handleFileData(data)
 
     __buildPreviewUrl: ->
       if @__tmpFinalPreviewUrl

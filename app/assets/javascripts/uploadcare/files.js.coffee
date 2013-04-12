@@ -47,3 +47,7 @@ namespace 'uploadcare', (ns) ->
       unless $.isArray(uuids)
         uuids = [uuids]
       new f.UploadedFile(settings, uuid) for uuid in uuids
+    ready: (settings, arrayOfFileData) ->
+      unless $.isArray(arrayOfFileData)
+        arrayOfFileData = [arrayOfFileData]
+      new f.ReadyFile(settings, fileData) for fileData in arrayOfFileData
