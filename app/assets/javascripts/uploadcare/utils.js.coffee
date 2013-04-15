@@ -129,10 +129,10 @@ namespace 'uploadcare.utils', (ns) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error
         text = data.error.content or data.error
-        ns.warn(text)
+        ns.warn("JSONP error: #{text}")
         $.Deferred().reject(text)
       else
         data
     , (_, textStatus, errorThrown) -> 
-      "Network error: #{textStatus} (#{errorThrown})"
+      "JSONP unexpected error: #{textStatus} (#{errorThrown})"
 
