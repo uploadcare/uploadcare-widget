@@ -26,7 +26,8 @@ namespace 'uploadcare.files', (ns) ->
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
       formData.append('UPLOADCARE_FILE_ID', @fileId)
-      formData.append('UPLOADCARE_STORE', +@settings.autostore)
+      if @settings.autostore
+        formData.append('UPLOADCARE_STORE', 1)
       formData.append('file', @__file)
 
       fail = =>

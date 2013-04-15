@@ -32,11 +32,14 @@ namespace 'uploadcare.files', (ns) ->
       fail = =>
         @__state('error')
 
+      data = 
+        pub_key: @settings.publicKey
+        source_url: @__url
+      if @settings.autostore
+        data.store = 1
+
       $.ajax "#{@settings.urlBase}/from_url/",
-        data:
-          pub_key: @settings.publicKey
-          source_url: @__url
-          store: +@settings.autostore
+        data: data
         dataType: 'jsonp'
       .fail(fail)
       .done (data) =>
