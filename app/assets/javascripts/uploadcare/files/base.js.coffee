@@ -40,9 +40,8 @@ namespace 'uploadcare.files', (ns) ->
 
     __requestInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-        data:
-          file_id: @fileId
-          pub_key: @settings.publicKey
+        file_id: @fileId, 
+        pub_key: @settings.publicKey
       .fail =>
         @__infoDf.reject('info', this)
       .done (data) =>

@@ -30,10 +30,9 @@ namespace 'uploadcare.files', (ns) ->
       @__state('start')
 
       utils.jsonp "#{@settings.urlBase}/from_url/",
-        data:
-          pub_key: @settings.publicKey
-          source_url: @__url
-          store: +@settings.autostore
+        pub_key: @settings.publicKey
+        source_url: @__url
+        store: +@settings.autostore
       .fail (error) =>
         if @settings.autostore && /autostore/i.test(error)
           utils.commonWarning('autostore')

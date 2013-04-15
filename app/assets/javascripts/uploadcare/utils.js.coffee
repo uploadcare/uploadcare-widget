@@ -123,13 +123,14 @@ namespace 'uploadcare.utils', (ns) ->
     if console and console.warn
       console.warn msg
     else
-      ns.log msg 
+      ns.log msg
 
   ns.jsonp = (url, data) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error
-        ns.warn data.error.content
-        $.Deferred().reject(data.error.content)
+        text = data.error.content or data.error
+        ns.warn(text)
+        $.Deferred().reject(text)
       else
         data
     , (_, textStatus, errorThrown) -> 
