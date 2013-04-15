@@ -118,6 +118,14 @@ namespace 'uploadcare.files', (ns) ->
         df.reject()
       return df.promise()
 
+    api: ->
+      unless @__api
+        @__api = utils.bindAll this, [
+          'promise'
+          'files'
+        ]
+      @__api
+
 
   class ns.SavedFileGroup extends ns.FileGroup
 
@@ -139,7 +147,7 @@ namespace 'uploadcare', (ns) ->
       else if utils.isFileGroup(item)
         for file in item.files()
           files.push file
-    return new uploadcare.files.FileGroup files, settings
+    return new uploadcare.files.FileGroup(files, settings).api()
 
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
     settings = s.build settings
@@ -155,7 +163,7 @@ namespace 'uploadcare', (ns) ->
           if data.error
             df.reject()
           else
-            df.resolve(new uploadcare.files.SavedFileGroup data, settings)
+            df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
     else
       df.reject()
     df.promise()
