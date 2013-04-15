@@ -29,22 +29,16 @@ namespace 'uploadcare.files', (ns) ->
 
       @__state('start')
 
-      fail = =>
-        @__state('error')
-
-      $.ajax "#{@settings.urlBase}/from_url/",
+      utils.jsonp "#{@settings.urlBase}/from_url/",
         data:
           pub_key: @settings.publicKey
           source_url: @__url
           store: +@settings.autostore
-        dataType: 'jsonp'
-      .fail(fail)
+      .fail (error) =>
+        if @settings.autostore && /autostore/i.test(error)
+          utils.commonWarning('autostore')
+        @__state('error')
       .done (data) =>
-        if data.error
-          if @settings.autostore && /autostore/i.test(data.error.content)
-            utils.commonWarning('autostore')
-          return fail()
-
         @__token = data.token
         @__pollWatcher.watch @__token
         @__pusherWatcher.watch @__token
@@ -121,13 +115,8 @@ namespace 'uploadcare.files', (ns) ->
       @uploader.__state 'error'
 
     __checkStatus: (callback) ->
-      fail = =>
-        @__error()
-
-      $.ajax "#{@settings.urlBase}/status/",
-        data: {'token': @token}
-        dataType: 'jsonp'
-      .fail(fail)
-      .done (data) ->
-        return fail() if data.error
-        callback(data)
+      utils.jsonp("#{@settings.urlBase}/status/", {@token})
+        .fail (error) =>
+          @__error()
+        .done (data) ->
+          callback(data)

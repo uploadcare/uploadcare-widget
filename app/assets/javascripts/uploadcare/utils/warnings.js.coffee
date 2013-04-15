@@ -8,7 +8,7 @@ namespace 'uploadcare.utils', (ns) ->
   ns.warnOnce = (msg) ->
     unless messages[msg]?
       messages[msg] = true
-      console.warn(msg)
+      ns.warn(msg)
 
   common =
     autostore: """

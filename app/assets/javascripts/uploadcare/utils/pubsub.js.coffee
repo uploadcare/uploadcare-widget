@@ -74,12 +74,8 @@ uploadcare.namespace 'uploadcare.utils.pubsub', (ns) ->
 
     __checkStatus: ->
 
-      fail = =>
-        @ps.__update {score: -1, state: 'error'}
-
-      $.ajax (@ps.pollUrlConstructor @ps.channel, @ps.topic),
-        dataType: 'jsonp'
-      .fail(fail)
-      .done (data) =>
-        return fail() if data.error
-        @ps.__update data
+      utils.jsonp(@ps.pollUrlConstructor(@ps.channel, @ps.topic), {})
+        .fail =>
+          @ps.__update {score: -1, state: 'error'}
+        .done (data) =>
+          @ps.__update data

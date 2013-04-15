@@ -1,7 +1,8 @@
 {
   namespace,
   settings: s,
-  jQuery: $
+  jQuery: $,
+  utils
 } = uploadcare
 
 namespace 'uploadcare.files', (ns) ->
@@ -38,18 +39,13 @@ namespace 'uploadcare.files', (ns) ->
     __startUpload: -> throw new Error('not implemented')
 
     __requestInfo: =>
-      fail = =>
-        @__infoDf.reject('info', this)
-
-      $.ajax "#{@settings.urlBase}/info/",
+      utils.jsonp "#{@settings.urlBase}/info/",
         data:
           file_id: @fileId
           pub_key: @settings.publicKey
-        dataType: 'jsonp'
-      .fail(fail)
+      .fail =>
+        @__infoDf.reject('info', this)
       .done (data) =>
-        return fail() if data.error
-
         @fileName = data.original_filename
         @fileSize = data.size
         @isImage = data.is_image
