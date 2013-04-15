@@ -21,11 +21,12 @@ namespace 'uploadcare.utils', (ns) ->
     multiupload: 'Sorry, the multiupload is not working now.'
 
     publicKey: """
-      Global public key not set!
-      Falling back to "demopublickey".
+      Global public key not set. Uploads may not work!
+      Add this to the <head> tag to set your key:
 
-      Add this to <head> tag to set your key:
-      <meta name="uploadcare-public-key" content="your_public_key">
+      <script>
+      UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+      </script>
       """
 
   ns.commonWarning = (name) ->

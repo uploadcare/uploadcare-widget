@@ -127,7 +127,6 @@ namespace 'uploadcare.settings', (ns) ->
 
     unless values.publicKey
       utils.commonWarning('publicKey')
-      values.publicKey = 'demopublickey'
 
     normalize(values)
 
