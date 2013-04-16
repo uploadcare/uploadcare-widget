@@ -106,13 +106,9 @@ namespace 'uploadcare.files', (ns) ->
           data =
             pub_key: @settings.publicKey
             files: (info.uuid for info in infos)
-          $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
+          utils.jsonp("#{@settings.urlBase}/group/", data)
             .fail(df.reject)
-            .done (data) ->
-              if data.error
-                df.reject()
-              else
-                df.resolve(data)
+            .done(df.resolve)
       else
         df.reject()
       return df.promise()
@@ -156,13 +152,10 @@ namespace 'uploadcare', (ns) ->
       data =
         pub_key: settings.publicKey
         group_id: id[0]
-      $.ajax("#{settings.urlBase}/group/info/", {data, dataType: 'jsonp'})
+      utils.jsonp("#{settings.urlBase}/group/info/", data)
         .fail(df.reject)
         .done (data) ->
-          if data.error
-            df.reject()
-          else
-            df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
+          df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
     else
       df.reject()
     df.promise()
