@@ -1,5 +1,5 @@
 # = require uploadcare/utils/abilities
-# = require uploadcare/utils/pubsub
+# = require uploadcare/utils/pusher
 # = require uploadcare/utils/collection
 # = require uploadcare/utils/square-image
 # = require uploadcare/utils/warnings
@@ -98,7 +98,6 @@ namespace 'uploadcare.utils', (ns) ->
       $('<input type="file">')
 
     input
-      .on('change', fn)
       .css(
         position: 'absolute'
         top: 0
@@ -115,6 +114,11 @@ namespace 'uploadcare.utils', (ns) ->
         overflow: 'hidden'
       )
       .append(input)
+
+    input.on 'change', (e) ->
+      fn(e)
+      input.detach()
+      ns.fileInput(container, multiple, fn)
 
     # to make it posible to set `cursor:pointer` on button
     # http://stackoverflow.com/a/9182787/478603
@@ -157,3 +161,14 @@ namespace 'uploadcare.utils', (ns) ->
       if value < 512 or i is labels.length - 1
         return "#{prefix}#{value} #{label}#{postfix}" 
       value = Math.round(value / 1024)
+
+  ns.jsonp = (url, data) ->
+    $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
+      if data.error
+        text = data.error.content or data.error
+        ns.warn("JSONP error: #{text}")
+        $.Deferred().reject(text)
+      else
+        data
+    , (_, textStatus, errorThrown) -> 
+      "JSONP unexpected error: #{textStatus} (#{errorThrown})"

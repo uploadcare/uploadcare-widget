@@ -105,7 +105,7 @@ namespace 'uploadcare.settings', (ns) ->
     'public-key': null
     'pusher-key': '79ae88bd931ea68464d9'
     'social-base': 'https://social.uploadcare.com'
-    'tabs': 'file url facebook dropbox gdrive instagram'
+    'tabs': 'file url facebook gdrive instagram'
     'url-base': 'https://upload.uploadcare.com'
 
   # Defaults (not normalized)

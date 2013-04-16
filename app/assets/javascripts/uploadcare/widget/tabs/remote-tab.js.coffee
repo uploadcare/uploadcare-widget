@@ -15,19 +15,20 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           if tab == service
             @createIframe()
 
-        @dialog.fail =>
-          @cleanup()
-
+        $(window).on "message", ({originalEvent: e}) =>
+          goodOrigin = e.origin is @settings.socialBase
+          goodSource = e.source is @iframe?[0]?.contentWindow
+          if goodOrigin and goodSource
+            message = JSON.parse e.data
+            if message.type is 'file-selected'
+              @onSelected.fire 'url', message.url
 
       createIframe: ->
         unless @iframe
-          @windowId = utils.uuid()
-          @createWatcher()
-
-          src =
-            "#{@settings.socialBase}/window/#{@windowId}/" +
-            "#{service}?lang=#{locale.lang}&public_key=#{@settings.publicKey}" +
-            "&widget_version=#{encodeURIComponent(uploadcare.version)}"
+          src = "#{@settings.socialBase}/window/#{service}?" + $.param
+            lang: @settings.locale
+            public_key: @settings.publicKey
+            widget_version: uploadcare.version
           @iframe = $('<iframe>')
             .attr('src', src)
             .css
@@ -37,19 +38,3 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               visibility: 'hidden'
             .appendTo(@content)
             .on 'load', -> $(this).css 'visibility', 'visible'
-
-
-      createWatcher: ->
-        unless @watcher
-          @watcher = new utils.pubsub.PubSub @settings, 'window', @windowId
-          $(@watcher).on('done', (e, state) =>
-            @cleanup()
-            @onSelected.fire 'url', state.url
-          )
-          @watcher.watch()
-
-      cleanup: ->
-        @watcher?.stop()
-        @watcher = null
-        @iframe?.remove()
-        @iframe = null
