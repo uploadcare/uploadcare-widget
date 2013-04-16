@@ -26,8 +26,10 @@ namespace 'uploadcare.settings', (ns) ->
     'tabs': 'file url facebook gdrive instagram'
     'url-base': 'https://upload.uploadcare.com'
 
-  all =
-    'tabs': 'file url facebook dropbox gdrive instagram'
+  presets =
+    'tabs':
+      all: 'file url facebook dropbox gdrive instagram'
+      default: defaults.tabs
 
 
   str2arr = (value) ->
@@ -39,9 +41,10 @@ namespace 'uploadcare.settings', (ns) ->
   arrayOptions = (settings, keys) ->
     for key in keys
       value = str2arr(settings[key])
-      value = str2arr(all[key]) if 'all' in value
-      value.concat(str2arr(defaults[key])) if 'default' in value
-      settings[key] = utils.uniq(value, (x) -> x != 'default')
+      presetList = presets[key]
+      for name, preset of presetList
+        value = value.concat(str2arr(preset)) if name in value
+      settings[key] = utils.uniq(value, (x) -> x not of presetList)
     settings
 
   urlOptions = (settings, keys) ->
