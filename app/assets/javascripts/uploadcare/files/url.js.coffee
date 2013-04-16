@@ -29,30 +29,23 @@ namespace 'uploadcare.files', (ns) ->
 
       @__state('start')
 
-      fail = =>
-        @__state('error')
-
       data = 
         pub_key: @settings.publicKey
         source_url: @__url
       if @settings.autostore
         data.store = 1
 
-      $.ajax "#{@settings.urlBase}/from_url/",
-        data: data
-        dataType: 'jsonp'
-      .fail(fail)
-      .done (data) =>
-        if data.error
-          if @settings.autostore && /autostore/i.test(data.error.content)
+      utils.jsonp("#{@settings.urlBase}/from_url/", data)
+        .fail (error) =>
+          if @settings.autostore && /autostore/i.test(error)
             utils.commonWarning('autostore')
-          return fail()
-
-        @__token = data.token
-        @__pollWatcher.watch @__token
-        @__pusherWatcher.watch @__token
-        $(@__pusherWatcher).on 'started', =>
-          @__pollWatcher.stopWatching()
+          @__state('error')
+        .done (data) =>
+          @__token = data.token
+          @__pollWatcher.watch @__token
+          @__pusherWatcher.watch @__token
+          $(@__pusherWatcher).on 'started', =>
+            @__pollWatcher.stopWatching()
 
       @__uploadDf.always =>
         @__shutdown = true
@@ -124,13 +117,8 @@ namespace 'uploadcare.files', (ns) ->
       @uploader.__state 'error'
 
     __checkStatus: (callback) ->
-      fail = =>
-        @__error()
-
-      $.ajax "#{@settings.urlBase}/status/",
-        data: {'token': @token}
-        dataType: 'jsonp'
-      .fail(fail)
-      .done (data) ->
-        return fail() if data.error
-        callback(data)
+      utils.jsonp("#{@settings.urlBase}/status/", {@token})
+        .fail (error) =>
+          @__error()
+        .done (data) ->
+          callback(data)

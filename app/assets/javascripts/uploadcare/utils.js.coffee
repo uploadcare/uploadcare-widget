@@ -118,3 +118,15 @@ namespace 'uploadcare.utils', (ns) ->
     if URL
       return URL.createObjectURL(object)
     return null
+
+  ns.jsonp = (url, data) ->
+    $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
+      if data.error
+        text = data.error.content or data.error
+        ns.warn("JSONP error: #{text}")
+        $.Deferred().reject(text)
+      else
+        data
+    , (_, textStatus, errorThrown) -> 
+      "JSONP unexpected error: #{textStatus} (#{errorThrown})"
+
