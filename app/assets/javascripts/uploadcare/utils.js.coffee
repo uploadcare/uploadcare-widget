@@ -69,7 +69,6 @@ namespace 'uploadcare.utils', (ns) ->
       $('<input type="file">')
 
     input
-      .on('change', fn)
       .css(
         position: 'absolute'
         top: 0
@@ -86,6 +85,11 @@ namespace 'uploadcare.utils', (ns) ->
         overflow: 'hidden'
       )
       .append(input)
+
+    input.on 'change', (e) ->
+      fn(e)
+      input.detach()
+      ns.fileInput(container, multiple, fn)
 
     # to make it posible to set `cursor:pointer` on button
     # http://stackoverflow.com/a/9182787/478603
