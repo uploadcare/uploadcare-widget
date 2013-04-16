@@ -28,14 +28,14 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           drag: 'Перетащите файл сюда'
           nodrop: 'Загрузка файлов с вашего компьютера'
           or: 'или'
-          button: 'Выбрать файлы'
-          also: 'Вы также можете загрузить файлы используя'
+          button: 'Выберите файл с компьютера'
+          also: 'Вы также можете загрузить файлы, используя:'
           tabNames:
             facebook: 'Facebook'
             dropbox: 'Dropbox'
             gdrive: 'Google Drive'
             instagram: 'Instagram'
-            url: 'Внешнюю ссылку'
+            url: 'Произвольную ссылку'
         url:
           title: 'Файлы с других сайтов'
           line1: 'Загрузите любой файл из сети.'
@@ -52,7 +52,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Пропустить предварительный просмотр'
           regular:
             title: 'Загрузить этот файл?'
-            line1: 'Вы собираетесь загрузить представленный файл.'
+            line1: 'Вы собираетесь загрузить этот файл:'
             line2: 'Пожалуйста, подтвердите.'
           image:
             title: 'Загрузить это изображение?'
@@ -65,7 +65,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               line1: 'Что-то пошло не так во время загрузки.'
               line2: 'Пожалуйста, попробуйте ещё раз.'
             image:
-              title: 'Только изображения'
+              title: 'Только изображения!'
               line1: 'Можно загружать только изображения.'
               line2: 'Попробуйте загрузить другой файл.'
             size:
