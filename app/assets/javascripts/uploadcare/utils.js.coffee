@@ -1,5 +1,5 @@
 # = require uploadcare/utils/abilities
-# = require uploadcare/utils/pubsub
+# = require uploadcare/utils/pusher
 # = require uploadcare/utils/warnings
 
 {
