@@ -33,11 +33,11 @@ namespace 'uploadcare', (ns) ->
     input: (settings, input) ->
       [new f.InputFile(settings, input)]
     url: (settings, urls) ->
+      # We also accept plain UUIDs here for an internally used shortcut.
+      # Typically, you should use the `uploaded` converter for clarity.
       unless $.isArray(urls)
         urls = [urls]
       for url in urls
-        # We also accept plain UUIDs here for an internally used shortcut.
-        # Typically, you should use the `uploaded` converter for clarity.
         cdn = new RegExp("^#{settings.cdnBase}/#{utils.uuidRegex.source}", 'i')
         if utils.fullUuidRegex.test(url) || cdn.test(url)
           new f.UploadedFile settings, url
