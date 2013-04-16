@@ -4,11 +4,21 @@
 
 namespace 'uploadcare.utils', (ns) ->
 
+  ns.log = (msg) ->
+    if console and console.log
+      console.log msg
+
+  ns.warn = (msg) ->
+    if console and console.warn
+      console.warn msg
+    else
+      ns.log msg
+
   messages = {}
   ns.warnOnce = (msg) ->
     unless messages[msg]?
       messages[msg] = true
-      console.warn(msg)
+      ns.warn(msg)
 
   common =
     autostore: """
