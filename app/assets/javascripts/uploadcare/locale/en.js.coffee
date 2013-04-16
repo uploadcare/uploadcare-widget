@@ -13,6 +13,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       info: 'Can’t load info'
       image: 'Only images allowed'
       createGroup: 'Can’t create file group'
+      deleted: 'File was deleted'
     draghere: 'Drop the file here'
     file:
       one: '1 file'

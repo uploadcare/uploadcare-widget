@@ -32,3 +32,12 @@ namespace 'uploadcare.files', (ns) ->
 
     __requestInfo: ->
       @__handleFileData(@__fileData)
+
+
+  class ns.DeletedFile extends ns.BaseFile
+    constructor: ->
+      super
+      @__uploadDf.reject('deleted')
+
+    __startUpload: ->
+      # nothing to do

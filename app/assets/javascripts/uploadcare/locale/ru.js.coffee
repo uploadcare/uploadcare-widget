@@ -12,6 +12,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       info: 'Ошибка при загрузке информации'
       image: 'Разрешены только изображения'
       createGroup: 'Не удалось создать группу файлов'
+      deleted: 'Файл удалён'
     draghere: 'Перетащите файл сюда'
     file:
       one: '1 файл'
