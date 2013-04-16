@@ -8,6 +8,13 @@
 } = uploadcare
 
 namespace 'uploadcare.utils', (ns) ->
+
+  ns.uniq = (arr, cond = -> true) ->
+    seen = {}
+    for item in arr when cond(item) and item not of seen
+      seen[item] = true
+      item
+
   ns.defer = (fn) ->
     setTimeout fn, 0
 

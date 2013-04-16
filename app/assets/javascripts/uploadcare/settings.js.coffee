@@ -7,12 +7,41 @@
 
 namespace 'uploadcare.settings', (ns) ->
 
+  defaults =
+    'autostore': false
+    'cdn-base': 'https://ucarecdn.com'
+    'crop': 'disabled'
+    'images-only': false
+    'live': true
+    'locale': null
+    'locale-pluralize': null
+    'locale-translations': null
+    'manual-start': false
+    'multiple': false
+    'path-value': false
+    'preview-step': false
+    'public-key': null
+    'pusher-key': '79ae88bd931ea68464d9'
+    'social-base': 'https://social.uploadcare.com'
+    'tabs': 'file url facebook gdrive instagram'
+    'url-base': 'https://upload.uploadcare.com'
+
+  all =
+    'tabs': 'file url facebook dropbox gdrive instagram'
+
+
+  str2arr = (value) ->
+    unless $.isArray(value)
+      value = $.trim(value)
+      value = if value then value.split(' ') else []
+    value
+
   arrayOptions = (settings, keys) ->
     for key in keys
-      value = settings[key]
-      unless $.isArray(value)
-        value = $.trim(value)
-        settings[key] = if value then value.split(' ') else []
+      value = str2arr(settings[key])
+      value = str2arr(all[key]) if 'all' in value
+      value.concat(str2arr(defaults[key])) if 'default' in value
+      settings[key] = utils.uniq(value, (x) -> x != 'default')
     settings
 
   urlOptions = (settings, keys) ->
@@ -92,25 +121,6 @@ namespace 'uploadcare.settings', (ns) ->
 
     settings
 
-
-  defaults =
-    'autostore': false
-    'cdn-base': 'https://ucarecdn.com'
-    'crop': 'disabled'
-    'images-only': false
-    'live': true
-    'locale': null
-    'locale-pluralize': null
-    'locale-translations': null
-    'manual-start': false
-    'multiple': false
-    'path-value': false
-    'preview-step': false
-    'public-key': null
-    'pusher-key': '79ae88bd931ea68464d9'
-    'social-base': 'https://social.uploadcare.com'
-    'tabs': 'file url facebook gdrive instagram'
-    'url-base': 'https://upload.uploadcare.com'
 
   # Defaults (not normalized)
   publicDefaults = {}
