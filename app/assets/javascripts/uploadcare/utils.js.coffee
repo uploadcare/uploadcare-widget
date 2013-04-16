@@ -115,16 +115,6 @@ namespace 'uploadcare.utils', (ns) ->
       return URL.createObjectURL(object)
     return null
 
-  ns.log = (msg) ->
-    if console and console.log
-      console.log msg
-
-  ns.warn = (msg) ->
-    if console and console.warn
-      console.warn msg
-    else
-      ns.log msg
-
   ns.jsonp = (url, data) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error
