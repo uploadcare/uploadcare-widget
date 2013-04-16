@@ -15,8 +15,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           if tab == service
             @createIframe()
 
+        nos = (str) -> str.replace(/^https/, 'http')
+
         $(window).on "message", ({originalEvent: e}) =>
-          goodOrigin = e.origin is @settings.socialBase
+          goodOrigin = nos(e.origin) is nos(@settings.socialBase)
           goodSource = e.source is @iframe?[0]?.contentWindow
           if goodOrigin and goodSource
             message = JSON.parse e.data
