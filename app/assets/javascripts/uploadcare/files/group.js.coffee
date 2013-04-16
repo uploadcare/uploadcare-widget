@@ -105,8 +105,7 @@ namespace 'uploadcare.files', (ns) ->
         @__fileInfosDf.done (infos...) =>
           data =
             pub_key: @settings.publicKey
-          for info, i in infos
-            data["files[#{i}]"] = info.uuid
+            files: (info.uuid for info in infos)
           $.ajax("#{@settings.urlBase}/group/", {data, dataType: 'jsonp'})
             .fail(df.reject)
             .done (data) ->
