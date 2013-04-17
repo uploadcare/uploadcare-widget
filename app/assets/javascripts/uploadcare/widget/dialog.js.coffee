@@ -20,7 +20,7 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.MULTIPLE_UPLOAD_FILES_LIMIT = 3
+  ns.MULTIPLE_UPLOAD_FILES_LIMIT = 30
 
   currentDialogPr = null
 
