@@ -24,6 +24,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'Удалить'
       file: 'Компьютер'
     dialog:
+      done: 'Готово'
+      showFiles: 'Показать файлы'
       tabs:
         file:
           drag: 'Перетащите файл сюда'

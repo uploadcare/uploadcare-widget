@@ -14,7 +14,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       image: 'Only images allowed'
       createGroup: 'Can’t create file group'
       deleted: 'File was deleted'
-    draghere: 'Drop the file here'
+    draghere: 'Drop a file here'
     file:
       one: '1 file'
       other: '%1 files'
@@ -23,6 +23,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'Remove'
       file: 'Computer'
     dialog:
+      done: 'Done'
+      showFiles: 'Show files'
       tabs:
         file:
           drag: 'Drop a file here'
@@ -73,9 +75,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               line1: 'The file you selected exceeds the 100 MB limit.'
               line2: 'Please try again with another file.'
           multiple:
-            title: 'You’ve choosen'
-            question: 'Would you like to add all of these files?'
-            toManyFiles: 'You’ve choosen to many files. %max% is maximum. Remove some.'
+            title: 'You’ve chosen'
+            question: 'Do you want to add all of these files?'
+            toManyFiles: 'You’ve chosen to many files. %max% is maximum. Please remove some of them.'
             clear: 'Remove all'
             done: 'Yes'
       footer:
