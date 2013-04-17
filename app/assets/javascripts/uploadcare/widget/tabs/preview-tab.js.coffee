@@ -92,31 +92,3 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       if circleEl.length
         circle = new progress.Circle circleEl
         circle.listen @file
-
-# size = 28
-# circleEl = $('<div>')
-#   .appendTo(tabButton)
-#   .css(
-#     position: 'absolute'
-#     top: '50%'
-#     left: '50%'
-#     marginTop: size / -2
-#     marginLeft: size / -2
-#     width: size
-#     height: size
-#   )
-
-# circleDf = $.Deferred()
-
-# update = =>
-#   infos = @files.lastProgresses()
-#   progress = 0
-#   for progressInfo in infos
-#     progress += (progressInfo?.progress or 0) / infos.length
-#   circleDf.notify {progress}
-
-# @files.onAnyProgress.add update
-# @files.onAdd.add update
-# @files.onRemove.add update
-
-# new Circle(circleEl).listen circleDf.promise(), 'progress'
