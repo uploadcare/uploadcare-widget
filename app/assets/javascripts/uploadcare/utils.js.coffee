@@ -9,11 +9,15 @@
 
 namespace 'uploadcare.utils', (ns) ->
 
+  own = Object.prototype.hasOwnProperty
+  ns.own = (o, prop) ->
+    own.call(o, prop)
+
   ns.uniq = (arr, cond = -> true) ->
-    seen = {}
-    for item in arr when cond(item) and item not of seen
-      seen[item] = true
-      item
+    result = []
+    for item in arr when cond(item) and item not in result
+      result.push(item)
+    result
 
   ns.defer = (fn) ->
     setTimeout fn, 0

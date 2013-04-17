@@ -42,9 +42,9 @@ namespace 'uploadcare.settings', (ns) ->
     for key in keys
       value = str2arr(settings[key])
       presetList = presets[key]
-      for name, preset of presetList
+      for own name, preset of presetList
         value = value.concat(str2arr(preset)) if name in value
-      settings[key] = utils.uniq(value, (x) -> x not of presetList)
+      settings[key] = utils.uniq(value, (x) -> not utils.own(presetList, x))
     settings
 
   urlOptions = (settings, keys) ->
