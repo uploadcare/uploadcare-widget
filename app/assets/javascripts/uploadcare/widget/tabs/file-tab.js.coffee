@@ -16,7 +16,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __initDragNDrop: ->
       dropArea = @content.find('@uploadcare-drop-area')
       if utils.abilities.fileDragAndDrop
-        dragdrop.receiveDrop @onSelected.fire, dropArea
+        dragdrop.receiveDrop (type, data) =>
+          @onSelected.fire type, data
+          @onGoToPreview.fire()
+        , dropArea
         className = 'draganddrop'
       else
         className = 'no-draganddrop'
@@ -26,3 +29,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileButton = @content.find('@uploadcare-dialog-browse-file')
       utils.fileInput fileButton, @settings.multiple, (e) =>
         @onSelected.fire 'event', e
+        @onGoToPreview.fire()

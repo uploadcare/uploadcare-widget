@@ -31,5 +31,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @content.find('@uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl input.val()
           @onSelected.fire 'url', url
+          @onGoToPreview.fire()
 
         false

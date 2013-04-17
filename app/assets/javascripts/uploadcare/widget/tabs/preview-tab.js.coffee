@@ -15,7 +15,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     PREFIX = '@uploadcare-dialog-preview-'
 
-    constructor: (@dialog, @settings) ->
+    constructor: (@dialog, @filesColl, @settings) ->
       @onDone = $.Callbacks()
       @onBack = $.Callbacks()
       @__doCrop = @settings.__cropParsed.enabled
@@ -25,13 +25,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
       @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
 
-    setFiles: (filesColl) ->
       if @settings.multiple
-        new ns.GroupView(@content, filesColl)
+        new ns.GroupView(@content, @filesColl)
       else
-        filesColl.onAdd.add @setFile
+        @filesColl.onAdd.add @__setFile
 
-    setFile: (@file) =>
+    __setFile: (@file) =>
       @__setState 'unknown'
       file = @file
       @file

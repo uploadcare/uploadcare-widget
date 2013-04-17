@@ -79,7 +79,6 @@ namespace 'uploadcare', (ns) ->
       @files.onAdd.add =>
         if @settings.previewStep
           @__showTab 'preview'
-          @switchTab 'preview'
         else
           @__resolve()
       @files.onRemove.add =>
@@ -128,20 +127,21 @@ namespace 'uploadcare', (ns) ->
       @__preparePreviewTab()
 
       for tabName in @settings.tabs when tabName not of @tabs
-        @tabs[tabName] = @addTab(tabName).tab
-        if @tabs[tabName]
-          @tabs[tabName].onSelected.add (fileType, data) =>
+        @tabs[tabName] = tab = @addTab(tabName).tab
+        if tab
+          tab.onSelected.add (fileType, data) =>
             if @settings.multiple
               @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
             else
               @files.clear()
-              @files.add(ns.fileFrom(fileType, data, @settings))
+              @files.add ns.fileFrom(fileType, data, @settings)
+          tab.onGoToPreview.add => @switchTab 'preview'
+          tab.onDone.add @__resolve
         else
           throw new Error("No such tab: #{tabName}")
 
     __preparePreviewTab: ->
       {tabButton, tab: @tabs.preview} = @addTab 'preview'
-      @tabs.preview.setFiles @files
       @tabs.preview.onDone.add @__resolve
       @tabs.preview.onBack.add => @files.clear()
       @__hideTab 'preview'
@@ -191,7 +191,7 @@ namespace 'uploadcare', (ns) ->
 
       return false if not tabCls
 
-      tab = new tabCls @dfd.promise(), @settings
+      tab = new tabCls @dfd.promise(), @files, @settings
 
       tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")

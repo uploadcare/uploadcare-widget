@@ -15,16 +15,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           if tab == service
             @createIframe()
 
-        nos = (str) -> str.replace(/^https/, 'http')
-
-        $(window).on "message", ({originalEvent: e}) =>
-          goodOrigin = nos(e.origin) is nos(@settings.socialBase)
-          goodSource = e.source is @iframe?[0]?.contentWindow
-          if goodOrigin and goodSource
-            message = JSON.parse e.data
-            if message.type is 'file-selected'
-              @onSelected.fire 'url', message.url
-
       createIframe: ->
         unless @iframe
           src = "#{@settings.socialBase}/window/#{service}?" + $.param
@@ -40,3 +30,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               visibility: 'hidden'
             .appendTo(@content)
             .on 'load', -> $(this).css 'visibility', 'visible'
+
+          nos = (str) -> str.toLowerCase().replace(/^https/, 'http')
+
+          $(window).on "message", ({originalEvent: e}) =>
+            goodOrigin = nos(e.origin) is nos(@settings.socialBase)
+            goodSource = e.source is @iframe?[0]?.contentWindow
+            if goodOrigin and goodSource
+              message = JSON.parse e.data
+              if message.type is 'file-selected'
+                @onSelected.fire 'url', message.url
