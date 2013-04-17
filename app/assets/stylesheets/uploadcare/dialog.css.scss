@@ -231,17 +231,6 @@ $dialog-free-space-for-close-button: y(2);
       color: $dialog-body-text-color-lighter;
     }
   }
-
-  .uploadcare-dialog-tabs-panel-facebook,
-  .uploadcare-dialog-tabs-panel-dropbox,
-  .uploadcare-dialog-tabs-panel-gdrive,
-  .uploadcare-dialog-tabs-panel-instagram {
-    padding: 0;
-    iframe {
-      border-bottom-right-radius: $dialog-corner-radius;
-      border-top-right-radius: $dialog-corner-radius;
-    }
-  }
 }
 
 .uploadcare-dialog-footer {
@@ -396,7 +385,7 @@ $dialog-button-height: 33px;
 
 // § Preview tab
 
-$dialog-preview-container-height: 455px;
+$dialog-preview-container-height: 456px;
 $dialog-preview-container-width: 775px;
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
@@ -416,7 +405,8 @@ $dialog-preview-container-width: 775px;
   }
 }
 
-.uploadcare-dialog-preview-footer {
+$dialog-footer-height: y(3);
+.uploadcare-dialog-inner-footer {
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
@@ -431,7 +421,7 @@ $dialog-preview-container-width: 775px;
     float: left;
   }
 }
-  .uploadcare-dialog-preview-footer-text {
+  .uploadcare-dialog-inner-footer-text {
     text-align: center;
     color: #85732c;
     font-size: 15px;
@@ -675,3 +665,82 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
       height: 20px;
       cursor: pointer;
     }
+
+
+// § Base source tab
+
+// <div 
+//   class="uploadcare-dialog-source-base-wrap" 
+//   role="uploadcare-dialog-source-base-wrap"
+// ></div>
+
+// <div class="uploadcare-dialog-inner-footer">
+//   <div 
+//     class="uploadcare-dialog-button" 
+//     role="uploadcare-dialog-source-base-show-files">%show files%</div>
+//   <div
+//     class="uploadcare-dialog-button-success" 
+//     role="uploadcare-dialog-source-base-done">%done%</div>
+//   <div class="uploadcare-dialog-inner-footer-text">
+//     <%- t('dialog.tabs.preview.multiple.title') %>
+//     <span role="uploadcare-dialog-source-base-files-count"></span>
+//   </div>
+// </div>
+
+.uploadcare-dialog-source-base-wrap {
+  height: $dialog-body-height;
+  margin: y(-1) x(-1);
+  padding: y(1) x(1);
+  @include prefix(box-sizing, border-box);
+
+  &.uploadcare-dialog-remote-iframe-wrap {
+    padding: 0;
+    iframe {
+      border-top-right-radius: $dialog-corner-radius;
+      border-bottom-right-radius: $dialog-corner-radius;
+      .uploadcare-dialog-multiple & {
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .uploadcare-dialog-multiple & {
+    height: $dialog-body-height - $dialog-footer-height;
+    margin: y(-1) x(-1) 0;
+  }
+}
+
+.uploadcare-dialog-source-base-footer {
+  display: none;
+  .uploadcare-dialog-multiple & {
+    display: block;
+  }
+}
+
+// .uploadcare-dialog-remote-content {
+
+//   .uploadcare-dialog-remote-iframe-wrap {
+//     height: $dialog-body-height;
+//     margin: y(-1) x(-1);
+//     &, iframe {
+//       border-top-right-radius: $dialog-corner-radius;
+//       border-bottom-right-radius: $dialog-corner-radius;
+//     }
+//   }
+//   .uploadcare-dialog-inner-footer {
+//     display: none;
+//   }
+
+//   &.uploadcare-dialog-remote-with-footer {
+//     .uploadcare-dialog-remote-iframe-wrap {
+//       height: $dialog-body-height - $dialog-footer-height;
+//       margin: y(-1) x(-1) 0;
+//       &, iframe {
+//         border-bottom-right-radius: 0;
+//       }
+//     }
+//     .uploadcare-dialog-inner-footer {
+//       display: block;
+//     }
+//   }
+// }

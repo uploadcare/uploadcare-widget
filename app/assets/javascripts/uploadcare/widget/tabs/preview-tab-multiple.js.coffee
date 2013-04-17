@@ -5,20 +5,21 @@
   templates: {tpl},
   jQuery: $,
   crop: {CropWidget},
-  locale: {t}
+  locale: {t},
+  MULTIPLE_UPLOAD_FILES_LIMIT
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
 
-  class ns.GroupView
+  class ns.PreviewTabMultiple extends ns.BasePreviewTab
 
     # dpm — abbreviation of dialog-preview-multiple
     CLASS_PREFIX = 'uploadcare-dpm-'
     ROLE_PREFIX = '@' + CLASS_PREFIX
 
-    FILES_LIMIT = 30
+    constructor: ->
+      super
 
-    constructor: (@container, @fileColl) ->
       @container.append tpl('tab-preview-multiple')
 
       @fileListEl = @__find('file-list')
@@ -26,31 +27,32 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @footerText = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
       
-      @__addFile(file) for file in @fileColl.get()
+      @__addFile(file) for file in @dialogApi.fileColl.get()
 
-      @fileColl.onAdd.add [@__addFile, @__updateContainerView]
-      @fileColl.onRemove.add [@__removeFile, @__updateContainerView]
+      @dialogApi.fileColl.onAdd.add [@__addFile, @__updateContainerView]
+      @dialogApi.fileColl.onRemove.add [@__removeFile, @__updateContainerView]
 
-      @fileColl.onAnyProgress.add @__fileProgress
-      @fileColl.onAnyDone.add @__fileDone
-      @fileColl.onAnyFail.add @__fileFailed
+      @dialogApi.fileColl.onAnyProgress.add @__fileProgress
+      @dialogApi.fileColl.onAnyDone.add @__fileDone
+      @dialogApi.fileColl.onAnyFail.add @__fileFailed
 
     __find: (s, context = @container) ->
       $(ROLE_PREFIX + s, context)
 
     __updateContainerView: =>
-      @filesCountEl.text t('file', @fileColl.length())
+      @filesCountEl.text t('file', @dialogApi.fileColl.length())
 
-      toManyFiles = @fileColl.length() > FILES_LIMIT
+      toManyFiles = @dialogApi.fileColl.length() > MULTIPLE_UPLOAD_FILES_LIMIT
       @doneBtnEl.toggleClass('uploadcare-disabled-el', toManyFiles)
-      @footerText.toggleClass('uploadcare-error', toManyFiles)
-      @footerText.text(
-        if toManyFiles
-          t('dialog.tabs.preview.multiple.toManyFiles')
-            .replace('%max%', FILES_LIMIT)
-        else
-          t('dialog.tabs.preview.multiple.question')
-      )
+      @footerText
+        .toggleClass('uploadcare-error', toManyFiles)
+        .text(
+          if toManyFiles
+            t('dialog.tabs.preview.multiple.toManyFiles')
+              .replace('%max%', MULTIPLE_UPLOAD_FILES_LIMIT)
+          else
+            t('dialog.tabs.preview.multiple.question')
+        )
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
@@ -95,4 +97,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __createFileEl: (file) ->
       $(tpl 'tab-preview-multiple-file')
         .appendTo(@fileListEl)
-        .on('click', ROLE_PREFIX + 'file-remove', (=> @fileColl.remove file))
+        .on('click', ROLE_PREFIX + 'file-remove', (=> @dialogApi.removeFile file))

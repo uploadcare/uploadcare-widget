@@ -1,5 +1,3 @@
-# = require ./preview-tab-multiple
-
 {
   namespace,
   utils,
@@ -11,24 +9,16 @@
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.PreviewTab
+  class ns.PreviewTab extends ns.BasePreviewTab
 
     PREFIX = '@uploadcare-dialog-preview-'
 
-    constructor: (@dialog, @filesColl, @settings) ->
-      @onDone = $.Callbacks()
-      @onBack = $.Callbacks()
+    constructor: ->
+      super
+
       @__doCrop = @settings.__cropParsed.enabled
 
-    setContent: (@content) ->
-      notDisabled = ':not(.uploadcare-disabled-el)'
-      @content.on('click', PREFIX + 'back' + notDisabled, @onBack.fire)
-      @content.on('click', PREFIX + 'done' + notDisabled, @onDone.fire)
-
-      if @settings.multiple
-        new ns.GroupView(@content, @filesColl)
-      else
-        @filesColl.onAdd.add @__setFile
+      @dialogApi.fileColl.onAdd.add @__setFile
 
     __setFile: (@file) =>
       @__setState 'unknown'
@@ -51,7 +41,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __setState: (state, data) ->
       @file.progress utils.once (progressInfo) =>
         data = $.extend {file: progressInfo.incompleteFileInfo}, data
-        @content.empty().append tpl("tab-preview-#{state}", data)
+        @container.empty().append tpl("tab-preview-#{state}", data)
         @__afterRender state
 
     __afterRender: (state) ->
@@ -63,15 +53,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @__initCrop()
 
     __hideDoneButton: ->
-      @content.find(PREFIX + 'done').hide()
+      @container.find(PREFIX + 'done').hide()
 
     __initCrop: ->
       # crop widget can't get container size when container hidden 
       # (dialog hidden) so we need timer here 
       setTimeout (=>
-        img = @content.find(PREFIX + 'image')
+        img = @container.find(PREFIX + 'image')
         container = img.parent()
-        doneButton = @content.find(PREFIX + 'done')
+        doneButton = @container.find(PREFIX + 'done')
         widget = new CropWidget $.extend({}, @settings.__cropParsed, {
           container
           controls: false
@@ -94,11 +84,39 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
         # REFACTOR: separate templates?
         img.remove()
-        @content.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
+        @container.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
       ), 100
 
     __initCircle: ->
-      circleEl = @content.find('@uploadcare-dialog-preview-circle')
+      circleEl = @container.find('@uploadcare-dialog-preview-circle')
       if circleEl.length
         circle = new progress.Circle circleEl
         circle.listen @file
+
+# size = 28
+# circleEl = $('<div>')
+#   .appendTo(tabButton)
+#   .css(
+#     position: 'absolute'
+#     top: '50%'
+#     left: '50%'
+#     marginTop: size / -2
+#     marginLeft: size / -2
+#     width: size
+#     height: size
+#   )
+
+# circleDf = $.Deferred()
+
+# update = =>
+#   infos = @files.lastProgresses()
+#   progress = 0
+#   for progressInfo in infos
+#     progress += (progressInfo?.progress or 0) / infos.length
+#   circleDf.notify {progress}
+
+# @files.onAnyProgress.add update
+# @files.onAdd.add update
+# @files.onRemove.add update
+
+# new Circle(circleEl).listen circleDf.promise(), 'progress'

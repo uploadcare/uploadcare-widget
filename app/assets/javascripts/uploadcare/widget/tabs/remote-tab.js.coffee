@@ -2,20 +2,21 @@
   namespace,
   locale,
   utils,
-  jQuery: $
+  jQuery: $,
+  locale: {t}
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
   ns.RemoteTabFor = (service) ->
-    class RemoteTab extends ns.BaseFileTab
+    class RemoteTab extends ns.BaseSourceTab
 
-      setContent: (@content) ->
+      constructor: ->
+        super
 
-        @dialog.progress (tab) =>
-          if tab == service
-            @createIframe()
+        @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
+        @dialogApi.onSwitchedToMe.add @__createIframe
 
-      createIframe: ->
+      __createIframe: =>
         unless @iframe
           src = "#{@settings.socialBase}/window/#{service}?" + $.param
             lang: @settings.locale
@@ -28,7 +29,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               height: '100%'
               border: 0
               visibility: 'hidden'
-            .appendTo(@content)
+            .appendTo(@wrap)
             .on 'load', -> $(this).css 'visibility', 'visible'
 
           nos = (str) -> str.toLowerCase().replace(/^https/, 'http')
@@ -39,4 +40,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             if goodOrigin and goodSource
               message = JSON.parse e.data
               if message.type is 'file-selected'
-                @onSelected.fire 'url', message.url
+                @dialogApi.addFiles 'url', message.url

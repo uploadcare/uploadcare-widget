@@ -34,6 +34,14 @@ namespace 'uploadcare.utils', (utils) ->
     length: ->
       @__items.length
 
+    readOnly: ->
+      utils.bindAll this, [
+        'get'
+        'length'
+        'onAdd'
+        'onRemove'
+      ]
+
 
   class utils.UniqCollection extends utils.Collection
 
@@ -74,3 +82,11 @@ namespace 'uploadcare.utils', (utils) ->
         handler(@onAnyFail),
         handler(@onAnyProgress)
       )
+
+    readOnly: ->
+      $.extend super(), utils.bindAll this, [
+        'onAnyDone'
+        'onAnyFail'
+        'onAnyProgress'
+        'lastProgresses'
+      ]

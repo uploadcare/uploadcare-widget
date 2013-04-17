@@ -1,32 +1,38 @@
 {
   namespace,
   utils,
-  jQuery: $
+  jQuery: $,
+  templates: {tpl}
 } = uploadcare
 
 {dragdrop} = uploadcare.widget
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.FileTab extends ns.BaseFileTab
+  class ns.FileTab extends ns.BaseSourceTab
 
-    setContent: (@content) ->
+    constructor: ->
+      super
+
+      @wrap.append tpl 'tab-file', {avalibleTabs: @dialogApi.avalibleTabs}
+
+      @wrap.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
+        @dialogApi.switchTab $(e.target).data 'tab'
+
       @__setupFileButton()
       @__initDragNDrop()
 
     __initDragNDrop: ->
-      dropArea = @content.find('@uploadcare-drop-area')
+      dropArea = @wrap.find('@uploadcare-drop-area')
       if utils.abilities.fileDragAndDrop
         dragdrop.receiveDrop (type, data) =>
-          @onSelected.fire type, data
-          @onGoToPreview.fire()
+          @dialogApi.addFiles type, data
         , dropArea
         className = 'draganddrop'
       else
         className = 'no-draganddrop'
-      @content.addClass "uploadcare-#{className}"
+      @wrap.addClass "uploadcare-#{className}"
 
     __setupFileButton: ->
-      fileButton = @content.find('@uploadcare-dialog-browse-file')
+      fileButton = @wrap.find('@uploadcare-dialog-browse-file')
       utils.fileInput fileButton, @settings.multiple, (e) =>
-        @onSelected.fire 'event', e
-        @onGoToPreview.fire()
+        @dialogApi.addFiles 'event', e
