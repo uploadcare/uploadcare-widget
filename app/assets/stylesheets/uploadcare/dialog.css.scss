@@ -669,24 +669,6 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
 
 // § Base source tab
 
-// <div 
-//   class="uploadcare-dialog-source-base-wrap" 
-//   role="uploadcare-dialog-source-base-wrap"
-// ></div>
-
-// <div class="uploadcare-dialog-inner-footer">
-//   <div 
-//     class="uploadcare-dialog-button" 
-//     role="uploadcare-dialog-source-base-show-files">%show files%</div>
-//   <div
-//     class="uploadcare-dialog-button-success" 
-//     role="uploadcare-dialog-source-base-done">%done%</div>
-//   <div class="uploadcare-dialog-inner-footer-text">
-//     <%- t('dialog.tabs.preview.multiple.title') %>
-//     <span role="uploadcare-dialog-source-base-files-count"></span>
-//   </div>
-// </div>
-
 .uploadcare-dialog-source-base-wrap {
   height: $dialog-body-height;
   margin: y(-1) x(-1);
@@ -716,31 +698,3 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
     display: block;
   }
 }
-
-// .uploadcare-dialog-remote-content {
-
-//   .uploadcare-dialog-remote-iframe-wrap {
-//     height: $dialog-body-height;
-//     margin: y(-1) x(-1);
-//     &, iframe {
-//       border-top-right-radius: $dialog-corner-radius;
-//       border-bottom-right-radius: $dialog-corner-radius;
-//     }
-//   }
-//   .uploadcare-dialog-inner-footer {
-//     display: none;
-//   }
-
-//   &.uploadcare-dialog-remote-with-footer {
-//     .uploadcare-dialog-remote-iframe-wrap {
-//       height: $dialog-body-height - $dialog-footer-height;
-//       margin: y(-1) x(-1) 0;
-//       &, iframe {
-//         border-bottom-right-radius: 0;
-//       }
-//     }
-//     .uploadcare-dialog-inner-footer {
-//       display: block;
-//     }
-//   }
-// }
