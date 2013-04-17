@@ -88,7 +88,7 @@ namespace 'uploadcare.utils', (ns) ->
 
     input.on 'change', (e) ->
       fn(e)
-      input.detach()
+      input.remove()
       ns.fileInput(container, multiple, fn)
 
     # to make it posible to set `cursor:pointer` on button
