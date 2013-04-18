@@ -7,12 +7,44 @@
 
 namespace 'uploadcare.settings', (ns) ->
 
+  defaults =
+    'autostore': false
+    'cdn-base': 'https://ucarecdn.com'
+    'crop': 'disabled'
+    'images-only': false
+    'live': true
+    'locale': null
+    'locale-pluralize': null
+    'locale-translations': null
+    'manual-start': false
+    'multiple': false
+    'path-value': false
+    'preview-step': false
+    'public-key': null
+    'pusher-key': '79ae88bd931ea68464d9'
+    'social-base': 'https://social.uploadcare.com'
+    'tabs': 'file url facebook gdrive instagram'
+    'url-base': 'https://upload.uploadcare.com'
+
+  presets =
+    'tabs':
+      all: 'file url facebook dropbox gdrive instagram'
+      default: defaults.tabs
+
+
+  str2arr = (value) ->
+    unless $.isArray(value)
+      value = $.trim(value)
+      value = if value then value.split(' ') else []
+    value
+
   arrayOptions = (settings, keys) ->
     for key in keys
-      value = settings[key]
-      unless $.isArray(value)
-        value = $.trim(value)
-        settings[key] = if value then value.split(' ') else []
+      value = str2arr(settings[key])
+      presetList = presets[key]
+      for own name, preset of presetList
+        value = value.concat(str2arr(preset)) if name in value
+      settings[key] = utils.uniq(value, (x) -> not utils.own(presetList, x))
     settings
 
   urlOptions = (settings, keys) ->
@@ -88,25 +120,6 @@ namespace 'uploadcare.settings', (ns) ->
 
     settings
 
-
-  defaults =
-    'autostore': false
-    'cdn-base': 'https://ucarecdn.com'
-    'crop': 'disabled'
-    'images-only': false
-    'live': true
-    'locale': null
-    'locale-pluralize': null
-    'locale-translations': null
-    'manual-start': false
-    'multiple': false
-    'path-value': false
-    'preview-step': false
-    'public-key': null
-    'pusher-key': '79ae88bd931ea68464d9'
-    'social-base': 'https://social.uploadcare.com'
-    'tabs': 'file url facebook gdrive instagram'
-    'url-base': 'https://upload.uploadcare.com'
 
   # Defaults (not normalized)
   publicDefaults = {}
