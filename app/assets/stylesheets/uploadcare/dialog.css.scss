@@ -149,7 +149,7 @@ $dialog-free-space-for-close-button: y(2);
       }
 
       &:hover {
-        background-color: #ebeced;
+        background-color: #e5e7e8;
         &:after {
           @extend %tab-icons-hover-image;
         }
