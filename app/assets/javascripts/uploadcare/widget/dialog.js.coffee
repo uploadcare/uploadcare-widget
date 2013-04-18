@@ -4,6 +4,7 @@
 # = require ./tabs/url-tab
 # = require ./tabs/remote-tab
 # = require ./tabs/preview-tab
+# = require ./tabs/static-tab
 
 {
   namespace,
@@ -52,9 +53,12 @@ namespace 'uploadcare', (ns) ->
         .appendTo('body')
       
       @__bind()
-      @__prepareTabs()
-      @switchTab(tab || @settings.tabs[0])
-      @__setFile currentFile
+
+      if @settings.publicKey
+        @__prepareTabs(tab)
+        @__setFile currentFile
+      else
+        @__welcome()
 
       @__updateFirstTab()
       @content.fadeIn('fast')
@@ -81,7 +85,7 @@ namespace 'uploadcare', (ns) ->
       @content.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
         @switchTab $(e.target).data('tab')
 
-    __prepareTabs: ->
+    __prepareTabs: (tab) ->
       @tabs = {}
 
       @tabs.preview = @addTab 'preview'
@@ -98,6 +102,8 @@ namespace 'uploadcare', (ns) ->
             @__setFile ns.fileFrom(fileType, data, @settings)
         else
           throw new Error("No such tab: #{tabName}")
+
+      @switchTab(tab || @settings.tabs[0])
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()
@@ -124,6 +130,7 @@ namespace 'uploadcare', (ns) ->
         when 'gdrive' then tabs.RemoteTabFor 'gdrive'
         when 'instagram' then tabs.RemoteTabFor 'instagram'
         when 'preview' then tabs.PreviewTab
+        when 'welcome' then tabs.StaticTab
 
       return false if not tabCls
 
@@ -178,3 +185,6 @@ namespace 'uploadcare', (ns) ->
       @content.find(".uploadcare-dialog-tab-#{tab}").hide()
       @__updateFirstTab()
 
+    __welcome: ->
+      @addTab('welcome')
+      @switchTab('welcome')
