@@ -68,10 +68,6 @@ namespace 'uploadcare', (ns) ->
       else
         files = []
 
-      # FIXME
-      if files.length
-        @settings = $.extend {}, @settings, {previewStep: true}
-
       @dfd = $.Deferred()
       @dfd.always => 
         @__closeDialog()
@@ -82,6 +78,17 @@ namespace 'uploadcare', (ns) ->
         .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
       
       @files = new utils.CollectionOfPromises()
+
+      @__bind()
+      @__prepareTabs()
+      @switchTab(tab || @settings.tabs[0])
+      
+      @files.add(file) for file in files
+
+      if files.length
+        @__showTab 'preview'
+        @switchTab 'preview'
+
       @files.onAdd.add =>
         if @settings.previewStep
           @__showTab 'preview'
@@ -92,12 +99,6 @@ namespace 'uploadcare', (ns) ->
       @files.onRemove.add =>
         if @files.length() == 0
           @__hideTab 'preview'
-
-      @__bind()
-      @__prepareTabs()
-      @switchTab(tab || @settings.tabs[0])
-      
-      @files.add(file) for file in files
 
       @__updateFirstTab()
 
