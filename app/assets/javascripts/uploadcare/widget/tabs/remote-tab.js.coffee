@@ -2,30 +2,29 @@
   namespace,
   locale,
   utils,
-  jQuery: $
+  jQuery: $,
+  locale: {t}
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
   ns.RemoteTabFor = (service) ->
-    class RemoteTab extends ns.BaseFileTab
+    class RemoteTab extends ns.BaseSourceTab
 
-      setContent: (@content) ->
+      constructor: ->
+        super
 
-        @dialog.progress (tab) =>
-          if tab == service
-            @createIframe()
+        @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
+        @dialogApi.onSwitchedToMe.add @__createIframe
 
-        nos = (str) -> str.replace(/^https/, 'http')
+        @dialogApi.onSwitched.add (_, switchedToMe) =>
+          @__sendMessage
+            type: 'visibility-changed'
+            visible: switchedToMe
 
-        $(window).on "message", ({originalEvent: e}) =>
-          goodOrigin = nos(e.origin) is nos(@settings.socialBase)
-          goodSource = e.source is @iframe?[0]?.contentWindow
-          if goodOrigin and goodSource
-            message = JSON.parse e.data
-            if message.type is 'file-selected'
-              @onSelected.fire 'url', message.url
+      __sendMessage: (messageObj) ->
+        @iframe?[0]?.contentWindow?.postMessage JSON.stringify(messageObj), '*'
 
-      createIframe: ->
+      __createIframe: =>
         unless @iframe
           src = "#{@settings.socialBase}/window/#{service}?" + $.param
             lang: @settings.locale
@@ -38,5 +37,19 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               height: '100%'
               border: 0
               visibility: 'hidden'
-            .appendTo(@content)
+            .appendTo(@wrap)
             .on 'load', -> $(this).css 'visibility', 'visible'
+
+          nos = (str) -> str.toLowerCase().replace(/^https/, 'http')
+
+          $(window).on "message", ({originalEvent: e}) =>
+            goodOrigin = nos(e.origin) is nos(@settings.socialBase)
+            goodSource = e.source is @iframe?[0]?.contentWindow
+            if goodOrigin and goodSource
+              try 
+                message = JSON.parse e.data
+              if message?.type is 'file-selected'
+                @dialogApi.addFiles 'url', message.url
+                @__sendMessage
+                  type: 'file-selected-received'
+                  url: message.url

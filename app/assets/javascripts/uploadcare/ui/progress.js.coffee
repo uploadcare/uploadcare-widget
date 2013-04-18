@@ -14,12 +14,14 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
       @element.html(tpl('circle'))
       @pie = @element.find('@uploadcare-widget-status')
+      @center = @element.find('@uploadcare-circle-center')
       @element.addClass 'uploadcare-widget-circle'
 
+      @setColorTheme 'default'
+      
       @size = Math.min(@element.width(), @element.height())
       @pie.width(@size).height(@size)
 
-      @color = @__getSegmentColor()
       @angleOffset = -90
       @raphael = @__initRaphael()
       @path = @raphael.path()
@@ -50,14 +52,39 @@ namespace 'uploadcare.ui.progress', (ns) ->
           .done (uploadedFile) =>
             if file == @observed
               @__update 1, false
+      @
 
 
     reset: (filled = false) ->
       @observed = null
       @__update (if filled then 100 else 0), true
 
-    __update: (val, instant = false) -> # val in [0..1]
+    colorThemes:
+      default:
+        back: '#e1e5e7'
+        front: '#d0bf26'
+        center: '#ffffff'
+      grey:
+        back: '#c5cacd'
+        front: '#a0a3a5'
+      darkGrey:
+        back: '#bfbfbf'
+        front: '#8c8c8c'
+
+    setColorTheme: (theme) ->
+      if $.type(theme) is 'string'
+        theme = @colorThemes[theme]
+      @colorTheme = $.extend {}, @colorThemes.default, theme
+      
+      @pie.css 'background', @colorTheme.back
+      @center.css 'background', @colorTheme.center
+
+      if @raphael
+        @__update()
+
+    __update: (val = @currentVal, instant = false) -> # val in [0..1]
       val = 1 if val > 1
+      @currentVal = val
       delay = @fullDelay * Math.abs(val - @value)
       @value = val
 
@@ -74,17 +101,13 @@ namespace 'uploadcare.ui.progress', (ns) ->
       # There probably is a correct solution to this.
       360 * if value < 1 then value else 0.99999999
 
-    __getSegmentColor: ->
-      @pie.addClass('uploadcare-widget-circle-active')
-      color = @pie.css('background-color')
-      @pie.removeClass('uploadcare-widget-circle-active')
-      return color
-
     __initRaphael: ->
       raphael = uploadcare.Raphael @pie.get(0), @size, @size
-      color = @color
       size = @size
       angleOffset = @angleOffset
+
+      getColor = =>
+        @colorTheme.front
 
       raphael.customAttributes.segment = (angle) ->
         x = size / 2
@@ -101,8 +124,12 @@ namespace 'uploadcare.ui.progress', (ns) ->
         a2 = (a2 % 360) * Math.PI / 180
 
         {
-          path: [["M", x, y], ["l", r * Math.cos(a1), r * Math.sin(a1)], ["A", r, r, 0, +flag, 1, x + r * Math.cos(a2), y + r * Math.sin(a2)], ["z"]],
-          fill: color
+          path: [
+            ["M", x, y]
+            ["l", r * Math.cos(a1), r * Math.sin(a1)]
+            ["A", r, r, 0, +flag, 1, x + r * Math.cos(a2), y + r * Math.sin(a2)], ["z"]
+          ]
+          fill: getColor()
         }
       return raphael
 

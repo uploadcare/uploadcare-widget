@@ -5,10 +5,9 @@
   jQuery: $,
   utils,
   ui: {progress},
+  locale: {t},
+  templates: {tpl}
 } = uploadcare
-
-{t} = uploadcare.locale
-{tpl} = uploadcare.templates
 
 namespace 'uploadcare.widget', (ns) ->
   class ns.Template
@@ -69,7 +68,6 @@ namespace 'uploadcare.widget', (ns) ->
 
     error: (type) ->
       @statusText.text(t("errors.#{type || 'default'}"))
-      @circle.reset()
       @setStatus 'error'
 
     setFileInfo: (info) ->

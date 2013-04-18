@@ -1,4 +1,5 @@
 {
+  utils,
   namespace,
   settings: s,
   jQuery: $
@@ -10,23 +11,39 @@ namespace 'uploadcare', (ns) ->
   ns.initialize = (container = 'body') ->
     initialize $(container).find('@uploadcare-uploader')
 
+  getSettings = (el) ->
+    s.build $(el).data()
+
   initialize = (targets) ->
-    ns.Widget(target) for target in targets
+    for target in targets
+      method = if getSettings(target).multiple
+        'MultipleWidget' 
+      else
+        'Widget'
+      uploadcare[method](target) 
 
   ns.Widget = (target) ->
     el = $(target).eq(0)
-    initializeWidget(el)
+    unless getSettings(el).multiple
+      initializeWidget(el, ns.widget.Widget)
+    else
+      throw new Error 'Widget can\'t be initialized on this element'
 
-  initializeWidget = (el) ->
+  ns.MultipleWidget = (target) ->
+    el = $(target).eq(0)
+    if getSettings(el).multiple
+      initializeWidget(el, ns.widget.MultipleWidget)
+    else
+      throw new Error 'MultipleWidget can\'t be initialized on this element'
+
+  initializeWidget = (el, Widget) ->
     widget = el.data(dataAttr)
     if !widget || el[0] != widget.element[0]
       cleanup(el)
-      widget = new ns.widget.Widget(el)
+      widget = new Widget(el)
       el.data(dataAttr, widget)
       widget.template.content.data(dataAttr, widget.template)
-
     widget.api()
-
 
   cleanup = (el) ->
     el.off('.uploadcare')
