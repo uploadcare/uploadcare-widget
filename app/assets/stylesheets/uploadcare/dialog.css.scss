@@ -415,10 +415,16 @@ $dialog-footer-height: y(3);
   border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
     float: right;
-    margin-right: 0;
   }
   .uploadcare-dialog-button {
     float: left;
+  }
+  .uploadcare-dialog-button-success,
+  .uploadcare-dialog-button {
+    width: x(4.5);
+    padding: 0;
+    text-align: center;
+    margin-right: 0;
   }
 }
   .uploadcare-dialog-inner-footer-text {
