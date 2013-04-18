@@ -126,7 +126,7 @@ namespace 'uploadcare', (ns) ->
         done: @__resolve
         switchTab: @switchTab
       @dfd.progress (name) ->
-        api.onSwitched.fire name
+        api.onSwitched.fire name, (name is tabName)
         if name is tabName
           api.onSwitchedToMe.fire name
       api

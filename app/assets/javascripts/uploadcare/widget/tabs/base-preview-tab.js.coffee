@@ -43,4 +43,31 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAdd.add update
       @dialogApi.fileColl.onRemove.add update
 
-      new Circle(circleEl).listen circleDf.promise(), 'progress'
+      circle = new Circle(circleEl).listen circleDf.promise(), 'progress'
+
+      updateTheme = ->
+        circle.setColorTheme(
+          if tabActive
+            'default'
+          else 
+            if buttonHovered
+              'darkGrey'
+            else
+              'grey'
+        )
+
+      tabActive = false
+      @dialogApi.onSwitched.add (_, switchedToMe) =>
+        tabActive = switchedToMe
+        updateTheme()
+
+      buttonHovered = false
+      @tabButton.hover ->
+        buttonHovered = true
+        updateTheme()
+      , ->
+        buttonHovered = false
+        updateTheme()
+
+
+
