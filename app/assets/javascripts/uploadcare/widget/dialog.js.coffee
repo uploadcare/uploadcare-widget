@@ -1,21 +1,26 @@
 # = require_self
-# = require ./tabs/base-file-tab
+# = require ./tabs/base-source-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
 # = require ./tabs/remote-tab
+# = require ./tabs/base-preview-tab
 # = require ./tabs/preview-tab
+# = require ./tabs/preview-tab-multiple
 
 {
   namespace,
+  utils,
+  locale: {t},
+  templates: {tpl},
+  ui: {progress: {Circle}}
   files,
   settings: s,
   jQuery: $
 } = uploadcare
 
-{t} = uploadcare.locale
-{tpl} = uploadcare.templates
-
 namespace 'uploadcare', (ns) ->
+
+  ns.MULTIPLE_UPLOAD_FILES_LIMIT = 30
 
   currentDialogPr = null
 
@@ -25,23 +30,43 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (currentFile, tab, settings) ->
+  # files - null, or File object, or array of File objects, or FileGroup object
+  # result - File objects or FileGroup object (depends on settings.multiple)
+  ns.openDialog = (files, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
 
     ns.closeDialog()
+
+    if utils.isFileGroup(files)
+      files = files.files()
+
     settings = s.build settings
-    dialog = new Dialog(settings, currentFile, tab)
-    return currentDialogPr = dialog.publicPromise()
+    dialog = new Dialog(settings, files, tab)
+
+    currentDialogPr = dialog.publicPromise()
       .always ->
         currentDialogPr = null
 
-  class Dialog
-    constructor: (@settings, currentFile, tab) ->
+    filter = if settings.multiple
+      (files) -> uploadcare.FileGroup(files, settings)
+    else
+      (files) -> files[0]
 
-      if currentFile
-        @settings = $.extend {}, @settings, {previewStep: true}
+    promise = utils.then(currentDialogPr, filter, filter)
+    promise.reject = currentDialogPr.reject
+
+    return promise
+
+  class Dialog
+    constructor: (@settings, files, tab) ->
+
+      if files 
+        unless $.isArray(files)
+          files = [files]
+      else
+        files = []
 
       @dfd = $.Deferred()
       @dfd.always => 
@@ -50,13 +75,33 @@ namespace 'uploadcare', (ns) ->
       @content = $(tpl('dialog'))
         .hide()
         .appendTo('body')
+        .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
       
+      @files = new utils.CollectionOfPromises()
+
       @__bind()
       @__prepareTabs()
       @switchTab(tab || @settings.tabs[0])
-      @__setFile currentFile
+      
+      @files.add(file) for file in files
+
+      if files.length
+        @__showTab 'preview'
+        @switchTab 'preview'
+
+      @files.onAdd.add =>
+        if @settings.previewStep
+          @__showTab 'preview'
+          unless @settings.multiple
+            @switchTab 'preview'
+        else
+          @__resolve()
+      @files.onRemove.add =>
+        if @files.length() == 0
+          @__hideTab 'preview'
 
       @__updateFirstTab()
+
       @content.fadeIn('fast')
 
     publicPromise: ->
@@ -64,87 +109,90 @@ namespace 'uploadcare', (ns) ->
       promise.reject = @dfd.reject
       return promise
 
+    apiForTab: (tabName) ->
+      api = 
+        avalibleTabs: @settings.tabs
+        fileColl: @files.readOnly()
+        onSwitched: $.Callbacks()
+        onSwitchedToMe: $.Callbacks()
+        addFiles: (fileType, data) =>
+          if @settings.multiple
+            @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
+          else
+            @files.clear()
+            @files.add ns.fileFrom(fileType, data, @settings)
+        removeFile: (file) => @files.remove(file)
+        clearFiles: => @files.clear()
+        switchToPreview: => @switchTab 'preview'
+        done: @__resolve
+        switchTab: @switchTab
+      @dfd.progress (name) ->
+        api.onSwitched.fire name, (name is tabName)
+        if name is tabName
+          api.onSwitchedToMe.fire name
+      api
+
+    __resolve: =>
+      @dfd.resolve @files.get()
+
+    __reject: =>
+      @dfd.reject @files.get()
+
     __bind: ->
-      reject = =>
-        @dfd.reject(@currentFile)
+      panel = @content.find('.uploadcare-dialog-panel')
 
       isPartOfWindow = (el) ->
-        $(el).is('.uploadcare-dialog-panel') or
-          $(el).parents('.uploadcare-dialog-panel').size()
+        $(el).is(panel) or $.contains(panel.get(0), el)
 
-      @content.on 'click', (e) ->
-        reject() unless isPartOfWindow(e.target) or $(e.target).is('a')
+      @content.on 'click', (e) =>
+        @__reject() unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
 
-      $(window).on 'keydown', (e) ->
-        reject() if e.which == 27 # Escape
-
-      @content.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
-        @switchTab $(e.target).data('tab')
+      $(window).on 'keydown', (e) =>
+        @__reject() if e.which == 27 # Escape
 
     __prepareTabs: ->
       @tabs = {}
 
-      @tabs.preview = @addTab 'preview'
-      @tabs.preview.onDone.add =>
-        @dfd.resolve @currentFile
-      @tabs.preview.onBack.add =>
-        @__setFile null
+      @addTab 'preview'
       @__hideTab 'preview'
-
-      for tabName in @settings.tabs when tabName not of @tabs
-        @tabs[tabName] = @addTab(tabName)
-        if @tabs[tabName]
-          @tabs[tabName].onSelected.add (fileType, data) =>
-            @__setFile ns.fileFrom(fileType, data, @settings)
-        else
-          throw new Error("No such tab: #{tabName}")
+      
+      @addTab tabName for tabName in @settings.tabs
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()
 
-    __setFile: (@currentFile) ->
-      if @settings.previewStep
-        if @currentFile
-          @tabs.preview.setFile @currentFile
-          @__showTab 'preview'
-          @switchTab 'preview'
-        else
-          @__hideTab 'preview'
-      else
-        @dfd.resolve(@currentFile) if @currentFile
-
     addTab: (name) ->
       {tabs} = uploadcare.widget
 
-      tabCls = switch name
+      return if name of @tabs
+
+      TabCls = switch name
         when 'file' then tabs.FileTab
         when 'url' then tabs.UrlTab
         when 'facebook' then tabs.RemoteTabFor 'facebook'
         when 'dropbox' then tabs.RemoteTabFor 'dropbox'
         when 'gdrive' then tabs.RemoteTabFor 'gdrive'
         when 'instagram' then tabs.RemoteTabFor 'instagram'
-        when 'preview' then tabs.PreviewTab
+        when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
 
-      return false if not tabCls
+      if not TabCls
+        throw new Error("No such tab: #{name}")
 
-      tab = new tabCls @dfd.promise(), @settings
+      tabPanel = $('<div>')
+        .hide()
+        .addClass('uploadcare-dialog-tabs-panel')
+        .addClass("uploadcare-dialog-tabs-panel-#{name}")
+        .appendTo(@content.find('.uploadcare-dialog-body'))
 
-      $('<div>')
+      tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .attr('title', t("tabs.#{name}.title"))
         .on('click', => @switchTab(name))
         .appendTo(@content.find('.uploadcare-dialog-tabs'))
-      
-      tab.setContent $('<div>')
-        .hide()
-        .addClass('uploadcare-dialog-tabs-panel')
-        .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .append(tpl("tab-#{name}", {avalibleTabs: @settings.tabs}))
-        .appendTo(@content.find('.uploadcare-dialog-body'))
-      
-      return tab
 
-    switchTab: (@currentTab) ->
+      @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
+
+    switchTab: (@currentTab) =>
       @content.find('.uploadcare-dialog-body')
         .find('.uploadcare-dialog-selected-tab')
           .removeClass('uploadcare-dialog-selected-tab')
@@ -177,4 +225,3 @@ namespace 'uploadcare', (ns) ->
         @switchTab @settings.tabs[0]
       @content.find(".uploadcare-dialog-tab-#{tab}").hide()
       @__updateFirstTab()
-

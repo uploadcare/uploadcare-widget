@@ -166,6 +166,9 @@ $dialog-free-space-for-close-button: y(2);
         }
       }
 
+      &.uploadcare-dialog-tab-preview:after {
+        display: none;
+      }
       &.uploadcare-dialog-tab-file:after {
         background-position: 0 ($frame-size * -1);
       }
@@ -226,17 +229,6 @@ $dialog-free-space-for-close-button: y(2);
       padding-top: y(3.5);
       text-align: center;
       color: $dialog-body-text-color-lighter;
-    }
-  }
-
-  .uploadcare-dialog-tabs-panel-facebook,
-  .uploadcare-dialog-tabs-panel-dropbox,
-  .uploadcare-dialog-tabs-panel-gdrive,
-  .uploadcare-dialog-tabs-panel-instagram {
-    padding: 0;
-    iframe {
-      border-bottom-right-radius: $dialog-corner-radius;
-      border-top-right-radius: $dialog-corner-radius;
     }
   }
 }
@@ -393,12 +385,12 @@ $dialog-button-height: 33px;
 
 // § Preview tab
 
-$dialog-preview-container-height: 452px;
+$dialog-preview-container-height: 456px;
 $dialog-preview-container-width: 775px;
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
   height: $dialog-preview-container-height;
-  margin-bottom: x(1);
+  margin-bottom: y(1);
   display: table;
 }
 .uploadcare-dialog-preview-image-wrap2 {
@@ -413,7 +405,8 @@ $dialog-preview-container-width: 775px;
   }
 }
 
-.uploadcare-dialog-preview-footer {
+$dialog-footer-height: y(3);
+.uploadcare-dialog-inner-footer {
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
@@ -422,12 +415,27 @@ $dialog-preview-container-width: 775px;
   border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
     float: right;
-    margin-right: 0;
   }
   .uploadcare-dialog-button {
     float: left;
   }
+  .uploadcare-dialog-button-success,
+  .uploadcare-dialog-button {
+    width: x(4.5);
+    padding: 0;
+    text-align: center;
+    margin-right: 0;
+  }
 }
+  .uploadcare-dialog-inner-footer-text {
+    text-align: center;
+    color: #85732c;
+    font-size: 15px;
+    line-height: $dialog-button-height;
+    &.uploadcare-error {
+      color: red;
+    }
+  }
 
 .uploadcare-dialog-preview-center {
   text-align: center;
@@ -533,5 +541,166 @@ $dialog-preview-container-width: 775px;
 
   .uploadcare-dialog-file-title {
     color: #438ae7;
+  }
+}
+
+
+// § Multiple preview
+
+$dpm-columns: 8%, 60%, 10%, 14%, 8%;
+
+.uploadcare-dpm-file-list {
+  height: $dialog-preview-container-height + y(1);
+  overflow: auto;
+  margin: 0 x(-1);
+  padding: 0 x(1);
+}
+  .uploadcare-dpm-file-item {
+    $border: 1px solid #e3e3e3;
+    border-top: $border;
+    padding: 10px 0;
+    font-size: $dialog-body-font-size-smaller;
+    line-height: 1;
+    word-wrap: break-word;
+    &:last-child {
+      border-bottom: $border;
+    }
+    &:hover {
+      background: #ececec;
+      .uploadcare-dpm-file-remove {display: inline-block}
+    }
+    &.uploadcare-dpm-image {
+      .uploadcare-dpm-file-preview-wrap {display: inline-block}
+      .uploadcare-dpm-file-name {
+        width: nth($dpm-columns, 2);
+        &:before {display: none}
+      }
+    }
+    &.uploadcare-dpm-uploaded {
+      .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
+    }
+    &.uploadcare-dpm-error {
+      .uploadcare-dpm-file-error {display: inline-block}
+      .uploadcare-dpm-file-size,
+      .uploadcare-dpm-file-progressbar-wrap {display: none}
+    }
+  }
+  %file-row-part {
+    @include vertical-centered;
+    @include prefix(box-sizing, border-box);
+    padding: 0 10px;
+  }
+  .uploadcare-dpm-file-preview-wrap {
+    @extend %file-row-part;
+    text-align: center;
+    width: nth($dpm-columns, 1);
+    display: none;
+    padding: 0;
+    line-height: 0;
+  }
+    .uploadcare-dpm-file-preview-wrap2 {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+    }
+  .uploadcare-dpm-file-name,
+  .uploadcare-dpm-file-size,
+  .uploadcare-dpm-file-error {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  %file-inline-icon {
+    $height: 20px;
+    $margin: ($height - $dialog-body-font-size-smaller) / -2;
+    content: '';
+    display: inline-block;
+    width: $height;
+    height: $height;
+    margin: $margin .7em $margin 0;
+  }
+  .uploadcare-dpm-file-name {
+    @extend %file-row-part;
+    width: nth($dpm-columns, 2) + nth($dpm-columns, 1);
+    &:before {
+      @extend %file-inline-icon, %file-icon-image;
+      width: 16px;
+    }
+  }
+  .uploadcare-dpm-file-size {
+    @extend %file-row-part;
+    width: nth($dpm-columns, 3);
+    padding-right: 0;
+    text-align: left;
+  }
+  .uploadcare-dpm-file-progressbar-wrap {
+    @extend %file-row-part;
+    width: nth($dpm-columns, 4);
+  }
+    .uploadcare-dpm-file-progressbar {
+      width: 80px;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 100px;
+    }
+      .uploadcare-dpm-file-progressbar-value {
+        height: 100%;
+        background: #d6b849;
+        border-radius: 100px;
+      }
+  .uploadcare-dpm-file-error {
+    @extend %file-row-part;
+    width: nth($dpm-columns, 3) + nth($dpm-columns, 4);
+    display: none;
+    color: #f5444b;
+    &:before {
+      @extend %file-inline-icon, %error-icon-image;
+    }
+  }
+  .uploadcare-dpm-file-remove-wrap {
+    @extend %file-row-part;
+    padding: 0;
+    padding-right: 10px;
+    width: nth($dpm-columns, 5);
+    text-align: right;
+    line-height: 0;
+  }
+    .uploadcare-dpm-file-remove {
+      @extend %remove-button-image;
+      display: none;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+
+// § Base source tab
+
+.uploadcare-dialog-source-base-wrap {
+  height: $dialog-body-height;
+  margin: y(-1) x(-1);
+  padding: y(1) x(1);
+  @include prefix(box-sizing, border-box);
+
+  &.uploadcare-dialog-remote-iframe-wrap {
+    padding: 0;
+    iframe {
+      border-top-right-radius: $dialog-corner-radius;
+      border-bottom-right-radius: $dialog-corner-radius;
+      .uploadcare-dialog-multiple & {
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .uploadcare-dialog-multiple & {
+    height: $dialog-body-height - $dialog-footer-height;
+    margin: y(-1) x(-1) 0;
+  }
+}
+
+.uploadcare-dialog-source-base-footer {
+  display: none;
+  .uploadcare-dialog-multiple & {
+    display: block;
   }
 }

@@ -23,3 +23,24 @@
 }
 
 $font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+// https://coderwall.com/p/oo2bqg
+@mixin vertical-centered {
+  vertical-align: middle;
+  display: inline-block;
+}
+@mixin vertical-centered-wrap {
+  &:before {
+    @include vertical-centered;
+    content: '';
+    height: 100%;
+  }
+}

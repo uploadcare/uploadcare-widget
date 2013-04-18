@@ -1,5 +1,7 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pusher
+# = require uploadcare/utils/collection
+# = require uploadcare/utils/square-image
 # = require uploadcare/utils/warnings
 
 {
@@ -31,6 +33,32 @@ namespace 'uploadcare.utils', (ns) ->
         called = true
       result
 
+  ns.wrapToPromise = (value) ->
+    $.Deferred().resolve(value).promise()
+
+  ns.remove = (array, item) ->
+    if (index = array.indexOf(item)) isnt -1
+      array.splice(index, 1)
+      true
+    else
+      false
+
+  # same as promise.then(), but if filter returns promise
+  # it will be just passed forward without any special behavior
+  ns.then = (pr, doneFilter, failFilter, progressFilter) ->
+    df = $.Deferred()
+    compose = (fn1, fn2) ->
+      if fn1 and fn2
+        -> fn2.call(this, fn1.apply(this, arguments))
+      else
+        fn1 or fn2
+    pr.then(
+      compose(doneFilter, df.resolve), 
+      compose(failFilter, df.reject), 
+      compose(progressFilter, df.notify)
+    )
+    df.promise()
+
   ns.bindAll = (source, methods) ->
     target = {}
     for method in methods
@@ -57,6 +85,7 @@ namespace 'uploadcare.utils', (ns) ->
       v.toString(16)
 
   ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
+  ns.groupIdRegex = new RegExp("#{ns.uuidRegex.source}~[0-9]+", 'i')
   ns.fullUuidRegex = new RegExp("^#{ns.uuidRegex.source}$", 'i')
   ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_,]+\/)+)+/i
 
@@ -130,6 +159,20 @@ namespace 'uploadcare.utils', (ns) ->
       return URL.createObjectURL(object)
     return null
 
+  ns.inDom = (el) ->
+    if el.jquery
+      el = el.get(0)
+    $.contains(document.documentElement, el)
+
+  ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
+    value = parseInt(value, 10)
+    return onNaN if isNaN(value)
+    labels = 'B KB MB GB TB PB EB ZB YB'.split ' '
+    for label, i in labels
+      if value < 512 or i is labels.length - 1
+        return "#{prefix}#{value} #{label}#{postfix}" 
+      value = Math.round(value / 1024)
+
   ns.jsonp = (url, data) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error
@@ -140,4 +183,3 @@ namespace 'uploadcare.utils', (ns) ->
         data
     , (_, textStatus, errorThrown) -> 
       "JSONP unexpected error: #{textStatus} (#{errorThrown})"
-

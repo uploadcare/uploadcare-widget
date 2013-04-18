@@ -8,11 +8,13 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       default: 'Error'
       baddata: 'Incorrect value'
       size: 'Too big'
-      upload: 'Can\'t upload'
+      upload: 'Can’t upload'
       user: 'Upload canceled'
-      info: 'Can\'t load info'
+      info: 'Can’t load info'
       image: 'Only images allowed'
-    draghere: 'Drop the file here'
+      createGroup: 'Can’t create file group'
+      deleted: 'File was deleted'
+    draghere: 'Drop a file here'
     file:
       one: '1 file'
       other: '%1 files'
@@ -21,6 +23,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'Remove'
       file: 'Computer'
     dialog:
+      done: 'Done'
+      showFiles: 'Show files'
       tabs:
         file:
           drag: 'Drop a file here'
@@ -70,13 +74,19 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Size limit'
               line1: 'The file you selected exceeds the 100 MB limit.'
               line2: 'Please try again with another file.'
+          multiple:
+            title: 'You’ve chosen'
+            question: 'Do you want to add all of these files?'
+            toManyFiles: 'You’ve chosen to many files. %max% is maximum. Please remove some of them.'
+            clear: 'Remove all'
+            done: 'Done'
       footer:
         text: 'Uploading, storing and processing files by'
         link: 'Uploadcare.com'
     crop:
       error:
         title: 'Error'
-        text: 'Can\'t load image'
+        text: 'Can’t load image'
       done: 'Done'
 
 

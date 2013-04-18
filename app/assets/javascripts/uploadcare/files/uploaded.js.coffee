@@ -19,3 +19,25 @@ namespace 'uploadcare.files', (ns) ->
 
     __startUpload: ->
       # nothing to do
+
+
+  class ns.ReadyFile extends ns.BaseFile
+    constructor: (settings, @__fileData) ->
+      super
+      @fileId = @__fileData.file_id
+      @__uploadDf.resolve()
+
+    __startUpload: ->
+      # nothing to do
+
+    __requestInfo: ->
+      @__handleFileData(@__fileData)
+
+
+  class ns.DeletedFile extends ns.BaseFile
+    constructor: ->
+      super
+      @__uploadDf.reject('deleted')
+
+    __startUpload: ->
+      # nothing to do
