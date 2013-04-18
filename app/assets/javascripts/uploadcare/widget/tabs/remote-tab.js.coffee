@@ -16,6 +16,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
         @dialogApi.onSwitchedToMe.add @__createIframe
 
+        @dialogApi.onSwitched.add (_, switchedToMe) =>
+          @__sendMessage
+            type: 'visibility-changed'
+            visible: switchedToMe
+
+      __sendMessage: (messageObj) ->
+        @iframe?[0]?.contentWindow?.postMessage JSON.stringify(messageObj), '*'
+
       __createIframe: =>
         unless @iframe
           src = "#{@settings.socialBase}/window/#{service}?" + $.param
@@ -38,6 +46,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             goodOrigin = nos(e.origin) is nos(@settings.socialBase)
             goodSource = e.source is @iframe?[0]?.contentWindow
             if goodOrigin and goodSource
-              message = JSON.parse e.data
-              if message.type is 'file-selected'
+              try 
+                message = JSON.parse e.data
+              if message?.type is 'file-selected'
                 @dialogApi.addFiles 'url', message.url
+                @__sendMessage
+                  type: 'file-selected-received'
+                  url: message.url
