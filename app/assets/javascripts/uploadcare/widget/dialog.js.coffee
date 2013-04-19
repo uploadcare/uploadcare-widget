@@ -6,6 +6,7 @@
 # = require ./tabs/base-preview-tab
 # = require ./tabs/preview-tab
 # = require ./tabs/preview-tab-multiple
+# = require ./tabs/static-tab
 
 {
   namespace,
@@ -80,25 +81,13 @@ namespace 'uploadcare', (ns) ->
       @files = new utils.CollectionOfPromises()
 
       @__bind()
-      @__prepareTabs()
-      @switchTab(tab || @settings.tabs[0])
-      
-      @files.add(file) for file in files
+      @tabs = {}
 
-      if files.length
-        @__showTab 'preview'
-        @switchTab 'preview'
-
-      @files.onAdd.add =>
-        if @settings.previewStep
-          @__showTab 'preview'
-          unless @settings.multiple
-            @switchTab 'preview'
-        else
-          @__resolve()
-      @files.onRemove.add =>
-        if @files.length() == 0
-          @__hideTab 'preview'
+      if @settings.publicKey
+        @__prepareTabs(tab)
+        @__prepareFiles(files)
+      else
+        @__welcome()
 
       @__updateFirstTab()
 
@@ -150,13 +139,30 @@ namespace 'uploadcare', (ns) ->
       $(window).on 'keydown', (e) =>
         @__reject() if e.which == 27 # Escape
 
-    __prepareTabs: ->
-      @tabs = {}
-
+    __prepareTabs: (tab) ->
       @addTab 'preview'
       @__hideTab 'preview'
       
       @addTab tabName for tabName in @settings.tabs
+      @switchTab(tab || @settings.tabs[0])
+
+    __prepareFiles: (files) ->
+      @files.add(file) for file in files
+
+      if files.length
+        @__showTab 'preview'
+        @switchTab 'preview'
+
+      @files.onAdd.add =>
+        if @settings.previewStep
+          @__showTab 'preview'
+          unless @settings.multiple
+            @switchTab 'preview'
+        else
+          @__resolve()
+      @files.onRemove.add =>
+        if @files.length() == 0
+          @__hideTab 'preview'
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()
@@ -174,6 +180,7 @@ namespace 'uploadcare', (ns) ->
         when 'gdrive' then tabs.RemoteTabFor 'gdrive'
         when 'instagram' then tabs.RemoteTabFor 'instagram'
         when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
+        when 'welcome' then tabs.StaticTabWith 'welcome'
 
       if not TabCls
         throw new Error("No such tab: #{name}")
@@ -225,3 +232,7 @@ namespace 'uploadcare', (ns) ->
         @switchTab @settings.tabs[0]
       @content.find(".uploadcare-dialog-tab-#{tab}").hide()
       @__updateFirstTab()
+
+    __welcome: ->
+      @addTab('welcome')
+      @switchTab('welcome')

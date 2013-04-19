@@ -231,6 +231,19 @@ $dialog-free-space-for-close-button: y(2);
       color: $dialog-body-text-color-lighter;
     }
   }
+
+  .uploadcare-pre {
+    white-space: pre;
+    font-family: monospace;
+    margin: y(1) auto;
+    padding: y(1) x(1);
+    background-color: $dialog-body-field-color;
+    border: 1px solid $dialog-body-border-color;
+    border-radius: 3px;
+    text-align: left;
+    font-size: 15px;
+    line-height: y(1);
+  }
 }
 
 .uploadcare-dialog-footer {
@@ -267,6 +280,11 @@ $dialog-free-space-for-close-button: y(2);
   font-size: 15px;
   line-height: x(1);
   margin-bottom: x(.5);
+}
+
+.uploadcare-dialog-large-text {
+  font-size: 18px;
+  line-height: x(1);
 }
 
 .uploadcare-dialog-section {
@@ -437,9 +455,13 @@ $dialog-footer-height: y(3);
     }
   }
 
+.uploadcare-dialog-message-center,
 .uploadcare-dialog-preview-center {
   text-align: center;
   padding-top: y(8);
+  .uploadcare-pre {
+    width: 400px;
+  }
 }
 
 .uploadcare-dialog-preview-circle {
