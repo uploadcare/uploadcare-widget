@@ -232,7 +232,9 @@ $dialog-free-space-for-close-button: y(2);
     }
   }
 
-  pre {
+  .uploadcare-pre {
+    white-space: pre;
+    font-family: monospace;
     margin: y(1) auto;
     padding: y(1) x(1);
     background-color: $dialog-body-field-color;
@@ -457,7 +459,7 @@ $dialog-footer-height: y(3);
 .uploadcare-dialog-preview-center {
   text-align: center;
   padding-top: y(8);
-  pre {
+  .uploadcare-pre {
     width: 400px;
   }
 }
