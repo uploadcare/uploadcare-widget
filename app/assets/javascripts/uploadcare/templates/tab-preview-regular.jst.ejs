@@ -1,8 +1,8 @@
 <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.regular.title') %></div>
 
 <div class="uploadcare-dialog-label">
-  <%- (file.name || t('dialog.tabs.preview.unknownName')) %><% if (file.size != null) { %>,
-  <%- Math.round(file.size/1000) %> KB<% } %>
+  <%- (file.name || t('dialog.tabs.preview.unknownName')) %><%- 
+    utils.readableFileSize(file.size, '', ', ') %>
 </div>
 
 <div class="uploadcare-dialog-section uploadcare-dialog-normal-text">

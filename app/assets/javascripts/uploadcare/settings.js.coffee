@@ -83,10 +83,6 @@ namespace 'uploadcare.settings', (ns) ->
     ]
 
     if settings.multiple
-      utils.commonWarning('multiupload')
-      settings.multiple = false
-
-    if settings.multiple
       settings.crop = 'disabled'
 
     settings.__cropParsed = {

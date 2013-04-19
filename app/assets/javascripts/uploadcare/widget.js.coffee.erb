@@ -5,7 +5,7 @@
 # = require uploadcare/templates
 # = require uploadcare/stylesheets
 # = require uploadcare/ui/crop/crop-widget
-# = require uploadcare/widget/widget
+# = require uploadcare/widget/base-widget
 # = require uploadcare/widget/live
 # = require uploadcare/widget/submit-guard
 
@@ -18,7 +18,10 @@ expose 'globals', uploadcare.settings.globals
 expose 'start'
 expose 'initialize'
 expose 'fileFrom'
+expose 'FileGroup'
+expose 'loadFileGroup'
 expose 'locales', (key for own key of uploadcare.locale.translations)
 expose 'openDialog'
 expose 'Circle', uploadcare.ui.progress.Circle
 expose 'Widget'
+expose 'MultipleWidget'

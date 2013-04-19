@@ -90,8 +90,8 @@ namespace 'uploadcare.files', (ns) ->
 
       for ev in ['progress', 'success']
         do (ev) =>
-          @channel.bind ev, onStarted
           @channel.bind ev, (data) => @uploader.__state ev, data
+          @channel.bind ev, onStarted  # self-removed callback should be last!
 
       @channel.bind 'fail', (data) => @uploader.__state('error')
 

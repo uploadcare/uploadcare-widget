@@ -1,7 +1,10 @@
 {
-  namespace
+  namespace,
+  templates: {tpl}
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.StaticTab
-    setContent: ->
+  ns.StaticTabWith = (tplName) ->
+    class ns.StaticTab
+      constructor: (@container) ->
+        @container.append tpl("tab-#{tplName}")

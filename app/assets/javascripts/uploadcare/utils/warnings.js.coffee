@@ -28,8 +28,6 @@ namespace 'uploadcare.utils', (ns) ->
       https://uploadcare.com/accounts/settings/
       """
 
-    multiupload: 'Sorry, the multiupload is not working now.'
-
     publicKey: """
       Global public key not set. Uploads may not work!
       Add this to the <head> tag to set your key:
