@@ -15,10 +15,6 @@ namespace 'uploadcare.files', (ns) ->
       @__shutdown = true
       @previewUrl = @__url
 
-      # Temporary solution 
-      # while server preview servise doesn't work with URL-files
-      @__tmpFinalPreviewUrl = @__url
-
       filename = utils.parseUrl(@__url).pathname.split('/').pop()
       @fileName = if filename then decodeURIComponent(filename) else null
 

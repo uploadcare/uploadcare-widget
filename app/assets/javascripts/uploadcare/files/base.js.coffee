@@ -61,10 +61,7 @@ namespace 'uploadcare.files', (ns) ->
         @__handleFileData(data)
 
     __buildPreviewUrl: ->
-      if @__tmpFinalPreviewUrl
-        @previewUrl = @__tmpFinalPreviewUrl
-      else
-        @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+      @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
 
     __progressInfo: ->
       state: @__progressState
