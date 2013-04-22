@@ -64,17 +64,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Done'
           error:
             default:
-              title: 'Uploading failed'
-              line1: 'Something went wrong during the upload.'
-              line2: 'Please try again.'
+              title: 'Oops! Something went wrong...'
+              text: 'Something went wrong during the upload.'
+              back: 'Please try again'
             image:
-              title: 'Images only'
-              line1: 'Only image files are accepted.'
-              line2: 'Please try again with another file.'
+              title: 'Only image files are accepted.'
+              text: 'Please try again with another file.'
+              back: 'Choose image'
             size:
-              title: 'Size limit'
-              line1: 'The file you selected exceeds the 100 MB limit.'
-              line2: 'Please try again with another file.'
+              title: 'The file you selected exceeds the 100 MB limit.'
+              text: 'Please try again with another file.'
           multiple:
             title: 'You’ve chosen'
             question: 'Do you want to add all of these files?'

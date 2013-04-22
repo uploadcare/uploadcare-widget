@@ -1,21 +1,20 @@
-<div class="uploadcare-dialog-title"><%- 
-  t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
-%></div>
+<div class="uloadcare-dialog-error-tab-wrap uloadcare-dialog-error-tab-<%- error %>">
+  <div class="uloadcare-dialog-error-tab-wrap2">
 
-<div class="uploadcare-dialog-label">
-  <%- (file.name || t('dialog.tabs.preview.unknownName')) %><%- 
-    utils.readableFileSize(file.size, '', ', ') %>
+    <div class="uloadcare-dialog-error-tab-illustration"></div>
+
+    <div class="uploadcare-dialog-title"><%-
+      t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
+    %></div>
+
+    <div class="uploadcare-dialog-normal-text"><%- 
+      t('dialog.tabs.preview.error.'+error+'.text') || t('dialog.tabs.preview.error.default.text') 
+    %></div>
+
+    <div class="uploadcare-dialog-button-success" 
+      role="uploadcare-dialog-preview-back"><%- 
+        t('dialog.tabs.preview.error.'+error+'.back') || t('dialog.tabs.preview.error.default.back') 
+    %></div>
+    
+  </div>
 </div>
-
-<div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
-  <%- 
-    t('dialog.tabs.preview.error.'+error+'.line1') || t('dialog.tabs.preview.error.default.line1')
-  %><br/>
-  <%- 
-    t('dialog.tabs.preview.error.'+error+'.line2') || t('dialog.tabs.preview.error.default.line2')
-  %>
-</div>
-
-<div
-  class="uploadcare-dialog-button-success" 
-  role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.change') %></div>
