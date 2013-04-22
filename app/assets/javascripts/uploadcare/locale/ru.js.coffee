@@ -51,7 +51,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           back: 'Назад'
           done: 'Добавить'
           unknown:
-            title: 'Загрузка. Пожалуйста подождите.'
+            title: 'Загрузка... Пожалуйста подождите.'
             done: 'Пропустить предварительный просмотр'
           regular:
             title: 'Загрузить этот файл?'

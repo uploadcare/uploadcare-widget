@@ -46,7 +46,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __afterRender: (state) ->
       if state is 'unknown'
-        @__initCircle()
         if @__doCrop
           @__hideDoneButton()
       if state is 'image' and @__doCrop
@@ -85,10 +84,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         # REFACTOR: separate templates?
         img.remove()
         @container.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
-
-    __initCircle: ->
-      circleEl = @container.find('@uploadcare-dialog-preview-circle')
-      if circleEl.length
-        circle = new progress.Circle circleEl
-        circle.listen @file
         @container.find('@uploadcare-dialog-preview-done').text t('dialog.tabs.preview.crop.done')

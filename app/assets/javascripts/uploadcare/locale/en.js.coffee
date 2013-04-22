@@ -50,7 +50,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           back: 'Back'
           done: 'Add'
           unknown:
-            title: 'Uploading. Please wait for a preview.'
+            title: 'Uploading... Please wait for a preview.'
             done: 'Skip preview and accept'
           regular:
             title: 'Add this file?'
