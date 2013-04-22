@@ -48,19 +48,19 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           unknownName: 'unknown'
           change: 'Cancel'
           back: 'Back'
-          done: 'Upload'
+          done: 'Add'
           unknown:
             title: 'Uploading. Please wait for a preview.'
             done: 'Skip preview and accept'
           regular:
-            title: 'Upload this file?'
-            line1: 'You are about to upload the file above.'
+            title: 'Add this file?'
+            line1: 'You are about to add the file above.'
             line2: 'Please confirm.'
           image:
-            title: 'Upload this image?'
+            title: 'Add this image?'
             change: 'Cancel'
           crop:
-            title: 'Crop and upload this image'
+            title: 'Crop and add this image'
           error:
             default:
               title: 'Uploading failed'
