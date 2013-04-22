@@ -16,7 +16,11 @@ namespace 'uploadcare.files', (ns) ->
       @previewUrl = @__url
 
       filename = utils.parseUrl(@__url).pathname.split('/').pop()
-      @fileName = if filename then decodeURIComponent(filename) else null
+      if filename
+        try
+          @fileName = decodeURIComponent(filename)
+        catch err
+          @fileName = filename
 
       @__notifyApi()
 
