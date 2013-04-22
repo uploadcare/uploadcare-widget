@@ -19,7 +19,9 @@ namespace 'uploadcare.files', (ns) ->
       # while server preview servise doesn't work with URL-files
       @__tmpFinalPreviewUrl = @__url
 
-      @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
+      filename = utils.parseUrl(@__url).pathname.split('/').pop()
+      @fileName = if filename then decodeURIComponent(filename) else null
+
       @__notifyApi()
 
     __startUpload: ->
