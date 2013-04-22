@@ -62,6 +62,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             change: 'Отмена'
           crop:
             title: 'Обрезать и добавить это изображение'
+            done: 'Готово'
           error:
             default:
               title: 'Ошибка загрузки'

@@ -61,6 +61,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             change: 'Cancel'
           crop:
             title: 'Crop and add this image'
+            done: 'Done'
           error:
             default:
               title: 'Uploading failed'

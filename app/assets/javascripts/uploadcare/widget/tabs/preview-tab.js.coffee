@@ -58,7 +58,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __initCrop: ->
       # crop widget can't get container size when container hidden 
       # (dialog hidden) so we need timer here 
-      setTimeout (=>
+      utils.defer =>
         img = @container.find(PREFIX + 'image')
         container = img.parent()
         doneButton = @container.find(PREFIX + 'done')
@@ -85,10 +85,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         # REFACTOR: separate templates?
         img.remove()
         @container.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
-      ), 100
 
     __initCircle: ->
       circleEl = @container.find('@uploadcare-dialog-preview-circle')
       if circleEl.length
         circle = new progress.Circle circleEl
         circle.listen @file
+        @container.find('@uploadcare-dialog-preview-done').text t('dialog.tabs.preview.crop.done')
