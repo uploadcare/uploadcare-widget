@@ -15,11 +15,9 @@ namespace 'uploadcare.files', (ns) ->
       @__shutdown = true
       @previewUrl = @__url
 
-      # Temporary solution 
-      # while server preview servise doesn't work with URL-files
-      @__tmpFinalPreviewUrl = @__url
+      filename = utils.parseUrl(@__url).pathname.split('/').pop()
+      @fileName = if filename then decodeURIComponent(filename) else null
 
-      @fileName = utils.parseUrl(@__url).pathname.split('/').pop() or null
       @__notifyApi()
 
     __startUpload: ->
@@ -90,8 +88,8 @@ namespace 'uploadcare.files', (ns) ->
 
       for ev in ['progress', 'success']
         do (ev) =>
-          @channel.bind ev, onStarted
           @channel.bind ev, (data) => @uploader.__state ev, data
+          @channel.bind ev, onStarted  # self-removed callback should be last!
 
       @channel.bind 'fail', (data) => @uploader.__state('error')
 

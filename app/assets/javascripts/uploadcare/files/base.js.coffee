@@ -38,6 +38,19 @@ namespace 'uploadcare.files', (ns) ->
 
     __startUpload: -> throw new Error('not implemented')
 
+    __handleFileData: (data) ->
+      @fileName = data.original_filename
+      @fileSize = data.size
+      @isImage = data.is_image
+      @isStored = data.is_stored or data.is_public
+      @__buildPreviewUrl()
+
+      if @settings.imagesOnly && !@isImage
+        @__infoDf.reject('image', this)
+        return
+
+      @__infoDf.resolve(this)
+
     __requestInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
         file_id: @fileId, 
@@ -45,23 +58,10 @@ namespace 'uploadcare.files', (ns) ->
       .fail =>
         @__infoDf.reject('info', this)
       .done (data) =>
-        @fileName = data.original_filename
-        @fileSize = data.size
-        @isImage = data.is_image
-        @isStored = data.is_stored
-        @__buildPreviewUrl()
-
-        if @settings.imagesOnly && !@isImage
-          @__infoDf.reject('image', this)
-          return
-
-        @__infoDf.resolve(this)
+        @__handleFileData(data)
 
     __buildPreviewUrl: ->
-      if @__tmpFinalPreviewUrl
-        @previewUrl = @__tmpFinalPreviewUrl
-      else
-        @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+      @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
 
     __progressInfo: ->
       state: @__progressState
@@ -160,3 +160,24 @@ namespace 'uploadcare.files', (ns) ->
         @__startUpload()
       @apiPromise
       
+
+namespace 'uploadcare.utils', (utils) ->
+
+  # Check if given obj is file API promise (aka File object)
+  utils.isFile = (obj) ->
+    return obj and obj.done and obj.fail and obj.cancel
+
+  # Converts any of:
+  #   URL
+  #   CDN-URL
+  #   UUID
+  #   File object
+  # to File object
+  utils.anyToFile = (value, settings) ->
+    if value
+      if utils.isFile(value)
+        value
+      else
+        uploadcare.fileFrom('url', value, settings)
+    else
+      null

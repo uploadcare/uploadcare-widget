@@ -11,6 +11,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       user: 'Загрузка прервана'
       info: 'Ошибка при загрузке информации'
       image: 'Разрешены только изображения'
+      createGroup: 'Не удалось создать группу файлов'
+      deleted: 'Файл удалён'
     draghere: 'Перетащите файл сюда'
     file:
       one: '1 файл'
@@ -22,6 +24,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'Удалить'
       file: 'Компьютер'
     dialog:
+      done: 'Готово'
+      showFiles: 'Показать файлы'
       tabs:
         file:
           drag: 'Перетащите файл сюда'
@@ -45,19 +49,19 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           unknownName: 'неизвестно'
           change: 'Отмена'
           back: 'Назад'
-          done: 'Загрузить'
+          done: 'Добавить'
           unknown:
             title: 'Загрузка. Пожалуйста подождите.'
             done: 'Пропустить предварительный просмотр'
           regular:
             title: 'Загрузить этот файл?'
-            line1: 'Вы собираетесь загрузить этот файл:'
+            line1: 'Вы собираетесь добавить этот файл:'
             line2: 'Пожалуйста, подтвердите.'
           image:
-            title: 'Загрузить это изображение?'
+            title: 'Добавить это изображение?'
             change: 'Отмена'
           crop:
-            title: 'Обрезать и загрузить это изображение'
+            title: 'Обрезать и добавить это изображение'
           error:
             default:
               title: 'Ошибка загрузки'
@@ -71,6 +75,12 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Файл слишком большой'
               line1: 'Размер выбранного файла превышает 100 Мб.'
               line2: 'Попробуйте загрузить другой файл.'
+          multiple:
+            title: 'Вы выбрали'
+            question: 'Вы хотите добавить все эти файлы?'
+            toManyFiles: 'Вы выбрали слишком много файлов. %max% максимум. Удалите что-нибудь.'
+            clear: 'Удалить все'
+            done: 'Готово'
       footer:
         text: 'Для загрузки, хранения и обработки файлов используется'
         link: 'Uploadcare.com'
