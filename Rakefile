@@ -171,6 +171,19 @@ namespace :js do
     end
   end
 
+
+  namespace :prefixed do
+    task :build, [:prefix] => [:application] do | t, args |
+      setup_prefix(args[:prefix])
+      build_widget(args[:prefix])
+    end
+
+    task :upload, [:prefix] => [:application] do | t, args |
+      setup_prefix(args[:prefix])
+      upload_widget(args[:prefix])
+    end
+  end
+
   task latest: ["latest:build", "latest:upload"]
   task release: ["release:build", "release:upload"]
 end
