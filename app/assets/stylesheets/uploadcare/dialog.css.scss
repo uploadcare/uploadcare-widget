@@ -266,7 +266,6 @@ $dialog-free-space-for-close-button: y(2);
 .uploadcare-dialog-title {
   font-size: 25px;
   line-height: 1;
-  font-weight: bolder;
   margin-bottom: x(1);
 }
 
@@ -470,6 +469,37 @@ $dialog-footer-height: y(3);
   display: inline-block;
   margin-bottom: y(1);
 }
+
+
+// § Errors in preview tab
+
+.uloadcare-dialog-error-tab-wrap {
+  height: 100%;
+  text-align: center;
+  @include vertical-centered-wrap;
+  .uploadcare-dialog-title {
+    margin-bottom: 12px;
+  }
+  .uloadcare-dialog-error-tab-illustration,
+  .uploadcare-dialog-normal-text {
+    margin-bottom: 38px;
+  }
+}
+  .uloadcare-dialog-error-tab-wrap2 {
+    @include vertical-centered;
+    margin-top: y(-1); // more visually centered
+  }
+    .uloadcare-dialog-error-tab-illustration {
+      @extend %error-default-image;
+      display: inline-block;
+      width: 170px;
+      height: 120px;
+      background-position: center;
+      background-repeat: no-repeat;
+      .uloadcare-dialog-error-tab-image & {
+        @extend %error-image-image;
+      }
+    }
 
 
 // § Computer tab
