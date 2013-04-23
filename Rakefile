@@ -171,7 +171,6 @@ namespace :js do
     end
   end
 
-
   namespace :prefixed do
     task :build, [:prefix] => [:application] do | t, args |
       setup_prefix(args[:prefix])
