@@ -42,8 +42,8 @@ jQuery(function($) {
         file.preview('#last-preview');
         file.done(function(info) {
           if (info.isImage) {
-            var ri = new uploadcare.ResizableImage(info.cdnUrl);
-            ri.element().done(function(el) {
+            var ri = uploadcare.resizableImage(info.cdnUrl);
+            ri.done(function(el) {
               $('#last-cdn').html(el);
             });
           }

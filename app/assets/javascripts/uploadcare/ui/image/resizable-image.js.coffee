@@ -2,33 +2,34 @@
 
 {
   namespace,
-  templates: tpl,
+  templates: {tpl},
   jQuery: $
 } = uploadcare
 
-{tpl} = uploadcare.templates
-
 namespace 'uploadcare.ui.image', (ns) ->
-  class ns.ResizableImage
-    constructor: (cdnUrl) ->
-      el = $(tpl('resizable-image'))
-      dr = new DragResize('dragresize', minWidth: 10, minHeight: 10)
-      dr.isElement = (el) -> $(el).hasClass('uploadcare-resizable-image')
-      dr.isHandle = -> false
-      dr.apply(el[0])
+  ns.resizableImage = (cdnUrl, scaleCrop = false) ->
+    el = $(tpl('resizable-image'))
+    dr = new DragResize('dragresize', minWidth: 10, minHeight: 10)
+    dr.isElement = (el) -> $(el).hasClass('uploadcare-resizable-image')
+    dr.isHandle = -> false
+    dr.apply(el[0])
 
-      @__df = $.Deferred()
-      img = new Image()
-      img.src = cdnUrl
-      img.onload = =>
-        el
-          .width(img.width)
-          .height(img.height)
-          .append(img)
-        @__df.resolve(el)
+    df = $.Deferred()
+    img = new Image()
+    img.src = cdnUrl
+    img.onload = ->
+      el
+        .width(img.width)
+        .height(img.height)
+        .append(img)
+      df.resolve(el)
 
-      dr.ondragend = ->
-        img.src = "#{cdnUrl}-/resize/#{el.width()}x#{el.height()}/"
+    img.onerror = ->
+      df.reject()
 
-    element: ->
-      @__df.promise()
+    op = if scaleCrop then 'scale_crop' else 'resize'
+    suffix = if scaleCrop then 'center/' else ''
+    dr.ondragend = ->
+      img.src = "#{cdnUrl}-/#{op}/#{el.width()}x#{el.height()}/#{suffix}"
+
+    df.promise()
