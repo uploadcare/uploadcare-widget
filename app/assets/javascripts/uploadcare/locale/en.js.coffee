@@ -50,7 +50,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           back: 'Back'
           done: 'Add'
           unknown:
-            title: 'Uploading. Please wait for a preview.'
+            title: 'Uploading... Please wait for a preview.'
             done: 'Skip preview and accept'
           regular:
             title: 'Add this file?'
@@ -61,19 +61,19 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             change: 'Cancel'
           crop:
             title: 'Crop and add this image'
+            done: 'Done'
           error:
             default:
-              title: 'Uploading failed'
-              line1: 'Something went wrong during the upload.'
-              line2: 'Please try again.'
+              title: 'Oops!'
+              text: 'Something went wrong during the upload.'
+              back: 'Please try again'
             image:
-              title: 'Images only'
-              line1: 'Only image files are accepted.'
-              line2: 'Please try again with another file.'
+              title: 'Only image files are accepted.'
+              text: 'Please try again with another file.'
+              back: 'Choose image'
             size:
-              title: 'Size limit'
-              line1: 'The file you selected exceeds the 100 MB limit.'
-              line2: 'Please try again with another file.'
+              title: 'The file you selected exceeds the 100 MB limit.'
+              text: 'Please try again with another file.'
           multiple:
             title: 'You’ve chosen'
             question: 'Do you want to add all of these files?'

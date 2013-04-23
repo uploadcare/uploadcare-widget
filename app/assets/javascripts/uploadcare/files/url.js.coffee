@@ -26,6 +26,8 @@ namespace 'uploadcare.files', (ns) ->
 
     setName: (name) ->
       @__realFileName = name
+      @fileName = name
+      @__notifyApi()
 
     __startUpload: ->
 
