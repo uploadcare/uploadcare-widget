@@ -24,6 +24,9 @@ namespace 'uploadcare.files', (ns) ->
 
       @__notifyApi()
 
+    setName: (name) ->
+      @__realFileName = name
+
     __startUpload: ->
 
       @__pollWatcher = new PollWatcher(this, @settings)
@@ -34,6 +37,7 @@ namespace 'uploadcare.files', (ns) ->
       data = 
         pub_key: @settings.publicKey
         source_url: @__url
+        filename: @__realFileName or ''
       if @settings.autostore
         data.store = 1
 

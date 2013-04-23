@@ -14,8 +14,11 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.fileFrom = (type, data, settings) ->
-    converters[type](settings, data)[0].promise()
+  ns.rawFileFrom = (type, data, settings) ->
+    converters[type](settings, data)[0]
+
+  ns.fileFrom = ->
+    ns.rawFileFrom.apply(null, arguments).promise()
 
   ns.filesFrom = (type, data, settings = {}) ->
     file.promise() for file in converters[type](settings, data)
