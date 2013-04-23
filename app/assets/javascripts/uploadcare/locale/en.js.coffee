@@ -64,7 +64,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Done'
           error:
             default:
-              title: 'Oops! Something went wrong...'
+              title: 'Oops!'
               text: 'Something went wrong during the upload.'
               back: 'Please try again'
             image:

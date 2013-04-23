@@ -484,6 +484,9 @@ $dialog-footer-height: y(3);
   .uploadcare-dialog-normal-text {
     margin-bottom: 38px;
   }
+  .uploadcare-dialog-button-success {
+    margin: 0;
+  }
 }
   .uloadcare-dialog-error-tab-wrap2 {
     @include vertical-centered;

@@ -65,7 +65,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Готово'
           error:
             default:
-              title: 'Ой! Что-то пошло не так...'
+              title: 'Ой!'
               text: 'Что-то пошло не так во время загрузки.'
               back: 'Пожалуйста, попробуйте ещё раз'
             image:
