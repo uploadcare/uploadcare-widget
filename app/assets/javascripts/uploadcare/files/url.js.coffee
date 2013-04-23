@@ -16,9 +16,16 @@ namespace 'uploadcare.files', (ns) ->
       @previewUrl = @__url
 
       filename = utils.parseUrl(@__url).pathname.split('/').pop()
-      @fileName = if filename then decodeURIComponent(filename) else null
+      if filename
+        try
+          @fileName = decodeURIComponent(filename)
+        catch err
+          @fileName = filename
 
       @__notifyApi()
+
+    setName: (name) ->
+      @__realFileName = name
 
     __startUpload: ->
 
@@ -30,6 +37,7 @@ namespace 'uploadcare.files', (ns) ->
       data = 
         pub_key: @settings.publicKey
         source_url: @__url
+        filename: @__realFileName or ''
       if @settings.autostore
         data.store = 1
 
