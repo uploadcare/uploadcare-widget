@@ -71,6 +71,4 @@ namespace 'uploadcare.widget', (ns) ->
       @setStatus 'error'
 
     setFileInfo: (info) ->
-      name = utils.fitText(info.name, 16)
-      size = Math.ceil(info.size / 1024).toString()
-      @statusText.html tpl('widget-file-name', {name, size})
+      @statusText.html tpl('widget-file-name', info)

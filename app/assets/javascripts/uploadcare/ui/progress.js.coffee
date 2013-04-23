@@ -49,7 +49,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
             if file == @observed
               @__update selectorFn(progress)
 
-          .done (uploadedFile) =>
+          .always (uploadedFile) =>
             if file == @observed
               @__update 1, false
       @
