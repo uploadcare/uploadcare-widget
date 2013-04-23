@@ -49,7 +49,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               try 
                 message = JSON.parse e.data
               if message?.type is 'file-selected'
-                @dialogApi.addFiles 'url', message.url
+
+                file = uploadcare.rawFileFrom 'url', message.url, @settings
+                file.setName message.filename
+                @dialogApi.addFiles file.promise()
+                
                 @__sendMessage
                   type: 'file-selected-received'
                   url: message.url

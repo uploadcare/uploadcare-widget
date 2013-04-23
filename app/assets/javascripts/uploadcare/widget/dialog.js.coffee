@@ -104,12 +104,17 @@ namespace 'uploadcare', (ns) ->
         fileColl: @files.readOnly()
         onSwitched: $.Callbacks()
         onSwitchedToMe: $.Callbacks()
+        # (fileType, data) or (fileObject)
         addFiles: (fileType, data) =>
-          if @settings.multiple
-            @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
-          else
+          unless @settings.multiple
             @files.clear()
-            @files.add ns.fileFrom(fileType, data, @settings)
+          if utils.isFile fileType
+            @files.add fileType
+          else
+            if @settings.multiple
+              @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
+            else
+              @files.add ns.fileFrom(fileType, data, @settings)
         removeFile: (file) => @files.remove(file)
         clearFiles: => @files.clear()
         switchToPreview: => @switchTab 'preview'
