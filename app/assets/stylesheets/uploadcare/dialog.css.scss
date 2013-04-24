@@ -166,6 +166,16 @@ $dialog-free-space-for-close-button: y(2);
         }
       }
 
+      &.uploadcare-dialog-disabled-tab {
+        cursor: default;
+        &:hover {
+          background-color: $dialog-body-shadow-color;
+          &:after {
+            @extend %tab-icons-image;
+          }
+        }
+      }
+
       &.uploadcare-dialog-tab-preview:after {
         display: none;
       }
