@@ -166,6 +166,16 @@ $dialog-free-space-for-close-button: y(2);
         }
       }
 
+      &.uploadcare-dialog-disabled-tab {
+        cursor: default;
+        &:hover {
+          background-color: $dialog-body-shadow-color;
+          &:after {
+            @extend %tab-icons-image;
+          }
+        }
+      }
+
       &.uploadcare-dialog-tab-preview:after {
         display: none;
       }
@@ -275,6 +285,13 @@ $dialog-free-space-for-close-button: y(2);
   padding-bottom: y(.5);
 }
 
+.uploadcare-dialog-big-title {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 1em;
+  margin-bottom: x(2);
+}
+
 .uploadcare-dialog-label {
   font-size: 15px;
   line-height: x(1);
@@ -282,8 +299,13 @@ $dialog-free-space-for-close-button: y(2);
 }
 
 .uploadcare-dialog-large-text {
-  font-size: 18px;
-  line-height: x(1);
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.5em;
+  .uploadcare-pre {
+    display: inline-block;
+    font-size: 18px;
+  }
 }
 
 .uploadcare-dialog-section {
@@ -454,13 +476,14 @@ $dialog-footer-height: y(3);
     }
   }
 
-.uploadcare-dialog-message-center,
+.uploadcare-dialog-message-center {
+  text-align: center;
+  padding-top: y(5);
+}
+
 .uploadcare-dialog-preview-center {
   text-align: center;
   padding-top: y(8);
-  .uploadcare-pre {
-    width: 400px;
-  }
 }
 
 .uploadcare-dialog-preview-circle {

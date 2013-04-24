@@ -204,6 +204,13 @@ namespace 'uploadcare', (ns) ->
 
       @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
 
+    __addFakeTab: (name) ->
+      $('<div>')
+        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
+        .addClass('uploadcare-dialog-disabled-tab')
+        .attr('title', t("tabs.#{name}.title"))
+        .appendTo(@content.find('.uploadcare-dialog-tabs'))
+
     switchTab: (@currentTab) =>
       @content.find('.uploadcare-dialog-body')
         .find('.uploadcare-dialog-selected-tab')
@@ -240,4 +247,5 @@ namespace 'uploadcare', (ns) ->
 
     __welcome: ->
       @addTab('welcome')
+      @__addFakeTab tabName for tabName in @settings.tabs
       @switchTab('welcome')
