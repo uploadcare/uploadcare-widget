@@ -64,12 +64,13 @@ $dragndrop-text-color: #707478;
   list-style: none;
   > li {
     $height: 24px;
+    display: inline-block;
     height: $height;
     float: left;
     font-size: 11px;
     color: $button-text-color;
     line-height: $widget-height;
-    min-width: 36px;
+    width: 36px;
     padding: 0 6px;
     margin: 0 3px ($widget-height - 24) 0;
     list-style: none;
@@ -94,6 +95,7 @@ $dragndrop-text-color: #707478;
     &.uploadcare-widget-buttons-cancel, &.uploadcare-widget-buttons-remove {
       font-size: 0.9em;
       display: none;
+      width: auto;
     }
   }
 }

@@ -146,6 +146,7 @@ $dialog-free-space-for-close-button: y(2);
         left: 50%;
         margin-top: $frame-size / -2;
         margin-left: $frame-size / -2;
+        border: none;
       }
 
       &:hover {
