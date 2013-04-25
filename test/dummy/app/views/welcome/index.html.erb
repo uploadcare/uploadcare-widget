@@ -25,8 +25,8 @@ Graceful pub key:
 Draggable:<br>
 <img src="https://secure.gravatar.com/avatar/afec5e3f528823759c4b1eb2d26bc0a2" alt="" />
 </p>
-<p><div>Preview:</div><span id="last-preview"></span></p>
 <p><div>CDN:</div><span id="last-cdn"></span></p>
+<p><div>Preview:</div><span id="last-preview"></span></p>
 <ul id="events"></ul>
 <script>
 jQuery(function($) {
@@ -42,7 +42,9 @@ jQuery(function($) {
         file.preview('#last-preview');
         file.done(function(info) {
           if (info.isImage) {
-            var ri = uploadcare.resizableImage(info.cdnUrl);
+            var ri = uploadcare.resizableImage(info.cdnUrl, {
+              fitWidth: 300
+            });
             ri.done(function(el) {
               $('#last-cdn').html(el);
             });
