@@ -66,7 +66,7 @@ namespace 'uploadcare.files', (ns) ->
     __progressInfo: ->
       state: @__progressState
       uploadProgress: @__progress
-      progress: if @__progressState == 'ready' then 1 else @__progress * 0.9
+      progress: if @__progressState in ['ready', 'error'] then 1 else @__progress * 0.9
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
@@ -131,9 +131,14 @@ namespace 'uploadcare.files', (ns) ->
       @apiDeferred.notify @__progressInfo()
 
     __rejectApi: (err) =>
+      @__progress = 1
+      @__progressState = 'error'
+      @__notifyApi()
       @apiDeferred.reject err, @__fileInfo()
 
     __resolveApi: =>
+      @__progressState = 'ready'
+      @__notifyApi()
       @apiDeferred.resolve @__fileInfo()
 
     __initApi: ->
@@ -147,10 +152,7 @@ namespace 'uploadcare.files', (ns) ->
         @__progressState = 'uploaded'
         @__progress = 1
         @__notifyApi()
-      @__infoDf.done =>
-        @__progressState = 'ready'
-        @__notifyApi()
-        @__resolveApi()
+      @__infoDf.done @__resolveApi
       @__infoDf.fail @__rejectApi
       @__uploadDf.fail @__rejectApi
 

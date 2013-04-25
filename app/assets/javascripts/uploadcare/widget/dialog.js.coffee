@@ -104,12 +104,17 @@ namespace 'uploadcare', (ns) ->
         fileColl: @files.readOnly()
         onSwitched: $.Callbacks()
         onSwitchedToMe: $.Callbacks()
+        # (fileType, data) or (fileObject)
         addFiles: (fileType, data) =>
-          if @settings.multiple
-            @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
-          else
+          unless @settings.multiple
             @files.clear()
-            @files.add ns.fileFrom(fileType, data, @settings)
+          if utils.isFile fileType
+            @files.add fileType
+          else
+            if @settings.multiple
+              @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
+            else
+              @files.add ns.fileFrom(fileType, data, @settings)
         removeFile: (file) => @files.remove(file)
         clearFiles: => @files.clear()
         switchToPreview: => @switchTab 'preview'
@@ -199,6 +204,13 @@ namespace 'uploadcare', (ns) ->
 
       @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
 
+    __addFakeTab: (name) ->
+      $('<div>')
+        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
+        .addClass('uploadcare-dialog-disabled-tab')
+        .attr('title', t("tabs.#{name}.title"))
+        .appendTo(@content.find('.uploadcare-dialog-tabs'))
+
     switchTab: (@currentTab) =>
       @content.find('.uploadcare-dialog-body')
         .find('.uploadcare-dialog-selected-tab')
@@ -235,4 +247,5 @@ namespace 'uploadcare', (ns) ->
 
     __welcome: ->
       @addTab('welcome')
+      @__addFakeTab tabName for tabName in @settings.tabs
       @switchTab('welcome')
