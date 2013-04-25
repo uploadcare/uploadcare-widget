@@ -21,13 +21,13 @@ $dialog-body-font-size-smaller: 13px;
 $dialog-free-space-for-close-button: y(2);
 
 .uploadcare-dialog {
+  @extend %dialog-overlay-image;
   font-family: $font-family;
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(#313131, .95);
   z-index: 10000;
   overflow: auto;
 
