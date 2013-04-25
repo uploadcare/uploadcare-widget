@@ -51,7 +51,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               if message?.type is 'file-selected'
 
                 file = uploadcare.rawFileFrom 'url', message.url, @settings
-                file.setName message.filename
+                if message.filename
+                  file.setName message.filename
                 @dialogApi.addFiles file.promise()
                 
                 @__sendMessage
