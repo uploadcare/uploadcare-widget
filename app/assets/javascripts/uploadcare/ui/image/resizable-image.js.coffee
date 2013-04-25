@@ -11,12 +11,16 @@ namespace 'uploadcare.ui.image', (ns) ->
   ns.resizableImage = (cdnUrl, options = {}) ->
     defaults =
       scaleCrop: false
+      minWidth: 10
+      minHeight: 10
       fitWidth: null
-    fittHeight: null
+      fitHeight: null
     options = $.extend({}, defaults, options)
 
     el = $(tpl('resizable-image'))
-    dr = new DragResize('dragresize', minWidth: 10, minHeight: 10)
+    dr = new DragResize 'dragresize',
+      minWidth: options.minWidth
+      minHeight: options.minHeight
     dr.isElement = (el) -> $(el).hasClass('uploadcare-resizable-image')
     dr.isHandle = -> false
     dr.apply(el[0])
