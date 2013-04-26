@@ -5,6 +5,7 @@
 # = require uploadcare/templates
 # = require uploadcare/stylesheets
 # = require uploadcare/ui/crop/crop-widget
+# = require uploadcare/ui/image/resizable-image
 # = require uploadcare/widget/base-widget
 # = require uploadcare/widget/live
 # = require uploadcare/widget/submit-guard
@@ -23,5 +24,6 @@ expose 'loadFileGroup'
 expose 'locales', (key for own key of uploadcare.locale.translations)
 expose 'openDialog'
 expose 'Circle', uploadcare.ui.progress.Circle
+expose 'resizableImage', uploadcare.ui.image.resizableImage
 expose 'Widget'
 expose 'MultipleWidget'

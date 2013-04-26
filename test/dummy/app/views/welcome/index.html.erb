@@ -4,6 +4,7 @@ We’ve developed a beautiful widget for the web.
     type="hidden"
     data-images-only
     data-path-value
+    data-autostore
     data-crop
     role="uploadcare-uploader" />
 It can do everything from drag-and-drop to selecting photos from various social networking sites like Facebook.
@@ -11,6 +12,7 @@ It can do everything from drag-and-drop to selecting photos from various social 
     type="hidden"
     data-tabs="facebook file url"
     data-path-value
+    data-autostore
     role="uploadcare-uploader" />
 </p>
 
@@ -23,7 +25,8 @@ Graceful pub key:
 Draggable:<br>
 <img src="https://secure.gravatar.com/avatar/afec5e3f528823759c4b1eb2d26bc0a2" alt="" />
 </p>
-<div id="last-result"></div>
+<p><div>CDN:</div><span id="last-cdn"></span></p>
+<p><div>Preview:</div><span id="last-preview"></span></p>
 <ul id="events"></ul>
 <script>
 jQuery(function($) {
@@ -34,13 +37,21 @@ jQuery(function($) {
   var widgets = uploadcare.initialize();
   for (var i = 0; i < widgets.length; i++) {
     widgets[i].onChange.add(function(file) {
+      $('#last-preivew, #last-cdn').empty();
       if (file) {
-        file.preview('#last-result');
+        file.preview('#last-preview');
         file.done(function(info) {
+          if (info.isImage) {
+            var ri = uploadcare.resizableImage(info.cdnUrl, {
+              fitWidth: 300
+            });
+            ri.done(function(el) {
+              $('#last-cdn').html(el);
+            });
+          }
           log('change: ' + info.uuid);
         });
       } else {
-        $('#last-result').empty();
         log('change: (empty)');
       }
     });
