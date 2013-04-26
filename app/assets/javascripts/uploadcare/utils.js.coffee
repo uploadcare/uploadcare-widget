@@ -101,6 +101,20 @@ namespace 'uploadcare.utils', (ns) ->
     else
       text
 
+  ns.fitDimensionsWithCdnLimit = (dim, limit=1024) ->
+    ns.fitDimensions(dim, limit, limit)
+
+  ns.fitDimensions = (o, width, height) ->
+    wr = if width then o.width / width else 1
+    hr = if height then o.height / height else 1
+    width = o.width
+    height = o.height
+    if wr > 1 || hr > 1
+      ratio = Math.max(wr, hr)
+      width /= ratio
+      height /= ratio
+    {width: Math.round(width), height: Math.round(height)}
+
   ns.fileInput = (container, multiple, fn) ->
     container.find('input:file').remove()
     input = if multiple
