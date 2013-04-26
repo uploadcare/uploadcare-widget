@@ -4,13 +4,12 @@
   namespace,
   utils,
   templates: {tpl},
-  jQuery: $
+  jQuery: $,
+  utils: 
+    cdnSizeLimit: {MAX_LO, MAX_HI}
 } = uploadcare
 
 namespace 'uploadcare.ui.image', (ns) ->
-
-  MAX_LO = 634
-  MAX_HI = 1024
 
   ns.resizableImage = (cdnUrl, options = {}) ->
     defaults =
