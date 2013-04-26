@@ -2,7 +2,10 @@
 
 {
   namespace,
-  jQuery: $
+  jQuery: $,
+  utils,
+  utils: 
+    cdnSizeLimit: {MAX_LO, MAX_HI}
 } = uploadcare
 {tpl} = uploadcare.templates
 
@@ -96,14 +99,35 @@ namespace 'uploadcare.crop', (ns) ->
             crop: $.extend({}, coords)
             modifiers: modifiers
 
+          resized = 
+            width: coords.w
+            height: coords.h
+
           if @__options.scale
             scale = @__options.preferedSize.split('x')
             sw = scale[0] - 0 if scale[0]
             sh = scale[1] - 0 if scale[1]
             if coords.w > sw or @__options.upscale
-              opts.crop.sw = sw
-              opts.crop.sh = sh
-              modifiers += "-/resize/#{@__options.preferedSize}/"
+              resized.width = sw
+              resized.height = sh
+
+          if resized.width > MAX_LO or resized.height > MAX_LO
+            resized = if resized.width > resized.height
+              utils.fitDimensions(resized, MAX_HI, MAX_LO)
+            else
+              utils.fitDimensions(resized, MAX_LO, MAX_HI)
+            if @__options.scale
+              utils.warnOnce """
+                You specified #{@__options.preferedSize} as preferred size in 
+                crop options. It's bigger than our CDN allows:
+                (#{MAX_HI}x#{MAX_LO}). Resulting image size will be 
+                #{resized.width}x#{resized.height}.
+              """
+
+          if resized.width isnt coords.w or resized.height isnt coords.h
+            opts.crop.sw = resized.width
+            opts.crop.sh = resized.height
+            opts.modifiers += "-/resize/#{resized.width}x#{resized.height}/"
 
           opts
 
