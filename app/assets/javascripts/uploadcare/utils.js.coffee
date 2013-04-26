@@ -89,6 +89,9 @@ namespace 'uploadcare.utils', (ns) ->
   ns.fullUuidRegex = new RegExp("^#{ns.uuidRegex.source}$", 'i')
   ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_,]+\/)+)+/i
 
+  ns.escapeRegExp = (str) -> 
+    str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+
   ns.normalizeUrl = (url) ->
     url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
     url.replace(/\/+$/, '')

@@ -9,18 +9,21 @@
   namespace,
   utils,
   jQuery: $,
-  files: f
+  files: f,
+  settings: s
 } = uploadcare
 
 namespace 'uploadcare', (ns) ->
 
   ns.rawFileFrom = (type, data, settings = {}) ->
+    settings = s.build settings
     converters[type](settings, data)[0]
 
   ns.fileFrom = ->
     ns.rawFileFrom.apply(null, arguments).promise()
 
   ns.filesFrom = (type, data, settings = {}) ->
+    settings = s.build settings
     file.promise() for file in converters[type](settings, data)
 
   converters =
@@ -41,7 +44,9 @@ namespace 'uploadcare', (ns) ->
       unless $.isArray(urls)
         urls = [urls]
       for url in urls
-        cdn = new RegExp("^#{settings.cdnBase}/#{utils.uuidRegex.source}", 'i')
+        cdnBase = utils.escapeRegExp(settings.cdnBase)
+          .replace(/^https?/i, 'https?')
+        cdn = new RegExp("^#{cdnBase}/#{utils.uuidRegex.source}", 'i')
         if utils.fullUuidRegex.test(url) || cdn.test(url)
           new f.UploadedFile settings, url
         else
