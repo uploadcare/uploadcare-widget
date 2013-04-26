@@ -39,10 +39,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
-      @file.progress utils.once (progressInfo) =>
-        data = $.extend {file: progressInfo.incompleteFileInfo}, data
+      render = utils.once (fileInfo) =>
+        data = $.extend {file: fileInfo}, data
         @container.empty().append tpl("tab-preview-#{state}", data)
         @__afterRender state
+
+      @file.progress (progressInfo) -> render progressInfo.incompleteFileInfo
+      @file.done render
+      @file.fail (error, fileIfo) -> render fileIfo
 
     __afterRender: (state) ->
       if state is 'unknown'
@@ -68,7 +72,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @file.done (info) =>
           widget.croppedImageModifiers(img.attr('src'), info.cdnUrlModifiers)
             .done (opts) =>
-              @file = @file.then (info) =>
+              @dialogApi.replaceFile @file, @file.then (info) =>
                 prefix = @settings.cdnBase
                 info.cdnUrlModifiers = opts.modifiers
                 info.cdnUrl = "#{prefix}/#{info.uuid}/#{opts.modifiers or ''}"

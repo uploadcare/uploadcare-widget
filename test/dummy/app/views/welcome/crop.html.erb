@@ -113,7 +113,7 @@ widget.<button id="destroy">destroy()</button>;
     // ---
 
     $('#widget-with-crop-option').change(function(){
-      var newInput = $($('#widget-with-crop-wrap').html());
+      var newInput = $('<input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url" data-crop>');
       newInput.attr('data-crop', $('#widget-with-crop-option').val());
       $('#widget-with-crop-wrap').empty().append(newInput);
     });
