@@ -116,6 +116,7 @@ namespace 'uploadcare', (ns) ->
             else
               @files.add ns.fileFrom(fileType, data, @settings)
         removeFile: (file) => @files.remove(file)
+        replaceFile: (oldFile, newFile) => @files.replace oldFile, newFile
         clearFiles: => @files.clear()
         switchToPreview: => @switchTab 'preview'
         done: @__resolve

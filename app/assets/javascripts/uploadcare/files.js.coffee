@@ -14,7 +14,7 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.rawFileFrom = (type, data, settings) ->
+  ns.rawFileFrom = (type, data, settings = {}) ->
     converters[type](settings, data)[0]
 
   ns.fileFrom = ->
