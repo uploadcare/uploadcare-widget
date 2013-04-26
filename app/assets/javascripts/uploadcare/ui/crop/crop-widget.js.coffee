@@ -2,7 +2,8 @@
 
 {
   namespace,
-  jQuery: $
+  jQuery: $,
+  utils
 } = uploadcare
 {tpl} = uploadcare.templates
 
@@ -68,6 +69,19 @@ namespace 'uploadcare.crop', (ns) ->
       @__options = $.extend {}, defaultOptions, options
       @__options.scale = false unless @__options.preferedSize
       checkOptions @__options
+
+      if @__options.scale
+        [width, height] = @__options.preferedSize.split('x')
+        fited = utils.fitDimensionsWithCdnLimit {width, height}
+        if fited.width isnt width
+          willBe = "#{fited.width}x#{fited.height}#{if @__options.upscale then '' else ' or smaller'}"
+          utils.warnOnce """
+            You specified #{@__options.preferedSize} as preferred size in crop options. 
+            It's bigger than our CDN allows. 
+            Resulting image size will be #{willBe}.
+          """
+          @__options.preferedSize = "#{fited.width}x#{fited.height}"
+
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
@@ -90,20 +104,33 @@ namespace 'uploadcare.crop', (ns) ->
         .pipe (coords) =>
           size = "#{coords.w}x#{coords.h}"
           topLeft = "#{coords.x},#{coords.y}"
-          modifiers = "-/crop/#{size}/#{topLeft}/"
 
           opts =
             crop: $.extend({}, coords)
-            modifiers: modifiers
+            modifiers: "-/crop/#{size}/#{topLeft}/"
 
-          if @__options.scale
-            scale = @__options.preferedSize.split('x')
-            sw = scale[0] - 0 if scale[0]
-            sh = scale[1] - 0 if scale[1]
-            if coords.w > sw or @__options.upscale
-              opts.crop.sw = sw
-              opts.crop.sh = sh
-              modifiers += "-/resize/#{@__options.preferedSize}/"
+          notTouched = coords.w is @__originalWidth and coords.h is @__originalHeight
+          if notTouched and not @__options.scale
+            opts.modifiers = ''
+          else
+            resized = 
+              width: coords.w
+              height: coords.h
+
+            if @__options.scale
+              scale = @__options.preferedSize.split('x')
+              sw = scale[0] - 0 if scale[0]
+              sh = scale[1] - 0 if scale[1]
+              if coords.w > sw or @__options.upscale
+                resized.width = sw
+                resized.height = sh
+
+            resized = utils.fitDimensionsWithCdnLimit resized
+
+            if resized.width isnt coords.w or resized.height isnt coords.h
+              opts.crop.sw = resized.width
+              opts.crop.sh = resized.height
+              opts.modifiers += "-/resize/#{resized.width}x#{resized.height}/"
 
           opts
 

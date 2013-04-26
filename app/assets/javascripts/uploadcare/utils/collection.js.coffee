@@ -10,6 +10,7 @@ namespace 'uploadcare.utils', (utils) ->
     constructor: (items = []) ->
       @onAdd = $.Callbacks()
       @onRemove = $.Callbacks()
+      @onReplaced = $.Callbacks()
 
       @__items = []
       @add(item) for item in items
@@ -24,6 +25,16 @@ namespace 'uploadcare.utils', (utils) ->
 
     clear: ->
       @remove(item) for item in @get()
+
+    replace: (oldItem, newItem) ->
+      unless oldItem is newItem
+        for item, i in @__items
+          if item is oldItem
+            @__replace oldItem, newItem, i
+
+    __replace: (oldItem, newItem, i) ->
+      @__items[i] = newItem
+      @onReplaced.fire oldItem, newItem, i
 
     get: (index) ->
       if index?
@@ -49,6 +60,11 @@ namespace 'uploadcare.utils', (utils) ->
       return if item in @__items
       super
 
+    __replace: (oldItem, newItem, i) ->
+      if newItem in @__items
+        @remove oldItem
+      else
+        super
 
   class utils.CollectionOfPromises extends utils.UniqCollection
 
@@ -71,6 +87,9 @@ namespace 'uploadcare.utils', (utils) ->
 
       super
 
+      @__watchItem item
+      
+    __watchItem: (item) ->
       handler = (callbacks) =>
         (args...) =>
           if item in @__items
@@ -82,6 +101,14 @@ namespace 'uploadcare.utils', (utils) ->
         handler(@onAnyFail),
         handler(@onAnyProgress)
       )
+
+    __replace: (oldItem, newItem, i) ->
+      unless newItem and newItem.done and newItem.fail and newItem.then
+        @remove oldItem
+      else
+        super
+
+        @__watchItem newItem
 
     readOnly: ->
       $.extend super(), utils.bindAll this, [
