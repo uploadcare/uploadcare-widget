@@ -1,0 +1,27 @@
+.uploadcare-resizable-image {
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .dragresize {
+    display: none;
+  }
+
+  .dragresize.dragresize-br {
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border: 1px solid #000;
+    background-color: #fff;
+    right: 0;
+    bottom: 0;
+    margin-right: -4px;
+    margin-bottom: -4px;
+    cursor: se-resize;
+    cursor: nwse-resize;
+  }
+}
