@@ -77,6 +77,11 @@ function DragResize(myName, config)
   minWidth: 10, minHeight: 10,     // Minimum pixel size of elements.
   minLeft: 0, maxLeft: 9999,       // Bounding box area, in pixels.
   minTop: 0, maxTop: 9999,
+
+  maxWidth: null,
+  maxHeight: null,
+  aspectRatio: null,
+
   zIndex: 1,                       // The highest Z-Index yet allocated.
   mouseX: 0, mouseY: 0,            // Current mouse position, recorded live.
   lastMouseX: 0, lastMouseY: 0,    // Last processed mouse positions.
@@ -231,6 +236,24 @@ DragResize.prototype.mouseMove = function(e) { with (this)
   elmX += diffX;
   elmY += diffY;
  }
+
+  // Maintain max dimensions
+  if (this.maxWidth) {
+    elmW = Math.min(elmW, this.maxWidth);
+  }
+  if (this.maxHeight) {
+    elmH = Math.min(elmH, this.maxHeight);
+  }
+
+  // Maintain aspect-ratio
+  if (this.aspectRatio) {
+    var currentRatio = elmW / elmH;
+    if (currentRatio > this.aspectRatio) {
+      elmW = elmH * this.aspectRatio
+    } else if (currentRatio < this.aspectRatio) {
+      elmH = elmW / this.aspectRatio
+    }
+  }
 
  // Assign new info back to the element, with minimum dimensions.
  with (element.style)
