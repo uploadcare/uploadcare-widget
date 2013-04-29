@@ -130,7 +130,11 @@ namespace 'uploadcare.crop', (ns) ->
             if resized.width isnt coords.w or resized.height isnt coords.h
               opts.crop.sw = resized.width
               opts.crop.sh = resized.height
-              opts.modifiers += "-/resize/#{resized.width}x#{resized.height}/"
+
+              size = [resized.width, resized.height]
+              size[if size[0] > size[1] then 1 else 0] = ''
+
+              opts.modifiers += "-/resize/#{size.join 'x'}/"
 
           opts
 
