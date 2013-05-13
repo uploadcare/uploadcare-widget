@@ -1,6 +1,6 @@
 describe "UploadedFile", ->
 
-  it "should be successfuly created with corrent file info", ->
+  it "should be successfully created with correct file info", ->
 
     mocks.use 'jsonp'
     mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
