@@ -15,16 +15,18 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.rawFileFrom = (type, data, settings = {}) ->
+  ns.rawFileFrom = ->
+    ns.rawFilesFrom.apply(this, arguments)[0]
+
+  ns.rawFilesFrom = (type, data, settings = {}) ->
     settings = s.build settings
-    converters[type](settings, data)[0]
+    converters[type](settings, data)
 
   ns.fileFrom = ->
     ns.rawFileFrom.apply(null, arguments).promise()
 
   ns.filesFrom = (type, data, settings = {}) ->
-    settings = s.build settings
-    file.promise() for file in converters[type](settings, data)
+    file.promise() for file in ns.rawFilesFrom.apply(this, arguments)
 
   converters =
     event: (settings, e) ->
