@@ -11,7 +11,7 @@ mocks.define 'uploadcareFile', ->
     fastUploaded: ->
       @resolve()
     fastFailed: ->
-      @reject()
+      @reject 'info'
 
   class FakeFile
 
