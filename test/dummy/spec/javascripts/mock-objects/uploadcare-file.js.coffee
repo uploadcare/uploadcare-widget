@@ -15,12 +15,12 @@ mocks.define 'uploadcareFile', ->
 
   class FakeFile
 
-    constructor: (@settings, fixture=kitty) ->
+    constructor: (@settings, @type, @data, fixture=kitty) ->
       @df = $.Deferred()
       @pr = @df.promise()
       @pr.cancel = ->
 
-      $.extend this, utils.toFileProperties kitty
+      $.extend this, utils.toFileProperties fixture
       @progressState = 'uploading'
       @progress = 0
 
@@ -65,7 +65,7 @@ mocks.define 'uploadcareFile', ->
 
   fakeRawFilesFrom = (type, data, settings = {}) ->
     settings = uploadcare.settings.build settings
-    file = transformer new FakeFile(settings), type, data, settings
+    file = transformer new FakeFile(settings, type, data)
     [file]
 
   origRawFilesFrom = uploadcare.rawFilesFrom
