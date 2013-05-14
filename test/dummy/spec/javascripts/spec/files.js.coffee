@@ -9,12 +9,17 @@ describe "UploadedFile", ->
 
   it "should be successfully created with correct file info", ->
 
-    mocks.use 'jsonp'
-    mocks.jsonp.addHandler /\/info\/$/, (url, data) -> kitty.info
+    file = null
 
-    file = uploadcare.fileFrom('uploaded', kitty.uuid)
+    runs ->
+      mocks.use 'jsonp'
+      mocks.jsonp.addHandler /\/info\/$/, (url, data) -> kitty.info
 
-    waitsFor (-> file.state() is 'resolved'), "successfuly created", 100
+      file = uploadcare.fileFrom('uploaded', kitty.uuid)
+
+    waitsFor ->
+      file.state() is 'resolved'
+    , "successfuly created", 100
 
     runs ->
       file.done (info) ->
@@ -23,13 +28,18 @@ describe "UploadedFile", ->
 
   it "should failed to be created if server responded with error", ->
 
-    mocks.use 'jsonp'
-    mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
-      error: 'some error message'
+    file = null
 
-    file = uploadcare.fileFrom('uploaded', kitty.uuid)
+    runs ->
+      mocks.use 'jsonp'
+      mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
+        error: 'some error message'
 
-    waitsFor (-> file.state() is 'rejected'), "file failed", 100
+      file = uploadcare.fileFrom('uploaded', kitty.uuid)
+
+    waitsFor ->
+      file.state() is 'rejected'
+    , "file failed", 100
 
     runs ->
       file.fail (error) ->
@@ -41,41 +51,46 @@ describe "UrlFile", ->
 
   it "should be successfully created with correct file info", ->
 
-    mocks.use 'jsonp pusher'
+    file = null
 
-    status =
-      status: 'error'
+    runs ->
+      mocks.use 'jsonp pusher'
 
-    updateStatus = (newStatus) ->
-      status = newStatus
-      mocks.pusher.channel('task-status-abc').send status.status, status
+      status =
+        status: 'error'
 
-    mocks.jsonp.addHandler /\/from_url\/$/, ->
-      updateStatus
-        status: 'progress'
-        total: kitty.info.size
-        done: 10
-      {token: 'abc'}
-    mocks.jsonp.addHandler /\/status\/$/, -> status
-    mocks.jsonp.addHandler /\/info\/$/, -> kitty.info
+      updateStatus = (newStatus) ->
+        status = newStatus
+        mocks.pusher.channel('task-status-abc').send status.status, status
 
-    file = uploadcare.fileFrom('url', 'http://example.com/kitty.jpg')
+      mocks.jsonp.addHandler /\/from_url\/$/, ->
+        updateStatus
+          status: 'progress'
+          total: kitty.info.size
+          done: 10
+        {token: 'abc'}
+      mocks.jsonp.addHandler /\/status\/$/, -> status
+      mocks.jsonp.addHandler /\/info\/$/, -> kitty.info
 
-    setTimeout ->
-      updateStatus
-        status: 'progress'
-        total: kitty.info.size
-        done: 70
-    , 50
+      file = uploadcare.fileFrom('url', 'http://example.com/kitty.jpg')
 
-    setTimeout ->
-      updateStatus
-        status: 'success'
-        original_filename: kitty.info.original_filename
-        file_id: kitty.uuid
-    , 100
+      setTimeout ->
+        updateStatus
+          status: 'progress'
+          total: kitty.info.size
+          done: 70
+      , 50
 
-    waitsFor (-> file.state() is 'resolved'), "successfuly created", 200
+      setTimeout ->
+        updateStatus
+          status: 'success'
+          original_filename: kitty.info.original_filename
+          file_id: kitty.uuid
+      , 100
+
+    waitsFor ->
+      file.state() is 'resolved'
+    , "successfuly created", 200
 
     runs ->
       file.done (info) ->

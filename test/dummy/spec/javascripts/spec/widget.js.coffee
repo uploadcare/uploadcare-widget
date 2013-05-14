@@ -22,9 +22,10 @@ $ ->
 
     describe 'After `widget.value(%uuid%)` call', ->
 
-      it '`widget.value()` should return an File with correct info', ->
-
+      beforeEach ->
         mocks.use 'uploadcareFile'
+
+      it '`widget.value()` should return an File with correct info', ->
 
         widget.value kitty.uuid
         file = widget.value()
@@ -36,8 +37,6 @@ $ ->
             expect(info[prop]).toBe utils.toFileInfo(kitty)[prop]
 
       it 'unless File failed to upload. `widget.value()` should return null in that case', ->
-
-        mocks.use 'uploadcareFile'
 
         mocks.uploadcareFile.onNewFile (file) ->
           file.playScenario 'fastFailed'
