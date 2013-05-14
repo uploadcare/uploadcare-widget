@@ -1,3 +1,5 @@
+{mocks} = jasmine
+
 mocks.define 'jsonp', ->
 
   orig = uploadcare.utils.jsonp

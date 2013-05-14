@@ -1,3 +1,5 @@
+{mocks} = jasmine
+
 mocks.define 'pusher', ->
 
   orig = Pusher

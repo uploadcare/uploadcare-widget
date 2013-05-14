@@ -1,18 +1,16 @@
-window.mocks =
+jasmine.ns '', (ns) ->
 
-  objects: []
+  ns.mocks =
 
-  define: (name, callback) ->
-    @[name] = @objects[name] = callback()
+    objects: []
 
-  use: (names) ->
-    for name in names.split ' '
-      @objects[name].turnOn()
+    define: (name, callback) ->
+      @[name] = @objects[name] = callback()
 
-  clear: ->
-    for name, object of @objects
-      object.turnOff()
+    use: (names) ->
+      for name in names.split ' '
+        @objects[name].turnOn()
 
-
-afterEach ->
-  mocks.clear()
+    clear: ->
+      for name, object of @objects
+        object.turnOff()
