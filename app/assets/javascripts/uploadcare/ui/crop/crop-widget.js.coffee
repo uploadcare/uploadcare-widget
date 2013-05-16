@@ -13,7 +13,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     defaultOptions =
 
-      # DOM element or selector or jQuery object to which widget 
+      # DOM element or selector or jQuery object to which widget
       # will be appended (required)
       container: null
 
@@ -21,16 +21,16 @@ namespace 'uploadcare.crop', (ns) ->
       # like "-/resize/%preferedSize%/". (optional)
       scale: true
 
-      # If set to `true` "-/resize/%preferedSize%/" will be added 
+      # If set to `true` "-/resize/%preferedSize%/" will be added
       # even if selected area smaller than `preferedSize` (optional)
       upscale: false
 
-      # Defines widget size. if set to `null` widget size will be equal 
+      # Defines widget size. if set to `null` widget size will be equal
       # to the `container` size. Syntax: '123x123'. (optional)
       widgetSize: null
 
       # Defines image size you want to get at the end.
-      # If `scale` option is set to `false`, it defines only 
+      # If `scale` option is set to `false`, it defines only
       # the prefered aspect ratio.
       # If set to `null` any aspect ratio will be acceptable.
       # Syntax: '123x123'. (optional)
@@ -78,8 +78,8 @@ namespace 'uploadcare.crop', (ns) ->
         if fited.width isnt width
           willBe = "#{fited.width}x#{fited.height}#{if @__options.upscale then '' else ' or smaller'}"
           utils.warnOnce """
-            You specified #{@__options.preferedSize} as preferred size in crop options. 
-            It's bigger than our CDN allows. 
+            You specified #{@__options.preferedSize} as preferred size in crop options.
+            It's bigger than our CDN allows.
             Resulting image size will be #{willBe}.
           """
           @__options.preferedSize = "#{fited.width}x#{fited.height}"
@@ -96,7 +96,7 @@ namespace 'uploadcare.crop', (ns) ->
     croppedImageModifiers: (originalUrl, currentModifiers) ->
       previousCoords = null
       if raw = currentModifiers?.match(cropModifierRegExp)
-        previousCoords = 
+        previousCoords =
           width: parseInt(raw[1], 10)
           height: parseInt(raw[2], 10)
           center: raw[4] == 'center'
@@ -115,7 +115,7 @@ namespace 'uploadcare.crop', (ns) ->
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
-            resized = 
+            resized =
               width: coords.w
               height: coords.h
 
@@ -164,7 +164,7 @@ namespace 'uploadcare.crop', (ns) ->
     destroy: ->
       @__clearImage()
       @__widgetElement.remove()
-      @__widgetElement = @__imageWrap = @__doneButton = null        
+      @__widgetElement = @__imageWrap = @__doneButton = null
 
     __buildWidget: ->
       @container = $ @__options.container
@@ -195,7 +195,7 @@ namespace 'uploadcare.crop', (ns) ->
         @__deferred = false
       if @__img
         @__img.remove()
-        @__img.off() 
+        @__img.off()
         @__img = null
       @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
       @__setState 'waiting'
@@ -217,14 +217,14 @@ namespace 'uploadcare.crop', (ns) ->
 
     __calcImgSizes: ->
       {width: @__originalWidth, height: @__originalHeight} = @__img[0]
-      [@__resizedWidth, @__resizedHeight] = 
+      [@__resizedWidth, @__resizedHeight] =
         fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight
       paddingTop = (@__wrapHeight - @__resizedHeight) / 2
       paddingLeft = (@__wrapWidth - @__resizedWidth) / 2
 
       @__img.attr {width: @__resizedWidth, height: @__resizedHeight}
       @__imageWrap.css {
-        paddingTop, 
+        paddingTop,
         paddingLeft,
         width: @__wrapWidth - paddingLeft,
         height: @__wrapHeight - paddingTop
