@@ -71,7 +71,9 @@ namespace 'uploadcare.crop', (ns) ->
       checkOptions @__options
 
       if @__options.scale
-        [width, height] = @__options.preferedSize.split('x')
+        s = @__options.preferedSize.split('x')
+        width = +s[0]
+        height = +s[1]
         fited = utils.fitDimensionsWithCdnLimit {width, height}
         if fited.width isnt width
           willBe = "#{fited.width}x#{fited.height}#{if @__options.upscale then '' else ' or smaller'}"
