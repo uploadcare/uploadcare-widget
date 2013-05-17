@@ -1,7 +1,17 @@
 # This pulls in all your specs from the javascripts directory into Jasmine:
 #
-# spec/javascripts/*_spec.js.coffee
-# spec/javascripts/*_spec.js
-# spec/javascripts/*_spec.js.erb
-#
-#=require_tree ./
+# = require_self
+# = require ./utils
+# = require application
+# = require mock-objects/manager
+# = require_tree ./
+# = require_tree ./fixtures/data
+
+jasmine.ns = (path, cb) ->
+  node = jasmine
+  for part in path.split '.' when part
+    node = node[part] or= {}
+  cb node
+
+afterEach ->
+  jasmine.mocks.clear()

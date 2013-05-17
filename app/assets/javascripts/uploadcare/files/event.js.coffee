@@ -13,7 +13,6 @@ namespace 'uploadcare.files', (ns) ->
       @fileId = utils.uuid()
       @fileSize = @__file.size
       @fileName = @__file.name
-      @previewUrl = utils.createObjectUrl @__file
       @__notifyApi()
 
     __startUpload: ->
