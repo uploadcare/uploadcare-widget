@@ -29,6 +29,10 @@ namespace 'uploadcare.files', (ns) ->
       @fileName = name
       @__notifyApi()
 
+    setIsImage: (isImage) ->
+      @isImage = isImage
+      @__notifyApi()
+
     __startUpload: ->
 
       @__pollWatcher = new PollWatcher(this, @settings)

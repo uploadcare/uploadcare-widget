@@ -58,6 +58,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 file = uploadcare.rawFileFrom 'url', message.url, @settings
                 if message.filename
                   file.setName message.filename
+                if message.is_image?
+                  file.setIsImage message.is_image
                 @dialogApi.addFiles file.promise()
                 
                 @__sendMessage
