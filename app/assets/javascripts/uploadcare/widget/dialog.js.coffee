@@ -118,6 +118,7 @@ namespace 'uploadcare', (ns) ->
         removeFile: (file) => @files.remove(file)
         replaceFile: (oldFile, newFile) => @files.replace oldFile, newFile
         clearFiles: => @files.clear()
+        sortFiles: (comparator) => @files.sort comparator
         switchToPreview: => @switchTab 'preview'
         done: @__resolve
         switchTab: @switchTab
