@@ -25,7 +25,7 @@ namespace 'uploadcare', (ns) ->
 
   currentDialogPr = null
 
-  ns.isDialogOpened = -> 
+  ns.isDialogOpened = ->
     currentDialogPr != null
 
   ns.closeDialog = ->
@@ -63,21 +63,21 @@ namespace 'uploadcare', (ns) ->
   class Dialog
     constructor: (@settings, files, tab) ->
 
-      if files 
+      if files
         unless $.isArray(files)
           files = [files]
       else
         files = []
 
       @dfd = $.Deferred()
-      @dfd.always => 
+      @dfd.always =>
         @__closeDialog()
 
       @content = $(tpl('dialog'))
         .hide()
         .appendTo('body')
         .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
-      
+
       @files = new utils.CollectionOfPromises()
 
       @__bind()
@@ -99,7 +99,7 @@ namespace 'uploadcare', (ns) ->
       return promise
 
     apiForTab: (tabName) ->
-      api = 
+      api =
         avalibleTabs: @settings.tabs
         fileColl: @files.readOnly()
         onSwitched: $.Callbacks()
@@ -149,7 +149,7 @@ namespace 'uploadcare', (ns) ->
     __prepareTabs: (tab) ->
       @addTab 'preview'
       @__hideTab 'preview'
-      
+
       @addTab tabName for tabName in @settings.tabs
       @switchTab(tab || @settings.tabs[0])
 
