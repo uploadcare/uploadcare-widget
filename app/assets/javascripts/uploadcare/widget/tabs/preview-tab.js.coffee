@@ -69,8 +69,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @container.find(PREFIX + 'done').hide()
 
     __initCrop: ->
-      # crop widget can't get container size when container hidden 
-      # (dialog hidden) so we need timer here 
+      # crop widget can't get container size when container hidden
+      # (dialog hidden) so we need timer here
       utils.defer =>
         img = @container.find(PREFIX + 'image')
         container = img.parent()
@@ -89,7 +89,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 info.crop = opts.crop
                 info
         doneButton.addClass('uploadcare-disabled-el')
-        widget.onStateChange.add (state) => 
+        widget.onStateChange.add (state) =>
           if state == 'loaded'
             doneButton
               .removeClass('uploadcare-disabled-el')

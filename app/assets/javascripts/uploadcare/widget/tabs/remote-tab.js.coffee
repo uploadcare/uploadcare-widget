@@ -51,7 +51,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             goodOrigin = nos(e.origin) is nos(@settings.socialBase)
             goodSource = e.source is @iframe?[0]?.contentWindow
             if goodOrigin and goodSource
-              try 
+              try
                 message = JSON.parse e.data
               if message?.type is 'file-selected'
 
@@ -61,7 +61,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 if message.is_image?
                   file.setIsImage message.is_image
                 @dialogApi.addFiles file.promise()
-                
+
                 @__sendMessage
                   type: 'file-selected-received'
                   url: message.url
