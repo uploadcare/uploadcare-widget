@@ -29,6 +29,10 @@ namespace 'uploadcare.files', (ns) ->
       @fileName = name
       @__notifyApi()
 
+    setIsImage: (isImage) ->
+      @isImage = isImage
+      @__notifyApi()
+
     __startUpload: ->
 
       @__pollWatcher = new PollWatcher(this, @settings)
@@ -36,7 +40,7 @@ namespace 'uploadcare.files', (ns) ->
 
       @__state('start')
 
-      data = 
+      data =
         pub_key: @settings.publicKey
         source_url: @__url
         filename: @__realFileName or ''
@@ -62,7 +66,7 @@ namespace 'uploadcare.files', (ns) ->
 
       @__uploadDf.promise()
 
-    
+
     ####### Four States of uploader
     __state: (state, data) ->
       (
