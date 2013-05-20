@@ -1,3 +1,9 @@
+/* Changes by uploadcare:
+ *   replace (function(...){...}(jQuery))
+ *   with (function(...){...}(uploadcare.jQuery)) in several places
+ *
+ */
+
 /*! jQuery UI - v1.10.3 - 2013-05-20
 * http://jqueryui.com
 * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.sortable.js
@@ -312,7 +318,7 @@ $.extend( $.ui, {
 	}
 });
 
-})( jQuery );
+})( uploadcare.jQuery );
 (function( $, undefined ) {
 
 var uuid = 0,
@@ -823,7 +829,7 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 	};
 });
 
-})( jQuery );
+})( uploadcare.jQuery );
 (function( $, undefined ) {
 
 var mouseHandled = false;
@@ -979,7 +985,7 @@ $.widget("ui.mouse", {
 	_mouseCapture: function(/* event */) { return true; }
 });
 
-})(jQuery);
+})(uploadcare.jQuery);
 (function( $, undefined ) {
 
 /*jshint loopfunc: true */
@@ -2249,4 +2255,4 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 });
 
-})(jQuery);
+})(uploadcare.jQuery);
