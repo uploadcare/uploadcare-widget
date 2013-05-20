@@ -22,17 +22,27 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __setFile: (@file) =>
       @__setState 'unknown'
+
+      stateKnown = utils.once (info) =>
+        if info.isImage
+          @__setState 'image'
+        else
+          @__setState 'regular'
+
       file = @file
-      @file
-        .done (info) =>
-          if file == @file
-            if info.isImage
-              @__setState 'image'
-            else
-              @__setState 'regular'
-        .fail (error) =>
-          if file == @file
-            @__setState 'error', {error}
+      ifCur = (fn) =>
+        => fn.apply(null, arguments) if file == @file
+
+      @file.done ifCur (info) =>
+        stateKnown info
+
+      @file.fail ifCur (error) =>
+        @__setState 'error', {error}
+
+      @file.progress ifCur (progressInfo) ->
+        info = progressInfo.incompleteFileInfo
+        if info.isImage? and info.previewUrl?
+          stateKnown info
 
     # error
     # unknown
