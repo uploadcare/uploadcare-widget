@@ -26,7 +26,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @filesCountEl = @__find('files-count')
       @footerText = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
-      
+
       @__addFile(file) for file in @dialogApi.fileColl.get()
 
       @dialogApi.fileColl.onAdd.add [@__addFile, @__updateContainerView]
@@ -35,6 +35,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyProgress.add @__fileProgress
       @dialogApi.fileColl.onAnyDone.add @__fileDone
       @dialogApi.fileColl.onAnyFail.add @__fileFailed
+
+      @fileListEl.sortable
+        axis: "y"
+        update: =>
+          elements = @__find 'file-item'
+          index = (file) => elements.index @__fileToEl(file)
+          @dialogApi.sortFiles (a, b) -> index(a) - index(b)
 
     __find: (s, context = @container) ->
       $(ROLE_PREFIX + s, context)
