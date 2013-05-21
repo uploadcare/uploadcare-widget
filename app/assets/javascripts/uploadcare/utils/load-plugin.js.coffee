@@ -10,10 +10,6 @@ namespace 'uploadcare.utils', (utils) ->
 
   utils.loadPlugin = (filename) ->
 
-    if cache[filename]
-      cache[filename]
-    else
-
     unless cache[filename]
 
       {scriptBase, scriptExt} = uploadcare.settings.build()

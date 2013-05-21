@@ -25,7 +25,7 @@ namespace 'uploadcare.settings', (ns) ->
     'social-base': 'https://social.uploadcare.com'
     'tabs': 'file url facebook gdrive instagram'
     'url-base': 'https://upload.uploadcare.com'
-    'script-base': "http://ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
+    'script-base': SCRIPT_BASE
     'script-ext': '.min.js'
 
   presets =
