@@ -76,8 +76,23 @@ def header_comment(version)
   eos
 end
 
+def plugin_comment(version, name)
+  <<-eos
+/*
+ * Uploadcare plugin "#{name}"
+ * Wigget version: #{version}
+ * Date: #{Time.now}
+ * Rev: #{`git rev-parse --verify HEAD`[0..9]}
+ */
+  eos
+end
+
 def wrap_namespace(js)
   ";(function(uploadcare){#{js}}({}));"
+end
+
+def wrap_plugin(js)
+  ";uploadcare.plugin(function(uploadcare){#{js}});"
 end
 
 def build_widget(version)
@@ -93,6 +108,20 @@ def build_widget(version)
     "#{version}/uploadcare-#{version}.js",
     comment + js
   )
+
+  %w(jquery-ui).each do |name|
+    js = Rails.application.assets["uploadcare/plugins/#{name}"].source
+    js = wrap_plugin(js)
+    comment = plugin_comment(version, name)
+    write_file(
+      "#{version}/plugins/#{name}.min.js",
+      comment + YUI::JavaScriptCompressor.new.compress(js)
+    )
+    write_file(
+      "#{version}/plugins/#{name}.js",
+      comment + js
+    )
+  end
 end
 
 def upload_widget(version)

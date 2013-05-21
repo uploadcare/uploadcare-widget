@@ -36,12 +36,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyDone.add @__fileDone
       @dialogApi.fileColl.onAnyFail.add @__fileFailed
 
-      @fileListEl.sortable
-        axis: "y"
-        update: =>
-          elements = @__find 'file-item'
-          index = (file) => elements.index @__fileToEl(file)
-          @dialogApi.sortFiles (a, b) -> index(a) - index(b)
+      utils.loadPlugin('jquery-ui').done =>
+        @fileListEl.sortable
+          axis: "y"
+          update: =>
+            elements = @__find 'file-item'
+            index = (file) => elements.index @__fileToEl(file)
+            @dialogApi.sortFiles (a, b) -> index(a) - index(b)
 
     __find: (s, context = @container) ->
       $(ROLE_PREFIX + s, context)
