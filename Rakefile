@@ -87,8 +87,8 @@ def plugin_comment(version, name)
   eos
 end
 
-def wrap_namespace(js)
-  ";(function(uploadcare){#{js}}({}));"
+def wrap_namespace(js, version)
+  ";(function(uploadcare, SCRIPT_BASE){#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
 end
 
 def wrap_plugin(js)
@@ -98,7 +98,7 @@ end
 def build_widget(version)
   comment = header_comment(version)
   js = Rails.application.assets['uploadcare/widget.js'].source
-  js = wrap_namespace(js)
+  js = wrap_namespace(js, version)
 
   write_file(
     "#{version}/uploadcare-#{version}.min.js",
