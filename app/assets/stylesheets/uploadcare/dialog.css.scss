@@ -650,6 +650,9 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
       background: #ececec;
       .uploadcare-dpm-file-remove {display: inline-block}
     }
+    &.ui-sortable-helper {
+      cursor: move;
+    }
     &.uploadcare-dpm-image {
       .uploadcare-dpm-file-preview-wrap {display: inline-block}
       .uploadcare-dpm-file-name {
