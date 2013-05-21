@@ -37,6 +37,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyFail.add @__fileFailed
 
       @fileListEl.sortable
+        axis: "y"
         update: =>
           elements = @__find 'file-item'
           index = (file) => elements.index @__fileToEl(file)
