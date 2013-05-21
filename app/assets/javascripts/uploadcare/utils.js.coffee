@@ -191,6 +191,9 @@ namespace 'uploadcare.utils', (ns) ->
         return "#{prefix}#{value} #{label}#{postfix}"
       value = Math.round(value / 1024)
 
+  ns.imagePath = (name) ->
+    uploadcare.settings.build().scriptBase + name
+
   ns.jsonp = (url, data) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error

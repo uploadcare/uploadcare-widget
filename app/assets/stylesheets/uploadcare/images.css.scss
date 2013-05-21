@@ -1,51 +1,51 @@
 %tab-icons-image {
-  background-image: asset-data-url('uploadcare/tab-icons.png');
+  background-image: url("<%= utils.imagePath('tab-icons.png') %>");
 }
 
 %tab-icons-hover-image {
-  background-image: asset-data-url('uploadcare/tab-icons-hover.png');
+  background-image: url("<%= utils.imagePath('tab-icons-hover.png') %>");
 }
 
 %tab-icons-active-image {
-  background-image: asset-data-url('uploadcare/tab-icons-active.png');
+  background-image: url("<%= utils.imagePath('tab-icons-active.png') %>");
 }
 
 %widget-buttons-image {
-  background-image: asset-data-url('uploadcare/buttons.png');
+  background-image: url("<%= utils.imagePath('buttons.png') %>");
 }
 
 %crop-border-image {
-  background-image: asset-data-url('uploadcare/crop-border-bg.gif');
+  background-image: url("<%= utils.imagePath('crop-border-bg.gif') %>");
 }
 
 %arrow-image {
-  background-image: asset-data-url('uploadcare/arrow.png');
+  background-image: url("<%= utils.imagePath('arrow.png') %>");
 }
 
 %loading-image {
-  background-image: asset-data-url('uploadcare/loading-spinner.gif')
+  background-image: url("<%= utils.imagePath('loading-spinner.gif') %>");
 }
 
 %remove-button-image {
-  background-image: asset-data-url('uploadcare/remove-button.png')
+  background-image: url("<%= utils.imagePath('remove-button.png') %>");
 }
 
 %error-icon-image {
-  background-image: asset-data-url('uploadcare/error-icon.png')
+  background-image: url("<%= utils.imagePath('error-icon.png') %>");
 }
 
 %file-icon-image {
-  background-image: asset-data-url('uploadcare/file-icon.png')
+  background-image: url("<%= utils.imagePath('file-icon.png') %>");
 }
 
 %error-default-image {
-  background-image: asset-data-url('uploadcare/error-default.png')
+  background-image: url("<%= utils.imagePath('error-default.png') %>");
 }
 
 %error-image-image {
-  background-image: asset-data-url('uploadcare/error-image.png')
+  background-image: url("<%= utils.imagePath('error-image.png') %>");
 }
 
 %dialog-overlay-image {
-  background-image: asset-data-url('uploadcare/dialog-overlay.png')
+  background-image: url("<%= utils.imagePath('dialog-overlay.png') %>");
 }

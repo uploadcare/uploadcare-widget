@@ -12,25 +12,27 @@ namespace 'uploadcare.utils', (utils) ->
 
     unless cache[filename]
 
-      {scriptBase, scriptExt} = uploadcare.settings.build()
-      url = "#{scriptBase}plugins/#{filename}#{scriptExt}"
-
       df = $.Deferred()
       cache[filename] = df.promise()
 
-      df.fail ->
-        utils.warn "Can't load script #{url}"
+      uploadcare.settings.waitForSettings null, (settings) ->
+        {scriptBase, scriptExt} = settings
 
-      attempts = 0
-      load = ->
-        attempts++
-        if attempts > ATTEMPTS
-          df.reject()
-        else
-          $.getScript(url)
-            .done(df.resolve)
-            .fail(load)
+        url = "#{scriptBase}plugins/#{filename}#{scriptExt}"
 
-      load()
+        df.fail ->
+          utils.warn "Can't load script #{url}"
+
+        attempts = 0
+        load = ->
+          attempts++
+          if attempts > ATTEMPTS
+            df.reject()
+          else
+            $.getScript(url)
+              .done(df.resolve)
+              .fail(load)
+
+        load()
 
     cache[filename]

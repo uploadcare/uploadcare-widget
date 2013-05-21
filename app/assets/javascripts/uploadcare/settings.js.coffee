@@ -141,12 +141,21 @@ namespace 'uploadcare.settings', (ns) ->
 
     normalize(values)
 
-
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
   ns.common = utils.once (settings) ->
-    normalize $.extend({}, ns.globals(), settings or {})
+    result = normalize $.extend({}, ns.globals(), settings or {})
+    waitForSettingsCb.fire result
+    result
 
   # Defaults + global variables + global overrides + local overrides
   ns.build = (settings) ->
     normalize $.extend({}, ns.common(), settings or {})
+
+  waitForSettingsCb = $.Callbacks "once memory"
+
+  # Like build() but won't cause settings freezing if they still didn't
+  ns.waitForSettings = (settings, fn) ->
+    waitForSettingsCb.add (common) ->
+      fn normalize $.extend({}, common, settings or {})
+
