@@ -144,6 +144,19 @@ def upload_widget(version)
     "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.js",
     'application/javascript'
   )
+
+  %w(jquery-ui).each do |name|
+    upload_file(credentials[:bucket_name], credentials[:fog],
+      "#{version}/plugins/#{name}.min.js",
+      "#{Rails.application.config.assets.prefix}/uploadcare/plugins/#{name}.min.js",
+      'application/javascript'
+    )
+    upload_file(credentials[:bucket_name], credentials[:fog],
+      "#{version}/plugins/#{name}.js",
+      "#{Rails.application.config.assets.prefix}/uploadcare/plugins/#{name}.js",
+      'application/javascript'
+    )
+  end
 end
 
 namespace :js do
