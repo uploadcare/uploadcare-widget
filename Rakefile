@@ -173,15 +173,14 @@ def upload_widget(version)
       "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
       type
     )
-    puts "Uploaded #{version}/#{name}"
   end
 
   upload_js = lambda do |name|
     upload.call name, 'application/javascript'
   end
 
-  upload_js.call "uploadcare/uploadcare-#{version}.min.js"
-  upload_js.call "uploadcare/uploadcare-#{version}.js"
+  upload_js.call "uploadcare-#{version}.min.js"
+  upload_js.call "uploadcare-#{version}.js"
 
   WIDGET_PLUGINS.each do |name|
     upload_js.call "plugins/#{name}.min.js"
