@@ -53,8 +53,8 @@ namespace 'uploadcare.utils', (ns) ->
       else
         fn1 or fn2
     pr.then(
-      compose(doneFilter, df.resolve), 
-      compose(failFilter, df.reject), 
+      compose(doneFilter, df.resolve),
+      compose(failFilter, df.reject),
       compose(progressFilter, df.notify)
     )
     df.promise()
@@ -89,7 +89,7 @@ namespace 'uploadcare.utils', (ns) ->
   ns.fullUuidRegex = new RegExp("^#{ns.uuidRegex.source}$", 'i')
   ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_,]+\/)+)+/i
 
-  ns.escapeRegExp = (str) -> 
+  ns.escapeRegExp = (str) ->
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
   ns.normalizeUrl = (url) ->
@@ -187,7 +187,7 @@ namespace 'uploadcare.utils', (ns) ->
     labels = 'B KB MB GB TB PB EB ZB YB'.split ' '
     for label, i in labels
       if value < 512 or i is labels.length - 1
-        return "#{prefix}#{value} #{label}#{postfix}" 
+        return "#{prefix}#{value} #{label}#{postfix}"
       value = Math.round(value / 1024)
 
   ns.jsonp = (url, data) ->
@@ -198,5 +198,7 @@ namespace 'uploadcare.utils', (ns) ->
         $.Deferred().reject(text)
       else
         data
-    , (_, textStatus, errorThrown) -> 
-      "JSONP unexpected error: #{textStatus} (#{errorThrown})"
+    , (_, textStatus, errorThrown) ->
+      text = "#{textStatus} (#{errorThrown})"
+      ns.warn("JSONP unexpected error: #{text}")
+      text
