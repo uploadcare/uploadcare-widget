@@ -203,7 +203,9 @@ namespace 'uploadcare.utils', (ns) ->
       else
         data
     , (_, textStatus, errorThrown) ->
-      "JSONP unexpected error: #{textStatus} (#{errorThrown})"
+      text = "#{textStatus} (#{errorThrown})"
+      ns.warn("JSONP unexpected error: #{text}")
+      text
 
   ns.plugin = (fn) ->
     fn uploadcare
