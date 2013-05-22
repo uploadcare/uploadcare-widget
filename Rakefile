@@ -54,7 +54,7 @@ IMAGES_TYPES = {
   '.jpg' => 'image/jpeg',
   '.jpeg' => 'image/jpeg'
 }
-IMAGES = file_list('app/assets/images/uploadcare')
+IMAGES = file_list('app/assets/images/uploadcare/images')
   .map { |full, base, without_ext, ext| [full, base, IMAGES_TYPES[ext]] }
 
 def ensure_dir(filename)
@@ -153,7 +153,7 @@ def build_widget(version)
   end
 
   IMAGES.each do |full, base|
-    cp_file full, "#{version}/#{base}"
+    cp_file full, "#{version}/images/#{base}"
   end
 end
 
@@ -188,7 +188,7 @@ def upload_widget(version)
   end
 
   IMAGES.each do |full, base, type|
-    upload.call base, type
+    upload.call "images/#{base}", type
   end
 end
 
