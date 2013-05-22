@@ -99,4 +99,5 @@ namespace 'uploadcare.widget', (ns) ->
         ]
         @__api.onChange = @onChange
         @__api.onUploadComplete = @onUploadComplete
+        @__api.inputElement = @element.get(0)
       @__api
