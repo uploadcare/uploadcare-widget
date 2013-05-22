@@ -39,14 +39,43 @@ def in_root(file)
   File.expand_path("../#{file}",  __FILE__)
 end
 
+def file_list(path)
+  path = in_root path
+  Dir.glob(File.join(path, "*"))
+    .select { |f| File.file?(f) }
+    .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
+end
+
+WIDGET_PLUGINS = file_list('app/assets/javascripts/uploadcare/plugins')
+  .map { |_, _, without_ext| without_ext }
+IMAGES_TYPES = {
+  '.png' => 'image/png',
+  '.gif' => 'image/gif',
+  '.jpg' => 'image/jpeg',
+  '.jpeg' => 'image/jpeg'
+}
+IMAGES = file_list('app/assets/images/uploadcare')
+  .map { |full, base, without_ext, ext| [full, base, IMAGES_TYPES[ext]] }
+
+def ensure_dir(filename)
+  path = File.dirname filename
+  FileUtils.mkdir_p(path) unless Dir.exists?(path)
+end
+
 def write_file(filename, contents)
-  dir = in_root(File.join('pkg', File.dirname(filename)))
-  FileUtils.mkdir_p(dir) unless Dir.exists?(dir)
   widget_path = in_root("pkg/#{filename}")
+  ensure_dir widget_path
   File.open(widget_path, "wb") do |f|
     f.write(contents)
   end
   puts "Created #{widget_path}"
+end
+
+def cp_file(src, dest)
+  widget_path = in_root("pkg/#{dest}")
+  ensure_dir widget_path
+  FileUtils.copy_file src, widget_path
+  puts "Copied #{widget_path}"
 end
 
 def upload_file(bucket_name, credentials, filename, key, content_type)
@@ -109,7 +138,7 @@ def build_widget(version)
     comment + js
   )
 
-  %w(jquery-ui).each do |name|
+  WIDGET_PLUGINS.each do |name|
     js = Rails.application.assets["uploadcare/plugins/#{name}"].source
     js = wrap_plugin(js)
     comment = plugin_comment(version, name)
@@ -121,6 +150,10 @@ def build_widget(version)
       "#{version}/plugins/#{name}.js",
       comment + js
     )
+  end
+
+  IMAGES.each do |full, base|
+    cp_file full, "#{version}/#{base}"
   end
 end
 
@@ -134,28 +167,29 @@ def upload_widget(version)
     bucket_name: ENV['AWS_BUCKET_NAME']
   }
 
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/uploadcare-#{version}.min.js",
-    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.min.js",
-    'application/javascript'
-  )
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/uploadcare-#{version}.js",
-    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.js",
-    'application/javascript'
-  )
+  upload = lambda do |name, type|
+    upload_file(credentials[:bucket_name], credentials[:fog],
+      "#{version}/#{name}",
+      "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
+      type
+    )
+    puts "Uploaded #{version}/#{name}"
+  end
 
-  %w(jquery-ui).each do |name|
-    upload_file(credentials[:bucket_name], credentials[:fog],
-      "#{version}/plugins/#{name}.min.js",
-      "#{Rails.application.config.assets.prefix}/uploadcare/plugins/#{name}.min.js",
-      'application/javascript'
-    )
-    upload_file(credentials[:bucket_name], credentials[:fog],
-      "#{version}/plugins/#{name}.js",
-      "#{Rails.application.config.assets.prefix}/uploadcare/plugins/#{name}.js",
-      'application/javascript'
-    )
+  upload_js = lambda do |name|
+    upload.call name, 'application/javascript'
+  end
+
+  upload_js.call "uploadcare/uploadcare-#{version}.min.js"
+  upload_js.call "uploadcare/uploadcare-#{version}.js"
+
+  WIDGET_PLUGINS.each do |name|
+    upload_js.call "plugins/#{name}.min.js"
+    upload_js.call "plugins/#{name}.js"
+  end
+
+  IMAGES.each do |full, base, type|
+    upload.call base, type
   end
 end
 
