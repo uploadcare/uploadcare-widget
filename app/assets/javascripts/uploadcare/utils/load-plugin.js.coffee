@@ -6,7 +6,7 @@
 namespace 'uploadcare.utils', (utils) ->
 
   cache = {}
-  ATTEMPTS = 3
+  MAX_ATTEMPTS = 3
 
   utils.loadPlugin = (filename) ->
 
@@ -21,12 +21,12 @@ namespace 'uploadcare.utils', (utils) ->
         url = "#{scriptBase}plugins/#{filename}#{scriptExt}"
 
         df.fail ->
-          utils.warn "Can't load script #{url}"
+          utils.warn "Couldn't load script #{url}"
 
         attempts = 0
         load = ->
           attempts++
-          if attempts > ATTEMPTS
+          if attempts > MAX_ATTEMPTS
             df.reject()
           else
             $.getScript(url)
