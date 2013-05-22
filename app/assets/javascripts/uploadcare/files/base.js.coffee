@@ -53,7 +53,7 @@ namespace 'uploadcare.files', (ns) ->
 
     __requestInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-        file_id: @fileId, 
+        file_id: @fileId,
         pub_key: @settings.publicKey
       .fail =>
         @__infoDf.reject('info', this)
@@ -139,7 +139,8 @@ namespace 'uploadcare.files', (ns) ->
     __resolveApi: =>
       @__progressState = 'ready'
       @__notifyApi()
-      @apiDeferred.resolve @__fileInfo()
+      $.extend @apiPromise, @__fileInfo()
+      @apiDeferred.resolve @apiPromise
 
     __initApi: ->
       @apiDeferred = $.Deferred()
@@ -161,7 +162,7 @@ namespace 'uploadcare.files', (ns) ->
         @__uploadStarted = true
         @__startUpload()
       @apiPromise
-      
+
 
 namespace 'uploadcare.utils', (utils) ->
 
