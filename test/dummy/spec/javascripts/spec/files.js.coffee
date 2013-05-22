@@ -25,6 +25,7 @@ describe "UploadedFile", ->
       file.done (info) ->
         for prop in ['uuid', 'name', 'size', 'isImage', 'isStored']
           expect(info[prop]).toBe utils.toFileInfo(kitty)[prop]
+        expect(info.preview).toEqual jasmine.any(Function)
 
   it "should failed to be created if server responded with error", ->
 

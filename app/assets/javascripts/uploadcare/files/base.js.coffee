@@ -78,6 +78,7 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
+      preview: @apiPromise.preview
 
     __cancel: =>
       @__uploadDf.reject('user', this)
@@ -139,8 +140,7 @@ namespace 'uploadcare.files', (ns) ->
     __resolveApi: =>
       @__progressState = 'ready'
       @__notifyApi()
-      $.extend @apiPromise, @__fileInfo()
-      @apiDeferred.resolve @apiPromise
+      @apiDeferred.resolve @__fileInfo()
 
     __initApi: ->
       @apiDeferred = $.Deferred()
