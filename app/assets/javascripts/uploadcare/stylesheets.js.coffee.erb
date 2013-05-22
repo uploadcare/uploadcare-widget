@@ -1,12 +1,16 @@
 {jQuery: $} = uploadcare
 {tpl} = uploadcare.templates
 
-css = tpl('styles')
+uploadcare.settings.waitForSettings null, ->
 
-style = document.createElement('style')
-style.setAttribute('type', 'text/css')
-if style.styleSheet?
-  style.styleSheet.cssText = css
-else
-  style.appendChild(document.createTextNode(css))
-$('head').append(style)
+  # We need waitForSettings here
+  # because settings.build() indirectly invokes inside template
+  css = tpl('styles')
+
+  style = document.createElement('style')
+  style.setAttribute('type', 'text/css')
+  if style.styleSheet?
+    style.styleSheet.cssText = css
+  else
+    style.appendChild(document.createTextNode(css))
+  $('head').append(style)
