@@ -14,8 +14,7 @@ namespace 'uploadcare.locale', (ns) ->
     translations: ns.translations[defaultLang]
     pluralize: ns.pluralize[defaultLang]
 
-  build = utils.once ->
-    settings = s.build()
+  _build = (settings) ->
     lang = settings.locale || defaults.lang
     translations = $.extend(true, {},
       ns.translations[lang],
@@ -28,6 +27,13 @@ namespace 'uploadcare.locale', (ns) ->
 
     {lang, translations, pluralize}
 
+  build = utils.once ->
+    _build s.build()
+
+  # Backdoor for widget constructor
+  ns.rebuild = (settings) ->
+    result = _build s.build settings
+    build = -> result
 
   translate = (key, node) ->
     path = key.split('.')
