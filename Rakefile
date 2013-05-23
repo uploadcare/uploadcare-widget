@@ -39,14 +39,43 @@ def in_root(file)
   File.expand_path("../#{file}",  __FILE__)
 end
 
+def file_list(path)
+  path = in_root path
+  Dir.glob(File.join(path, "*"))
+    .select { |f| File.file?(f) }
+    .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
+end
+
+WIDGET_PLUGINS = file_list('app/assets/javascripts/uploadcare/plugins')
+  .map { |_, _, without_ext| without_ext }
+IMAGES_TYPES = {
+  '.png' => 'image/png',
+  '.gif' => 'image/gif',
+  '.jpg' => 'image/jpeg',
+  '.jpeg' => 'image/jpeg'
+}
+IMAGES = file_list('app/assets/images/uploadcare/images')
+  .map { |full, base, without_ext, ext| [full, base, IMAGES_TYPES[ext]] }
+
+def ensure_dir(filename)
+  path = File.dirname filename
+  FileUtils.mkdir_p(path) unless Dir.exists?(path)
+end
+
 def write_file(filename, contents)
-  dir = in_root(File.join('pkg', File.dirname(filename)))
-  FileUtils.mkdir_p(dir) unless Dir.exists?(dir)
   widget_path = in_root("pkg/#{filename}")
+  ensure_dir widget_path
   File.open(widget_path, "wb") do |f|
     f.write(contents)
   end
   puts "Created #{widget_path}"
+end
+
+def cp_file(src, dest)
+  widget_path = in_root("pkg/#{dest}")
+  ensure_dir widget_path
+  FileUtils.copy_file src, widget_path
+  puts "Copied #{widget_path}"
 end
 
 def upload_file(bucket_name, credentials, filename, key, content_type)
@@ -76,14 +105,29 @@ def header_comment(version)
   eos
 end
 
-def wrap_namespace(js)
-  ";(function(uploadcare){#{js}}({}));"
+def plugin_comment(version, name)
+  <<-eos
+/*
+ * Uploadcare plugin "#{name}"
+ * Wigget version: #{version}
+ * Date: #{Time.now}
+ * Rev: #{`git rev-parse --verify HEAD`[0..9]}
+ */
+  eos
+end
+
+def wrap_namespace(js, version)
+  ";(function(uploadcare, SCRIPT_BASE){#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
+end
+
+def wrap_plugin(js)
+  ";uploadcare.plugin(function(uploadcare){#{js}});"
 end
 
 def build_widget(version)
   comment = header_comment(version)
   js = Rails.application.assets['uploadcare/widget.js'].source
-  js = wrap_namespace(js)
+  js = wrap_namespace(js, version)
 
   write_file(
     "#{version}/uploadcare-#{version}.min.js",
@@ -93,6 +137,24 @@ def build_widget(version)
     "#{version}/uploadcare-#{version}.js",
     comment + js
   )
+
+  WIDGET_PLUGINS.each do |name|
+    js = Rails.application.assets["uploadcare/plugins/#{name}"].source
+    js = wrap_plugin(js)
+    comment = plugin_comment(version, name)
+    write_file(
+      "#{version}/plugins/#{name}.min.js",
+      comment + YUI::JavaScriptCompressor.new.compress(js)
+    )
+    write_file(
+      "#{version}/plugins/#{name}.js",
+      comment + js
+    )
+  end
+
+  IMAGES.each do |full, base|
+    cp_file full, "#{version}/images/#{base}"
+  end
 end
 
 def upload_widget(version)
@@ -105,16 +167,29 @@ def upload_widget(version)
     bucket_name: ENV['AWS_BUCKET_NAME']
   }
 
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/uploadcare-#{version}.min.js",
-    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.min.js",
-    'application/javascript'
-  )
-  upload_file(credentials[:bucket_name], credentials[:fog],
-    "#{version}/uploadcare-#{version}.js",
-    "#{Rails.application.config.assets.prefix}/uploadcare/uploadcare-#{version}.js",
-    'application/javascript'
-  )
+  upload = lambda do |name, type|
+    upload_file(credentials[:bucket_name], credentials[:fog],
+      "#{version}/#{name}",
+      "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
+      type
+    )
+  end
+
+  upload_js = lambda do |name|
+    upload.call name, 'application/javascript'
+  end
+
+  upload_js.call "uploadcare-#{version}.min.js"
+  upload_js.call "uploadcare-#{version}.js"
+
+  WIDGET_PLUGINS.each do |name|
+    upload_js.call "plugins/#{name}.min.js"
+    upload_js.call "plugins/#{name}.js"
+  end
+
+  IMAGES.each do |full, base, type|
+    upload.call "images/#{base}", type
+  end
 end
 
 namespace :js do

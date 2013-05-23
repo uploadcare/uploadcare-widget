@@ -17,10 +17,10 @@ namespace 'uploadcare', (ns) ->
   initialize = (targets) ->
     for target in targets
       method = if getSettings(target).multiple
-        'MultipleWidget' 
+        'MultipleWidget'
       else
         'Widget'
-      uploadcare[method](target) 
+      uploadcare[method](target)
 
   ns.Widget = (target) ->
     el = $(target).eq(0)

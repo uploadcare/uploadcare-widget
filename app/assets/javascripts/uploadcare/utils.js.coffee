@@ -3,6 +3,7 @@
 # = require uploadcare/utils/collection
 # = require uploadcare/utils/square-image
 # = require uploadcare/utils/warnings
+# = require uploadcare/utils/load-plugin
 
 {
   namespace,
@@ -190,6 +191,9 @@ namespace 'uploadcare.utils', (ns) ->
         return "#{prefix}#{value} #{label}#{postfix}"
       value = Math.round(value / 1024)
 
+  ns.imagePath = (name) ->
+    uploadcare.settings.build().scriptBase + 'images/' + name
+
   ns.jsonp = (url, data) ->
     $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
       if data.error
@@ -202,3 +206,6 @@ namespace 'uploadcare.utils', (ns) ->
       text = "#{textStatus} (#{errorThrown})"
       ns.warn("JSONP unexpected error: #{text}")
       text
+
+  ns.plugin = (fn) ->
+    fn uploadcare
