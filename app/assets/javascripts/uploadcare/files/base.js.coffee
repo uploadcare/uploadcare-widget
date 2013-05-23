@@ -53,7 +53,7 @@ namespace 'uploadcare.files', (ns) ->
 
     __requestInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-        file_id: @fileId, 
+        file_id: @fileId,
         pub_key: @settings.publicKey
       .fail =>
         @__infoDf.reject('info', this)
@@ -78,6 +78,7 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
+      preview: @apiPromise.preview
 
     __cancel: =>
       @__uploadDf.reject('user', this)
@@ -161,7 +162,7 @@ namespace 'uploadcare.files', (ns) ->
         @__uploadStarted = true
         @__startUpload()
       @apiPromise
-      
+
 
 namespace 'uploadcare.utils', (utils) ->
 
