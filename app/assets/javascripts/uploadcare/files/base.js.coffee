@@ -79,6 +79,18 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
       preview: @apiPromise.preview
+      dimensions: @dimensions
+
+    dimensions: =>
+      img = new Image()
+      img.src = @previewUrl
+
+      $.Deferred(->
+        img.onload = =>
+          @resolve
+            width: img.width
+            height: img.height
+      ).promise()
 
     __cancel: =>
       @__uploadDf.reject('user', this)
@@ -91,7 +103,7 @@ namespace 'uploadcare.files', (ns) ->
 
         img = new Image()
         img.src = @previewUrl
-        img.onload = ->
+        img.onload = =>
           if opts.sw || opts.sh # Resized?
             sw = opts.sw || opts.sh * opts.w / opts.h
             sh = opts.sh || opts.sw * opts.h / opts.w
