@@ -105,14 +105,14 @@ namespace 'uploadcare.files', (ns) ->
         img.src = @previewUrl
         img.onload = =>
           if opts.sw || opts.sh # Resized?
-            sw = opts.sw || opts.sh * opts.w / opts.h
-            sh = opts.sh || opts.sw * opts.h / opts.w
+            sw = opts.sw || opts.sh * opts.width / opts.height
+            sh = opts.sh || opts.sw * opts.height / opts.width
           else
-            sw = opts.w
-            sh = opts.h
+            sw = opts.width
+            sh = opts.height
 
-          sx = sw / opts.w
-          sy = sh / opts.h
+          sx = sw / opts.width
+          sy = sh / opts.height
 
           el = $('<div>').css({
             position: 'relative'

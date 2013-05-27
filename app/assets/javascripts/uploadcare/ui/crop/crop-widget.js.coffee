@@ -104,32 +104,32 @@ namespace 'uploadcare.crop', (ns) ->
           left: parseInt(raw[6], 10) or undefined
       @croppedImageCoords(originalUrl, previousCoords)
         .pipe (coords) =>
-          size = "#{coords.w}x#{coords.h}"
+          size = "#{coords.width}x#{coords.height}"
           topLeft = "#{coords.x},#{coords.y}"
 
           opts =
             crop: $.extend({}, coords)
             modifiers: "-/crop/#{size}/#{topLeft}/"
 
-          notTouched = coords.w is @__originalWidth and coords.h is @__originalHeight
+          notTouched = coords.width is @__originalWidth and coords.height is @__originalHeight
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
             resized =
-              width: coords.w
-              height: coords.h
+              width: coords.width
+              height: coords.height
 
             if @__options.scale
               scale = @__options.preferedSize.split('x')
               sw = scale[0] - 0 if scale[0]
               sh = scale[1] - 0 if scale[1]
-              if coords.w > sw or @__options.upscale
+              if coords.width > sw or @__options.upscale
                 resized.width = sw
                 resized.height = sh
 
             resized = utils.fitDimensionsWithCdnLimit resized
 
-            if resized.width isnt coords.w or resized.height isnt coords.h
+            if resized.width isnt coords.width or resized.height isnt coords.height
               opts.crop.sw = resized.width
               opts.crop.sh = resized.height
 
@@ -137,7 +137,6 @@ namespace 'uploadcare.crop', (ns) ->
               size[if size[0] > size[1] then 1 else 0] = ''
 
               opts.modifiers += "-/resize/#{size.join 'x'}/"
-
           opts
 
     croppedImageCoords: (originalUrl, previousCoords) ->
@@ -254,7 +253,15 @@ namespace 'uploadcare.crop', (ns) ->
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
-        onSelect: (coords) => @__currentCoords = coords
+        onSelect: (coords) =>
+          @__currentCoords =
+            height: coords.h
+            width: coords.w
+            x: coords.x
+            x2: coords.x2
+            y: coords.y
+            y2: coords.y2
+
       if @__options.preferedSize
         [width, height] = @__options.preferedSize.split 'x'
         jCropOptions.aspectRatio = width / height
