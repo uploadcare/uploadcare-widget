@@ -79,7 +79,7 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
       preview: @apiPromise.preview
-      dimensions: @dimensions
+      dimensions: if @isImage then @dimensions else null
 
     dimensions: =>
       url = @previewUrl
