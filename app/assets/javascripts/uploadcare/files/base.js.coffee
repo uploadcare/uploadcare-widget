@@ -82,14 +82,17 @@ namespace 'uploadcare.files', (ns) ->
       dimensions: @dimensions
 
     dimensions: =>
-      img = new Image()
-      img.src = @previewUrl
+      url = @previewUrl
 
       $.Deferred(->
+        img = new Image()
+
         img.onload = =>
           @resolve
             width: img.width
             height: img.height
+
+        img.src = url
       ).promise()
 
     __cancel: =>
@@ -102,8 +105,7 @@ namespace 'uploadcare.files', (ns) ->
         opts = info.crop
 
         img = new Image()
-        img.src = @previewUrl
-        img.onload = =>
+        img.onload = ->
           if opts.sw || opts.sh # Resized?
             sw = opts.sw || opts.sh * opts.width / opts.height
             sh = opts.sh || opts.sw * opts.height / opts.width
@@ -127,6 +129,7 @@ namespace 'uploadcare.files', (ns) ->
             height: img.height * sy
           }))
           $(selector).html(el)
+        img.src = @previewUrl
 
     __extendPromise: (p) =>
       p.cancel = @__cancel
