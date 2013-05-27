@@ -79,6 +79,21 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: @previewUrl
       preview: @apiPromise.preview
+      dimensions: if @isImage then @dimensions else null
+
+    dimensions: =>
+      url = @previewUrl
+
+      $.Deferred(->
+        img = new Image()
+
+        img.onload = =>
+          @resolve
+            width: img.width
+            height: img.height
+
+        img.src = url
+      ).promise()
 
     __cancel: =>
       @__uploadDf.reject('user', this)
@@ -90,17 +105,16 @@ namespace 'uploadcare.files', (ns) ->
         opts = info.crop
 
         img = new Image()
-        img.src = @previewUrl
         img.onload = ->
           if opts.sw || opts.sh # Resized?
-            sw = opts.sw || opts.sh * opts.w / opts.h
-            sh = opts.sh || opts.sw * opts.h / opts.w
+            sw = opts.sw || opts.sh * opts.width / opts.height
+            sh = opts.sh || opts.sw * opts.height / opts.width
           else
-            sw = opts.w
-            sh = opts.h
+            sw = opts.width
+            sh = opts.height
 
-          sx = sw / opts.w
-          sy = sh / opts.h
+          sx = sw / opts.width
+          sy = sh / opts.height
 
           el = $('<div>').css({
             position: 'relative'
@@ -115,6 +129,7 @@ namespace 'uploadcare.files', (ns) ->
             height: img.height * sy
           }))
           $(selector).html(el)
+        img.src = @previewUrl
 
     __extendPromise: (p) =>
       p.cancel = @__cancel
