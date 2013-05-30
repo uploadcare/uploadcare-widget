@@ -147,12 +147,14 @@ $dialog-free-space-for-close-button: y(2);
         margin-top: $frame-size / -2;
         margin-left: $frame-size / -2;
         border: none;
+        opacity: .66;
       }
 
       &:hover {
         background-color: #e5e7e8;
         &:after {
-          @extend %tab-icons-hover-image;
+          @extend %tab-icons-image;
+          opacity: 1;
         }
       }
 
@@ -164,6 +166,7 @@ $dialog-free-space-for-close-button: y(2);
         }
         &:after {
           @extend %tab-icons-active-image;
+          opacity: 1;
         }
       }
 
@@ -197,6 +200,9 @@ $dialog-free-space-for-close-button: y(2);
       }
       &.uploadcare-dialog-tab-instagram:after {
         background-position: 0 ($frame-size * -6);
+      }
+      &.uploadcare-dialog-tab-vk:after {
+        background-position: 0 ($frame-size * -7);
       }
 
       &.uploadcare-dialog-first-tab {

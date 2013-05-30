@@ -38,6 +38,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             dropbox: 'Dropbox'
             gdrive: 'Google Drive'
             instagram: 'Instagram'
+            vk: 'ВКонтакте'
             url: 'Произвольную ссылку'
         url:
           title: 'Файлы с других сайтов'

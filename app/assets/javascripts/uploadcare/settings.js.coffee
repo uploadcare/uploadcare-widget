@@ -30,7 +30,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   presets =
     'tabs':
-      all: 'file url facebook dropbox gdrive instagram'
+      all: 'file url facebook vk dropbox gdrive instagram'
       default: defaults.tabs
 
 

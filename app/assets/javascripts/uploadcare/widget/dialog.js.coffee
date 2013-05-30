@@ -194,6 +194,7 @@ namespace 'uploadcare', (ns) ->
         when 'dropbox' then tabs.RemoteTabFor 'dropbox'
         when 'gdrive' then tabs.RemoteTabFor 'gdrive'
         when 'instagram' then tabs.RemoteTabFor 'instagram'
+        when 'vk' then tabs.RemoteTabFor 'vk'
         when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
         when 'welcome' then tabs.StaticTabWith 'welcome'
 
