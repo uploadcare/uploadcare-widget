@@ -583,6 +583,7 @@ $dialog-footer-height: y(3);
   .uploadcare-dialog-file-sources {
     position: relative;
     display: inline-block;
+    max-width: 550px;
     &:before {
       @extend %arrow-image;
       content: '';
@@ -600,6 +601,7 @@ $dialog-footer-height: y(3);
       margin-right: .2em;
       cursor: pointer;
       font-weight: 300;
+      white-space: nowrap;
       &:after {
         content: '\00B7';
         color: #b7babc;
