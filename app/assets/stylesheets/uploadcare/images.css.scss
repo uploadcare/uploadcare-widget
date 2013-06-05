@@ -2,10 +2,6 @@
   background-image: url("<%= utils.imagePath('tab-icons.png') %>");
 }
 
-%tab-icons-hover-image {
-  background-image: url("<%= utils.imagePath('tab-icons-hover.png') %>");
-}
-
 %tab-icons-active-image {
   background-image: url("<%= utils.imagePath('tab-icons-active.png') %>");
 }

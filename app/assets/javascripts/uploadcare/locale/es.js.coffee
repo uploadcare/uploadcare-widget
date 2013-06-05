@@ -32,6 +32,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             dropbox: 'Dropbox'
             gdrive: 'Google Drive'
             instagram: 'Instagram'
+            vk: 'Vkontakte'
             url: 'Una dirección cualquiera'
         url:
           title: 'Archivos de la web'
