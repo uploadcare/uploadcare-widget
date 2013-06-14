@@ -13,6 +13,7 @@ Dummy::Application.routes.draw do
   get "welcome/in_hidden_el"
   get "welcome/multiple"
   get "welcome/delayed"
+  get "welcome/require"
 
 
   # The priority is based upon order of creation:

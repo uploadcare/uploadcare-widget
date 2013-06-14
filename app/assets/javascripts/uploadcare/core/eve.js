@@ -17,7 +17,7 @@
         current_event,
         stop,
         events = {n: {}},
-    
+
         eve = function (name, scope) {
             var e = events,
                 oldstop = stop,
@@ -78,7 +78,7 @@
             current_event = ce;
             return out.length ? out : null;
         };
-    
+
     eve.listeners = function (name) {
         var names = name.split(separator),
             e = events,
@@ -110,8 +110,8 @@
         }
         return out;
     };
-    
-    
+
+
     eve.on = function (name, f) {
         var names = name.split(separator),
             e = events;
@@ -131,19 +131,19 @@
             }
         };
     };
-    
+
     eve.stop = function () {
         stop = 1;
     };
-    
+
     eve.nt = function (subname) {
         if (subname) {
             return new RegExp("(?:\\.|\\/|^)" + subname + "(?:\\.|\\/|$)").test(current_event);
         }
         return current_event;
     };
-    
-    
+
+
     eve.off = eve.unbind = function (name, f) {
         var names = name.split(separator),
             e,
@@ -196,7 +196,7 @@
             }
         }
     };
-    
+
     eve.once = function (name, f) {
         var f2 = function () {
             var res = f.apply(this, arguments);
@@ -205,10 +205,13 @@
         };
         return eve.on(name, f2);
     };
-    
+
     eve.version = version;
     eve.toString = function () {
         return "You are running Eve " + version;
     };
-    (typeof module != "undefined" && module.exports) ? (module.exports = eve) : (typeof define != "undefined" ? (define("eve", [], function() { return eve; })) : (glob.eve = eve));
+
+    glob.eve = eve;
+
+    (typeof module != "undefined" && module.exports) ? (module.exports = eve) : (typeof define != "undefined" ? (define("eve", [], function() { return eve; })) : null);
 })(uploadcare);
