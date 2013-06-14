@@ -23,14 +23,14 @@ namespace 'uploadcare.settings', (ns) ->
     'public-key': null
     'pusher-key': '79ae88bd931ea68464d9'
     'social-base': 'https://social.uploadcare.com'
-    'tabs': 'file url facebook gdrive instagram'
+    'tabs': 'file url facebook gdrive instagram evernote'
     'url-base': 'https://upload.uploadcare.com'
     'script-base': if SCRIPT_BASE? then SCRIPT_BASE else ''
     'script-ext': '.min.js'
 
   presets =
     'tabs':
-      all: 'file url facebook vk dropbox gdrive instagram'
+      all: 'file url facebook vk dropbox gdrive instagram evernote'
       default: defaults.tabs
 
 

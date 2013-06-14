@@ -37,7 +37,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             dropbox: 'Dropbox'
             gdrive: 'Google Drive'
             instagram: 'Instagram'
-            vk: 'Vkontakte'
+            vk: 'VK'
+            evernote: 'Evernote'
             url: 'Arbitrary Links'
         url:
           title: 'Files from the Web'
