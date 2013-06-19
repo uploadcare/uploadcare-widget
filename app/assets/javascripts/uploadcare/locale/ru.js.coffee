@@ -39,6 +39,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             gdrive: 'Google Drive'
             instagram: 'Instagram'
             vk: 'ВКонтакте'
+            evernote: 'Evernote'
             url: 'Произвольную ссылку'
         url:
           title: 'Файлы с других сайтов'

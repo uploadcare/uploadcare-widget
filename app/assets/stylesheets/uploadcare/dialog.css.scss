@@ -204,6 +204,9 @@ $dialog-free-space-for-close-button: y(2);
       &.uploadcare-dialog-tab-vk:after {
         background-position: 0 ($frame-size * -7);
       }
+      &.uploadcare-dialog-tab-evernote:after {
+        background-position: 0 ($frame-size * -8);
+      }
 
       &.uploadcare-dialog-first-tab {
         border-top-left-radius: $dialog-corner-radius;
