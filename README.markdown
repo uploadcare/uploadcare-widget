@@ -11,6 +11,7 @@ Add following code to your document's `<head>`.
   // Widget settings
   UPLOADCARE_PUBLIC_KEY = 'your_public_key';
 </script>
+<link src="styles.css" rel='stylesheet' type='text/css' />
 <script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare-x.y.z.min.js"></script>
 ```
 
