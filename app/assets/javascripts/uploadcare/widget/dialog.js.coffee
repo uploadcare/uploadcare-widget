@@ -52,7 +52,7 @@ namespace 'uploadcare', (ns) ->
 
     filter = if settings.multiple
       (files) -> uploadcare.FileGroup(files, settings)
-    else
+    else (files) ->
       if files
         files[0]
       else
