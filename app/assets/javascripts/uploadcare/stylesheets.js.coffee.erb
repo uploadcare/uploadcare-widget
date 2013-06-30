@@ -3,14 +3,15 @@
 
 uploadcare.settings.waitForSettings null, ->
 
-  # We need waitForSettings here
-  # because settings.build() indirectly invokes inside template
-  css = tpl('styles')
+  if not uploadcare.settings.common().customWidget
+    # We need waitForSettings here
+    # because settings.build() indirectly invokes inside template
+    css = tpl('styles')
 
-  style = document.createElement('style')
-  style.setAttribute('type', 'text/css')
-  if style.styleSheet?
-    style.styleSheet.cssText = css
-  else
-    style.appendChild(document.createTextNode(css))
-  $('head').append(style)
+    style = document.createElement('style')
+    style.setAttribute('type', 'text/css')
+    if style.styleSheet?
+      style.styleSheet.cssText = css
+    else
+      style.appendChild(document.createTextNode(css))
+    $('head').append(style)

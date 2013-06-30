@@ -15,7 +15,8 @@ namespace 'uploadcare.widget', (ns) ->
       @content = $(tpl('widget'))
       @content.css('display', 'none')
       @element.after(@content)
-      @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
+      if not uploadcare.settings.common().customWidget
+        @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
 
       @statusText = @content.find('@uploadcare-widget-status-text')
       @buttonsContainer = @content.find('@uploadcare-widget-buttons')
@@ -49,16 +50,21 @@ namespace 'uploadcare.widget', (ns) ->
 
     reset: ->
       @statusText.text(t('ready'))
-      @circle.reset()
+      if not uploadcare.settings.common().customWidget
+        @circle.reset()
       @setStatus 'ready'
 
     loaded: ->
       @setStatus 'loaded'
-      @circle.reset true
+      if not uploadcare.settings.common().customWidget
+        @circle.reset true
+      else
+        return true
 
     listen: (file) ->
       @__file = file
-      @circle.listen file
+      if not uploadcare.settings.common().customWidget
+        @circle.listen file
       @setStatus 'started'
       file.progress (info) =>
         if file == @__file

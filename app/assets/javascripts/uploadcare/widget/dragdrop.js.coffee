@@ -53,6 +53,12 @@ namespace 'uploadcare.widget.dragdrop', (ns) ->
         delayedDragState.timeout = setTimeout (-> __dragState newActive), delay
       else
         __dragState newActive
+        if uploadcare.settings.common().customWidget
+          if active
+            uploadcare.settings.onDragStartCallback()  if uploadcare.settings.onDragStartCallback
+            uploadcare.settings.onDragStartCallback()  if uploadcare.settings.onDragStartCallback
+          else
+            uploadcare.settings.onDragEndCallback()  if uploadcare.settings.onDragEndCallback
 
     __dragState = (newActive) ->
       if active != newActive

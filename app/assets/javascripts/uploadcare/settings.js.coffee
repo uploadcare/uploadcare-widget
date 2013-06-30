@@ -8,6 +8,7 @@
 namespace 'uploadcare.settings', (ns) ->
 
   defaults =
+    'returnArray': []
     'autostore': false
     'cdn-base': 'https://ucarecdn.com'
     'crop': 'disabled'
@@ -20,6 +21,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple': false
     'path-value': false
     'preview-step': false
+    'custom-widget': false
     'public-key': null
     'pusher-key': '79ae88bd931ea68464d9'
     'social-base': 'https://social.uploadcare.com'
@@ -81,7 +83,8 @@ namespace 'uploadcare.settings', (ns) ->
       'imagesOnly',
       'multiple',
       'pathValue',
-      'previewStep'
+      'previewStep',
+      'customWidget'
     ]
 
     if settings.multiple
@@ -117,7 +120,7 @@ namespace 'uploadcare.settings', (ns) ->
       crop = ''
     settings.crop = crop
 
-    if settings.__cropParsed.enabled or settings.multiple
+    if settings.__cropParsed.enabled or settings.multiple and not settings.customWidget
       settings.previewStep = true
 
     settings

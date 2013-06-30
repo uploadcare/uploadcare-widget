@@ -39,10 +39,15 @@ namespace 'uploadcare.widget', (ns) ->
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
-        if 'file' in @settings.tabs
-          fileButton = @template.addButton('file')
-          fileButton.on 'click', =>
-            @openDialog('file')
+        if uploadcare.settings.common().customWidget
+          $("@uploadcare-widget-buttons").on("click", ->
+            _this.openDialog "file"
+          ).css cursor: "pointer"
+        else
+          if 'file' in @settings.tabs
+            fileButton = @template.addButton('file')
+            fileButton.on 'click', =>
+              @openDialog('file')
 
         dialogButton = @template.addButton('dialog')
         dialogButton.on 'click', => @openDialog()
@@ -84,8 +89,11 @@ namespace 'uploadcare.widget', (ns) ->
 
     __onUploadingDone: (info) ->
       @__setValue @__infoToValue(info)
-      @template.setFileInfo(info)
-      @template.loaded()
+      if uploadcare.settings.common().customWidget
+        return info
+      else
+        @template.setFileInfo(info)
+        @template.loaded()
 
     __onUploadingFailed: (error) ->
       @template.error error

@@ -12,7 +12,6 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings) ->
 
       @settings = s.build settings
-
       @fileId = null
       @fileName = null
       @fileSize = null
@@ -70,6 +69,7 @@ namespace 'uploadcare.files', (ns) ->
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
+      id: @id
       uuid: @fileId
       name: @fileName
       size: @fileSize
