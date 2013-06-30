@@ -92,6 +92,7 @@ namespace 'uploadcare.files', (ns) ->
         size: 0
         isImage: true
         isStored: true
+        files: uploadcare.settings.common().returnArray
       @__fileInfosDf.done (infos...) ->
         for _info in infos
           info.size += _info.size

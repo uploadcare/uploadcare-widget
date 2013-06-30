@@ -10,10 +10,11 @@
 namespace 'uploadcare.files', (ns) ->
 
   class ns.UrlFile extends ns.BaseFile
-    constructor: (settings, @__url) ->
+    constructor: (settings, @__url, @__id) ->
       super
       @__shutdown = true
       @previewUrl = @__url
+      @id = @__id
 
       filename = utils.parseUrl(@__url).pathname.split('/').pop()
       if filename
@@ -76,6 +77,10 @@ namespace 'uploadcare.files', (ns) ->
         progress: (data) =>
           return if @__shutdown
           @fileSize = data.total
+          if uploadcare.settings.common().customWidget
+            uploadcare.settings.onProgressCallback
+              id: @id
+              progress: (data.done / data.total)
           @__uploadDf.notify(data.done / data.total, this)
 
         success: (data) =>

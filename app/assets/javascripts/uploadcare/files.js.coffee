@@ -35,7 +35,17 @@ namespace 'uploadcare', (ns) ->
           e.originalEvent.dataTransfer.files
         else
           e.target.files
-        new f.EventFile(settings, file) for file in files
+        _i = 0
+        _len = files.length
+        while _i < _len
+          file = files[_i]
+          if uploadcare.settings.common().customWidget
+            __id = new Date
+            uploadcare.settings.onFileAddCallback
+              file: file
+              id: __id
+          new f.EventFile(settings, file, __id)
+          _i++
       else
         @input settings, e.target
     input: (settings, input) ->
@@ -52,6 +62,14 @@ namespace 'uploadcare', (ns) ->
         if utils.fullUuidRegex.test(url) || cdn.test(url)
           new f.UploadedFile settings, url
         else
+          if uploadcare.settings.common().customWidget
+            __id = new Date
+            uploadcare.settings.onFileAddCallback
+              file:
+                name: utils.parseUrl(url).pathname.split("/").pop()
+                
+              id: __id
+
           new f.UrlFile settings, url
     uploaded: (settings, uuids) ->
       unless $.isArray(uuids)
