@@ -30,6 +30,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             lang: @settings.locale
             public_key: @settings.publicKey
             widget_version: uploadcare.version
+            images_only: @settings.imagesOnly
           @iframe = $('<iframe>')
             .attr
               src: src
