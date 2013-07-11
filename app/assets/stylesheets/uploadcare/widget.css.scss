@@ -62,7 +62,7 @@ $dragndrop-text-color: #707478;
   margin: 0;
   padding: 0;
   list-style: none;
-  > li {
+  .uploadcare-widget-button {
     $height: 24px;
     display: inline-block;
     height: $height;
