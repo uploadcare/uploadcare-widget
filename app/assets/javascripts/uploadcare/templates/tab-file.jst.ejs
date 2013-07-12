@@ -11,18 +11,20 @@
   <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file">
     <%- t('dialog.tabs.file.button') %>
   </div>
-  <div class="uploadcare-dialog-file-or">
-    <%- t('dialog.tabs.file.also') %>
-  </div>
-  <div class="uploadcare-dialog-file-sources">
-    <% for (var i = 0; i < avalibleTabs.length; i++) { 
-      var tab = avalibleTabs[i];
-      if (tab == 'file') continue; %>
-      <div 
-        class="uploadcare-dialog-file-source"
-        role="uploadcare-dialog-switch-tab"
-        data-tab="<%- tab %>"
-      ><%- t('dialog.tabs.file.tabNames.' + tab) %></div>
-    <% } %>
-  </div>
+  <% if (avalibleTabs.length > 1) { %>
+    <div class="uploadcare-dialog-file-or">
+      <%- t('dialog.tabs.file.also') %>
+    </div>
+    <div class="uploadcare-dialog-file-sources">
+      <% for (var i = 0; i < avalibleTabs.length; i++) {
+        var tab = avalibleTabs[i];
+        if (tab == 'file') continue; %>
+        <div
+          class="uploadcare-dialog-file-source"
+          role="uploadcare-dialog-switch-tab"
+          data-tab="<%- tab %>"
+        ><%- t('dialog.tabs.file.tabNames.' + tab) %></div>
+      <% } %>
+    </div>
+  <% } %>
 </div>
