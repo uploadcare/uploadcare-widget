@@ -1,11 +1,10 @@
 {
   namespace,
   utils,
+  dragdrop,
   jQuery: $,
   templates: {tpl}
 } = uploadcare
-
-{dragdrop} = uploadcare.widget
 
 namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.FileTab extends ns.BaseSourceTab
@@ -24,10 +23,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __initDragNDrop: ->
       dropArea = @wrap.find('@uploadcare-drop-area')
       if utils.abilities.fileDragAndDrop
-        dragdrop.receiveDrop (type, data) =>
+        dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles type, data
           @dialogApi.switchToPreview()
-        , dropArea
         className = 'draganddrop'
       else
         className = 'no-draganddrop'

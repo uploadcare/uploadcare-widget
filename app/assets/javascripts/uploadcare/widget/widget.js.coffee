@@ -2,6 +2,7 @@
   namespace,
   utils,
   settings: s,
+  files,
   jQuery: $
 } = uploadcare
 
