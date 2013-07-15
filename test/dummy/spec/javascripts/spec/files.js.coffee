@@ -86,7 +86,7 @@ describe "UrlFile", ->
         updateStatus
           status: 'success'
           original_filename: kitty.info.original_filename
-          file_id: kitty.uuid
+          uuid: kitty.uuid
       , 100
 
     waitsFor ->

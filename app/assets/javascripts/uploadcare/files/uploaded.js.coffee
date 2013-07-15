@@ -24,7 +24,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ReadyFile extends ns.BaseFile
     constructor: (settings, @__fileData) ->
       super
-      @fileId = @__fileData.file_id
+      @fileId = @__fileData.uuid
       @__uploadDf.resolve()
 
     __startUpload: ->
