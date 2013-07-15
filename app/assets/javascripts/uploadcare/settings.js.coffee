@@ -159,3 +159,28 @@ namespace 'uploadcare.settings', (ns) ->
     waitForSettingsCb.add (common) ->
       fn normalize $.extend({}, common, settings or {})
 
+  class ns.CssCollector
+    constructor: () ->
+      @data = {}
+
+    # Add css for all tabs:
+    #   uploadcare.defaults.tabsEmbeddedCss.add('http://url')
+    # Add css for one tab:
+    #   uploadcare.defaults.tabsEmbeddedCss.add('http://url', 'gdrive')
+    add: (url, tab = '*') ->
+      if not /^https?:\/\//i.test(url)
+        throw new Error('Embedded urls should be absolute. ' + url)
+
+      unless tab of @data
+        @data[tab] = []
+      unless url in @data[tab]
+        @data[tab].push url
+
+    get: (tab = '*') ->
+      if tab of @data
+        @data[tab]
+      else
+        []
+
+  tabsEmbeddedCss = new ns.CssCollector
+  expose 'tabsEmbeddedCss', tabsEmbeddedCss
