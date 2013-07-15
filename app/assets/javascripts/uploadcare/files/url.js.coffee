@@ -81,7 +81,6 @@ namespace 'uploadcare.files', (ns) ->
         success: (data) =>
           return if @__shutdown
           @__state('progress', data)
-          debugger
           [@fileName, @fileId] = [data.original_filename, data.uuid]
           @__uploadDf.resolve(this)
 
