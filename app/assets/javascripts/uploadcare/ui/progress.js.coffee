@@ -110,16 +110,18 @@ namespace 'uploadcare.ui.progress', (ns) ->
     constructor: ->
       super
 
+      @canvasSize = @size * 2
+
       @element.addClass 'uploadcare-widget-circle--canvas'
       @element.html(tpl('circle-canvas'))
 
       @setColorTheme 'default'
       @setValue 0, true
 
-      @canvasEl = @element.find('canvas').get(0)
-      @canvasEl.width = @size
-      @canvasEl.height = @size
-      @canvasCtx = @canvasEl.getContext '2d'
+      @canvasEl = @element.find('canvas')
+                  .css(width: @size, height: @size)
+                  .prop(width: @canvasSize, height: @canvasSize)
+      @canvasCtx = @canvasEl.get(0).getContext '2d'
 
       @__reRender()
 
@@ -130,28 +132,29 @@ namespace 'uploadcare.ui.progress', (ns) ->
     __reRender: ->
       if @canvasCtx
         ctx = @canvasCtx
+        halfSize = @canvasSize/2
 
         # Clear
-        ctx.clearRect 0, 0, @size, @size
+        ctx.clearRect 0, 0, @canvasSize, @canvasSize
 
         # Background circle
         ctx.fillStyle = @colorTheme.back
         ctx.beginPath()
-        ctx.arc(@size/2, @size/2, @size/2, 0, 2*Math.PI)
+        ctx.arc(halfSize, halfSize, halfSize, 0, 2*Math.PI)
         ctx.fill()
 
         # Progress circle
         offset = -Math.PI / 2
         ctx.fillStyle = @colorTheme.front
         ctx.beginPath()
-        ctx.moveTo(@size/2, @size/2)
-        ctx.arc(@size/2, @size/2, @size/2, offset, 2*Math.PI * @val + offset)
+        ctx.moveTo(halfSize, halfSize)
+        ctx.arc(halfSize, halfSize, halfSize, offset, 2*Math.PI * @val + offset)
         ctx.fill()
 
         # Center circle
         ctx.fillStyle = @colorTheme.center
         ctx.beginPath()
-        ctx.arc(@size/2, @size/2, @size/15, 0, 2*Math.PI)
+        ctx.arc(halfSize, halfSize, @canvasSize/15, 0, 2*Math.PI)
         ctx.fill()
 
     __animateValue: (targetValue) ->
