@@ -11,6 +11,7 @@
   utils,
   settings: s,
   jQuery: $,
+  dragdrop,
   locale: {t}
 } = uploadcare
 
@@ -48,7 +49,7 @@ namespace 'uploadcare.widget', (ns) ->
         dialogButton.on 'click', => @openDialog()
 
       # Enable drag and drop
-      ns.dragdrop.receiveDrop(@__handleDirectSelection, @template.dropArea)
+      dragdrop.receiveDrop(@template.dropArea, @__handleDirectSelection)
       @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
         unless active && uploadcare.isDialogOpened()
           @template.dropArea.toggleClass('uploadcare-dragging', active)
