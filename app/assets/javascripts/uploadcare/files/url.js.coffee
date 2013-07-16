@@ -80,7 +80,10 @@ namespace 'uploadcare.files', (ns) ->
           if uploadcare.settings.common().customWidget
             uploadcare.settings.onProgressCallback
               id: @id
+              uuid: data.file_id,
               progress: (data.done / data.total)
+              size: @fileSize
+
           @__uploadDf.notify(data.done / data.total, this)
 
         success: (data) =>

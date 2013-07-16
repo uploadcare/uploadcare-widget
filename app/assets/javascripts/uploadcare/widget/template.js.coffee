@@ -21,7 +21,7 @@ namespace 'uploadcare.widget', (ns) ->
       @statusText = @content.find('@uploadcare-widget-status-text')
       @buttonsContainer = @content.find('@uploadcare-widget-buttons')
 
-      @dropArea = @content.find('@uploadcare-drop-area')
+      @dropArea = $('@uploadcare-drop-area')
 
       @labels = []
 

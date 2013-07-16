@@ -36,12 +36,22 @@ namespace 'uploadcare.files', (ns) ->
       xhr = new XMLHttpRequest()
       xhr.addEventListener 'loadend', =>
         fail() if xhr? && !xhr.status
+      xhr.upload.addEventListener 'load', (event) =>
+        if uploadcare.settings.common().customWidget
+          uploadcare.settings.onProgressCallback
+            id: @id
+            uuid: @fileId,
+            size: event.totalSize || event.total
+            progress: 1
+
       xhr.upload.addEventListener 'progress', (event) =>
         @__loaded = event.loaded
         @fileSize = event.totalSize || event.total
         if uploadcare.settings.common().customWidget
           uploadcare.settings.onProgressCallback
             id: @id
+            uuid: @fileId,
+            size: @fileSize
             progress: (@__loaded / @fileSize)
 
         @__uploadDf.notify(@__loaded / @fileSize, this)
