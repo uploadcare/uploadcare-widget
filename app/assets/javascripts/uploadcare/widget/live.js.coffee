@@ -22,15 +22,29 @@ namespace 'uploadcare', (ns) ->
         'Widget'
       uploadcare[method](target)
 
-  ns.Widget = (target) ->
+  ns.Widget = (target, options) ->
     el = $(target).eq(0)
+
+    if options
+      uploadcare.settings.onDragStartCallback = options.onDragStartCallback  if options.onDragStartCallback
+      uploadcare.settings.onDragEndCallback = options.onDragEndCallback  if options.onDragEndCallback
+      uploadcare.settings.onProgressCallback = options.onProgressCallback  if options.onProgressCallback
+      uploadcare.settings.onFileAddCallback = options.onFileAddCallback  if options.onFileAddCallback
+
     unless getSettings(el).multiple
       initializeWidget(el, ns.widget.Widget)
     else
       throw new Error 'Widget can\'t be initialized on this element'
 
-  ns.MultipleWidget = (target) ->
+  ns.MultipleWidget = (target, options) ->
     el = $(target).eq(0)
+
+    if options
+      uploadcare.settings.onDragStartCallback = options.onDragStartCallback  if options.onDragStartCallback
+      uploadcare.settings.onDragEndCallback = options.onDragEndCallback  if options.onDragEndCallback
+      uploadcare.settings.onProgressCallback = options.onProgressCallback  if options.onProgressCallback
+      uploadcare.settings.onFileAddCallback = options.onFileAddCallback  if options.onFileAddCallback
+
     if getSettings(el).multiple
       initializeWidget(el, ns.widget.MultipleWidget)
     else

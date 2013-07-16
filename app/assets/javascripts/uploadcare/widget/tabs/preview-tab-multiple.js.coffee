@@ -24,7 +24,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @fileListEl = @__find('file-list')
       @filesCountEl = @__find('files-count')
-      @footerText = @__find('footer-text')
+
+      if not uploadcare.settings.common().customWidget
+        @footerText = @__find('footer-text')
+
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
 
       @__addFile(file) for file in @dialogApi.fileColl.get()
@@ -48,19 +51,20 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       $(ROLE_PREFIX + s, context)
 
     __updateContainerView: =>
-      @filesCountEl.text t('file', @dialogApi.fileColl.length())
+      if not uploadcare.settings.common().customWidget
+        @filesCountEl.text t('file', @dialogApi.fileColl.length())
 
-      toManyFiles = @dialogApi.fileColl.length() > MULTIPLE_UPLOAD_FILES_LIMIT
-      @doneBtnEl.toggleClass('uploadcare-disabled-el', toManyFiles)
-      @footerText
-        .toggleClass('uploadcare-error', toManyFiles)
-        .text(
-          if toManyFiles
-            t('dialog.tabs.preview.multiple.toManyFiles')
-              .replace('%max%', MULTIPLE_UPLOAD_FILES_LIMIT)
-          else
-            t('dialog.tabs.preview.multiple.question')
-        )
+        toManyFiles = @dialogApi.fileColl.length() > MULTIPLE_UPLOAD_FILES_LIMIT
+        @doneBtnEl.toggleClass('uploadcare-disabled-el', toManyFiles)
+        @footerText
+          .toggleClass('uploadcare-error', toManyFiles)
+          .text(
+            if toManyFiles
+              t('dialog.tabs.preview.multiple.toManyFiles')
+                .replace('%max%', MULTIPLE_UPLOAD_FILES_LIMIT)
+            else
+              t('dialog.tabs.preview.multiple.question')
+          )
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)

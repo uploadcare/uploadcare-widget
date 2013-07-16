@@ -7,9 +7,9 @@
 namespace 'uploadcare.files', (ns) ->
 
   class ns.EventFile extends ns.BaseFile
-    constructor: (settings, @__file) ->
+    constructor: (settings, @__file, @__id) ->
       super
-
+      @id = @__id
       @fileId = utils.uuid()
       @fileSize = @__file.size
       @fileName = @__file.name
@@ -36,9 +36,24 @@ namespace 'uploadcare.files', (ns) ->
       xhr = new XMLHttpRequest()
       xhr.addEventListener 'loadend', =>
         fail() if xhr? && !xhr.status
+      xhr.upload.addEventListener 'load', (event) =>
+        if uploadcare.settings.common().customWidget
+          uploadcare.settings.onProgressCallback
+            id: @id
+            uuid: @fileId,
+            size: event.totalSize || event.total
+            progress: 1
+
       xhr.upload.addEventListener 'progress', (event) =>
         @__loaded = event.loaded
         @fileSize = event.totalSize || event.total
+        if uploadcare.settings.common().customWidget
+          uploadcare.settings.onProgressCallback
+            id: @id
+            uuid: @fileId,
+            size: @fileSize
+            progress: (@__loaded / @fileSize)
+
         @__uploadDf.notify(@__loaded / @fileSize, this)
 
       # jQuery Ajax wrapper for JSON and stuff
@@ -59,6 +74,7 @@ namespace 'uploadcare.files', (ns) ->
             if @settings.autostore && /autostore/i.test(data.error.content)
               utils.commonWarning('autostore')
             return fail()
+          @settings.returnArray.push @__fileInfo()
           @__uploadDf.resolve(this)
 
       @__uploadDf.always =>

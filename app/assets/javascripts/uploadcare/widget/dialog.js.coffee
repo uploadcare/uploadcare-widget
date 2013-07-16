@@ -52,8 +52,11 @@ namespace 'uploadcare', (ns) ->
 
     filter = if settings.multiple
       (files) -> uploadcare.FileGroup(files, settings)
-    else
-      (files) -> files[0]
+    else (files) ->
+      if files
+        files[0]
+      else
+        null
 
     promise = utils.then(currentDialogPr, filter, filter)
     promise.reject = currentDialogPr.reject
@@ -81,10 +84,15 @@ namespace 'uploadcare', (ns) ->
       @dfd.always =>
         @__closeDialog()
 
-      @content = $(tpl('dialog'))
-        .hide()
-        .appendTo('body')
-        .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
+      if uploadcare.settings.common().customWidget
+        @content = $(tpl('dialog'))
+          .hide()
+          .appendTo('body')
+      else
+        @content = $(tpl('dialog'))
+          .hide()
+          .appendTo('body')
+          .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
 
       @files = new utils.CollectionOfPromises()
 
@@ -155,8 +163,13 @@ namespace 'uploadcare', (ns) ->
         @__reject() if e.which == 27 # Escape
 
     __prepareTabs: (tab) ->
-      @addTab 'preview'
-      @__hideTab 'preview'
+      if uploadcare.settings.common().customWidget
+        if not @settings.multiple or (@settings.imagesOnly and @settings.crop)
+          @addTab "preview"
+          @__hideTab "preview"
+      else
+        @addTab 'preview'
+        @__hideTab 'preview'
 
       @addTab tabName for tabName in @settings.tabs
       @switchTab(tab || @settings.tabs[0])
@@ -165,8 +178,13 @@ namespace 'uploadcare', (ns) ->
       @files.add(file) for file in files
 
       if files.length
-        @__showTab 'preview'
-        @switchTab 'preview'
+        if uploadcare.settings.common().customWidget
+          if not @settings.multiple or (@settings.imagesOnly and @settings.crop)
+            @__showTab 'preview'
+            @switchTab 'preview'
+        else
+          @__showTab 'preview'
+          @switchTab 'preview'
 
       @files.onAdd.add =>
         if @settings.previewStep
@@ -187,17 +205,29 @@ namespace 'uploadcare', (ns) ->
 
       return if name of @tabs
 
-      TabCls = switch name
-        when 'file' then tabs.FileTab
-        when 'url' then tabs.UrlTab
-        when 'facebook' then tabs.RemoteTabFor 'facebook'
-        when 'dropbox' then tabs.RemoteTabFor 'dropbox'
-        when 'gdrive' then tabs.RemoteTabFor 'gdrive'
-        when 'instagram' then tabs.RemoteTabFor 'instagram'
-        when 'vk' then tabs.RemoteTabFor 'vk'
-        when 'evernote' then tabs.RemoteTabFor 'evernote'
-        when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
-        when 'welcome' then tabs.StaticTabWith 'welcome'
+      if uploadcare.settings.common().customWidget and @settings.multiple
+        TabCls = switch name
+          when 'file' then tabs.FileTab
+          when 'url' then tabs.UrlTab
+          when 'facebook' then tabs.RemoteTabFor 'facebook'
+          when 'dropbox' then tabs.RemoteTabFor 'dropbox'
+          when 'gdrive' then tabs.RemoteTabFor 'gdrive'
+          when 'instagram' then tabs.RemoteTabFor 'instagram'
+          when 'vk' then tabs.RemoteTabFor 'vk'
+          when 'evernote' then tabs.RemoteTabFor 'evernote'
+          when 'welcome' then tabs.StaticTabWith 'welcome'
+      else
+        TabCls = switch name
+          when 'file' then tabs.FileTab
+          when 'url' then tabs.UrlTab
+          when 'facebook' then tabs.RemoteTabFor 'facebook'
+          when 'dropbox' then tabs.RemoteTabFor 'dropbox'
+          when 'gdrive' then tabs.RemoteTabFor 'gdrive'
+          when 'instagram' then tabs.RemoteTabFor 'instagram'
+          when 'vk' then tabs.RemoteTabFor 'vk'
+          when 'evernote' then tabs.RemoteTabFor 'evernote'
+          when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
+          when 'welcome' then tabs.StaticTabWith 'welcome'
 
       if not TabCls
         throw new Error("No such tab: #{name}")

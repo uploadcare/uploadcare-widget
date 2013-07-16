@@ -9,6 +9,8 @@
 namespace 'uploadcare.ui.progress', (ns) ->
   class ns.Circle
     constructor: (@element) ->
+      if uploadcare.settings.common().customWidget
+        return null
       # should work with other jqueries
       @element = $(@element)
 
@@ -76,14 +78,18 @@ namespace 'uploadcare.ui.progress', (ns) ->
         theme = @colorThemes[theme]
       @colorTheme = $.extend {}, @colorThemes.default, theme
       
-      @pie.css 'background', @colorTheme.back
-      @center.css 'background', @colorTheme.center
+      if not uploadcare.settings.common().customWidget
+        @pie.css 'background', @colorTheme.back
+      if not uploadcare.settings.common().customWidget
+        @center.css 'background', @colorTheme.center
 
       if @raphael
         @__update()
 
     __update: (val = @currentVal, instant = false) -> # val in [0..1]
       val = 1 if val > 1
+      if uploadcare.settings.common().customWidget
+        return null
       @currentVal = val
       delay = @fullDelay * Math.abs(val - @value)
       @value = val

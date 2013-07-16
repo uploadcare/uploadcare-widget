@@ -3,8 +3,11 @@
 } = uploadcare
 
 canSubmit = (form) ->
-  notSubmittable = '[data-status=started], [data-status=error]'
-  not form.find('.uploadcare-widget').is(notSubmittable)
+  if uploadcare.settings.common().customWidget
+    return true
+  else
+    notSubmittable = '[data-status=started], [data-status=error]'
+    not form.find('.uploadcare-widget').is(notSubmittable)
 
 submitPreventionState = (form, prevent) ->
   form.attr('data-uploadcare-submitted', prevent)

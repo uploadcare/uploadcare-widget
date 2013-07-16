@@ -53,9 +53,16 @@ namespace 'uploadcare.widget.dragdrop', (ns) ->
         delayedDragState.timeout = setTimeout (-> __dragState newActive), delay
       else
         __dragState newActive
+        if uploadcare.settings.common().customWidget
+          if active
+            uploadcare.settings.onDragStartCallback()  if uploadcare.settings.onDragStartCallback
+          else
+            uploadcare.settings.onDragEndCallback()  if uploadcare.settings.onDragEndCallback
 
     __dragState = (newActive) ->
       if active != newActive
         active = newActive
+        if not active
+          uploadcare.settings.onDragEndCallback()  if uploadcare.settings.onDragEndCallback
         $('@uploadcare-drop-area').trigger('dragstatechange.uploadcare', active)
         $('body').toggleClass('uploadcare-draging', active)
