@@ -92,6 +92,9 @@ namespace 'uploadcare.files', (ns) ->
             width: img.width
             height: img.height
 
+        img.onerror = =>
+          @reject()
+
         img.src = url
       ).promise()
 
