@@ -41,18 +41,10 @@ namespace 'uploadcare', (ns) ->
     input: (settings, input) ->
       [new f.InputFile(settings, input)]
     url: (settings, urls) ->
-      # We also accept plain UUIDs here for an internally used shortcut.
-      # Typically, you should use the `uploaded` converter for clarity.
       unless $.isArray(urls)
         urls = [urls]
       for url in urls
-        cdnBase = utils.escapeRegExp(settings.cdnBase)
-          .replace(/^https?/i, 'https?')
-        cdn = new RegExp("^#{cdnBase}/#{utils.uuidRegex.source}", 'i')
-        if utils.fullUuidRegex.test(url) || cdn.test(url)
-          new f.UploadedFile settings, url
-        else
-          new f.UrlFile settings, url
+        new f.UrlFile settings, url
     uploaded: (settings, uuids) ->
       unless $.isArray(uuids)
         uuids = [uuids]
@@ -65,3 +57,16 @@ namespace 'uploadcare', (ns) ->
           new f.ReadyFile(settings, fileData)
         else
           new f.DeletedFile()
+
+    # internally used shortcut
+    'url-or-uploaded': (settings, urls) ->
+      unless $.isArray(urls)
+        urls = [urls]
+      cdnBase = utils.escapeRegExp(settings.cdnBase)
+        .replace(/^https?/i, 'https?')
+      cdn = new RegExp("^#{cdnBase}/#{utils.uuidRegex.source}", 'i')
+      for url in urls
+        if utils.fullUuidRegex.test(url) || cdn.test(url)
+          new f.UploadedFile settings, url
+        else
+          new f.UrlFile settings, url

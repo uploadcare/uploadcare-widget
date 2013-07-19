@@ -199,6 +199,6 @@ namespace 'uploadcare.utils', (utils) ->
       if utils.isFile(value)
         value
       else
-        uploadcare.fileFrom('url', value, settings)
+        uploadcare.fileFrom('url-or-uploaded', value, settings)
     else
       null
