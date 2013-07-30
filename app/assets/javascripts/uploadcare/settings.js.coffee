@@ -159,3 +159,20 @@ namespace 'uploadcare.settings', (ns) ->
     waitForSettingsCb.add (common) ->
       fn normalize $.extend({}, common, settings or {})
 
+  class ns.CssCollector
+    constructor: () ->
+      @urls = []
+      @styles = []
+
+    addUrl: (url) ->
+      if not /^https?:\/\//i.test(url)
+        throw new Error('Embedded urls should be absolute. ' + url)
+
+      unless url in @urls
+        @urls.push url
+
+    addStyle: (style) ->
+      @styles.push style
+
+  tabsCss = new ns.CssCollector
+  expose 'tabsCss', tabsCss

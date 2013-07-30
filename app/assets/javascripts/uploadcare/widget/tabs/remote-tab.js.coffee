@@ -2,6 +2,7 @@
   namespace,
   locale,
   utils,
+  tabsCss,
   jQuery: $,
   locale: {t}
 } = uploadcare
@@ -44,7 +45,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               border: 0
               visibility: 'hidden'
             .appendTo(@wrap)
-            .on 'load', -> $(this).css 'visibility', 'visible'
+            .on 'load', ->
+              $(this).css 'visibility', 'visible'
+              for url in tabsCss.urls
+                message = JSON.stringify(url: url, type: 'embed-css')
+                this.contentWindow.postMessage message, '*'
+              for style in tabsCss.styles
+                message = JSON.stringify(style: style, type: 'embed-css')
+                this.contentWindow.postMessage message, '*'
+              return
 
           nos = (str) -> str.toLowerCase().replace(/^https/, 'http')
 
