@@ -16,7 +16,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: '文件已被删除'
     draghere: '拖放文件到这里'
     file:
-      one: '1 文件'
       other: '%1 文件'
     buttons:
       cancel: '取消'
@@ -95,6 +94,4 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
-  ns.en = (n) ->
-    return '一个' if n == 1
-    '其它'
+  ns.zh = () -> 'other'
