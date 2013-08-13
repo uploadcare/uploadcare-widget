@@ -115,22 +115,20 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (@uploader, @settings) ->
 
     watch: (@token) ->
-      @interval = setInterval(
-        => @__checkStatus (data) =>
-          @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
-      250)
+      bind = =>
+        @__updateStatus().done =>
+          if @interval  # Do not schedule next request if watcher stopped.
+            @interval = setTimeout bind, 250
+      @interval = setTimeout bind, 0
 
     stopWatching: ->
-      clearInterval @interval if @interval
+      clearTimeout @interval if @interval
       @interval = null
 
-    __error: ->
-      @stopWatching()
-      @uploader.__state 'error'
-
-    __checkStatus: (callback) ->
+    __updateStatus: ->
       utils.jsonp("#{@settings.urlBase}/status/", {@token})
         .fail (error) =>
-          @__error()
-        .done (data) ->
-          callback(data)
+          @stopWatching()
+          @uploader.__state 'error'
+        .done (data) =>
+          @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
