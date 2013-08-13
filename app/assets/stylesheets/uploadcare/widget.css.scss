@@ -17,7 +17,7 @@ $dragndrop-text-color: #707478;
   padding: 0 5px;
 
   &[data-status=loaded], &[data-status=started] {
-    .uploadcare-widget-buttons > li { display: none; }
+    .uploadcare-widget-button { display: none; }
   }
   &[data-status=started] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
   &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
