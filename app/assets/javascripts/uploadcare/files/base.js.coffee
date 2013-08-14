@@ -42,7 +42,9 @@ namespace 'uploadcare.files', (ns) ->
       @fileName = data.original_filename
       @fileSize = data.size
       @isImage = data.is_image
-      @isStored = data.is_stored or data.is_public
+      @imageInfo = data.image_info
+      @isStored = data.is_stored
+      @isReady = data.is_ready
       @__buildPreviewUrl()
 
       if @settings.imagesOnly && !@isImage
@@ -70,33 +72,21 @@ namespace 'uploadcare.files', (ns) ->
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
-      uuid: @fileId
-      name: @fileName
-      size: @fileSize
-      isStored: @isStored
-      isImage: @isImage
-      cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
-      cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: @previewUrl
-      preview: @apiPromise.preview
-      dimensions: if @isImage then @dimensions else null
-
-    dimensions: =>
-      url = @previewUrl
-
-      $.Deferred(->
-        img = new Image()
-
-        img.onload = =>
-          @resolve
-            width: img.width
-            height: img.height
-
-        img.onerror = =>
-          @reject()
-
-        img.src = url
-      ).promise()
+      r =
+        uuid: @fileId
+        name: @fileName
+        size: @fileSize
+        isStored: @isStored
+        isImage: @isImage
+        originalImageInfo: @imageInfo
+        cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+        cdnUrlModifiers: @cdnUrlModifiers
+        previewUrl: @previewUrl
+        preview: @apiPromise.preview
+      if @isImage
+        r.dimensions = =>
+          $.Deferred().resolve(@imageInfo).promise()
+      r
 
     __cancel: =>
       @__uploadDf.reject('user', this)
