@@ -9,4 +9,9 @@ jasmine.ns 'fixtures', (ns) ->
         original_filename: 'kitty.jpg'
         size: 100
         is_image: true
-        is_public: false
+        is_stored: false
+        image_info:
+          width: 1145
+          geo_location: null
+          datetime_original: null
+          height: 725

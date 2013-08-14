@@ -21,6 +21,7 @@ namespace 'uploadcare.files', (ns) ->
       @cdnUrlModifiers = null
       @previewUrl = null
       @isImage = null
+      @imageInfo = null
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()

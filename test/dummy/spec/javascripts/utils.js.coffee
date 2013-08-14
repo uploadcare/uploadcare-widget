@@ -4,8 +4,9 @@ jasmine.ns 'utils', (ns) ->
     fileId:           fixture.uuid
     fileName:         fixture.info.original_filename
     fileSize:         fixture.info.size
-    isStored:         fixture.info.is_public
+    isStored:         fixture.info.is_stored
     isImage:          fixture.info.is_image
+    imageInfo:        fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
     previewUrl:       fixture.previewUrl
 
@@ -13,8 +14,9 @@ jasmine.ns 'utils', (ns) ->
     uuid:             fixture.uuid
     name:             fixture.info.original_filename
     size:             fixture.info.size
-    isStored:         fixture.info.is_public
+    isStored:         fixture.info.is_stored
     isImage:          fixture.info.is_image
+    originalImageInfo:fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
     previewUrl:       fixture.previewUrl
     cdnUrl: "#{settings.cdnBase}/#{fixture.uuid}/#{fixture.cdnUrlModifiers or ''}"
