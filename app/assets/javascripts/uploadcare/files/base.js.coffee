@@ -72,21 +72,19 @@ namespace 'uploadcare.files', (ns) ->
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
-      r =
-        uuid: @fileId
-        name: @fileName
-        size: @fileSize
-        isStored: @isStored
-        isImage: @isImage
-        originalImageInfo: @imageInfo
-        cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
-        cdnUrlModifiers: @cdnUrlModifiers
-        previewUrl: @previewUrl
-        preview: @apiPromise.preview
-      if @isImage
-        r.dimensions = =>
+      uuid: @fileId
+      name: @fileName
+      size: @fileSize
+      isStored: @isStored
+      isImage: @isImage
+      originalImageInfo: @imageInfo
+      cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+      cdnUrlModifiers: @cdnUrlModifiers
+      previewUrl: @previewUrl
+      preview: @apiPromise.preview
+      dimensions: if @isImage then =>
           $.Deferred().resolve(@imageInfo).promise()
-      r
+        else null
 
     __cancel: =>
       @__uploadDf.reject('user', this)
