@@ -17,7 +17,6 @@ namespace 'uploadcare.files', (ns) ->
       @fileName = null
       @fileSize = null
       @isStored = null
-      @cdnUrl = null
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
