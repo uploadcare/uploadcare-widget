@@ -19,7 +19,6 @@ namespace 'uploadcare.files', (ns) ->
       @isStored = null
       @cdnUrl = null
       @cdnUrlModifiers = null
-      @previewUrl = null
       @isImage = null
       @imageInfo = null
       @isReady = null
@@ -56,7 +55,6 @@ namespace 'uploadcare.files', (ns) ->
       @imageInfo = data.image_info
       @isStored = data.is_stored
       @isReady = data.is_ready
-      @__buildPreviewUrl()
 
       if @settings.imagesOnly && !@isImage
         @__infoDf.reject('image', this)
@@ -74,9 +72,6 @@ namespace 'uploadcare.files', (ns) ->
       .done (data) =>
         @__handleFileData(data)
 
-    __buildPreviewUrl: ->
-      @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
-
     __progressInfo: ->
       state: @__progressState
       uploadProgress: @__progress
@@ -90,9 +85,10 @@ namespace 'uploadcare.files', (ns) ->
       isStored: @isStored
       isImage: @isImage
       originalImageInfo: @imageInfo
+      originalUrl: "#{@settings.cdnBase}/#{@fileId}/"
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: @previewUrl
+      previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
       preview: @apiPromise.preview
       dimensions: if @isImage then =>
           window.console?.warn? "'dimensions' method is deprecated. " +
@@ -134,7 +130,7 @@ namespace 'uploadcare.files', (ns) ->
             height: img.height * sy
           }))
           $(selector).html(el)
-        img.src = @previewUrl
+        img.src = info.originalUrl
 
     __extendPromise: (p) =>
       p.cancel = =>

@@ -12,7 +12,6 @@ namespace 'uploadcare.files', (ns) ->
         modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
         @cdnUrlModifiers = modifiers[0] if modifiers
         @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
-        @__buildPreviewUrl()
         @__uploadDf.resolve(this)
       else
         @__uploadDf.reject('baddata', this)

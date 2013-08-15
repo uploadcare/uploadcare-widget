@@ -41,7 +41,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @file.progress ifCur (progressInfo) ->
         info = progressInfo.incompleteFileInfo
-        if info.isImage? and info.previewUrl?
+        if info.isImage? and info.originalUrl?
           stateKnown info
 
     # error

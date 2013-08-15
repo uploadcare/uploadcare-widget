@@ -85,7 +85,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl.toggleClass(CLASS_PREFIX + 'image', !!info.isImage)
       if info.isImage
         pWrapEl = @__find('file-preview-wrap', fileEl)
-        utils.squareImage pWrapEl, info.previewUrl
+        utils.squareImage pWrapEl, info.originalUrl
 
       @__find('file-name', fileEl)
         .text(info.name or t('dialog.tabs.preview.unknownName'))
