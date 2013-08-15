@@ -4,6 +4,7 @@
 # = require uploadcare/utils/square-image
 # = require uploadcare/utils/warnings
 # = require uploadcare/utils/load-plugin
+# = require uploadcare/utils/jquery-jsonp
 
 {
   namespace,
@@ -195,7 +196,7 @@ namespace 'uploadcare.utils', (ns) ->
     uploadcare.settings.build().scriptBase + 'images/' + name
 
   ns.jsonp = (url, data) ->
-    $.ajax(url, {data, dataType: 'jsonp'}).then (data) ->
+    $.jsonp({url, data, callbackParameter: 'callback'}).then (data) ->
       if data.error
         text = data.error.content or data.error
         ns.warn("JSONP error: #{text}")
