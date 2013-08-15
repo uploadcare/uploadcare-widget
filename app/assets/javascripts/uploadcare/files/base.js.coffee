@@ -26,7 +26,6 @@ namespace 'uploadcare.files', (ns) ->
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
-      @__waitReadyDf = null
       @__progressState = 'uploading'
       @__progress = 0
 
@@ -34,12 +33,21 @@ namespace 'uploadcare.files', (ns) ->
         .fail (error) =>
           @__infoDf.reject(error, this)
         .done =>
-          @__requestInfo()
+          @__completeUpload()
 
       @__initApi()
       @__notifyApi()
 
     __startUpload: -> throw new Error('not implemented')
+
+    __completeUpload: =>
+      # Update info until @__infoDf resolved.
+      timeout = 100
+      do check = =>
+        if @__infoDf.state() == 'pending'
+          @__updateInfo().done =>
+            setTimeout check, timeout
+            timeout += 50
 
     __handleFileData: (data) ->
       @fileName = data.original_filename
@@ -54,9 +62,10 @@ namespace 'uploadcare.files', (ns) ->
         @__infoDf.reject('image', this)
         return
 
-      @__infoDf.resolve(this)
+      if @isReady
+        @__infoDf.resolve(this)
 
-    __requestInfo: =>
+    __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
         file_id: @fileId,
         pub_key: @settings.publicKey
@@ -90,23 +99,6 @@ namespace 'uploadcare.files', (ns) ->
                                 "Use originalImageInfo instead."
           $.Deferred().resolve(@imageInfo).promise()
         else null
-      waitReady: =>
-        @__waitReady()
-
-    __waitReady: =>
-      unless @__waitReadyDf
-        @__waitReadyDf = $.Deferred()
-        timeout = 100
-        do check = =>
-          if @isReady
-            @__waitReadyDf.resolve()
-          else
-            setTimeout =>
-              timeout += 50
-              @__requestInfo().fail(@__waitReadyDf.reject)
-                              .done(check)
-            , timeout
-      @__waitReadyDf.promise()
 
     __cancel: =>
       @__uploadDf.reject('user', this)

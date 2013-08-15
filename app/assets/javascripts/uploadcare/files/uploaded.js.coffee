@@ -22,16 +22,14 @@ namespace 'uploadcare.files', (ns) ->
 
 
   class ns.ReadyFile extends ns.BaseFile
-    constructor: (settings, @__fileData) ->
+    constructor: (settings, __fileData) ->
       super
       @fileId = @__fileData.uuid
+      @__handleFileData(__fileData)
       @__uploadDf.resolve()
 
     __startUpload: ->
       # nothing to do
-
-    __requestInfo: ->
-      @__handleFileData(@__fileData)
 
 
   class ns.DeletedFile extends ns.BaseFile
