@@ -137,14 +137,15 @@ namespace 'uploadcare.files', (ns) ->
         img.src = @previewUrl
 
     __extendPromise: (p) =>
-      p.cancel = @__cancel
-      p.preview = (selector) => @__preview(p, selector)
+      p.cancel = =>
+        @__cancel()
 
-      __pipe = p.pipe
-      p.pipe = => @__extendPromise __pipe.apply(p, arguments)
+      p.preview = (selector) =>
+        @__preview(p, selector)
 
       __then = p.then
-      p.then = => @__extendPromise __then.apply(p, arguments)
+      p.pipe = p.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
+        @__extendPromise __then.apply(p, arguments)
 
       p # extended promise
 
