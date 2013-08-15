@@ -22,9 +22,11 @@ namespace 'uploadcare.files', (ns) ->
       @previewUrl = null
       @isImage = null
       @imageInfo = null
+      @isReady = null
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
+      @__waitReadyDf = null
       @__progressState = 'uploading'
       @__progress = 0
 
@@ -84,8 +86,27 @@ namespace 'uploadcare.files', (ns) ->
       previewUrl: @previewUrl
       preview: @apiPromise.preview
       dimensions: if @isImage then =>
+          window.console?.warn? "'dimensions' method is deprecated. " +
+                                "Use originalImageInfo instead."
           $.Deferred().resolve(@imageInfo).promise()
         else null
+      waitReady: =>
+        @__waitReady()
+
+    __waitReady: =>
+      unless @__waitReadyDf
+        @__waitReadyDf = $.Deferred()
+        timeout = 100
+        do check = =>
+          if @isReady
+            @__waitReadyDf.resolve()
+          else
+            setTimeout =>
+              timeout += 50
+              @__requestInfo().fail(@__waitReadyDf.reject)
+                              .done(check)
+            , timeout
+      @__waitReadyDf.promise()
 
     __cancel: =>
       @__uploadDf.reject('user', this)
