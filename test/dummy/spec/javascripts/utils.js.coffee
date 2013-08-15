@@ -6,6 +6,7 @@ jasmine.ns 'utils', (ns) ->
     fileSize:         fixture.info.size
     isStored:         fixture.info.is_stored
     isImage:          fixture.info.is_image
+    isReady:          fixture.info.is_ready
     imageInfo:        fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
     previewUrl:       fixture.previewUrl
@@ -16,6 +17,7 @@ jasmine.ns 'utils', (ns) ->
     size:             fixture.info.size
     isStored:         fixture.info.is_stored
     isImage:          fixture.info.is_image
+    isReady:          fixture.info.is_ready
     originalImageInfo:fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
     previewUrl:       fixture.previewUrl

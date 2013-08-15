@@ -10,6 +10,7 @@ jasmine.ns 'fixtures', (ns) ->
         size: 100
         is_image: true
         is_stored: false
+        is_ready: true
         image_info:
           width: 1145
           geo_location: null
