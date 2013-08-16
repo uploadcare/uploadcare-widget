@@ -98,51 +98,35 @@ namespace 'uploadcare.files', (ns) ->
     __cancel: =>
       @__uploadDf.reject('user', this)
 
-    __preview: (p, selector) =>
-      p.done (info) =>
-        return $(selector).empty() unless info.crop
-
-        opts = info.crop
-
+    __preview: (selector) =>
+      window.console?.warn? "'preview' method is deprecated. " +
+                            "Use fileInfo.cdnUrl as image source."
+      @apiPromise.done (info) =>
         img = new Image()
         img.onload = ->
-          if opts.sw || opts.sh # Resized?
-            sw = opts.sw || opts.sh * opts.width / opts.height
-            sh = opts.sh || opts.sw * opts.height / opts.width
-          else
-            sw = opts.width
-            sh = opts.height
+          $(selector).html(
+            $('<div>')
+              .css
+                position: 'relative'
+                overflow: 'hidden'
+                width: @width
+                height: @height
+              .append img
+          )
+        img.src = info.cdnUrl
 
-          sx = sw / opts.width
-          sy = sh / opts.height
-
-          el = $('<div>').css({
-            position: 'relative'
-            overflow: 'hidden'
-            width: sw
-            height: sh
-          }).append($(img).css({
-            position: 'absolute'
-            left: opts.x * -sx
-            top: opts.y * -sy
-            width: img.width * sx
-            height: img.height * sy
-          }))
-          $(selector).html(el)
-        img.src = info.originalUrl
-
-    __extendPromise: (p) =>
-      p.cancel = =>
+    __extendApi: (api) =>
+      api.cancel = =>
         @__cancel()
 
-      p.preview = (selector) =>
-        @__preview(p, selector)
+      api.preview = (selector) =>
+        @__preview(selector)
 
-      __then = p.then
-      p.pipe = p.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
-        @__extendPromise __then.apply(p, arguments)
+      __then = api.then
+      api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
+        @__extendApi __then.apply(api, arguments)
 
-      p # extended promise
+      api # extended promise
 
     __notifyApi: =>
       @apiDeferred.notify @__progressInfo()
@@ -160,7 +144,7 @@ namespace 'uploadcare.files', (ns) ->
 
     __initApi: ->
       @apiDeferred = $.Deferred()
-      @apiPromise = @__extendPromise @apiDeferred.promise()
+      @apiPromise = @__extendApi @apiDeferred.promise()
 
       @__uploadDf.progress (progress) =>
         @__progress = progress
