@@ -190,7 +190,6 @@ namespace 'uploadcare.crop', (ns) ->
         @forceDone()
 
     __clearImage: ->
-      @__jCropApi?.destroy()
       if @__deferred and @__deferred.state() is 'pending'
         @__deferred.reject(IMAGE_CLEARED)
         @__deferred = false
@@ -295,5 +294,4 @@ namespace 'uploadcare.crop', (ns) ->
       for val, i in jCropOptions.setSelect
         jCropOptions.setSelect[i] = val * scaleRatio
 
-      setApi = (api) => @__jCropApi = api
-      @__img.Jcrop jCropOptions, -> setApi this
+      @__img.Jcrop jCropOptions
