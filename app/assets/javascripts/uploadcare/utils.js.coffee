@@ -105,7 +105,7 @@ namespace 'uploadcare.utils', (ns) ->
     else
       text
 
-  ns.fitDimensionsWithCdnLimit = (dim, limit=1024) ->
+  ns.fitDimensionsWithCdnLimit = (dim, limit=1600) ->
     ns.fitDimensions(dim, limit, limit)
 
   ns.fitDimensions = (o, width, height) ->
