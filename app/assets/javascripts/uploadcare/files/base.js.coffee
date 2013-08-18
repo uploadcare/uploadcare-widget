@@ -90,8 +90,8 @@ namespace 'uploadcare.files', (ns) ->
       previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
       preview: @apiPromise.preview
       dimensions: if @isImage then =>
-          window.console?.warn? "'dimensions' method is deprecated. " +
-                                "Use originalImageInfo instead."
+          utils.warnOnce "'dimensions' method is deprecated. " +
+                         "Use originalImageInfo instead."
           $.Deferred().resolve(@imageInfo).promise()
         else null
 
@@ -99,8 +99,8 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf.reject('user', this)
 
     __preview: (selector) =>
-      window.console?.warn? "'preview' method is deprecated. " +
-                            "Use fileInfo.cdnUrl as image source."
+      utils.warnOnce "'preview' method is deprecated. " +
+                     "Use fileInfo.cdnUrl as image source."
       @apiPromise.done (info) =>
         img = new Image()
         img.onload = ->
