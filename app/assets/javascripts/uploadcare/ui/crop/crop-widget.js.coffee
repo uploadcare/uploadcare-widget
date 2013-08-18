@@ -202,19 +202,15 @@ namespace 'uploadcare.crop', (ns) ->
 
     __setImage: (@__url) ->
       @__deferred = $.Deferred()
-      @__setState 'loading'
-      @__img = $ '<img/>'
-      @__img.on
-        load: =>
-          @__setState 'loaded'
-        error: =>
+      @__img = $('<img/>')
+        .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR
-      @__img.attr
-        src: @__url
-        width: @__resizedWidth
-        height: @__resizedHeight
-      @__img.appendTo @__imageWrap
+        .attr
+          src: @__url
+          width: @__resizedWidth
+          height: @__resizedHeight
+        .appendTo @__imageWrap
 
     __calcImgSizes: (size) ->
       {width: @__originalWidth, height: @__originalHeight} = size
@@ -294,4 +290,6 @@ namespace 'uploadcare.crop', (ns) ->
       for val, i in jCropOptions.setSelect
         jCropOptions.setSelect[i] = val * scaleRatio
 
-      @__img.Jcrop jCropOptions
+      @__setState 'loading'
+      @__img.Jcrop jCropOptions, =>
+        @__setState 'loaded'

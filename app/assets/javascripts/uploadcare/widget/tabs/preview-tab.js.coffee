@@ -74,6 +74,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           container
           controls: false
         })
+        doneButton.addClass('uploadcare-disabled-el')
+        widget.onStateChange.add (state) =>
+          if state == 'loaded'
+            doneButton
+              .removeClass('uploadcare-disabled-el')
+              .click -> widget.forceDone()
         @file.done (info) =>
           widget.croppedImageModifiers(img.attr('src'), info.originalImageInfo,
                                        info.cdnUrlModifiers)
@@ -83,12 +89,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 info.cdnUrl = "#{@settings.cdnBase}/#{info.uuid}/#{opts.modifiers or ''}"
                 info.crop = opts.crop
                 info
-        doneButton.addClass('uploadcare-disabled-el')
-        widget.onStateChange.add (state) =>
-          if state == 'loaded'
-            doneButton
-              .removeClass('uploadcare-disabled-el')
-              .click -> widget.forceDone()
 
         # REFACTOR: separate templates?
         img.remove()
