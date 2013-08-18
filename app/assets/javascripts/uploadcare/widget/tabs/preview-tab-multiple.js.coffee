@@ -84,8 +84,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       fileEl.toggleClass(CLASS_PREFIX + 'image', !!info.isImage)
       if info.isImage
-        pWrapEl = @__find('file-preview-wrap', fileEl)
-        utils.squareImage pWrapEl, info.originalUrl
+        @__find('file-preview-wrap', fileEl).html $('<img>')
+          .attr
+            class: CLASS_PREFIX + '-file-preview-image'
+            src: "#{info.originalUrl}-/scale_crop/45x45/center/"
 
       @__find('file-name', fileEl)
         .text(info.name or t('dialog.tabs.preview.unknownName'))
