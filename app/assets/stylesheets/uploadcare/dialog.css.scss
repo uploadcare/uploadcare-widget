@@ -445,12 +445,12 @@ $dialog-preview-container-width: 775px;
 .uploadcare-dialog-preview-image-wrap2 {
   display: table-cell;
   vertical-align: middle;
-  text-align: center;
-  img {
-    max-width: $dialog-preview-container-width;
-    max-height: $dialog-preview-container-height;
-    display: block;
-  }
+}
+.uploadcare-dialog-preview-image {
+  max-width: $dialog-preview-container-width;
+  max-height: $dialog-preview-container-height;
+  display: block;
+  margin: 0 auto;
 }
 
 $dialog-footer-height: y(3);
