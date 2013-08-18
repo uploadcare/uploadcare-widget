@@ -113,7 +113,7 @@ namespace 'uploadcare.files', (ns) ->
                 height: @height
               .append img
           )
-        img.src = info.cdnUrl
+        img.src = "#{info.cdnUrl}-/preview/1600x1600/"
 
     __extendApi: (api) =>
       api.cancel = =>
