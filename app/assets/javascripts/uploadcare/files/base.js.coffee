@@ -30,13 +30,13 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf
         .fail (error) =>
           @__infoDf.reject(error, this)
-        .done =>
-          @__completeUpload()
+        .done @__completeUpload
 
       @__initApi()
       @__notifyApi()
 
-    __startUpload: -> throw new Error('not implemented')
+    __startUpload: ->
+      throw new Error('not implemented')
 
     __completeUpload: =>
       # Update info until @__infoDf resolved.
@@ -47,7 +47,7 @@ namespace 'uploadcare.files', (ns) ->
             setTimeout check, timeout
             timeout += 50
 
-    __handleFileData: (data) ->
+    __handleFileData: (data) =>
       @fileName = data.original_filename
       @fileSize = data.size
       @isImage = data.is_image
@@ -68,8 +68,7 @@ namespace 'uploadcare.files', (ns) ->
         pub_key: @settings.publicKey
       .fail =>
         @__infoDf.reject('info', this)
-      .done (data) =>
-        @__handleFileData(data)
+      .done @__handleFileData
 
     __progressInfo: ->
       state: @__progressState
@@ -116,11 +115,8 @@ namespace 'uploadcare.files', (ns) ->
         img.src = "#{info.cdnUrl}-/preview/1600x1600/"
 
     __extendApi: (api) =>
-      api.cancel = =>
-        @__cancel()
-
-      api.preview = (selector) =>
-        @__preview(selector)
+      api.cancel = @__cancel
+      api.preview = @__preview
 
       __then = api.then
       api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
@@ -128,7 +124,7 @@ namespace 'uploadcare.files', (ns) ->
 
       api # extended promise
 
-    __notifyApi: =>
+    __notifyApi: ->
       @apiDeferred.notify @__progressInfo()
 
     __rejectApi: (err) =>
