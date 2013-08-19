@@ -21,42 +21,31 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAdd.add @__setFile
 
     __setFile: (@file) =>
-      @__setState 'unknown'
 
-      stateKnown = utils.once (info) =>
-        if info.isImage
-          @__setState 'image'
-        else
-          @__setState 'regular'
-
-      file = @file
       ifCur = (fn) =>
         => fn.apply(null, arguments) if file == @file
 
-      @file.done ifCur (info) =>
-        stateKnown info
+      @file.progress ifCur utils.once (info) =>
+        @__setState 'unknown', {file: info.incompleteFileInfo}
 
-      @file.fail ifCur (error) =>
-        @__setState 'error', {error}
+      @file.done ifCur (file) =>
+        state = if file.isImage then 'image' else 'regular'
+        @__setState state, {file}
+
+      @file.fail ifCur (error, file) =>
+        @__setState 'error', {error, file}
 
     # error
     # unknown
     # image
     # regular
     __setState: (state, data) ->
-      render = utils.once (fileInfo) =>
-        data = $.extend {file: fileInfo}, data
-        @container.empty().append tpl("tab-preview-#{state}", data)
-        @__afterRender state
-
-      @file.progress (progressInfo) -> render progressInfo.incompleteFileInfo
-      @file.done render
-      @file.fail (error, fileIfo) -> render fileIfo
+      @container.empty().append tpl("tab-preview-#{state}", data)
+      @__afterRender state
 
     __afterRender: (state) ->
-      if state is 'unknown'
-        if @__doCrop
-          @__hideDoneButton()
+      if state is 'unknown' and @__doCrop
+        @__hideDoneButton()
       if state is 'image' and @__doCrop
         @__initCrop()
 
