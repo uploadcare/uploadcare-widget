@@ -57,7 +57,7 @@ namespace 'uploadcare.files', (ns) ->
         @__apiDf.resolve info
       notify = =>
         @__apiDf.notify @__progressInfo()
-        
+
       notify()
       @__fileColl.onAnyProgress.add notify
 

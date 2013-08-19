@@ -17,10 +17,10 @@ namespace 'uploadcare.files', (ns) ->
       @fileName = null
       @fileSize = null
       @isStored = null
-      @cdnUrl = null
       @cdnUrlModifiers = null
-      @previewUrl = null
       @isImage = null
+      @imageInfo = null
+      @isReady = null
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
@@ -30,38 +30,45 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf
         .fail (error) =>
           @__infoDf.reject(error, this)
-        .done =>
-          @__requestInfo()
+        .done @__completeUpload
 
       @__initApi()
       @__notifyApi()
 
-    __startUpload: -> throw new Error('not implemented')
+    __startUpload: ->
+      throw new Error('not implemented')
 
-    __handleFileData: (data) ->
+    __completeUpload: =>
+      # Update info until @__infoDf resolved.
+      timeout = 100
+      do check = =>
+        if @__infoDf.state() == 'pending'
+          @__updateInfo().done =>
+            setTimeout check, timeout
+            timeout += 50
+
+    __handleFileData: (data) =>
       @fileName = data.original_filename
       @fileSize = data.size
       @isImage = data.is_image
-      @isStored = data.is_stored or data.is_public
-      @__buildPreviewUrl()
+      @imageInfo = data.image_info
+      @isStored = data.is_stored
+      @isReady = data.is_ready
 
       if @settings.imagesOnly && !@isImage
         @__infoDf.reject('image', this)
         return
 
-      @__infoDf.resolve(this)
+      if @isReady
+        @__infoDf.resolve(this)
 
-    __requestInfo: =>
+    __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
         file_id: @fileId,
         pub_key: @settings.publicKey
       .fail =>
         @__infoDf.reject('info', this)
-      .done (data) =>
-        @__handleFileData(data)
-
-    __buildPreviewUrl: ->
-      @previewUrl = "#{@settings.urlBase}/preview/?file_id=#{@fileId}&pub_key=#{@settings.publicKey}"
+      .done @__handleFileData
 
     __progressInfo: ->
       state: @__progressState
@@ -75,78 +82,49 @@ namespace 'uploadcare.files', (ns) ->
       size: @fileSize
       isStored: @isStored
       isImage: @isImage
+      originalImageInfo: @imageInfo
+      originalUrl: "#{@settings.cdnBase}/#{@fileId}/"
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: @previewUrl
+      previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
       preview: @apiPromise.preview
-      dimensions: if @isImage then @dimensions else null
-
-    dimensions: =>
-      url = @previewUrl
-
-      $.Deferred(->
-        img = new Image()
-
-        img.onload = =>
-          @resolve
-            width: img.width
-            height: img.height
-
-        img.onerror = =>
-          @reject()
-
-        img.src = url
-      ).promise()
+      dimensions: if @isImage then =>
+          utils.warnOnce "'dimensions' method is deprecated. " +
+                         "Use originalImageInfo instead."
+          $.Deferred().resolve(@imageInfo).promise()
+        else null
 
     __cancel: =>
       @__uploadDf.reject('user', this)
 
-    __preview: (p, selector) =>
-      p.done (info) =>
-        return $(selector).empty() unless info.crop
-
-        opts = info.crop
-
+    __preview: (selector) =>
+      utils.warnOnce "'preview' method is deprecated. " +
+                     "Use fileInfo.cdnUrl as image source."
+      @apiPromise.done (info) =>
         img = new Image()
         img.onload = ->
-          if opts.sw || opts.sh # Resized?
-            sw = opts.sw || opts.sh * opts.width / opts.height
-            sh = opts.sh || opts.sw * opts.height / opts.width
-          else
-            sw = opts.width
-            sh = opts.height
+          $(selector).html(
+            $('<div>')
+              .css
+                position: 'relative'
+                overflow: 'hidden'
+                width: @width
+                height: @height
+              .append img
+          )
+        img.src = "#{info.cdnUrl}-/preview/1600x1600/"
 
-          sx = sw / opts.width
-          sy = sh / opts.height
+    __extendApi: (api) =>
+      api.cancel = @__cancel
+      api.preview = @__preview
 
-          el = $('<div>').css({
-            position: 'relative'
-            overflow: 'hidden'
-            width: sw
-            height: sh
-          }).append($(img).css({
-            position: 'absolute'
-            left: opts.x * -sx
-            top: opts.y * -sy
-            width: img.width * sx
-            height: img.height * sy
-          }))
-          $(selector).html(el)
-        img.src = @previewUrl
+      __then = api.then
+      api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
+        @__extendApi __then.apply(api, arguments)
 
-    __extendPromise: (p) =>
-      p.cancel = @__cancel
-      p.preview = (selector) => @__preview(p, selector)
+      api # extended promise
 
-      __pipe = p.pipe
-      p.pipe = => @__extendPromise __pipe.apply(p, arguments)
-
-      __then = p.then
-      p.then = => @__extendPromise __then.apply(p, arguments)
-
-      p # extended promise
-
-    __notifyApi: =>
+    __notifyApi: ->
       @apiDeferred.notify @__progressInfo()
 
     __rejectApi: (err) =>
@@ -162,7 +140,7 @@ namespace 'uploadcare.files', (ns) ->
 
     __initApi: ->
       @apiDeferred = $.Deferred()
-      @apiPromise = @__extendPromise @apiDeferred.promise()
+      @apiPromise = @__extendApi @apiDeferred.promise()
 
       @__uploadDf.progress (progress) =>
         @__progress = progress

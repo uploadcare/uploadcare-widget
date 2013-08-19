@@ -2,11 +2,13 @@
 
 <div class="uploadcare-dialog-preview-image-wrap1">
 <div class="uploadcare-dialog-preview-image-wrap2">
+  <!-- 1162x684 is 1.5 size of conteiner -->
   <img 
-    src="<%- file.previewUrl %>" 
+    src="<%- file.originalUrl %>-/preview/1162x684/"
     title="<%- (file.name || t('dialog.tabs.preview.unknownName')) %>" 
     alt="<%- (file.name || t('dialog.tabs.preview.unknownName')) %>"
     role="uploadcare-dialog-preview-image"
+    class="uploadcare-dialog-preview-image"
   />
 </div>
 </div>

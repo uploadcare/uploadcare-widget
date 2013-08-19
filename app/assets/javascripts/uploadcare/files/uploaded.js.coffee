@@ -11,8 +11,6 @@ namespace 'uploadcare.files', (ns) ->
         @fileId = id[0]
         modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
         @cdnUrlModifiers = modifiers[0] if modifiers
-        @cdnUrl = "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
-        @__buildPreviewUrl()
         @__uploadDf.resolve(this)
       else
         @__uploadDf.reject('baddata', this)
@@ -22,16 +20,14 @@ namespace 'uploadcare.files', (ns) ->
 
 
   class ns.ReadyFile extends ns.BaseFile
-    constructor: (settings, @__fileData) ->
+    constructor: (settings, __fileData) ->
       super
       @fileId = @__fileData.uuid
+      @__handleFileData(__fileData)
       @__uploadDf.resolve()
 
     __startUpload: ->
       # nothing to do
-
-    __requestInfo: ->
-      @__handleFileData(@__fileData)
 
 
   class ns.DeletedFile extends ns.BaseFile
