@@ -87,22 +87,22 @@ namespace 'uploadcare.crop', (ns) ->
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
-    croppedImageUrl: (originalUrl) ->
-      @croppedImageModifiers(originalUrl)
-        .pipe (opts) => @__url + opts.modifiers
+    croppedImageUrl: (originalUrl, size) ->
+      @croppedImageCoords(originalUrl, size).then (opts) =>
+        @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
-    croppedImageModifiers: (originalUrl, currentModifiers) ->
-      previousCoords = null
-      if raw = currentModifiers?.match(cropModifierRegExp)
-        previousCoords =
-          width: parseInt(raw[1], 10)
-          height: parseInt(raw[2], 10)
-          center: raw[4] == 'center'
-          top: parseInt(raw[5], 10) or undefined
-          left: parseInt(raw[6], 10) or undefined
-      @croppedImageCoords(originalUrl, previousCoords)
+    __parseModifiers: (modifiers) ->
+      if raw = modifiers?.match(cropModifierRegExp)
+        width: parseInt(raw[1], 10)
+        height: parseInt(raw[2], 10)
+        center: raw[4] == 'center'
+        top: parseInt(raw[5], 10) or undefined
+        left: parseInt(raw[6], 10) or undefined
+
+    croppedImageModifiers: (previewUrl, size, modifiers) ->
+      @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
         .pipe (coords) =>
           size = "#{coords.width}x#{coords.height}"
           topLeft = "#{coords.x},#{coords.y}"
@@ -139,9 +139,11 @@ namespace 'uploadcare.crop', (ns) ->
               opts.modifiers += "-/resize/#{size.join 'x'}/"
           opts
 
-    croppedImageCoords: (originalUrl, previousCoords) ->
+    croppedImageCoords: (previewUrl, size, coords) ->
       @__clearImage()
-      @__setImage originalUrl, previousCoords
+      @__calcImgSizes size
+      @__setImage previewUrl
+      @__initJcrop coords
       @__deferred.promise()
 
     # This method could be usefull if you want to make your own done button.
@@ -188,7 +190,6 @@ namespace 'uploadcare.crop', (ns) ->
         @forceDone()
 
     __clearImage: ->
-      @__jCropApi?.destroy()
       if @__deferred and @__deferred.state() is 'pending'
         @__deferred.reject(IMAGE_CLEARED)
         @__deferred = false
@@ -199,29 +200,25 @@ namespace 'uploadcare.crop', (ns) ->
       @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
       @__setState 'waiting'
 
-    __setImage: (@__url, previousCoords) ->
+    __setImage: (@__url) ->
       @__deferred = $.Deferred()
-      @__setState 'loading'
-      @__img = $ '<img/>'
-      @__img.attr 'src', @__url
-      @__img.on
-        load: =>
-          @__setState 'loaded'
-          @__calcImgSizes()
-          @__img.appendTo @__imageWrap
-          @__initJcrop previousCoords
-        error: =>
+      @__img = $('<img/>')
+        .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR
+        .attr
+          src: @__url
+          width: @__resizedWidth
+          height: @__resizedHeight
+        .appendTo @__imageWrap
 
-    __calcImgSizes: ->
-      {width: @__originalWidth, height: @__originalHeight} = @__img[0]
+    __calcImgSizes: (size) ->
+      {width: @__originalWidth, height: @__originalHeight} = size
       [@__resizedWidth, @__resizedHeight] =
         fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight
       paddingTop = (@__wrapHeight - @__resizedHeight) / 2
       paddingLeft = (@__wrapWidth - @__resizedWidth) / 2
 
-      @__img.attr {width: @__resizedWidth, height: @__resizedHeight}
       @__imageWrap.css {
         paddingTop,
         paddingLeft,
@@ -293,5 +290,6 @@ namespace 'uploadcare.crop', (ns) ->
       for val, i in jCropOptions.setSelect
         jCropOptions.setSelect[i] = val * scaleRatio
 
-      setApi = (api) => @__jCropApi = api
-      @__img.Jcrop jCropOptions, -> setApi this
+      @__setState 'loading'
+      @__img.Jcrop jCropOptions, =>
+        @__setState 'loaded'

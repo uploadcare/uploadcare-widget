@@ -13,7 +13,6 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings, @__url) ->
       super
       @__shutdown = true
-      @previewUrl = @__url
 
       filename = utils.parseUrl(@__url).pathname.split('/').pop()
       if filename

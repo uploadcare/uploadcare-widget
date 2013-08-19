@@ -1,7 +1,6 @@
 # = require uploadcare/utils/abilities
 # = require uploadcare/utils/pusher
 # = require uploadcare/utils/collection
-# = require uploadcare/utils/square-image
 # = require uploadcare/utils/warnings
 # = require uploadcare/utils/load-plugin
 # = require uploadcare/utils/jquery-jsonp
@@ -106,7 +105,7 @@ namespace 'uploadcare.utils', (ns) ->
     else
       text
 
-  ns.fitDimensionsWithCdnLimit = (dim, limit=1024) ->
+  ns.fitDimensionsWithCdnLimit = (dim, limit=1600) ->
     ns.fitDimensions(dim, limit, limit)
 
   ns.fitDimensions = (o, width, height) ->
