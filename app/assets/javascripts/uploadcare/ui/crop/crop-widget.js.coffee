@@ -36,12 +36,8 @@ namespace 'uploadcare.crop', (ns) ->
       # Syntax: '123x123'. (optional)
       preferedSize: null
 
-      # Specifies whether to show done button in widget or not. (optional)
-      controls: true
-
     LOADING_ERROR = 'loadingerror'
     IMAGE_CLEARED = 'imagecleared'
-    CONTROLS_HEIGHT = 30
 
     checkOptions = (options) ->
       throw new Error("options.container must be specified") unless options.container
@@ -165,29 +161,20 @@ namespace 'uploadcare.crop', (ns) ->
     destroy: ->
       @__clearImage()
       @__widgetElement.remove()
-      @__widgetElement = @__imageWrap = @__doneButton = null
+      @__widgetElement = @__imageWrap = null
 
     __buildWidget: ->
       @container = $ @__options.container
       @__widgetElement = $ tpl('crop-widget')
       @__imageWrap = @__widgetElement.find '@uploadcare-crop-widget-image-wrap'
-      @__doneButton = @__widgetElement.find '@uploadcare-crop-widget-done-button'
-      unless @__options.controls
-        @__widgetElement.addClass 'uploadcare-crop-widget--no-controls'
 
       [@__wrapWidth, @__wrapHeight] = [@__widgetWidth, @__widgetHeight] = @__widgetSize()
-      @__wrapHeight -= CONTROLS_HEIGHT if @__options.controls
       @__imageWrap.css {width: @__wrapWidth, height: @__wrapHeight}
       @__widgetElement.css {width: @__widgetWidth, height: @__widgetHeight}
 
       @__widgetElement.appendTo @container
 
       @__setState 'waiting'
-      @__bind()
-
-    __bind: ->
-      @__doneButton.click =>
-        @forceDone()
 
     __clearImage: ->
       if @__deferred and @__deferred.state() is 'pending'
@@ -246,7 +233,6 @@ namespace 'uploadcare.crop', (ns) ->
         .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
         .addClass(prefix + state)
       @onStateChange.fire state
-      @__doneButton.prop 'disabled', state != 'loaded'
 
     __initJcrop: (previousCoords) ->
       jCropOptions =

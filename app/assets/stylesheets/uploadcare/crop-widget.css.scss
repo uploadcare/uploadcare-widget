@@ -8,9 +8,6 @@
       <div class="uploadcare-crop-widget__error__text">Can't load image</div>
     </div>
   </div>
-  <div class="uploadcare-crop-widget__controls">
-    <button class="uploadcare-crop-widget__done-button">done</button>
-  </div>
 </div>
 
 */
@@ -20,7 +17,6 @@
 .uploadcare-crop-widget--loading {}
 .uploadcare-crop-widget--loaded {}
 .uploadcare-crop-widget--error {}
-.uploadcare-crop-widget--no-controls {}
   .uploadcare-crop-widget__image-wrap {
     position: relative;
     .uploadcare-crop-widget--loading & {
@@ -49,14 +45,3 @@
     .uploadcare-crop-widget__error__text {
       font-size: 15px;
     }
-  .uploadcare-crop-widget__controls {
-    height: 30px;
-    padding-top: 5px;
-    text-align: center;
-    .uploadcare-crop-widget--no-controls & {
-      display: none;
-    }
-  }
-    .uploadcare-crop-widget__done-button {
-    }
-

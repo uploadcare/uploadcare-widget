@@ -4,7 +4,6 @@
   ui: {progress},
   templates: {tpl},
   jQuery: $,
-  crop: {CropWidget},
   locale: {t},
   MULTIPLE_UPLOAD_FILES_LIMIT
 } = uploadcare
