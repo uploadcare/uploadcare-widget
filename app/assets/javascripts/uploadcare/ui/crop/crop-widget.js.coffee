@@ -193,6 +193,7 @@ namespace 'uploadcare.crop', (ns) ->
         .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR
+          @__img.remove()
         .attr
           src: @__url
           width: @__resizedWidth
