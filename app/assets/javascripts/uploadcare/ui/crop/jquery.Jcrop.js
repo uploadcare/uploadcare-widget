@@ -1317,67 +1317,6 @@
       $div.removeClass().addClass(cssClass('holder')).addClass(cname);
     }
     //}}}
-    function animateTo(a, callback) //{{{
-    {
-      var x1 = a[0] / xscale,
-          y1 = a[1] / yscale,
-          x2 = a[2] / xscale,
-          y2 = a[3] / yscale;
-
-      if (animating) {
-        return;
-      }
-
-      var animto = Coords.flipCoords(x1, y1, x2, y2),
-          c = Coords.getFixed(),
-          initcr = [c.x, c.y, c.x2, c.y2],
-          animat = initcr,
-          interv = options.animationDelay,
-          ix1 = animto[0] - initcr[0],
-          iy1 = animto[1] - initcr[1],
-          ix2 = animto[2] - initcr[2],
-          iy2 = animto[3] - initcr[3],
-          pcent = 0,
-          velocity = options.swingSpeed;
-
-      x1 = animat[0];
-      y1 = animat[1];
-      x2 = animat[2];
-      y2 = animat[3];
-
-      Selection.animMode(true);
-      var anim_timer;
-
-      function queueAnimator() {
-        window.setTimeout(animator, interv);
-      }
-      var animator = (function () {
-        return function () {
-          pcent += (100 - pcent) / velocity;
-
-          animat[0] = Math.round(x1 + ((pcent / 100) * ix1));
-          animat[1] = Math.round(y1 + ((pcent / 100) * iy1));
-          animat[2] = Math.round(x2 + ((pcent / 100) * ix2));
-          animat[3] = Math.round(y2 + ((pcent / 100) * iy2));
-
-          if (pcent >= 99.8) {
-            pcent = 100;
-          }
-          if (pcent < 100) {
-            setSelectRaw(animat);
-            queueAnimator();
-          } else {
-            Selection.done();
-            Selection.animMode(false);
-            if (typeof(callback) === 'function') {
-              callback.call(api);
-            }
-          }
-        };
-      }());
-      queueAnimator();
-    }
-    //}}}
     function setSelect(rect) //{{{
     {
       setSelectRaw([rect[0] / xscale, rect[1] / yscale, rect[2] / xscale, rect[3] / yscale]);
@@ -1434,35 +1373,6 @@
       $origimg.show();
       $origimg.css('visibility','visible');
       $(obj).removeData('Jcrop');
-    }
-    //}}}
-    function setImage(src, callback) //{{{
-    {
-      Selection.release();
-      disableCrop();
-      var img = new Image();
-      img.onload = function () {
-        var iw = img.width;
-        var ih = img.height;
-        var bw = options.boxWidth;
-        var bh = options.boxHeight;
-        $img.width(iw).height(ih);
-        $img.attr('src', src);
-        $img2.attr('src', src);
-        presize($img, bw, bh);
-        boundx = $img.width();
-        boundy = $img.height();
-        $img2.width(boundx).height(boundy);
-        $trk.width(boundx + (bound * 2)).height(boundy + (bound * 2));
-        $div.width(boundx).height(boundy);
-        Shade.resize(boundx,boundy);
-        enableCrop();
-
-        if (typeof(callback) === 'function') {
-          callback.call(api);
-        }
-      };
-      img.src = src;
     }
     //}}}
     function colorChangeMacro($obj,color,now) {
@@ -1545,8 +1455,6 @@
     interfaceUpdate(true);
 
     var api = {
-      setImage: setImage,
-      animateTo: animateTo,
       setSelect: setSelect,
       setOptions: setOptionsNew,
       tellSelect: tellSelect,
