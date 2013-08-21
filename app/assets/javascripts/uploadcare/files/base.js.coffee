@@ -20,7 +20,6 @@ namespace 'uploadcare.files', (ns) ->
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
-      @isReady = null
 
       @__uploadDf = $.Deferred()
       @__infoDf = $.Deferred()
@@ -53,13 +52,12 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = data.is_image
       @imageInfo = data.image_info
       @isStored = data.is_stored
-      @isReady = data.is_ready
 
       if @settings.imagesOnly && !@isImage
         @__infoDf.reject('image', this)
         return
 
-      if @isReady
+      if data.is_ready
         @__infoDf.resolve(this)
 
     __updateInfo: =>
