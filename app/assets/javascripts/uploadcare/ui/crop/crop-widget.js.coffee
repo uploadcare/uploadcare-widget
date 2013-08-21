@@ -83,8 +83,8 @@ namespace 'uploadcare.crop', (ns) ->
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
-    croppedImageUrl: (originalUrl, size) ->
-      @croppedImageCoords(originalUrl, size).then (opts) =>
+    croppedImageUrl: (previewUrl, size) ->
+      @croppedImageCoords(previewUrl, size).then (opts) =>
         @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
@@ -99,7 +99,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     croppedImageModifiers: (previewUrl, size, modifiers) ->
       @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
-        .pipe (coords) =>
+        .then (coords) =>
           size = "#{coords.width}x#{coords.height}"
           topLeft = "#{coords.x},#{coords.y}"
 
@@ -161,16 +161,16 @@ namespace 'uploadcare.crop', (ns) ->
     destroy: ->
       @__clearImage()
       @__widgetElement.remove()
-      @__widgetElement = @__imageWrap = null
+      @__widgetElement = null
 
     __buildWidget: ->
       @container = $ @__options.container
       @__widgetElement = $ tpl('crop-widget')
-      @__imageWrap = @__widgetElement.find '@uploadcare-crop-widget-image-wrap'
 
-      [@__wrapWidth, @__wrapHeight] = [@__widgetWidth, @__widgetHeight] = @__widgetSize()
-      @__imageWrap.css {width: @__wrapWidth, height: @__wrapHeight}
-      @__widgetElement.css {width: @__widgetWidth, height: @__widgetHeight}
+      [@__widgetWidth, @__widgetHeight] = @__widgetSize()
+      @__widgetElement.css
+        width: @__widgetWidth
+        height: @__widgetHeight
 
       @__widgetElement.appendTo @container
 
@@ -197,21 +197,12 @@ namespace 'uploadcare.crop', (ns) ->
           src: @__url
           width: @__resizedWidth
           height: @__resizedHeight
-        .appendTo @__imageWrap
+        .appendTo @__widgetElement
 
     __calcImgSizes: (size) ->
       {width: @__originalWidth, height: @__originalHeight} = size
       [@__resizedWidth, @__resizedHeight] =
-        fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight
-      paddingTop = (@__wrapHeight - @__resizedHeight) / 2
-      paddingLeft = (@__wrapWidth - @__resizedWidth) / 2
-
-      @__imageWrap.css {
-        paddingTop,
-        paddingLeft,
-        width: @__wrapWidth - paddingLeft,
-        height: @__wrapHeight - paddingTop
-      }
+        fitSize @__originalWidth, @__originalHeight, @__widgetWidth, @__widgetHeight
 
     __widgetSize: ->
       if !@__options.widgetSize

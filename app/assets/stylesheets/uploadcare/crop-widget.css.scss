@@ -2,32 +2,27 @@
 
 /*
 <div class="uploadcare-crop-widget">
-  <div class="uploadcare-crop-widget__image-wrap">
-    <div class="uploadcare-crop-widget__error">
-      <div class="uploadcare-crop-widget__error__title">Error</div>
-      <div class="uploadcare-crop-widget__error__text">Can't load image</div>
-    </div>
+  <div class="uploadcare-crop-widget__error">
+    <div class="uploadcare-crop-widget__error__title">Error</div>
+    <div class="uploadcare-crop-widget__error__text">Can't load image</div>
   </div>
 </div>
 
 */
 .uploadcare-crop-widget {
   font-family: $font-family;
+  position: relative;
 }
-.uploadcare-crop-widget--loading {}
+.uploadcare-crop-widget--loading {
+  @extend %loading-image;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .uploadcare-crop-widget--loaded {}
 .uploadcare-crop-widget--error {}
-  .uploadcare-crop-widget__image-wrap {
-    position: relative;
-    .uploadcare-crop-widget--loading & {
-      @extend %loading-image;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
+  .uploadcare-crop-widget img {
+    display: block;
   }
-    .uploadcare-crop-widget__image-wrap img {
-      display: block;
-    }
   .uploadcare-crop-widget__error {
     @include prefix(box-sizing, border-box);
     text-align: center;
