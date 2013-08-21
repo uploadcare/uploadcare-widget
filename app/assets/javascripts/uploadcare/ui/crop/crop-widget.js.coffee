@@ -84,7 +84,7 @@ namespace 'uploadcare.crop', (ns) ->
       @__buildWidget()
 
     croppedImageUrl: (previewUrl, size) ->
-      @croppedImageCoords(previewUrl, size).then (opts) =>
+      @croppedImageModifiers(previewUrl, size).then (opts) =>
         @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
