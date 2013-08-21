@@ -165,15 +165,8 @@ namespace 'uploadcare.crop', (ns) ->
 
     __buildWidget: ->
       @container = $ @__options.container
-      @__widgetElement = $ tpl('crop-widget')
-
+      @__widgetElement = $(tpl('crop-widget')).appendTo @container
       [@__widgetWidth, @__widgetHeight] = @__widgetSize()
-      @__widgetElement.css
-        width: @__widgetWidth
-        height: @__widgetHeight
-
-      @__widgetElement.appendTo @container
-
       @__setState 'waiting'
 
     __clearImage: ->
