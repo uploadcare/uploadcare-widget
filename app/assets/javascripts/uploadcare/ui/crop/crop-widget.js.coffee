@@ -170,6 +170,7 @@ namespace 'uploadcare.crop', (ns) ->
       @__setState 'waiting'
 
     __clearImage: ->
+      @__jCropApi?.destroy()
       if @__deferred and @__deferred.state() is 'pending'
         @__deferred.reject(IMAGE_CLEARED)
         @__deferred = false
@@ -262,5 +263,7 @@ namespace 'uploadcare.crop', (ns) ->
         jCropOptions.setSelect[i] = val * scaleRatio
 
       @__setState 'loading'
-      @__img.Jcrop jCropOptions, =>
+      done = (api) =>
+        @__jCropApi = api
         @__setState 'loaded'
+      @__img.Jcrop jCropOptions, -> done this
