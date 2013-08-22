@@ -1,11 +1,15 @@
 <style>
-  #widget-container {
+  .widget-container-table {
     border: solid 1px black;
+    display: table;
     width: 500px;
     height: 300px;
   }
-  #source-url {
-    width: 400px;
+  #widget-container {
+    width: 500px;
+    height: 300px;
+    display: table-cell;
+    vertical-align: middle;
   }
   .long-input {
     width: 800px;
@@ -42,7 +46,8 @@ widget = <button id="new">new</button> CropWidget({
   widgetSize: <input id="widget-size" value=""></label>
 });
 
-widget.<button id="cropped-image-url">croppedImageUrl</button>(<input id="source-url" value="http://ucarecdn.com/85b5644f-e692-4855-9db0-8c5a83096e25/">)
+widget.<button id="cropped-image-url">croppedImageUrl</button>(<input id="source-url" value="http://ucarecdn.com/85b5644f-e692-4855-9db0-8c5a83096e25/-/preview/500x300/" size="100">,
+                      {width: <input id="image-width" value="1280" size="5">, height: <input id="image-height" value="681" size="5">})
   .done( ... )
   .fail( ... )
 
@@ -50,7 +55,9 @@ widget.<button id="force-done">forceDone()</button>;
 widget.<button id="destroy">destroy()</button>;
 <code></pre>
 
-<div id="widget-container"></div>
+<div class="widget-container-table">
+  <div id="widget-container"></div>
+</div>
 
 <pre id="log"></pre>
 
@@ -95,7 +102,8 @@ widget.<button id="destroy">destroy()</button>;
     function setUrl() {
       var url = $('#source-url').val()
       log('URL: ' + url)
-      widget.croppedImageUrl(url, {width: 500, height: 300})
+      widget.croppedImageUrl(url, {width: parseInt($('#image-width').val()),
+                                   height: parseInt($('#image-height').val())})
         .done(function(url){
           log('DONE: ' + url);
         })
