@@ -184,6 +184,8 @@ namespace 'uploadcare.crop', (ns) ->
     __setImage: (@__url) ->
       @__deferred = $.Deferred()
       @__img = $('<img/>')
+        .css
+          margin: '0 auto'
         .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR

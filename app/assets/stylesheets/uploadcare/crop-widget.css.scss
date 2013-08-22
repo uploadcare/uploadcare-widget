@@ -12,6 +12,9 @@
 .uploadcare-crop-widget {
   font-family: $font-family;
   position: relative;
+  .jcrop-holder {
+    margin: 0 auto;
+  }
 }
 .uploadcare-crop-widget--loading {
   @extend %loading-image;
