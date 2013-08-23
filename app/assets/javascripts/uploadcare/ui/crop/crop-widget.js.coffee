@@ -36,12 +36,8 @@ namespace 'uploadcare.crop', (ns) ->
       # Syntax: '123x123'. (optional)
       preferedSize: null
 
-      # Specifies whether to show done button in widget or not. (optional)
-      controls: true
-
     LOADING_ERROR = 'loadingerror'
     IMAGE_CLEARED = 'imagecleared'
-    CONTROLS_HEIGHT = 30
 
     checkOptions = (options) ->
       throw new Error("options.container must be specified") unless options.container
@@ -87,8 +83,8 @@ namespace 'uploadcare.crop', (ns) ->
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
-    croppedImageUrl: (originalUrl, size) ->
-      @croppedImageCoords(originalUrl, size).then (opts) =>
+    croppedImageUrl: (previewUrl, size) ->
+      @croppedImageModifiers(previewUrl, size).then (opts) =>
         @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
@@ -98,14 +94,14 @@ namespace 'uploadcare.crop', (ns) ->
         width: parseInt(raw[1], 10)
         height: parseInt(raw[2], 10)
         center: raw[4] == 'center'
-        top: parseInt(raw[5], 10) or undefined
-        left: parseInt(raw[6], 10) or undefined
+        left: parseInt(raw[5], 10) or undefined
+        top: parseInt(raw[6], 10) or undefined
 
     croppedImageModifiers: (previewUrl, size, modifiers) ->
       @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
-        .pipe (coords) =>
+        .then (coords) =>
           size = "#{coords.width}x#{coords.height}"
-          topLeft = "#{coords.x},#{coords.y}"
+          topLeft = "#{coords.left},#{coords.top}"
 
           opts =
             crop: $.extend({}, coords)
@@ -155,41 +151,27 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      scaleRatio = @__resizedWidth / @__originalWidth
-      fixedCoords = {}
-      for key, value of @__currentCoords
-        fixedCoords[key] = Math.round value / scaleRatio
-      fixedCoords
+      scaleX = @__resizedWidth / @__originalWidth
+      scaleY = @__resizedHeight / @__originalHeight
+      left: Math.round @__currentCoords.left / scaleX
+      top: Math.round @__currentCoords.top / scaleY
+      width: Math.round @__currentCoords.width / scaleX
+      height: Math.round @__currentCoords.height / scaleY
 
     # Destroys widget completly
     destroy: ->
       @__clearImage()
       @__widgetElement.remove()
-      @__widgetElement = @__imageWrap = @__doneButton = null
+      @__widgetElement = null
 
     __buildWidget: ->
       @container = $ @__options.container
-      @__widgetElement = $ tpl('crop-widget')
-      @__imageWrap = @__widgetElement.find '@uploadcare-crop-widget-image-wrap'
-      @__doneButton = @__widgetElement.find '@uploadcare-crop-widget-done-button'
-      unless @__options.controls
-        @__widgetElement.addClass 'uploadcare-crop-widget--no-controls'
-
-      [@__wrapWidth, @__wrapHeight] = [@__widgetWidth, @__widgetHeight] = @__widgetSize()
-      @__wrapHeight -= CONTROLS_HEIGHT if @__options.controls
-      @__imageWrap.css {width: @__wrapWidth, height: @__wrapHeight}
-      @__widgetElement.css {width: @__widgetWidth, height: @__widgetHeight}
-
-      @__widgetElement.appendTo @container
-
+      @__widgetElement = $(tpl('crop-widget')).appendTo @container
+      [@__widgetWidth, @__widgetHeight] = @__widgetSize()
       @__setState 'waiting'
-      @__bind()
-
-    __bind: ->
-      @__doneButton.click =>
-        @forceDone()
 
     __clearImage: ->
+      @__jCropApi?.destroy()
       if @__deferred and @__deferred.state() is 'pending'
         @__deferred.reject(IMAGE_CLEARED)
         @__deferred = false
@@ -203,28 +185,22 @@ namespace 'uploadcare.crop', (ns) ->
     __setImage: (@__url) ->
       @__deferred = $.Deferred()
       @__img = $('<img/>')
+        .css
+          margin: '0 auto'
         .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR
+          @__img.remove()
         .attr
           src: @__url
           width: @__resizedWidth
           height: @__resizedHeight
-        .appendTo @__imageWrap
+        .appendTo @__widgetElement
 
     __calcImgSizes: (size) ->
       {width: @__originalWidth, height: @__originalHeight} = size
       [@__resizedWidth, @__resizedHeight] =
-        fitSize @__originalWidth, @__originalHeight, @__wrapWidth, @__wrapHeight
-      paddingTop = (@__wrapHeight - @__resizedHeight) / 2
-      paddingLeft = (@__wrapWidth - @__resizedWidth) / 2
-
-      @__imageWrap.css {
-        paddingTop,
-        paddingLeft,
-        width: @__wrapWidth - paddingLeft,
-        height: @__wrapHeight - paddingTop
-      }
+        fitSize @__originalWidth, @__originalHeight, @__widgetWidth, @__widgetHeight
 
     __widgetSize: ->
       if !@__options.widgetSize
@@ -246,7 +222,6 @@ namespace 'uploadcare.crop', (ns) ->
         .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
         .addClass(prefix + state)
       @onStateChange.fire state
-      @__doneButton.prop 'disabled', state != 'loaded'
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
@@ -254,10 +229,8 @@ namespace 'uploadcare.crop', (ns) ->
           @__currentCoords =
             height: coords.h
             width: coords.w
-            x: coords.x
-            x2: coords.x2
-            y: coords.y
-            y2: coords.y2
+            left: coords.x
+            top: coords.y
 
       if @__options.preferedSize
         [width, height] = @__options.preferedSize.split 'x'
@@ -275,21 +248,24 @@ namespace 'uploadcare.crop', (ns) ->
           previousCoords.height = @__originalHeight
 
       if previousCoords.center
-        top = (@__originalWidth - previousCoords.width) / 2
-        left = (@__originalHeight - previousCoords.height) / 2
+        left = (@__originalWidth - previousCoords.width) / 2
+        top = (@__originalHeight - previousCoords.height) / 2
       else
-        top = previousCoords.top or 0
         left = previousCoords.left or 0
+        top = previousCoords.top or 0
+
+      scaleX = @__resizedWidth / @__originalWidth
+      scaleY = @__resizedHeight / @__originalHeight
+
       jCropOptions.setSelect = [
-        top
-        left
-        previousCoords.width + top
-        previousCoords.height + left
+        left * scaleX,
+        top * scaleY,
+        (previousCoords.width + left) * scaleX,
+        (previousCoords.height + top) * scaleY,
       ]
-      scaleRatio = @__resizedWidth / @__originalWidth
-      for val, i in jCropOptions.setSelect
-        jCropOptions.setSelect[i] = val * scaleRatio
 
       @__setState 'loading'
-      @__img.Jcrop jCropOptions, =>
+      done = (api) =>
+        @__jCropApi = api
         @__setState 'loaded'
+      @__img.Jcrop jCropOptions, -> done this
