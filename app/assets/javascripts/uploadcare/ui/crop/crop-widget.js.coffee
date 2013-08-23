@@ -25,6 +25,9 @@ namespace 'uploadcare.crop', (ns) ->
       # even if selected area smaller than `preferedSize` (optional)
       upscale: false
 
+      # Restrict selection to preferedSize area.
+      notLess: false
+
       # Defines widget size. if set to `null` widget size will be equal
       # to the `container` size. Syntax: '123x123'. (optional)
       widgetSize: null
@@ -45,6 +48,8 @@ namespace 'uploadcare.crop', (ns) ->
 
       unless options.preferedSize
         options.scale = false
+        options.upscale = false
+        options.notLess = false
 
       for option in ['widgetSize', 'preferedSize']
         value = options[option]
@@ -253,6 +258,13 @@ namespace 'uploadcare.crop', (ns) ->
 
       scaleX = @__resizedWidth / @__originalWidth
       scaleY = @__resizedHeight / @__originalHeight
+
+      if @__options.notLess
+        [width, height] = fitSize(@__options.preferedSize[0],
+                                  @__options.preferedSize[1],
+                                  @__originalWidth, @__originalHeight)
+        jCropOptions.minSize = [Math.ceil width * scaleX,
+                                Math.ceil height * scaleY]
 
       jCropOptions.setSelect = [
         left * scaleX,
