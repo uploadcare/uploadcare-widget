@@ -118,9 +118,10 @@ namespace 'uploadcare.crop', (ns) ->
               width: coords.width
               height: coords.height
 
-            if @__options.scale
-              if coords.width > @__options.preferedSize[0] or @__options.upscale
-                [resized.width, resized.height] = @__options.preferedSize
+            downscale = @__options.scale and coords.width > @__options.preferedSize[0]
+            upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
+            if downscale or upscale
+              [resized.width, resized.height] = @__options.preferedSize
 
             resized = utils.fitDimensionsWithCdnLimit resized
 
