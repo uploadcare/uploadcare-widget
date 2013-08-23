@@ -39,12 +39,31 @@ namespace 'uploadcare.crop', (ns) ->
     LOADING_ERROR = 'loadingerror'
     IMAGE_CLEARED = 'imagecleared'
 
-    checkOptions = (options) ->
-      throw new Error("options.container must be specified") unless options.container
+    prepareOptions = (options) ->
+      unless options.container
+        throw new Error("options.container must be specified")
+
+      unless options.preferedSize
+        options.scale = false
+
       for option in ['widgetSize', 'preferedSize']
         value = options[option]
-        unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
-          throw new Error("options.#{option} must follow pattern '123x456' or be falsy")
+        if value
+          unless typeof value is 'string' and value.match /^\d+x\d+$/i
+            throw new Error("options.#{option} must follow pattern '123x456' or be falsy")
+          options[option] = $.map value.split('x'), (size) -> parseInt(size)
+
+      if options.scale
+        [width, height] = options.preferedSize
+        fited = utils.fitDimensionsWithCdnLimit {width, height}
+        if fited.width isnt width
+          willBe = "#{fited.width}x#{fited.height}#{if options.upscale then '' else ' or smaller'}"
+          utils.warnOnce """
+            You specified #{width}x#{height} as preferred size in crop options.
+            It's bigger than our CDN allows.
+            Resulting image size will be #{willBe}.
+          """
+          options.preferedSize = [fited.width, fited.height]
 
     fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
       if objWidth > boxWidth or objHeight > boxHeight or upscale
@@ -63,23 +82,7 @@ namespace 'uploadcare.crop', (ns) ->
     #     preferedSize: '100x100'
     constructor: (options) ->
       @__options = $.extend {}, defaultOptions, options
-      @__options.scale = false unless @__options.preferedSize
-      checkOptions @__options
-
-      if @__options.scale
-        s = @__options.preferedSize.split('x')
-        width = +s[0]
-        height = +s[1]
-        fited = utils.fitDimensionsWithCdnLimit {width, height}
-        if fited.width isnt width
-          willBe = "#{fited.width}x#{fited.height}#{if @__options.upscale then '' else ' or smaller'}"
-          utils.warnOnce """
-            You specified #{@__options.preferedSize} as preferred size in crop options.
-            It's bigger than our CDN allows.
-            Resulting image size will be #{willBe}.
-          """
-          @__options.preferedSize = "#{fited.width}x#{fited.height}"
-
+      prepareOptions @__options
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
@@ -116,12 +119,8 @@ namespace 'uploadcare.crop', (ns) ->
               height: coords.height
 
             if @__options.scale
-              scale = @__options.preferedSize.split('x')
-              sw = scale[0] - 0 if scale[0]
-              sh = scale[1] - 0 if scale[1]
-              if coords.width > sw or @__options.upscale
-                resized.width = sw
-                resized.height = sh
+              if coords.width > @__options.preferedSize[0] or @__options.upscale
+                [resized.width, resized.height] = @__options.preferedSize
 
             resized = utils.fitDimensionsWithCdnLimit resized
 
@@ -198,15 +197,12 @@ namespace 'uploadcare.crop', (ns) ->
         .appendTo @__widgetElement
 
     __calcImgSizes: (size) ->
-      {width: @__originalWidth, height: @__originalHeight} = size
+      [@__originalWidth, @__originalHeight] = size
       [@__resizedWidth, @__resizedHeight] =
         fitSize @__originalWidth, @__originalHeight, @__widgetWidth, @__widgetHeight
 
     __widgetSize: ->
-      if !@__options.widgetSize
-        [@container.width(), @container.height()]
-      else
-        @__options.widgetSize.split 'x'
+      @__options.widgetSize or [@container.width(), @container.height()]
 
     #             |
     #             v
@@ -233,8 +229,7 @@ namespace 'uploadcare.crop', (ns) ->
             top: coords.y
 
       if @__options.preferedSize
-        [width, height] = @__options.preferedSize.split 'x'
-        jCropOptions.aspectRatio = width / height
+        jCropOptions.aspectRatio =  @__options.preferedSize[0] / @__options.preferedSize[1]
 
       unless previousCoords
         previousCoords = {center: true}
@@ -242,7 +237,8 @@ namespace 'uploadcare.crop', (ns) ->
           [
             previousCoords.width
             previousCoords.height
-          ] = fitSize(width, height, @__originalWidth, @__originalHeight, true)
+          ] = fitSize(@__options.preferedSize[0], @__options.preferedSize[1],
+                      @__originalWidth, @__originalHeight, true)
         else
           previousCoords.width = @__originalWidth
           previousCoords.height = @__originalHeight

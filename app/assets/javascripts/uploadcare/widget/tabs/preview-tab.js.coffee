@@ -69,7 +69,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               .removeClass('uploadcare-disabled-el')
               .click -> widget.forceDone()
         @file.done (info) =>
-          widget.croppedImageModifiers(img.attr('src'), info.originalImageInfo,
+          size = [info.originalImageInfo.width, info.originalImageInfo.height]
+          widget.croppedImageModifiers(img.attr('src'), size,
                                        info.cdnUrlModifiers)
             .done (opts) =>
               @dialogApi.replaceFile @file, @file.then (info) =>
