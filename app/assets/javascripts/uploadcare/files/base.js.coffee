@@ -141,8 +141,9 @@ namespace 'uploadcare.files', (ns) ->
       @apiPromise = @__extendApi @apiDeferred.promise()
 
       @__uploadDf.progress (progress) =>
-        @__progress = progress
-        @__notifyApi()
+        if progress > @__progress
+          @__progress = progress
+          @__notifyApi()
       @__uploadDf.done =>
         @__progressState = 'uploaded'
         @__progress = 1
