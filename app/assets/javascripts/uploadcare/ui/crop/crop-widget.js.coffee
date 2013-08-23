@@ -94,14 +94,14 @@ namespace 'uploadcare.crop', (ns) ->
         width: parseInt(raw[1], 10)
         height: parseInt(raw[2], 10)
         center: raw[4] == 'center'
-        top: parseInt(raw[5], 10) or undefined
-        left: parseInt(raw[6], 10) or undefined
+        left: parseInt(raw[5], 10) or undefined
+        top: parseInt(raw[6], 10) or undefined
 
     croppedImageModifiers: (previewUrl, size, modifiers) ->
       @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
         .then (coords) =>
           size = "#{coords.width}x#{coords.height}"
-          topLeft = "#{coords.x},#{coords.y}"
+          topLeft = "#{coords.left},#{coords.top}"
 
           opts =
             crop: $.extend({}, coords)
@@ -151,11 +151,12 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      scaleRatio = @__resizedWidth / @__originalWidth
-      fixedCoords = {}
-      for key, value of @__currentCoords
-        fixedCoords[key] = Math.round value / scaleRatio
-      fixedCoords
+      scaleX = @__resizedWidth / @__originalWidth
+      scaleY = @__resizedHeight / @__originalHeight
+      left: Math.round @__currentCoords.left / scaleX
+      top: Math.round @__currentCoords.top / scaleY
+      width: Math.round @__currentCoords.width / scaleX
+      height: Math.round @__currentCoords.height / scaleY
 
     # Destroys widget completly
     destroy: ->
@@ -228,10 +229,8 @@ namespace 'uploadcare.crop', (ns) ->
           @__currentCoords =
             height: coords.h
             width: coords.w
-            x: coords.x
-            x2: coords.x2
-            y: coords.y
-            y2: coords.y2
+            left: coords.x
+            top: coords.y
 
       if @__options.preferedSize
         [width, height] = @__options.preferedSize.split 'x'
@@ -249,20 +248,21 @@ namespace 'uploadcare.crop', (ns) ->
           previousCoords.height = @__originalHeight
 
       if previousCoords.center
-        top = (@__originalWidth - previousCoords.width) / 2
-        left = (@__originalHeight - previousCoords.height) / 2
+        left = (@__originalWidth - previousCoords.width) / 2
+        top = (@__originalHeight - previousCoords.height) / 2
       else
-        top = previousCoords.top or 0
         left = previousCoords.left or 0
+        top = previousCoords.top or 0
+
+      scaleX = @__resizedWidth / @__originalWidth
+      scaleY = @__resizedHeight / @__originalHeight
+
       jCropOptions.setSelect = [
-        top
-        left
-        previousCoords.width + top
-        previousCoords.height + left
+        left * scaleX,
+        top * scaleY,
+        (previousCoords.width + left) * scaleX,
+        (previousCoords.height + top) * scaleY,
       ]
-      scaleRatio = @__resizedWidth / @__originalWidth
-      for val, i in jCropOptions.setSelect
-        jCropOptions.setSelect[i] = val * scaleRatio
 
       @__setState 'loading'
       done = (api) =>
