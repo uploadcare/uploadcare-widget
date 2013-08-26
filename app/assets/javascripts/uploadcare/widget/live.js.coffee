@@ -58,9 +58,9 @@ namespace 'uploadcare', (ns) ->
       el.remove()
 
   ns.start = (settings) ->
-    s.common(settings)
-    live = -> initialize $('@uploadcare-uploader')
-    if s.build().live
+    live = ->
+      initialize $('@uploadcare-uploader')
+    if s.common(settings).live
       setInterval(live, 100)
     else
       live()
