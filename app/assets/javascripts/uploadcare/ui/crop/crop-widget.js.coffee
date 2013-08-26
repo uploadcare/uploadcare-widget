@@ -113,7 +113,7 @@ namespace 'uploadcare.crop', (ns) ->
             if downscale or upscale
               resized = @__options.preferedSize
             else
-              resized = utils.fitDimensionsWithCdnLimit [coords.width, coords.height]
+              resized = utils.fitSizeInCdnLimit [coords.width, coords.height]
 
             if resized[0] isnt coords.width or resized[1] isnt coords.height
               [opts.crop.sw, opts.crop.sh] = resized
@@ -123,7 +123,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     croppedImageCoords: (previewUrl, size, coords) ->
       @__clearImage()
-      @__calcImgSizes size
+      @__calcSizes size
       @__setImage previewUrl
       @__initJcrop coords
       @__deferred.promise()
@@ -153,14 +153,13 @@ namespace 'uploadcare.crop', (ns) ->
     __buildWidget: ->
       @container = $ @__options.container
       @__widgetElement = $(tpl('crop-widget')).appendTo @container
-      [@__widgetWidth, @__widgetHeight] = @__widgetSize()
       @__setState 'waiting'
 
     __clearImage: ->
       @__jCropApi?.destroy()
       if @__deferred and @__deferred.state() is 'pending'
         @__deferred.reject(IMAGE_CLEARED)
-        @__deferred = false
+      @__deferred = $.Deferred()
       if @__img
         @__img.remove()
         @__img.off()
@@ -169,7 +168,6 @@ namespace 'uploadcare.crop', (ns) ->
       @__setState 'waiting'
 
     __setImage: (@__url) ->
-      @__deferred = $.Deferred()
       @__img = $('<img/>')
         .css
           margin: '0 auto'
@@ -183,13 +181,10 @@ namespace 'uploadcare.crop', (ns) ->
           height: @__resizedHeight
         .appendTo @__widgetElement
 
-    __calcImgSizes: (size) ->
-      @__originalSize = size
-      [@__resizedWidth, @__resizedHeight] =
-        utils.fitSize @__originalSize, [@__widgetWidth, @__widgetHeight]
-
-    __widgetSize: ->
-      @__options.widgetSize or [@container.width(), @container.height()]
+    __calcSizes: (originalSize) ->
+      @__originalSize = originalSize
+      widgetSize = @__options.widgetSize or [@container.width(), @container.height()]
+      [@__resizedWidth, @__resizedHeight] = utils.fitSize @__originalSize, widgetSize
 
     #             |
     #             v
