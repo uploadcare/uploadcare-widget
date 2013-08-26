@@ -137,8 +137,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      scaleX = @__resizedWidth / @__originalSize[0]
-      scaleY = @__resizedHeight / @__originalSize[1]
+      [scaleX, scaleY] = @__resizedScale
       left: Math.round @__currentCoords.left / scaleX
       top: Math.round @__currentCoords.top / scaleY
       width: Math.round @__currentCoords.width / scaleX
@@ -157,14 +156,9 @@ namespace 'uploadcare.crop', (ns) ->
 
     __clearImage: ->
       @__jCropApi?.destroy()
-      if @__deferred and @__deferred.state() is 'pending'
-        @__deferred.reject(IMAGE_CLEARED)
+      @__img?.off().remove()
+      @__deferred?.reject(IMAGE_CLEARED)
       @__deferred = $.Deferred()
-      if @__img
-        @__img.remove()
-        @__img.off()
-        @__img = null
-      @__resizedHeight = @__resizedWidth = @__originalSize = null
       @__setState 'waiting'
 
     __setImage: (@__url) ->
@@ -177,14 +171,19 @@ namespace 'uploadcare.crop', (ns) ->
           @__img.remove()
         .attr
           src: @__url
-          width: @__resizedWidth
-          height: @__resizedHeight
+          width: @__resizedSize[0]
+          height: @__resizedSize[1]
         .appendTo @__widgetElement
 
     __calcSizes: (originalSize) ->
-      @__originalSize = originalSize
       widgetSize = @__options.widgetSize or [@container.width(), @container.height()]
-      [@__resizedWidth, @__resizedHeight] = utils.fitSize @__originalSize, widgetSize
+      resizedSize = utils.fitSize originalSize, widgetSize
+      @__originalSize = originalSize
+      @__resizedSize = resizedSize
+      @__resizedScale = [
+        resizedSize[0] / originalSize[0],
+        resizedSize[1] / originalSize[1],
+      ]
 
     #             |
     #             v
@@ -230,8 +229,7 @@ namespace 'uploadcare.crop', (ns) ->
         left = previousCoords.left or 0
         top = previousCoords.top or 0
 
-      scaleX = @__resizedWidth / @__originalSize[0]
-      scaleY = @__resizedHeight / @__originalSize[1]
+      [scaleX, scaleY] = @__resizedScale
 
       if @__options.notLess
         [width, height] = utils.fitSize(@__options.preferedSize
