@@ -68,15 +68,6 @@ namespace 'uploadcare.crop', (ns) ->
           """
           options.preferedSize = fited
 
-    fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
-      if objWidth > boxWidth or objHeight > boxHeight or upscale
-        if boxWidth / boxHeight < objWidth / objHeight
-          [boxWidth, Math.floor(objHeight / objWidth * boxWidth)]
-        else
-          [Math.floor(objWidth / objHeight * boxHeight), boxHeight]
-      else
-        [objWidth, objHeight]
-
     # Example:
     #   new CropWidget
     #     container: '.crop-widget-home'
@@ -113,7 +104,7 @@ namespace 'uploadcare.crop', (ns) ->
             crop: $.extend({}, coords)
             modifiers: "-/crop/#{size}/#{topLeft}/"
 
-          notTouched = coords.width is @__originalWidth and coords.height is @__originalHeight
+          notTouched = coords.width is @__originalSize[0] and coords.height is @__originalSize[1]
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
@@ -146,8 +137,8 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      scaleX = @__resizedWidth / @__originalWidth
-      scaleY = @__resizedHeight / @__originalHeight
+      scaleX = @__resizedWidth / @__originalSize[0]
+      scaleY = @__resizedHeight / @__originalSize[1]
       left: Math.round @__currentCoords.left / scaleX
       top: Math.round @__currentCoords.top / scaleY
       width: Math.round @__currentCoords.width / scaleX
@@ -174,7 +165,7 @@ namespace 'uploadcare.crop', (ns) ->
         @__img.remove()
         @__img.off()
         @__img = null
-      @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
+      @__resizedHeight = @__resizedWidth = @__originalSize = null
       @__setState 'waiting'
 
     __setImage: (@__url) ->
@@ -193,9 +184,9 @@ namespace 'uploadcare.crop', (ns) ->
         .appendTo @__widgetElement
 
     __calcImgSizes: (size) ->
-      [@__originalWidth, @__originalHeight] = size
+      @__originalSize = size
       [@__resizedWidth, @__resizedHeight] =
-        fitSize @__originalWidth, @__originalHeight, @__widgetWidth, @__widgetHeight
+        utils.fitSize @__originalSize, [@__widgetWidth, @__widgetHeight]
 
     __widgetSize: ->
       @__options.widgetSize or [@container.width(), @container.height()]
@@ -233,26 +224,23 @@ namespace 'uploadcare.crop', (ns) ->
           [
             previousCoords.width
             previousCoords.height
-          ] = fitSize(@__options.preferedSize[0], @__options.preferedSize[1],
-                      @__originalWidth, @__originalHeight, true)
+          ] = utils.fitSize(@__options.preferedSize, @__originalSize, true)
         else
-          previousCoords.width = @__originalWidth
-          previousCoords.height = @__originalHeight
+          [previousCoords.width, previousCoords.height] = @__originalSize
 
       if previousCoords.center
-        left = (@__originalWidth - previousCoords.width) / 2
-        top = (@__originalHeight - previousCoords.height) / 2
+        left = (@__originalSize[0] - previousCoords.width) / 2
+        top = (@__originalSize[1] - previousCoords.height) / 2
       else
         left = previousCoords.left or 0
         top = previousCoords.top or 0
 
-      scaleX = @__resizedWidth / @__originalWidth
-      scaleY = @__resizedHeight / @__originalHeight
+      scaleX = @__resizedWidth / @__originalSize[0]
+      scaleY = @__resizedHeight / @__originalSize[1]
 
       if @__options.notLess
-        [width, height] = fitSize(@__options.preferedSize[0],
-                                  @__options.preferedSize[1],
-                                  @__originalWidth, @__originalHeight)
+        [width, height] = utils.fitSize(@__options.preferedSize
+                                        @__originalSize)
         jCropOptions.minSize = [Math.ceil width * scaleX,
                                 Math.ceil height * scaleY]
 
