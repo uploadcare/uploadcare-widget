@@ -66,6 +66,29 @@ namespace 'uploadcare.settings', (ns) ->
         settings[key] = !!value
     settings
 
+  parseCrop = (cropValue) ->
+    crop = enabled: true
+
+    reDisabled = /^(disabled|false)$/i
+    reRatio = /^[0-9]+\:[0-9]+$/i
+    reFixed = /^([0-9]+x[0-9]+)(\s+(upscale|minimum))?$/i
+
+    if cropValue.match reDisabled
+      crop.enabled = false
+
+    else if ratio = cropValue.match reRatio
+      crop.preferedSize = ratio[0].replace(':', 'x')
+
+    else if fixed = cropValue.match reFixed
+      crop.preferedSize = fixed[1]
+      crop.scale = true
+      if fixed[3]
+        crop.upscale = true
+      if fixed[3].toLowerCase() == 'minimum'
+        crop.notLess = true
+
+    crop
+
 
   normalize = (settings) ->
     arrayOptions settings, [
@@ -84,35 +107,11 @@ namespace 'uploadcare.settings', (ns) ->
       'previewStep'
     ]
 
-    if settings.multiple
-      cropValue = 'disabled'
-    else
-      cropValue = $.trim settings.crop
-
-    settings.crop = crop = {
-      enabled: true
-      scale: false
-      upscale: false
-      preferedSize: null
-    }
-
-    reDisabled = /^(disabled|false)$/i
-    reRatio = /^[0-9]+\:[0-9]+$/i
-    reFixed = /^([0-9]+x[0-9])+\s+(upscale|minimum)$/i
-
-    if reDisabled.match cropValue
-      crop.enabled = false
-
-    else if ratio = reRatio.match cropValue
-      crop.preferedSize = ratio[0].replace(':', 'x')
-
-    else if fixed = reFixed.match cropValue
-      crop.preferedSize = fixed[1]
-      crop.scale = true
-      if fixed[2]
-        crop.upscale = true
-      if fixed[2].toLowerCase() == 'minimum'
-        crop.notLess = true
+    unless $.isPlainObject settings.crop
+      if settings.multiple
+        settings.crop = enabled: false
+      else
+        settings.crop = parseCrop $.trim settings.crop
 
     if settings.crop.enabled or settings.multiple
       settings.previewStep = true
