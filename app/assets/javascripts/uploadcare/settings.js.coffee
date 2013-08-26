@@ -35,8 +35,8 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   str2arr = (value) ->
-    unless $.isArray(value)
-      value = $.trim(value)
+    unless $.isArray value
+      value = $.trim value
       value = if value then value.split(' ') else []
     value
 
@@ -85,39 +85,36 @@ namespace 'uploadcare.settings', (ns) ->
     ]
 
     if settings.multiple
-      settings.crop = 'disabled'
+      cropValue = 'disabled'
+    else
+      cropValue = $.trim settings.crop
 
-    settings.__cropParsed = {
+    settings.crop = crop = {
       enabled: true
       scale: false
       upscale: false
       preferedSize: null
     }
 
-    # disabled 300x200 → disabled
-    # 300x200 3:2 → 3:2
-    # 300x200 UPscale abc → 300x200 upscale
-    # upscale → ""
-    crop = '' + settings.crop
-    if crop.match /(disabled|false)/i
-      crop = 'disabled'
-      settings.__cropParsed.enabled = false
-    else if ratio = crop.match /[0-9]+\:[0-9]+/
-      crop = ratio[0]
-      settings.__cropParsed.preferedSize = ratio[0].replace(':', 'x')
-    else if size = crop.match /[0-9]+x[0-9]+/i
-      settings.__cropParsed.preferedSize = size[0]
-      settings.__cropParsed.scale = true
-      if crop.match(/upscale/i)
-        crop = size[0] + ' upscale'
-        settings.__cropParsed.upscale = true
-      else
-        crop = size[0]
-    else
-      crop = ''
-    settings.crop = crop
+    reDisabled = /^(disabled|false)$/i
+    reRatio = /^[0-9]+\:[0-9]+$/i
+    reFixed = /^([0-9]+x[0-9])+\s+(upscale|minimum)$/i
 
-    if settings.__cropParsed.enabled or settings.multiple
+    if reDisabled.match cropValue
+      crop.enabled = false
+
+    else if ratio = reRatio.match cropValue
+      crop.preferedSize = ratio[0].replace(':', 'x')
+
+    else if fixed = reFixed.match cropValue
+      crop.preferedSize = fixed[1]
+      crop.scale = true
+      if fixed[2]
+        crop.upscale = true
+      if fixed[2].toLowerCase() == 'minimum'
+        crop.notLess = true
+
+    if settings.crop.enabled or settings.multiple
       settings.previewStep = true
 
     settings

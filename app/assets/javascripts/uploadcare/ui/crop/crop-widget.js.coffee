@@ -232,10 +232,9 @@ namespace 'uploadcare.crop', (ns) ->
       [scaleX, scaleY] = @__resizedScale
 
       if @__options.notLess
-        [width, height] = utils.fitSize(@__options.preferedSize
-                                        @__originalSize)
-        jCropOptions.minSize = [Math.ceil width * scaleX,
-                                Math.ceil height * scaleY]
+        preferedSize = utils.fitSize @__options.preferedSize, @__originalSize
+        jCropOptions.minSize = [Math.ceil preferedSize[0] * scaleX,
+                                Math.ceil preferedSize[1] * scaleY]
 
       jCropOptions.setSelect = [
         left * scaleX,

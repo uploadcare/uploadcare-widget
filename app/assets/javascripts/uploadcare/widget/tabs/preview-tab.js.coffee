@@ -16,7 +16,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @__doCrop = @settings.__cropParsed.enabled
+      @__doCrop = @settings.crop.enabled
 
       @dialogApi.fileColl.onAdd.add @__setFile
 
@@ -59,9 +59,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         img = @container.find(PREFIX + 'image')
         container = img.parent()
         doneButton = @container.find(PREFIX + 'done')
-        widget = new CropWidget $.extend({}, @settings.__cropParsed, {
-          container
-        })
+        widget = new CropWidget $.extend({}, @settings.crop, {container})
         doneButton.addClass('uploadcare-disabled-el')
         widget.onStateChange.add (state) =>
           if state == 'loaded'
