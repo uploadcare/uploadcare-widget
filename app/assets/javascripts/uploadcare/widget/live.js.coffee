@@ -16,11 +16,16 @@ namespace 'uploadcare', (ns) ->
 
   initialize = (targets) ->
     for target in targets
-      method = if getSettings(target).multiple
-        'MultipleWidget'
+      widget = $(target).data(dataAttr)
+      if widget && target == widget.element[0]
+        # widget already exists
+        continue
+
+      widgetClass = if getSettings(target).multiple
+        ns.widget.MultipleWidget
       else
-        'Widget'
-      uploadcare[method](target)
+        ns.widget.Widget
+      initializeWidget($(target), widgetClass)
 
   ns.Widget = (target) ->
     el = $(target).eq(0)
