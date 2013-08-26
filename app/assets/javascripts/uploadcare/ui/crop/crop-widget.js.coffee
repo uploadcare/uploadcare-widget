@@ -59,16 +59,14 @@ namespace 'uploadcare.crop', (ns) ->
           options[option] = $.map value.split('x'), (size) -> parseInt(size)
 
       if options.scale
-        [width, height] = options.preferedSize
-        fited = utils.fitDimensionsWithCdnLimit {width, height}
-        if fited.width isnt width
-          willBe = "#{fited.width}x#{fited.height}#{if options.upscale then '' else ' or smaller'}"
+        fited = utils.fitSizeInCdnLimit options.preferedSize
+        if fited[0] isnt options.preferedSize[0]
+          willBe = "#{fited.join 'x'}#{if options.upscale then '' else ' or smaller'}"
           utils.warnOnce """
-            You specified #{width}x#{height} as preferred size in crop options.
-            It's bigger than our CDN allows.
+            Specified preferred crop size is bigger than our CDN allows.
             Resulting image size will be #{willBe}.
           """
-          options.preferedSize = [fited.width, fited.height]
+          options.preferedSize = fited
 
     fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
       if objWidth > boxWidth or objHeight > boxHeight or upscale
@@ -119,25 +117,17 @@ namespace 'uploadcare.crop', (ns) ->
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
-            resized =
-              width: coords.width
-              height: coords.height
-
             downscale = @__options.scale and coords.width > @__options.preferedSize[0]
             upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
             if downscale or upscale
-              [resized.width, resized.height] = @__options.preferedSize
+              resized = @__options.preferedSize
+            else
+              resized = utils.fitDimensionsWithCdnLimit [coords.width, coords.height]
 
-            resized = utils.fitDimensionsWithCdnLimit resized
-
-            if resized.width isnt coords.width or resized.height isnt coords.height
-              opts.crop.sw = resized.width
-              opts.crop.sh = resized.height
-
-              size = [resized.width, resized.height]
-              size[if size[0] > size[1] then 1 else 0] = ''
-
-              opts.modifiers += "-/resize/#{size.join 'x'}/"
+            if resized[0] isnt coords.width or resized[1] isnt coords.height
+              [opts.crop.sw, opts.crop.sh] = resized
+              resized[0 + (resized[0] > resized[1])] = ''
+              opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
 
     croppedImageCoords: (previewUrl, size, coords) ->
