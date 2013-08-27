@@ -105,19 +105,19 @@ namespace 'uploadcare.utils', (ns) ->
     else
       text
 
-  ns.fitDimensionsWithCdnLimit = (dim, limit=1600) ->
-    ns.fitDimensions(dim, limit, limit)
+  ns.fitSizeInCdnLimit = (objSize) ->
+    ns.fitSize(objSize, [1600, 1600])
 
-  ns.fitDimensions = (o, width, height) ->
-    wr = if width then o.width / width else 1
-    hr = if height then o.height / height else 1
-    width = o.width
-    height = o.height
-    if wr > 1 || hr > 1
-      ratio = Math.max(wr, hr)
-      width /= ratio
-      height /= ratio
-    {width: Math.round(width), height: Math.round(height)}
+  ns.fitSize = (objSize, boxSize, upscale) ->
+    if objSize[0] > boxSize[0] or objSize[1] > boxSize[1] or upscale
+      widthRatio = boxSize[0] / objSize[0]
+      heightRation = boxSize[1] / objSize[1]
+      if !boxSize[0] || (boxSize[1] && widthRatio > heightRation)
+        [Math.round(heightRation * objSize[0]), boxSize[1]]
+      else
+        [boxSize[0], Math.round(widthRatio * objSize[1])]
+    else
+      objSize.slice()
 
   ns.fileInput = (container, multiple, fn) ->
     container.find('input:file').remove()

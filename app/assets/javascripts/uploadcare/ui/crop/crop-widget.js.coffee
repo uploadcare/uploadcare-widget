@@ -17,69 +17,59 @@ namespace 'uploadcare.crop', (ns) ->
       # will be appended (required)
       container: null
 
-      # If set to `true` the resize method will be appended to result URL
-      # like "-/resize/%preferedSize%/". (optional)
-      scale: true
+      # If set to `true` "-/resize/%preferedSize%/" will be added
+      # if selected area bigger than `preferedSize`. Default false.
+      scale: false
 
       # If set to `true` "-/resize/%preferedSize%/" will be added
-      # even if selected area smaller than `preferedSize` (optional)
+      # if selected area smaller than `preferedSize`. Default false.
       upscale: false
 
+      # Restrict selection to preferedSize area. Default false.
+      notLess: false
+
       # Defines widget size. if set to `null` widget size will be equal
-      # to the `container` size. Syntax: '123x123'. (optional)
+      # to the `container` size. Array: [123, 123]. (optional)
       widgetSize: null
 
       # Defines image size you want to get at the end.
       # If `scale` option is set to `false`, it defines only
       # the prefered aspect ratio.
       # If set to `null` any aspect ratio will be acceptable.
-      # Syntax: '123x123'. (optional)
+      # Array: [123, 123]. (optional)
       preferedSize: null
 
     LOADING_ERROR = 'loadingerror'
     IMAGE_CLEARED = 'imagecleared'
 
-    checkOptions = (options) ->
-      throw new Error("options.container must be specified") unless options.container
-      for option in ['widgetSize', 'preferedSize']
-        value = options[option]
-        unless !value or (typeof value is 'string' and value.match /^\d+x\d+$/i)
-          throw new Error("options.#{option} must follow pattern '123x456' or be falsy")
+    prepareOptions = (options) ->
+      unless options.container
+        throw new Error("options.container must be specified")
 
-    fitSize = (objWidth, objHeight, boxWidth, boxHeight, upscale=false) ->
-      if objWidth > boxWidth or objHeight > boxHeight or upscale
-        if boxWidth / boxHeight < objWidth / objHeight
-          [boxWidth, Math.floor(objHeight / objWidth * boxWidth)]
-        else
-          [Math.floor(objWidth / objHeight * boxHeight), boxHeight]
-      else
-        [objWidth, objHeight]
+      unless options.preferedSize
+        options.scale = false
+        options.upscale = false
+        options.notLess = false
+
+      if options.scale
+        fited = utils.fitSizeInCdnLimit options.preferedSize
+        if fited[0] isnt options.preferedSize[0]
+          willBe = "#{fited.join 'x'}#{if options.upscale then '' else ' or smaller'}"
+          utils.warnOnce """
+            Specified preferred crop size is bigger than our CDN allows.
+            Resulting image size will be #{willBe}.
+          """
+          options.preferedSize = fited
 
     # Example:
     #   new CropWidget
     #     container: '.crop-widget-home'
     #     upscale: true
-    #     widgetSize: '500x300'
-    #     preferedSize: '100x100'
+    #     widgetSize: [500, 300]
+    #     preferedSize: [100, 100]
     constructor: (options) ->
       @__options = $.extend {}, defaultOptions, options
-      @__options.scale = false unless @__options.preferedSize
-      checkOptions @__options
-
-      if @__options.scale
-        s = @__options.preferedSize.split('x')
-        width = +s[0]
-        height = +s[1]
-        fited = utils.fitDimensionsWithCdnLimit {width, height}
-        if fited.width isnt width
-          willBe = "#{fited.width}x#{fited.height}#{if @__options.upscale then '' else ' or smaller'}"
-          utils.warnOnce """
-            You specified #{@__options.preferedSize} as preferred size in crop options.
-            It's bigger than our CDN allows.
-            Resulting image size will be #{willBe}.
-          """
-          @__options.preferedSize = "#{fited.width}x#{fited.height}"
-
+      prepareOptions @__options
       @onStateChange = $.Callbacks()
       @__buildWidget()
 
@@ -107,37 +97,26 @@ namespace 'uploadcare.crop', (ns) ->
             crop: $.extend({}, coords)
             modifiers: "-/crop/#{size}/#{topLeft}/"
 
-          notTouched = coords.width is @__originalWidth and coords.height is @__originalHeight
+          notTouched = coords.width is @__originalSize[0] and coords.height is @__originalSize[1]
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
-            resized =
-              width: coords.width
-              height: coords.height
+            downscale = @__options.scale and coords.width > @__options.preferedSize[0]
+            upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
+            if downscale or upscale
+              resized = @__options.preferedSize.slice()
+            else
+              resized = utils.fitSizeInCdnLimit [coords.width, coords.height]
 
-            if @__options.scale
-              scale = @__options.preferedSize.split('x')
-              sw = scale[0] - 0 if scale[0]
-              sh = scale[1] - 0 if scale[1]
-              if coords.width > sw or @__options.upscale
-                resized.width = sw
-                resized.height = sh
-
-            resized = utils.fitDimensionsWithCdnLimit resized
-
-            if resized.width isnt coords.width or resized.height isnt coords.height
-              opts.crop.sw = resized.width
-              opts.crop.sh = resized.height
-
-              size = [resized.width, resized.height]
-              size[if size[0] > size[1] then 1 else 0] = ''
-
-              opts.modifiers += "-/resize/#{size.join 'x'}/"
+            if resized[0] isnt coords.width or resized[1] isnt coords.height
+              [opts.crop.sw, opts.crop.sh] = resized
+              resized[0 + (resized[0] > resized[1])] = ''
+              opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
 
     croppedImageCoords: (previewUrl, size, coords) ->
       @__clearImage()
-      @__calcImgSizes size
+      @__calcSizes size
       @__setImage previewUrl
       @__initJcrop coords
       @__deferred.promise()
@@ -151,8 +130,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      scaleX = @__resizedWidth / @__originalWidth
-      scaleY = @__resizedHeight / @__originalHeight
+      [scaleX, scaleY] = @__resizedScale
       left: Math.round @__currentCoords.left / scaleX
       top: Math.round @__currentCoords.top / scaleY
       width: Math.round @__currentCoords.width / scaleX
@@ -167,23 +145,16 @@ namespace 'uploadcare.crop', (ns) ->
     __buildWidget: ->
       @container = $ @__options.container
       @__widgetElement = $(tpl('crop-widget')).appendTo @container
-      [@__widgetWidth, @__widgetHeight] = @__widgetSize()
       @__setState 'waiting'
 
     __clearImage: ->
       @__jCropApi?.destroy()
-      if @__deferred and @__deferred.state() is 'pending'
-        @__deferred.reject(IMAGE_CLEARED)
-        @__deferred = false
-      if @__img
-        @__img.remove()
-        @__img.off()
-        @__img = null
-      @__resizedHeight = @__resizedWidth = @__originalHeight = @__originalWidth = null
+      @__img?.off().remove()
+      @__deferred?.reject(IMAGE_CLEARED)
+      @__deferred = $.Deferred()
       @__setState 'waiting'
 
     __setImage: (@__url) ->
-      @__deferred = $.Deferred()
       @__img = $('<img/>')
         .css
           margin: '0 auto'
@@ -193,20 +164,19 @@ namespace 'uploadcare.crop', (ns) ->
           @__img.remove()
         .attr
           src: @__url
-          width: @__resizedWidth
-          height: @__resizedHeight
+          width: @__resizedSize[0]
+          height: @__resizedSize[1]
         .appendTo @__widgetElement
 
-    __calcImgSizes: (size) ->
-      {width: @__originalWidth, height: @__originalHeight} = size
-      [@__resizedWidth, @__resizedHeight] =
-        fitSize @__originalWidth, @__originalHeight, @__widgetWidth, @__widgetHeight
-
-    __widgetSize: ->
-      if !@__options.widgetSize
-        [@container.width(), @container.height()]
-      else
-        @__options.widgetSize.split 'x'
+    __calcSizes: (originalSize) ->
+      widgetSize = @__options.widgetSize or [@container.width(), @container.height()]
+      resizedSize = utils.fitSize originalSize, widgetSize
+      @__originalSize = originalSize
+      @__resizedSize = resizedSize
+      @__resizedScale = [
+        resizedSize[0] / originalSize[0],
+        resizedSize[1] / originalSize[1],
+      ]
 
     #             |
     #             v
@@ -233,8 +203,7 @@ namespace 'uploadcare.crop', (ns) ->
             top: coords.y
 
       if @__options.preferedSize
-        [width, height] = @__options.preferedSize.split 'x'
-        jCropOptions.aspectRatio = width / height
+        jCropOptions.aspectRatio =  @__options.preferedSize[0] / @__options.preferedSize[1]
 
       unless previousCoords
         previousCoords = {center: true}
@@ -242,20 +211,23 @@ namespace 'uploadcare.crop', (ns) ->
           [
             previousCoords.width
             previousCoords.height
-          ] = fitSize(width, height, @__originalWidth, @__originalHeight, true)
+          ] = utils.fitSize(@__options.preferedSize, @__originalSize, true)
         else
-          previousCoords.width = @__originalWidth
-          previousCoords.height = @__originalHeight
+          [previousCoords.width, previousCoords.height] = @__originalSize
 
       if previousCoords.center
-        left = (@__originalWidth - previousCoords.width) / 2
-        top = (@__originalHeight - previousCoords.height) / 2
+        left = (@__originalSize[0] - previousCoords.width) / 2
+        top = (@__originalSize[1] - previousCoords.height) / 2
       else
         left = previousCoords.left or 0
         top = previousCoords.top or 0
 
-      scaleX = @__resizedWidth / @__originalWidth
-      scaleY = @__resizedHeight / @__originalHeight
+      [scaleX, scaleY] = @__resizedScale
+
+      if @__options.notLess
+        preferedSize = utils.fitSize @__options.preferedSize, @__originalSize
+        jCropOptions.minSize = [Math.ceil preferedSize[0] * scaleX,
+                                Math.ceil preferedSize[1] * scaleY]
 
       jCropOptions.setSelect = [
         left * scaleX,
