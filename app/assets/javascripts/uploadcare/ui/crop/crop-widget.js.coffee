@@ -17,26 +17,26 @@ namespace 'uploadcare.crop', (ns) ->
       # will be appended (required)
       container: null
 
-      # If set to `true` the resize method will be appended to result URL
-      # like "-/resize/%preferedSize%/". (optional)
-      scale: true
+      # If set to `true` "-/resize/%preferedSize%/" will be added
+      # if selected area bigger than `preferedSize`. Default false.
+      scale: false
 
       # If set to `true` "-/resize/%preferedSize%/" will be added
-      # even if selected area smaller than `preferedSize` (optional)
+      # if selected area smaller than `preferedSize`. Default false.
       upscale: false
 
-      # Restrict selection to preferedSize area.
+      # Restrict selection to preferedSize area. Default false.
       notLess: false
 
       # Defines widget size. if set to `null` widget size will be equal
-      # to the `container` size. Syntax: '123x123'. (optional)
+      # to the `container` size. Array: [123, 123]. (optional)
       widgetSize: null
 
       # Defines image size you want to get at the end.
       # If `scale` option is set to `false`, it defines only
       # the prefered aspect ratio.
       # If set to `null` any aspect ratio will be acceptable.
-      # Syntax: '123x123'. (optional)
+      # Array: [123, 123]. (optional)
       preferedSize: null
 
     LOADING_ERROR = 'loadingerror'
@@ -50,13 +50,6 @@ namespace 'uploadcare.crop', (ns) ->
         options.scale = false
         options.upscale = false
         options.notLess = false
-
-      for option in ['widgetSize', 'preferedSize']
-        value = options[option]
-        if value
-          unless typeof value is 'string' and value.match /^\d+x\d+$/i
-            throw new Error("options.#{option} must follow pattern '123x456' or be falsy")
-          options[option] = $.map value.split('x'), (size) -> parseInt(size)
 
       if options.scale
         fited = utils.fitSizeInCdnLimit options.preferedSize
@@ -72,8 +65,8 @@ namespace 'uploadcare.crop', (ns) ->
     #   new CropWidget
     #     container: '.crop-widget-home'
     #     upscale: true
-    #     widgetSize: '500x300'
-    #     preferedSize: '100x100'
+    #     widgetSize: [500, 300]
+    #     preferedSize: [100, 100]
     constructor: (options) ->
       @__options = $.extend {}, defaultOptions, options
       prepareOptions @__options

@@ -44,8 +44,8 @@ widget = <button id="new">new</button> CropWidget({
   scale: <input type="checkbox" id="scale" checked>,
   upscale: <input type="checkbox" id="upscale">,
   notLess: <input type="checkbox" id="notLess">,
-  preferedSize: <input id="prefered-size" value="200x300"></label>,
-  widgetSize: <input id="widget-size" value=""></label>
+  preferedSize: [<input id="prefered-size" value="200, 300">],
+  widgetSize: <input id="widget-size" value="">
 });
 
 widget.<button id="cropped-image-url">croppedImageUrl</button>(<input id="source-url" value="http://ucarecdn.com/85b5644f-e692-4855-9db0-8c5a83096e25/-/preview/500x300/" size="100">,
@@ -85,12 +85,18 @@ widget.<button id="destroy">destroy()</button>;
     function create() {
       destroy()
       log('NEW')
+      var preferedSize = false;
+      if ($('#prefered-size').val()) {
+        preferedSize = $.map($('#prefered-size').val().split(','), function(x) {
+          return +$.trim(x);
+        });
+      }
       widget = new CropWidget({
         container: '#widget-container',
         scale: $('#scale').is(':checked'),
         upscale: $('#upscale').is(':checked'),
         notLess: $('#notLess').is(':checked'),
-        preferedSize: $('#prefered-size').val() || null,
+        preferedSize: preferedSize,
         widgetSize: $('#widget-size').val() || null
       });
 
