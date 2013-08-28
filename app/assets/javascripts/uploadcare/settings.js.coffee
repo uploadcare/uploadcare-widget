@@ -35,8 +35,8 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   str2arr = (value) ->
-    unless $.isArray(value)
-      value = $.trim(value)
+    unless $.isArray value
+      value = $.trim value
       value = if value then value.split(' ') else []
     value
 
@@ -66,6 +66,29 @@ namespace 'uploadcare.settings', (ns) ->
         settings[key] = !!value
     settings
 
+  parseCrop = (cropValue) ->
+    crop = enabled: true
+
+    reDisabled = /^(disabled|false)$/i
+    reRatio = /^([0-9]+)\:([0-9]+)$/i
+    reFixed = /^([0-9]+)x([0-9]+)(\s+(upscale|minimum))?$/i
+
+    if cropValue.match reDisabled
+      crop.enabled = false
+
+    else if ratio = cropValue.match reRatio
+      crop.preferedSize = [+ratio[1], +ratio[2]]
+
+    else if fixed = cropValue.match reFixed
+      crop.preferedSize = [+fixed[1], +fixed[2]]
+      crop.scale = true
+      if fixed[4]
+        crop.upscale = true
+        if fixed[4].toLowerCase() == 'minimum'
+          crop.notLess = true
+
+    crop
+
 
   normalize = (settings) ->
     arrayOptions settings, [
@@ -84,40 +107,13 @@ namespace 'uploadcare.settings', (ns) ->
       'previewStep'
     ]
 
-    if settings.multiple
-      settings.crop = 'disabled'
-
-    settings.__cropParsed = {
-      enabled: true
-      scale: false
-      upscale: false
-      preferedSize: null
-    }
-
-    # disabled 300x200 → disabled
-    # 300x200 3:2 → 3:2
-    # 300x200 UPscale abc → 300x200 upscale
-    # upscale → ""
-    crop = '' + settings.crop
-    if crop.match /(disabled|false)/i
-      crop = 'disabled'
-      settings.__cropParsed.enabled = false
-    else if ratio = crop.match /[0-9]+\:[0-9]+/
-      crop = ratio[0]
-      settings.__cropParsed.preferedSize = ratio[0].replace(':', 'x')
-    else if size = crop.match /[0-9]+x[0-9]+/i
-      settings.__cropParsed.preferedSize = size[0]
-      settings.__cropParsed.scale = true
-      if crop.match(/upscale/i)
-        crop = size[0] + ' upscale'
-        settings.__cropParsed.upscale = true
+    unless $.isPlainObject settings.crop
+      if settings.multiple
+        settings.crop = enabled: false
       else
-        crop = size[0]
-    else
-      crop = ''
-    settings.crop = crop
+        settings.crop = parseCrop $.trim settings.crop
 
-    if settings.__cropParsed.enabled or settings.multiple
+    if settings.crop.enabled or settings.multiple
       settings.previewStep = true
 
     settings
