@@ -70,22 +70,20 @@ namespace 'uploadcare.settings', (ns) ->
     crop = enabled: true
 
     reDisabled = /^(disabled|false)$/i
-    reRatio = /^([0-9]+)\:([0-9]+)$/i
-    reFixed = /^([0-9]+)x([0-9]+)(\s+(upscale|minimum))?$/i
+    reRatio = /^([0-9]+)([x:])([0-9]+)(\s+(upscale|minimum))?$/i
 
     if cropValue.match reDisabled
       crop.enabled = false
 
-    else if ratio = cropValue.match reRatio
-      crop.preferedSize = [+ratio[1], +ratio[2]]
-
-    else if fixed = cropValue.match reFixed
-      crop.preferedSize = [+fixed[1], +fixed[2]]
-      crop.scale = true
-      if fixed[4]
+    else if ratio = cropValue.toLowerCase().match reRatio
+      crop.preferedSize = [+ratio[1], +ratio[3]]
+      if ratio[2] == 'x'
+        crop.scale = true
+      if ratio[5]
         crop.upscale = true
-        if fixed[4].toLowerCase() == 'minimum'
+        if ratio[5] == 'minimum'
           crop.notLess = true
+    # else should raise?
 
     crop
 

@@ -1,6 +1,10 @@
 # History
 
 
+### 0.12.1, 10.09.2013
+
+* crop options "upscale" and "minimum" also applicable to ratio
+
 ### 0.12, 28.08.2013
 
 * new preperty origialImageInfo of fileInfo object
