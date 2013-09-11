@@ -7,11 +7,11 @@
 
 ### 0.12, 28.08.2013
 
-* new preperty origialImageInfo of fileInfo object
-* now you can use fileInfo.cdnUrl with all operations right after uploading
+* new property `originalImageInfo` of `fileInfo` object
+* now you can use `fileInfo.cdnUrl` with all operations right after uploading
 * traffic and preview delay significantly reduced for large images
 * new option for crop — "minimum". Doesn't allows user to select area less
-then you specified
+  then you specified
 
 ### 0.11.2, 13.08.2013
 
