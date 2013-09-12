@@ -67,4 +67,4 @@
       return this;
     }
   });
-}(uploadcare.jQuery)
+}(jQuery)

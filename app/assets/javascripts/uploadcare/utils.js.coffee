@@ -3,7 +3,6 @@
 # = require uploadcare/utils/collection
 # = require uploadcare/utils/warnings
 # = require uploadcare/utils/load-plugin
-# = require uploadcare/utils/jquery-jsonp
 
 {
   namespace,

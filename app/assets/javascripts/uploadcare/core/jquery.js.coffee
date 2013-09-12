@@ -1,13 +1,7 @@
 # = require uploadcare/core/jquery.1.8.3.js
+# = require uploadcare/core/jquery-role.js
+# = require uploadcare/core/jquery-xdr.js
+# = require uploadcare/core/jquery-jsonp.js
 
-{namespace} = uploadcare
-
-namespace 'uploadcare', (ns) ->
-
-  ns.jQuery = jQuery
-  jQuery.noConflict(true)
-  ns.expose 'jQuery'
-
-  # back compatibility
-  ns.whenReady = (fn) -> fn()
-  ns.expose 'whenReady'
+uploadcare.jQuery = jQuery
+jQuery.noConflict(true)

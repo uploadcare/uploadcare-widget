@@ -282,4 +282,4 @@
 	// ###################### INSTALL in jQuery ##
 	$.jsonp = jsonp;
 
-} )( uploadcare.jQuery );
+} )( jQuery );

@@ -13,7 +13,7 @@ uploadcare.version = '<%= UploadcareWidget::VERSION %>'
 
 {expose} = uploadcare
 
-expose 'whenReady'
+expose 'jQuery'
 expose 'globals', uploadcare.settings.globals
 expose 'start'
 expose 'initialize'
@@ -26,6 +26,10 @@ expose 'Circle', uploadcare.ui.progress.Circle
 expose 'Widget'
 expose 'MultipleWidget'
 expose 'plugin', uploadcare.utils.plugin
+expose 'tabsCss'
 expose 'dragdrop.support'
 expose 'dragdrop.receiveDrop'
 expose 'dragdrop.uploadDrop'
+
+# back compatibility
+expose 'whenReady', (fn) -> fn()
