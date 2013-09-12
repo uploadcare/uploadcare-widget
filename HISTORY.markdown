@@ -1,5 +1,8 @@
 # History
 
+### 0.12.2, 12.09.2013
+
+* fixed bug introduced in 0.12.0 related to load info about already uploaded files
 
 ### 0.12.1, 12.09.2013
 
