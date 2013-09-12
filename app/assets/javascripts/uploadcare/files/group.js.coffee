@@ -103,12 +103,11 @@ namespace 'uploadcare.files', (ns) ->
       df = $.Deferred()
       if @__fileColl.length()
         @__fileInfosDf.done (infos...) =>
-          data =
+          utils.jsonp "#{@settings.urlBase}/group/", 'POST',
             pub_key: @settings.publicKey
             files: (info.uuid for info in infos)
-          utils.jsonp("#{@settings.urlBase}/group/", data)
-            .fail(df.reject)
-            .done(df.resolve)
+          .fail(df.reject)
+          .done(df.resolve)
       else
         df.reject()
       return df.promise()
@@ -149,13 +148,12 @@ namespace 'uploadcare', (ns) ->
     df = $.Deferred()
     id = utils.groupIdRegex.exec(groupIdOrUrl)
     if id
-      data =
-        pub_key: settings.publicKey
-        group_id: id[0]
-      utils.jsonp("#{settings.urlBase}/group/info/", data)
-        .fail(df.reject)
-        .done (data) ->
-          df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
+      utils.jsonp "#{settings.urlBase}/group/info/",
+          pub_key: settings.publicKey
+          group_id: id[0]
+      .fail(df.reject)
+      .done (data) ->
+        df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
     else
       df.reject()
     df.promise()
