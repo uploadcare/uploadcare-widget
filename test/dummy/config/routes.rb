@@ -14,6 +14,7 @@ Dummy::Application.routes.draw do
   get "welcome/multiple"
   get "welcome/delayed"
   get "welcome/require"
+  get "welcome/dnd"
 
 
   # The priority is based upon order of creation:

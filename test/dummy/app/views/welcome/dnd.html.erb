@@ -1,0 +1,56 @@
+<style>
+  #target {
+    border: 10px dashed #ddd;
+    border-radius: 50px;
+    width: 500px;
+    height: 300px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+
+<div id="target">
+  Drop file there or <a class="target_open" href="#">select
+    from another source</a>.<br><br>
+  <input class="target_input" type="text" size="60">
+</div>
+
+
+<script>
+  $(function() {
+    $('#target').each(function() {
+      var $target = $(this);
+      var $input = $target.find('.target_input');
+
+      // open dialog and update input on success
+      function openDialog(file) {
+        uploadcare.openDialog(file)
+          .done(function(file) {
+            // first clear previous file if upload fails or user cancel upload.
+            $input.val('');
+
+            if (file) {
+              file.done(function(fileInfo) {
+                $input.val(fileInfo.cdnUrl);
+              });
+            }
+          });
+      }
+
+      // listen drag & drop on target
+      uploadcare.dragdrop.uploadDrop($target, openDialog);
+
+      // open empty dialog or dialog with uploaded file
+      $target.on('click', 'a', function(e) {
+        e.preventDefault();
+
+        var file = null;
+        if ($input.val()) {
+          file = uploadcare.fileFrom('uploaded', $input.val());
+        }
+        openDialog(file);
+      })
+    });
+  });
+</script>
