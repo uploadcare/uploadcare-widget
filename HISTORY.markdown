@@ -1,11 +1,12 @@
 # History
 
 
-### 0.12.1, 10.09.2013
+### 0.12.1, 12.09.2013
 
 * crop options "upscale" and "minimum" also applicable to ratio
+* built-in jQuery (version 1.8.3) now available in `uploadcare.jQuery`
 
-### 0.12, 28.08.2013
+### 0.12.0, 28.08.2013
 
 * new property `originalImageInfo` of `fileInfo` object
 * now you can use `fileInfo.cdnUrl` with all operations right after uploading
