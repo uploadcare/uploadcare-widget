@@ -23,10 +23,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @container.on('click', ROLE_PREFIX + 'done' + notDisabled, @dialogApi.done)
 
       updateFooter = =>
-        tooLessFiles = @dialogApi.fileColl.length() is 0
+        tooFewFiles = @dialogApi.fileColl.length() is 0
 
         @container.find("#{ROLE_PREFIX}done, #{ROLE_PREFIX}show-files")
-          .toggleClass 'uploadcare-disabled-el', tooLessFiles
+          .toggleClass 'uploadcare-disabled-el', tooFewFiles
 
         @container.find(ROLE_PREFIX + 'footer-text')
           .text(
