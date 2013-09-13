@@ -168,5 +168,4 @@ namespace 'uploadcare.settings', (ns) ->
     addStyle: (style) ->
       @styles.push style
 
-  tabsCss = new ns.CssCollector
-  expose 'tabsCss', tabsCss
+  ns.tabsCss = new ns.CssCollector

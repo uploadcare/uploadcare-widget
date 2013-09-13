@@ -4,8 +4,7 @@
   ui: {progress},
   templates: {tpl},
   jQuery: $,
-  locale: {t},
-  MULTIPLE_UPLOAD_FILES_LIMIT
+  locale: {t}
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
@@ -49,15 +48,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __updateContainerView: =>
       @filesCountEl.text t('file', @dialogApi.fileColl.length())
 
-      toManyFiles = @dialogApi.fileColl.length() > MULTIPLE_UPLOAD_FILES_LIMIT
-      @doneBtnEl.toggleClass('uploadcare-disabled-el', toManyFiles)
       @footerText
-        .toggleClass('uploadcare-error', toManyFiles)
         .text(
-          if toManyFiles
-            t('dialog.tabs.preview.multiple.toManyFiles')
-              .replace('%max%', MULTIPLE_UPLOAD_FILES_LIMIT)
-          else
             t('dialog.tabs.preview.multiple.question')
         )
 
