@@ -197,7 +197,7 @@ namespace 'uploadcare.utils', (ns) ->
     if $.isPlainObject type
       data = type
       type = 'GET'
-    $.ajax({type, url, data, crossDomain: true}).then (data) ->
+    $.ajax({type, url, data, crossDomain: true, cache: false}).then (data) ->
       if data.error
         text = data.error.content or data.error
         ns.warn("JSONP error: #{text}")

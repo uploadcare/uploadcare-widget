@@ -22,12 +22,12 @@ if ( window.XDomainRequest ) {
 					xdr.onerror = function() {
 						callback( 404, "Not Found" );
 					};
-					xdr.onprogress = jQuery.noop;
+					xdr.onprogress = function() {};
 					xdr.ontimeout = function() {
 						callback( 0, "timeout" );
 					};
 					xdr.timeout = s.xdrTimeout || Number.MAX_VALUE;
-					xdr.open( s.type, s.url );
+					xdr.open( s.type, s.url.replace(/^https?:/, '') );
 					xdr.send( ( s.hasContent && s.data ) || null );
 				},
 				abort: function() {
