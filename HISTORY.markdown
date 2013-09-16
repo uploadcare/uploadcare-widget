@@ -1,9 +1,12 @@
 # History
 
+### 0.12.4, 16.09.2013
+
+* `uploadcare.tabsCss` api fixed
+
 ### 0.12.3, 13.09.2013
 
 * restrictions on the number of files in multiupload group removed
-* `uploadcare.tabsCss` api fixed
 
 ### 0.12.2, 12.09.2013
 
