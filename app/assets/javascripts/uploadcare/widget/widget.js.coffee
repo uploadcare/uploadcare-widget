@@ -43,15 +43,10 @@ namespace 'uploadcare.widget', (ns) ->
 
     value: (value) ->
       if value?
-        if @element.val() != value
-          @__setFile utils.anyToFile(value, @settings)
+        @__setFile utils.valueToFile(value, @settings)
         this
       else
         @currentFile
-
-    reloadInfo: =>
-      @__setFile utils.anyToFile(@element.val(), @settings)
-      this
 
     __handleDirectSelection: (type, data) =>
       file = uploadcare.fileFrom(type, data, @settings)

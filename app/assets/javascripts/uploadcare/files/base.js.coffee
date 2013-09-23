@@ -165,17 +165,8 @@ namespace 'uploadcare.utils', (utils) ->
   utils.isFile = (obj) ->
     return obj and obj.done and obj.fail and obj.cancel
 
-  # Converts any of:
-  #   URL
-  #   CDN-URL
-  #   UUID
-  #   File object
-  # to File object
-  utils.anyToFile = (value, settings) ->
-    if value
-      if utils.isFile(value)
-        value
-      else
-        uploadcare.fileFrom('url-or-uploaded', value, settings)
-    else
-      null
+  # Converts user-given value to File object.
+  utils.valueToFile = (value, settings) ->
+    if value and not utils.isFile(value)
+      value = uploadcare.fileFrom('uploaded', value, settings)
+    value
