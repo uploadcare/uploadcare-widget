@@ -29,7 +29,7 @@ namespace 'uploadcare.widget', (ns) ->
       @__setupWidget()
       @template.reset()
 
-      @element.on 'change.uploadcare', => @reloadInfo()
+      @element.on 'change.uploadcare', @reloadInfo
       @reloadInfo()
 
     __setupWidget: ->
