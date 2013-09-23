@@ -35,3 +35,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileButton = @wrap.find('@uploadcare-dialog-browse-file')
       utils.fileInput fileButton, @settings.multiple, (e) =>
         @dialogApi.addFiles 'event', e
+        @dialogApi.switchTab 'preview'
