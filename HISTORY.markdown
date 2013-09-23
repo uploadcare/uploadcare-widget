@@ -1,5 +1,10 @@
 # History
 
+### 0.12.5, 23.09.2013
+
+* switch to preview tab right after selecting files
+* prevent to request not ready images in multiupload preview
+
 ### 0.12.4, 16.09.2013
 
 * `uploadcare.tabsCss` api fixed
