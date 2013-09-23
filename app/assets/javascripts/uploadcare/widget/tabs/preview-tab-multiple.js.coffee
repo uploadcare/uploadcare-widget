@@ -60,8 +60,16 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(file, progressInfo.incompleteFileInfo)
 
     __fileDone: (file, info) =>
-      @__fileToEl(file).addClass(CLASS_PREFIX + 'uploaded')
+      fileEl = @__fileToEl(file)
+      fileEl.addClass(CLASS_PREFIX + 'uploaded')
       @__updateFileInfo(file, info)
+
+      if info.isImage
+        fileEl.addClass(CLASS_PREFIX + 'image')
+
+        @__find('file-preview-wrap', fileEl).html $('<img>')
+          .attr
+            src: "#{info.originalUrl}-/scale_crop/45x45/center/"
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
@@ -72,13 +80,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __updateFileInfo: (file, info) =>
       fileEl = @__fileToEl(file)
-
-      fileEl.toggleClass(CLASS_PREFIX + 'image', !!info.isImage)
-      if info.isImage
-        @__find('file-preview-wrap', fileEl).html $('<img>')
-          .attr
-            class: CLASS_PREFIX + '-file-preview-image'
-            src: "#{info.originalUrl}-/scale_crop/45x45/center/"
 
       @__find('file-name', fileEl)
         .text(info.name or t('dialog.tabs.preview.unknownName'))

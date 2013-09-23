@@ -688,15 +688,11 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
     @extend %file-row-part;
     text-align: center;
     width: nth($dpm-columns, 1);
+    height: 45px;
     display: none;
     padding: 0;
     line-height: 0;
   }
-    .uploadcare-dpm-file-preview-wrap2 {
-      display: inline-block;
-      width: 45px;
-      height: 45px;
-    }
   .uploadcare-dpm-file-name,
   .uploadcare-dpm-file-size,
   .uploadcare-dpm-file-error {
