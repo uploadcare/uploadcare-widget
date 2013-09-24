@@ -56,15 +56,10 @@ namespace 'uploadcare.widget', (ns) ->
 
     value: (value) ->
       if value?
-        if @element.val() != value
-          @__setGroupByPromise utils.anyToFileGroup(value, @settings)
+        @__setGroupByPromise utils.valueToGroup(value, @settings)
         this
       else
         @currentGroup
-
-    reloadInfo: =>
-      @__setGroupByPromise utils.anyToFileGroup(@element.val(), @settings)
-      this
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
@@ -79,6 +74,3 @@ namespace 'uploadcare.widget', (ns) ->
         .fail (group) =>
           unless utils.isFileGroupsEqual group, @currentGroup
             @__setGroup null
-    
-
-    

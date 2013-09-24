@@ -84,10 +84,14 @@ namespace 'uploadcare.utils', (ns) ->
       v = if c == 'x' then r else r & 3 | 8
       v.toString(16)
 
+  # splitUrlRegex("url") => ["url", "scheme", "host", "path", "query", "fragment"]
+  ns.splitUrlRegex = /^(?:([^:\/?#]+):)?(?:\/\/([^\/?\#]*))?([^?\#]*)\??([^\#]*)\#?(.*)$/
+
   ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
   ns.groupIdRegex = new RegExp("#{ns.uuidRegex.source}~[0-9]+", 'i')
-  ns.fullUuidRegex = new RegExp("^#{ns.uuidRegex.source}$", 'i')
-  ns.cdnUrlModifiersRegex = /(?:-\/(?:[a-z0-9_,]+\/)+)+/i
+  ns.cdnUrlRegex = new RegExp("^/?(#{ns.uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$", 'i')
+  ns.splitCdnUrl = (url) ->
+    ns.cdnUrlRegex.exec ns.splitUrlRegex.exec(url)[3]
 
   ns.escapeRegExp = (str) ->
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
@@ -156,19 +160,6 @@ namespace 'uploadcare.utils', (ns) ->
       input.css
         left: e.pageX - left - width + 10
         top: e.pageY - top - 10
-
-
-  # url = parseUrl('http://example.com/page/123?foo=bar#top')
-  # url.href == 'http://example.com/page/123?foo=bar#top'
-  # url.protocol == 'http:'
-  # url.host == 'example.com'
-  # url.pathname == '/page/123'
-  # url.search == '?foo=bar'
-  # url.hash == '#top'
-  ns.parseUrl = (url) ->
-    a = document.createElement('a')
-    a.href = url
-    return a
 
   ns.createObjectUrl = (object) ->
     URL = window.URL || window.webkitURL
