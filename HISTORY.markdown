@@ -1,5 +1,11 @@
 # History
 
+### 0.13, 24.09.2013
+
+* Widget no longer accepts urls in `value` HTML-attribute or `value()` method.
+  You should use `widget.value(uploadcare.fileFrom('url', 'http://url/'))`.
+* Widget now can be used with any custom domain.
+
 ### 0.12.5, 23.09.2013
 
 * switch to preview tab right after selecting files
