@@ -14,7 +14,7 @@ namespace 'uploadcare.files', (ns) ->
       super
       @__shutdown = true
 
-      filename = utils.parseUrl(@__url).pathname.split('/').pop()
+      filename = utils.splitUrlRegex.exec(@__url)[3].split('/').pop()
       if filename
         try
           @fileName = decodeURIComponent(filename)

@@ -6,11 +6,10 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings, fileIdOrUrl) ->
       super
 
-      id = utils.uuidRegex.exec(fileIdOrUrl)
-      if id
-        @fileId = id[0]
-        modifiers = utils.cdnUrlModifiersRegex.exec(fileIdOrUrl)
-        @cdnUrlModifiers = modifiers[0] if modifiers
+      cdnUrl = utils.splitCdnUrl(fileIdOrUrl)
+      if cdnUrl
+        @fileId = cdnUrl[1]
+        @cdnUrlModifiers = cdnUrl[2] if cdnUrl[2]
         @__uploadDf.resolve(this)
       else
         @__uploadDf.reject('baddata', this)
