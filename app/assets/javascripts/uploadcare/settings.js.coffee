@@ -9,7 +9,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   defaults =
     'autostore': false
-    'cdn-base': 'https://ucarecdn.com'
+    'cdn-base': 'http://www.ucarecdn.com'
     'crop': 'disabled'
     'images-only': false
     'live': true
