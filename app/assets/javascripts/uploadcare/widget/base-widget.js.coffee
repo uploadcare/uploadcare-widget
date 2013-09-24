@@ -91,6 +91,9 @@ namespace 'uploadcare.widget', (ns) ->
     __onUploadingFailed: (error) ->
       @template.error error
 
+    reloadInfo: =>
+      @value @element.val()
+
     api: ->
       unless @__api
         @__api = utils.bindAll this, [

@@ -164,24 +164,17 @@ namespace 'uploadcare.utils', (utils) ->
   utils.isFileGroup = (obj) ->
     return obj and obj.files and obj.promise
 
-  # Converts any of:
-  #   group ID
-  #   group CDN-URL
-  #   array of what utils.anyToFile() can take
-  #   FileGroup object
-  # to FileGroup object (returned through promise)
-  utils.anyToFileGroup = (value, settings) ->
+  # Converts user-given value to FileGroup object.
+  utils.valueToGroup = (value, settings) ->
     if value
       if $.isArray(value)
-        files = utils.anyToFile(item, settings) for item in value
-        utils.wrapToPromise(uploadcare.FileGroup files, settings)
+        files = utils.valueToFile(item, settings) for item in value
+        value = uploadcare.FileGroup(files, settings)
       else
-        if utils.isFileGroup(value)
-          utils.wrapToPromise(value)
-        else
-          uploadcare.loadFileGroup(value, settings)
-    else
-      utils.wrapToPromise(null)
+        if not utils.isFileGroup(value)
+          return uploadcare.loadFileGroup(value, settings)
+
+    utils.wrapToPromise(value)
 
   # check if two groups contains same files in same order
   utils.isFileGroupsEqual = (group1, group2) ->
