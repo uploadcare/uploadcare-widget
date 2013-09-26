@@ -1,5 +1,9 @@
 # History
 
+### 0.13.1, 26.09.2013
+
+* widget size reduced from 341 to 293 kb (from 104 to 93 kb gziped)
+
 ### 0.13.0, 26.09.2013
 
 * Widget no longer accepts urls in `value` HTML-attribute or `value()` method.
