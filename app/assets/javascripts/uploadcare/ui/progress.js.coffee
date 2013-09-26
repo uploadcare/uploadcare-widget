@@ -53,15 +53,19 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
   class ns.BaseRenderer
     constructor: (el) ->
-      @element = $ el
+      @element = $(el)
       @element.data 'uploadcare-progress-renderer', this
       @element.addClass 'uploadcare-widget-circle'
       @size = Math.min(@element.width(), @element.height())
+
     setColorTheme: (theme) ->
       if $.type(theme) is 'string'
         theme = @colorThemes[theme]
       @colorTheme = $.extend {}, @colorThemes.default, theme
-    setValue: (value, instant=false) -> throw new Error 'not implemented'
+
+    setValue: (value, instant=false) ->
+      throw new Error 'not implemented'
+
     colorThemes:
       default:
         back: '#e1e5e7'
@@ -112,16 +116,16 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
       @canvasSize = @size * 2
 
-      @element.addClass 'uploadcare-widget-circle--canvas'
-      @element.html(tpl('circle-canvas'))
-
       @setColorTheme 'default'
       @setValue 0, true
 
-      @canvasEl = @element.find('canvas')
+      @canvasEl = $('<canvas>')
                   .css(width: @size, height: @size)
                   .prop(width: @canvasSize, height: @canvasSize)
       @canvasCtx = @canvasEl.get(0).getContext '2d'
+
+      @element.addClass 'uploadcare-widget-circle--canvas'
+      @element.html(@canvasEl)
 
       @__reRender()
 
@@ -160,6 +164,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
     __animateValue: (targetValue) ->
       perStep = if targetValue > @val then 0.05 else -0.05
       @__animIntervalId = setInterval =>
+        # TODO: rewrite with timers, not perStep
         newValue = @val + perStep
         if (perStep > 0 and newValue > targetValue) or (perStep < 0 and newValue < targetValue)
           newValue = targetValue
