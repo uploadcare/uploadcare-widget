@@ -15,7 +15,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'Файл удалён'
     draghere: 'Перетащите файл сюда'
     file:
-      one: '1 файл'
+      one: '%1 файл'
       few: '%1 файла'
       many: '%1 файлов'
       other: '%1 файла'

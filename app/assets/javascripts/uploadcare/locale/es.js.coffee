@@ -13,7 +13,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       image: 'Sólo se permiten imagenes'
     draghere: 'Arrastra los archivos hasta aquí'
     file:
-      one: '1 archivo'
+      one: '%1 archivo'
       other: '%1 archivos'
     buttons:
       cancel: 'Cancelar'

@@ -1,5 +1,9 @@
 # History
 
+### 0.13.2, 30.09.2013
+
+* Translations fixes
+
 ### 0.13.1, 26.09.2013
 
 * widget size reduced from 341 to 293 kb (from 104 to 93 kb gziped)

@@ -16,7 +16,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'File was deleted'
     draghere: 'Drop a file here'
     file:
-      one: '1 file'
+      one: '%1 file'
       other: '%1 files'
     buttons:
       cancel: 'Cancel'

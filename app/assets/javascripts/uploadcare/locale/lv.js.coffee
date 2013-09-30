@@ -7,8 +7,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       image: 'Atļauti tikai attēli'
     draghere: 'Velciet failus šeit'
     file:
-      zero: '0 failu'
-      one: '1 fails'
+      zero: '%1 failu'
+      one: '%1 fails'
       other: '%1 faili'
     buttons:
       cancel: 'Atcelt'
