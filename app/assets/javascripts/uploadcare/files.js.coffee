@@ -15,18 +15,13 @@
 
 namespace 'uploadcare', (ns) ->
 
-  ns.rawFilesFrom = (type, data, settings = {}) ->
-    settings = s.build settings
-    converters[type](settings, data)
-
-  ns.rawFileFrom = ->
-    ns.rawFilesFrom.apply(null, arguments)[0]
-
   ns.fileFrom = ->
-    ns.rawFileFrom.apply(null, arguments).promise()
+    ns.filesFrom.apply(null, arguments)[0]
 
-  ns.filesFrom = ->
-    file.promise() for file in ns.rawFilesFrom.apply(null, arguments)
+  ns.filesFrom = (type, data, settings) ->
+    settings = s.build(settings or {})
+    for file in converters[type](settings, data)
+      file.promise()
 
   converters =
     event: (settings, e) ->
@@ -46,12 +41,13 @@ namespace 'uploadcare', (ns) ->
       unless $.isArray(urls)
         urls = [urls]
       for url in urls
-        new f.UrlFile settings, url
+        new f.UrlFile(settings, url)
 
     uploaded: (settings, uuids) ->
       unless $.isArray(uuids)
         uuids = [uuids]
-      new f.UploadedFile(settings, uuid) for uuid in uuids
+      for uuid in uuids
+        new f.UploadedFile(settings, uuid)
 
     ready: (settings, arrayOfFileData) ->
       unless $.isArray(arrayOfFileData)
