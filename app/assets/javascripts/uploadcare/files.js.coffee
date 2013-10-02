@@ -56,4 +56,4 @@ namespace 'uploadcare', (ns) ->
         if fileData
           new f.ReadyFile(settings, fileData)
         else
-          new f.DeletedFile()
+          new f.DeletedFile(settings)

@@ -9,10 +9,7 @@ namespace 'uploadcare.files', (ns) ->
 
   class ns.BaseFile
 
-    constructor: (settings) ->
-
-      @settings = s.build settings
-
+    constructor: (@settings) ->
       @fileId = null
       @fileName = null
       @fileSize = null
