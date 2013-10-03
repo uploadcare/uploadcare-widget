@@ -130,7 +130,9 @@ widget.<button id="destroy">destroy()</button>;
     // ---
 
     $('#widget-with-crop-option').change(function(){
-      var wraper = $('#widget-with-crop-wrap');
+      // uploadcare.jQuery need for in ie8:
+      // it clones nodes with jquery's expando.
+      var wraper = uploadcare.jQuery('#widget-with-crop-wrap');
       var input = wraper.find('[role="uploadcare-uploader"]')
           .attr('data-crop', this.value);
       wraper.empty().append(input.clone());
