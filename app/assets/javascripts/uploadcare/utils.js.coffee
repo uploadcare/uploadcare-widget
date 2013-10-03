@@ -188,16 +188,16 @@ namespace 'uploadcare.utils', (ns) ->
     if $.isPlainObject type
       data = type
       type = 'GET'
-    $.ajax({type, url, data, crossDomain: true, cache: false}).then (data) ->
+    $.ajax({url, type, data, crossDomain: true, cache: false}).then (data) ->
       if data.error
         text = data.error.content or data.error
-        ns.warn("JSONP error: #{text}")
+        ns.warn("JSONP error: #{text} while loading #{url}")
         $.Deferred().reject(text)
       else
         data
     , (_, textStatus, errorThrown) ->
       text = "#{textStatus} (#{errorThrown})"
-      ns.warn("JSONP unexpected error: #{text}")
+      ns.warn("JSONP unexpected error: #{text} while loading #{url}")
       text
 
   ns.plugin = (fn) ->
