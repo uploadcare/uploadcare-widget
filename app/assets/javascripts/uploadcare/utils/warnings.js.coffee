@@ -8,13 +8,14 @@ namespace 'uploadcare.utils', (ns) ->
     if window.console and console.log
       console.log msg
     else
-      $('<div style="display:none!important"/>').text(msg).appendTo('body')
+      # Uncomment this to see anything in ie8:
+      # $('<div style="display:none!important"/>').text(msg).appendTo('body')
 
   ns.warn = (msg) ->
     if window.console and console.warn
       console.warn msg
     else
-      ns.log msg
+      ns.log "Warning: #{msg}"
 
   messages = {}
   ns.warnOnce = (msg) ->
