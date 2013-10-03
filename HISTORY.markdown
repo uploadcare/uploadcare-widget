@@ -1,5 +1,10 @@
 # History
 
+### 0.13.3, 03.10.2013
+
+* Opening speed is significantly impoved for widget with hundreds of files
+* Restored compatibility with IE8 and some Firefox versions
+
 ### 0.13.2, 30.09.2013
 
 * Translations fixes
