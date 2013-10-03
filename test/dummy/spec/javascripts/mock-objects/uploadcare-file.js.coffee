@@ -63,19 +63,19 @@ mocks.define 'uploadcareFile', ->
   transformer = defaultTransformer = (file) ->
     file.playScenario('fastUploaded')
 
-  fakeRawFilesFrom = (type, data, settings = {}) ->
+  fakeFilesFrom = (type, data, settings = {}) ->
     settings = uploadcare.settings.build settings
     file = transformer new FakeFile(settings, type, data)
-    [file]
+    [file.promise()]
 
-  origRawFilesFrom = uploadcare.rawFilesFrom
+  origFilesFrom = uploadcare.filesFrom
 
   turnOn: ->
-    uploadcare.rawFilesFrom = fakeRawFilesFrom
+    uploadcare.filesFrom = fakeFilesFrom
 
   turnOff: ->
     transformer = defaultTransformer
-    uploadcare.rawFilesFrom = origRawFilesFrom
+    uploadcare.filesFrom = origFilesFrom
 
   onNewFile: (fn) ->
     transformer = fn

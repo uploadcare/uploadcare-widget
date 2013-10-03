@@ -130,9 +130,13 @@ widget.<button id="destroy">destroy()</button>;
     // ---
 
     $('#widget-with-crop-option').change(function(){
-      var newInput = $('<input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url" data-crop>');
-      newInput.attr('data-crop', $('#widget-with-crop-option').val());
-      uploadcare.initialize($('#widget-with-crop-wrap').empty().append(newInput)[0]);
+      // uploadcare.jQuery need for in ie8:
+      // it clones nodes with jquery's expando.
+      var wraper = uploadcare.jQuery('#widget-with-crop-wrap');
+      var input = wraper.find('[role="uploadcare-uploader"]')
+          .attr('data-crop', this.value);
+      wraper.empty().append(input.clone());
+      uploadcare.initialize(wraper);
     });
 
   });

@@ -16,7 +16,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @__doCrop = @settings.crop.enabled
+      $.each @dialogApi.fileColl.get(), (i, file) =>
+        @__setFile file
 
       @dialogApi.fileColl.onAdd.add @__setFile
 
@@ -45,9 +46,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__afterRender state
 
     __afterRender: (state) ->
-      if state is 'unknown' and @__doCrop
+      if state is 'unknown' and @settings.crop.enabled
         @__hideDoneButton()
-      if state is 'image' and @__doCrop
+      if state is 'image' and @settings.crop.enabled
         @__initCrop()
 
     __hideDoneButton: ->
