@@ -24,6 +24,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @filesCountEl = @__find('files-count')
       @footerText = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
+      @__fileTpl = $(tpl 'tab-preview-multiple-file')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__addFile(file)
@@ -105,7 +106,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       $(file).data('dmp-el')
 
     __createFileEl: (file) ->
-      $(tpl 'tab-preview-multiple-file')
+      @__fileTpl.clone()
         .appendTo(@fileListEl)
         .on('click', ROLE_PREFIX + 'file-remove', =>
           @dialogApi.removeFile file)
