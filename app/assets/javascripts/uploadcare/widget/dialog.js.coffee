@@ -90,8 +90,8 @@ namespace 'uploadcare', (ns) ->
       @tabs = {}
 
       if @settings.publicKey
-        @__prepareTabs(tab)
         @__prepareFiles(files)
+        @__prepareTabs(tab)
       else
         @__welcome()
 
@@ -154,17 +154,18 @@ namespace 'uploadcare', (ns) ->
 
     __prepareTabs: (tab) ->
       @addTab 'preview'
-      @__hideTab 'preview'
+      for tabName in @settings.tabs
+        @addTab tabName
 
-      @addTab tabName for tabName in @settings.tabs
-      @switchTab(tab || @settings.tabs[0])
+      if @files.length()
+        @__showTab 'preview'
+        @switchTab 'preview'
+      else
+        @__hideTab 'preview'
+        @switchTab(tab || @settings.tabs[0])
 
     __prepareFiles: (files) ->
       @files.add(file) for file in files
-
-      if files.length
-        @__showTab 'preview'
-        @switchTab 'preview'
 
       @files.onAdd.add =>
         if @settings.previewStep
@@ -173,6 +174,7 @@ namespace 'uploadcare', (ns) ->
             @switchTab 'preview'
         else
           @__resolve()
+
       @files.onRemove.add =>
         if @files.length() == 0
           @__hideTab 'preview'

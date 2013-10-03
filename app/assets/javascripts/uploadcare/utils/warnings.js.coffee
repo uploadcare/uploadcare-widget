@@ -5,11 +5,13 @@
 namespace 'uploadcare.utils', (ns) ->
 
   ns.log = (msg) ->
-    if console and console.log
+    if window.console and console.log
       console.log msg
+    else
+      $('<div style="display:none!important"/>').text(msg).appendTo('body')
 
   ns.warn = (msg) ->
-    if console and console.warn
+    if window.console and console.warn
       console.warn msg
     else
       ns.log msg

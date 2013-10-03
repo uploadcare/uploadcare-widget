@@ -37,7 +37,8 @@ namespace 'uploadcare.utils', (ns) ->
     $.Deferred().resolve(value).promise()
 
   ns.remove = (array, item) ->
-    if (index = array.indexOf(item)) isnt -1
+    index = $.inArray(item, array)
+    if index isnt -1
       array.splice(index, 1)
       true
     else
@@ -188,16 +189,16 @@ namespace 'uploadcare.utils', (ns) ->
     if $.isPlainObject type
       data = type
       type = 'GET'
-    $.ajax({type, url, data, crossDomain: true, cache: false}).then (data) ->
+    $.ajax({url, type, data, crossDomain: true, cache: false}).then (data) ->
       if data.error
         text = data.error.content or data.error
-        ns.warn("JSONP error: #{text}")
+        ns.warn("JSONP error: #{text} while loading #{url}")
         $.Deferred().reject(text)
       else
         data
     , (_, textStatus, errorThrown) ->
       text = "#{textStatus} (#{errorThrown})"
-      ns.warn("JSONP unexpected error: #{text}")
+      ns.warn("JSONP unexpected error: #{text} while loading #{url}")
       text
 
   ns.plugin = (fn) ->

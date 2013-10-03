@@ -4,7 +4,8 @@
   utils,
   tabsCss,
   jQuery: $,
-  locale: {t}
+  locale: {t},
+  files
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
@@ -65,7 +66,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 message = JSON.parse e.data
               if message?.type is 'file-selected'
 
-                file = uploadcare.rawFileFrom 'url', message.url, @settings
+                file = files.UrlFile @settings, message.url
                 if message.filename
                   file.setName message.filename
                 if message.is_image?
