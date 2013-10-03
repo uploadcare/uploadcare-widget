@@ -37,7 +37,8 @@ namespace 'uploadcare.utils', (ns) ->
     $.Deferred().resolve(value).promise()
 
   ns.remove = (array, item) ->
-    if (index = array.indexOf(item)) isnt -1
+    index = $.inArray(item, array)
+    if index isnt -1
       array.splice(index, 1)
       true
     else
