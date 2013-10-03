@@ -185,11 +185,16 @@ namespace 'uploadcare.utils', (ns) ->
   ns.imagePath = (name) ->
     uploadcare.settings.build().scriptBase + 'images/' + name
 
+  ns.ajaxDefaults =
+    dataType: 'json'
+    crossDomain: true
+    cache: false
+
   ns.jsonp = (url, type, data) ->
     if $.isPlainObject type
       data = type
       type = 'GET'
-    $.ajax({url, type, data, crossDomain: true, cache: false}).then (data) ->
+    $.ajax($.extend {url, type, data}, ns.ajaxDefaults).then (data) ->
       if data.error
         text = data.error.content or data.error
         ns.warn("JSONP error: #{text} while loading #{url}")
