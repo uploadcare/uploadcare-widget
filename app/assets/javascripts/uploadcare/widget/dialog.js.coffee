@@ -56,14 +56,6 @@ namespace 'uploadcare', (ns) ->
     promise = utils.then(currentDialogPr, filter, filter)
     promise.reject = currentDialogPr.reject
 
-    fileUploadedDf = $.Deferred()
-    promise.uploadDone = fileUploadedDf.done
-
-    promise.done (fileOrGroup) ->
-      if fileOrGroup
-        fileOrGroup.promise().done ->
-          fileUploadedDf.resolve.apply null, arguments
-
     return promise
 
   class Dialog
