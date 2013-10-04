@@ -18,16 +18,6 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = null
       @imageInfo = null
 
-      @__uploadDf = $.Deferred()
-      @__infoDf = $.Deferred()
-      @__progressState = 'uploading'
-      @__progress = 0
-
-      @__uploadDf
-        .fail (error) =>
-          @__infoDf.reject(error, this)
-        .done @__completeUpload
-
       @__initApi()
       @__notifyApi()
 
@@ -35,10 +25,10 @@ namespace 'uploadcare.files', (ns) ->
       throw new Error('not implemented')
 
     __completeUpload: =>
-      # Update info until @__infoDf resolved.
+      # Update info until @apiPromise resolved.
       timeout = 100
       do check = =>
-        if @__infoDf.state() == 'pending'
+        if @apiPromise.state() == 'pending'
           @__updateInfo().done =>
             setTimeout check, timeout
             timeout += 50
@@ -55,14 +45,14 @@ namespace 'uploadcare.files', (ns) ->
         return
 
       if data.is_ready
-        @__infoDf.resolve(this)
+        @__resolveApi()
 
     __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
         file_id: @fileId,
         pub_key: @settings.publicKey
       .fail =>
-        @__infoDf.reject('info', this)
+        @__rejectApi('info')
       .done @__handleFileData
 
     __progressInfo: ->
@@ -90,7 +80,7 @@ namespace 'uploadcare.files', (ns) ->
         else null
 
     __cancel: =>
-      @__uploadDf.reject('user', this)
+      @__uploadDf.reject('user')
 
     __preview: (selector) =>
       utils.warnOnce "'preview' method is deprecated. " +
@@ -137,17 +127,20 @@ namespace 'uploadcare.files', (ns) ->
       @apiDeferred = $.Deferred()
       @apiPromise = @__extendApi @apiDeferred.promise()
 
-      @__uploadDf.progress (progress) =>
-        if progress > @__progress
-          @__progress = progress
+      @__progressState = 'uploading'
+      @__progress = 0
+
+      @__uploadDf = $.Deferred()
+        .done(@__completeUpload)
+        .done =>
+          @__progressState = 'uploaded'
+          @__progress = 1
           @__notifyApi()
-      @__uploadDf.done =>
-        @__progressState = 'uploaded'
-        @__progress = 1
-        @__notifyApi()
-      @__infoDf.done @__resolveApi
-      @__infoDf.fail @__rejectApi
-      @__uploadDf.fail @__rejectApi
+        .progress (progress) =>
+          if progress > @__progress
+            @__progress = progress
+            @__notifyApi()
+        .fail(@__rejectApi)
 
     promise: ->
       unless @__uploadStarted
