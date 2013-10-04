@@ -7,6 +7,13 @@
 
 namespace 'uploadcare.files', (ns) ->
 
+  # progressState: one of 'error', 'ready', 'uploading', 'uploaded'
+  # internal api
+  #   __notifyApi: file upload in progress
+  #   __resolveApi: file is ready
+  #   __rejectApi: file failed on any stage
+  #   __completeUpload: file uploaded, info required
+
   class ns.BaseFile
 
     constructor: (@settings) ->
@@ -19,7 +26,6 @@ namespace 'uploadcare.files', (ns) ->
       @imageInfo = null
 
       @__initApi()
-      @__notifyApi()
 
     __startUpload: ->
       throw new Error('not implemented')
@@ -113,7 +119,6 @@ namespace 'uploadcare.files', (ns) ->
       @apiDeferred.notify @__progressInfo()
 
     __rejectApi: (err) =>
-      @__progress = 1
       @__progressState = 'error'
       @__notifyApi()
       @apiDeferred.reject err, @__fileInfo()
@@ -129,6 +134,7 @@ namespace 'uploadcare.files', (ns) ->
 
       @__progressState = 'uploading'
       @__progress = 0
+      @__notifyApi()
 
       @__uploadDf = $.Deferred()
         .done(@__completeUpload)
@@ -140,7 +146,8 @@ namespace 'uploadcare.files', (ns) ->
           if progress > @__progress
             @__progress = progress
             @__notifyApi()
-        .fail(@__rejectApi)
+        .fail =>
+          @__rejectApi('upload')
 
     promise: ->
       unless @__uploadStarted

@@ -63,8 +63,6 @@ namespace 'uploadcare.files', (ns) ->
         @__pusherWatcher.stopWatching()
         @__pollWatcher.stopWatching()
 
-      @__uploadDf.promise()
-
 
     ####### Four States of uploader
     __state: (state, data) ->
@@ -73,18 +71,20 @@ namespace 'uploadcare.files', (ns) ->
           @__shutdown = false
 
         progress: (data) =>
-          return if @__shutdown
+          if @__shutdown
+            return
           @fileSize = data.total
-          @__uploadDf.notify(data.done / data.total, this)
+          @__uploadDf.notify(data.done / data.total)
 
         success: (data) =>
-          return if @__shutdown
+          if @__shutdown
+            return
           @__state('progress', data)
           [@fileName, @fileId] = [data.original_filename, data.uuid]
-          @__uploadDf.resolve(this)
+          @__uploadDf.resolve()
 
         error: =>
-          @__uploadDf.reject('upload', this)
+          @__uploadDf.reject()
       )[state](data)
 
 

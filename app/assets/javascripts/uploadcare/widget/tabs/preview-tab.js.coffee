@@ -25,7 +25,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       ifCur = (fn) =>
         =>
-          fn.apply(null, arguments) if file == @file
+          if file == @file
+            fn.apply(null, arguments)
 
       @file.progress ifCur utils.once (info) =>
         @__setState 'unknown', {file: info.incompleteFileInfo}

@@ -18,8 +18,8 @@ namespace 'uploadcare.files', (ns) ->
     __startUpload: ->
       targetUrl = "#{@settings.urlBase}/iframe/"
 
-      if @fileSize > (100*1024*1024)
-        @__uploadDf.reject('size', this)
+      if @fileSize > 100 * 1024 * 1024
+        @__rejectApi('size')
         return
 
       formData = new FormData()
@@ -29,21 +29,17 @@ namespace 'uploadcare.files', (ns) ->
         formData.append('UPLOADCARE_STORE', 1)
       formData.append('file', @__file)
 
-      fail = =>
-        @__uploadDf.reject('upload', this)
-
-      # Naked XHR for progress tracking
-      xhr = new XMLHttpRequest()
-      xhr.addEventListener 'loadend', =>
-        fail() if xhr? && !xhr.status
-      xhr.upload.addEventListener 'progress', (event) =>
-        @__loaded = event.loaded
-        @fileSize = event.totalSize || event.total
-        @__uploadDf.notify(@__loaded / @fileSize, this)
-
       # jQuery Ajax wrapper for JSON and stuff
       $.ajax
-        xhr: -> xhr # Provide our XHR to jQuery
+        # Provide our XHR to jQuery
+        xhr: =>
+          # Naked XHR for progress tracking
+          xhr = $.ajaxSettings.xhr()
+          if xhr.upload
+            xhr.upload.addEventListener 'progress', (e) =>
+              @fileSize = e.totalSize || e.total
+              @__uploadDf.notify(e.loaded / @fileSize)
+          xhr
         crossDomain: true
         type: 'POST'
         url: "#{@settings.urlBase}/iframe/?jsonerrors=1"
@@ -53,15 +49,11 @@ namespace 'uploadcare.files', (ns) ->
         processData: false
         data: formData
         dataType: 'json'
-        error: fail
+        error: @__uploadDf.reject
         success: (data) =>
           if data?.error
             if @settings.autostore && /autostore/i.test(data.error.content)
               utils.commonWarning('autostore')
-            return fail()
-          @__uploadDf.resolve(this)
-
-      @__uploadDf.always =>
-        _xhr = xhr
-        xhr = null
-        _xhr.abort() # Correct order to avoid errors
+            @__uploadDf.reject()
+          else
+            @__uploadDf.resolve()

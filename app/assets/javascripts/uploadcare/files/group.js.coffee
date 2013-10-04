@@ -82,7 +82,6 @@ namespace 'uploadcare.files', (ns) ->
       state: @__progressState
       uploadProgress: progress
       progress: if @__progressState == 'ready' then 1 else progress * 0.9
-      incompleteFileInfo: {}
 
     __buildInfo: (cb) ->
       info = 
