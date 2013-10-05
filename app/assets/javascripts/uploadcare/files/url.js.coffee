@@ -10,9 +10,10 @@
 namespace 'uploadcare.files', (ns) ->
 
   class ns.UrlFile extends ns.BaseFile
+    allEvents: 'progress success error fail'
+
     constructor: (settings, @__url) ->
       super
-      @__shutdown = true
 
       filename = utils.splitUrlRegex.exec(@__url)[3].split('/').pop()
       if filename
@@ -33,11 +34,13 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
+      pusherWatcher = new PusherWatcher(@settings.pusherKey)
+      pollWatcher = new PollWatcher("#{@settings.urlBase}/status/")
+      @__listenWatcher($([pusherWatcher, pollWatcher]))
 
-      @__pollWatcher = new PollWatcher(this, @settings)
-      @__pusherWatcher = new PusherWatcher(this, @settings)
-
-      @__state('start')
+      # turn off pollWatcher if we receive any message from pusher
+      $(pusherWatcher).one @allEvents, =>
+        pollWatcher.stopWatching()
 
       data =
         pub_key: @settings.publicKey
@@ -50,68 +53,47 @@ namespace 'uploadcare.files', (ns) ->
         .fail (error) =>
           if @settings.autostore && /autostore/i.test(error)
             utils.commonWarning('autostore')
-          @__state('error')
+          @__uploadDf.reject()
         .done (data) =>
-          @__token = data.token
-          @__pollWatcher.watch @__token
-          @__pusherWatcher.watch @__token
-          $(@__pusherWatcher).on 'started', =>
-            @__pollWatcher.stopWatching()
+          pusherWatcher.watch data.token
+          pollWatcher.watch data.token
 
       @__uploadDf.always =>
-        @__shutdown = true
-        @__pusherWatcher.stopWatching()
-        @__pollWatcher.stopWatching()
+        $([pusherWatcher, pollWatcher]).off(@allEvents)
+        pusherWatcher.stopWatching()
+        pollWatcher.stopWatching()
 
-
-    ####### Four States of uploader
-    __state: (state, data) ->
-      (
-        start: =>
-          @__shutdown = false
-
-        progress: (data) =>
-          if @__shutdown
-            return
+    __listenWatcher: (watcher) =>
+      watcher
+        .on 'progress', (e, data) =>
           @fileSize = data.total
           @__uploadDf.notify(data.done / data.total)
 
-        success: (data) =>
-          if @__shutdown
-            return
-          @__state('progress', data)
-          [@fileName, @fileId] = [data.original_filename, data.uuid]
+        .on 'success', (e, data) =>
+          $(e.target).trigger('progress', data)
+          @fileId = data.uuid
+          @fileName = data.original_filename
           @__uploadDf.resolve()
 
-        error: =>
-          @__uploadDf.reject()
-      )[state](data)
+        .on 'error fail', @__uploadDf.reject
 
 
   class PusherWatcher
-    constructor: (@uploader, @settings) ->
-      @pusher = pusher.getPusher(@settings.pusherKey, 'url-upload')
+    constructor: (pusherKey) ->
+      @pusher = pusher.getPusher(pusherKey, 'url-upload')
 
-    watch: (@token) ->
-      @channel = @pusher.subscribe("task-status-#{@token}")
+    watch: (token) ->
+      channel = @pusher.subscribe("task-status-#{token}")
 
-      onStarted = =>
-        $(this).trigger 'started'
-        @channel.unbind ev, onStarted for ev in ['progress', 'success']
-
-      for ev in ['progress', 'success']
-        do (ev) =>
-          @channel.bind ev, (data) => @uploader.__state ev, data
-          @channel.bind ev, onStarted  # self-removed callback should be last!
-
-      @channel.bind 'fail', (data) => @uploader.__state('error')
+      channel.bind_all (ev, data) =>
+        $(this).trigger ev, data
 
     stopWatching: ->
-      @pusher.release() if @pusher
-      @pusher = null
+      @pusher.release()
+
 
   class PollWatcher
-    constructor: (@uploader, @settings) ->
+    constructor: (@poolUrl) ->
 
     watch: (@token) ->
       bind = =>
@@ -121,13 +103,14 @@ namespace 'uploadcare.files', (ns) ->
       @interval = setTimeout bind, 0
 
     stopWatching: ->
-      clearTimeout @interval if @interval
+      if @interval
+        clearTimeout @interval
       @interval = null
 
     __updateStatus: ->
-      utils.jsonp("#{@settings.urlBase}/status/", {@token})
+      utils.jsonp(@poolUrl, {@token})
         .fail (error) =>
           @stopWatching()
-          @uploader.__state 'error'
+          $(this).trigger 'error'
         .done (data) =>
-          @uploader.__state data.status, data if data.status in ['progress', 'success', 'error']
+          $(this).trigger data.status, data
