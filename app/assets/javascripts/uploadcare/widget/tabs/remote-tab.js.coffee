@@ -66,7 +66,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 message = JSON.parse e.data
               if message?.type is 'file-selected'
 
-                file = files.UrlFile @settings, message.url
+                file = new files.UrlFile @settings, message.url
                 if message.filename
                   file.setName message.filename
                 if message.is_image?
