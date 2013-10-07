@@ -9,19 +9,25 @@ mocks.define 'pusher', ->
   class Channel
 
     constructor: ->
-      @callbacks = {}
+      @events = {}
+      @all = $.Callbacks()
+
+    bind_all: (fn) ->
+      @all.add fn
 
     bind: (name, fn) ->
-      (@callbacks[name] or= $.Callbacks()).add fn
+      (@events[name] or= $.Callbacks()).add fn
 
     unbind: (name, fn) ->
-      @callbacks[name]?.remove fn
+      @events[name]?.remove fn
 
     send: (name, data) ->
-      @callbacks[name]?.fire data
+      @all.fire name, data
+      @events[name]?.fire data
 
 
-  getChanel = (name) -> channels[name] or= new Channel
+  getChanel = (name) ->
+    channels[name] or= new Channel
 
 
   class FakePusher
