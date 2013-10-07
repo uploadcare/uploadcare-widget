@@ -16,9 +16,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         super
 
         @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
-        @dialogApi.onSwitchedToMe.add @__createIframe
 
         @dialogApi.onSwitched.add (_, switchedToMe) =>
+          if switchedToMe
+            @__createIframe
           @__sendMessage
             type: 'visibility-changed'
             visible: switchedToMe

@@ -101,7 +101,6 @@ namespace 'uploadcare', (ns) ->
         avalibleTabs: @settings.tabs
         fileColl: @files.readOnly()
         onSwitched: $.Callbacks()
-        onSwitchedToMe: $.Callbacks()
         # (fileType, data) or (fileObject)
         addFiles: (fileType, data) =>
           unless @settings.multiple
@@ -122,8 +121,6 @@ namespace 'uploadcare', (ns) ->
         switchTab: @switchTab
       @dfd.progress (name) ->
         api.onSwitched.fire name, (name is tabName)
-        if name is tabName
-          api.onSwitchedToMe.fire name
       api
 
     __resolve: =>
