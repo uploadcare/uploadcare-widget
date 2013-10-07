@@ -11,12 +11,11 @@ namespace 'uploadcare.files', (ns) ->
         @fileId = cdnUrl[1]
         if cdnUrl[2]
           @cdnUrlModifiers = cdnUrl[2]
-        @__completeUpload()
       else
         @__rejectApi('baddata')
 
     __startUpload: ->
-      # nothing to do
+      @__completeUpload()
 
 
   class ns.ReadyFile extends ns.BaseFile
@@ -24,10 +23,9 @@ namespace 'uploadcare.files', (ns) ->
       super
       @fileId = data.uuid
       @__handleFileData(data)
-      @__completeUpload()
 
     __startUpload: ->
-      # nothing to do
+      @__completeUpload()
 
 
   class ns.DeletedFile extends ns.BaseFile
