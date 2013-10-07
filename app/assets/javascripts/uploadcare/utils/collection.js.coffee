@@ -50,14 +50,6 @@ namespace 'uploadcare.utils', (utils) ->
     length: ->
       @__items.length
 
-    readOnly: ->
-      utils.bindAll this, [
-        'get'
-        'length'
-        'onAdd'
-        'onRemove'
-      ]
-
 
   class utils.UniqCollection extends utils.Collection
 
@@ -84,7 +76,8 @@ namespace 'uploadcare.utils', (utils) ->
       super
 
     lastProgresses: ->
-      $(item).data('lastProgress') for item in @__items
+      for item in @__items
+        $(item).data('lastProgress')
 
     add: (item) ->
       unless item and item.done and item.fail and item.then
@@ -114,11 +107,3 @@ namespace 'uploadcare.utils', (utils) ->
         super
 
         @__watchItem newItem
-
-    readOnly: ->
-      $.extend super(), utils.bindAll this, [
-        'onAnyDone'
-        'onAnyFail'
-        'onAnyProgress'
-        'lastProgresses'
-      ]

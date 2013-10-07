@@ -99,7 +99,7 @@ namespace 'uploadcare', (ns) ->
     apiForTab: (tabName) ->
       api =
         avalibleTabs: @settings.tabs
-        fileColl: @files.readOnly()
+        fileColl: @files
         onSwitched: $.Callbacks()
         # (fileType, data) or (fileObject)
         addFiles: (fileType, data) =>
@@ -109,14 +109,10 @@ namespace 'uploadcare', (ns) ->
             @files.add fileType
           else
             if @settings.multiple
-              @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
+              for file in ns.filesFrom(fileType, data, @settings)
+                @files.add file
             else
               @files.add ns.fileFrom(fileType, data, @settings)
-        removeFile: (file) => @files.remove(file)
-        replaceFile: (oldFile, newFile) => @files.replace oldFile, newFile
-        clearFiles: => @files.clear()
-        sortFiles: (comparator) => @files.sort comparator
-        switchToPreview: => @switchTab 'preview'
         done: @__resolve
         switchTab: @switchTab
       @dfd.progress (name) ->

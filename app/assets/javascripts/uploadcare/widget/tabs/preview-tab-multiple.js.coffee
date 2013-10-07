@@ -35,8 +35,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         )
       @__updateContainerView()
 
-      @dialogApi.fileColl.onAdd.add [@__addFile, @__updateContainerView]
-      @dialogApi.fileColl.onRemove.add [@__removeFile, @__updateContainerView]
+      @dialogApi.fileColl.onAdd.add [@__fileAdded, @__updateContainerView]
+      @dialogApi.fileColl.onRemove.add [@__fileRemoved, @__updateContainerView]
 
       @dialogApi.fileColl.onAnyProgress.add @__fileProgress
       @dialogApi.fileColl.onAnyDone.add @__fileDone
@@ -49,7 +49,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             elements = @__find 'file-item'
             index = (file) =>
               elements.index @__fileToEl(file)
-            @dialogApi.sortFiles (a, b) ->
+            @dialogApi.fileColl.sort (a, b) ->
               index(a) - index(b)
 
     __find: (s, context = @container) ->
@@ -96,10 +96,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__find('file-error', fileEl)
         .text t("errors.#{error}")
 
-    __addFile: (file) =>
+    __fileAdded: (file) =>
       $(file).data 'dmp-el', @__createFileEl(file)
 
-    __removeFile: (file) =>
+    __fileRemoved: (file) =>
       @__fileToEl(file).remove()
 
     __fileToEl: (file) ->
@@ -109,4 +109,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__fileTpl.clone()
         .appendTo(@fileListEl)
         .on('click', ROLE_PREFIX + 'file-remove', =>
-          @dialogApi.removeFile file)
+          @dialogApi.fileColl.remove file)

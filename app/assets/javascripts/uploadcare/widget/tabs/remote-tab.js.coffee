@@ -19,7 +19,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
         @dialogApi.onSwitched.add (_, switchedToMe) =>
           if switchedToMe
-            @__createIframe
+            @__createIframe()
           @__sendMessage
             type: 'visibility-changed'
             visible: switchedToMe

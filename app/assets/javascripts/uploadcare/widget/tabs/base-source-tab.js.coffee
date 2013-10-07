@@ -19,7 +19,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @wrap = @container.find ROLE_PREFIX + 'wrap'
 
       notDisabled = ':not(.uploadcare-disabled-el)'
-      @container.on('click', ROLE_PREFIX + 'show-files' + notDisabled, @dialogApi.switchToPreview)
+      @container.on('click', ROLE_PREFIX + 'show-files' + notDisabled, =>
+        @dialogApi.switchTab 'preview')
       @container.on('click', ROLE_PREFIX + 'done' + notDisabled, @dialogApi.done)
 
       updateFooter = =>
