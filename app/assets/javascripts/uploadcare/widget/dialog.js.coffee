@@ -76,13 +76,26 @@ namespace 'uploadcare', (ns) ->
         .appendTo('body')
         .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
 
+      # files collection
       @files = new utils.CollectionOfPromises()
+
+      @files.onRemove.add =>
+        if @files.length() == 0
+          @__hideTab 'preview'
 
       @__bind()
       @tabs = {}
 
+      # validators
+      @validators = []
+
+      if @settings.imagesOnly
+        @validators.push (info) =>
+          if not info.isImage
+            throw new Error('image')
+
       if @settings.publicKey
-        @__prepareFiles(files)
+        @addFiles(files)
         @__prepareTabs(tab)
       else
         @__welcome()
@@ -96,28 +109,45 @@ namespace 'uploadcare', (ns) ->
       promise.reject = @dfd.reject
       return promise
 
+    # (fileType, data) or ([fileObject, fileObject])
+    addFiles: (files, data) =>
+      if data
+        # 'files' is actually file type
+        files = ns.filesFrom(files, data, @settings)
+
+      unless @settings.multiple
+        @files.clear()
+
+      for file in files
+        @files.add file.then @__validationFilter
+
+      if @settings.previewStep
+        @__showTab 'preview'
+        unless @settings.multiple
+          @switchTab 'preview'
+      else
+        @__resolve()
+
+    __validationFilter: (info) =>
+      try
+        for validator in @validators
+            validator(info)
+        info
+      catch err
+        $.Deferred().reject(err.message, info)
+
     apiForTab: (tabName) ->
-      api =
-        avalibleTabs: @settings.tabs
-        fileColl: @files
-        onSwitched: $.Callbacks()
-        # (fileType, data) or (fileObject)
-        addFiles: (fileType, data) =>
-          unless @settings.multiple
-            @files.clear()
-          if utils.isFile fileType
-            @files.add fileType
-          else
-            if @settings.multiple
-              for file in ns.filesFrom(fileType, data, @settings)
-                @files.add file
-            else
-              @files.add ns.fileFrom(fileType, data, @settings)
-        done: @__resolve
-        switchTab: @switchTab
+      onSwitched = $.Callbacks()
       @dfd.progress (name) ->
-        api.onSwitched.fire name, (name is tabName)
-      api
+        onSwitched.fire name, (name is tabName)
+
+      # return
+      avalibleTabs: @settings.tabs
+      fileColl: @files
+      onSwitched: onSwitched
+      addFiles: @addFiles
+      done: @__resolve
+      switchTab: @switchTab
 
     __resolve: =>
       @dfd.resolve @files.get()
@@ -148,21 +178,6 @@ namespace 'uploadcare', (ns) ->
       else
         @__hideTab 'preview'
         @switchTab(tab || @settings.tabs[0])
-
-    __prepareFiles: (files) ->
-      @files.add(file) for file in files
-
-      @files.onAdd.add =>
-        if @settings.previewStep
-          @__showTab 'preview'
-          unless @settings.multiple
-            @switchTab 'preview'
-        else
-          @__resolve()
-
-      @files.onRemove.add =>
-        if @files.length() == 0
-          @__hideTab 'preview'
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()

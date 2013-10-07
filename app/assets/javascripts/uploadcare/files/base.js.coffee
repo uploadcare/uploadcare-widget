@@ -46,10 +46,6 @@ namespace 'uploadcare.files', (ns) ->
       @imageInfo = data.image_info
       @isStored = data.is_stored
 
-      if @settings.imagesOnly && !@isImage
-        @__infoDf.reject('image', this)
-        return
-
       if data.is_ready
         @__resolveApi()
 

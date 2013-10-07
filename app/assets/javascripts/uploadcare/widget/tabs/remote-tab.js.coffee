@@ -72,7 +72,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                   file.setName message.filename
                 if message.is_image?
                   file.setIsImage message.is_image
-                @dialogApi.addFiles file.promise()
+                @dialogApi.addFiles [file.promise()]
 
                 @__sendMessage
                   type: 'file-selected-received'
