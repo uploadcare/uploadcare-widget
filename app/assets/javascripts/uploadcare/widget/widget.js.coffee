@@ -13,13 +13,6 @@ namespace 'uploadcare.widget', (ns) ->
       @currentFile = null
       super
 
-    __initOnUploadComplete: ->
-      __onUploadComplete = $.Callbacks()
-      @onUploadComplete = utils.publicCallbacks __onUploadComplete
-      @__onChange.add (file) =>
-        file?.done (info) =>
-          __onUploadComplete.fire info
-
     __currentObject: ->
       @currentFile
 

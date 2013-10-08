@@ -22,9 +22,10 @@ namespace 'uploadcare.widget', (ns) ->
       @element = $(element)
       @settings = s.build @element.data()
 
-      @__onChange = $.Callbacks()
-      @onChange = utils.publicCallbacks @__onChange
-      @__initOnUploadComplete()
+      @__onUploadComplete = $.Callbacks()
+      @__onChange = $.Callbacks().add (object) =>
+        object?.promise().done (info) =>
+          __onUploadComplete.fire info
 
       @__setupWidget()
 
@@ -103,7 +104,7 @@ namespace 'uploadcare.widget', (ns) ->
           'reloadInfo'
           'value'
         ]
-        @__api.onChange = @onChange
-        @__api.onUploadComplete = @onUploadComplete
+        @__api.onChange = utils.publicCallbacks @__onChange
+        @__api.onUploadComplete = utils.publicCallbacks @__onUploadComplete
         @__api.inputElement = @element.get(0)
       @__api

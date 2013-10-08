@@ -12,13 +12,6 @@ namespace 'uploadcare.widget', (ns) ->
       @currentGroup = null
       super
 
-    __initOnUploadComplete: ->
-      __onUploadComplete = $.Callbacks()
-      @onUploadComplete = utils.publicCallbacks __onUploadComplete
-      @__onChange.add (group) =>
-        group?.promise().done (info) =>
-          __onUploadComplete.fire info
-
     __currentObject: ->
       @currentGroup
 
