@@ -74,7 +74,9 @@ namespace 'uploadcare', (ns) ->
       @content = $(tpl('dialog'))
         .hide()
         .appendTo('body')
-        .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
+
+      if @settings.multiple
+        @content.addClass('uploadcare-dialog-multiple')
 
       # files collection
       @files = new utils.CollectionOfPromises()

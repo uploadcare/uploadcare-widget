@@ -27,7 +27,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__fileTpl = $(tpl 'tab-preview-multiple-file')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
-        @__addFile(file)
+        @__fileAdded(file)
         file.then(
           (info) => @__fileDone(file, info),
           (info) => @__fileFailed(file, info),

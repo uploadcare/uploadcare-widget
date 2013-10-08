@@ -14,7 +14,8 @@ namespace 'uploadcare.utils', (utils) ->
       @onSorted = $.Callbacks()
 
       @__items = []
-      @add(item) for item in items
+      for item in items
+        @add(item)
 
     add: (item) ->
       @__items.push(item)
@@ -25,7 +26,8 @@ namespace 'uploadcare.utils', (utils) ->
         @onRemove.fire(item)
 
     clear: ->
-      @remove(item) for item in @get()
+      for item in @get()
+        @remove(item)
 
     replace: (oldItem, newItem) ->
       unless oldItem is newItem
@@ -54,7 +56,8 @@ namespace 'uploadcare.utils', (utils) ->
   class utils.UniqCollection extends utils.Collection
 
     add: (item) ->
-      return if item in @__items
+      if item in @__items
+        return
       super
 
     __replace: (oldItem, newItem, i) ->
