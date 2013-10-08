@@ -38,8 +38,12 @@ namespace 'uploadcare', (ns) ->
 
     ns.closeDialog()
 
-    if utils.isFileGroup(files)
+    if not files
+      files = []
+    else if utils.isFileGroup(files)
       files = files.files()
+    else if not $.isArray(files)
+      files = [files]
 
     settings = s.build settings
     dialog = new Dialog(settings, files, tab)
@@ -48,10 +52,8 @@ namespace 'uploadcare', (ns) ->
       .always ->
         currentDialogPr = null
 
-    filter = if settings.multiple
-      (files) -> uploadcare.FileGroup(files, settings)
-    else
-      (files) -> files[0]
+    filter = (files) ->
+      if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
     promise = utils.then(currentDialogPr, filter, filter)
     promise.reject = currentDialogPr.reject
@@ -59,14 +61,7 @@ namespace 'uploadcare', (ns) ->
     return promise
 
   class Dialog
-    constructor: (@settings, files, tab) ->
-
-      if files
-        unless $.isArray(files)
-          files = [files]
-      else
-        files = []
-
+    constructor: (@settings, files, tab, @validators=[]) ->
       @dfd = $.Deferred()
       @dfd.always =>
         @__closeDialog()
@@ -89,9 +84,8 @@ namespace 'uploadcare', (ns) ->
       @tabs = {}
 
       # validators
-      @validators = []
-
       if @settings.imagesOnly
+        @settings.imagesOnly = false
         @validators.push (info) =>
           if not info.isImage
             throw new Error('image')
