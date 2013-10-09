@@ -27,7 +27,6 @@ namespace 'uploadcare.widget', (ns) ->
       @__initOnUploadComplete()
 
       @__setupWidget()
-      @template.reset()
 
       @element.on 'change.uploadcare', @reloadInfo
       @reloadInfo()
@@ -41,12 +40,14 @@ namespace 'uploadcare.widget', (ns) ->
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
         if 'file' in @settings.tabs
-          fileButton = @template.addButton('file')
-          fileButton.on 'click', =>
+          @template.addButton('file').on 'click', =>
             @openDialog('file')
 
-        dialogButton = @template.addButton('dialog')
-        dialogButton.on 'click', => @openDialog()
+        @template.addButton('dialog').on 'click', =>
+          @openDialog()
+
+      @template.content.on 'click', '@uploadcare-widget-file-name', =>
+        @openDialog()
 
       # Enable drag and drop
       dragdrop.receiveDrop(@template.dropArea, @__handleDirectSelection)
@@ -54,8 +55,7 @@ namespace 'uploadcare.widget', (ns) ->
         unless active && uploadcare.isDialogOpened()
           @template.dropArea.toggleClass('uploadcare-dragging', active)
 
-      @template.content.on 'click', '@uploadcare-widget-file-name', =>
-        @openDialog()
+      @template.reset()
 
     __infoToValue: (info) ->
       if info.cdnUrlModifiers || @settings.pathValue
@@ -78,10 +78,12 @@ namespace 'uploadcare.widget', (ns) ->
       if object
         @template.listen object
         object
-          .fail (error) =>
-            @__onUploadingFailed(error) if object == @__currentFile()
           .done (info) =>
-            @__onUploadingDone(info) if object == @__currentFile()
+            if object == @__currentFile()
+              @__onUploadingDone(info)
+          .fail (error) =>
+            if object == @__currentFile()
+              @__onUploadingFailed(error)
 
     __onUploadingDone: (info) ->
       @__setValue @__infoToValue(info)
