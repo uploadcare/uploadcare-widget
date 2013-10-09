@@ -1,5 +1,9 @@
 # History
 
+### 0.13.5, 09.10.2013
+
+* uploadcare.filesFrom function exposed in api
+
 ### 0.13.4, 05.10.2013
 
 * Fixed loading from url and social sources. Bug introduced in 0.13.3.
