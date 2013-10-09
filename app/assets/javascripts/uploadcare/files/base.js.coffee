@@ -75,14 +75,12 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
       preview: @apiPromise.preview
-      dimensions: if @isImage then =>
-          utils.warnOnce "'dimensions' method is deprecated. " +
-                         "Use originalImageInfo instead."
-          $.Deferred().resolve(@imageInfo).promise()
-        else null
 
     __cancel: =>
-      @__uploadDf.reject('user')
+      @__rejectApi('user')
+      # This will call __rejectApi again, but it'll be noop
+      # becouse apiDeferred already reolved.
+      @__uploadDf.reject()
 
     __preview: (selector) =>
       utils.warnOnce "'preview' method is deprecated. " +
