@@ -21,6 +21,7 @@ namespace 'uploadcare.widget', (ns) ->
     constructor: (element) ->
       @element = $(element)
       @settings = s.build @element.data()
+      @validators = []
 
       @__onUploadComplete = $.Callbacks()
       @__onChange = $.Callbacks().add (object) =>
@@ -103,6 +104,7 @@ namespace 'uploadcare.widget', (ns) ->
           'openDialog'
           'reloadInfo'
           'value'
+          'validators'
         ]
         @__api.onChange = utils.publicCallbacks @__onChange
         @__api.onUploadComplete = utils.publicCallbacks @__onUploadComplete

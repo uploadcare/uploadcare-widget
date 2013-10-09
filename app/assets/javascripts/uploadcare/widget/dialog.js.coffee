@@ -61,7 +61,7 @@ namespace 'uploadcare', (ns) ->
     return promise
 
   class Dialog
-    constructor: (@settings, files, tab, @validators=[]) ->
+    constructor: (@settings, files, tab) ->
       @dfd = $.Deferred()
       @dfd.always =>
         @__closeDialog()
@@ -115,7 +115,7 @@ namespace 'uploadcare', (ns) ->
         @files.clear()
 
       for file in files
-        @files.add file.then @__validationFilter
+        @files.add file
 
       if @settings.previewStep
         @__showTab 'preview'
@@ -123,14 +123,6 @@ namespace 'uploadcare', (ns) ->
           @switchTab 'preview'
       else
         @__resolve()
-
-    __validationFilter: (info) =>
-      try
-        for validator in @validators
-            validator(info)
-        info
-      catch err
-        $.Deferred().reject(err.message, info)
 
     apiForTab: (tabName) ->
       onSwitched = $.Callbacks()

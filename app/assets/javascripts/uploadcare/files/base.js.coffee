@@ -25,6 +25,11 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = null
       @imageInfo = null
 
+      @validators = (@settings.__validators or []).slice()
+      # this can be exposed in future
+      @onInfoReady = $.Callbacks('once memory')
+      @onInfoReady.add @__runValidators
+
       @__initApi()
 
     __startUpload: ->
@@ -45,6 +50,8 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = data.is_image
       @imageInfo = data.image_info
       @isStored = data.is_stored
+
+      @onInfoReady.fire @__fileInfo()
 
       if data.is_ready
         @__resolveApi()
@@ -98,6 +105,13 @@ namespace 'uploadcare.files', (ns) ->
               .append img
           )
         img.src = "#{info.cdnUrl}-/preview/1600x1600/"
+
+   __runValidators: (info) =>
+     try
+        for v in @validators
+            v(info)
+      catch err
+        @__rejectApi(err.message)
 
     __extendApi: (api) =>
       api.cancel = @__cancel
