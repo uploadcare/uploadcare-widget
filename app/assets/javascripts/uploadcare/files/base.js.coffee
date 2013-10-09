@@ -107,8 +107,8 @@ namespace 'uploadcare.files', (ns) ->
           )
         img.src = "#{info.cdnUrl}-/preview/1600x1600/"
 
-   __runValidators: (info) =>
-     try
+    __runValidators: (info) =>
+      try
         for v in @validators
             v(info)
       catch err

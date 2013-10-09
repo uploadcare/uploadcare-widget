@@ -27,7 +27,7 @@ namespace 'uploadcare.widget', (ns) ->
       @__onUploadComplete = $.Callbacks()
       @__onChange = $.Callbacks().add (object) =>
         object?.promise().done (info) =>
-          __onUploadComplete.fire info
+          @__onUploadComplete.fire info
 
       @__setupWidget()
 

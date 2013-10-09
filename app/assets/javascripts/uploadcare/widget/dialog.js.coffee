@@ -74,7 +74,7 @@ namespace 'uploadcare', (ns) ->
         @content.addClass('uploadcare-dialog-multiple')
 
       # files collection
-      @files = new utils.CollectionOfPromises()
+      @files = new utils.CollectionOfPromises(files)
 
       @files.onRemove.add =>
         if @files.length() == 0
@@ -83,15 +83,7 @@ namespace 'uploadcare', (ns) ->
       @__bind()
       @tabs = {}
 
-      # validators
-      if @settings.imagesOnly
-        @settings.imagesOnly = false
-        @validators.push (info) =>
-          if not info.isImage
-            throw new Error('image')
-
       if @settings.publicKey
-        @addFiles(files)
         @__prepareTabs(tab)
       else
         @__welcome()
