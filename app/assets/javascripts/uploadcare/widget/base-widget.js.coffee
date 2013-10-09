@@ -21,6 +21,7 @@ namespace 'uploadcare.widget', (ns) ->
     constructor: (element) ->
       @element = $(element)
       @settings = s.build @element.data()
+      @currentObject = null
       @validators = []
 
       @__onUploadComplete = $.Callbacks()
@@ -65,15 +66,16 @@ namespace 'uploadcare.widget', (ns) ->
       else
         info.uuid
 
-    __setValue: (value) ->
+    __updateInputValue: (value) ->
       if @element.val() != value
         @element.val(value)
-        @__onChange.fire @__currentObject()
+        @__onChange.fire @currentObject
 
     __reset: =>
-      @__clearCurrentObj()
+      @currentObject?.cancel?()
+      @currentObject = null
       @template.reset()
-      @__setValue ''
+      @__updateInputValue ''
 
     __watchCurrentObject: ->
       object = @__currentFile()
@@ -88,7 +90,7 @@ namespace 'uploadcare.widget', (ns) ->
               @__onUploadingFailed(error)
 
     __onUploadingDone: (info) ->
-      @__setValue @__infoToValue(info)
+      @__updateInputValue @__infoToValue(info)
       @template.setFileInfo(info)
       @template.loaded()
 

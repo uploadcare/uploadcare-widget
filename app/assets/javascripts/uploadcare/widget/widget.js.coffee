@@ -9,25 +9,14 @@
 namespace 'uploadcare.widget', (ns) ->
   class ns.Widget extends ns.BaseWidget
 
-    constructor: (element) ->
-      @currentFile = null
-      super
-
-    __currentObject: ->
-      @currentFile
-
     __currentFile: ->
-      @currentFile
+      @currentObject
 
-    __clearCurrentObj: ->
-      @currentFile?.cancel()
-      @currentFile = null
-
-    __setFile: (newFile) =>
-      unless newFile == @currentFile
+    __setObject: (newFile) =>
+      unless newFile == @currentObject
         @__reset()
         if newFile
-          @currentFile = newFile
+          @currentObject = newFile
           @__watchCurrentObject()
 
     __onUploadingFailed: ->
@@ -36,21 +25,21 @@ namespace 'uploadcare.widget', (ns) ->
 
     value: (value) ->
       if value?
-        @__setFile utils.valueToFile(value, @settings)
+        @__setObject utils.valueToFile(value, @settings)
         this
       else
-        @currentFile
+        @currentObject
 
     __handleDirectSelection: (type, data) =>
       file = uploadcare.fileFrom(type, data, @settings)
       if @settings.previewStep
-        uploadcare.openDialog(file, @settings).done(@__setFile)
+        uploadcare.openDialog(file, @settings).done(@__setObject)
       else
-        @__setFile file
+        @__setObject file
 
     openDialog: (tab) ->
-      uploadcare.openDialog(@currentFile, tab, @settings)
-        .done(@__setFile)
+      uploadcare.openDialog(@currentObject, tab, @settings)
+        .done(@__setObject)
         .fail (file) =>
-          unless file == @currentFile
-            @__setFile null
+          unless file == @currentObject
+            @__setObject null

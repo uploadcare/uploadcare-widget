@@ -51,7 +51,8 @@ namespace 'uploadcare.files', (ns) ->
       @imageInfo = data.image_info
       @isStored = data.is_stored
 
-      @onInfoReady.fire @__fileInfo()
+      if not @onInfoReady.fired()
+        @onInfoReady.fire @__fileInfo()
 
       if data.is_ready
         @__resolveApi()

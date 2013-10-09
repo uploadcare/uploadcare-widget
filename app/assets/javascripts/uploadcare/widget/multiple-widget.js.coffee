@@ -8,21 +8,14 @@
 namespace 'uploadcare.widget', (ns) ->
   class ns.MultipleWidget extends ns.BaseWidget
 
-    constructor: (element) ->
-      @currentGroup = null
-      super
-
-    __currentObject: ->
-      @currentGroup
-
     __currentFile: ->
-      @currentGroup?.promise()
+      @currentObject?.promise()
 
-    __setGroup: (group) =>
-      unless utils.isFileGroupsEqual @currentGroup, group
+    __setObject: (group) =>
+      unless utils.isFileGroupsEqual @currentObject, group
         @__reset()
         if group and group.files().length
-          @currentGroup = group
+          @currentObject = group
           @__watchCurrentObject()
 
     __setGroupByPromise: (groupPr) ->
@@ -34,13 +27,10 @@ namespace 'uploadcare.widget', (ns) ->
         .done (group) =>
           if @__lastGroupPr == groupPr
             @__reset()
-            @__setGroup group
+            @__setObject group
         .fail =>
           if @__lastGroupPr == groupPr
             @template.error 'createGroup'
-
-    __clearCurrentObj: ->
-      @currentGroup = null
 
     __onUploadingFailed: (error) ->
       if error is 'createGroup'
@@ -52,18 +42,18 @@ namespace 'uploadcare.widget', (ns) ->
         @__setGroupByPromise utils.valueToGroup(value, @settings)
         this
       else
-        @currentGroup
+        @currentObject
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
       if @settings.previewStep
-        uploadcare.openDialog(files, @settings).done(@__setGroup)
+        uploadcare.openDialog(files, @settings).done(@__setObject)
       else
-        @__setGroup uploadcare.FileGroup(files, @settings)
+        @__setObject uploadcare.FileGroup(files, @settings)
 
     openDialog: (tab) ->
-      uploadcare.openDialog(@currentGroup, tab, @settings)
-        .done(@__setGroup)
+      uploadcare.openDialog(@currentObject, tab, @settings)
+        .done(@__setObject)
         .fail (group) =>
-          unless utils.isFileGroupsEqual group, @currentGroup
-            @__setGroup null
+          unless utils.isFileGroupsEqual group, @currentObject
+            @__setObject null
