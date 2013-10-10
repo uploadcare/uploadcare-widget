@@ -1,8 +1,15 @@
 # History
 
+### 0.14.0, 11.10.2013
+
+* French localization were added.
+* Custom file's validators can be used to restrict user's choice.
+* Undocumented method `fileInfo.dimensions()` were removed.
+* Undocumented callback `Dialog.uploadDone` were removed.
+
 ### 0.13.5, 09.10.2013
 
-* uploadcare.filesFrom function exposed in api
+* `uploadcare.filesFrom` function exposed in api.
 
 ### 0.13.4, 05.10.2013
 
