@@ -1,0 +1,31 @@
+<p>
+  images only, 500kb max<br>
+  <input role="uploadcare-uploader" data-preview-step id="test1" value="">
+</p>
+
+<p>
+  1mb max<br>
+  <input role="uploadcare-uploader" data-multiple id="test2" value="">
+</p>
+
+<script>
+  $(function() {
+    function imagesOnly(info) {
+      if ( ! info.isImage) {
+        throw new Error('image');
+      }
+      console.log('image loaded', info);
+    }
+    function maxSize(size) {
+      return function (info) {
+        if (info.size > size) {
+          throw new Error('size');
+        }
+        console.log('small loaded', info);
+      }
+    }
+    uploadcare.Widget('#test1').validators.push(imagesOnly);
+    uploadcare.Widget('#test1').validators.push(maxSize(512 * 1024));
+    uploadcare.MultipleWidget('#test2').validators.push(maxSize(1024 * 1024));
+  });
+</script>

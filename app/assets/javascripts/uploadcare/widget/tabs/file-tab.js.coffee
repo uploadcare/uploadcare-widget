@@ -25,7 +25,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       if utils.abilities.fileDragAndDrop
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles type, data
-          @dialogApi.switchToPreview()
+          @dialogApi.switchTab 'preview'
         className = 'draganddrop'
       else
         className = 'no-draganddrop'

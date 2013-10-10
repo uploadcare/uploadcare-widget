@@ -13,7 +13,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__initTabButtonCircle()
 
       notDisabled = ':not(.uploadcare-disabled-el)'
-      @container.on('click', PREFIX + 'back' + notDisabled, @dialogApi.clearFiles)
+      @container.on('click', PREFIX + 'back' + notDisabled, =>
+        @dialogApi.fileColl.clear())
       @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.done)
 
     __initTabButtonCircle: ->

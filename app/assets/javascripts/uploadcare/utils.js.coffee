@@ -60,14 +60,18 @@ namespace 'uploadcare.utils', (ns) ->
     )
     df.promise()
 
+  # Build copy of source with only specified methods.
+  # Handles chaining correctly.
   ns.bindAll = (source, methods) ->
     target = {}
-    for method in methods
-      do (method) ->
-        fn = source[method]
-        target[method] = unless $.isFunction(fn) then fn else ->
+    $.each methods, (i, method) ->
+      fn = source[method]
+      if $.isFunction(fn)
+        target[method] = ->
           result = fn.apply(source, arguments)
           if result == source then target else result # Fix chaining
+      else
+        target[method] = fn
     target
 
   ns.upperCase = (s) ->

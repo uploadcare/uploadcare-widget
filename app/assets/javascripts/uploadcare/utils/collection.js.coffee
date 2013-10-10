@@ -14,7 +14,8 @@ namespace 'uploadcare.utils', (utils) ->
       @onSorted = $.Callbacks()
 
       @__items = []
-      @add(item) for item in items
+      for item in items
+        @add(item)
 
     add: (item) ->
       @__items.push(item)
@@ -25,7 +26,8 @@ namespace 'uploadcare.utils', (utils) ->
         @onRemove.fire(item)
 
     clear: ->
-      @remove(item) for item in @get()
+      for item in @get()
+        @remove(item)
 
     replace: (oldItem, newItem) ->
       unless oldItem is newItem
@@ -50,19 +52,12 @@ namespace 'uploadcare.utils', (utils) ->
     length: ->
       @__items.length
 
-    readOnly: ->
-      utils.bindAll this, [
-        'get'
-        'length'
-        'onAdd'
-        'onRemove'
-      ]
-
 
   class utils.UniqCollection extends utils.Collection
 
     add: (item) ->
-      return if item in @__items
+      if item in @__items
+        return
       super
 
     __replace: (oldItem, newItem, i) ->
@@ -84,7 +79,8 @@ namespace 'uploadcare.utils', (utils) ->
       super
 
     lastProgresses: ->
-      $(item).data('lastProgress') for item in @__items
+      for item in @__items
+        $(item).data('lastProgress')
 
     add: (item) ->
       unless item and item.done and item.fail and item.then
@@ -114,11 +110,3 @@ namespace 'uploadcare.utils', (utils) ->
         super
 
         @__watchItem newItem
-
-    readOnly: ->
-      $.extend super(), utils.bindAll this, [
-        'onAnyDone'
-        'onAnyFail'
-        'onAnyProgress'
-        'lastProgresses'
-      ]

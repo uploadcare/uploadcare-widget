@@ -25,8 +25,8 @@ namespace 'uploadcare.files', (ns) ->
         })
         .css('display', 'none')
         .appendTo('body')
-        .on('load', => @__uploadDf.resolve(this))
-        .on('error', => @__uploadDf.reject('upload', this))
+        .on('load', @__uploadDf.resolve)
+        .on('error', @__uploadDf.reject)
 
       formParam = (name, value) ->
         $('<input>')
