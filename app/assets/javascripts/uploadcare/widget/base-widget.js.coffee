@@ -21,8 +21,8 @@ namespace 'uploadcare.widget', (ns) ->
     constructor: (element) ->
       @element = $(element)
       @settings = s.build @element.data()
+      @validators = @settings.__validators = []
       @currentObject = null
-      @validators = []
 
       @__onUploadComplete = $.Callbacks()
       @__onChange = $.Callbacks().add (object) =>

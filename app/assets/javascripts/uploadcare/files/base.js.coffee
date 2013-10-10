@@ -25,11 +25,10 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = null
       @imageInfo = null
 
-      @validators = (@settings.__validators or []).slice()
       # this can be exposed in future
       @onInfoReady = $.Callbacks('once memory')
-      @onInfoReady.add @__runValidators
 
+      @__setupValidation()
       @__initApi()
 
     __startUpload: ->
@@ -106,6 +105,16 @@ namespace 'uploadcare.files', (ns) ->
               .append img
           )
         img.src = "#{info.cdnUrl}-/preview/1600x1600/"
+
+    __setupValidation: ->
+      @validators = (@settings.__validators or []).slice()
+
+      if @settings.imagesOnly
+        @validators.push (info) ->
+          if not info.isImage
+            throw new Error('image')
+
+      @onInfoReady.add @__runValidators
 
     __runValidators: (info) =>
       try
