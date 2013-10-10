@@ -38,8 +38,12 @@ namespace 'uploadcare', (ns) ->
 
     ns.closeDialog()
 
-    if utils.isFileGroup(files)
+    if not files
+      files = []
+    else if utils.isFileGroup(files)
       files = files.files()
+    else if not $.isArray(files)
+      files = [files]
 
     settings = s.build settings
     dialog = new Dialog(settings, files, tab)
@@ -48,10 +52,8 @@ namespace 'uploadcare', (ns) ->
       .always ->
         currentDialogPr = null
 
-    filter = if settings.multiple
-      (files) -> uploadcare.FileGroup(files, settings)
-    else
-      (files) -> files[0]
+    filter = (files) ->
+      if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
     promise = utils.then(currentDialogPr, filter, filter)
     promise.reject = currentDialogPr.reject
@@ -60,13 +62,6 @@ namespace 'uploadcare', (ns) ->
 
   class Dialog
     constructor: (@settings, files, tab) ->
-
-      if files
-        unless $.isArray(files)
-          files = [files]
-      else
-        files = []
-
       @dfd = $.Deferred()
       @dfd.always =>
         @__closeDialog()
@@ -74,15 +69,21 @@ namespace 'uploadcare', (ns) ->
       @content = $(tpl('dialog'))
         .hide()
         .appendTo('body')
-        .addClass(if @settings.multiple then 'uploadcare-dialog-multiple')
 
-      @files = new utils.CollectionOfPromises()
+      if @settings.multiple
+        @content.addClass('uploadcare-dialog-multiple')
+
+      # files collection
+      @files = new utils.CollectionOfPromises(files)
+
+      @files.onRemove.add =>
+        if @files.length() == 0
+          @__hideTab 'preview'
 
       @__bind()
       @tabs = {}
 
       if @settings.publicKey
-        @__prepareFiles(files)
         @__prepareTabs(tab)
       else
         @__welcome()
@@ -96,35 +97,37 @@ namespace 'uploadcare', (ns) ->
       promise.reject = @dfd.reject
       return promise
 
+    # (fileType, data) or ([fileObject, fileObject])
+    addFiles: (files, data) =>
+      if data
+        # 'files' is actually file type
+        files = ns.filesFrom(files, data, @settings)
+
+      unless @settings.multiple
+        @files.clear()
+
+      for file in files
+        @files.add file
+
+      if @settings.previewStep
+        @__showTab 'preview'
+        unless @settings.multiple
+          @switchTab 'preview'
+      else
+        @__resolve()
+
     apiForTab: (tabName) ->
-      api =
-        avalibleTabs: @settings.tabs
-        fileColl: @files.readOnly()
-        onSwitched: $.Callbacks()
-        onSwitchedToMe: $.Callbacks()
-        # (fileType, data) or (fileObject)
-        addFiles: (fileType, data) =>
-          unless @settings.multiple
-            @files.clear()
-          if utils.isFile fileType
-            @files.add fileType
-          else
-            if @settings.multiple
-              @files.add(file) for file in ns.filesFrom(fileType, data, @settings)
-            else
-              @files.add ns.fileFrom(fileType, data, @settings)
-        removeFile: (file) => @files.remove(file)
-        replaceFile: (oldFile, newFile) => @files.replace oldFile, newFile
-        clearFiles: => @files.clear()
-        sortFiles: (comparator) => @files.sort comparator
-        switchToPreview: => @switchTab 'preview'
-        done: @__resolve
-        switchTab: @switchTab
+      onSwitched = $.Callbacks()
       @dfd.progress (name) ->
-        api.onSwitched.fire name, (name is tabName)
-        if name is tabName
-          api.onSwitchedToMe.fire name
-      api
+        onSwitched.fire name, (name is tabName)
+
+      # return
+      avalibleTabs: @settings.tabs
+      fileColl: @files
+      onSwitched: onSwitched
+      addFiles: @addFiles
+      done: @__resolve
+      switchTab: @switchTab
 
     __resolve: =>
       @dfd.resolve @files.get()
@@ -155,21 +158,6 @@ namespace 'uploadcare', (ns) ->
       else
         @__hideTab 'preview'
         @switchTab(tab || @settings.tabs[0])
-
-    __prepareFiles: (files) ->
-      @files.add(file) for file in files
-
-      @files.onAdd.add =>
-        if @settings.previewStep
-          @__showTab 'preview'
-          unless @settings.multiple
-            @switchTab 'preview'
-        else
-          @__resolve()
-
-      @files.onRemove.add =>
-        if @files.length() == 0
-          @__hideTab 'preview'
 
     __closeDialog: ->
       @content.fadeOut 'fast', => @content.off().remove()

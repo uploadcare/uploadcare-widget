@@ -9,30 +9,29 @@ namespace 'uploadcare.files', (ns) ->
       cdnUrl = utils.splitCdnUrl(fileIdOrUrl)
       if cdnUrl
         @fileId = cdnUrl[1]
-        @cdnUrlModifiers = cdnUrl[2] if cdnUrl[2]
-        @__uploadDf.resolve(this)
+        if cdnUrl[2]
+          @cdnUrlModifiers = cdnUrl[2]
       else
-        @__uploadDf.reject('baddata', this)
+        @__rejectApi('baddata')
 
     __startUpload: ->
-      # nothing to do
+      @__completeUpload()
 
 
   class ns.ReadyFile extends ns.BaseFile
-    constructor: (settings, __fileData) ->
+    constructor: (settings, data) ->
       super
-      @fileId = __fileData.uuid
-      @__handleFileData(__fileData)
-      @__uploadDf.resolve()
+      @fileId = data.uuid
+      @__handleFileData(data)
 
     __startUpload: ->
-      # nothing to do
+      @__completeUpload()
 
 
   class ns.DeletedFile extends ns.BaseFile
     constructor: ->
       super
-      @__uploadDf.reject('deleted')
+      @__rejectApi('deleted')
 
     __startUpload: ->
       # nothing to do

@@ -21,15 +21,19 @@ namespace 'uploadcare.widget', (ns) ->
     constructor: (element) ->
       @element = $(element)
       @settings = s.build @element.data()
+      @validators = @settings.__validators = []
+      @currentObject = null
 
-      @__onChange = $.Callbacks()
-      @onChange = utils.publicCallbacks @__onChange
-      @__initOnUploadComplete()
+      @__onUploadComplete = $.Callbacks()
+      @__onChange = $.Callbacks().add (object) =>
+        object?.promise().done (info) =>
+          @__onUploadComplete.fire info
 
       @__setupWidget()
 
       @element.on 'change.uploadcare', @reloadInfo
-      @reloadInfo()
+      # Delay loading info for allow set custom validators on page load.
+      setTimeout @reloadInfo, 0
 
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
@@ -63,15 +67,16 @@ namespace 'uploadcare.widget', (ns) ->
       else
         info.uuid
 
-    __setValue: (value) ->
+    __updateInputValue: (value) ->
       if @element.val() != value
         @element.val(value)
-        @__onChange.fire @__currentObject()
+        @__onChange.fire @currentObject
 
     __reset: =>
-      @__clearCurrentObj()
+      @currentObject?.cancel?()
+      @currentObject = null
       @template.reset()
-      @__setValue ''
+      @__updateInputValue ''
 
     __watchCurrentObject: ->
       object = @__currentFile()
@@ -86,7 +91,7 @@ namespace 'uploadcare.widget', (ns) ->
               @__onUploadingFailed(error)
 
     __onUploadingDone: (info) ->
-      @__setValue @__infoToValue(info)
+      @__updateInputValue @__infoToValue(info)
       @template.setFileInfo(info)
       @template.loaded()
 
@@ -102,8 +107,9 @@ namespace 'uploadcare.widget', (ns) ->
           'openDialog'
           'reloadInfo'
           'value'
+          'validators'
         ]
-        @__api.onChange = @onChange
-        @__api.onUploadComplete = @onUploadComplete
+        @__api.onChange = utils.publicCallbacks @__onChange
+        @__api.onUploadComplete = utils.publicCallbacks @__onUploadComplete
         @__api.inputElement = @element.get(0)
       @__api
