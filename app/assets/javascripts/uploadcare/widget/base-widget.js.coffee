@@ -32,7 +32,8 @@ namespace 'uploadcare.widget', (ns) ->
       @__setupWidget()
 
       @element.on 'change.uploadcare', @reloadInfo
-      @reloadInfo()
+      # Delay loading info for allow set custom validators on page load.
+      setTimeout @reloadInfo, 0
 
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)

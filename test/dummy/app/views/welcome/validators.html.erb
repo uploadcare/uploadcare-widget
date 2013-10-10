@@ -1,15 +1,16 @@
 <p>
   images only<br>
-  <input role="uploadcare-uploader" id="images-only">
+  <input role="uploadcare-uploader" data-preview-step
+    id="images-only" value="16f13c2f-188d-4dbe-bd18-f2bf2cd1ee18">
 </p>
 
 <script>
   $(function() {
     uploadcare.Widget('#images-only').validators.push(function(info) {
-      console.log('image loaded', info);
       if ( ! info.isImage) {
         throw new Error('image');
       }
-    })
+      console.log('image loaded', info);
+    });
   });
 </script>
