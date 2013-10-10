@@ -7,7 +7,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     errors:
       default: 'Error'
       baddata: 'Incorrect value'
-      size: 'Too big'
+      size: 'File too big'
       upload: 'Can’t upload'
       user: 'Upload canceled'
       info: 'Can’t load info'
@@ -74,7 +74,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               text: 'Please try again with another file.'
               back: 'Choose image'
             size:
-              title: 'The file you selected exceeds the 100 MB limit.'
+              title: 'The file you selected exceeds the limit.'
               text: 'Please try again with another file.'
           multiple:
             title: 'You’ve chosen'
