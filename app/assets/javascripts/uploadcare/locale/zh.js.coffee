@@ -7,7 +7,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     errors:
       default: '错误'
       baddata: '错误数据'
-      size: '太大'
+      size: '文件太大'
       upload: '无法上传'
       user: '上传被取消'
       info: '无法读取信息'
@@ -16,7 +16,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: '文件已被删除'
     draghere: '拖放文件到这里'
     file:
-      other: '%1 文件'
+      other: '%1 个文件'
     buttons:
       cancel: '取消'
       remove: '删除'
@@ -67,10 +67,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             default:
               title: '错误!'
               text: '上传过程中出错。'
-              back: '请再试一次'
+              back: '请重试'
             image:
-              title: '只接受图片文件。'
-              text: '请用另一个文件再试一次。'
+              title: '只允许上传图片文件。'
+              text: '请选择其他文件重新上传。'
               back: '选择图片'
             size:
               title: '你选取的文件超过了100MB的上限'
@@ -81,7 +81,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             clear: '清空'
             done: '完成'
       footer:
-        text: '上传，储存，处理文件，提供自'
+        text: '为您提供文件上传、存储和编辑功能。 Copyright ©'
         link: 'Uploadcare.com'
     crop:
       error:
