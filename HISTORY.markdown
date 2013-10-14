@@ -1,5 +1,9 @@
 # History
 
+### 0.14.1, 14.10.2013
+
+* Chinese localization updated.
+
 ### 0.14.0, 11.10.2013
 
 * French localization was added.
