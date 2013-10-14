@@ -8,7 +8,25 @@
   <input role="uploadcare-uploader" data-multiple id="test2" value="">
 </p>
 
+<p>
+  images only, horizontal images<br>
+  <input role="uploadcare-uploader" data-crop id="test3" value="">
+</p>
+
 <script>
+  UPLOADCARE_LOCALE_TRANSLATIONS = {
+    errors: {
+      vertical: "Horizontal images only"
+    },
+    dialog: {tabs: {preview: {error: {
+      vertical: {
+        title: 'No vertical images is allowed.',
+        text: 'We are sory but image should be horizontal.',
+        back: 'Back'
+      }
+    } } } }
+  }
+
   $(function() {
     function imagesOnly(info) {
       if ( ! info.isImage) {
@@ -16,6 +34,15 @@
       }
       console.log('image loaded', info);
     }
+
+    function horizontalImage(info) {
+      if (info.isImage) {
+        if (info.originalImageInfo.height > info.originalImageInfo.width) {
+          throw new Error('vertical');
+        }
+      }
+    }
+
     function maxSize(size) {
       return function (info) {
         if (info.size > size) {
@@ -24,8 +51,13 @@
         console.log('small loaded', info);
       }
     }
+
     uploadcare.Widget('#test1').validators.push(imagesOnly);
     uploadcare.Widget('#test1').validators.push(maxSize(512 * 1024));
+
     uploadcare.MultipleWidget('#test2').validators.push(maxSize(1024 * 1024));
+
+    uploadcare.Widget('#test3').validators.push(imagesOnly);
+    uploadcare.Widget('#test3').validators.push(horizontalImage);
   });
 </script>

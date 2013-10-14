@@ -2,10 +2,10 @@
 
 ### 0.14.0, 11.10.2013
 
-* French localization were added.
+* French localization was added.
 * Custom file's validators can be used to restrict user's choice.
-* Undocumented method `fileInfo.dimensions()` were removed.
-* Undocumented callback `Dialog.uploadDone` were removed.
+* Undocumented method `fileInfo.dimensions()` was removed.
+* Undocumented callback `Dialog.uploadDone` was removed.
 
 ### 0.13.5, 09.10.2013
 
