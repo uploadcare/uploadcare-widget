@@ -70,7 +70,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   intOptions = (settings, keys) ->
     for key in keys when settings[key]?
-      value = parseInt(settings[key])
+      settings[key] = parseInt(settings[key])
     settings
 
   parseCrop = (cropValue) ->
