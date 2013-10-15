@@ -56,10 +56,20 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       $(ROLE_PREFIX + s, context)
 
     __updateContainerView: =>
-      @filesCountEl.text t('file', @dialogApi.fileColl.length())
+      files = @dialogApi.fileColl.length()
+      tooManyFiles = @settings.multipleMax and files > @settings.multipleMax
+
+      @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles)
+
+      @filesCountEl.text t('file', files)
 
       @footerText
+        .toggleClass('uploadcare-error', tooManyFiles)
         .text(
+          if tooManyFiles
+            t('dialog.tabs.preview.multiple.tooManyFiles')
+              .replace('%max%', @settings.multipleMax)
+          else
             t('dialog.tabs.preview.multiple.question')
         )
 

@@ -78,6 +78,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           multiple:
             title: '你已经选择'
             question: '你要添加所有文件吗？'
+            tooManyFiles: '你选了太多的文件. 最多可选择%max%. 请删除一些。'
             clear: '清空'
             done: '完成'
       footer:

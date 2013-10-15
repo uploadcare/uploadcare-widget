@@ -79,6 +79,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           multiple:
             title: 'You’ve chosen'
             question: 'Do you want to add all of these files?'
+            tooManyFiles: 'You’ve chosen too many files. %max% is maximum.'
             clear: 'Remove all'
             done: 'Done'
       footer:

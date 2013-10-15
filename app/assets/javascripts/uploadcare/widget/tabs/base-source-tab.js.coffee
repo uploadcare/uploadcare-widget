@@ -24,14 +24,24 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @container.on('click', ROLE_PREFIX + 'done' + notDisabled, @dialogApi.done)
 
       updateFooter = =>
-        tooFewFiles = @dialogApi.fileColl.length() is 0
+        files = @dialogApi.fileColl.length()
+        tooManyFiles = @settings.multipleMax and files > @settings.multipleMax
+        tooFewFiles = files is 0
 
-        @container.find("#{ROLE_PREFIX}done, #{ROLE_PREFIX}show-files")
+        @container.find(ROLE_PREFIX + 'done')
+          .toggleClass 'uploadcare-disabled-el', tooManyFiles or tooFewFiles
+
+        @container.find(ROLE_PREFIX + 'show-files')
           .toggleClass 'uploadcare-disabled-el', tooFewFiles
 
         @container.find(ROLE_PREFIX + 'footer-text')
+          .toggleClass('uploadcare-error', tooManyFiles)
           .text(
-              t('dialog.tabs.preview.multiple.title') + ' ' + t('file', @dialogApi.fileColl.length())
+            if tooManyFiles
+              t('dialog.tabs.preview.multiple.tooManyFiles')
+                .replace('%max%', @settings.multipleMax)
+            else
+              t('dialog.tabs.preview.multiple.title') + ' ' + t('file', files)
           )
 
       updateFooter()
