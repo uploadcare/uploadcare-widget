@@ -76,8 +76,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: '你选取的文件超过了100MB的上限'
               text: '请用另一个文件再试一次。'
           multiple:
-            title: '你已经选择'
+            title: '你已经选择 %files%'
             question: '你要添加所有文件吗？'
+            tooManyFiles: '你选了太多的文件. 最多可选择%max%. 请删除一些。'
             clear: '清空'
             done: '完成'
       footer:

@@ -77,7 +77,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Le fichier sélectionné est trop volumineux.'
               text: 'Merci de bien vouloir recommencer avec un autre fichier.'
           multiple:
-            title: 'Vous avez choisi'
+            title: 'Vous avez choisi %files%'
             question: 'Voulez vous ajouter tous ces fichiers ?'
             clear: 'Tout retirer'
             done: 'Terminer'

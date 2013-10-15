@@ -69,6 +69,3 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       , ->
         buttonHovered = false
         updateTheme()
-
-
-
