@@ -19,12 +19,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       super
 
       @container.append tpl('tab-preview-multiple')
+      @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
       @fileListEl = @__find('file-list')
-      @filesCountEl = @__find('files-count')
-      @footerText = @__find('footer-text')
+      @titleEl = @__find('title')
+      @footerTextEl = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
-      @__fileTpl = $(tpl 'tab-preview-multiple-file')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
@@ -57,21 +57,27 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
-      tooManyFiles = @settings.multipleMax and files > @settings.multipleMax
+      tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+      tooFewFiles = files < @settings.multipleMin
 
-      @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles)
+      @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
 
-      @filesCountEl.text t('file', files)
+      @titleEl.text t('dialog.tabs.preview.multiple.title')
+        .replace('%files%', t('file', files))
 
-      @footerText
-        .toggleClass('uploadcare-error', tooManyFiles)
-        .text(
-          if tooManyFiles
-            t('dialog.tabs.preview.multiple.tooManyFiles')
-              .replace('%max%', @settings.multipleMax)
-          else
-            t('dialog.tabs.preview.multiple.question')
-        )
+      footer = if tooManyFiles
+        t('dialog.tabs.preview.multiple.tooManyFiles')
+          .replace('%max%', @settings.multipleMax)
+      else if files and tooFewFiles
+        t('dialog.tabs.preview.multiple.tooFewFiles')
+          .replace('%min%', @settings.multipleMin)
+          .replace('%files%', t('file', files))
+      else
+        t('dialog.tabs.preview.multiple.question')
+
+      @footerTextEl
+        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
+        .text(footer)
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
