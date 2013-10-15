@@ -77,8 +77,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'The file you selected exceeds the limit.'
               text: 'Please try again with another file.'
           multiple:
-            title: 'You’ve chosen'
+            title: 'You’ve chosen %files%'
             question: 'Do you want to add all of these files?'
+            tooManyFiles: 'You’ve chosen too many files. %max% is maximum.'
+            tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
             clear: 'Remove all'
             done: 'Done'
       footer:

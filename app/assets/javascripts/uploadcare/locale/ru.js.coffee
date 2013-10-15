@@ -78,8 +78,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Размер выбранного файла превышает лимит.'
               text: 'Попробуйте загрузить другой файл.'
           multiple:
-            title: 'Вы выбрали'
+            title: 'Вы выбрали %files%'
             question: 'Вы хотите добавить все эти файлы?'
+            tooManyFiles: 'Вы выбрали слишком много файлов. %max% максимум.'
+            tooFewFiles: 'Вы выбрали %files%. Нужно не меньше %min%.'
             clear: 'Удалить все'
             done: 'Готово'
       footer:

@@ -18,6 +18,8 @@ namespace 'uploadcare.settings', (ns) ->
     'locale-translations': null
     'manual-start': false
     'multiple': false
+    'multiple-max': 0
+    'multiple-min': 1
     'path-value': false
     'preview-step': false
     'public-key': null
@@ -66,6 +68,11 @@ namespace 'uploadcare.settings', (ns) ->
         settings[key] = !!value
     settings
 
+  intOptions = (settings, keys) ->
+    for key in keys when settings[key]?
+      value = parseInt(settings[key])
+    settings
+
   parseCrop = (cropValue) ->
     crop = enabled: true
 
@@ -103,6 +110,10 @@ namespace 'uploadcare.settings', (ns) ->
       'multiple',
       'pathValue',
       'previewStep'
+    ]
+    intOptions settings, [
+      'multipleMax',
+      'multipleMin',
     ]
 
     unless $.isPlainObject settings.crop
