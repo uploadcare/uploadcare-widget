@@ -1,5 +1,10 @@
 # History
 
+### 0.14.2, 15.10.2013
+
+* Portuguese localization added.
+* Minimum and maximum limits for number of files in MultipleWidget added.
+
 ### 0.14.1, 14.10.2013
 
 * Chinese localization updated.
