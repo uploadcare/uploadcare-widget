@@ -50,10 +50,3 @@ namespace 'uploadcare.widget', (ns) ->
         uploadcare.openDialog(files, @settings).done(@__setObject)
       else
         @__setObject uploadcare.FileGroup(files, @settings)
-
-    openDialog: (tab) ->
-      uploadcare.openDialog(@currentObject, tab, @settings)
-        .done(@__setObject)
-        .fail (group) =>
-          unless utils.isFileGroupsEqual group, @currentObject
-            @__setObject null

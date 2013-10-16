@@ -39,7 +39,8 @@ namespace 'uploadcare.widget', (ns) ->
       @template = new ns.Template(@settings, @element)
 
       @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
-      @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
+      if @settings.clearable
+        @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
@@ -100,6 +101,10 @@ namespace 'uploadcare.widget', (ns) ->
 
     reloadInfo: =>
       @value @element.val()
+
+    openDialog: (tab) ->
+      uploadcare.openDialog(@currentObject, tab, @settings)
+        .done(@__setObject)
 
     api: ->
       unless @__api

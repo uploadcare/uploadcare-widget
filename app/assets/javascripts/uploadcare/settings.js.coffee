@@ -8,25 +8,30 @@
 namespace 'uploadcare.settings', (ns) ->
 
   defaults =
-    'autostore': false
-    'cdn-base': 'http://www.ucarecdn.com'
-    'crop': 'disabled'
-    'images-only': false
+    # developer hooks
     'live': true
+    'manual-start': false
     'locale': null
     'locale-pluralize': null
     'locale-translations': null
-    'manual-start': false
+    # widget settings
+    'crop': 'disabled'
+    'preview-step': false
+    'images-only': false
+    'clearable': false
     'multiple': false
     'multiple-max': 0
     'multiple-min': 1
     'path-value': false
-    'preview-step': false
+    'tabs': 'file url facebook gdrive instagram evernote'
+    # upload settings
+    'autostore': false
     'public-key': null
     'pusher-key': '79ae88bd931ea68464d9'
-    'social-base': 'https://social.uploadcare.com'
-    'tabs': 'file url facebook gdrive instagram evernote'
+    'cdn-base': 'http://www.ucarecdn.com'
     'url-base': 'https://upload.uploadcare.com'
+    'social-base': 'https://social.uploadcare.com'
+    # maintain settings
     'script-base': if SCRIPT_BASE? then SCRIPT_BASE else ''
     'script-ext': '.min.js'
 
@@ -100,20 +105,21 @@ namespace 'uploadcare.settings', (ns) ->
       'tabs'
     ]
     urlOptions settings, [
-      'cdnBase',
-      'socialBase',
+      'cdnBase'
+      'socialBase'
       'urlBase'
     ]
     flagOptions settings, [
-      'autostore',
-      'imagesOnly',
-      'multiple',
-      'pathValue',
+      'autostore'
+      'imagesOnly'
+      'multiple'
+      'clearable'
+      'pathValue'
       'previewStep'
     ]
     intOptions settings, [
-      'multipleMax',
-      'multipleMin',
+      'multipleMax'
+      'multipleMin'
     ]
 
     unless $.isPlainObject settings.crop
