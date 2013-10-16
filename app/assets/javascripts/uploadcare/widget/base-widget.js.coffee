@@ -39,7 +39,8 @@ namespace 'uploadcare.widget', (ns) ->
       @template = new ns.Template(@settings, @element)
 
       @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
-      @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
+      if @settings.clearable
+        @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
