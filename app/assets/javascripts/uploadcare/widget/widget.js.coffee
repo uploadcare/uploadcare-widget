@@ -35,10 +35,3 @@ namespace 'uploadcare.widget', (ns) ->
         uploadcare.openDialog(file, @settings).done(@__setObject)
       else
         @__setObject file
-
-    openDialog: (tab) ->
-      uploadcare.openDialog(@currentObject, tab, @settings)
-        .done(@__setObject)
-        .fail (file) =>
-          unless file == @currentObject
-            @__setObject null

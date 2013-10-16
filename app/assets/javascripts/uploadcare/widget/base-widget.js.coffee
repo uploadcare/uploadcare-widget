@@ -101,6 +101,10 @@ namespace 'uploadcare.widget', (ns) ->
     reloadInfo: =>
       @value @element.val()
 
+    openDialog: (tab) ->
+      uploadcare.openDialog(@currentObject, tab, @settings)
+        .done(@__setObject)
+
     api: ->
       unless @__api
         @__api = utils.bindAll this, [
