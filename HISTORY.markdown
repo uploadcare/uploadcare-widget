@@ -1,5 +1,11 @@
 # History
 
+### 0.15.0, 16.10.2013
+
+* New settings `clearable` allows user to remove uploaded file from widget.
+  It is turned off by default.
+* Widget does not cleared if user cancels dialog.
+
 ### 0.14.2, 15.10.2013
 
 * Portuguese localization added.
