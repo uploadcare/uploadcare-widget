@@ -46,8 +46,6 @@ def file_list(path)
     .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
 end
 
-WIDGET_PLUGINS = file_list('app/assets/javascripts/uploadcare/plugins')
-  .map { |_, _, without_ext| without_ext }
 IMAGES_TYPES = {
   '.png' => 'image/png',
   '.gif' => 'image/gif',
@@ -105,23 +103,8 @@ def header_comment(version)
   eos
 end
 
-def plugin_comment(version, name)
-  <<-eos
-/*
- * Uploadcare plugin "#{name}"
- * Wigget version: #{version}
- * Date: #{Time.now}
- * Rev: #{`git rev-parse --verify HEAD`[0..9]}
- */
-  eos
-end
-
 def wrap_namespace(js, version)
   ";(function(uploadcare, SCRIPT_BASE){#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
-end
-
-def wrap_plugin(js)
-  ";uploadcare.plugin(function(uploadcare){#{js}});"
 end
 
 def build_widget(version)
@@ -137,20 +120,6 @@ def build_widget(version)
     "#{version}/uploadcare-#{version}.js",
     comment + js
   )
-
-  WIDGET_PLUGINS.each do |name|
-    js = Rails.application.assets["uploadcare/plugins/#{name}"].source
-    js = wrap_plugin(js)
-    comment = plugin_comment(version, name)
-    write_file(
-      "#{version}/plugins/#{name}.min.js",
-      comment + YUI::JavaScriptCompressor.new.compress(js)
-    )
-    write_file(
-      "#{version}/plugins/#{name}.js",
-      comment + js
-    )
-  end
 
   IMAGES.each do |full, base|
     cp_file full, "#{version}/images/#{base}"
@@ -181,11 +150,6 @@ def upload_widget(version)
 
   upload_js.call "uploadcare-#{version}.min.js"
   upload_js.call "uploadcare-#{version}.js"
-
-  WIDGET_PLUGINS.each do |name|
-    upload_js.call "plugins/#{name}.min.js"
-    upload_js.call "plugins/#{name}.js"
-  end
 
   IMAGES.each do |full, base, type|
     upload.call "images/#{base}", type

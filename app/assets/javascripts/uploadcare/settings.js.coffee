@@ -33,7 +33,6 @@ namespace 'uploadcare.settings', (ns) ->
     'social-base': 'https://social.uploadcare.com'
     # maintain settings
     'script-base': if SCRIPT_BASE? then SCRIPT_BASE else ''
-    'script-ext': '.min.js'
 
   presets =
     'tabs':
