@@ -1,5 +1,10 @@
 # History
 
+### 0.15.1, 17.10.2013
+
+* Tiny replacement of jQuery UI sotrable plugin used. This saves about 12kb
+  of gziped widget size for multiupload documents.
+
 ### 0.15.0, 16.10.2013
 
 * New settings `clearable` allows user to remove uploaded file from widget.
