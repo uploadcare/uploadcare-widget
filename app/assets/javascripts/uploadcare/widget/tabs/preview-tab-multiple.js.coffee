@@ -42,19 +42,20 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyDone.add @__fileDone
       @dialogApi.fileColl.onAnyFail.add @__fileFailed
 
-      @dialogApi.onSwitched.add (_, switchedToMe) =>
-        if switchedToMe
-          @__find('file-item').sortable
-            axis: 'y'
-            start: (info) =>
-              info.dragged.css('opacity', .3)
-            finish: (info) =>
-              info.dragged.css('opacity', 1)
-              elements = @__find 'file-item'
-              index = (file) =>
-                elements.index @__fileToEl(file)
-              @dialogApi.sortFiles (a, b) ->
-                index(a) - index(b)
+      @__setupSorting()
+
+    __setupSorting: ->
+      @fileListEl.sortable
+        axis: 'y'
+        start: (info) ->
+          info.dragged.css('visibility', 'hidden')
+        finish: (info) =>
+          info.dragged.css('visibility', 'visible')
+          elements = @__find 'file-item'
+          index = (file) =>
+            elements.index @__fileToEl(file)
+          @dialogApi.fileColl.sort (a, b) ->
+            index(a) - index(b)
 
     __find: (s, context = @container) ->
       $(ROLE_PREFIX + s, context)

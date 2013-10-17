@@ -3,11 +3,12 @@
 	function nearestFinder (targets) {
 		this.targets = targets;
 		this.last = null;
+		this.update();
 	}
 	nearestFinder.prototype = {
 		update: function() {
 			var rows = {};
-	
+
 			this.targets.each(function(i) {
 				var offset = $(this).offset();
 				if ( ! (offset.top in rows)) {
@@ -42,13 +43,13 @@
 				}
 			}
 
-			return $(nearest);
+			return nearest;
 		},
 
 		findNotLast: function(x, y) {
 			var nearest = this.find(x, y);
 
-			if (this.last && nearest && this.last[0] == nearest[0]) {
+			if (this.last && nearest && this.last == nearest) {
 				return null;
 			}
 
@@ -66,7 +67,9 @@
 				zIndex: 1000,
 				start: $.noop,
 				move: $.noop,
-				finish: $.noop
+				finish: $.noop,
+				items: null,
+				keepFake: false
 			}, o);
 
 			function fixTouch(e) {
@@ -77,8 +80,7 @@
 				}
 			}
 
-			this.off('mousedown.moveable touchstart.movable');
-			this.on('mousedown.moveable touchstart.movable', function(eDown) {
+			this.on('mousedown.moveable touchstart.movable', o.items, null, function(eDown) {
 				fixTouch(eDown);
 
 				if ( ! o.anyButton && eDown.which != 1) {
@@ -87,7 +89,7 @@
 				eDown.preventDefault();
 
 				var dragged = false;
-				var $dragged = $(eDown.currentTarget);
+				var $dragged = $(this);
 				var $fake = false;
 				var originalPos = $dragged.position();  // offset parent
 
@@ -140,19 +142,15 @@
 
 					var dx = eUp.pageX - eDown.pageX;
 					var dy = eUp.pageY - eDown.pageY;
-					var keepFake = false;
 					dragged = false;
 					o.finish({
 						event: eUp,
 						dragged: $dragged,
 						fake: $fake,
 						dx: dx,
-						dy: dy,
-						keepFake: function() {
-							keepFake = true;
-						}
+						dy: dy
 					});
-					if ( ! keepFake) {
+					if ( ! o.keepFake) {
 						$fake.remove();
 					}
 				});
@@ -161,41 +159,43 @@
 		},
 
 		sortable: function(o) {
-			var oMovable = $.extend({}, o);
+			var oMovable = $.extend({
+				items: '>*'
+			}, o);
 			var o = $.extend({
-				check_bounds:
-					function (info) {
-						return true;
-					},
+				checkBounds: function () {return true;},
 				start: $.noop,
 				attach: $.noop,
 				move: $.noop,
 				finish: $.noop
 			}, o);
-			var finder = new nearestFinder(this);
+			var finder;
 			var initialNext = false;
+			var parent = this;
 
 			oMovable.start = function(info) {
 				o.start(info);
-				finder.update();
+				finder = new nearestFinder(parent.find(oMovable.items));
 				initialNext = info.dragged.next();
 			};
 
 			oMovable.move = function(info) {
 				info.nearest = null;
 
-				if (o.check_bounds(info)) {
+				if (o.checkBounds(info)) {
 					var offset = info.fake.offset();
-					var $nearest = info.nearest = finder.findNotLast(
+					var nearest = finder.findNotLast(
 						offset.left + info.dragged.width() / 2, offset.top);
+					info.nearest = $(nearest);
 
-					if ($nearest && $nearest[0] != info.dragged[0]) {
-						if (info.dragged.nextAll().filter($nearest[0]).length > 0) {
-							info.dragged.insertAfter($nearest);
+					if (nearest && nearest != info.dragged[0]) {
+						if (info.dragged.nextAll().filter(nearest).length > 0) {
+							info.dragged.insertAfter(nearest);
 						} else {
-							info.dragged.insertBefore($nearest);
+							info.dragged.insertBefore(nearest);
 						}
 						o.attach(info);
+						finder.last = null;
 						finder.update();
 					}
 				} else if (finder.last !== null) {
@@ -215,11 +215,12 @@
 			oMovable.finish = function(info) {
 				var offset = info.fake.offset();
 				info.nearest = null;
-				if (o.check_bounds(info)) {
-					info.nearest = finder.find(
-						offset.left + info.dragged.width() / 2, offset.top);
+				if (o.checkBounds(info)) {
+					info.nearest = $(finder.find(
+						offset.left + info.dragged.width() / 2, offset.top));
 				}
 				o.finish(info);
+				finder = null;
 			};
 
 			return this.moveable(oMovable);
