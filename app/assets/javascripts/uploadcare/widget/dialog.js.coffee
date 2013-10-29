@@ -186,7 +186,7 @@ namespace 'uploadcare', (ns) ->
         .hide()
         .addClass('uploadcare-dialog-tabs-panel')
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .appendTo(@content.find('.uploadcare-dialog-body'))
+        .appendTo(@content.find('.uploadcare-dialog-panel'))
 
       tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
@@ -204,7 +204,7 @@ namespace 'uploadcare', (ns) ->
         .appendTo(@content.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
-      @content.find('.uploadcare-dialog-body')
+      @content.find('.uploadcare-dialog-panel')
         .find('.uploadcare-dialog-selected-tab')
           .removeClass('uploadcare-dialog-selected-tab')
           .end()
