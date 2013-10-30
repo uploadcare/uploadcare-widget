@@ -1,5 +1,11 @@
 # History
 
+### 0.15.2, 30.10.2013
+
+* Widget's width can be easily changed in css.
+* Css is now prepended to head, this allows overriding css rules without
+  `important` keyword.
+
 ### 0.15.1, 17.10.2013
 
 * Tiny replacement of jQuery UI sotrable plugin used. This saves about 12kb
