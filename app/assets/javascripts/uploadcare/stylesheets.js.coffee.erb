@@ -13,4 +13,4 @@ uploadcare.settings.waitForSettings null, ->
     style.styleSheet.cssText = css
   else
     style.appendChild(document.createTextNode(css))
-  $('head').append(style)
+  $('head').prepend(style)

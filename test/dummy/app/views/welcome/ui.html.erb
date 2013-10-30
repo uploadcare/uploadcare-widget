@@ -1,13 +1,21 @@
-<style>
-  dt {
-    font-family: monospace;
-    margin-bottom: .5em;
-  }
+<% content_for :head do %>
+  <style>
+    dt {
+      font-family: monospace;
+      margin-bottom: .5em;
+    }
 
-  dd {
-    margin: 0 0 1.5em 0;
-  }
-</style>
+    dd {
+      margin: 0 0 1.5em 0;
+    }
+
+    .uploadcare-dialog .uploadcare-dialog-panel {
+      width: auto;
+      min-width: 600px;
+      max-width: 1000px;
+    }
+  </style>
+<% end %>
 
 <dl>
   <dt>.uploadcare-dialog-button</dt>
@@ -36,3 +44,5 @@
     <button class="uploadcare-dialog-button-success" disabled>click me</button>
   </dd>
 </dl>
+
+<input type="hidden" role="uploadcare-uploader" data-crop="">
