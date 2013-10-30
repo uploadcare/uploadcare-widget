@@ -44,6 +44,7 @@ $dialog-free-space-for-close-button: y(2);
 }
 
 .uploadcare-dialog-inner-wrap1 {
+  position: relative;
   display: table;
   width: 100%;
   height: 100%;
@@ -55,28 +56,21 @@ $dialog-free-space-for-close-button: y(2);
 }
 
 .uploadcare-dialog-close {
+  $size: y(1.5);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  width: $size;
+  height: $size;
+  line-height: $size;
+  font-size: $size * .9;
+  font-weight: bold;
+  color: #1d1d1d;
+  cursor: pointer;
   position: absolute;
+  right: 0;
   top: 4px;
-  left: 0;
-  width: 100%;
-  min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
-  > div {
-    $size: y(1.5);
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: none;
-    width: $size;
-    height: $size;
-    line-height: $size;
-    font-size: $size * .9;
-    font-weight: bold;
-    color: #1d1d1d;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
 }
 
 
