@@ -1,5 +1,9 @@
 # History
 
+### 0.15.3, 05.11.2013
+
+* Fixed bug, do not allow set value while page loading.
+
 ### 0.15.2, 30.10.2013
 
 * Widget's width can be easily changed in css.
