@@ -24,6 +24,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     value: (value) ->
       if value?
+        @__hasValue = true
         @__setObject utils.valueToFile(value, @settings)
         this
       else

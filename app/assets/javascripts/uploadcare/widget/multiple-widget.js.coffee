@@ -39,6 +39,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     value: (value) ->
       if value?
+        @__hasValue = true
         @__setGroupByPromise utils.valueToGroup(value, @settings)
         this
       else
