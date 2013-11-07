@@ -23,7 +23,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-max': 0
     'multiple-min': 1
     'path-value': false
-    'tabs': 'file url facebook gdrive instagram evernote'
+    'tabs': 'file url facebook gdrive instagram evernote box'
     # upload settings
     'autostore': false
     'public-key': null
@@ -36,7 +36,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   presets =
     'tabs':
-      all: 'file url facebook vk dropbox gdrive instagram evernote'
+      all: 'file url facebook vk dropbox gdrive instagram evernote box'
       default: defaults.tabs
 
 
