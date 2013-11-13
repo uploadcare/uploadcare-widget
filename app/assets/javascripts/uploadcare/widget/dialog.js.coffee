@@ -88,8 +88,6 @@ namespace 'uploadcare', (ns) ->
       else
         @__welcome()
 
-      @__updateFirstTab()
-
       @content.fadeIn('fast')
 
     publicPromise: ->
@@ -142,10 +140,12 @@ namespace 'uploadcare', (ns) ->
         $(el).is(panel) or $.contains(panel.get(0), el)
 
       @content.on 'click', (e) =>
-        @__reject() unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
+        unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
+          @__reject()
 
       $(window).on 'keydown', (e) =>
-        @__reject() if e.which == 27 # Escape
+        if e.which == 27 # Escape
+          @__reject()
 
     __prepareTabs: (tab) ->
       @addTab 'preview'
@@ -160,7 +160,8 @@ namespace 'uploadcare', (ns) ->
         @switchTab(tab || @settings.tabs[0])
 
     __closeDialog: ->
-      @content.fadeOut 'fast', => @content.off().remove()
+      @content.fadeOut 'fast', =>
+        @content.off().remove()
 
     addTab: (name) ->
       {tabs} = uploadcare.widget
@@ -219,25 +220,13 @@ namespace 'uploadcare', (ns) ->
             .show()
       @dfd.notify @currentTab
 
-    __updateFirstTab: ->
-      # Needs to solve issue with border-radius in CSS
-      # (WebKit bug: http://tech.bluesmoon.info/2011/04/overflowhidden-border-radius-and.html)
-      className = 'uploadcare-dialog-first-tab'
-      @content.find(".#{className}").removeClass className
-      @content.find(".uploadcare-dialog-tab").filter( ->
-        # :visible selector doesn't work because whole dialog might be hidden
-        $(this).css('display') != 'none'
-      ).first().addClass className
-
     __showTab: (tab) ->
       @content.find(".uploadcare-dialog-tab-#{tab}").show()
-      @__updateFirstTab()
 
     __hideTab: (tab) ->
       if @currentTab == tab
         @switchTab @settings.tabs[0]
       @content.find(".uploadcare-dialog-tab-#{tab}").hide()
-      @__updateFirstTab()
 
     __welcome: ->
       @addTab('welcome')

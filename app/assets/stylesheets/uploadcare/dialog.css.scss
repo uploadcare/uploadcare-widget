@@ -104,27 +104,14 @@ $dialog-free-space-for-close-button: y(2);
   margin: 0;
   padding: 0;
   background: $dialog-body-shadow-color;
-  border-bottom-left-radius: $dialog-corner-radius;
-  border-top-left-radius: $dialog-corner-radius;
-  overflow: hidden;
-  position: relative;
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0; right: 0; bottom: 0;
-    width: 0;
-    border-left: 1px solid $dialog-body-border-color;
-  }
+  border-right: 1px solid $dialog-body-border-color;
 }
 
   $frame-size: 50px;
   .uploadcare-dialog-tab {
     @include prefix(box-sizing, border-box);
-    width: $dialog-tab-width;
     height: 56px;
     border-bottom: 1px solid $dialog-body-border-color;
-    border-right: 1px solid $dialog-body-border-color;
     cursor: pointer;
 
     position: relative;
@@ -209,9 +196,6 @@ $dialog-free-space-for-close-button: y(2);
     .uploadcare-dialog-tab-skydrive:after {
       background-position: 0 ($frame-size * -10);
     }
-    .uploadcare-dialog-first-tab {
-      border-top-left-radius: $dialog-corner-radius;
-    }
 
 
 .uploadcare-dialog-tabs-panel {
@@ -221,8 +205,6 @@ $dialog-free-space-for-close-button: y(2);
   padding: y(1) x(1);
   height: $dialog-body-height;
   line-height: y(1);
-  border-bottom-right-radius: $dialog-corner-radius;
-  border-top-right-radius: $dialog-corner-radius;
   font-size: $dialog-body-font-size;
   color: $dialog-body-text-color;
 
@@ -456,7 +438,6 @@ $dialog-footer-height: y(3);
   height: $dialog-button-height;
   padding: 16px 30px;
   margin: 0 x(-1) y(-1);
-  border-bottom-right-radius: $dialog-corner-radius;
   .uploadcare-dialog-button-success {
     float: right;
   }
@@ -769,21 +750,14 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
   padding: y(1) x(1);
   @include prefix(box-sizing, border-box);
 
-  &.uploadcare-dialog-remote-iframe-wrap {
-    padding: 0;
-    iframe {
-      border-top-right-radius: $dialog-corner-radius;
-      border-bottom-right-radius: $dialog-corner-radius;
-      .uploadcare-dialog-multiple & {
-        border-bottom-right-radius: 0;
-      }
-    }
-  }
-
   .uploadcare-dialog-multiple & {
     height: $dialog-body-height - $dialog-footer-height;
     margin: y(-1) x(-1) 0;
   }
+}
+
+.uploadcare-dialog-remote-iframe-wrap {
+  padding: 0;
 }
 
 .uploadcare-dialog-source-base-footer {
