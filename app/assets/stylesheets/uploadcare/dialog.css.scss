@@ -157,6 +157,9 @@ $dialog-free-space-for-close-button: y(2);
       border-right: 1px solid $dialog-body-background-color;
       &, &:hover {
         background-color: $dialog-body-background-color;
+        &:after {
+          @extend %tab-icons-active-image;
+        }
       }
       &:after {
         @extend %tab-icons-active-image;
