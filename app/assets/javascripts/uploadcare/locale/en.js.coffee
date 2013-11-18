@@ -39,6 +39,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             instagram: 'Instagram'
             vk: 'VK'
             evernote: 'Evernote'
+            box: 'Box'
             url: 'Arbitrary Links'
         url:
           title: 'Files from the Web'
