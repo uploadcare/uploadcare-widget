@@ -1,5 +1,9 @@
 # History
 
+### 0.15.4, 18.11.2013
+
+* Box.com tab added.
+
 ### 0.15.3, 05.11.2013
 
 * Fixed bug, do not allow set value while page loading.
