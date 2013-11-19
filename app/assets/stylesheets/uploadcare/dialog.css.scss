@@ -122,7 +122,7 @@ $dialog-free-space-for-close-button: y(2);
   .uploadcare-dialog-tab {
     @include prefix(box-sizing, border-box);
     width: $dialog-tab-width;
-    height: 60px;
+    height: 56px;
     border-bottom: 1px solid $dialog-body-border-color;
     border-right: 1px solid $dialog-body-border-color;
     cursor: pointer;
