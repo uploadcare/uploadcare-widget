@@ -1,5 +1,9 @@
 # History
 
+### 0.15.5, 25.11.2013
+
+* Skydrive tab added.
+
 ### 0.15.4, 18.11.2013
 
 * Box.com tab added.
