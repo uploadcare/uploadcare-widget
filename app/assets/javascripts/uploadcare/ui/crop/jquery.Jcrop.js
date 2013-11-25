@@ -1293,15 +1293,12 @@
 
       if (options.keySupport) {
         $keymgr.keydown(parseKey).blur(onBlur);
-        if (ie6mode || !options.fixedSupport) {
-          $keymgr.css({
-            position: 'absolute',
-            left: '-20px'
-          });
-          $keywrap.append($keymgr).insertBefore($img);
-        } else {
-          $keymgr.insertBefore($img);
-        }
+
+        $keymgr.css({
+          position: 'absolute',
+          left: '-20px'
+        });
+        $keywrap.append($keymgr).insertBefore($img);
       }
 
 
