@@ -31,12 +31,10 @@ namespace 'uploadcare', (ns) ->
 
   # files - null, or File object, or array of File objects, or FileGroup object
   # result - File objects or FileGroup object (depends on settings.multiple)
-  ns.openDialog = (files, tab, settings) ->
+  ns.openPanel = (placeholder, files, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
-
-    ns.closeDialog()
 
     if not files
       files = []
@@ -46,29 +44,33 @@ namespace 'uploadcare', (ns) ->
       files = [files]
 
     settings = s.build settings
-    dialog = new Dialog(settings, files, tab)
-
-    currentDialogPr = dialog.publicPromise()
-      .always ->
-        currentDialogPr = null
+    panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
     filter = (files) ->
       if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
-    promise = utils.then(currentDialogPr, filter, filter)
-    promise.reject = currentDialogPr.reject
+    promise = utils.then(panel, filter, filter)
+    promise.reject = panel.reject
+    promise
 
-    return promise
+  ns.openDialog = (files, tab, settings) ->
+    ns.closeDialog()
 
-  class Dialog
-    constructor: (@settings, files, tab) ->
+    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+                                   files, tab, settings)
+    currentDialogPr.always ->
+        currentDialogPr = null
+        dialog.fadeOut 'fast', ->
+          dialog.remove()
+
+  class Panel
+    constructor: (@settings, @placeholder, files, tab) ->
       @dfd = $.Deferred()
-      @dfd.always =>
-        @__closeDialog()
+      @dfd.always @__closePanel
 
-      @content = $(tpl('dialog'))
-        .hide()
-        .appendTo('body')
+      @content = $(tpl('panel'))
+      @placeholder.replaceWith(@content)
 
       if @settings.multiple
         @content.addClass('uploadcare-dialog-multiple')
@@ -80,7 +82,6 @@ namespace 'uploadcare', (ns) ->
         if @files.length() == 0
           @__hideTab 'preview'
 
-      @__bind()
       @tabs = {}
 
       if @settings.publicKey
@@ -88,11 +89,9 @@ namespace 'uploadcare', (ns) ->
       else
         @__welcome()
 
-      @content.fadeIn('fast')
-
     publicPromise: ->
       promise = @dfd.promise()
-      promise.reject = @dfd.reject
+      promise.reject = @__reject
       return promise
 
     # (fileType, data) or ([fileObject, fileObject])
@@ -133,20 +132,6 @@ namespace 'uploadcare', (ns) ->
     __reject: =>
       @dfd.reject @files.get()
 
-    __bind: ->
-      panel = @content.find('.uploadcare-dialog-panel')
-
-      isPartOfWindow = (el) ->
-        $(el).is(panel) or $.contains(panel.get(0), el)
-
-      @content.on 'click', (e) =>
-        unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
-          @__reject()
-
-      $(window).on 'keydown', (e) =>
-        if e.which == 27 # Escape
-          @__reject()
-
     __prepareTabs: (tab) ->
       @addTab 'preview'
       for tabName in @settings.tabs
@@ -159,14 +144,14 @@ namespace 'uploadcare', (ns) ->
         @__hideTab 'preview'
         @switchTab(tab || @settings.tabs[0])
 
-    __closeDialog: ->
-      @content.fadeOut 'fast', =>
-        @content.off().remove()
+    __closePanel: =>
+      @content.replaceWith(@placeholder)
 
     addTab: (name) ->
       {tabs} = uploadcare.widget
 
-      return if name of @tabs
+      if name of @tabs
+        return
 
       TabCls = switch name
         when 'file' then tabs.FileTab
