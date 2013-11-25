@@ -177,6 +177,7 @@ namespace 'uploadcare', (ns) ->
         when 'vk' then tabs.RemoteTabFor 'vk'
         when 'evernote' then tabs.RemoteTabFor 'evernote'
         when 'box' then tabs.RemoteTabFor 'box'
+        when 'skydrive' then tabs.RemoteTabFor 'skydrive'
         when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
         when 'welcome' then tabs.StaticTabWith 'welcome'
 

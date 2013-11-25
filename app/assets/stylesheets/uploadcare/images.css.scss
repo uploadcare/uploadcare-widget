@@ -20,6 +20,7 @@
 
 %loading-image {
   background-image: url("<%= utils.imagePath('loading-spinner.gif') %>");
+  background-size: 25px 25px;
 }
 
 %remove-button-image {
