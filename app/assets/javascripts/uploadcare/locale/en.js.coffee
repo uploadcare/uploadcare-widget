@@ -40,6 +40,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             vk: 'VK'
             evernote: 'Evernote'
             box: 'Box'
+            skydrive: 'SkyDrive'
             url: 'Arbitrary Links'
         url:
           title: 'Files from the Web'

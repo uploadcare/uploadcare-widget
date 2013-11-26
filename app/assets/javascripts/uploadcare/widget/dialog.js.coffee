@@ -21,6 +21,12 @@
 
 namespace 'uploadcare', (ns) ->
 
+  $(window).on 'keydown', (e) =>
+    if ns.isDialogOpened()
+      if e.which == 27  # Escape
+        e.stopImmediatePropagation()
+        ns.closeDialog()
+
   currentDialogPr = null
 
   ns.isDialogOpened = ->
@@ -31,12 +37,10 @@ namespace 'uploadcare', (ns) ->
 
   # files - null, or File object, or array of File objects, or FileGroup object
   # result - File objects or FileGroup object (depends on settings.multiple)
-  ns.openDialog = (files, tab, settings) ->
+  ns.openPanel = (placeholder, files, tab, settings) ->
     if $.isPlainObject(tab)
       settings = tab
       tab = null
-
-    ns.closeDialog()
 
     if not files
       files = []
@@ -46,29 +50,39 @@ namespace 'uploadcare', (ns) ->
       files = [files]
 
     settings = s.build settings
-    dialog = new Dialog(settings, files, tab)
-
-    currentDialogPr = dialog.publicPromise()
-      .always ->
-        currentDialogPr = null
+    panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
     filter = (files) ->
       if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
-    promise = utils.then(currentDialogPr, filter, filter)
-    promise.reject = currentDialogPr.reject
+    promise = utils.then(panel, filter, filter)
+    promise.reject = panel.reject
+    promise
 
-    return promise
+  ns.openDialog = (files, tab, settings) ->
+    ns.closeDialog()
 
-  class Dialog
-    constructor: (@settings, files, tab) ->
+    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    dialog.on 'click', (e) ->
+      showStoper = $(e.target).parents().addBack()
+      if not showStoper.filter('.uploadcare-dialog-panel, a').length
+        ns.closeDialog()
+
+    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+                                   files, tab, settings)
+    currentDialogPr.always ->
+        currentDialogPr = null
+        dialog.fadeOut 'fast', ->
+          dialog.remove()
+
+  class Panel
+    constructor: (@settings, placeholder, files, tab) ->
       @dfd = $.Deferred()
-      @dfd.always =>
-        @__closeDialog()
+      @dfd.always @__closePanel
 
-      @content = $(tpl('dialog'))
-        .hide()
-        .appendTo('body')
+      @content = $(tpl('panel'))
+      @placeholder = $(placeholder)
+      @placeholder.replaceWith(@content)
 
       if @settings.multiple
         @content.addClass('uploadcare-dialog-multiple')
@@ -80,7 +94,6 @@ namespace 'uploadcare', (ns) ->
         if @files.length() == 0
           @__hideTab 'preview'
 
-      @__bind()
       @tabs = {}
 
       if @settings.publicKey
@@ -88,13 +101,9 @@ namespace 'uploadcare', (ns) ->
       else
         @__welcome()
 
-      @__updateFirstTab()
-
-      @content.fadeIn('fast')
-
     publicPromise: ->
       promise = @dfd.promise()
-      promise.reject = @dfd.reject
+      promise.reject = @__reject
       return promise
 
     # (fileType, data) or ([fileObject, fileObject])
@@ -135,18 +144,6 @@ namespace 'uploadcare', (ns) ->
     __reject: =>
       @dfd.reject @files.get()
 
-    __bind: ->
-      panel = @content.find('.uploadcare-dialog-panel')
-
-      isPartOfWindow = (el) ->
-        $(el).is(panel) or $.contains(panel.get(0), el)
-
-      @content.on 'click', (e) =>
-        @__reject() unless !utils.inDom(e.target) or isPartOfWindow(e.target) or $(e.target).is('a')
-
-      $(window).on 'keydown', (e) =>
-        @__reject() if e.which == 27 # Escape
-
     __prepareTabs: (tab) ->
       @addTab 'preview'
       for tabName in @settings.tabs
@@ -159,13 +156,14 @@ namespace 'uploadcare', (ns) ->
         @__hideTab 'preview'
         @switchTab(tab || @settings.tabs[0])
 
-    __closeDialog: ->
-      @content.fadeOut 'fast', => @content.off().remove()
+    __closePanel: =>
+      @content.replaceWith(@placeholder)
 
     addTab: (name) ->
       {tabs} = uploadcare.widget
 
-      return if name of @tabs
+      if name of @tabs
+        return
 
       TabCls = switch name
         when 'file' then tabs.FileTab
@@ -219,25 +217,13 @@ namespace 'uploadcare', (ns) ->
             .show()
       @dfd.notify @currentTab
 
-    __updateFirstTab: ->
-      # Needs to solve issue with border-radius in CSS
-      # (WebKit bug: http://tech.bluesmoon.info/2011/04/overflowhidden-border-radius-and.html)
-      className = 'uploadcare-dialog-first-tab'
-      @content.find(".#{className}").removeClass className
-      @content.find(".uploadcare-dialog-tab").filter( ->
-        # :visible selector doesn't work because whole dialog might be hidden
-        $(this).css('display') != 'none'
-      ).first().addClass className
-
     __showTab: (tab) ->
       @content.find(".uploadcare-dialog-tab-#{tab}").show()
-      @__updateFirstTab()
 
     __hideTab: (tab) ->
       if @currentTab == tab
         @switchTab @settings.tabs[0]
       @content.find(".uploadcare-dialog-tab-#{tab}").hide()
-      @__updateFirstTab()
 
     __welcome: ->
       @addTab('welcome')

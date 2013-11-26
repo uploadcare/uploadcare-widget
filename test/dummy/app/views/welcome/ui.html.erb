@@ -14,7 +14,45 @@
       min-width: 600px;
       max-width: 1000px;
     }
+    #placeholderholder {
+      width: 800px;
+      margin: 20px;
+    }
+    #placeholder {
+      height: 616px;
+      background: url(/assets/uploadcare/images/loading-spinner.gif) no-repeat 50% 50%;
+      background-size: 25px 25px;
+    }
+    #placeholderholder .uploadcare-dialog-tab,
+    #placeholderholder .uploadcare-dialog-tabs,
+    #placeholderholder .uploadcare-dialog-panel {
+      background: transparent;
+      border: 0;
+    }
+    #placeholderholder .uploadcare-dialog-tabs {
+      float: none;
+      width: auto;
+      height: auto;
+      overflow: hidden;
+    }
+    #placeholderholder .uploadcare-dialog-tab {
+      width: 56px;
+      float: left;
+    }
+    #placeholderholder .uploadcare-dialog-tabs-panel {
+      margin-left: 0;
+    }
   </style>
+  <script>
+    function replace() {
+      uploadcare.openPanel('#placeholder').done(function(file) {
+        file.done(function(fileInfo) {
+          window.location = fileInfo.cdnUrl;
+        }).fail(replace);
+      }).fail(replace);
+    }
+    $(replace);
+  </script>
 <% end %>
 
 <dl>
@@ -46,3 +84,7 @@
 </dl>
 
 <input type="hidden" role="uploadcare-uploader" data-crop="">
+
+<div id="placeholderholder">
+  <div id="placeholder"></div>
+</div>
