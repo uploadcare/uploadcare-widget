@@ -21,6 +21,12 @@
 
 namespace 'uploadcare', (ns) ->
 
+  $(window).on 'keydown', (e) =>
+    if ns.isDialogOpened()
+      if e.which == 27  # Escape
+        e.stopImmediatePropagation()
+        ns.closeDialog()
+
   currentDialogPr = null
 
   ns.isDialogOpened = ->
@@ -57,6 +63,11 @@ namespace 'uploadcare', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    dialog.on 'click', (e) ->
+      showStoper = $(e.target).parents().addBack()
+      if not showStoper.filter('.uploadcare-dialog-panel, a').length
+        ns.closeDialog()
+
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
     currentDialogPr.always ->
