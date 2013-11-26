@@ -14,18 +14,33 @@
       min-width: 600px;
       max-width: 1000px;
     }
-    #placeholder {
+    #placeholderholder {
       width: 800px;
+      margin: 20px;
+    }
+    #placeholder {
       height: 616px;
       background: url(/assets/uploadcare/images/loading-spinner.gif) no-repeat 50% 50%;
       background-size: 25px 25px;
     }
-    #placeholderholder {
-      width: 800px;
-      margin: 50px;
-    }
+    #placeholderholder .uploadcare-dialog-tab,
+    #placeholderholder .uploadcare-dialog-tabs,
     #placeholderholder .uploadcare-dialog-panel {
-      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+      background: transparent;
+      border: 0;
+    }
+    #placeholderholder .uploadcare-dialog-tabs {
+      float: none;
+      width: auto;
+      height: auto;
+      overflow: hidden;
+    }
+    #placeholderholder .uploadcare-dialog-tab {
+      width: 56px;
+      float: left;
+    }
+    #placeholderholder .uploadcare-dialog-tabs-panel {
+      margin-left: 0;
     }
   </style>
   <script>

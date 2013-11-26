@@ -2,7 +2,6 @@ $dialog-tab-width: x(3);
 $dialog-body-height: y(28);
 
 $dialog-width: x(36);
-$dialog-height: $dialog-body-height;
 
 $dialog-corner-radius: 8px;
 $dialog-link-color: #1a85ad;
@@ -75,7 +74,6 @@ $dialog-free-space-for-close-button: y(2);
 
 
 .uploadcare-dialog-panel {
-  height: $dialog-height;
   overflow: hidden;
   background: $dialog-body-background-color;
   font-weight: normal;
@@ -526,7 +524,7 @@ $dialog-footer-height: y(3);
   width: 100%;
   height: 100%;
   @include prefix(box-sizing, border-box);
-  background: #f8f8f8;
+  background: rgba(255,255,255,.64);
   border: dashed $border-width #c5cacd;
   text-align: center;
   border-radius: 3px;
@@ -566,6 +564,7 @@ $dialog-footer-height: y(3);
     line-height: 2em;
     &:before {
       @extend %arrow-image;
+      background-repeat: no-repeat;
       content: '';
       display: block;
       position: absolute;
