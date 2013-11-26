@@ -35,6 +35,22 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
+  ns.openDialog = (files, tab, settings) ->
+    ns.closeDialog()
+
+    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    dialog.on 'click', (e) ->
+      showStopper = $(e.target).parents().addBack().filter('.uploadcare-dialog-panel, a')
+      if not showStopper.length
+        ns.closeDialog()
+
+    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+                                   files, tab, settings)
+    currentDialogPr.always ->
+        currentDialogPr = null
+        dialog.fadeOut 'fast', ->
+          dialog.remove()
+
   # files - null, or File object, or array of File objects, or FileGroup object
   # result - File objects or FileGroup object (depends on settings.multiple)
   ns.openPanel = (placeholder, files, tab, settings) ->
@@ -58,22 +74,6 @@ namespace 'uploadcare', (ns) ->
     promise = utils.then(panel, filter, filter)
     promise.reject = panel.reject
     promise
-
-  ns.openDialog = (files, tab, settings) ->
-    ns.closeDialog()
-
-    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
-    dialog.on 'click', (e) ->
-      showStoper = $(e.target).parents().addBack()
-      if not showStoper.filter('.uploadcare-dialog-panel, a').length
-        ns.closeDialog()
-
-    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
-                                   files, tab, settings)
-    currentDialogPr.always ->
-        currentDialogPr = null
-        dialog.fadeOut 'fast', ->
-          dialog.remove()
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
