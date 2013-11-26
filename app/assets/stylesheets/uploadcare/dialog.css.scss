@@ -250,7 +250,7 @@ $dialog-free-space-for-close-button: y(2);
   text-align: center;
   color: #888888;
   margin-top: x(.6);
-  a {
+  .uploadcare-dialog & a {
     color: #c2c2c2;
     text-decoration: none;
     &:hover {

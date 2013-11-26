@@ -14,7 +14,30 @@
       min-width: 600px;
       max-width: 1000px;
     }
+    #placeholder {
+      width: 800px;
+      height: 616px;
+      background: url(/assets/uploadcare/images/loading-spinner.gif) no-repeat 50% 50%;
+      background-size: 25px 25px;
+    }
+    #placeholderholder {
+      width: 800px;
+      margin: 50px;
+    }
+    #placeholderholder .uploadcare-dialog-panel {
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    }
   </style>
+  <script>
+    function replace() {
+      uploadcare.openPanel('#placeholder').done(function(file) {
+        file.done(function(fileInfo) {
+          window.location = fileInfo.cdnUrl;
+        }).fail(replace);
+      }).fail(replace);
+    }
+    $(replace);
+  </script>
 <% end %>
 
 <dl>
@@ -46,3 +69,7 @@
 </dl>
 
 <input type="hidden" role="uploadcare-uploader" data-crop="">
+
+<div id="placeholderholder">
+  <div id="placeholder"></div>
+</div>

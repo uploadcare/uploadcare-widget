@@ -76,11 +76,12 @@ namespace 'uploadcare', (ns) ->
           dialog.remove()
 
   class Panel
-    constructor: (@settings, @placeholder, files, tab) ->
+    constructor: (@settings, placeholder, files, tab) ->
       @dfd = $.Deferred()
       @dfd.always @__closePanel
 
       @content = $(tpl('panel'))
+      @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
       if @settings.multiple
