@@ -1,4 +1,3 @@
-# = require_self
 # = require ./tabs/base-source-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
@@ -13,8 +12,9 @@
   utils,
   locale: {t},
   templates: {tpl},
-  ui: {progress: {Circle}}
+  ui: {progress: {Circle}},
   files,
+  widget: {tabs},
   settings: s,
   jQuery: $
 } = uploadcare
@@ -51,6 +51,7 @@ namespace 'uploadcare', (ns) ->
         dialog.fadeOut 'fast', ->
           dialog.remove()
 
+
   # files - null, or File object, or array of File objects, or FileGroup object
   # result - File objects or FileGroup object (depends on settings.multiple)
   ns.openPanel = (placeholder, files, tab, settings) ->
@@ -74,6 +75,27 @@ namespace 'uploadcare', (ns) ->
     promise = utils.then(panel, filter, filter)
     promise.reject = panel.reject
     promise
+
+
+  registeredTabs = {}
+
+  ns.registerTab = (tabName, constructor) ->
+    registeredTabs[tabName] = constructor
+
+  ns.registerTab('file', tabs.FileTab)
+  ns.registerTab('url', tabs.UrlTab)
+  ns.registerTab('facebook', tabs.RemoteTabFor 'facebook')
+  ns.registerTab('dropbox', tabs.RemoteTabFor 'dropbox')
+  ns.registerTab('gdrive', tabs.RemoteTabFor 'gdrive')
+  ns.registerTab('instagram', tabs.RemoteTabFor 'instagram')
+  ns.registerTab('vk', tabs.RemoteTabFor 'vk')
+  ns.registerTab('evernote', tabs.RemoteTabFor 'evernote')
+  ns.registerTab('box', tabs.RemoteTabFor 'box')
+  ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
+  ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
+  ns.registerTab 'preview', (tabPanel, tabButton, apiForTab, settings) ->
+    tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
+    new tabCls(tabPanel, tabButton, apiForTab, settings)
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
@@ -160,24 +182,11 @@ namespace 'uploadcare', (ns) ->
       @content.replaceWith(@placeholder)
 
     addTab: (name) ->
-      {tabs} = uploadcare.widget
 
       if name of @tabs
         return
 
-      TabCls = switch name
-        when 'file' then tabs.FileTab
-        when 'url' then tabs.UrlTab
-        when 'facebook' then tabs.RemoteTabFor 'facebook'
-        when 'dropbox' then tabs.RemoteTabFor 'dropbox'
-        when 'gdrive' then tabs.RemoteTabFor 'gdrive'
-        when 'instagram' then tabs.RemoteTabFor 'instagram'
-        when 'vk' then tabs.RemoteTabFor 'vk'
-        when 'evernote' then tabs.RemoteTabFor 'evernote'
-        when 'box' then tabs.RemoteTabFor 'box'
-        when 'skydrive' then tabs.RemoteTabFor 'skydrive'
-        when 'preview' then (if @settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab)
-        when 'welcome' then tabs.StaticTabWith 'welcome'
+      TabCls = registeredTabs[name]
 
       if not TabCls
         throw new Error("No such tab: #{name}")
@@ -227,5 +236,6 @@ namespace 'uploadcare', (ns) ->
 
     __welcome: ->
       @addTab('welcome')
-      @__addFakeTab tabName for tabName in @settings.tabs
+      for tabName in @settings.tabs
+        @__addFakeTab tabName
       @switchTab('welcome')
