@@ -1,6 +1,4 @@
 Dummy::Application.routes.draw do
-  get "integrations/index"
-
   root to: "welcome#toc"
   get "welcome/index"
   get "welcome/locale"
