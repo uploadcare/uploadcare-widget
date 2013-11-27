@@ -35,6 +35,9 @@
       height: auto;
       overflow: hidden;
     }
+    #placeholderholder .uploadcare-dialog-selected-tab {
+      margin: 0;
+    }
     #placeholderholder .uploadcare-dialog-tab {
       width: 56px;
       float: left;
@@ -44,12 +47,45 @@
     }
   </style>
   <script>
+    function GroupTab(container, button, dialogApi, settings) {
+      var group = settings.favoriteGroup;
+      if ( ! group) {
+        throw new Error('No group found in options.')
+      }
+
+      dialogApi.onSwitched.add(function(name, toThis) {
+        if (toThis) {
+          container.empty();
+          uploadcare.loadFileGroup(group).done(function(fileGroup) {
+            $.each(fileGroup.files(), function(i, file) {
+              file.done(function(fileInfo) {
+                var item = $('<a>').attr('href', fileInfo.cdnUrl)
+                          .text(fileInfo.name);
+                item.on('click', function(e) {
+                  e.preventDefault();
+                  dialogApi.addFiles([file]);
+                });
+                container.append($('<p>').append(item));
+              });
+            });
+          });
+        }
+      });
+    }
+    uploadcare.registerTab('favorite', GroupTab)
+
     function replace() {
-      uploadcare.openPanel('#placeholder').done(function(file) {
+      uploadcare.openPanel('#placeholder', null, {
+        tabs: 'file url facebook gdrive instagram evernote box skydrive favorite',
+        favoriteGroup: '8552e3eb-02b2-4614-9678-dafb1c43a2f5~6'
+      })
+      .done(function(file) {
         file.done(function(fileInfo) {
           window.location = fileInfo.cdnUrl;
-        }).fail(replace);
-      }).fail(replace);
+        })
+        .fail(replace);
+      })
+      .fail(replace);
     }
     $(replace);
   </script>

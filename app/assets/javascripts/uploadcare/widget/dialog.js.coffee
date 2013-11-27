@@ -79,21 +79,21 @@ namespace 'uploadcare', (ns) ->
 
   registeredTabs = {}
 
-  ns.addTabConstructor = (tabName, constructor) ->
+  ns.registerTab = (tabName, constructor) ->
     registeredTabs[tabName] = constructor
 
-  ns.addTabConstructor('file', tabs.FileTab)
-  ns.addTabConstructor('url', tabs.UrlTab)
-  ns.addTabConstructor('facebook', tabs.RemoteTabFor 'facebook')
-  ns.addTabConstructor('dropbox', tabs.RemoteTabFor 'dropbox')
-  ns.addTabConstructor('gdrive', tabs.RemoteTabFor 'gdrive')
-  ns.addTabConstructor('instagram', tabs.RemoteTabFor 'instagram')
-  ns.addTabConstructor('vk', tabs.RemoteTabFor 'vk')
-  ns.addTabConstructor('evernote', tabs.RemoteTabFor 'evernote')
-  ns.addTabConstructor('box', tabs.RemoteTabFor 'box')
-  ns.addTabConstructor('skydrive', tabs.RemoteTabFor 'skydrive')
-  ns.addTabConstructor('welcome', tabs.StaticTabWith 'welcome')
-  ns.addTabConstructor 'preview', (tabPanel, tabButton, apiForTab, settings) ->
+  ns.registerTab('file', tabs.FileTab)
+  ns.registerTab('url', tabs.UrlTab)
+  ns.registerTab('facebook', tabs.RemoteTabFor 'facebook')
+  ns.registerTab('dropbox', tabs.RemoteTabFor 'dropbox')
+  ns.registerTab('gdrive', tabs.RemoteTabFor 'gdrive')
+  ns.registerTab('instagram', tabs.RemoteTabFor 'instagram')
+  ns.registerTab('vk', tabs.RemoteTabFor 'vk')
+  ns.registerTab('evernote', tabs.RemoteTabFor 'evernote')
+  ns.registerTab('box', tabs.RemoteTabFor 'box')
+  ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
+  ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
+  ns.registerTab 'preview', (tabPanel, tabButton, apiForTab, settings) ->
     tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
     new tabCls(tabPanel, tabButton, apiForTab, settings)
 
