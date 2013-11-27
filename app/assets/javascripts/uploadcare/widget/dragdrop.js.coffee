@@ -40,7 +40,7 @@ namespace 'uploadcare.dragdrop', (ns) ->
           false
 
     onDelay = 0
-    offDelay = if $.browser.opera then 200 else 1
+    offDelay = 1
 
     active = false
     $ ->

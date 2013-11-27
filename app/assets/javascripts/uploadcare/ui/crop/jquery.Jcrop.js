@@ -33,7 +33,7 @@
 
   $.Jcrop = function (obj, opt) {
     var options = $.extend({}, $.Jcrop.defaults),
-        docOffset, lastcurs, ie6mode = false;
+        docOffset, lastcurs;
 
     // Internal Methods {{{
     function px(n) {
@@ -254,12 +254,10 @@
     function newTracker() //{{{
     {
       var trk = $('<div></div>').addClass(cssClass('tracker'));
-      if ($.browser.msie) {
-        trk.css({
-          opacity: 0,
-          backgroundColor: 'white'
-        });
-      }
+      trk.css({
+        opacity: 0,
+        backgroundColor: 'white'
+      });
       return trk;
     }
     //}}}
@@ -267,9 +265,6 @@
     // }}}
     // Initialization {{{
     // Sanitize some options {{{
-    if ($.browser.msie && ($.browser.version.split('.')[0] === '6')) {
-      ie6mode = true;
-    }
     if (typeof(obj) !== 'object') {
       obj = $(obj)[0];
     }
@@ -327,12 +322,11 @@
 
     var boundx = $img.width(),
         boundy = $img.height(),
-        
-        
+
         $div = $('<div />').width(boundx).height(boundy).addClass(cssClass('holder')).css({
-        position: 'relative',
-        backgroundColor: options.bgColor
-      }).insertAfter($origimg).append($img);
+          position: 'relative',
+          backgroundColor: options.bgColor
+        }).insertAfter($origimg).append($img);
 
     if (options.addClass) {
       $div.addClass(options.addClass);
@@ -366,12 +360,6 @@
 
       $img_holder.append($img2);
 
-    }
-
-    if (ie6mode) {
-      $sel.css({
-        overflowY: 'hidden'
-      });
     }
 
     var bound = options.boundary;
@@ -1485,9 +1473,6 @@
         selection: $sel
       }
     };
-
-    if ($.browser.msie)
-      $div.bind('selectstart', function () { return false; });
 
     $origimg.data('Jcrop', api);
     return api;
