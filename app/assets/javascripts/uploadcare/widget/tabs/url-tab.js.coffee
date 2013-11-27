@@ -9,17 +9,15 @@
 namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.UrlTab extends ns.BaseSourceTab
 
-    # starts with "http(s)://" and has at least one dot
-    urlRegexp = /^(http|https):\/\/.+\..+$/i
+    # starts with scheme
+    urlRegexp = /^[a-z][a-z0-9+\-.]*:?\/\//
 
     fixUrl = (url) ->
       url = $.trim url
       if urlRegexp.test url
         url
-      else if urlRegexp.test 'http://' + url
-        'http://' + url
       else
-        null
+        'http://' + url
 
     constructor: ->
       super
@@ -28,10 +26,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       input = @wrap.find('@uploadcare-dialog-url-input')
       input.on 'change keyup input', ->
-        button.attr('disabled', !fixUrl $(this).val())
+        button.prop('disabled', !$.trim(this.value))
 
       button = @wrap.find('@uploadcare-dialog-url-submit')
-        .attr('disabled', true)
+        .prop('disabled', true)
 
       @wrap.find('@uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl input.val()
