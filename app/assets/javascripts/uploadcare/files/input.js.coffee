@@ -29,9 +29,8 @@ namespace 'uploadcare.files', (ns) ->
         .on('error', @__uploadDf.reject)
 
       formParam = (name, value) ->
-        $('<input>')
+        $('<input type="hidden">')
           .attr({
-            type: 'hidden'
             name: name
           })
           .val(value)

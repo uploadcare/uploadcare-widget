@@ -2,10 +2,9 @@
   namespace,
   files,
   jQuery: $,
-  utils: {abilities}
+  utils: {abilities},
+  templates: {tpl},
 } = uploadcare
-
-{tpl} = uploadcare.templates
 
 namespace 'uploadcare.ui.progress', (ns) ->
 

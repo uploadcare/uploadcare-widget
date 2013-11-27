@@ -3,9 +3,9 @@
 {
   namespace,
   jQuery: $,
+  templates: {tpl},
   utils
 } = uploadcare
-{tpl} = uploadcare.templates
 
 namespace 'uploadcare.crop', (ns) ->
 
