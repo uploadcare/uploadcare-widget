@@ -1,5 +1,16 @@
 # History
 
+### 0.16.0, 28.11.2013
+
+* `uploadcare.openPanel()` method added. It allows open panel with tabs
+  embedded in page (no modal mode).
+* `uploadcare.registerTab()` method added. Now you can add custom tabs to
+  dialogs and panels.
+* jQuery version updated to 1.10.2. If you use `uploadcare.jQuery`, please
+  check update guide http://jquery.com/upgrade-guide/1.9/
+* spelling of `body.uploadcare-dragging` was fixed (it was draging). If you
+  use this class, update your code.
+
 ### 0.15.5, 25.11.2013
 
 * Skydrive tab added.
