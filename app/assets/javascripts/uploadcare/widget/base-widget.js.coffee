@@ -61,9 +61,6 @@ namespace 'uploadcare.widget', (ns) ->
 
       # Enable drag and drop
       dragdrop.receiveDrop(@template.dropArea, @__handleDirectSelection)
-      @template.dropArea.on 'dragstatechange.uploadcare', (e, active) =>
-        unless active && uploadcare.isDialogOpened()
-          @template.dropArea.toggleClass('uploadcare-dragging', active)
 
       @template.reset()
 

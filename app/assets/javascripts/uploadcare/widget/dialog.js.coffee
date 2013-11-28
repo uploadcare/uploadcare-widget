@@ -28,16 +28,19 @@ namespace 'uploadcare', (ns) ->
         ns.closeDialog()
 
   currentDialogPr = null
+  openedClass = 'uploadcare-dialog-opened'
 
   ns.isDialogOpened = ->
     currentDialogPr != null
 
   ns.closeDialog = ->
     currentDialogPr?.reject()
+    $('body').removeClass(openedClass)
 
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
 
+    $('body').addClass(openedClass)
     dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
     dialog.on 'click', (e) ->
       showStopper = $(e.target).parents().addBack().filter('.uploadcare-dialog-panel, a')
