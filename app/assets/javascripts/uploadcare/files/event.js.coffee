@@ -10,21 +10,17 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings, @__file) ->
       super
 
-      @fileId = utils.uuid()
       @fileSize = @__file.size
       @fileName = @__file.name
       @__notifyApi()
 
     __startUpload: ->
-      targetUrl = "#{@settings.urlBase}/iframe/"
-
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi('size')
         return
 
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
-      formData.append('UPLOADCARE_FILE_ID', @fileId)
       if @settings.autostore
         formData.append('UPLOADCARE_STORE', 1)
       formData.append('file', @__file)
@@ -42,7 +38,7 @@ namespace 'uploadcare.files', (ns) ->
           xhr
         crossDomain: true
         type: 'POST'
-        url: "#{@settings.urlBase}/iframe/?jsonerrors=1"
+        url: "#{@settings.urlBase}/base/?jsonerrors=1"
         xhrFields: {withCredentials: true}
         headers: {'X-PINGOTHER': 'pingpong'}
         contentType: false # For correct boundary string
@@ -51,9 +47,10 @@ namespace 'uploadcare.files', (ns) ->
         dataType: 'json'
         error: @__uploadDf.reject
         success: (data) =>
-          if data?.error
+          if data?.file
+            @fileId = data.file
+            @__uploadDf.resolve()
+          else
             if @settings.autostore && /autostore/i.test(data.error.content)
               utils.commonWarning('autostore')
             @__uploadDf.reject()
-          else
-            @__uploadDf.resolve()
