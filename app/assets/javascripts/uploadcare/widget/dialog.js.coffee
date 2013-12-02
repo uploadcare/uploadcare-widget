@@ -35,7 +35,6 @@ namespace 'uploadcare', (ns) ->
 
   ns.closeDialog = ->
     currentDialogPr?.reject()
-    $('body').removeClass(openedClass)
 
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
@@ -50,9 +49,10 @@ namespace 'uploadcare', (ns) ->
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
     currentDialogPr.always ->
-        currentDialogPr = null
-        dialog.fadeOut 'fast', ->
-          dialog.remove()
+      $('body').removeClass(openedClass)
+      currentDialogPr = null
+      dialog.fadeOut 'fast', ->
+        dialog.remove()
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
