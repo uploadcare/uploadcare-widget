@@ -13,7 +13,6 @@ namespace 'uploadcare.widget', (ns) ->
   class ns.Template
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))
-      @content.css('display', 'none')
       @element.after(@content)
       @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
 
