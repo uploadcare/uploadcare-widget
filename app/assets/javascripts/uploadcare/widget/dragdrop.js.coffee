@@ -18,6 +18,7 @@ namespace 'uploadcare.dragdrop', (ns) ->
     ns.receiveDrop = ->
   else
     ns.receiveDrop = (el, callback) ->
+      ns.watchDragging el
       $(el).on
         dragover: (e) ->
           e.preventDefault() # Prevent opening files.
@@ -37,16 +38,17 @@ namespace 'uploadcare.dragdrop', (ns) ->
               uris = uris.replace /\n$/, ''
               callback('url', uris)
 
-    active = false
-    changeState = (newActive) ->
-      if active != newActive
-        active = newActive
-        $('body').toggleClass('uploadcare-dragging', active)
-                 .trigger('dragstatechange.uploadcare', active)
-
-    $ ->
+    ns.watchDragging = (el, receiver) ->
       delayedEnter = false
-      $(document).on
+      active = false
+
+      changeState = (newActive) ->
+        if active != newActive
+          active = newActive
+          $(el).toggleClass('uploadcare-dragging', active)
+               .trigger('dragstatechange.uploadcare', active)
+
+      $(receiver || el).on
         dragenter: ->
           delayedEnter = setTimeout(->
             delayedEnter = false
@@ -63,3 +65,5 @@ namespace 'uploadcare.dragdrop', (ns) ->
           setTimeout(->
             changeState off
           , 0)
+
+    ns.watchDragging 'body', document
