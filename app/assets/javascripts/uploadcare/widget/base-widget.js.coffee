@@ -60,7 +60,7 @@ namespace 'uploadcare.widget', (ns) ->
         @openDialog()
 
       # Enable drag and drop
-      dragdrop.receiveDrop(@template.dropArea, @__handleDirectSelection)
+      dragdrop.receiveDrop(@template.content, @__handleDirectSelection)
 
       @template.reset()
 

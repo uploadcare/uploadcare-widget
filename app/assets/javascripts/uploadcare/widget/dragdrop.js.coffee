@@ -60,4 +60,6 @@ namespace 'uploadcare.dragdrop', (ns) ->
         'drop mouseenter': ->
           if delayedEnter
             clearTimeout delayedEnter
-          changeState off
+          setTimeout(->
+            changeState off
+          , 0)
