@@ -44,9 +44,7 @@ namespace 'uploadcare.dragdrop', (ns) ->
 
       changeState = (newActive) ->
         if active != newActive
-          active = newActive
-          $(el).toggleClass('uploadcare-dragging', active)
-               .trigger('dragstatechange.uploadcare', active)
+          $(el).toggleClass('uploadcare-dragging', active = newActive)
 
       $(receiver || el).on
         dragenter: ->

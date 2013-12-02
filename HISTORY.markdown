@@ -8,8 +8,10 @@
   dialogs and panels.
 * jQuery version updated to 1.10.2. If you use `uploadcare.jQuery`, please
   check update guide http://jquery.com/upgrade-guide/1.9/
-* spelling of `body.uploadcare-dragging` was fixed (it was draging). If you
+* spelling of `body.uploadcare-dragging` class fixed (it was draging). If you
   use this class, update your code.
+* `uploadcare-dragging` class now appear on elements used as target for
+  `receiveDrop` and `uploadDrop`
 
 ### 0.15.5, 25.11.2013
 
