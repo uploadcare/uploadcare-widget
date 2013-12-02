@@ -1,3 +1,5 @@
+@import "colors";
+
 $dialog-tab-width: x(3);
 $dialog-body-height: y(28);
 
@@ -601,13 +603,21 @@ $dialog-footer-height: y(3);
   }
 
   .uploadcare-dialog-file-drop-area {
-    background: #f2f7fe;
-    border-color: #438ae7;
+    background-color: $dragndrop-background-color;
+    border-color: $dragndrop-border-color;
     padding-top: y(12);
   }
 
   .uploadcare-dialog-file-title {
-    color: #438ae7;
+    color: $dragndrop-text-color;
+  }
+}
+.uploadcare-dragging.uploadcare-dialog-file-drop-area {
+  background-color: $dragndrop-hover-background-color;
+  border-color: $dragndrop-hover-border-color;
+
+  .uploadcare-dialog-file-title {
+    color: $dragndrop-hover-text-color;
   }
 }
 

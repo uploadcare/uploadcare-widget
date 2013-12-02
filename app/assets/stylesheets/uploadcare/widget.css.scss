@@ -1,4 +1,5 @@
 @import "images";
+@import "colors";
 @import "mixins";
 @import "dialog";
 @import "crop-widget";
@@ -6,9 +7,6 @@
 $widget-height: 25px;
 $button-text-color: #8f9295;
 $circle-center-width: 10%;
-$dragndrop-background-color: #f0f0f0;
-$dragndrop-border-color: #b3b5b6;
-$dragndrop-text-color: #707478;
 
 .uploadcare-widget {
   display: inline-block !important;
@@ -133,6 +131,11 @@ $dragndrop-text-color: #707478;
   border: 1px dashed $dragndrop-border-color;
   border-radius: $widget-height / 2 + $padding;
 
+  .uploadcare-widget.uploadcare-dragging & {
+    background-color: $dragndrop-hover-background-color;
+    border-color: $dragndrop-hover-border-color;
+    color: $dragndrop-hover-text-color;
+  }
   .uploadcare-dragging & {
     display: block;
   }
