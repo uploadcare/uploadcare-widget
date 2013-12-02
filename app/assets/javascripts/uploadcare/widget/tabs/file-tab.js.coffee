@@ -12,7 +12,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @wrap.append tpl 'tab-file', {avalibleTabs: @dialogApi.avalibleTabs}
+      @wrap.append tpl 'tab-file', {tabs: @settings.tabs}
 
       @wrap.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
         @dialogApi.switchTab $(e.target).data 'tab'

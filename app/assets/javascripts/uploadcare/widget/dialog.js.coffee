@@ -156,7 +156,6 @@ namespace 'uploadcare', (ns) ->
         onSwitched.fire name, (name is tabName)
 
       # return
-      avalibleTabs: @settings.tabs
       fileColl: @files
       onSwitched: onSwitched
       addFiles: @addFiles

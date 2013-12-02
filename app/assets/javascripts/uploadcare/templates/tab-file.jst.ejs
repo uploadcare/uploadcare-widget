@@ -11,13 +11,13 @@
   <div class="uploadcare-dialog-big-button" role="uploadcare-dialog-browse-file">
     <%- t('dialog.tabs.file.button') %>
   </div>
-  <% if (avalibleTabs.length > 1) { %>
+  <% if (tabs.length > 1) { %>
     <div class="uploadcare-dialog-file-or">
       <%- t('dialog.tabs.file.also') %>
     </div>
     <div class="uploadcare-dialog-file-sources">
-      <% for (var i = 0; i < avalibleTabs.length; i++) {
-        var tab = avalibleTabs[i];
+      <% for (var i = 0; i < tabs.length; i++) {
+        var tab = tabs[i];
         if (tab == 'file') continue; %>
         <div
           class="uploadcare-dialog-file-source"
