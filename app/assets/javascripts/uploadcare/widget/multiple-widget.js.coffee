@@ -13,10 +13,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     __setObject: (group) =>
       unless utils.isFileGroupsEqual @currentObject, group
-        @__reset()
-        if group and group.files().length
-          @currentObject = group
-          @__watchCurrentObject()
+        super
 
     __setGroupByPromise: (groupPr) ->
       @__lastGroupPr = groupPr
@@ -26,7 +23,6 @@ namespace 'uploadcare.widget', (ns) ->
       groupPr
         .done (group) =>
           if @__lastGroupPr == groupPr
-            @__reset()
             @__setObject group
         .fail =>
           if @__lastGroupPr == groupPr

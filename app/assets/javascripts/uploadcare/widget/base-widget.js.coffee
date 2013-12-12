@@ -81,6 +81,13 @@ namespace 'uploadcare.widget', (ns) ->
       @template.reset()
       @__updateInputValue ''
 
+    __setObject: (newFile) =>
+      unless newFile == @currentObject
+        @__reset()
+        if newFile
+          @currentObject = newFile
+          @__watchCurrentObject()
+
     __watchCurrentObject: ->
       object = @__currentFile()
       if object
