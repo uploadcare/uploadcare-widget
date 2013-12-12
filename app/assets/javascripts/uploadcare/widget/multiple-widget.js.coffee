@@ -30,8 +30,8 @@ namespace 'uploadcare.widget', (ns) ->
 
     __onUploadingFailed: (error) ->
       if error is 'createGroup'
-        @__reset()
-      super
+        @__setObject(null)
+      @template.error error
 
     value: (value) ->
       if value?

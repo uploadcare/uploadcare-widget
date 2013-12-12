@@ -106,6 +106,7 @@ namespace 'uploadcare.widget', (ns) ->
       @template.loaded()
 
     __onUploadingFailed: (error) ->
+      @__setObject(null)
       @template.error error
 
     reloadInfo: =>

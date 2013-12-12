@@ -11,10 +11,6 @@ namespace 'uploadcare.widget', (ns) ->
     __currentFile: ->
       @currentObject
 
-    __onUploadingFailed: ->
-      @__reset()
-      super
-
     value: (value) ->
       if value?
         @__hasValue = true
