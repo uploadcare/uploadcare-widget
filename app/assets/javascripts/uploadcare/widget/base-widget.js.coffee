@@ -75,8 +75,9 @@ namespace 'uploadcare.widget', (ns) ->
 
     __reset: =>
       # low-level primitive. @__setObject(null) could be better.
-      @currentObject?.cancel?()
+      object = @currentObject
       @currentObject = null
+      object?.cancel?()
       @template.reset()
       @element.val('')
 
