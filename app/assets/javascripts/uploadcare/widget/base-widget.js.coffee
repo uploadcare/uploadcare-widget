@@ -43,9 +43,12 @@ namespace 'uploadcare.widget', (ns) ->
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
 
-      @template.addButton('cancel', t('buttons.cancel')).on('click', @__reset)
+      @template.addButton('cancel', t('buttons.cancel')).on 'click', =>
+        @__setObject(null)
+
       if @settings.clearable
-        @template.addButton('remove', t('buttons.remove')).on('click', @__reset)
+        @template.addButton('remove', t('buttons.remove')).on 'click', =>
+          @__setObject(null)
 
       # Create the dialog and widget buttons
       if @settings.tabs.length > 0
@@ -70,16 +73,12 @@ namespace 'uploadcare.widget', (ns) ->
       else
         info.uuid
 
-    __updateInputValue: (value) ->
-      if @element.val() != value
-        @element.val(value)
-        @__onChange.fire @currentObject
-
     __reset: =>
+      # low-level primitive. @__setObject(null) could be better.
       @currentObject?.cancel?()
       @currentObject = null
       @template.reset()
-      @__updateInputValue ''
+      @element.val('')
 
     __setObject: (newFile) =>
       unless newFile == @currentObject
@@ -87,6 +86,7 @@ namespace 'uploadcare.widget', (ns) ->
         if newFile
           @currentObject = newFile
           @__watchCurrentObject()
+        @__onChange.fire @currentObject
 
     __watchCurrentObject: ->
       object = @__currentFile()
@@ -101,7 +101,7 @@ namespace 'uploadcare.widget', (ns) ->
               @__onUploadingFailed(error)
 
     __onUploadingDone: (info) ->
-      @__updateInputValue @__infoToValue(info)
+      @element.val(@__infoToValue(info))
       @template.setFileInfo(info)
       @template.loaded()
 
