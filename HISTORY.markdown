@@ -1,5 +1,9 @@
 # History
 
+### 0.16.1, 13.12.2013
+
+* Widget.onChange now fires immediately after user chooses file.
+
 ### 0.16.0, 28.11.2013
 
 * `uploadcare.openPanel()` method added. It allows open panel with tabs
