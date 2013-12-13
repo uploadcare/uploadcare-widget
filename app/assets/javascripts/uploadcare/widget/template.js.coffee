@@ -50,6 +50,7 @@ namespace 'uploadcare.widget', (ns) ->
       @statusText.text(t('ready'))
       @circle.reset()
       @setStatus 'ready'
+      @__file = null
 
     loaded: ->
       @setStatus 'loaded'
