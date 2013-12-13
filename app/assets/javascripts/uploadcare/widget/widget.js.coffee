@@ -11,14 +11,6 @@ namespace 'uploadcare.widget', (ns) ->
     __currentFile: ->
       @currentObject
 
-    value: (value) ->
-      if value?
-        @__hasValue = true
-        @__setObject utils.valueToFile(value, @settings)
-        this
-      else
-        @currentObject
-
     __handleDirectSelection: (type, data) =>
       file = uploadcare.fileFrom(type, data, @settings)
       if @settings.previewStep

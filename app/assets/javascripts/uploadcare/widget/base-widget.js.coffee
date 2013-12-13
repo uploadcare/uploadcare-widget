@@ -110,6 +110,17 @@ namespace 'uploadcare.widget', (ns) ->
       @__setObject(null)
       @template.error error
 
+    __setExternalValue: (value) ->
+      @__setObject utils.valueToFile(value, @settings)
+
+    value: (value) ->
+      if value?
+        @__hasValue = true
+        @__setExternalValue value
+        this
+      else
+        @currentObject
+
     reloadInfo: =>
       @value @element.val()
 

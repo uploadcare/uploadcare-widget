@@ -15,8 +15,8 @@ namespace 'uploadcare.widget', (ns) ->
       unless utils.isFileGroupsEqual @currentObject, group
         super
 
-    __setGroupByPromise: (groupPr) ->
-      @__lastGroupPr = groupPr
+    __setExternalValue: (value) ->
+      @__lastGroupPr = groupPr = utils.valueToGroup(value, @settings)
       @__reset()
       @template.setStatus 'started'
       @template.statusText.text t('loadingInfo')
@@ -32,14 +32,6 @@ namespace 'uploadcare.widget', (ns) ->
       if error is 'createGroup'
         @__setObject(null)
       @template.error error
-
-    value: (value) ->
-      if value?
-        @__hasValue = true
-        @__setGroupByPromise utils.valueToGroup(value, @settings)
-        this
-      else
-        @currentObject
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
