@@ -13,20 +13,16 @@ namespace 'uploadcare.widget', (ns) ->
 
     __setObject: (group) =>
       unless utils.isFileGroupsEqual @currentObject, group
-        @__reset()
-        if group and group.files().length
-          @currentObject = group
-          @__watchCurrentObject()
+        super
 
-    __setGroupByPromise: (groupPr) ->
-      @__lastGroupPr = groupPr
+    __setExternalValue: (value) ->
+      @__lastGroupPr = groupPr = utils.valueToGroup(value, @settings)
       @__reset()
       @template.setStatus 'started'
       @template.statusText.text t('loadingInfo')
       groupPr
         .done (group) =>
           if @__lastGroupPr == groupPr
-            @__reset()
             @__setObject group
         .fail =>
           if @__lastGroupPr == groupPr
@@ -34,16 +30,8 @@ namespace 'uploadcare.widget', (ns) ->
 
     __onUploadingFailed: (error) ->
       if error is 'createGroup'
-        @__reset()
-      super
-
-    value: (value) ->
-      if value?
-        @__hasValue = true
-        @__setGroupByPromise utils.valueToGroup(value, @settings)
-        this
-      else
-        @currentObject
+        @__setObject(null)
+      @template.error error
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
