@@ -42,9 +42,15 @@ namespace 'uploadcare', (ns) ->
     $('body').addClass(openedClass)
     dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
     dialog.on 'click', (e) ->
-      showStopper = $(e.target).parents().addBack().filter('.uploadcare-dialog-panel, a')
-      if not showStopper.length
-        ns.closeDialog()
+      # handler can be called after element detached (close button)
+      if not $.contains(document.documentElement, e.target)
+        return
+
+      showStoppers = '.uploadcare-dialog-panel, a'
+      if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
+        return
+
+      ns.closeDialog()
 
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)

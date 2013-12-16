@@ -165,16 +165,6 @@ namespace 'uploadcare.utils', (ns) ->
         left: e.pageX - left - width + 10
         top: e.pageY - top - 10
 
-  ns.createObjectUrl = (object) ->
-    URL = window.URL || window.webkitURL
-    if URL
-      return URL.createObjectURL(object)
-    return null
-
-  ns.inDom = (el) ->
-    if el.jquery
-      el = el.get(0)
-    $.contains(document.documentElement, el)
 
   ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
     value = parseInt(value, 10)

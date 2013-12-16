@@ -129,5 +129,5 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __createFileEl: (file) ->
       @__fileTpl.clone()
         .appendTo(@fileListEl)
-        .on('click', ROLE_PREFIX + 'file-remove', =>
-          @dialogApi.fileColl.remove file)
+        .on 'click', ROLE_PREFIX + 'file-remove', =>
+          @dialogApi.fileColl.remove file
