@@ -1,5 +1,10 @@
 # History
 
+### 0.16.2, 16.12.2013
+
+* Removing file from multiupload preview step no longer closes whole dialog.
+  Bug introduced in 0.16.0.
+
 ### 0.16.1, 13.12.2013
 
 * Widget.onChange now fires immediately after user chooses file.
