@@ -21,17 +21,11 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ReadyFile extends ns.BaseFile
     constructor: (settings, data) ->
       super
-      @fileId = data.uuid
-      @__handleFileData(data)
+      if not data
+        @__rejectApi('deleted')
+      else
+        @fileId = data.uuid
+        @__handleFileData(data)
 
     __startUpload: ->
       @__completeUpload()
-
-
-  class ns.DeletedFile extends ns.BaseFile
-    constructor: ->
-      super
-      @__rejectApi('deleted')
-
-    __startUpload: ->
-      # nothing to do

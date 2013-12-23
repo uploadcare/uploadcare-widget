@@ -54,7 +54,4 @@ namespace 'uploadcare', (ns) ->
       unless $.isArray(arrayOfFileData)
         arrayOfFileData = [arrayOfFileData]
       for fileData in arrayOfFileData
-        if fileData
-          new f.ReadyFile(settings, fileData)
-        else
-          new f.DeletedFile(settings)
+        new f.ReadyFile(settings, fileData)
