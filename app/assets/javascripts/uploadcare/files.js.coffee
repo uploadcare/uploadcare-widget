@@ -25,12 +25,13 @@ namespace 'uploadcare', (ns) ->
 
   converters =
     event: (settings, e) ->
-      if utils.abilities.canFileAPI
+      if utils.abilities.fileAPI
         files = if e.type == 'drop'
           e.originalEvent.dataTransfer.files
         else
           e.target.files
-        new f.ObjectFile(settings, file) for file in files
+        for file in files
+          new f.ObjectFile(settings, file)
       else
         @input settings, e.target
 
