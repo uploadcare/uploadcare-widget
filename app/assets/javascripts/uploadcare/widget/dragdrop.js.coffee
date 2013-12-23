@@ -29,8 +29,8 @@ namespace 'uploadcare.dragdrop', (ns) ->
           e.preventDefault() # Prevent opening files.
 
           dt = e.originalEvent.dataTransfer
-          if dt.files.length
-            callback('event', e)
+          if dt and dt.files.length
+            callback('object', dt.files)
           else
             uris = dt.getData('text/uri-list')
             if uris
