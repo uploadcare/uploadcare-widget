@@ -6,7 +6,7 @@
 
 namespace 'uploadcare.files', (ns) ->
 
-  class ns.EventFile extends ns.BaseFile
+  class ns.ObjectFile extends ns.BaseFile
     constructor: (settings, @__file) ->
       super
 
