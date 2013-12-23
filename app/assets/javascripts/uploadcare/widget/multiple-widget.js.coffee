@@ -35,7 +35,4 @@ namespace 'uploadcare.widget', (ns) ->
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
-      if @settings.previewStep
-        uploadcare.openDialog(files, @settings).done(@__setObject)
-      else
-        @__setObject uploadcare.FileGroup(files, @settings)
+      uploadcare.openDialog(files, @settings).done(@__setObject)
