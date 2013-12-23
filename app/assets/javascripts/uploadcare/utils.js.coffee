@@ -127,7 +127,6 @@ namespace 'uploadcare.utils', (ns) ->
       objSize.slice()
 
   ns.fileInput = (container, multiple, fn) ->
-    container.find('input:file').remove()
     input = if multiple
       $('<input type="file" multiple>')
     else
@@ -151,8 +150,8 @@ namespace 'uploadcare.utils', (ns) ->
       )
       .append(input)
 
-    input.on 'change', (e) ->
-      fn(e)
+    input.on 'change', ->
+      fn(this)
       input.remove()
       ns.fileInput(container, multiple, fn)
 
