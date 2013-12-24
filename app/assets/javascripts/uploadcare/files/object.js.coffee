@@ -20,21 +20,19 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
-      if @fileSize > @MP_MIN_SIZE
-        @__multipartUpload()
+      if @fileSize < @MP_MIN_SIZE
+        @directUpload()
       else
-        @__directUpload()
+        @multipartUpload()
 
-    __directUpload: ->
+    directUpload: ->
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
       if @settings.autostore
         formData.append('UPLOADCARE_STORE', '1')
       formData.append('file', @__file)
 
-      # jQuery Ajax wrapper for JSON and stuff
       $.ajax
-        # Provide our XHR to jQuery
         xhr: =>
           # Naked XHR for progress tracking
           xhr = $.ajaxSettings.xhr()
@@ -61,10 +59,10 @@ namespace 'uploadcare.files', (ns) ->
               utils.commonWarning('autostore')
             @__uploadDf.reject()
 
-    __multipartUpload: ->
-      @__multipartStart().done (data) =>
-        @__uploadParts(data.parts).done =>
-          @__multipartComplete(data.uuid).done (data) =>
+    multipartUpload: ->
+      @multipartStart().done (data) =>
+        @uploadParts(data.parts).done =>
+          @multipartComplete(data.uuid).done (data) =>
             @fileId = data.uuid
             @__handleFileData(data)
             @__completeUpload()
@@ -72,7 +70,7 @@ namespace 'uploadcare.files', (ns) ->
         .fail @__uploadDf.reject
       .fail @__uploadDf.reject
 
-    __multipartStart: ->
+    multipartStart: ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         filename: @fileName
@@ -85,7 +83,7 @@ namespace 'uploadcare.files', (ns) ->
         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
       )
 
-    __uploadParts: (parts) ->
+    uploadParts: (parts) ->
       blobCount = Math.min(parts.length, @MP_CONCURRENCY)
       blobSize = Math.max(Math.ceil(@__file.size / blobCount), @MP_PART_SIZE)
       blobOffset = 0
@@ -120,7 +118,7 @@ namespace 'uploadcare.files', (ns) ->
             data: blob
       $.when.apply(null, requests)
 
-    __multipartComplete: (uuid) ->
+    multipartComplete: (uuid) ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         uuid: uuid
