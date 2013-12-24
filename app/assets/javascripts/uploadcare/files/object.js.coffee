@@ -8,13 +8,15 @@ namespace 'uploadcare.files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
-    MP_CONCURRENCY: 4
+    MP_PART_SIZE: 5 * 1024 * 1024
+    MP_CONCURRENCY: 8
 
     constructor: (settings, @__file) ->
       super
 
       @fileSize = @__file.size
       @fileName = @__file.name or 'original'
+      @fileType = @__file.type or 'application/octet-stream'
       @__notifyApi()
 
     __startUpload: ->
@@ -38,7 +40,6 @@ namespace 'uploadcare.files', (ns) ->
           xhr = $.ajaxSettings.xhr()
           if xhr.upload
             xhr.upload.addEventListener 'progress', (e) =>
-              @fileSize = e.totalSize || e.total
               @__uploadDf.notify(e.loaded / @fileSize)
           xhr
         crossDomain: true
@@ -64,14 +65,15 @@ namespace 'uploadcare.files', (ns) ->
       @__multipartStart().done (data) =>
         @__uploadParts(data.parts).done =>
           @__multipartComplete(data.uuid).done (data) =>
-            console.log data
+            @__handleFileData(data)
+            @__completeUpload()
 
     __multipartStart: ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         filename: @fileName
         size: @fileSize
-        content_type: @__file.type or 'application/octet-stream'
+        content_type: @fileType
       if @settings.autostore
         data.UPLOADCARE_STORE = '1'
 
@@ -80,18 +82,37 @@ namespace 'uploadcare.files', (ns) ->
       )
 
     __uploadParts: (parts) ->
-      blobSize = Math.ceil(@__file.size / @MP_CONCURRENCY)
+      blobCount = Math.min(parts.length, @MP_CONCURRENCY)
+      blobSize = Math.max(Math.ceil(@__file.size / blobCount), @MP_PART_SIZE)
       blobOffset = 0
+
+      progress = []
+      updateProgress = (i, loaded) =>
+        progress[i] = loaded
+        total = 0
+        for loaded in progress
+          total += loaded
+        @__uploadDf.notify(total / @fileSize)
+
       requests =
-        for i in [0...@MP_CONCURRENCY]
+        for i in [0...blobCount]
+          progress.push(0)
           blob = @__file.slice(blobOffset, blobOffset + blobSize)
           blobOffset += blobSize
           $.ajax
+            xhr: =>
+              # Naked XHR for progress tracking
+              xhr = $.ajaxSettings.xhr()
+              if xhr.upload
+                xhr.upload._part = i
+                xhr.upload.addEventListener 'progress', (e) =>
+                  updateProgress(e.target._part, e.loaded)
+              xhr
             url: parts[i]
             crossDomain: true
             type: 'PUT'
             processData: false
-            contentType: false
+            contentType: @fileType
             data: blob
       $.when.apply(null, requests)
 
