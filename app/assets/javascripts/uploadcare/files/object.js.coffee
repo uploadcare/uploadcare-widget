@@ -67,6 +67,9 @@ namespace 'uploadcare.files', (ns) ->
           @__multipartComplete(data.uuid).done (data) =>
             @__handleFileData(data)
             @__completeUpload()
+          .fail @__uploadDf.reject
+        .fail @__uploadDf.reject
+      .fail @__uploadDf.reject
 
     __multipartStart: ->
       data =
