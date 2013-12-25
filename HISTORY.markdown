@@ -1,5 +1,9 @@
 # History
 
+### 0.17.0, 25.12.2013
+
+* We now support large files uploads. Merry Christmas.
+
 ### 0.16.2, 16.12.2013
 
 * Removing file from multiupload preview step no longer closes whole dialog.
