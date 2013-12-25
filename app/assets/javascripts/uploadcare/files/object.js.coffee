@@ -9,7 +9,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
     MP_PART_SIZE: 5 * 1024 * 1024
-    MP_CONCURRENCY: 8
+    MP_CONCURRENCY: 4
 
     constructor: (settings, @__file) ->
       super
