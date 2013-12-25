@@ -1,5 +1,5 @@
 # = require ./files/base
-# = require ./files/event
+# = require ./files/object
 # = require ./files/input
 # = require ./files/url
 # = require ./files/uploaded
@@ -30,7 +30,7 @@ namespace 'uploadcare', (ns) ->
           e.originalEvent.dataTransfer.files
         else
           e.target.files
-        new f.EventFile(settings, file) for file in files
+        new f.ObjectFile(settings, file) for file in files
       else
         @input settings, e.target
 
