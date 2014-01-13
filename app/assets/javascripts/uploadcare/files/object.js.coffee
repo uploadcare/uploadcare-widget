@@ -9,6 +9,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
     MP_PART_SIZE: 5 * 1024 * 1024
+    MP_MIN_LAST_PART_SIZE: 1 * 1024 * 1024
     MP_CONCURRENCY: 4
     MP_MAX_ATTEMPTS: 3
 
@@ -110,9 +111,13 @@ namespace 'uploadcare.files', (ns) ->
         if submittedBytes >= @fileSize
           return
 
+        bytesToSubmit = submittedBytes + @MP_PART_SIZE
+        if @fileSize < bytesToSubmit + @MP_MIN_LAST_PART_SIZE
+          bytesToSubmit = @fileSize
+
+        blob = @__file.slice(submittedBytes, bytesToSubmit)
+        submittedBytes = bytesToSubmit
         partNo = submittedParts
-        blob = @__file.slice(submittedBytes, submittedBytes + @MP_PART_SIZE)
-        submittedBytes += @MP_PART_SIZE
         inProgress += 1
         submittedParts += 1
 
