@@ -1,5 +1,12 @@
 # History
 
+### 0.17.1, 13.01.2013
+
+* Large files uploads in parallel by small pieces with automatic recovering
+  in case of network errors.
+* Requests aborts after user cancels upload.
+* Slightly reduced cpu usage during large files uploading.
+
 ### 0.17.0, 25.12.2013
 
 * We now support large files uploads. Merry Christmas.
