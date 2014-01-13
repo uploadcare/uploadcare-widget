@@ -25,6 +25,10 @@ namespace 'uploadcare.files', (ns) ->
       else
         @multipartUpload()
 
+    __autoAbort: (xhr) ->
+      @__uploadDf.always xhr.abort
+      xhr
+
     directUpload: ->
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
@@ -32,7 +36,7 @@ namespace 'uploadcare.files', (ns) ->
         formData.append('UPLOADCARE_STORE', '1')
       formData.append('file', @__file)
 
-      $.ajax
+      @__autoAbort $.ajax
         xhr: =>
           # Naked XHR for progress tracking
           xhr = $.ajaxSettings.xhr()
@@ -83,7 +87,7 @@ namespace 'uploadcare.files', (ns) ->
       if @settings.autostore
         data.UPLOADCARE_STORE = '1'
 
-      utils.jsonp(
+      @__autoAbort utils.jsonp(
         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
       )
 
@@ -105,7 +109,7 @@ namespace 'uploadcare.files', (ns) ->
           progress.push(0)
           blob = @__file.slice(blobOffset, blobOffset + blobSize)
           blobOffset += blobSize
-          $.ajax
+          @__autoAbort $.ajax
             xhr: =>
               # Naked XHR for progress tracking
               xhr = $.ajaxSettings.xhr()
@@ -126,6 +130,7 @@ namespace 'uploadcare.files', (ns) ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         uuid: uuid
-      utils.jsonp(
+
+      @__autoAbort utils.jsonp(
         "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data
       )
