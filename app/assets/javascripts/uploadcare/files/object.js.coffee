@@ -60,6 +60,10 @@ namespace 'uploadcare.files', (ns) ->
             @__uploadDf.reject()
 
     multipartUpload: ->
+      if @settings.imagesOnly
+        @__rejectApi 'image'
+        return
+
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
           @multipartComplete(data.uuid).done (data) =>
