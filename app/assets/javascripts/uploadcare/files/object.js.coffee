@@ -92,10 +92,6 @@ namespace 'uploadcare.files', (ns) ->
       )
 
     uploadParts: (parts) ->
-      blobCount = Math.min(parts.length, @MP_CONCURRENCY)
-      blobSize = Math.max(Math.ceil(@__file.size / blobCount), @MP_PART_SIZE)
-      blobOffset = 0
-
       progress = []
       updateProgress = (i, loaded) =>
         progress[i] = loaded
@@ -104,27 +100,50 @@ namespace 'uploadcare.files', (ns) ->
           total += loaded
         @__uploadDf.notify(total / @fileSize)
 
-      requests =
-        for i in [0...blobCount]
-          progress.push(0)
-          blob = @__file.slice(blobOffset, blobOffset + blobSize)
-          blobOffset += blobSize
-          @__autoAbort $.ajax
-            xhr: =>
-              # Naked XHR for progress tracking
-              xhr = $.ajaxSettings.xhr()
-              if xhr.upload
-                xhr.upload._part = i
-                xhr.upload.addEventListener 'progress', (e) =>
-                  updateProgress(e.target._part, e.loaded)
-              xhr
-            url: parts[i]
-            crossDomain: true
-            type: 'PUT'
-            processData: false
-            contentType: @fileType
-            data: blob
-      $.when.apply(null, requests)
+      df = $.Deferred()
+
+      inProgress = 0
+      submittedParts = 0
+      submittedBytes = 0
+      submit = =>
+        if submittedBytes >= @fileSize
+          return
+
+        if @__uploadDf.state() != 'pending'
+          return
+
+        progress.push(0)
+        blob = @__file.slice(submittedBytes, submittedBytes + @MP_PART_SIZE)
+
+        @__autoAbort $.ajax
+          xhr: =>
+            # Naked XHR for progress tracking
+            xhr = $.ajaxSettings.xhr()
+            if xhr.upload
+              xhr.upload._part = submittedParts
+              xhr.upload.addEventListener 'progress', (e) =>
+                updateProgress(e.target._part, e.loaded)
+            xhr
+          url: parts[submittedParts]
+          crossDomain: true
+          type: 'PUT'
+          processData: false
+          contentType: @fileType
+          data: blob
+          error: df.reject
+          complete: ->
+            inProgress -= 1
+            submit()
+            if not inProgress
+              df.resolve()
+
+        submittedBytes += @MP_PART_SIZE
+        inProgress += 1
+        submittedParts += 1
+
+      for i in [0...@MP_CONCURRENCY]
+        submit()
+      df
 
     multipartComplete: (uuid) ->
       data =
