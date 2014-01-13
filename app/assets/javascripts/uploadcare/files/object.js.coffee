@@ -10,6 +10,7 @@ namespace 'uploadcare.files', (ns) ->
     MP_MIN_SIZE: 25 * 1024 * 1024
     MP_PART_SIZE: 5 * 1024 * 1024
     MP_CONCURRENCY: 4
+    MP_MAX_ATTEMPTS: 3
 
     constructor: (settings, @__file) ->
       super
@@ -109,37 +110,44 @@ namespace 'uploadcare.files', (ns) ->
         if submittedBytes >= @fileSize
           return
 
-        if @__uploadDf.state() != 'pending'
-          return
-
-        progress.push(0)
+        partNo = submittedParts
         blob = @__file.slice(submittedBytes, submittedBytes + @MP_PART_SIZE)
-
-        @__autoAbort $.ajax
-          xhr: =>
-            # Naked XHR for progress tracking
-            xhr = $.ajaxSettings.xhr()
-            if xhr.upload
-              xhr.upload._part = submittedParts
-              xhr.upload.addEventListener 'progress', (e) =>
-                updateProgress(e.target._part, e.loaded)
-            xhr
-          url: parts[submittedParts]
-          crossDomain: true
-          type: 'PUT'
-          processData: false
-          contentType: @fileType
-          data: blob
-          error: df.reject
-          complete: ->
-            inProgress -= 1
-            submit()
-            if not inProgress
-              df.resolve()
-
         submittedBytes += @MP_PART_SIZE
         inProgress += 1
         submittedParts += 1
+
+        attempts = 0
+        do retry = =>
+          if @__uploadDf.state() != 'pending'
+            return
+
+          attempts += 1
+          if attempts > @MP_MAX_ATTEMPTS
+            df.reject()
+            return
+
+          progress[partNo] = 0
+
+          @__autoAbort $.ajax
+            xhr: =>
+              # Naked XHR for progress tracking
+              xhr = $.ajaxSettings.xhr()
+              if xhr.upload
+                xhr.upload.addEventListener 'progress', (e) =>
+                  updateProgress(partNo, e.loaded)
+              xhr
+            url: parts[partNo]
+            crossDomain: true
+            type: 'PUT'
+            processData: false
+            contentType: @fileType
+            data: blob
+            error: retry
+            success: ->
+              inProgress -= 1
+              submit()
+              if not inProgress
+                df.resolve()
 
       for i in [0...@MP_CONCURRENCY]
         submit()
