@@ -9,7 +9,9 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
     MP_PART_SIZE: 5 * 1024 * 1024
+    MP_MIN_LAST_PART_SIZE: 1 * 1024 * 1024
     MP_CONCURRENCY: 4
+    MP_MAX_ATTEMPTS: 3
 
     constructor: (settings, @__file) ->
       super
@@ -25,6 +27,10 @@ namespace 'uploadcare.files', (ns) ->
       else
         @multipartUpload()
 
+    __autoAbort: (xhr) ->
+      @__uploadDf.always xhr.abort
+      xhr
+
     directUpload: ->
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
@@ -32,7 +38,7 @@ namespace 'uploadcare.files', (ns) ->
         formData.append('UPLOADCARE_STORE', '1')
       formData.append('file', @__file)
 
-      $.ajax
+      @__autoAbort $.ajax
         xhr: =>
           # Naked XHR for progress tracking
           xhr = $.ajaxSettings.xhr()
@@ -60,6 +66,10 @@ namespace 'uploadcare.files', (ns) ->
             @__uploadDf.reject()
 
     multipartUpload: ->
+      if @settings.imagesOnly
+        @__rejectApi 'image'
+        return
+
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
           @multipartComplete(data.uuid).done (data) =>
@@ -79,49 +89,86 @@ namespace 'uploadcare.files', (ns) ->
       if @settings.autostore
         data.UPLOADCARE_STORE = '1'
 
-      utils.jsonp(
+      @__autoAbort utils.jsonp(
         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
       )
 
     uploadParts: (parts) ->
-      blobCount = Math.min(parts.length, @MP_CONCURRENCY)
-      blobSize = Math.max(Math.ceil(@__file.size / blobCount), @MP_PART_SIZE)
-      blobOffset = 0
-
       progress = []
+      lastUpdate = $.now()
       updateProgress = (i, loaded) =>
         progress[i] = loaded
+
+        if $.now() - lastUpdate < 250
+          return
+        lastUpdate = $.now()
+
         total = 0
         for loaded in progress
           total += loaded
         @__uploadDf.notify(total / @fileSize)
 
-      requests =
-        for i in [0...blobCount]
-          progress.push(0)
-          blob = @__file.slice(blobOffset, blobOffset + blobSize)
-          blobOffset += blobSize
-          $.ajax
+      df = $.Deferred()
+
+      inProgress = 0
+      submittedParts = 0
+      submittedBytes = 0
+      submit = =>
+        if submittedBytes >= @fileSize
+          return
+
+        bytesToSubmit = submittedBytes + @MP_PART_SIZE
+        if @fileSize < bytesToSubmit + @MP_MIN_LAST_PART_SIZE
+          bytesToSubmit = @fileSize
+
+        blob = @__file.slice(submittedBytes, bytesToSubmit)
+        submittedBytes = bytesToSubmit
+        partNo = submittedParts
+        inProgress += 1
+        submittedParts += 1
+
+        attempts = 0
+        do retry = =>
+          if @__uploadDf.state() != 'pending'
+            return
+
+          attempts += 1
+          if attempts > @MP_MAX_ATTEMPTS
+            df.reject()
+            return
+
+          progress[partNo] = 0
+
+          @__autoAbort $.ajax
             xhr: =>
               # Naked XHR for progress tracking
               xhr = $.ajaxSettings.xhr()
               if xhr.upload
-                xhr.upload._part = i
                 xhr.upload.addEventListener 'progress', (e) =>
-                  updateProgress(e.target._part, e.loaded)
+                  updateProgress(partNo, e.loaded)
               xhr
-            url: parts[i]
+            url: parts[partNo]
             crossDomain: true
             type: 'PUT'
             processData: false
             contentType: @fileType
             data: blob
-      $.when.apply(null, requests)
+            error: retry
+            success: ->
+              inProgress -= 1
+              submit()
+              if not inProgress
+                df.resolve()
+
+      for i in [0...@MP_CONCURRENCY]
+        submit()
+      df
 
     multipartComplete: (uuid) ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         uuid: uuid
-      utils.jsonp(
+
+      @__autoAbort utils.jsonp(
         "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data
       )
