@@ -95,8 +95,14 @@ namespace 'uploadcare.files', (ns) ->
 
     uploadParts: (parts) ->
       progress = []
+      lastUpdate = $.now()
       updateProgress = (i, loaded) =>
         progress[i] = loaded
+
+        if $.now() - lastUpdate < 250
+          return
+        lastUpdate = $.now()
+
         total = 0
         for loaded in progress
           total += loaded
