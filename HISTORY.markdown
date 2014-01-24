@@ -1,5 +1,9 @@
 # History
 
+### 0.17.2, 24.01.2013
+
+* better compatibility with host page markup
+
 ### 0.17.1, 13.01.2013
 
 * Large files uploads in parallel by small pieces with automatic recovering
