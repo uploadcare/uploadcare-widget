@@ -95,7 +95,7 @@ $dialog-free-space-for-close-button: y(2);
 }
 
 .uploadcare-dialog-tabs {
-  @include prefix(box-sizing, border-box);
+  @include box-sizing(border-box);
   width: $dialog-tab-width;
   height: $dialog-body-height;
   float: left;
@@ -109,7 +109,7 @@ $dialog-free-space-for-close-button: y(2);
 
   $frame-size: 50px;
   .uploadcare-dialog-tab {
-    @include prefix(box-sizing, border-box);
+    @include box-sizing(border-box);
     height: 56px;
     border-bottom: 1px solid $dialog-body-border-color;
     cursor: pointer;
@@ -200,7 +200,7 @@ $dialog-free-space-for-close-button: y(2);
 
 .uploadcare-dialog-tabs-panel {
   position: relative;
-  @include prefix(box-sizing, border-box);
+  @include box-sizing(border-box);
   margin-left: $dialog-tab-width;
   padding: y(1) x(1);
   height: $dialog-body-height;
@@ -209,7 +209,7 @@ $dialog-free-space-for-close-button: y(2);
   color: $dialog-body-text-color;
 
   .uploadcare-dialog-input {
-    @include prefix(box-sizing, border-box);
+    @include box-sizing(border-box);
     width: 100%;
     height: y(2);
     margin-bottom: y(1);
@@ -423,6 +423,7 @@ $dialog-preview-container-height: 456px;
 
 $dialog-footer-height: y(3);
 .uploadcare-dialog-inner-footer {
+  @include box-sizing(content-box);
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
@@ -515,7 +516,7 @@ $dialog-footer-height: y(3);
 
   width: 100%;
   height: 100%;
-  @include prefix(box-sizing, border-box);
+  @include box-sizing(border-box);
   background: rgba(255,255,255,.64);
   border: dashed $border-width #c5cacd;
   text-align: center;
@@ -659,7 +660,7 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
   }
   %file-row-part {
     @include vertical-centered;
-    @include prefix(box-sizing, border-box);
+    @include box-sizing(border-box);
     padding: 0 10px;
   }
   .uploadcare-dpm-file-preview-wrap {
@@ -747,7 +748,7 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
   height: $dialog-body-height;
   margin: y(-1) x(-1);
   padding: y(1) x(1);
-  @include prefix(box-sizing, border-box);
+  @include box-sizing(border-box);
 
   .uploadcare-dialog-multiple & {
     height: $dialog-body-height - $dialog-footer-height;
