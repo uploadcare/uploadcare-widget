@@ -208,7 +208,6 @@ $dialog-free-space-for-close-button: y(2);
   font-size: $dialog-body-font-size;
   color: $dialog-body-text-color;
 
-}
   .uploadcare-dialog-input {
     @include prefix(box-sizing, border-box);
     width: 100%;
@@ -221,16 +220,7 @@ $dialog-free-space-for-close-button: y(2);
     background: $dialog-body-field-color;
     color: $dialog-body-text-color;
   }
-  .uploadcare-dialog-drop-file {
-    background: $dialog-body-field-color;
-    border: 1px dashed $dialog-body-border-color;
-    border-radius: 3px;
-    height: y(4.5);
-    padding-top: y(3.5);
-    text-align: center;
-    color: $dialog-body-text-color-lighter;
-  }
-
+}
 
 .uploadcare-pre {
   white-space: pre;
