@@ -6,6 +6,12 @@
   #{$prop}: $value;
 }
 
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+  -moz-box-sizing: $value;
+  box-sizing: $value;
+}
+
 @mixin gradient($from, $to) {
   background: mix($from, $to);
   background: -webkit-linear-gradient($from, $to);
