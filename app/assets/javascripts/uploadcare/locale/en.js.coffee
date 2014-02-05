@@ -22,6 +22,13 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       cancel: 'Cancel'
       remove: 'Remove'
       file: 'Computer'
+      choose:
+        files:
+          one: 'Choose a file'
+          other: 'Choose files'
+        images:
+          one: 'Choose an image'
+          other: 'Choose images'
     dialog:
       done: 'Done'
       showFiles: 'Show files'

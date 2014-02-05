@@ -14,11 +14,16 @@ $circle-center-width: 10%;
   vertical-align: middle;
   padding: 0 5px;
 
-  &[data-status=loaded], &[data-status=started] {
-    .uploadcare-widget-button { display: none; }
+  &[data-status=ready] {
+    .uploadcare-widget-status-text,
+    .uploadcare-widget-circle {
+      display: none;
+    }
   }
-  &[data-status=started] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
-  &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
+
+  &[data-status=ready] .uploadcare-widget-buttons-open,
+  &[data-status=started] .uploadcare-widget-buttons-cancel,
+  &[data-status=loaded] .uploadcare-widget-buttons-remove {
     display: inline-block;
   }
 
@@ -60,15 +65,15 @@ $circle-center-width: 10%;
   margin: 0;
   padding: 0;
   list-style: none;
+  }
   .uploadcare-widget-button {
     $height: 24px;
-    display: inline-block;
+    display: none;
     height: $height;
     float: left;
-    font-size: 11px;
+    font-size: 0.9em;
     color: $button-text-color;
     line-height: $widget-height;
-    width: 36px;
     padding: 0 6px;
     margin: 0 3px ($widget-height - 24) 0;
     list-style: none;
@@ -76,27 +81,8 @@ $circle-center-width: 10%;
     border-radius: 2px;
     background: #e1e5e7;
     cursor: default;
-
-    $frame: -$height;
-    &.uploadcare-widget-buttons-dialog,
-    &.uploadcare-widget-buttons-file,
-    &.uploadcare-widget-buttons-url {
-      @extend %widget-buttons-image;
-      background-position: 0 0;
-      background-repeat: no-repeat;
-      padding-left: 30px;
-    }
-    &.uploadcare-widget-buttons-dialog,
-    &.uploadcare-widget-buttons-url {
-      background-position: 0 $frame;
-    }
-    &.uploadcare-widget-buttons-cancel, &.uploadcare-widget-buttons-remove {
-      font-size: 0.9em;
-      display: none;
-      width: auto;
-    }
   }
-}
+
 
 .uploadcare-widget-status-text {
   float: left;
@@ -123,6 +109,7 @@ $circle-center-width: 10%;
   top: -$padding;
   left: 0;
   width: 100%;
+  min-width: 150px;
   height: $height;
   line-height: $height;
   text-align: center;

@@ -21,21 +21,6 @@ namespace 'uploadcare.widget', (ns) ->
 
       @dropArea = @content.find('@uploadcare-drop-area')
 
-      @labels = []
-
-    pushLabel: (label) ->
-      @labels.push @statusText.text()
-      @statusText.text(label)
-
-    popLabel: ->
-      @statusText.text(@labels.pop())
-
-    addState: (state) ->
-      @content.addClass("uploadcare-widget-state-#{state}")
-
-    removeState: (state) ->
-      @content.removeClass("uploadcare-widget-state-#{state}")
-
     addButton: (name, caption='') ->
       li = $ tpl('widget-button', {name, caption})
       @buttonsContainer.append(li)
@@ -47,7 +32,6 @@ namespace 'uploadcare.widget', (ns) ->
       form.trigger("#{status}.uploadcare")
 
     reset: ->
-      @statusText.text(t('ready'))
       @circle.reset()
       @setStatus 'ready'
       @__file = null
