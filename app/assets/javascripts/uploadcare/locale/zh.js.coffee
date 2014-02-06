@@ -1,7 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.zh =
-    ready: '上传自'
     uploading: '上传中...请等待'
     loadingInfo: '正在读取信息...'
     errors:
@@ -20,7 +19,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: '取消'
       remove: '删除'
-      file: '计算机'
     dialog:
       done: '完成'
       showFiles: '显示文件'

@@ -1,7 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.en =
-    ready: 'Upload from'
     uploading: 'Uploading... Please wait.'
     loadingInfo: 'Loading info...'
     errors:
@@ -21,7 +20,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Cancel'
       remove: 'Remove'
-      file: 'Computer'
       choose:
         files:
           one: 'Choose a file'

@@ -1,6 +1,5 @@
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.lv =
-    ready: 'Izvēlieties failu'
     uploading: 'Augšupielādē... Lūdzu, gaidiet.'
     errors:
       default: 'Kļūda'
@@ -13,7 +12,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Atcelt'
       remove: 'Dzēst'
-      file: 'Dators'
     dialog:
       title: 'Ielādēt jebko no jebkurienes'
       poweredby: 'Darbināts ar'

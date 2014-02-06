@@ -1,6 +1,5 @@
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.ru =
-    ready: 'Выберите файл'
     uploading: 'Идет загрузка'
     loadingInfo: 'Загрузка информации...'
     errors:
@@ -22,7 +21,13 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Отмена'
       remove: 'Удалить'
-      file: 'Компьютер'
+      choose:
+        files:
+          one: 'Выбрать файл'
+          other: 'Выбрать файлы'
+        images:
+          one: 'Выбрать изображение'
+          other: 'Выбрать изображения'
     dialog:
       done: 'Готово'
       showFiles: 'Показать файлы'
