@@ -13,17 +13,6 @@ $circle-size: 25px;
   white-space: nowrap;
   padding: 0 5px;
 
-  &[data-status=ready] .uploadcare-widget-button-open,
-  &[data-status=started] .uploadcare-widget-status,
-  &[data-status=started] .uploadcare-widget-text,
-  &[data-status=started] .uploadcare-widget-button-cancel,
-  &[data-status=loaded] .uploadcare-widget-text,
-  &[data-status=loaded] .uploadcare-widget-button-remove,
-  &[data-status=error] .uploadcare-widget-text,
-  &[data-status=error] .uploadcare-widget-button-open {
-    display: inline-block;
-  }
-
   .uploadcare-widget-circle {
     display: none;
     width: $circle-size;
@@ -31,6 +20,17 @@ $circle-size: 25px;
     margin-right: 1ex;
     vertical-align: middle;
   }
+}
+
+.uploadcare-widget-status-ready .uploadcare-widget-button-open,
+.uploadcare-widget-status-started .uploadcare-widget-status,
+.uploadcare-widget-status-started .uploadcare-widget-text,
+.uploadcare-widget-status-started .uploadcare-widget-button-cancel,
+.uploadcare-widget-status-loaded .uploadcare-widget-text,
+.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
+.uploadcare-widget-status-error .uploadcare-widget-text,
+.uploadcare-widget-status-error .uploadcare-widget-button-open {
+  display: inline-block;
 }
 
 .uploadcare-widget-circle {
