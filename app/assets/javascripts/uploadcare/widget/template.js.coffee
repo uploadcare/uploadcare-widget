@@ -16,15 +16,12 @@ namespace 'uploadcare.widget', (ns) ->
       @element.after(@content)
       @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
 
-      @statusText = @content.find('@uploadcare-widget-status-text')
-      @buttonsContainer = @content.find('@uploadcare-widget-buttons')
+      @statusText = @content.find('@uploadcare-widget-text')
 
       @dropArea = @content.find('@uploadcare-drop-area')
 
     addButton: (name, caption='') ->
-      li = $ tpl('widget-button', {name, caption})
-      @buttonsContainer.append(li)
-      return li
+      $(tpl('widget-button', {name, caption})).appendTo(@content)
 
     setStatus: (status) ->
       @content.attr('data-status', status)
