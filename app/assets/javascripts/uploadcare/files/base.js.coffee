@@ -77,8 +77,8 @@ namespace 'uploadcare.files', (ns) ->
       isStored: @isStored
       isImage: @isImage
       originalImageInfo: @imageInfo
-      originalUrl: "#{@settings.cdnBase}/#{@fileId}/"
-      cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+      originalUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/" else null
+      cdnUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}" else null
       cdnUrlModifiers: @cdnUrlModifiers
 
     __cancel: =>
@@ -92,7 +92,7 @@ namespace 'uploadcare.files', (ns) ->
 
       if @settings.imagesOnly
         @validators.push (info) ->
-          if not info.isImage
+          if info.isImage is false
             throw new Error('image')
 
       @onInfoReady.add @__runValidators
@@ -150,7 +150,9 @@ namespace 'uploadcare.files', (ns) ->
     promise: ->
       unless @__uploadStarted
         @__uploadStarted = true
-        @__startUpload()
+        @__runValidators @__fileInfo()
+        if @apiPromise.state() == 'pending'
+          @__startUpload()
       @apiPromise
 
 
