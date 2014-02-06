@@ -17,7 +17,7 @@ gem "jquery-rails"
 # gem 'debugger'
 
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.14'
 gem 'pry'
 gem 'pry-rails'
 gem 'sprockets'
@@ -28,3 +28,6 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'yui-compressor', '0.9.6'
 gem 'fog'
+
+# newer versions generates bigger js files
+gem 'coffee-script-source', '1.6.3'
