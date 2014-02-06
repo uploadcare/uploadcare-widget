@@ -34,7 +34,7 @@ mocks.define 'uploadcareFile', ->
       isImage: @isImage
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: @previewUrl
+      originalUrl: @originalUrl
 
     __progressInfo: ->
       state: @progressState

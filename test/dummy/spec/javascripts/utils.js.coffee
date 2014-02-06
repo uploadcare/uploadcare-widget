@@ -9,7 +9,6 @@ jasmine.ns 'utils', (ns) ->
     isReady:          fixture.info.is_ready
     imageInfo:        fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
-    previewUrl:       fixture.previewUrl
 
   ns.toFileInfo = (fixture, settings = uploadcare.settings.build()) ->
     uuid:             fixture.uuid
@@ -20,7 +19,6 @@ jasmine.ns 'utils', (ns) ->
     isReady:          fixture.info.is_ready
     originalImageInfo:fixture.image_info
     cdnUrlModifiers:  fixture.cdnUrlModifiers
-    previewUrl:       fixture.previewUrl
     cdnUrl: "#{settings.cdnBase}/#{fixture.uuid}/#{fixture.cdnUrlModifiers or ''}"
 
 

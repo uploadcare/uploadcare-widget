@@ -80,31 +80,12 @@ namespace 'uploadcare.files', (ns) ->
       originalUrl: "#{@settings.cdnBase}/#{@fileId}/"
       cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
       cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
-      preview: @apiPromise.preview
 
     __cancel: =>
       @__rejectApi('user')
       # This will call __rejectApi again, but it'll be noop
       # becouse apiDeferred already reolved.
       @__uploadDf.reject()
-
-    __preview: (selector) =>
-      utils.warnOnce "'preview' method is deprecated. " +
-                     "Use fileInfo.cdnUrl as image source."
-      @apiPromise.done (info) =>
-        img = new Image()
-        img.onload = ->
-          $(selector).html(
-            $('<div>')
-              .css
-                position: 'relative'
-                overflow: 'hidden'
-                width: @width
-                height: @height
-              .append img
-          )
-        img.src = "#{info.cdnUrl}-/preview/1600x1600/"
 
     __setupValidation: ->
       @validators = (@settings.__validators or []).slice()
@@ -125,7 +106,6 @@ namespace 'uploadcare.files', (ns) ->
 
     __extendApi: (api) =>
       api.cancel = @__cancel
-      api.preview = @__preview
 
       __then = api.then
       api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
