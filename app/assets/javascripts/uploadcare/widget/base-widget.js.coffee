@@ -43,7 +43,11 @@ namespace 'uploadcare.widget', (ns) ->
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
 
-      @template.addButton('open', t('buttons.choose.files.one')).on 'click', =>
+      path = ['buttons.choose']
+      path.push(if @settings.imagesOnly then 'images' else 'files')
+      path.push(if @settings.multiple then 'other' else 'one')
+
+      @template.addButton('open', t(path.join('.'))).on 'click', =>
         @openDialog()
 
       @template.addButton('cancel', t('buttons.cancel')).on 'click', =>

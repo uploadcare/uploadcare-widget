@@ -63,10 +63,15 @@ $circle-size: 25px;
   background: #c3c3c3;
   cursor: default;
 }
+.uploadcare-widget-button:hover {
+  background: #b2b2b2;
+}
 .uploadcare-widget-button-open {
   background: #18a5d0;
 }
-
+.uploadcare-widget-button-open:hover {
+  background: #0094c0;
+}
 
 .uploadcare-widget-text {
   display: none;
