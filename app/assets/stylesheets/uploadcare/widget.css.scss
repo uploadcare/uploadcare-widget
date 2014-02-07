@@ -11,14 +11,6 @@ $circle-size: 25px;
   display: inline-block;
   vertical-align: baseline;
   white-space: nowrap;
-
-  .uploadcare-widget-circle {
-    display: none;
-    width: $circle-size;
-    height: $circle-size;
-    margin-right: 1ex;
-    vertical-align: middle;
-  }
 }
 
 .uploadcare-widget-status-ready .uploadcare-widget-button-open,
@@ -32,13 +24,16 @@ $circle-size: 25px;
   display: inline-block;
 }
 
-.uploadcare-widget-circle {
-  position: relative;
+.uploadcare-widget-status {
+  display: none;
+  width: $circle-size;
+  height: $circle-size;
+  margin-right: 1ex;
+  vertical-align: middle;
 }
 
 .uploadcare-widget-circle--text {
   .uploadcare-widget-circle-back {
-    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -60,11 +55,11 @@ $circle-size: 25px;
   padding: .3em .6em;
   margin-right: 3px;
   border-radius: 4px;
-  background: #d3d3d3;
+  background: #c3c3c3;
   cursor: default;
 }
 .uploadcare-widget-button:hover {
-  background: #c3c3c3;
+  background: #b3b3b3;
 }
 .uploadcare-widget-button-open {
   padding: .4em .8em;
