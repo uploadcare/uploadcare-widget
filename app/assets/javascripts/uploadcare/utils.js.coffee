@@ -166,14 +166,24 @@ namespace 'uploadcare.utils', (ns) ->
         top: e.pageY - top - 10
 
 
+  ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
+
   ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
     value = parseInt(value, 10)
-    return onNaN if isNaN(value)
-    labels = 'B KB MB GB TB PB EB ZB YB'.split ' '
-    for label, i in labels
-      if value < 512 or i is labels.length - 1
-        return "#{prefix}#{value} #{label}#{postfix}"
-      value = Math.round(value / 1024)
+    if isNaN(value)
+      return onNaN
+
+    digits = 2
+    i = 0
+    while value > 999 and i < ns.fileSizeLabels.length - 1
+      i++
+      value /= 1024
+
+    # number of digits after point: total number minus digits before point
+    fixedTo = Math.max(0, digits - value.toFixed(0).length)
+    # fixed → number → string, to trim trailing zeroes
+    value = Number(value.toFixed(fixedTo))
+    return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
 
   ns.imagePath = (name) ->
     uploadcare.settings.build().scriptBase + 'images/' + name
