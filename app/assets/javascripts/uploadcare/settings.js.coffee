@@ -130,6 +130,9 @@ namespace 'uploadcare.settings', (ns) ->
     if settings.crop.enabled or settings.multiple
       settings.previewStep = true
 
+    if settings.crop.enabled
+      settings.pathValue = true
+
     settings
 
 
