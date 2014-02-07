@@ -1,6 +1,5 @@
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.es =
-    ready: 'Subir desde'
     uploading: 'Subiendo... Por favor espere.'
     loadingInfo: 'Cargando Información...'
     errors:
@@ -18,7 +17,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Cancelar'
       remove: 'Eliminar'
-      file: 'Computadora'
     dialog:
       tabs:
         file:

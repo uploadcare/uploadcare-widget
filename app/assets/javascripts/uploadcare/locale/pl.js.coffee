@@ -1,6 +1,5 @@
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.pl =
-    ready: 'Prześlij z'
     uploading: 'Przesyłanie... Proszę czekać.'
     errors:
       default: 'Błąd'
@@ -8,7 +7,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Anuluj'
       remove: 'Usuń'
-      file: 'Komputer'
     dialog:
       tabs:
         file:

@@ -43,21 +43,19 @@ namespace 'uploadcare.widget', (ns) ->
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
 
+      path = ['buttons.choose']
+      path.push(if @settings.imagesOnly then 'images' else 'files')
+      path.push(if @settings.multiple then 'other' else 'one')
+
+      @template.addButton('open', t(path.join('.'))).on 'click', =>
+        @openDialog()
+
       @template.addButton('cancel', t('buttons.cancel')).on 'click', =>
         @__setObject(null)
 
       if @settings.clearable
         @template.addButton('remove', t('buttons.remove')).on 'click', =>
           @__setObject(null)
-
-      # Create the dialog and widget buttons
-      if @settings.tabs.length > 0
-        if 'file' in @settings.tabs
-          @template.addButton('file').on 'click', =>
-            @openDialog('file')
-
-        @template.addButton('dialog').on 'click', =>
-          @openDialog()
 
       @template.content.on 'click', '@uploadcare-widget-file-name', =>
         @openDialog()

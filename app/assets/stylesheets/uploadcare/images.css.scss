@@ -6,10 +6,6 @@
   background-image: url("<%= utils.imagePath('tab-icons-active.png') %>");
 }
 
-%widget-buttons-image {
-  background-image: url("<%= utils.imagePath('buttons.png') %>");
-}
-
 %crop-border-image {
   background-image: url("<%= utils.imagePath('crop-border-bg.gif') %>");
 }

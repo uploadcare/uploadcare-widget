@@ -15,39 +15,21 @@ namespace 'uploadcare.widget', (ns) ->
       @content = $(tpl('widget'))
       @element.after(@content)
       @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
-
-      @statusText = @content.find('@uploadcare-widget-status-text')
-      @buttonsContainer = @content.find('@uploadcare-widget-buttons')
-
-      @dropArea = @content.find('@uploadcare-drop-area')
-
-      @labels = []
-
-    pushLabel: (label) ->
-      @labels.push @statusText.text()
-      @statusText.text(label)
-
-    popLabel: ->
-      @statusText.text(@labels.pop())
-
-    addState: (state) ->
-      @content.addClass("uploadcare-widget-state-#{state}")
-
-    removeState: (state) ->
-      @content.removeClass("uploadcare-widget-state-#{state}")
+      @statusText = @content.find('@uploadcare-widget-text')
 
     addButton: (name, caption='') ->
-      li = $ tpl('widget-button', {name, caption})
-      @buttonsContainer.append(li)
-      return li
+      $(tpl('widget-button', {name, caption})).appendTo(@content)
 
     setStatus: (status) ->
+      prefix = 'uploadcare-widget-status-'
+      @content.removeClass(prefix + @content.attr('data-status'))
       @content.attr('data-status', status)
+      @content.addClass(prefix + status)
+
       form = @element.closest('@uploadcare-upload-form')
       form.trigger("#{status}.uploadcare")
 
     reset: ->
-      @statusText.text(t('ready'))
       @circle.reset()
       @setStatus 'ready'
       @__file = null

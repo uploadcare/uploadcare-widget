@@ -4,31 +4,32 @@
 @import "dialog";
 @import "crop-widget";
 
-$widget-height: 25px;
-$button-text-color: #8f9295;
-$circle-center-width: 10%;
+$circle-size: 25px;
 
 .uploadcare-widget {
-  display: inline-block !important;
   position: relative;
-  vertical-align: middle;
-  padding: 0 5px;
-
-  &[data-status=loaded], &[data-status=started] {
-    .uploadcare-widget-button { display: none; }
-  }
-  &[data-status=started] .uploadcare-widget-buttons .uploadcare-widget-buttons-cancel,
-  &[data-status=loaded] .uploadcare-widget-buttons .uploadcare-widget-buttons-remove {
-    display: inline-block;
-  }
+  display: inline-block;
+  vertical-align: baseline;
+  white-space: nowrap;
 
   .uploadcare-widget-circle {
-    width: $widget-height;
-    height: $widget-height;
-    top: -1px;
-    float: left;
+    display: none;
+    width: $circle-size;
+    height: $circle-size;
     margin-right: 1ex;
+    vertical-align: middle;
   }
+}
+
+.uploadcare-widget-status-ready .uploadcare-widget-button-open,
+.uploadcare-widget-status-started .uploadcare-widget-status,
+.uploadcare-widget-status-started .uploadcare-widget-text,
+.uploadcare-widget-status-started .uploadcare-widget-button-cancel,
+.uploadcare-widget-status-loaded .uploadcare-widget-text,
+.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
+.uploadcare-widget-status-error .uploadcare-widget-text,
+.uploadcare-widget-status-error .uploadcare-widget-button-open {
+  display: inline-block;
 }
 
 .uploadcare-widget-circle {
@@ -52,60 +53,30 @@ $circle-center-width: 10%;
     }
 }
 
-.uploadcare-widget-buttons {
-  position: relative;
-  top: -1px;
-  float: left;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  .uploadcare-widget-button {
-    $height: 24px;
-    display: inline-block;
-    height: $height;
-    float: left;
-    font-size: 11px;
-    color: $button-text-color;
-    line-height: $widget-height;
-    width: 36px;
-    padding: 0 6px;
-    margin: 0 3px ($widget-height - 24) 0;
-    list-style: none;
-    @include box-sizing(border-box);
-    border-radius: 2px;
-    background: #e1e5e7;
-    cursor: default;
 
-    $frame: -$height;
-    &.uploadcare-widget-buttons-dialog,
-    &.uploadcare-widget-buttons-file,
-    &.uploadcare-widget-buttons-url {
-      @extend %widget-buttons-image;
-      background-position: 0 0;
-      background-repeat: no-repeat;
-      padding-left: 30px;
-    }
-    &.uploadcare-widget-buttons-dialog,
-    &.uploadcare-widget-buttons-url {
-      background-position: 0 $frame;
-    }
-    &.uploadcare-widget-buttons-cancel, &.uploadcare-widget-buttons-remove {
-      font-size: 0.9em;
-      display: none;
-      width: auto;
-    }
-  }
+.uploadcare-widget-button {
+  display: none;
+  color: white;
+  padding: .3em .6em;
+  margin-right: 3px;
+  border-radius: 4px;
+  background: #d3d3d3;
+  cursor: default;
+}
+.uploadcare-widget-button:hover {
+  background: #c3c3c3;
+}
+.uploadcare-widget-button-open {
+  padding: .4em .8em;
+  background: #18a5d0;
+}
+.uploadcare-widget-button-open:hover {
+  background: #0094c0;
 }
 
-.uploadcare-widget-status-text {
-  float: left;
-  overflow: hidden;
-  line-height: $widget-height;
-  height: $widget-height;
+.uploadcare-widget-text {
+  display: none;
   margin-right: 1ex;
-  white-space: nowrap;
-  padding: 0 5px;
 }
   .uploadcare-widget-file-name {
     cursor: pointer;
@@ -118,18 +89,22 @@ $circle-center-width: 10%;
 .uploadcare-widget-dragndrop-area {
   display: none;
   position: absolute;
-  $padding: 8px;
-  $height: $padding * 2 + $widget-height;
-  top: -$padding;
-  left: 0;
+
+  // Verticlly centered
+  top: 50%;
+  margin-top: -1.3em;
+
+  left: -.5em;
   width: 100%;
-  height: $height;
-  line-height: $height;
+  height: 2em;
+  padding: .3em .5em;
+  line-height: 2em;
+  min-width: 9em;
   text-align: center;
   background-color: $dragndrop-background-color;
   color: $dragndrop-text-color;
   border: 1px dashed $dragndrop-border-color;
-  border-radius: $widget-height / 2 + $padding;
+  border-radius: 100px;
 
   .uploadcare-widget.uploadcare-dragging & {
     background-color: $dragndrop-hover-background-color;
