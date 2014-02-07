@@ -43,6 +43,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyProgress.add update
       @dialogApi.fileColl.onAdd.add update
       @dialogApi.fileColl.onRemove.add update
+      update()
 
       circle = new Circle(circleEl).listen circleDf.promise(), 'progress'
 
