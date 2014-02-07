@@ -77,11 +77,9 @@ namespace 'uploadcare.files', (ns) ->
       isStored: @isStored
       isImage: @isImage
       originalImageInfo: @imageInfo
-      originalUrl: "#{@settings.cdnBase}/#{@fileId}/"
-      cdnUrl: "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+      originalUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/" else null
+      cdnUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}" else null
       cdnUrlModifiers: @cdnUrlModifiers
-      previewUrl: "#{@settings.cdnBase}/#{@fileId}/"  # deprecated, use originalUrl
-      preview: @apiPromise.preview
 
     __cancel: =>
       @__rejectApi('user')
@@ -89,29 +87,12 @@ namespace 'uploadcare.files', (ns) ->
       # becouse apiDeferred already reolved.
       @__uploadDf.reject()
 
-    __preview: (selector) =>
-      utils.warnOnce "'preview' method is deprecated. " +
-                     "Use fileInfo.cdnUrl as image source."
-      @apiPromise.done (info) =>
-        img = new Image()
-        img.onload = ->
-          $(selector).html(
-            $('<div>')
-              .css
-                position: 'relative'
-                overflow: 'hidden'
-                width: @width
-                height: @height
-              .append img
-          )
-        img.src = "#{info.cdnUrl}-/preview/1600x1600/"
-
     __setupValidation: ->
       @validators = (@settings.__validators or []).slice()
 
       if @settings.imagesOnly
         @validators.push (info) ->
-          if not info.isImage
+          if info.isImage is false
             throw new Error('image')
 
       @onInfoReady.add @__runValidators
@@ -125,7 +106,6 @@ namespace 'uploadcare.files', (ns) ->
 
     __extendApi: (api) =>
       api.cancel = @__cancel
-      api.preview = @__preview
 
       __then = api.then
       api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
@@ -170,7 +150,9 @@ namespace 'uploadcare.files', (ns) ->
     promise: ->
       unless @__uploadStarted
         @__uploadStarted = true
-        @__startUpload()
+        @__runValidators @__fileInfo()
+        if @apiPromise.state() == 'pending'
+          @__startUpload()
       @apiPromise
 
 

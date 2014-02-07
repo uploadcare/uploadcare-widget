@@ -13,6 +13,11 @@
   <input role="uploadcare-uploader" data-crop id="test3" value="">
 </p>
 
+<p>
+  images only native<br>
+  <input role="uploadcare-uploader" data-crop value="" data-images-only>
+</p>
+
 <script>
   UPLOADCARE_LOCALE_TRANSLATIONS = {
     errors: {
@@ -29,14 +34,14 @@
 
   $(function() {
     function imagesOnly(info) {
-      if ( ! info.isImage) {
+      if (info.isImage === false) {
         throw new Error('image');
       }
       console.log('image loaded', info);
     }
 
     function horizontalImage(info) {
-      if (info.isImage) {
+      if (info.originalImageInfo !== null) {
         if (info.originalImageInfo.height > info.originalImageInfo.width) {
           throw new Error('vertical');
         }
@@ -45,8 +50,10 @@
 
     function maxSize(size) {
       return function (info) {
-        if (info.size > size) {
-          throw new Error('size');
+        if (info.size !== null) {
+          if (info.size > size) {
+            throw new Error('size');
+          }
         }
         console.log('small loaded', info);
       }
