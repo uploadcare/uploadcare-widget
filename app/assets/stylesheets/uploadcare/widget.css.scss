@@ -57,16 +57,17 @@ $circle-size: 25px;
 .uploadcare-widget-button {
   display: none;
   color: white;
-  padding: .35em 1em;
+  padding: .3em .6em;
   margin-right: 3px;
   border-radius: 4px;
-  background: #c3c3c3;
+  background: #d3d3d3;
   cursor: default;
 }
 .uploadcare-widget-button:hover {
-  background: #b2b2b2;
+  background: #c3c3c3;
 }
 .uploadcare-widget-button-open {
+  padding: .4em .8em;
   background: #18a5d0;
 }
 .uploadcare-widget-button-open:hover {
