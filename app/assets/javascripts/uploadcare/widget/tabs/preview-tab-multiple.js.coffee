@@ -109,6 +109,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @__find('file-preview-wrap', fileEl).html $('<img>')
           .attr
             src: "#{info.originalUrl}-/scale_crop/90x90/center/"
+          .css
+            width: 'auto'
             height: 45
 
     __fileFailed: (file, error, info) =>
