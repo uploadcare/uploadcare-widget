@@ -112,7 +112,7 @@ namespace 'uploadcare.widget', (ns) ->
       @__setObject utils.valueToFile(value, @settings)
 
     value: (value) ->
-      if value?
+      if value isnt undefined
         @__hasValue = true
         @__setExternalValue value
         this
