@@ -48,14 +48,11 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @renderer.setColorTheme theme
 
 
-
-
   class ns.BaseRenderer
     constructor: (el) ->
       @element = $(el)
       @element.data 'uploadcare-progress-renderer', this
       @element.addClass 'uploadcare-widget-circle'
-      @size = Math.min(@element.width(), @element.height())
 
     setColorTheme: (theme) ->
       if $.type(theme) is 'string'
@@ -113,13 +110,12 @@ namespace 'uploadcare.ui.progress', (ns) ->
     constructor: ->
       super
 
-      @canvasSize = @size * 2
+      @canvasSize = Math.min(@element.width(), @element.height()) * 2
 
       @setColorTheme 'default'
       @setValue 0, true
 
       @canvasEl = $('<canvas>')
-                  .css(width: @size, height: @size)
                   .prop(width: @canvasSize, height: @canvasSize)
       @canvasCtx = @canvasEl.get(0).getContext '2d'
 
