@@ -40,9 +40,11 @@ jQuery(function($) {
   for (var i = 0; i < widgets.length; i++) {
     widgets[i].onChange.add(function(file) {
       if (file) {
-        file.preview('#last-result');
         file.done(function(info) {
           log('change: ' + info.uuid);
+          $('#last-result').html($('<img/>', {
+            src: info.originalUrl + '-/preview/500x500/'
+          }));
         });
       } else {
         $('#last-result').empty();

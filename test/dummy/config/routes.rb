@@ -7,6 +7,7 @@ Dummy::Application.routes.draw do
   get "welcome/crop"
   get "welcome/with_value"
   get "welcome/preview_step"
+  get "welcome/embedded"
   get "welcome/ui"
   get "welcome/in_hidden_el"
   get "welcome/multiple"

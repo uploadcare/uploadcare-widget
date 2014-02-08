@@ -1,97 +1,32 @@
 <% content_for :head do %>
   <style>
+    body {
+      font-family: verdana;
+    }
     dt {
       font-family: monospace;
       margin-bottom: .5em;
     }
-
     dd {
       margin: 0 0 1.5em 0;
     }
 
-    .uploadcare-dialog .uploadcare-dialog-panel {
-      width: auto;
-      min-width: 600px;
-      max-width: 1000px;
+    .uploadcare-widget-status-loaded .uploadcare-widget-status {
+      display: inline-block;
     }
-    #placeholderholder {
-      width: 800px;
-      margin: 20px;
+    .lh-10, .lh-10 .uploadcare-widget {
+      line-height: 1.0;
     }
-    #placeholder {
-      height: 616px;
-      background: url(/assets/uploadcare/images/loading-spinner.gif) no-repeat 50% 50%;
-      background-size: 25px 25px;
+    .lh-14, .lh-14 .uploadcare-widget {
+      line-height: 1.3;
     }
-    #placeholderholder .uploadcare-dialog-tab,
-    #placeholderholder .uploadcare-dialog-tabs,
-    #placeholderholder .uploadcare-dialog-panel {
-      background: transparent;
-      border: 0;
+    .lh-20 {
+      line-height: 1.3;
     }
-    #placeholderholder .uploadcare-dialog-tabs {
-      float: none;
-      width: auto;
-      height: auto;
-      overflow: hidden;
-    }
-    #placeholderholder .uploadcare-dialog-selected-tab {
-      margin: 0;
-    }
-    #placeholderholder .uploadcare-dialog-tab {
-      width: 56px;
-      float: left;
-    }
-    #placeholderholder .uploadcare-dialog-tabs-panel,
-    #placeholderholder .uploadcare-dialog-source-base-wrap {
-      padding: 0;
-      margin: 0;
-      height: 572px;
+    .lh-20 .uploadcare-widget {
+      line-height: 2.0;
     }
   </style>
-  <script>
-    function GroupTab(container, button, dialogApi, settings) {
-      var group = settings.favoriteGroup;
-      if ( ! group) {
-        throw new Error('No group found in options.')
-      }
-
-      dialogApi.onSwitched.add(function(name, toThis) {
-        if (toThis) {
-          container.empty();
-          uploadcare.loadFileGroup(group).done(function(fileGroup) {
-            $.each(fileGroup.files(), function(i, file) {
-              file.done(function(fileInfo) {
-                var item = $('<a>').attr('href', fileInfo.cdnUrl)
-                          .text(fileInfo.name);
-                item.on('click', function(e) {
-                  e.preventDefault();
-                  dialogApi.addFiles([file]);
-                });
-                container.append($('<p>').append(item));
-              });
-            });
-          });
-        }
-      });
-    }
-    uploadcare.registerTab('favorite', GroupTab)
-
-    function replace() {
-      uploadcare.openPanel('#placeholder', null, {
-        tabs: 'file url facebook gdrive instagram evernote box skydrive favorite',
-        favoriteGroup: '8552e3eb-02b2-4614-9678-dafb1c43a2f5~6'
-      })
-      .done(function(file) {
-        file.done(function(fileInfo) {
-          window.location = fileInfo.cdnUrl;
-        })
-        .fail(replace);
-      })
-      .fail(replace);
-    }
-    $(replace);
-  </script>
 <% end %>
 
 <dl>
@@ -122,8 +57,78 @@
   </dd>
 </dl>
 
-<input type="text" role="uploadcare-uploader" data-clearable>
+<table border="0">
+    <tr>
+    <td style="font-size: 12px" class="lh-10">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 12px" class="lh-14">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 12px" class="lh-20">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 16px" class="lh-10">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 16px" class="lh-14">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 16px" class="lh-20">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 24px" class="lh-10">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 24px" class="lh-14">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+    <td style="font-size: 24px" class="lh-20">
+      prev line<br>
+      <input type="hidden" role="uploadcare-uploader" data-clearable><br>
+      next line
+    </td>
+  </tr>
+</table>
 
-<div id="placeholderholder">
-  <div id="placeholder"></div>
-</div>
+<p>
+  Draggable:<br>
+  <img src="https://secure.gravatar.com/avatar/afec5e3f528823759c4b1eb2d26bc0a2" alt="" />
+</p>
+<script>
+  $(function() {
+    var all = $('table input').map(function() {
+      return uploadcare.Widget(this);
+    }).get();
+    $.each(all, function() {
+      var widget = this;
+      widget.onChange(function(file) {
+        $.each(all, function() {
+          if (this !== widget) {
+            this.value(file);
+          }
+        });
+      });
+    })
+  });
+</script>
