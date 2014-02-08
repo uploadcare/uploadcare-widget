@@ -195,6 +195,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
+        allowSelect: false
         onSelect: (coords) =>
           @__currentCoords =
             height: coords.h
