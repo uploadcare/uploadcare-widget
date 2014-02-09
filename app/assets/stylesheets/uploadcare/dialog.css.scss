@@ -758,6 +758,15 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
 
 .uploadcare-dialog-remote-iframe-wrap {
   padding: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.uploadcare-dialog-remote-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  visibility: 'hidden';
 }
 
 .uploadcare-dialog-source-base-footer {

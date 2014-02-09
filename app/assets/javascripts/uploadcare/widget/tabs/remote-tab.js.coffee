@@ -41,11 +41,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               marginwidth: 0
               frameborder: 0
               allowTransparency: "true"
-            .css
-              width: '100%'
-              height: '100%'
-              border: 0
-              visibility: 'hidden'
+            .addClass('uploadcare-dialog-remote-iframe')
             .appendTo(@wrap)
             .on 'load', ->
               $(this).css 'visibility', 'visible'
