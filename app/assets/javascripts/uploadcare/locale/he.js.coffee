@@ -1,7 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
-  ns.en =
-    ready: 'העלה קובץ'
+  ns.he =
     uploading: 'טוען... אנא המתן.'
     loadingInfo: 'טוען מידע...'
     errors:
