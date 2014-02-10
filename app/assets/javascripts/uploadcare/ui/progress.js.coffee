@@ -110,7 +110,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
     constructor: ->
       super
 
-      @canvasSize = Math.min(@element.width(), @element.height()) * 2
+      @canvasSize = Math.floor(Math.min(@element.width(), @element.height())) * 2
 
       @setColorTheme 'default'
       @setValue 0, true
