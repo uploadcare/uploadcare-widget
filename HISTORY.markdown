@@ -1,5 +1,20 @@
 # History
 
+### 0.18.0, 10.02.2013
+
+* Widget now in one button "Choose a file".
+  Progress circle appears only on uploading.
+* Widget adapts to host page: controls size depends on font size only,
+  height can be adjusted via line-height.
+* Widget always return CDN urls when crop used (similar to path-value option).
+* Validators runs every time new file properties available. All unavailable
+  properties are null.
+* Fixed scrolling on social tabs on touch devices.
+* Fixed file size labels.
+* Fixed images in multiple preview in ie8.
+* Fixed impossible to set null value to widget.
+* Removed deprecated `preview()` and `previewUrl` fields of `fileInfo` object.
+
 ### 0.17.2, 24.01.2013
 
 * better compatibility with host page markup
