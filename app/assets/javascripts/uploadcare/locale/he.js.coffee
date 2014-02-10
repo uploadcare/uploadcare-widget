@@ -22,7 +22,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'הסר'
       choose:
         files:
-          one: 'בחר קובת'
+          one: 'בחר קובץ'
           other: 'בחר קבצים'
         images:
           one: 'בחר תמונה'
