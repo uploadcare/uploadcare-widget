@@ -21,7 +21,13 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'ביטול'
       remove: 'הסר'
-      file: 'מחשב'
+      choose:
+        files:
+          one: 'בחר קובת'
+          other: 'בחר קבצים'
+        images:
+          one: 'בחר תמונה'
+          other: 'בחר תמונות'
     dialog:
       done: 'סיום'
       showFiles: 'הצג קבצים'
