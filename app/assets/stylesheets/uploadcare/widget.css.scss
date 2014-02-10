@@ -26,11 +26,13 @@
 .uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
 .uploadcare-widget-status-error .uploadcare-widget-text,
 .uploadcare-widget-status-error .uploadcare-widget-button-open {
-  display: inline-block;
+  // We have to use important to avoid overriding display: none.
+  display: inline-block !important;
 }
 
+
 .uploadcare-widget-status {
-  display: none;
+  display: none !important;
   width: 1.8em;
   height: 1.8em;
   margin: -1em 0;
@@ -56,14 +58,28 @@
       line-height: 1;
     }
 }
-.uploadcare-widget-circle--canvas canvas {
-  width: 100%;
-  height: 100%;
+.uploadcare-widget-circle--canvas {
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 
+.uploadcare-widget-text {
+  display: none !important;
+  margin-right: 1ex;
+}
+  .uploadcare-widget-file-name {
+    cursor: pointer;
+    color: #1a85ad;
+    text-decoration: none;
+    border-bottom: 1px dotted #1a85ad;
+  }
+
+
 .uploadcare-widget-button {
-  display: none;
+  display: none !important;
   color: white;
   padding: .4em .6em;
   line-height: 1;
@@ -84,17 +100,6 @@
   background: #0094c0;
 }
 
-.uploadcare-widget-text {
-  display: none;
-  margin-right: 1ex;
-}
-  .uploadcare-widget-file-name {
-    cursor: pointer;
-    color: #1a85ad;
-    border-bottom-color: #1a85ad;
-    text-decoration: none;
-    border-bottom: 1px dotted;
-  }
 
 .uploadcare-widget-dragndrop-area {
   display: none;
