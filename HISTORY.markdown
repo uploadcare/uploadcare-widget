@@ -1,6 +1,6 @@
 # History
 
-### 0.18.0, 10.02.2013
+### 0.18.0, 10.02.2014
 
 * Widget now in one button "Choose a file".
   Progress circle appears only on uploading.
@@ -15,11 +15,11 @@
 * Fixed impossible to set null value to widget.
 * Removed deprecated `preview()` and `previewUrl` fields of `fileInfo` object.
 
-### 0.17.2, 24.01.2013
+### 0.17.2, 24.01.2014
 
 * better compatibility with host page markup
 
-### 0.17.1, 13.01.2013
+### 0.17.1, 13.01.2014
 
 * Large files uploads in parallel by small pieces with automatic recovering
   in case of network errors.
