@@ -3,7 +3,7 @@
 $dialog-tab-width: x(3);
 $dialog-body-height: y(28);
 
-$dialog-width: x(36);
+$dialog-width: x(24);
 
 $dialog-corner-radius: 8px;
 $dialog-link-color: #1a85ad;
@@ -41,7 +41,8 @@ $dialog-free-space-for-close-button: y(1.5);
   }
 
   .uploadcare-dialog-panel {
-    width: $dialog-width;
+    min-width: $dialog-width;
+    max-width: x(36);
     border-radius: $dialog-corner-radius;
     @include prefix(box-shadow, 0 1px 2px rgba(black, 0.35));
   }
