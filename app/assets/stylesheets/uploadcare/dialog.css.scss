@@ -119,7 +119,7 @@ $dialog-free-space-for-close-button: y(1.5);
     cursor: pointer;
 
     position: relative;
-    &:after {
+    &:before {
       @extend %tab-icons-image;
       content: '';
       display: block;
@@ -136,7 +136,7 @@ $dialog-free-space-for-close-button: y(1.5);
 
     &:hover {
       background-color: #e5e7e8;
-      &:after {
+      &:before {
         @extend %tab-icons-image;
         opacity: 1;
       }
@@ -147,11 +147,11 @@ $dialog-free-space-for-close-button: y(1.5);
       border-right: 1px solid $dialog-body-background-color;
       &, &:hover {
         background-color: $dialog-body-background-color;
-        &:after {
+        &:before {
           @extend %tab-icons-active-image;
         }
       }
-      &:after {
+      &:before {
         @extend %tab-icons-active-image;
         opacity: 1;
       }
@@ -161,43 +161,43 @@ $dialog-free-space-for-close-button: y(1.5);
       cursor: default;
       &:hover {
         background-color: $dialog-body-shadow-color;
-        &:after {
+        &:before {
           @extend %tab-icons-image;
         }
       }
     }
 
-    .uploadcare-dialog-tab-preview:after {
+    .uploadcare-dialog-tab-preview:before {
       display: none;
     }
-    .uploadcare-dialog-tab-file:after {
+    .uploadcare-dialog-tab-file:before {
       background-position: 0 ($frame-size * -1);
     }
-    .uploadcare-dialog-tab-url:after {
+    .uploadcare-dialog-tab-url:before {
       background-position: 0 ($frame-size * -2);
     }
-    .uploadcare-dialog-tab-facebook:after {
+    .uploadcare-dialog-tab-facebook:before {
       background-position: 0 ($frame-size * -3);
     }
-    .uploadcare-dialog-tab-dropbox:after {
+    .uploadcare-dialog-tab-dropbox:before {
       background-position: 0 ($frame-size * -4);
     }
-    .uploadcare-dialog-tab-gdrive:after {
+    .uploadcare-dialog-tab-gdrive:before {
       background-position: 0 ($frame-size * -5);
     }
-    .uploadcare-dialog-tab-instagram:after {
+    .uploadcare-dialog-tab-instagram:before {
       background-position: 0 ($frame-size * -6);
     }
-    .uploadcare-dialog-tab-vk:after {
+    .uploadcare-dialog-tab-vk:before {
       background-position: 0 ($frame-size * -7);
     }
-    .uploadcare-dialog-tab-evernote:after {
+    .uploadcare-dialog-tab-evernote:before {
       background-position: 0 ($frame-size * -8);
     }
-    .uploadcare-dialog-tab-box:after {
+    .uploadcare-dialog-tab-box:before {
       background-position: 0 ($frame-size * -9);
     }
-    .uploadcare-dialog-tab-skydrive:after {
+    .uploadcare-dialog-tab-skydrive:before {
       background-position: 0 ($frame-size * -10);
     }
 
