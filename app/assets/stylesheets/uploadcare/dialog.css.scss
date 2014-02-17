@@ -20,6 +20,10 @@ $dialog-body-font-size-smaller: 13px;
 
 $dialog-free-space-for-close-button: y(1.5);
 
+.uploadcare-dialog-opened { // body
+  overflow: hidden;
+}
+
 .uploadcare-dialog {
   @extend %dialog-overlay-image;
   font-family: $font-family;
