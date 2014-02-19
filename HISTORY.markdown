@@ -1,5 +1,10 @@
 # History
 
+### 0.18.1, 19.02.2014
+
+* Added Turkish locale.
+* Fixed crop on pages with old bootstrap.
+
 ### 0.18.0, 10.02.2014
 
 * Widget now in one button "Choose a file".
