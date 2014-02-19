@@ -158,6 +158,8 @@ namespace 'uploadcare.crop', (ns) ->
       @__img = $('<img/>')
         .css
           margin: '0 auto'
+          width: @__resizedSize[0]
+          height: @__resizedSize[1]
         .on 'error', =>
           @__setState 'error'
           @__deferred.reject LOADING_ERROR
@@ -241,4 +243,5 @@ namespace 'uploadcare.crop', (ns) ->
       done = (api) =>
         @__jCropApi = api
         @__setState 'loaded'
-      @__img.Jcrop jCropOptions, -> done this
+      @__img.Jcrop jCropOptions, ->
+        done(this)
