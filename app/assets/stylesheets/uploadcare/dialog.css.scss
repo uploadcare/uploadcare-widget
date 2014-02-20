@@ -776,3 +776,32 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
     display: block;
   }
 }
+
+@media screen and (max-width: $dialog-width + $dialog-free-space-for-close-button * 2) {
+  .uploadcare-dialog-opened {
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+  }
+  // hide anything else on the page
+  body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
+    display: none !important;
+  }
+
+  .uploadcare-dialog-inner-wrap1,
+  .uploadcare-dialog-inner-wrap2 {
+    padding: 0;
+    display: block;
+    height: auto;
+    background: $dialog-body-background-color;
+  }
+
+  .uploadcare-dialog {
+    position: absolute;
+    overflow: visible;
+
+    background: $dialog-body-background-color;
+  }
+}
