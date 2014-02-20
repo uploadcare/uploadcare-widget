@@ -21,6 +21,14 @@
 
 namespace 'uploadcare', (ns) ->
 
+  lockScroll = (el, toTop) ->
+    top = el.scrollTop()
+    left = el.scrollLeft()
+    if toTop
+      el.scrollTop(0).scrollLeft(0)
+    ->
+      el.scrollTop(top).scrollLeft(left)
+
   $(window).on 'keydown', (e) =>
     if ns.isDialogOpened()
       if e.which == 27  # Escape
@@ -39,8 +47,7 @@ namespace 'uploadcare', (ns) ->
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
 
-    $('body').addClass(openedClass)
-    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    dialog = $(tpl('dialog')).appendTo('body')
     dialog.on 'click', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
@@ -54,11 +61,15 @@ namespace 'uploadcare', (ns) ->
 
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
+
+    cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
+    $('html, body').addClass(openedClass)
+
     currentDialogPr.always ->
-      $('body').removeClass(openedClass)
+      $('html, body').removeClass(openedClass)
       currentDialogPr = null
-      dialog.fadeOut 'fast', ->
-        dialog.remove()
+      dialog.remove()
+      cancelLock()
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
