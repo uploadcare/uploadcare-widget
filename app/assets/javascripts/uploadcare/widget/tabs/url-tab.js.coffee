@@ -23,6 +23,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       super
 
       @wrap.append tpl 'tab-url'
+      @wrap.addClass('uploadcare-dialog-padding')
 
       input = @wrap.find('@uploadcare-dialog-url-input')
       input.on 'change keyup input', ->

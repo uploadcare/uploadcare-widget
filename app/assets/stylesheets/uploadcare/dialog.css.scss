@@ -17,6 +17,7 @@ $dialog-body-text-color: #000;
 $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
+$dialog-footer-height: y(3);
 
 $dialog-free-space-for-close-button: y(1.5);
 
@@ -249,9 +250,9 @@ $dialog-free-space-for-close-button: y(1.5);
 // § Common tab elements
 
 .uploadcare-dialog-title {
-  font-size: 25px;
+  font-size: y(1);
   line-height: 1;
-  margin-bottom: x(1);
+  margin-bottom: y(1);
 }
 
 .uploadcare-dialog-title2 {
@@ -400,10 +401,11 @@ $dialog-button-height: 33px;
 // § Preview tab
 
 $dialog-preview-container-height: 456px;
+$dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-footer-height;
+
 .uploadcare-dialog-preview-image-wrap1 {
   width: 100%;
   height: $dialog-preview-container-height;
-  margin-bottom: y(1);
   display: table;
 }
 .uploadcare-dialog-preview-image-wrap2 {
@@ -417,7 +419,7 @@ $dialog-preview-container-height: 456px;
   margin: 0 auto;
 }
 
-$dialog-footer-height: y(3);
+
 .uploadcare-dialog-inner-footer {
   @include box-sizing(content-box);
   background: #fff3be;
@@ -613,7 +615,7 @@ $dialog-footer-height: y(3);
 $dpm-columns: 8%, 60%, 10%, 14%, 8%;
 
 .uploadcare-dpm-file-list {
-  height: $dialog-preview-container-height + y(1);
+  height: $dialog-preview-container-height;
   overflow: auto;
 }
   .uploadcare-dpm-file-item {

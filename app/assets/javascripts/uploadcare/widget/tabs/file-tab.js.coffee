@@ -13,6 +13,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       super
 
       @wrap.append tpl 'tab-file', {tabs: @settings.tabs}
+      @wrap.addClass('uploadcare-dialog-padding')
 
       @wrap.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
         @dialogApi.switchTab $(e.target).data 'tab'
