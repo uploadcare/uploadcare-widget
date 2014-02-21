@@ -61,10 +61,6 @@ $dialog-free-space-for-close-button: y(1.5);
 
 .uploadcare-dialog-close {
   $size: y(1.5);
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
   width: $size;
   height: $size;
   line-height: $size;
@@ -203,7 +199,6 @@ $dialog-free-space-for-close-button: y(1.5);
   position: relative;
   @include box-sizing(border-box);
   margin-left: $dialog-tab-width;
-  padding: y(1) x(1);
   height: $dialog-body-height;
   line-height: y(1);
   font-size: $dialog-body-font-size;
@@ -428,8 +423,7 @@ $dialog-footer-height: y(3);
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-button-height;
-  padding: 16px 30px;
-  margin: 0 x(-1) y(-1);
+  padding: 16px x(1);
   .uploadcare-dialog-button-success {
     float: right;
   }
@@ -621,8 +615,6 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
 .uploadcare-dpm-file-list {
   height: $dialog-preview-container-height + y(1);
   overflow: auto;
-  margin: 0 x(-1);
-  padding: 0 x(1);
 }
   .uploadcare-dpm-file-item {
     $border: 1px solid #e3e3e3;
@@ -747,18 +739,18 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
 
 .uploadcare-dialog-source-base-wrap {
   height: $dialog-body-height;
-  margin: y(-1) x(-1);
-  padding: y(1) x(1);
   @include box-sizing(border-box);
 
   .uploadcare-dialog-multiple & {
     height: $dialog-body-height - $dialog-footer-height;
-    margin: y(-1) x(-1) 0;
   }
 }
+.uploadcare-dialog-padding {
+    padding: y(1) x(1);
+}
+
 
 .uploadcare-dialog-remote-iframe-wrap {
-  padding: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
