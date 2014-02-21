@@ -612,35 +612,34 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 // § Multiple preview
 
-$dpm-columns: 8%, 60%, 10%, 14%, 8%;
-
 .uploadcare-dpm-file-list {
-  height: $dialog-preview-container-height;
+  height: $dialog-preview-container-height + y(1);
   overflow: auto;
+  margin: 0 x(-1) y(-1) 0;
 }
   .uploadcare-dpm-file-item {
     $border: 1px solid #e3e3e3;
     border-top: $border;
     border-bottom: $border;
     margin-bottom: -1px;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
     padding: 10px 0;
+    min-height: 20px;
     font-size: $dialog-body-font-size-smaller;
-    line-height: 1;
+    line-height: 1.2;
     word-wrap: break-word;
     &:last-child {
       margin-bottom: 0;
     }
-    &:hover, &.ui-sortable-helper {
+    &:hover {
       background: #ececec;
       .uploadcare-dpm-file-remove {display: inline-block}
     }
-    &.ui-sortable-helper {
-      cursor: move;
-    }
     &.uploadcare-dpm-image {
-      .uploadcare-dpm-file-preview-wrap {display: inline-block}
+      .uploadcare-dpm-file-preview-wrap {display: table-cell}
       .uploadcare-dpm-file-name {
-        width: nth($dpm-columns, 2);
         &:before {display: none}
       }
     }
@@ -648,30 +647,25 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
       .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
     }
     &.uploadcare-dpm-error {
-      .uploadcare-dpm-file-error {display: inline-block}
+      .uploadcare-dpm-file-error {display: table-cell}
       .uploadcare-dpm-file-size,
       .uploadcare-dpm-file-progressbar-wrap {display: none}
     }
   }
+  .uploadcare-dpm-file-row {
+    display: table-row;
+  }
   %file-row-part {
-    @include vertical-centered;
-    @include box-sizing(border-box);
-    padding: 0 10px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 20px;
   }
   .uploadcare-dpm-file-preview-wrap {
     @extend %file-row-part;
-    text-align: center;
-    width: nth($dpm-columns, 1);
+    width: 45px;
     height: 45px;
     display: none;
-    padding: 0;
     line-height: 0;
-  }
-  .uploadcare-dpm-file-name,
-  .uploadcare-dpm-file-size,
-  .uploadcare-dpm-file-error {
-    padding-top: 4px;
-    padding-bottom: 4px;
   }
   %file-inline-icon {
     $height: 20px;
@@ -684,24 +678,24 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
   }
   .uploadcare-dpm-file-name {
     @extend %file-row-part;
-    width: nth($dpm-columns, 2) + nth($dpm-columns, 1);
+    width: 100%;
     &:before {
       @extend %file-inline-icon, %file-icon-image;
       width: 16px;
+      padding: 0;
     }
   }
   .uploadcare-dpm-file-size {
     @extend %file-row-part;
-    width: nth($dpm-columns, 3);
-    padding-right: 0;
+    width: 4.5em;
     text-align: left;
   }
   .uploadcare-dpm-file-progressbar-wrap {
     @extend %file-row-part;
-    width: nth($dpm-columns, 4);
+    width: 80px;
   }
     .uploadcare-dpm-file-progressbar {
-      width: 80px;
+      width: 100%;
       height: 8px;
       background: #e0e0e0;
       border-radius: 100px;
@@ -713,7 +707,7 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
       }
   .uploadcare-dpm-file-error {
     @extend %file-row-part;
-    width: nth($dpm-columns, 3) + nth($dpm-columns, 4);
+    width: 200px;
     display: none;
     color: #f5444b;
     &:before {
@@ -722,9 +716,7 @@ $dpm-columns: 8%, 60%, 10%, 14%, 8%;
   }
   .uploadcare-dpm-file-remove-wrap {
     @extend %file-row-part;
-    padding: 0;
-    padding-right: 10px;
-    width: nth($dpm-columns, 5);
+    width: 20px;
     text-align: right;
     line-height: 0;
   }
