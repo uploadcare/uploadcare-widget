@@ -111,14 +111,12 @@ namespace 'uploadcare', (ns) ->
       @dfd = $.Deferred()
       @dfd.always @__closePanel
 
-      sel = '.uploadcare-dialog-panel'
       @content = $(tpl('panel'))
-      @panel = @content.find(sel).add(@content.filter(sel));
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
       if @settings.multiple
-        @panel.addClass('uploadcare-dialog-multiple')
+        @content.addClass('uploadcare-dialog-multiple')
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
@@ -189,8 +187,7 @@ namespace 'uploadcare', (ns) ->
         @switchTab(tab || @settings.tabs[0])
 
     __closePanel: =>
-      @panel.replaceWith(@placeholder)
-      @content.remove()
+      @content.replaceWith(@placeholder)
 
     addTab: (name) ->
 
@@ -206,13 +203,13 @@ namespace 'uploadcare', (ns) ->
         .hide()
         .addClass('uploadcare-dialog-tabs-panel')
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .appendTo(@panel)
+        .appendTo(@content.find('.uploadcare-dialog-panel'))
 
       tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .attr('title', t("tabs.#{name}.title"))
         .on('click', => @switchTab(name))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
+        .appendTo(@content.find('.uploadcare-dialog-tabs'))
 
       @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
 
@@ -221,10 +218,10 @@ namespace 'uploadcare', (ns) ->
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .addClass('uploadcare-dialog-disabled-tab')
         .attr('title', t("tabs.#{name}.title"))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
+        .appendTo(@content.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
-      @panel
+      @content.find('.uploadcare-dialog-panel')
         .find('.uploadcare-dialog-selected-tab')
           .removeClass('uploadcare-dialog-selected-tab')
           .end()
@@ -238,12 +235,12 @@ namespace 'uploadcare', (ns) ->
       @dfd.notify @currentTab
 
     __showTab: (tab) ->
-      @panel.find(".uploadcare-dialog-tab-#{tab}").show()
+      @content.find(".uploadcare-dialog-tab-#{tab}").show()
 
     __hideTab: (tab) ->
       if @currentTab == tab
         @switchTab @settings.tabs[0]
-      @panel.find(".uploadcare-dialog-tab-#{tab}").hide()
+      @content.find(".uploadcare-dialog-tab-#{tab}").hide()
 
     __welcome: ->
       @addTab('welcome')
