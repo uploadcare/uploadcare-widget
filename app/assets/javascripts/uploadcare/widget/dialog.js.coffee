@@ -222,7 +222,13 @@ namespace 'uploadcare', (ns) ->
       tabButton = $('<div>')
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .attr('title', t("tabs.#{name}.title"))
-        .on('click', => @switchTab(name))
+        .on('click', =>
+          if name is @currentTab
+            @panel.find('.uploadcare-dialog-tabs')
+                  .toggleClass('uploadcare-dialog-tabs-opened')
+          else
+            @switchTab(name)
+        )
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
       @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
@@ -235,17 +241,15 @@ namespace 'uploadcare', (ns) ->
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
-      @panel
-        .find('.uploadcare-dialog-selected-tab')
-          .removeClass('uploadcare-dialog-selected-tab')
-          .end()
-        .find(".uploadcare-dialog-tab-#{@currentTab}")
-          .addClass('uploadcare-dialog-selected-tab')
-          .end()
-        .find('.uploadcare-dialog-tabs-panel')
-          .hide()
-          .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
-            .show()
+      @panel.find('.uploadcare-dialog-tabs')
+            .removeClass('uploadcare-dialog-tabs-opened')
+      @panel.find('.uploadcare-dialog-tab')
+            .removeClass('uploadcare-dialog-selected-tab')
+            .filter(".uploadcare-dialog-tab-#{@currentTab}")
+            .addClass('uploadcare-dialog-selected-tab')
+      @panel.find('.uploadcare-dialog-tabs-panel').hide()
+            .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}").show()
+
       @dfd.notify @currentTab
 
     __showTab: (tab) ->
