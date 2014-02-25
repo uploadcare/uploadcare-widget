@@ -35,6 +35,10 @@ $dialog-free-space-for-close-button: y(1.5);
   z-index: 10000;
   overflow: auto;
 
+  @include vertical-centered-wrap;
+  text-align: center;
+  white-space: nowrap;
+
   * {
     margin: 0;
     padding: 0;
@@ -46,19 +50,14 @@ $dialog-free-space-for-close-button: y(1.5);
   }
 }
 
-.uploadcare-dialog-inner-wrap1 {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-.uploadcare-dialog-inner-wrap2 {
-  display: table-cell;
-  vertical-align: middle;
-}
 .uploadcare-dialog-inner-wrap {
+  @include vertical-centered;
+  // We need width 100% and paddings.
+  @include box-sizing(border-box);
   position: relative;
-  min-width: $dialog-width;
-  max-width: x(36);
+  width: 100%;
+  min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
+  max-width: x(36) + $dialog-free-space-for-close-button * 2;
   margin: 0 auto;
   padding: 0 $dialog-free-space-for-close-button;
 }
@@ -781,11 +780,8 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     display: none !important;
   }
 
-  .uploadcare-dialog-inner-wrap,
-  .uploadcare-dialog-inner-wrap1,
-  .uploadcare-dialog-inner-wrap2 {
+  .uploadcare-dialog-inner-wrap {
     padding: 0;
-    display: block;
     height: auto;
     background: $dialog-body-background-color;
     min-width: 0;
@@ -802,8 +798,11 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   .uploadcare-dialog {
     position: absolute;
     overflow: visible;
-
     background: $dialog-body-background-color;
+
+    &:before {
+      display: none;
+    }
 
     .uploadcare-dialog-panel {
       overflow: visible;

@@ -48,5 +48,9 @@ $font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     @include vertical-centered;
     content: '';
     height: 100%;
+
+    // IE8 applies styles from parent, so we need reset them.
+    position: static;
+    width: 0;
   }
 }
