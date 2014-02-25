@@ -1,5 +1,9 @@
 # History
 
+### 0.18.2, 25.02.2014
+
+* Clear look for close icon.
+
 ### 0.18.1, 19.02.2014
 
 * Added Turkish locale.
