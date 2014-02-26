@@ -37,7 +37,6 @@ $dialog-free-space-for-close-button: y(1.5);
 
   @include vertical-centered-wrap;
   text-align: center;
-  white-space: nowrap;
 
   * {
     margin: 0;
@@ -52,6 +51,8 @@ $dialog-free-space-for-close-button: y(1.5);
 
 .uploadcare-dialog-inner-wrap {
   @include vertical-centered;
+  text-align: left;
+
   // We need width 100% and paddings.
   @include box-sizing(border-box);
   position: relative;
@@ -82,8 +83,6 @@ $dialog-free-space-for-close-button: y(1.5);
   position: relative;
   background: $dialog-body-background-color;
   font-weight: normal;
-  text-align: left;
-  white-space: normal;
 
   a {
     text-decoration: none;

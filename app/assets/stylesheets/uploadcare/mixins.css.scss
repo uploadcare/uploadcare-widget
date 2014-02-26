@@ -40,12 +40,15 @@ $font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 // https://coderwall.com/p/oo2bqg
 @mixin vertical-centered {
-  vertical-align: middle;
   display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
 }
 @mixin vertical-centered-wrap {
+  white-space: nowrap;
   &:before {
-    @include vertical-centered;
+    display: inline-block;
+    vertical-align: middle;
     content: '';
     height: 100%;
 
