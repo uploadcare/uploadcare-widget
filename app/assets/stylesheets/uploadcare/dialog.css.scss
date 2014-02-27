@@ -20,6 +20,7 @@ $dialog-body-font-size-smaller: 13px;
 $dialog-footer-height: y(3);
 
 $dialog-free-space-for-close-button: y(1.5);
+$switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2;
 
 .uploadcare-dialog-opened { // body
   overflow: hidden;
@@ -115,27 +116,37 @@ $dialog-free-space-for-close-button: y(1.5);
     border-bottom: 1px solid $dialog-body-border-color;
     cursor: pointer;
 
-    position: relative;
+    // Geometry
+    .uploadcare-dialog-icon,
+    &:before {
+      @include box-sizing(border-box);
+
+      position: relative;
+      top: 50%;
+      left: 50%;
+      display: inline-block;
+      width: $frame-size;
+      height: $frame-size;
+      margin-top: $frame-size / -2;
+      margin-left: $frame-size / -2;
+      opacity: .66;
+    }
+
+    // Builtin icons
     &:before {
       @extend %tab-icons-image;
       content: '';
-      display: block;
-      position: absolute;
-      width: $frame-size;
-      height: $frame-size;
-      top: 50%;
-      left: 50%;
-      margin-top: $frame-size / -2;
-      margin-left: $frame-size / -2;
-      border: none;
-      opacity: .66;
     }
 
     &:hover {
       background-color: #e5e7e8;
+
+      .uploadcare-dialog-icon,
+      &:before {
+        opacity: 1;
+      }
       &:before {
         @extend %tab-icons-image;
-        opacity: 1;
       }
     }
   }
@@ -386,11 +397,11 @@ $dialog-button-height: 33px;
   font-weight: normal;
   letter-spacing: 1px;
   color: white;
-  line-height: y(3) - 2px;
+  line-height: y(1.5);
   border: solid 1px #276fcb;
   text-shadow: 0 -1px #2a7ce5;
   display: inline-block;
-  padding: 0 2em;
+  padding: y(0.75) 2em;
   cursor: pointer;
   @include prefix(box-shadow, inset 0 -2px #1f66c1);
   @include gradient(#4892f6, #4289e6);
@@ -401,8 +412,6 @@ $dialog-button-height: 33px;
   }
 
   &:active {
-    border: none;
-    line-height: y(3);
     @include prefix(box-shadow, inset 0 2px #2561b9);
     @include gradient(#2c6ec3, #2c6ec3);
   }
@@ -411,7 +420,6 @@ $dialog-button-height: 33px;
 
 // § Preview tab
 
-$dialog-preview-container-height: 456px;
 $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-footer-height;
 
 .uploadcare-dialog-preview-image-wrap1 {
@@ -515,21 +523,22 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 // § Computer tab
 
-
 .uploadcare-if-draganddrop {display: none}
 
-.uploadcare-draganddrop {
-  .uploadcare-if-no-draganddrop {display: none}
-  .uploadcare-if-draganddrop {display: block}
+@media screen and (min-width: $switch-to-mobile-width) {
+  .uploadcare-draganddrop {
+    .uploadcare-if-no-draganddrop {display: none}
+    .uploadcare-if-draganddrop {display: block}
 
-  .uploadcare-dialog-file-drop-area {
-    border: dashed 3px #c5cacd;
-    background: rgba(255,255,255,.64);
-  }
-  .uploadcare-dialog-file-title {
-    color: #dee0e1;
-    text-shadow: 0 1px white;
-    margin-top: 0;
+    .uploadcare-dialog-file-drop-area {
+      border: dashed 3px #c5cacd;
+      background: rgba(255,255,255,.64);
+    }
+    .uploadcare-dialog-file-title {
+      color: #dee0e1;
+      text-shadow: 0 1px white;
+      margin-top: 0;
+    }
   }
 }
 

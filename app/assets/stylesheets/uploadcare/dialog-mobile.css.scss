@@ -1,4 +1,4 @@
-@media screen and (max-width: $dialog-width + $dialog-free-space-for-close-button * 2) {
+@media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
     overflow: visible !important;
     position: static !important;
@@ -52,12 +52,14 @@
       .uploadcare-dialog-tab_current {
         display: block;
       }
-      .uploadcare-dialog-tab:before {
-        position: static;
-        margin: 0 y(.5) 0 0;
-        display: inline-block;
-        vertical-align: middle;
-        opacity: 1;
+      .uploadcare-dialog-tab{
+        .uploadcare-dialog-icon,
+        &:before {
+          position: static;
+          margin: 0 y(.5);
+          vertical-align: middle;
+          opacity: 1;
+        }
       }
       .uploadcare-dialog-tab:after {
         content: attr(title);
@@ -89,9 +91,20 @@
       height: auto;
     }
 
+    // § Computer tab
+
     .uploadcare-dialog-file-sources,
     .uploadcare-dialog-file-or {
       display: none;
     }
+
+    .uploadcare-dialog-file-title {
+      font-size: 30px;
+      margin: y(2) 0;
+    }
+    .uploadcare-dialog-file-drop-area {
+      padding-top: 0;
+    }
+
   }
 }
