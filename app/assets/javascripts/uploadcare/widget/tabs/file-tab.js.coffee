@@ -27,10 +27,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles type, data
           @dialogApi.switchTab 'preview'
-        className = 'draganddrop'
-      else
-        className = 'no-draganddrop'
-      @wrap.addClass "uploadcare-#{className}"
+        @wrap.addClass "uploadcare-draganddrop"
 
     __setupFileButton: ->
       fileButton = @wrap.find('@uploadcare-dialog-browse-file')
