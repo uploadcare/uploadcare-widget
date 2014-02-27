@@ -1,0 +1,97 @@
+@media screen and (max-width: $dialog-width + $dialog-free-space-for-close-button * 2) {
+  .uploadcare-dialog-opened {
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+  }
+  // hide anything else on the page
+  body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
+    display: none !important;
+  }
+
+  .uploadcare-dialog-inner-wrap {
+    padding: 0;
+    height: auto;
+    background: $dialog-body-background-color;
+    min-width: 0;
+  }
+
+  .uploadcare-dialog-close {
+    color: #000;
+    z-index: 2;
+    width: $frame-size;
+    height: $frame-size;
+    line-height: $frame-size;
+  }
+
+  .uploadcare-dialog {
+    position: absolute;
+    overflow: visible;
+    background: $dialog-body-background-color;
+
+    &:before {
+      display: none;
+    }
+
+    .uploadcare-dialog-panel {
+      overflow: visible;
+      border-radius: 0;
+      @include prefix(box-shadow, none);
+    }
+    .uploadcare-dialog-tabs {
+      position: relative;
+      width: 100%;
+      height: $frame-size;
+    }
+      .uploadcare-dialog-tab {
+        display: none;
+        height: $frame-size;
+      }
+      .uploadcare-dialog-tab_current {
+        display: block;
+      }
+      .uploadcare-dialog-tab:before {
+        position: static;
+        margin: 0 y(.5) 0 0;
+        display: inline-block;
+        vertical-align: middle;
+        opacity: 1;
+      }
+      .uploadcare-dialog-tab:after {
+        content: attr(title);
+        font-size: 20px;
+        display: inline;
+        vertical-align: middle;
+      }
+
+    .uploadcare-dialog-opened-tabs {
+      .uploadcare-dialog-tabs-panel_current {
+        display: none;
+      }
+      .uploadcare-dialog-tabs {
+        height: auto;
+        // overlap close icon
+        z-index: 3;
+      }
+        .uploadcare-dialog-tab {
+          display: block;
+        }
+    }
+
+    .uploadcare-dialog-tabs-panel {
+      clear: both;
+      margin-left: 0;
+      height: auto;
+    }
+    .uploadcare-dpm-file-list {
+      height: auto;
+    }
+
+    .uploadcare-dialog-file-sources,
+    .uploadcare-dialog-file-or {
+      display: none;
+    }
+  }
+}
