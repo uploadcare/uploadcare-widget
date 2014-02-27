@@ -756,7 +756,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   width: 100%;
   height: 100%;
   border: 0;
-  visibility: 'hidden';
+  visibility: hidden;
 }
 
 .uploadcare-dialog-source-base-footer {
@@ -817,21 +817,36 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
         display: none;
         height: $frame-size;
       }
-      .uploadcare-dialog-tabs-opened {
-        height: auto;
-        // overlap close icon
-        z-index: 3;
-      }
-      .uploadcare-dialog-tabs-opened .uploadcare-dialog-tab {
-        display: block;
-      }
       .uploadcare-dialog-selected-tab {
         display: block;
       }
       .uploadcare-dialog-tab:before {
         position: static;
-        margin: 0;
+        margin: 0 y(.5) 0 0;
+        display: inline-block;
+        vertical-align: middle;
+        opacity: 1;
       }
+      .uploadcare-dialog-tab:after {
+        content: attr(title);
+        font-size: 20px;
+        display: inline;
+        vertical-align: middle;
+      }
+
+    .uploadcare-dialog-opened-tabs {
+      .uploadcare-dialog-tabs-panel {
+        display: none;
+      }
+      .uploadcare-dialog-tabs {
+        height: auto;
+        // overlap close icon
+        z-index: 3;
+      }
+        .uploadcare-dialog-tab {
+          display: block;
+        }
+    }
 
     .uploadcare-dialog-tabs-panel {
       clear: both;

@@ -215,17 +215,17 @@ namespace 'uploadcare', (ns) ->
 
       tabPanel = $('<div>')
         .hide()
-        .addClass('uploadcare-dialog-tabs-panel')
+        .addClass("uploadcare-dialog-tabs-panel")
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
         .appendTo(@panel)
 
       tabButton = $('<div>')
-        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
-        .attr('title', t("tabs.#{name}.title"))
+        .addClass("uploadcare-dialog-tab")
+        .addClass("uploadcare-dialog-tab-#{name}")
+        .attr('title', t("dialog.tabs.names.#{name}"))
         .on('click', =>
           if name is @currentTab
-            @panel.find('.uploadcare-dialog-tabs')
-                  .toggleClass('uploadcare-dialog-tabs-opened')
+            @panel.toggleClass('uploadcare-dialog-opened-tabs')
           else
             @switchTab(name)
         )
@@ -241,8 +241,7 @@ namespace 'uploadcare', (ns) ->
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
-      @panel.find('.uploadcare-dialog-tabs')
-            .removeClass('uploadcare-dialog-tabs-opened')
+      @panel.removeClass('uploadcare-dialog-opened-tabs')
       @panel.find('.uploadcare-dialog-tab')
             .removeClass('uploadcare-dialog-selected-tab')
             .filter(".uploadcare-dialog-tab-#{@currentTab}")
