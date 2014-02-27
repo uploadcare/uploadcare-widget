@@ -139,7 +139,7 @@ $dialog-free-space-for-close-button: y(1.5);
       }
     }
   }
-    .uploadcare-dialog-selected-tab {
+    .uploadcare-dialog-tab_current {
       margin-right: -1px;
       border-right: 1px solid $dialog-body-background-color;
       &, &:hover {
@@ -152,6 +152,9 @@ $dialog-free-space-for-close-button: y(1.5);
         @extend %tab-icons-active-image;
         opacity: 1;
       }
+    }
+    .uploadcare-dialog-tab_hidden {
+      display: none !important;
     }
 
     .uploadcare-dialog-disabled-tab {
@@ -201,6 +204,7 @@ $dialog-free-space-for-close-button: y(1.5);
 
 .uploadcare-dialog-tabs-panel {
   position: relative;
+  display: none;
   @include box-sizing(border-box);
   margin-left: $dialog-tab-width;
   height: $dialog-body-height;
@@ -220,6 +224,10 @@ $dialog-free-space-for-close-button: y(1.5);
     background: $dialog-body-field-color;
     color: $dialog-body-text-color;
   }
+}
+
+.uploadcare-dialog-tabs-panel_current {
+  display: block;
 }
 
 .uploadcare-pre {
@@ -817,7 +825,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
         display: none;
         height: $frame-size;
       }
-      .uploadcare-dialog-selected-tab {
+      .uploadcare-dialog-tab_current {
         display: block;
       }
       .uploadcare-dialog-tab:before {
@@ -835,7 +843,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
       }
 
     .uploadcare-dialog-opened-tabs {
-      .uploadcare-dialog-tabs-panel {
+      .uploadcare-dialog-tabs-panel_current {
         display: none;
       }
       .uploadcare-dialog-tabs {

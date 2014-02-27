@@ -214,7 +214,6 @@ namespace 'uploadcare', (ns) ->
         throw new Error("No such tab: #{name}")
 
       tabPanel = $('<div>')
-        .hide()
         .addClass("uploadcare-dialog-tabs-panel")
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
         .appendTo(@panel)
@@ -242,22 +241,32 @@ namespace 'uploadcare', (ns) ->
 
     switchTab: (@currentTab) =>
       @panel.removeClass('uploadcare-dialog-opened-tabs')
-      @panel.find('.uploadcare-dialog-tab')
-            .removeClass('uploadcare-dialog-selected-tab')
-            .filter(".uploadcare-dialog-tab-#{@currentTab}")
-            .addClass('uploadcare-dialog-selected-tab')
-      @panel.find('.uploadcare-dialog-tabs-panel').hide()
-            .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}").show()
+
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}")
+            .removeClass("#{className}_current")
+            .filter(".#{className}-#{@currentTab}")
+            .addClass("#{className}_current")
+
+      className = 'uploadcare-dialog-tabs-panel'
+      @panel.find(".#{className}")
+            .removeClass("#{className}_current")
+            .filter(".#{className}-#{@currentTab}")
+            .addClass("#{className}_current")
 
       @dfd.notify @currentTab
 
     __showTab: (tab) ->
-      @panel.find(".uploadcare-dialog-tab-#{tab}").show()
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}-#{tab}")
+            .removeClass("#{className}_hidden")
 
     __hideTab: (tab) ->
       if @currentTab == tab
         @switchTab @settings.tabs[0]
-      @panel.find(".uploadcare-dialog-tab-#{tab}").hide()
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}-#{tab}")
+            .addClass("#{className}_hidden")
 
     __welcome: ->
       @addTab('welcome')
