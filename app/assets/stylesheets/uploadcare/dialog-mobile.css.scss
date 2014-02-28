@@ -23,7 +23,7 @@
     z-index: 2;
     width: $frame-size;
     height: $frame-size;
-    line-height: $frame-size;
+    line-height: $frame-size*.9;
   }
 
   .uploadcare-dialog {
@@ -43,28 +43,27 @@
     .uploadcare-dialog-tabs {
       position: relative;
       width: 100%;
-      height: $frame-size;
+      height: auto;
+      float: none;
     }
       .uploadcare-dialog-tab {
         display: none;
         height: $frame-size;
-      }
-      .uploadcare-dialog-tab_current {
-        display: block;
-      }
-      .uploadcare-dialog-tab{
+
         .uploadcare-dialog-icon,
         &:before {
           position: static;
-          margin: 0 y(.5);
+          margin: 0 6px;
           vertical-align: middle;
           opacity: 1;
         }
       }
+      .uploadcare-dialog-tab_current {
+        display: block;
+      }
       .uploadcare-dialog-tab:after {
         content: attr(title);
         font-size: 20px;
-        display: inline;
         vertical-align: middle;
       }
 
@@ -73,7 +72,6 @@
         display: none;
       }
       .uploadcare-dialog-tabs {
-        height: auto;
         // overlap close icon
         z-index: 3;
       }
@@ -81,9 +79,23 @@
           display: block;
         }
     }
+    .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) {
+      .uploadcare-dialog-tab_current {
+        text-align: center;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 16px; left: 14px;
+          display: block;
+          width: 22px;
+          height: 18px;
+          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAOCAQAAAD+6Ta3AAAARklEQVR4Ae3SsRFEIQhAwW1IR2s3s6zTGUN+AxdK5tucAIBmOuKSY2pQbHHZVhgiweAnEixW1uC0VdSU41Xo19+te73+9AGOg1FzTMH13gAAAABJRU5ErkJggg==);
+          background-size: 22px;
+        }
+      }
+    }
 
     .uploadcare-dialog-tabs-panel {
-      clear: both;
       margin-left: 0;
       height: auto;
     }
