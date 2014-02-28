@@ -100,13 +100,12 @@ $switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2
 }
 
 .uploadcare-dialog-tabs {
-  position: absolute;
-  top: 0; left: 0;
+  @include box-sizing(border-box);
   width: $dialog-tab-width;
-  height: 100%;
+  height: $dialog-body-height;
+  float: left;
   background: $dialog-body-shadow-color;
   border-right: 1px solid $dialog-body-border-color;
-  z-index: 1;
 }
 
   $frame-size: 50px;
