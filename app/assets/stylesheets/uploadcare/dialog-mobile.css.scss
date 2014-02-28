@@ -49,6 +49,7 @@
       .uploadcare-dialog-tab {
         display: none;
         height: $frame-size;
+        white-space: nowrap;
 
         .uploadcare-dialog-icon,
         &:before {

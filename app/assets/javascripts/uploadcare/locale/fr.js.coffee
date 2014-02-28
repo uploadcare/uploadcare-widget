@@ -24,20 +24,22 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       done: 'Terminer'
       showFiles: 'Voir les fichiers'
       tabs:
+        names:
+          preview: 'Avant-première'
+          file: 'Ordinateur'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          url: 'Une adresse web'
         file:
           drag: 'Glissez-déposez un fichier ici'
           nodrop: 'Envoyez des fichiers depuis votre ordinateur'
           or: 'ou'
           button: 'Choisissez un fichier depuis votre ordinateur'
           also: 'Vous pouvez également le sélectionner depuis'
-          tabNames:
-            facebook: 'Facebook'
-            dropbox: 'Dropbox'
-            gdrive: 'Google Drive'
-            instagram: 'Instagram'
-            vk: 'VK'
-            evernote: 'Evernote'
-            url: 'Une adresse web'
         url:
           title: 'Fichiers depuis le Web'
           line1: 'Prenez n\'importe quel fichier depuis un site web.'

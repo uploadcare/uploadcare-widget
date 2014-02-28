@@ -23,21 +23,23 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     dialog:
       done: 'OK'
       showFiles: 'Mostrar arquivos'
-      tabs: 
+      tabs:
+        names:
+          preview: 'Pré-estréia'
+          file: 'Computador'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          url: 'Link da web'
         file: 
           drag: 'Arraste um arquivo para cá'
           nodrop: 'Faça upload de arquivos do seu computador'
           or: 'ou'
           button: 'Escolha um arquivo do computador'
           also: 'Você também pode escolher arquivos de'
-          tabNames: 
-            facebook: 'Facebook'
-            dropbox: 'Dropbox'
-            gdrive: 'Google Drive'
-            instagram: 'Instagram'
-            vk: 'VK'
-            evernote: 'Evernote'
-            url: 'Link da web'
         url: 
           title: 'Arquivos da web'
           line1: 'Faça upload de qualquer arquivo da web.'

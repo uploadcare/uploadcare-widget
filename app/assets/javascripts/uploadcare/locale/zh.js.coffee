@@ -23,20 +23,20 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       done: '完成'
       showFiles: '显示文件'
       tabs:
+        names:
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          url: '任意图片链接'
         file:
           drag: '拖放文件到这里'
           nodrop: '从你的电脑中上传'
           or: '或者'
           button: '从电脑中选取文件'
           also: '你也可以选自'
-          tabNames:
-            facebook: 'Facebook'
-            dropbox: 'Dropbox'
-            gdrive: 'Google Drive'
-            instagram: 'Instagram'
-            vk: 'VK'
-            evernote: 'Evernote'
-            url: '任意图片链接'
         url:
           title: '来自互联网的文件'
           line1: '从互联网选取文件'
