@@ -1,5 +1,10 @@
 # History
 
+### 0.18.3, 05.03.2014
+
+* New widget settings `preferred-types`.
+* Fixed transparent images crop.
+
 ### 0.18.2, 25.02.2014
 
 * Clear look for close icon.
