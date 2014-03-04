@@ -62,8 +62,16 @@ namespace 'uploadcare.widget.tabs', (ns) ->
               try
                 message = JSON.parse e.data
               if message?.type is 'file-selected'
+                url = do =>
+                  if message.alternatives
+                    for type in @settings.preferredTypes
+                      type = utils.globRegexp(type)
+                      for key of message.alternatives
+                        if type.test(key)
+                          return message.alternatives[key]
+                  return message.url
 
-                file = new files.UrlFile @settings, message.url
+                file = new files.UrlFile @settings, url
                 if message.filename
                   file.setName message.filename
                 if message.is_image?

@@ -10,13 +10,9 @@
 
 namespace 'uploadcare.utils', (ns) ->
 
-  own = Object.prototype.hasOwnProperty
-  ns.own = (o, prop) ->
-    own.call(o, prop)
-
-  ns.uniq = (arr, cond = -> true) ->
+  ns.unique = (arr) ->
     result = []
-    for item in arr when cond(item) and item not in result
+    for item in arr when item not in result
       result.push(item)
     result
 
@@ -99,6 +95,10 @@ namespace 'uploadcare.utils', (ns) ->
 
   ns.escapeRegExp = (str) ->
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+
+  ns.globRegexp = (str, flags='i') ->
+    parts = $.map(str.split('*'), ns.escapeRegExp)
+    new RegExp("^" + parts.join('.+') + "$", flags)
 
   ns.normalizeUrl = (url) ->
     url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i

@@ -24,6 +24,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-min': 1
     'path-value': false
     'tabs': 'file url facebook gdrive instagram evernote box skydrive'
+    'preferred-types': ''
     # upload settings
     'autostore': false
     'public-key': null
@@ -48,11 +49,15 @@ namespace 'uploadcare.settings', (ns) ->
 
   arrayOptions = (settings, keys) ->
     for key in keys
-      value = str2arr(settings[key])
-      presetList = presets[key]
-      for own name, preset of presetList
-        value = value.concat(str2arr(preset)) if name in value
-      settings[key] = utils.uniq(value, (x) -> not utils.own(presetList, x))
+      value = source = str2arr(settings[key])
+      if presets.hasOwnProperty(key)
+        value = []
+        for item in source
+          if presets[key].hasOwnProperty(item)
+            value = value.concat(str2arr(presets[key][item]))
+          else
+            value.push(item)
+      settings[key] = utils.unique(value)
     settings
 
   urlOptions = (settings, keys) ->
@@ -102,6 +107,7 @@ namespace 'uploadcare.settings', (ns) ->
   normalize = (settings) ->
     arrayOptions settings, [
       'tabs'
+      'preferredTypes'
     ]
     urlOptions settings, [
       'cdnBase'
