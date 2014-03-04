@@ -24,6 +24,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-min': 1
     'path-value': false
     'tabs': 'file url facebook gdrive instagram evernote box skydrive'
+    'preferred-types': ''
     # upload settings
     'autostore': false
     'public-key': null
@@ -106,6 +107,7 @@ namespace 'uploadcare.settings', (ns) ->
   normalize = (settings) ->
     arrayOptions settings, [
       'tabs'
+      'preferredTypes'
     ]
     urlOptions settings, [
       'cdnBase'

@@ -96,6 +96,10 @@ namespace 'uploadcare.utils', (ns) ->
   ns.escapeRegExp = (str) ->
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
+  ns.globRegexp = (str, flags='i') ->
+    parts = $.map(str.split('*'), ns.escapeRegExp)
+    new RegExp("^" + parts.join('.+') + "$", flags)
+
   ns.normalizeUrl = (url) ->
     url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
     url.replace(/\/+$/, '')
