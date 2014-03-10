@@ -11,21 +11,6 @@
     display: none !important;
   }
 
-  .uploadcare-dialog-inner-wrap {
-    padding: 0;
-    height: auto;
-    background: $dialog-body-background-color;
-    min-width: 0;
-  }
-
-  .uploadcare-dialog-close {
-    color: #000;
-    z-index: 2;
-    width: $frame-size;
-    height: $frame-size;
-    line-height: $frame-size*.9;
-  }
-
   .uploadcare-dialog {
     position: absolute;
     overflow: visible;
@@ -34,17 +19,80 @@
     &:before {
       display: none;
     }
+  }
 
+  .uploadcare-dialog-inner-wrap {
+    padding: 0;
+    min-width: 0;
+    height: 100%;
+    background: $dialog-body-background-color;
+  }
+
+  .uploadcare-dialog-close {
+    position: fixed;
+    z-index: 2;
+    color: #000;
+    width: $frame-size;
+    height: $frame-size;
+    line-height: $frame-size*.9;
+  }
+
+  .uploadcare-dialog-footer {
+    display: none;
+  }
+
+  // § Panels
+
+  .uploadcare-dialog {
     .uploadcare-dialog-panel {
       overflow: visible;
+      height: 100%;
       border-radius: 0;
       @include prefix(box-shadow, none);
     }
+      .uploadcare-dialog-tabs-panel {
+        padding: $frame-size 0 0;
+        margin: 0;
+        height: 100%;
+      }
+        .uploadcare-dialog-source-base-wrap {
+          height: auto;
+        }
+        .uploadcare-dialog-remote-iframe-wrap {
+          overflow: visible;
+          height: 100%;
+        }
+
+
+    .uploadcare-dpm-file-list {
+      height: auto;
+    }
+
+    // § Computer tab
+
+    .uploadcare-dialog-file-sources,
+    .uploadcare-dialog-file-or {
+      display: none;
+    }
+
+    .uploadcare-dialog-file-title {
+      font-size: 30px;
+      margin: y(2) 0;
+    }
+    .uploadcare-dialog-file-drop-area {
+      padding-top: 0;
+    }
+  }
+
+  // § Tabs
+
+  .uploadcare-dialog {
     .uploadcare-dialog-tabs {
-      position: relative;
+      position: fixed;
       width: 100%;
       height: auto;
       float: none;
+      z-index: 1;
     }
       .uploadcare-dialog-tab {
         display: none;
@@ -73,6 +121,7 @@
         display: none;
       }
       .uploadcare-dialog-tabs {
+        position: relative;
         // overlap close icon
         z-index: 3;
       }
@@ -95,29 +144,5 @@
         }
       }
     }
-
-    .uploadcare-dialog-tabs-panel {
-      margin-left: 0;
-      height: auto;
-    }
-    .uploadcare-dpm-file-list {
-      height: auto;
-    }
-
-    // § Computer tab
-
-    .uploadcare-dialog-file-sources,
-    .uploadcare-dialog-file-or {
-      display: none;
-    }
-
-    .uploadcare-dialog-file-title {
-      font-size: 30px;
-      margin: y(2) 0;
-    }
-    .uploadcare-dialog-file-drop-area {
-      padding-top: 0;
-    }
-
   }
 }
