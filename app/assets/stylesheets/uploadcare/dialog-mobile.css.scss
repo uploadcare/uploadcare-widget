@@ -59,6 +59,7 @@
           height: auto;
         }
         .uploadcare-dialog-remote-iframe-wrap {
+          overflow: visible;
           height: 100%;
         }
         .uploadcare-dialog-padding {
@@ -72,13 +73,16 @@
     }
     .uploadcare-dpm-file-list {
       height: auto;
-      margin-right: -15px;
+      margin: 0 -15px 0 0;
     }
     .uploadcare-dpm-file-item > * {
       padding-right: 10px;
     }
     .uploadcare-dpm-file-progressbar-wrap {
       width: 40px;
+    }
+    .uploadcare-dpm-file-remove {
+      display: inline-block;
     }
 
     // § Computer tab
@@ -100,12 +104,23 @@
 
     .uploadcare-dialog-inner-footer {
       position: fixed;
-      width: 100%;
       bottom: 0;
+      width: 100%;
+      padding: 16px 15px;
+      opacity: .95;
     }
-    .uploadcare-dialog .uploadcare-dialog-multiple {
+    .uploadcare-dialog-inner-footer-text {
+      display: none;
+    }
+    .uploadcare-dialog-multiple {
+      .uploadcare-dialog-remote-iframe-after {
+        height: $dialog-footer-height;
+      }
       .uploadcare-dialog-source-base-wrap {
-        padding-bottom: 66px;
+        padding-bottom: $dialog-footer-height;
+      }
+      .uploadcare-dialog-padding {
+        padding-bottom: y(1) + $dialog-footer-height;
       }
     }
 
@@ -117,6 +132,7 @@
       height: auto;
       float: none;
       z-index: 1;
+      opacity: .95;
     }
       .uploadcare-dialog-tab {
         display: none;
@@ -146,6 +162,7 @@
       }
       .uploadcare-dialog-tabs {
         position: relative;
+        opacity: 1;
         // overlap close icon
         z-index: 3;
       }
