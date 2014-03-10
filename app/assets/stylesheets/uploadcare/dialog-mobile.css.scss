@@ -5,6 +5,7 @@
     width: auto !important;
     height: auto !important;
     min-width: 0 !important;
+    background: $dialog-body-background-color !important;
   }
   // hide anything else on the page
   body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
@@ -14,7 +15,6 @@
   .uploadcare-dialog {
     position: absolute;
     overflow: visible;
-    background: $dialog-body-background-color;
 
     &:before {
       display: none;
@@ -25,7 +25,6 @@
     padding: 0;
     min-width: 0;
     height: 100%;
-    background: $dialog-body-background-color;
   }
 
   .uploadcare-dialog-close {
@@ -41,9 +40,10 @@
     display: none;
   }
 
-  // § Panels
-
   .uploadcare-dialog {
+
+    // § Panels
+
     .uploadcare-dialog-panel {
       overflow: visible;
       height: 100%;
@@ -59,13 +59,26 @@
           height: auto;
         }
         .uploadcare-dialog-remote-iframe-wrap {
-          overflow: visible;
           height: 100%;
         }
+        .uploadcare-dialog-padding {
+            padding: y(1) 15px;
+        }
 
+    // § Preview tabs
 
+    .uploadcare-dialog-preview-image-wrap1 {
+      height: auto;
+    }
     .uploadcare-dpm-file-list {
       height: auto;
+      margin-right: -15px;
+    }
+    .uploadcare-dpm-file-item > * {
+      padding-right: 10px;
+    }
+    .uploadcare-dpm-file-progressbar-wrap {
+      width: 40px;
     }
 
     // § Computer tab
@@ -77,16 +90,27 @@
 
     .uploadcare-dialog-file-title {
       font-size: 30px;
-      margin: y(2) 0;
+      margin: y(1) 0;
     }
     .uploadcare-dialog-file-drop-area {
       padding-top: 0;
     }
-  }
 
-  // § Tabs
+    // § Mulltiple
 
-  .uploadcare-dialog {
+    .uploadcare-dialog-inner-footer {
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+    .uploadcare-dialog .uploadcare-dialog-multiple {
+      .uploadcare-dialog-source-base-wrap {
+        padding-bottom: 66px;
+      }
+    }
+
+    // § Tabs
+
     .uploadcare-dialog-tabs {
       position: fixed;
       width: 100%;
