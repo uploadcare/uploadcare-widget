@@ -24,60 +24,63 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             type: 'visibility-changed'
             visible: switchedToMe
 
+      remoteUrl: ->
+        "#{@settings.socialBase}/window/#{service}?" + $.param
+          lang: @settings.locale
+          public_key: @settings.publicKey
+          widget_version: uploadcare.version
+          images_only: @settings.imagesOnly
+
       __sendMessage: (messageObj) ->
-        @iframe?[0]?.contentWindow?.postMessage JSON.stringify(messageObj), '*'
+        @iframe?[0].contentWindow.postMessage JSON.stringify(messageObj), '*'
 
       __createIframe: =>
-        unless @iframe
-          src = "#{@settings.socialBase}/window/#{service}?" + $.param
-            lang: @settings.locale
-            public_key: @settings.publicKey
-            widget_version: uploadcare.version
-            images_only: @settings.imagesOnly
-          @iframe = $('<iframe>')
-            .attr
-              src: src
-              marginheight: 0
-              marginwidth: 0
-              frameborder: 0
-              allowTransparency: "true"
-            .addClass('uploadcare-dialog-remote-iframe')
-            .appendTo(@wrap)
-            .on 'load', ->
-              $(this).css 'visibility', 'visible'
-              for url in tabsCss.urls
-                message = JSON.stringify(url: url, type: 'embed-css')
-                this.contentWindow.postMessage message, '*'
-              for style in tabsCss.styles
-                message = JSON.stringify(style: style, type: 'embed-css')
-                this.contentWindow.postMessage message, '*'
-              return
+        if @iframe
+          return
 
-          nos = (str) -> str.toLowerCase().replace(/^https/, 'http')
+        @iframe = $('<iframe>',
+            src: @remoteUrl()
+            marginheight: 0
+            marginwidth: 0
+            frameborder: 0
+            allowTransparency: "true"
+          )
+          .addClass('uploadcare-dialog-remote-iframe')
+          .appendTo(@wrap)
+          .on 'load', =>
+            @iframe.css 'opacity', '1'
+            for url in tabsCss.urls
+              @__sendMessage
+                type: 'embed-css'
+                url: url
+            for style in tabsCss.styles
+              @__sendMessage
+                type: 'embed-css'
+                style: style
+            return
 
-          $(window).on "message", ({originalEvent: e}) =>
-            goodOrigin = nos(e.origin) is nos(@settings.socialBase)
-            goodSource = e.source is @iframe?[0]?.contentWindow
-            if goodOrigin and goodSource
-              try
-                message = JSON.parse e.data
-              if message?.type is 'file-selected'
-                url = do =>
-                  if message.alternatives
-                    for type in @settings.preferredTypes
-                      type = utils.globRegexp(type)
-                      for key of message.alternatives
-                        if type.test(key)
-                          return message.alternatives[key]
-                  return message.url
+        $(window).on "message", ({originalEvent: e}) =>
+          if e.source isnt @iframe[0].contentWindow
+            return
 
-                file = new files.UrlFile @settings, url
-                if message.filename
-                  file.setName message.filename
-                if message.is_image?
-                  file.setIsImage message.is_image
-                @dialogApi.addFiles [file.promise()]
+          try
+            message = JSON.parse e.data
+          catch
+            return
 
-                @__sendMessage
-                  type: 'file-selected-received'
-                  url: message.url
+          if message.type is 'file-selected'
+            url = do =>
+              if message.alternatives
+                for type in @settings.preferredTypes
+                  type = utils.globRegexp(type)
+                  for key of message.alternatives
+                    if type.test(key)
+                      return message.alternatives[key]
+              return message.url
+
+            file = new files.UrlFile @settings, url
+            if message.filename
+              file.setName message.filename
+            if message.is_image?
+              file.setIsImage message.is_image
+            @dialogApi.addFiles [file.promise()]
