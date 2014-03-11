@@ -107,7 +107,7 @@
       bottom: 0;
       width: 100%;
       padding: 16px 15px;
-      opacity: .95;
+      background: rgba(255, 243, 190, 0.95);
     }
     .uploadcare-dialog-inner-footer-text {
       display: none;
@@ -132,12 +132,13 @@
       height: auto;
       float: none;
       z-index: 1;
-      opacity: .95;
+      background: transparent;
     }
       .uploadcare-dialog-tab {
         display: none;
         height: $frame-size;
         white-space: nowrap;
+        background: #dee0e1;
 
         .uploadcare-dialog-icon,
         &:before {
@@ -149,6 +150,7 @@
       }
       .uploadcare-dialog-tab_current {
         display: block;
+        background: rgba(239, 239, 239, 0.95);
       }
       .uploadcare-dialog-tab:after {
         content: attr(title);
@@ -162,7 +164,6 @@
       }
       .uploadcare-dialog-tabs {
         position: relative;
-        opacity: 1;
         // overlap close icon
         z-index: 3;
       }
