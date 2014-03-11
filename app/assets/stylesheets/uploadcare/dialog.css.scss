@@ -443,7 +443,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-footer-height;
-  padding: 16px x(1);
+  padding: ($dialog-footer-height - $dialog-button-height) / 2 x(1) 0;
   .uploadcare-dialog-button-success {
     float: right;
   }

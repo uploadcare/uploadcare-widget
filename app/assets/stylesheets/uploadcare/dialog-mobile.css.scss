@@ -1,3 +1,5 @@
+$dialog-mobile-footer-height: 50px;
+
 @media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
     overflow: visible !important;
@@ -106,7 +108,8 @@
       position: fixed;
       bottom: 0;
       width: 100%;
-      padding: 16px 15px;
+      height: $dialog-mobile-footer-height;
+      padding: ($dialog-mobile-footer-height - $dialog-button-height) / 2 15px 0;
       background: rgba(255, 243, 190, 0.95);
     }
     .uploadcare-dialog-inner-footer-text {
@@ -114,13 +117,13 @@
     }
     .uploadcare-dialog-multiple {
       .uploadcare-dialog-remote-iframe-after {
-        height: $dialog-footer-height;
+        height: $dialog-mobile-footer-height;
       }
       .uploadcare-dialog-source-base-wrap {
-        padding-bottom: $dialog-footer-height;
+        padding-bottom: $dialog-mobile-footer-height;
       }
       .uploadcare-dialog-padding {
-        padding-bottom: y(1) + $dialog-footer-height;
+        padding-bottom: y(1) + $dialog-mobile-footer-height;
       }
     }
 
