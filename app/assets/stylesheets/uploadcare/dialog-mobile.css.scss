@@ -115,6 +115,9 @@ $dialog-mobile-footer-height: 50px;
     .uploadcare-dialog-inner-footer-text {
       display: none;
     }
+    .uploadcare-dialog-source-base-counter {
+      display: inline;
+    }
     .uploadcare-dialog-multiple {
       .uploadcare-dialog-remote-iframe-after {
         height: $dialog-mobile-footer-height;
@@ -153,7 +156,7 @@ $dialog-mobile-footer-height: 50px;
       }
       .uploadcare-dialog-tab_current {
         display: block;
-        background: rgba(239, 239, 239, 0.95);
+        background: rgba($dialog-body-background-color, 0.95);
       }
       .uploadcare-dialog-tab:after {
         content: attr(title);
@@ -172,6 +175,9 @@ $dialog-mobile-footer-height: 50px;
       }
         .uploadcare-dialog-tab {
           display: block;
+        }
+        .uploadcare-dialog-tab_current {
+          background: $dialog-body-background-color;
         }
     }
     .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) {

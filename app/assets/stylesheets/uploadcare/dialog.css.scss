@@ -457,15 +457,15 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     text-align: center;
     margin-right: 0;
   }
+  .uploadcare-error {
+    color: red;
+  }
 }
   .uploadcare-dialog-inner-footer-text {
     text-align: center;
     color: #85732c;
     font-size: 15px;
     line-height: $dialog-button-height;
-    &.uploadcare-error {
-      color: red;
-    }
   }
 
 .uploadcare-dialog-message-center {
@@ -775,4 +775,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   .uploadcare-dialog-multiple & {
     display: block;
   }
+}
+.uploadcare-dialog-source-base-counter {
+  display: none;
 }
