@@ -648,7 +648,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     min-height: 20px;
     font-size: $dialog-body-font-size-smaller;
     line-height: 1.2;
-    word-wrap: break-word;
 
     // for each columns
     > * {
@@ -665,27 +664,19 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
       background: #ececec;
       .uploadcare-dpm-file-remove {display: inline-block}
     }
-    &.uploadcare-dpm-image {
-      .uploadcare-dpm-file-preview-wrap {display: table-cell}
-      .uploadcare-dpm-file-name {
-        &:before {display: none}
-      }
-    }
-    &.uploadcare-dpm-uploaded {
-      .uploadcare-dpm-file-progressbar-value {background: #8ac54c}
-    }
-    &.uploadcare-dpm-error {
-      .uploadcare-dpm-file-error {display: table-cell}
-      .uploadcare-dpm-file-size,
-      .uploadcare-dpm-file-progressbar-wrap {display: none}
-    }
   }
-  .uploadcare-dpm-file-preview-wrap {
-    width: 45px;
-    height: 45px;
-    display: none;
-    line-height: 0;
+
+  // States
+  .uploadcare-dpm-uploaded {
+    .uploadcare-dpm-file-progressbar-wrap {display: none}
   }
+  .uploadcare-dpm-error {
+    .uploadcare-dpm-file-error {display: table-cell}
+    .uploadcare-dpm-file-size,
+    .uploadcare-dpm-file-progressbar-wrap {display: none}
+  }
+
+  // Elements
   %file-inline-icon {
     $height: 20px;
     $margin: ($height - $dialog-body-font-size-smaller) / -2;
@@ -695,16 +686,23 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     height: $height;
     margin: $margin .7em $margin 0;
   }
+  .uploadcare-dpm-file-preview-wrap {
+    width: 45px;
+    display: table-cell;
+    text-align: center;
+    line-height: 0;
+    padding-right: 10px;
+  }
+  .uploadcare-dpm-file-preview {
+    @extend %file-inline-icon, %file-icon-image;
+    margin: 0;
+  }
   .uploadcare-dpm-file-name {
     width: 100%;
-    &:before {
-      @extend %file-inline-icon, %file-icon-image;
-      width: 16px;
-      padding: 0;
-    }
+    word-wrap: break-word;
   }
   .uploadcare-dpm-file-size {
-    width: 4.5em;
+    width: 3.5em;
     text-align: left;
   }
   .uploadcare-dpm-file-progressbar-wrap {

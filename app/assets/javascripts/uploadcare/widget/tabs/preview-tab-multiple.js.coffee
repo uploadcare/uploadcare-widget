@@ -104,8 +104,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl.addClass(CLASS_PREFIX + 'uploaded')
 
       if info.isImage
-        fileEl.addClass(CLASS_PREFIX + 'image')
-
         @__find('file-preview-wrap', fileEl).html $('<img>')
           .attr
             src: "#{info.originalUrl}-/scale_crop/90x90/center/"
