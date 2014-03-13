@@ -78,6 +78,7 @@ $dialog-mobile-min-width: 310px;
 
     .uploadcare-dialog-preview-image-wrap1 {
       height: auto;
+      padding-bottom: $dialog-mobile-footer-height;
     }
     .uploadcare-dpm-file-list {
       height: auto;
