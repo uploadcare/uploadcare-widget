@@ -444,6 +444,14 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   margin: 0 auto;
 }
 
+.uploadcare-crop-widget .jcrop-handle:before {
+  content: '';
+  display: block;
+  width: 26px;
+  height: 26px;
+  margin: -9px;
+}
+
 
 .uploadcare-dialog-inner-footer {
   @include box-sizing(border-box);
