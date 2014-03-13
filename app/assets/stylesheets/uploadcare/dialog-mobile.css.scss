@@ -1,5 +1,7 @@
 $dialog-mobile-footer-height: 50px;
-$dialog-mobile-min-width: 280px;
+$dialog-mobile-min-width: 310px;
+
+.uploadcare-if-mobile { display: none; }
 
 @media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
@@ -14,6 +16,9 @@ $dialog-mobile-min-width: 280px;
   body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
     display: none !important;
   }
+
+  .uploadcare-if-mobile { display: block; }
+  .uploadcare-if-no-mobile { display: none; }
 
   .uploadcare-dialog {
     position: absolute;

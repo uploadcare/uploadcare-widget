@@ -277,6 +277,9 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
   font-size: y(1);
   line-height: 1;
   margin-bottom: y(1);
+  &.uploadcare-error {
+    color: red;
+  }
 }
 
 .uploadcare-dialog-title2 {

@@ -23,6 +23,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @fileListEl = @__find('file-list')
       @titleEl = @__find('title')
+      @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
 
@@ -68,8 +69,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
 
-      @titleEl.text t('dialog.tabs.preview.multiple.title')
+      title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
+      @titleEl.text title
 
       footer = if tooManyFiles
         t('dialog.tabs.preview.multiple.tooManyFiles')
@@ -84,6 +86,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @footerTextEl
         .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
         .text(footer)
+
+      @mobileTitleEl
+        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
+        .text(if tooManyFiles or tooFewFiles then footer else title)
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
