@@ -46,6 +46,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __setupSorting: ->
       @fileListEl.sortable
+        touch: false
         axis: 'y'
         start: (info) ->
           info.dragged.css('visibility', 'hidden')
