@@ -1,4 +1,5 @@
 $dialog-mobile-footer-height: 50px;
+$dialog-mobile-min-width: 280px;
 
 @media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
@@ -25,7 +26,7 @@ $dialog-mobile-footer-height: 50px;
 
   .uploadcare-dialog-inner-wrap {
     padding: 0;
-    min-width: 0;
+    min-width: $dialog-mobile-min-width;
     height: 100%;
   }
 
@@ -106,8 +107,9 @@ $dialog-mobile-footer-height: 50px;
 
     .uploadcare-dialog-inner-footer {
       position: fixed;
-      bottom: 0;
+      left: 0; bottom: 0;
       width: 100%;
+      min-width: $dialog-mobile-min-width;
       height: $dialog-mobile-footer-height;
       padding: ($dialog-mobile-footer-height - $dialog-button-height) / 2 15px 0;
       background: rgba(255, 243, 190, 0.95);
@@ -134,7 +136,10 @@ $dialog-mobile-footer-height: 50px;
 
     .uploadcare-dialog-tabs {
       position: fixed;
+      // Fixes bug in Chrome with resizing.
+      top: 0; left: 0;
       width: 100%;
+      min-width: $dialog-mobile-min-width;
       height: auto;
       float: none;
       z-index: 1;

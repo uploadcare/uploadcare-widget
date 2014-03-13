@@ -3,8 +3,6 @@
 $dialog-tab-width: x(3);
 $dialog-body-height: y(28);
 
-$dialog-width: x(24);
-
 $dialog-corner-radius: 8px;
 $dialog-link-color: #1a85ad;
 $dialog-link-active-color: #252525;
@@ -19,8 +17,8 @@ $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
 $dialog-footer-height: y(3);
 
-$dialog-free-space-for-close-button: y(1.5);
-$switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2;
+$dialog-close-button-size: y(1.5);
+$switch-to-mobile-width: 600px; // iPhone max side is 568px
 
 .uploadcare-dialog-opened { // body
   overflow: hidden;
@@ -56,20 +54,24 @@ $switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2
 
   // We need width 100% and paddings.
   @include box-sizing(border-box);
+  $paddings: $dialog-close-button-size + y(.5);
   position: relative;
   width: 100%;
-  min-width: $dialog-width + $dialog-free-space-for-close-button * 2;
-  max-width: x(36) + $dialog-free-space-for-close-button * 2;
+
+  // 720 <= min-width <= 768.
+  // 720 — when iframe size is 601
+  // 768 — ipad size
+  min-width: 760px;
+  max-width: x(36) + $paddings; // x(36) = 900px — old widget size
   margin: 0 auto;
-  padding: 0 $dialog-free-space-for-close-button;
+  padding: 0 $dialog-close-button-size 0 y(.5);
 }
 
 .uploadcare-dialog-close {
-  $size: y(1.5);
-  width: $size;
-  height: $size;
-  line-height: $size;
-  font-size: $size * .9;
+  width: $dialog-close-button-size;
+  height: $dialog-close-button-size;
+  line-height: $dialog-close-button-size;
+  font-size: $dialog-close-button-size * .9;
   font-weight: bold;
   color: #fff;
   cursor: pointer;
@@ -158,6 +160,7 @@ $switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2
           @extend %tab-icons-active-image;
         }
       }
+      .uploadcare-dialog-icon,
       &:before {
         @extend %tab-icons-active-image;
         opacity: 1;
@@ -293,6 +296,7 @@ $switch-to-mobile-width: $dialog-width + $dialog-free-space-for-close-button * 2
   font-size: 15px;
   line-height: x(1);
   margin-bottom: x(.5);
+  word-wrap: break-word;
 }
 
 .uploadcare-dialog-large-text {
