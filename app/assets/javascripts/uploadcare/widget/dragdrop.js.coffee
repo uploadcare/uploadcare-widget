@@ -11,8 +11,12 @@ namespace 'uploadcare.dragdrop', (ns) ->
   ns.uploadDrop = (el, callback, settings) ->
     settings = s.build settings
     ns.receiveDrop el, (type, data) ->
-      method = if settings.multiple then 'filesFrom' else 'fileFrom'
-      callback uploadcare[method](type, data, settings)
+      callback(
+        if settings.multiple
+          uploadcare.filesFrom(type, data, settings)
+        else
+          uploadcare.fileFrom(type, data[0], settings)
+      )
 
   unless ns.support
     ns.receiveDrop = ->
@@ -29,13 +33,20 @@ namespace 'uploadcare.dragdrop', (ns) ->
           e.preventDefault() # Prevent opening files.
 
           dt = e.originalEvent.dataTransfer
-          if dt and dt.files.length
+          if not dt
+            return
+
+          if dt.files.length
             callback('object', dt.files)
+
           else
-            uris = dt.getData('text/uri-list')
+            uris = []
+            for uri in dt.getData('text/uri-list').split()
+              uri = $.trim(uri)
+              if uri && uri[0] != '#'
+                uris.push(uri)
+
             if uris
-              # opera likes to add \n at the end
-              uris = uris.replace /\n$/, ''
               callback('url', uris)
 
     ns.watchDragging = (el, receiver) ->
