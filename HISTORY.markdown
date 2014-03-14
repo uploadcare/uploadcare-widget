@@ -17,7 +17,7 @@
 
 ### 0.18.0, 10.02.2014
 
-* Widget now in one button "Choose a file".
+* Widget now is one button "Choose a file".
   Progress circle appears only on uploading.
 * Widget adapts to host page: controls size depends on font size only,
   height can be adjusted via line-height.

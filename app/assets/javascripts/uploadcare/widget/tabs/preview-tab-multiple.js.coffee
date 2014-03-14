@@ -23,6 +23,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @fileListEl = @__find('file-list')
       @titleEl = @__find('title')
+      @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
       @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
 
@@ -46,6 +47,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __setupSorting: ->
       @fileListEl.sortable
+        touch: false
         axis: 'y'
         start: (info) ->
           info.dragged.css('visibility', 'hidden')
@@ -67,8 +69,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
 
-      @titleEl.text t('dialog.tabs.preview.multiple.title')
+      title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
+      @titleEl.text title
 
       footer = if tooManyFiles
         t('dialog.tabs.preview.multiple.tooManyFiles')
@@ -83,6 +86,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @footerTextEl
         .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
         .text(footer)
+
+      @mobileTitleEl
+        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
+        .text(if tooManyFiles or tooFewFiles then footer else title)
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
@@ -104,8 +111,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl.addClass(CLASS_PREFIX + 'uploaded')
 
       if info.isImage
-        fileEl.addClass(CLASS_PREFIX + 'image')
-
         @__find('file-preview-wrap', fileEl).html $('<img>')
           .attr
             src: "#{info.originalUrl}-/scale_crop/90x90/center/"

@@ -19,20 +19,22 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       remove: 'Eliminar'
     dialog:
       tabs:
+        names:
+          preview: 'Avance'
+          file: 'Computadora'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          url: 'Una dirección cualquiera'
         file:
           drag: 'Arrastra una archivo aquí'
           nodrop: 'Sube fotos desde tu computadora'
           or: 'o'
           button: 'Elige un archivo desde tu computadora'
           also: 'Tambien puedes seleccionarlo de'
-          tabNames:
-            facebook: 'Facebook'
-            dropbox: 'Dropbox'
-            gdrive: 'Google Drive'
-            instagram: 'Instagram'
-            vk: 'VK'
-            evernote: 'Evernote'
-            url: 'Una dirección cualquiera'
         url:
           title: 'Archivos de la web'
           line1: 'Selecciona cualquier archivo de la web.'

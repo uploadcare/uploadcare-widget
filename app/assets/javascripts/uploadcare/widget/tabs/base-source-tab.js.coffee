@@ -47,6 +47,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           .toggleClass('uploadcare-error', tooManyFiles)
           .text(footer.replace('%files%', t('file', files)))
 
+        @container.find(".#{CLASS_PREFIX}counter")
+          .toggleClass('uploadcare-error', tooManyFiles)
+          .text(if files then "(#{files})" else "")
+
       updateFooter()
       @dialogApi.fileColl.onAdd.add updateFooter
       @dialogApi.fileColl.onRemove.add updateFooter

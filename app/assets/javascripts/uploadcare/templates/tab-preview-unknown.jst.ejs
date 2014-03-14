@@ -1,10 +1,13 @@
-<div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.unknown.title') %></div>
+<div class="uploadcare-dialog-padding">
 
-<div class="uploadcare-dialog-label">
-  <%- (file.name || "") %><%-
-    utils.readableFileSize(file.size, '', ', ') %>
+  <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.unknown.title') %></div>
+
+  <div class="uploadcare-dialog-label">
+    <%- (file.name || "") %><%-
+      utils.readableFileSize(file.size, '', ', ') %>
+  </div>
+
+  <div
+    class="uploadcare-dialog-button-success"
+    role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.unknown.done') %></div>
 </div>
-
-<div 
-  class="uploadcare-dialog-button-success"
-  role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.unknown.done') %></div>

@@ -70,10 +70,14 @@
 				move: $.noop,
 				finish: $.noop,
 				items: null,
-				keepFake: false
+				keepFake: false,
+				touch: true
 			}, o);
 
 			function fixTouch(e) {
+			  if ( ! o.touch) {
+			    return;
+			  }
 				var touch, s;
 				s = e.originalEvent.touches;
 				if (s && s.length) {

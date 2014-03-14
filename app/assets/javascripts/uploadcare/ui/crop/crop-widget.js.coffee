@@ -171,7 +171,8 @@ namespace 'uploadcare.crop', (ns) ->
         .appendTo @__widgetElement
 
     __calcSizes: (originalSize) ->
-      widgetSize = @__options.widgetSize or [@container.width(), @container.height()]
+      widgetSize = @__options.widgetSize or [
+        @container.width(), @container.height() or 640]
       resizedSize = utils.fitSize originalSize, widgetSize
       @__originalSize = originalSize
       @__resizedSize = resizedSize
@@ -197,6 +198,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
+        handleSize: 10
         allowSelect: false
         onSelect: (coords) =>
           @__currentCoords =

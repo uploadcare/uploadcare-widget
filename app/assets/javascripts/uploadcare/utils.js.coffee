@@ -182,7 +182,7 @@ namespace 'uploadcare.utils', (ns) ->
     fixedTo = Math.max(0, digits - value.toFixed(0).length)
     # fixed → number → string, to trim trailing zeroes
     value = Number(value.toFixed(fixedTo))
-    return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
+    return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
 
   ns.imagePath = (name) ->
     uploadcare.settings.build().scriptBase + 'images/' + name

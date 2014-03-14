@@ -1,16 +1,18 @@
-<div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.image.title') %></div>
+<div class="uploadcare-dialog-padding">
+  <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.image.title') %></div>
 
-<div class="uploadcare-dialog-preview-image-wrap1">
-<div class="uploadcare-dialog-preview-image-wrap2">
-  <!-- 1162x684 is 1.5 size of conteiner -->
-  <img
-    src="<%- file.originalUrl %>-/preview/1162x684/-/setfill/efefef/-/format/jpeg/"
-    title="<%- (file.name || "") %>"
-    alt="<%- (file.name || "") %>"
-    role="uploadcare-dialog-preview-image"
-    class="uploadcare-dialog-preview-image"
-  />
-</div>
+  <div class="uploadcare-dialog-preview-image-wrap1">
+  <div class="uploadcare-dialog-preview-image-wrap2">
+    <!-- 1162x684 is 1.5 size of conteiner -->
+    <img
+      src="<%- file.originalUrl %>-/preview/1162x684/-/setfill/efefef/-/format/jpeg/"
+      title="<%- (file.name || "") %>"
+      alt="<%- (file.name || "") %>"
+      role="uploadcare-dialog-preview-image"
+      class="uploadcare-dialog-preview-image"
+    />
+  </div>
+  </div>
 </div>
 
 <div class="uploadcare-dialog-inner-footer">

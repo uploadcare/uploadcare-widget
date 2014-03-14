@@ -21,6 +21,14 @@
 
 namespace 'uploadcare', (ns) ->
 
+  lockScroll = (el, toTop) ->
+    top = el.scrollTop()
+    left = el.scrollLeft()
+    if toTop
+      el.scrollTop(0).scrollLeft(0)
+    ->
+      el.scrollTop(top).scrollLeft(left)
+
   $(window).on 'keydown', (e) =>
     if ns.isDialogOpened()
       if e.which == 27  # Escape
@@ -39,8 +47,7 @@ namespace 'uploadcare', (ns) ->
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
 
-    $('body').addClass(openedClass)
-    dialog = $(tpl('dialog')).hide().appendTo('body').fadeIn('fast')
+    dialog = $(tpl('dialog')).appendTo('body')
     dialog.on 'click', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
@@ -54,11 +61,15 @@ namespace 'uploadcare', (ns) ->
 
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
+
+    cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
+    $('html, body').addClass(openedClass)
+
     currentDialogPr.always ->
-      $('body').removeClass(openedClass)
+      $('html, body').removeClass(openedClass)
       currentDialogPr = null
-      dialog.fadeOut 'fast', ->
-        dialog.remove()
+      dialog.remove()
+      cancelLock()
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
@@ -111,12 +122,14 @@ namespace 'uploadcare', (ns) ->
       @dfd = $.Deferred()
       @dfd.always @__closePanel
 
+      sel = '.uploadcare-dialog-panel'
       @content = $(tpl('panel'))
+      @panel = @content.find(sel).add(@content.filter(sel));
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
       if @settings.multiple
-        @content.addClass('uploadcare-dialog-multiple')
+        @panel.addClass('uploadcare-dialog-multiple')
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
@@ -187,7 +200,8 @@ namespace 'uploadcare', (ns) ->
         @switchTab(tab || @settings.tabs[0])
 
     __closePanel: =>
-      @content.replaceWith(@placeholder)
+      @panel.replaceWith(@placeholder)
+      @content.remove()
 
     addTab: (name) ->
 
@@ -200,16 +214,21 @@ namespace 'uploadcare', (ns) ->
         throw new Error("No such tab: #{name}")
 
       tabPanel = $('<div>')
-        .hide()
-        .addClass('uploadcare-dialog-tabs-panel')
+        .addClass("uploadcare-dialog-tabs-panel")
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .appendTo(@content.find('.uploadcare-dialog-panel'))
+        .appendTo(@panel)
 
       tabButton = $('<div>')
-        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
-        .attr('title', t("tabs.#{name}.title"))
-        .on('click', => @switchTab(name))
-        .appendTo(@content.find('.uploadcare-dialog-tabs'))
+        .addClass("uploadcare-dialog-tab")
+        .addClass("uploadcare-dialog-tab-#{name}")
+        .attr('title', t("dialog.tabs.names.#{name}"))
+        .on('click', =>
+          if name is @currentTab
+            @panel.toggleClass('uploadcare-dialog-opened-tabs')
+          else
+            @switchTab(name)
+        )
+        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
       @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
 
@@ -218,29 +237,36 @@ namespace 'uploadcare', (ns) ->
         .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
         .addClass('uploadcare-dialog-disabled-tab')
         .attr('title', t("tabs.#{name}.title"))
-        .appendTo(@content.find('.uploadcare-dialog-tabs'))
+        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
-      @content.find('.uploadcare-dialog-panel')
-        .find('.uploadcare-dialog-selected-tab')
-          .removeClass('uploadcare-dialog-selected-tab')
-          .end()
-        .find(".uploadcare-dialog-tab-#{@currentTab}")
-          .addClass('uploadcare-dialog-selected-tab')
-          .end()
-        .find('.uploadcare-dialog-tabs-panel')
-          .hide()
-          .filter(".uploadcare-dialog-tabs-panel-#{@currentTab}")
-            .show()
+      @panel.removeClass('uploadcare-dialog-opened-tabs')
+
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}")
+            .removeClass("#{className}_current")
+            .filter(".#{className}-#{@currentTab}")
+            .addClass("#{className}_current")
+
+      className = 'uploadcare-dialog-tabs-panel'
+      @panel.find(".#{className}")
+            .removeClass("#{className}_current")
+            .filter(".#{className}-#{@currentTab}")
+            .addClass("#{className}_current")
+
       @dfd.notify @currentTab
 
     __showTab: (tab) ->
-      @content.find(".uploadcare-dialog-tab-#{tab}").show()
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}-#{tab}")
+            .removeClass("#{className}_hidden")
 
     __hideTab: (tab) ->
       if @currentTab == tab
         @switchTab @settings.tabs[0]
-      @content.find(".uploadcare-dialog-tab-#{tab}").hide()
+      className = 'uploadcare-dialog-tab'
+      @panel.find(".#{className}-#{tab}")
+            .addClass("#{className}_hidden")
 
     __welcome: ->
       @addTab('welcome')

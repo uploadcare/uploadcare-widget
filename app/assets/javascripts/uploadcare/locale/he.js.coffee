@@ -31,22 +31,22 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       done: 'סיום'
       showFiles: 'הצג קבצים'
       tabs:
+        names:
+          facebook: 'פייסבוק'
+          dropbox: 'דרופבוקס'
+          gdrive: 'כונן גוגל'
+          instagram: 'אינסטגרם'
+          vk: 'VK'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'SkyDrive'
+          url: 'לינק מהאינטרנט'
         file:
           drag: 'שחרר כאן קובץ'
           nodrop: 'העלה קבצים מהמחשב'
           or: 'או'
           button: 'בחר קובץ מהמחשב'
           also: 'ניתן לבחור גם מ'
-          tabNames:
-            facebook: 'פייסבוק'
-            dropbox: 'דרופבוקס'
-            gdrive: 'כונן גוגל'
-            instagram: 'אינסטגרם'
-            vk: 'VK'
-            evernote: 'Evernote'
-            box: 'Box'
-            skydrive: 'SkyDrive'
-            url: 'לינק מהאינטרנט'
         url:
           title: 'קובץ מהאינטרנט'
           line1: 'גרור קובץ מהאינטרנט'

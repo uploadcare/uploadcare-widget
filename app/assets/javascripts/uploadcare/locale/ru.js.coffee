@@ -32,20 +32,22 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       done: 'Готово'
       showFiles: 'Показать файлы'
       tabs:
+        names:
+          preview: 'Предпросмотр'
+          file: 'Компьютер'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'ВКонтакте'
+          evernote: 'Evernote'
+          url: 'Произвольная ссылка'
         file:
           drag: 'Перетащите файл сюда'
           nodrop: 'Загрузка файлов с вашего компьютера'
           or: 'или'
           button: 'Выберите файл с компьютера'
           also: 'Вы также можете загрузить файлы, используя:'
-          tabNames:
-            facebook: 'Facebook'
-            dropbox: 'Dropbox'
-            gdrive: 'Google Drive'
-            instagram: 'Instagram'
-            vk: 'ВКонтакте'
-            evernote: 'Evernote'
-            url: 'Произвольную ссылку'
         url:
           title: 'Файлы с других сайтов'
           line1: 'Загрузите любой файл из сети.'

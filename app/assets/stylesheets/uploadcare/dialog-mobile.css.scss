@@ -1,0 +1,210 @@
+$dialog-mobile-footer-height: 50px;
+$dialog-mobile-min-width: 310px;
+
+.uploadcare-if-mobile { display: none; }
+
+@media screen and (max-width: $switch-to-mobile-width) {
+  .uploadcare-dialog-opened {
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    background: $dialog-body-background-color !important;
+  }
+  // hide anything else on the page
+  body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
+    display: none !important;
+  }
+
+  .uploadcare-if-mobile { display: block; }
+  .uploadcare-if-no-mobile { display: none; }
+
+  .uploadcare-dialog {
+    position: absolute;
+    overflow: visible;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  .uploadcare-dialog-inner-wrap {
+    padding: 0;
+    min-width: $dialog-mobile-min-width;
+    height: 100%;
+  }
+
+  .uploadcare-dialog-close {
+    position: fixed;
+    z-index: 2;
+    color: #000;
+    width: $frame-size;
+    height: $frame-size;
+    line-height: $frame-size*.9;
+  }
+
+  .uploadcare-dialog-footer {
+    display: none;
+  }
+
+  .uploadcare-dialog {
+
+    // § Panels
+
+    .uploadcare-dialog-panel {
+      overflow: visible;
+      height: 100%;
+      border-radius: 0;
+      @include prefix(box-shadow, none);
+    }
+      .uploadcare-dialog-tabs-panel {
+        padding: $frame-size 0 0;
+        margin: 0;
+        height: 100%;
+      }
+        .uploadcare-dialog-source-base-wrap {
+          height: auto;
+        }
+        .uploadcare-dialog-remote-iframe-wrap {
+          overflow: visible;
+          height: 100%;
+        }
+        .uploadcare-dialog-padding {
+            padding: y(1) 15px;
+        }
+
+    // § Preview tabs
+
+    .uploadcare-dialog-preview-image-wrap1 {
+      height: auto;
+      padding-bottom: $dialog-mobile-footer-height;
+    }
+    .uploadcare-dpm-file-list {
+      height: auto;
+      margin: 0 -15px 0 0;
+    }
+    .uploadcare-dpm-file-item > * {
+      padding-right: 10px;
+    }
+    .uploadcare-dpm-file-progressbar-wrap {
+      width: 40px;
+    }
+    .uploadcare-dpm-file-remove {
+      display: inline-block;
+    }
+
+    // § Computer tab
+
+    .uploadcare-dialog-file-sources,
+    .uploadcare-dialog-file-or {
+      display: none;
+    }
+
+    .uploadcare-dialog-file-title {
+      font-size: 30px;
+      margin: y(1) 0;
+    }
+    .uploadcare-dialog-file-drop-area {
+      padding-top: 0;
+    }
+
+    // § Mulltiple
+
+    .uploadcare-dialog-inner-footer {
+      position: fixed;
+      left: 0; bottom: 0;
+      width: 100%;
+      min-width: $dialog-mobile-min-width;
+      height: $dialog-mobile-footer-height;
+      padding: ($dialog-mobile-footer-height - $dialog-button-height) / 2 15px 0;
+      background: rgba(255, 243, 190, 0.95);
+    }
+    .uploadcare-dialog-inner-footer-text {
+      display: none;
+    }
+    .uploadcare-dialog-source-base-counter {
+      display: inline;
+    }
+    .uploadcare-dialog-multiple {
+      .uploadcare-dialog-remote-iframe-after {
+        height: $dialog-mobile-footer-height;
+      }
+      .uploadcare-dialog-source-base-wrap {
+        padding-bottom: $dialog-mobile-footer-height;
+      }
+      .uploadcare-dialog-padding {
+        padding-bottom: y(1) + $dialog-mobile-footer-height;
+      }
+    }
+
+    // § Tabs
+
+    .uploadcare-dialog-tabs {
+      position: fixed;
+      // Fixes bug in Chrome with resizing.
+      top: 0; left: 0;
+      width: 100%;
+      min-width: $dialog-mobile-min-width;
+      height: auto;
+      float: none;
+      z-index: 1;
+      background: transparent;
+    }
+      .uploadcare-dialog-tab {
+        display: none;
+        height: $frame-size;
+        white-space: nowrap;
+        background: #dee0e1;
+
+        .uploadcare-dialog-icon,
+        &:before {
+          position: static;
+          margin: 0 6px;
+          vertical-align: middle;
+          opacity: 1;
+        }
+      }
+      .uploadcare-dialog-tab_current {
+        display: block;
+        background: rgba($dialog-body-background-color, 0.95);
+      }
+      .uploadcare-dialog-tab:after {
+        content: attr(title);
+        font-size: 20px;
+        vertical-align: middle;
+      }
+
+    .uploadcare-dialog-opened-tabs {
+      .uploadcare-dialog-tabs-panel_current {
+        display: none;
+      }
+      .uploadcare-dialog-tabs {
+        position: relative;
+        // overlap close icon
+        z-index: 3;
+      }
+        .uploadcare-dialog-tab {
+          display: block;
+        }
+        .uploadcare-dialog-tab_current {
+          background: $dialog-body-background-color;
+        }
+    }
+    .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) {
+      .uploadcare-dialog-tab_current {
+        text-align: center;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 16px; left: 14px;
+          display: block;
+          width: 22px;
+          height: 18px;
+          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAOCAQAAAD+6Ta3AAAARklEQVR4Ae3SsRFEIQhAwW1IR2s3s6zTGUN+AxdK5tucAIBmOuKSY2pQbHHZVhgiweAnEixW1uC0VdSU41Xo19+te73+9AGOg1FzTMH13gAAAABJRU5ErkJggg==);
+          background-size: 22px;
+        }
+      }
+    }
+  }
+}
