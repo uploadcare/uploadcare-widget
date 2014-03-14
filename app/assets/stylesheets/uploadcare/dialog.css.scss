@@ -142,12 +142,12 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
     &:hover {
       background-color: #e5e7e8;
 
-      .uploadcare-dialog-icon,
-      &:before {
+      .uploadcare-dialog-icon {
         opacity: 1;
       }
       &:before {
         @extend %tab-icons-image;
+        opacity: 1;
       }
     }
   }
@@ -160,7 +160,9 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
           @extend %tab-icons-active-image;
         }
       }
-      .uploadcare-dialog-icon,
+      .uploadcare-dialog-icon {
+        opacity: 1;
+      }
       &:before {
         @extend %tab-icons-active-image;
         opacity: 1;
