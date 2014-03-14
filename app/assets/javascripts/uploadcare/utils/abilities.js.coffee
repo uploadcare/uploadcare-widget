@@ -1,6 +1,6 @@
 uploadcare.namespace 'uploadcare.utils.abilities', (ns) ->
 
-  ns.canFileAPI = !!window.FileList
+  ns.fileAPI = !!(window.File and window.FileList and window.FileReader)
 
   # https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
   ns.dragAndDrop = do ->
@@ -12,4 +12,4 @@ uploadcare.namespace 'uploadcare.utils.abilities', (ns) ->
     el = document.createElement("canvas")
     !!(el.getContext && el.getContext('2d'))
 
-  ns.fileDragAndDrop = ns.canFileAPI && ns.dragAndDrop
+  ns.fileDragAndDrop = ns.fileAPI && ns.dragAndDrop

@@ -10,50 +10,25 @@
   utils,
   jQuery: $,
   files: f,
-  settings: s
+  settings
 } = uploadcare
 
 namespace 'uploadcare', (ns) ->
 
-  ns.fileFrom = ->
-    ns.filesFrom.apply(null, arguments)[0]
+  ns.fileFrom = (type, data, s) ->
+    ns.filesFrom(type, [data], s)[0]
 
-  ns.filesFrom = (type, data, settings) ->
-    settings = s.build(settings or {})
-    for file in converters[type](settings, data)
-      file.promise()
+
+  ns.filesFrom = (type, data, s) ->
+    s = settings.build(s or {})
+
+    for part in data
+      new converters[type](s, part).promise()
+
 
   converters =
-    event: (settings, e) ->
-      if utils.abilities.canFileAPI
-        files = if e.type == 'drop'
-          e.originalEvent.dataTransfer.files
-        else
-          e.target.files
-        new f.ObjectFile(settings, file) for file in files
-      else
-        @input settings, e.target
-
-    input: (settings, input) ->
-      [new f.InputFile(settings, input)]
-
-    url: (settings, urls) ->
-      unless $.isArray(urls)
-        urls = [urls]
-      for url in urls
-        new f.UrlFile(settings, url)
-
-    uploaded: (settings, uuids) ->
-      unless $.isArray(uuids)
-        uuids = [uuids]
-      for uuid in uuids
-        new f.UploadedFile(settings, uuid)
-
-    ready: (settings, arrayOfFileData) ->
-      unless $.isArray(arrayOfFileData)
-        arrayOfFileData = [arrayOfFileData]
-      for fileData in arrayOfFileData
-        if fileData
-          new f.ReadyFile(settings, fileData)
-        else
-          new f.DeletedFile(settings)
+    object: f.ObjectFile
+    input: f.InputFile
+    url: f.UrlFile
+    uploaded: f.UploadedFile
+    ready: f.ReadyFile
