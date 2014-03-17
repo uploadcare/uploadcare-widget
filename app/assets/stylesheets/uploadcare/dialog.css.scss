@@ -4,8 +4,6 @@ $dialog-tab-width: x(3);
 $dialog-body-height: y(28);
 
 $dialog-corner-radius: 8px;
-$dialog-link-color: #1a85ad;
-$dialog-link-active-color: #252525;
 $dialog-button-text-color: #fff;
 $dialog-body-background-color: #efefef;
 $dialog-body-shadow-color: #dee0e1;
@@ -86,19 +84,6 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
   position: relative;
   background: $dialog-body-background-color;
   font-weight: normal;
-
-  a {
-    text-decoration: none;
-    border-bottom: 1px dotted;
-    &:link, &:visited {
-      color: $dialog-link-color;
-      border-bottom-color: $dialog-link-color;
-    }
-    &:hover, &:active {
-      color: $dialog-link-active-color;
-      border-bottom-color: $dialog-link-active-color;
-    }
-  }
 }
 
 .uploadcare-dialog-tabs {
