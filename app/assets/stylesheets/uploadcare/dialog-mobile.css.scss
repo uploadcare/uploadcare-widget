@@ -127,7 +127,9 @@ $dialog-mobile-min-width: 310px;
       display: inline;
     }
     .uploadcare-dialog-multiple {
-      .uploadcare-dialog-remote-iframe-after {
+      .uploadcare-dialog-remote-iframe-wrap:after {
+        content: '';
+        display: block;
         height: $dialog-mobile-footer-height;
       }
       .uploadcare-dialog-source-base-wrap {

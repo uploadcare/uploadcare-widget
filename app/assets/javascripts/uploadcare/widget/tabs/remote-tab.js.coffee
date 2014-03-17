@@ -59,8 +59,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 style: style
             return
 
-        $('<div class="uploadcare-dialog-remote-iframe-after"></div>').insertAfter(@iframe)
-
         $(window).on "message", ({originalEvent: e}) =>
           if e.source isnt @iframe[0].contentWindow
             return
