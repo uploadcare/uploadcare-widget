@@ -114,6 +114,8 @@
 
 
 .uploadcare-widget-dragndrop-area {
+  @include box-sizing(content-box);
+
   display: none;
   position: absolute;
 
