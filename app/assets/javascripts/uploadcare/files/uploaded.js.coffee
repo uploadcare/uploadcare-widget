@@ -15,7 +15,7 @@ namespace 'uploadcare.files', (ns) ->
         @__rejectApi('baddata')
 
     __startUpload: ->
-      @__completeUpload()
+      @__uploadDf.resolve()
 
 
   class ns.ReadyFile extends ns.BaseFile
@@ -28,4 +28,4 @@ namespace 'uploadcare.files', (ns) ->
         @__handleFileData(data)
 
     __startUpload: ->
-      @__completeUpload()
+      @__uploadDf.resolve()
