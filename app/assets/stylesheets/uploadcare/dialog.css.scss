@@ -47,12 +47,12 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
 }
 
 .uploadcare-dialog {
-  @include prefix(transition, opacity .35s ease-out);
+  @include prefix(transition, opacity .35s cubic-bezier(0.05,.7,.25,1));
   opacity: 0;
   .uploadcare-dialog-inner-wrap {
-    @include prefix(transition, all .35s cubic-bezier(0.175,.885,.32,1.075));
-    @include prefix(transform, scale(0));
-    @include prefix(transform-origin, 50% 100%);
+    @include prefix(transition, all .35s cubic-bezier(0.05,.7,.25,1));
+    @include prefix(transform, scale(.8));
+    @include prefix(transform-origin, 50% 120%);
   }
 }
 .uploadcare-dialog.uploadcare-active {
