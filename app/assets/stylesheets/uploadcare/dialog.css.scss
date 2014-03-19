@@ -18,7 +18,7 @@ $dialog-footer-height: y(3);
 $dialog-close-button-size: y(1.5);
 $switch-to-mobile-width: 600px; // iPhone max side is 568px
 
-.uploadcare-dialog-opened { // body
+html.uploadcare-dialog-opened {
   overflow: hidden;
 }
 
