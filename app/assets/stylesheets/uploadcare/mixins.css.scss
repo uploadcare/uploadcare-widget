@@ -1,8 +1,6 @@
 @mixin prefix($prop, $value) {
-  -ms-#{$prop}: $value;
-  -moz-#{$prop}: $value;
   -webkit-#{$prop}: $value;
-  -o-#{$prop}: $value;
+  -moz-#{$prop}: $value;
   #{$prop}: $value;
 }
 
@@ -16,7 +14,6 @@
   background: mix($from, $to);
   background: -webkit-linear-gradient($from, $to);
   background: -moz-linear-gradient($from, $to);
-  background: -o-linear-gradient($from, $to);
   background: linear-gradient($from, $to);
 }
 

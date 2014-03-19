@@ -46,6 +46,22 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
   }
 }
 
+.uploadcare-dialog {
+  @include prefix(transition, opacity .35s ease-out);
+  opacity: 0;
+  .uploadcare-dialog-inner-wrap {
+    @include prefix(transition, all .35s cubic-bezier(0.175,.885,.32,1.075));
+    @include prefix(transform, scale(0));
+    @include prefix(transform-origin, 50% 100%);
+  }
+}
+.uploadcare-dialog.uploadcare-active {
+  opacity: 1;
+  .uploadcare-dialog-inner-wrap {
+    @include prefix(transform, initial);
+  }
+}
+
 .uploadcare-dialog-inner-wrap {
   @include vertical-centered;
   text-align: left;

@@ -66,6 +66,7 @@ namespace 'uploadcare', (ns) ->
     currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
 
+    dialog.addClass('uploadcare-active')
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
