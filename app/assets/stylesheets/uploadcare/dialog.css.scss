@@ -67,7 +67,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
   text-align: left;
 
   // We need width 100% and paddings.
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
   $paddings: $dialog-close-button-size + y(.5);
   position: relative;
   width: 100%;
@@ -103,7 +103,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
 }
 
 .uploadcare-dialog-tabs {
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
   width: $dialog-tab-width;
   height: $dialog-body-height;
   float: left;
@@ -113,7 +113,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
 
   $frame-size: 50px;
   .uploadcare-dialog-tab {
-    @include box-sizing(border-box);
+    @include prefix(box-sizing, border-box);
     height: 56px;
     border-bottom: 1px solid $dialog-body-border-color;
     cursor: pointer;
@@ -121,7 +121,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
     // Geometry
     .uploadcare-dialog-icon,
     &:before {
-      @include box-sizing(border-box);
+      @include prefix(box-sizing, border-box);
 
       position: relative;
       top: 50%;
@@ -221,7 +221,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
 .uploadcare-dialog-tabs-panel {
   position: relative;
   display: none;
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
   margin-left: $dialog-tab-width;
   height: $dialog-body-height;
   line-height: y(1);
@@ -229,7 +229,7 @@ $switch-to-mobile-width: 600px; // iPhone max side is 568px
   color: $dialog-body-text-color;
 
   .uploadcare-dialog-input {
-    @include box-sizing(border-box);
+    @include prefix(box-sizing, border-box);
     width: 100%;
     height: y(2);
     margin-bottom: y(1);
@@ -457,7 +457,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 
 .uploadcare-dialog-inner-footer {
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-footer-height;
@@ -562,7 +562,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 .uploadcare-dialog-file-drop-area {
   width: 100%;
   height: 100%;
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
   border: none;
   text-align: center;
   border-radius: 3px;
@@ -669,7 +669,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
     // for each columns
     > * {
-      @include box-sizing(content-box);
+      @include prefix(box-sizing, content-box);
       display: table-cell;
       vertical-align: middle;
       padding-right: 20px;
@@ -763,7 +763,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 .uploadcare-dialog-source-base-wrap {
   height: $dialog-body-height;
-  @include box-sizing(border-box);
+  @include prefix(box-sizing, border-box);
 
   .uploadcare-dialog-multiple & {
     height: $dialog-body-height - $dialog-footer-height;
