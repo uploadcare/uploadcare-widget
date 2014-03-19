@@ -219,30 +219,6 @@
       } else {
         Selection.release();
       }
-      Tracker.setCursor(options.allowSelect ? 'crosshair' : 'default');
-    }
-    //}}}
-    function newSelection(e) //{{{
-    {
-      if (options.disabled) {
-        return false;
-      }
-      if (!options.allowSelect) {
-        return false;
-      }
-      btndown = true;
-      docOffset = getPos($img);
-      Selection.disableHandles();
-      Tracker.setCursor('crosshair');
-      var pos = mouseAbs(e);
-      Coords.setPressed(pos);
-      Selection.update();
-      Tracker.activateHandlers(selectDrag, doneSelect);
-      KeyManager.watchKeys();
-
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
     }
     //}}}
     function selectDrag(pos) //{{{
@@ -368,7 +344,7 @@
       top: px(-bound),
       left: px(-bound),
       zIndex: 290
-    }).mousedown(newSelection);
+    });
 
     /* }}} */
     // Set more variables {{{
@@ -429,11 +405,6 @@
             e.preventDefault();
             return false;
           };
-        },
-        newSelection: function (e) {
-          e.pageX = e.originalEvent.changedTouches[0].pageX;
-          e.pageY = e.originalEvent.changedTouches[0].pageY;
-          return newSelection(e);
         },
         isSupported: hasTouchSupport,
         support: detectSupport()
@@ -1268,9 +1239,6 @@
         case 40:
           doNudge(e, 0, nudge);
           break;
-        case 27:
-          if (options.allowSelect) Selection.release();
-          break;
         case 9:
           return true;
         }
@@ -1387,7 +1355,6 @@
         Selection.disableHandles();
       }
 
-      Tracker.setCursor(options.allowSelect ? 'crosshair' : 'default');
       Selection.setCursor(options.allowMove ? 'move' : 'default');
 
       if (options.hasOwnProperty('trueSize')) {
@@ -1433,8 +1400,6 @@
     }
     //}}}
     //}}}
-
-    if (Touch.support) $trk.bind('touchstart.jcrop', Touch.newSelection);
 
     $hdl_holder.hide();
     interfaceUpdate(true);
@@ -1540,7 +1505,6 @@
   $.Jcrop.defaults = {
 
     // Basic Settings
-    allowSelect: true,
     allowMove: true,
     allowResize: true,
 
