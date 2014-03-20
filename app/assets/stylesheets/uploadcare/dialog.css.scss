@@ -47,12 +47,12 @@ html.uploadcare-dialog-opened {
 }
 
 .uploadcare-dialog {
-  @include prefix(transition, opacity .35s cubic-bezier(0.05,.7,.25,1));
+  @include prefix(transition, opacity .25s cubic-bezier(0.05,.7,.25,1));
   opacity: 0;
   .uploadcare-dialog-inner-wrap {
-    @include prefix(transition, all .35s cubic-bezier(0.05,.7,.25,1));
+    @include prefixprefix(transition, transform .25s cubic-bezier(0.05,.7,.25,1));
     @include prefix(transform, scale(.8));
-    @include prefix(transform-origin, 50% 120%);
+    @include prefix(transform-origin, 50% 100%);
   }
 }
 .uploadcare-dialog.uploadcare-active {
@@ -115,6 +115,7 @@ html.uploadcare-dialog-opened {
   .uploadcare-dialog-tab {
     @include prefix(box-sizing, border-box);
     height: 56px;
+    position: relative;
     border-bottom: 1px solid $dialog-body-border-color;
     cursor: pointer;
 
@@ -123,14 +124,14 @@ html.uploadcare-dialog-opened {
     &:before {
       @include prefix(box-sizing, border-box);
 
-      position: relative;
+      position: absolute;
       top: 50%;
       left: 50%;
       display: inline-block;
       width: $frame-size;
       height: $frame-size;
-      margin-top: $frame-size / -2;
-      margin-left: $frame-size / -2;
+      margin: $frame-size / -2;
+
       opacity: .66;
     }
 
