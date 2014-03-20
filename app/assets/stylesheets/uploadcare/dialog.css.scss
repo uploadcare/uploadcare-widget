@@ -336,7 +336,7 @@ $dialog-button-height: 33px;
   display: inline-block;
   font-size: $dialog-body-font-size-smaller;
   line-height: $dialog-button-height - 2;
-  padding: 0 y(1);
+  padding: 0 x(.5);
   margin-right: .5em;
   border: solid 1px;
   border-radius: 3px;
@@ -471,8 +471,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   }
   .uploadcare-dialog-button-success,
   .uploadcare-dialog-button {
-    width: x(4.5);
-    padding: 0;
+    min-width: x(4);
     text-align: center;
     margin-right: 0;
   }
