@@ -58,7 +58,7 @@ html.uploadcare-dialog-opened {
 .uploadcare-dialog.uploadcare-active {
   opacity: 1;
   .uploadcare-dialog-inner-wrap {
-    @include prefix(transform, initial);
+    @include prefix(transform, none);
   }
 }
 
