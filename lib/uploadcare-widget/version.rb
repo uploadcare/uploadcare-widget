@@ -1,3 +1,3 @@
 module UploadcareWidget
-  VERSION = "0.18.3"
+  VERSION = "1.0.0"
 end

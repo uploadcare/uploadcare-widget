@@ -1,5 +1,12 @@
 # History
 
+### 1.0.0, 21.03.2014
+
+* Mobile version.
+* Undocumented `fromFile('event')` method was removed.
+* Page scrolling disabled when dialog is opened.
+* Increased active size of crop corners.
+
 ### 0.18.3, 05.03.2014
 
 * New widget settings `preferred-types`.
