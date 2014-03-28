@@ -34,7 +34,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @wrap.find('@uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl input.val()
-          @dialogApi.addFiles 'url', url
+          @dialogApi.addFiles 'url', [url]
           input.val ''
 
         false
