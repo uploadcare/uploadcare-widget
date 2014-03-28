@@ -1,5 +1,9 @@
 # History
 
+### 1.0.1, 28.03.2014
+
+* Fixed uploading from url.
+
 ### 1.0.0, 21.03.2014
 
 * Mobile version.
