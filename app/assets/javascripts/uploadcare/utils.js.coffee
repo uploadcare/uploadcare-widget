@@ -174,12 +174,15 @@ namespace 'uploadcare.utils', (ns) ->
 
     digits = 2
     i = 0
-    while value > 999 and i < ns.fileSizeLabels.length - 1
+    threshold = 1000 - 5 * Math.pow(10, 2 - Math.max(digits, 3))
+    while value > threshold and i < ns.fileSizeLabels.length - 1
       i++
       value /= 1024
 
+    value += 0.000000000000001;
+
     # number of digits after point: total number minus digits before point
-    fixedTo = Math.max(0, digits - value.toFixed(0).length)
+    fixedTo = Math.max(0, digits - Math.floor(value).toFixed(0).length)
     # fixed → number → string, to trim trailing zeroes
     value = Number(value.toFixed(fixedTo))
     return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
