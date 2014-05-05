@@ -45,6 +45,7 @@ namespace 'uploadcare.files', (ns) ->
           if xhr.upload
             xhr.upload.addEventListener 'progress', (e) =>
               @__uploadDf.notify(e.loaded / @fileSize)
+            , false
           xhr
         crossDomain: true
         type: 'POST'
@@ -146,6 +147,7 @@ namespace 'uploadcare.files', (ns) ->
               if xhr.upload
                 xhr.upload.addEventListener 'progress', (e) =>
                   updateProgress(partNo, e.loaded)
+                , false
               xhr
             url: parts[partNo]
             crossDomain: true

@@ -139,7 +139,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
         # Background circle
         ctx.fillStyle = @colorTheme.back
         ctx.beginPath()
-        ctx.arc(halfSize, halfSize, halfSize, 0, 2*Math.PI)
+        ctx.arc(halfSize, halfSize, halfSize, 0, 2*Math.PI, false)
         ctx.fill()
 
         # Progress circle
@@ -147,13 +147,13 @@ namespace 'uploadcare.ui.progress', (ns) ->
         ctx.fillStyle = @colorTheme.front
         ctx.beginPath()
         ctx.moveTo(halfSize, halfSize)
-        ctx.arc(halfSize, halfSize, halfSize, offset, 2*Math.PI * @val + offset)
+        ctx.arc(halfSize, halfSize, halfSize, offset, 2*Math.PI * @val + offset, false)
         ctx.fill()
 
         # Center circle
         ctx.fillStyle = @colorTheme.center
         ctx.beginPath()
-        ctx.arc(halfSize, halfSize, @canvasSize/15, 0, 2*Math.PI)
+        ctx.arc(halfSize, halfSize, @canvasSize/15, 0, 2*Math.PI, false)
         ctx.fill()
 
     __animateValue: (targetValue) ->
