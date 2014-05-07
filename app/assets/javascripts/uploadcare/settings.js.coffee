@@ -141,7 +141,7 @@ namespace 'uploadcare.settings', (ns) ->
     if settings.crop.enabled
       settings.pathValue = true
 
-    if not utils.abilities.fileAPI
+    if not utils.abilities.sendFileAPI
       settings.systemDialog = false
 
     settings
