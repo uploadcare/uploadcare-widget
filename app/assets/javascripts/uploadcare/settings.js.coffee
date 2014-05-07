@@ -15,6 +15,7 @@ namespace 'uploadcare.settings', (ns) ->
     'locale-pluralize': null
     'locale-translations': null
     # widget settings
+    'system-dialog': false
     'crop': 'disabled'
     'preview-step': false
     'images-only': false
@@ -121,6 +122,7 @@ namespace 'uploadcare.settings', (ns) ->
       'clearable'
       'pathValue'
       'previewStep'
+      'systemDialog'
     ]
     intOptions settings, [
       'multipleMax'
@@ -138,6 +140,9 @@ namespace 'uploadcare.settings', (ns) ->
 
     if settings.crop.enabled
       settings.pathValue = true
+
+    if not utils.abilities.fileAPI
+      settings.systemDialog = false
 
     settings
 

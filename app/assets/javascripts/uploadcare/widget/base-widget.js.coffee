@@ -123,8 +123,12 @@ namespace 'uploadcare.widget', (ns) ->
       @value @element.val()
 
     openDialog: (tab) ->
-      uploadcare.openDialog(@currentObject, tab, @settings)
-        .done(@__setObject)
+      if @settings.systemDialog
+        utils.fileSelectDialog @template.content, @settings.multiple, (input) =>
+          @__handleDirectSelection 'object', input.files
+      else
+        uploadcare.openDialog(@currentObject, tab, @settings)
+          .done(@__setObject)
 
     api: ->
       unless @__api

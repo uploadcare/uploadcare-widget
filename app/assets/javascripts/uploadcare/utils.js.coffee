@@ -167,6 +167,25 @@ namespace 'uploadcare.utils', (ns) ->
           left: e.pageX - left - width + 10
           top: e.pageY - top - 10
 
+  ns.fileSelectDialog = (container, multiple, fn) ->
+    (
+      if multiple
+        $('<input type="file" multiple>')
+      else
+        $('<input type="file">')
+    )
+      .css(
+        position: 'fixed'
+        bottom: 0
+        opacity: 0
+      )
+      .on 'change', ->
+        fn(this)
+        $(this).remove()
+      .appendTo(container)
+      .focus()
+      .click()
+      .hide()
 
   ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
 
