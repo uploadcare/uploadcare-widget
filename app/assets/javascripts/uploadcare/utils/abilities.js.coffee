@@ -4,6 +4,12 @@ uploadcare.namespace 'uploadcare.utils.abilities', (ns) ->
 
   ns.sendFileAPI = !!(window.FormData and ns.fileAPI)
 
+  ns.blob = do ->
+    try
+      !! new Blob
+    catch
+      false
+
   # https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
   ns.dragAndDrop = do ->
     el = document.createElement("div")

@@ -22,16 +22,20 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
-      if @fileSize < @MP_MIN_SIZE
-        @directUpload()
-      else
+      if @fileSize >= @MP_MIN_SIZE and utils.abilities.blob
         @multipartUpload()
+      else
+        @directUpload()
 
     __autoAbort: (xhr) ->
       @__uploadDf.always xhr.abort
       xhr
 
     directUpload: ->
+      if @fileSize > 100 * 1024 * 1024
+        @__rejectApi 'size'
+        return
+
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
       if @settings.autostore
