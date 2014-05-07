@@ -127,42 +127,45 @@ namespace 'uploadcare.utils', (ns) ->
       objSize.slice()
 
   ns.fileInput = (container, multiple, fn) ->
-    input = if multiple
-      $('<input type="file" multiple>')
-    else
-      $('<input type="file">')
+    input = null
 
-    input
-      .css(
-        position: 'absolute'
-        top: 0
-        opacity: 0
-        margin: 0
-        padding: 0
-        width: 'auto'
-        height: 'auto'
-        cursor: container.css('cursor')
+    do run = ->
+      input = (
+        if multiple
+          $('<input type="file" multiple>')
+        else
+          $('<input type="file">')
       )
+        .css(
+          position: 'absolute'
+          top: 0
+          opacity: 0
+          margin: 0
+          padding: 0
+          width: 'auto'
+          height: 'auto'
+          cursor: container.css('cursor')
+        )
+        .on 'change', ->
+          fn(this)
+          input.remove()
+          run()
+
+      container.append(input)
+
     container
       .css(
         position: 'relative'
         overflow: 'hidden'
       )
-      .append(input)
-
-    input.on 'change', ->
-      fn(this)
-      input.remove()
-      ns.fileInput(container, multiple, fn)
-
-    # to make it posible to set `cursor:pointer` on button
-    # http://stackoverflow.com/a/9182787/478603
-    container.mousemove (e) ->
-      {left, top} = $(this).offset()
-      width = input.width()
-      input.css
-        left: e.pageX - left - width + 10
-        top: e.pageY - top - 10
+      # to make it posible to set `cursor:pointer` on button
+      # http://stackoverflow.com/a/9182787/478603
+      .mousemove (e) ->
+        {left, top} = $(this).offset()
+        width = input.width()
+        input.css
+          left: e.pageX - left - width + 10
+          top: e.pageY - top - 10
 
 
   ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
