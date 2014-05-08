@@ -105,6 +105,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
-  ns.en = (n) ->
+  ns.nl = (n) ->
     return 'one' if n == 1
     'other'
