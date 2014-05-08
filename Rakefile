@@ -76,19 +76,6 @@ def cp_file(src, dest)
   puts "Copied #{widget_path}"
 end
 
-def upload_file(bucket_name, credentials, filename, key, content_type)
-  storage = Fog::Storage.new credentials
-  directory = storage.directories.get(bucket_name)
-
-  file = directory.files.create(
-    key: key,
-    body: File.read(in_root("pkg/#{filename}")),
-    public: true,
-    content_type: content_type
-  )
-  puts "Uploaded #{CGI::unescape file.public_url}"
-end
-
 def setup_prefix(version)
   Rails.application.config.assets.prefix = "widget/#{version}"
 end
@@ -127,21 +114,21 @@ def build_widget(version)
 end
 
 def upload_widget(version)
-  credentials = {
-    fog: {
-      provider: 'AWS',
-      aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-    },
-    bucket_name: ENV['AWS_BUCKET_NAME']
-  }
+  storage = Fog::Storage.new({
+    provider: 'AWS',
+    aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+  })
+  directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
 
   upload = lambda do |name, type|
-    upload_file(credentials[:bucket_name], credentials[:fog],
-      "#{version}/#{name}",
-      "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
-      type
+    file = directory.files.create(
+      body: File.read(in_root("pkg/#{version}/#{name}")),
+      key: "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
+      public: true,
+      content_type: type
     )
+    puts "Uploaded #{CGI::unescape file.public_url}"
   end
 
   upload_js = lambda do |name|
