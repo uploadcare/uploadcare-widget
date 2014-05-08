@@ -1,5 +1,11 @@
 # History
 
+### 1.1.0, 08.05.2014
+
+* Added Dutch locale.
+* `system-dialog` widget settings.
+* Restored compatibility with some old browsers versions.
+
 ### 1.0.1, 28.03.2014
 
 * Fixed uploading from url.
@@ -7,7 +13,7 @@
 ### 1.0.0, 21.03.2014
 
 * Mobile version.
-* Undocumented `fromFile('event')` method was removed.
+* Undocumented `fileFrom('event')` method was removed.
 * Page scrolling disabled when dialog is opened.
 * Increased active size of crop corners.
 
