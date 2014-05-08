@@ -33,7 +33,8 @@ namespace 'uploadcare.locale', (ns) ->
   # Backdoor for widget constructor
   ns.rebuild = (settings) ->
     result = _build s.build settings
-    build = -> result
+    build = ->
+      result
 
   translate = (key, node) ->
     path = key.split('.')

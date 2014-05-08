@@ -13,7 +13,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     __handleDirectSelection: (type, data) =>
       file = uploadcare.fileFrom(type, data[0], @settings)
-      if @settings.previewStep
-        uploadcare.openDialog(file, @settings).done(@__setObject)
-      else
+      if @settings.systemDialog or not @settings.previewStep
         @__setObject file
+      else
+        uploadcare.openDialog(file, @settings).done(@__setObject)
