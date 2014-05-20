@@ -1,6 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
-  ns.en =
+  ns.da =
     uploading: 'Uploader... Vent venligst.'
     loadingInfo: 'Henter information...'
     errors:
@@ -105,6 +105,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
-  ns.en = (n) ->
+  ns.da = (n) ->
     return 'one' if n == 1
     'other'
