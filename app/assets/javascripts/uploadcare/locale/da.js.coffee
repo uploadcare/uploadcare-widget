@@ -42,7 +42,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           evernote: 'Evernote'
           box: 'Box'
           skydrive: 'SkyDrive'
-          url: 'Arbitrary Links'
+          url: 'Direkte link'
         file:
           drag: 'Drop en fil her'
           nodrop: 'Hent filer fra din komputer'
@@ -93,7 +93,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             clear: 'Fjern alle'
             done: 'Fortsæt'
       footer:
-        text: 'Uploader, gemmer og behandler filer ved hjælp af'
+        text: 'Uploader gemmer og behandler filer ved hjælp af'
         link: 'Uploadcare.com'
     crop:
       error:
