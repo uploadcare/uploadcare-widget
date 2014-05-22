@@ -113,6 +113,7 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('dropbox', tabs.RemoteTabFor 'dropbox')
   ns.registerTab('gdrive', tabs.RemoteTabFor 'gdrive')
   ns.registerTab('instagram', tabs.RemoteTabFor 'instagram')
+  ns.registerTab('flickr', tabs.RemoteTabFor 'flickr')
   ns.registerTab('vk', tabs.RemoteTabFor 'vk')
   ns.registerTab('evernote', tabs.RemoteTabFor 'evernote')
   ns.registerTab('box', tabs.RemoteTabFor 'box')
