@@ -1,5 +1,11 @@
 # History
 
+### 1.2.0, 08.05.2014
+
+* Added Flickr as a source.
+* Added Danish locale.
+* Fixed French localization.
+
 ### 1.1.0, 08.05.2014
 
 * Added Dutch locale.
