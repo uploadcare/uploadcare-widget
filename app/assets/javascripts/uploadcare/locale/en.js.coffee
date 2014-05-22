@@ -41,7 +41,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           vk: 'VK'
           evernote: 'Evernote'
           box: 'Box'
-          skydrive: 'SkyDrive'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
           url: 'Arbitrary Links'
         file:
           drag: 'Drop a file here'

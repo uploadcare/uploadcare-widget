@@ -217,6 +217,9 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab-skydrive:before {
       background-position: 0 ($frame-size * -10);
     }
+    .uploadcare-dialog-tab-flickr:before {
+      background-position: 0 ($frame-size * -11);
+    }
 
 
 .uploadcare-dialog-tabs-panel {
