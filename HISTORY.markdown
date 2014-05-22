@@ -1,6 +1,6 @@
 # History
 
-### 1.2.0, 08.05.2014
+### 1.2.0, 22.05.2014
 
 * Added Flickr as a source.
 * Added Danish locale.
