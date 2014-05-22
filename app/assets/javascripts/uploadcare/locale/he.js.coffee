@@ -36,10 +36,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           dropbox: 'דרופבוקס'
           gdrive: 'כונן גוגל'
           instagram: 'אינסטגרם'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'SkyDrive'
           url: 'לינק מהאינטרנט'
         file:
           drag: 'שחרר כאן קובץ'

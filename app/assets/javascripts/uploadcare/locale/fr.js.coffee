@@ -34,12 +34,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'Avant-première'
           file: 'Ordinateur'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
           url: 'Une adresse web'
         file:
           drag: 'Glissez-déposez un fichier ici'

@@ -33,14 +33,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'Önizleme'
           file: 'Bilgisayar'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'SkyDrive'
           url: 'Dış Bağlantılar'
         file:
           drag: 'Braya bir dosya bakın'

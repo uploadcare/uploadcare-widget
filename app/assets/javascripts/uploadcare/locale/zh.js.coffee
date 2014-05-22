@@ -24,12 +24,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       showFiles: '显示文件'
       tabs:
         names:
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
           url: '任意图片链接'
         file:
           drag: '拖放文件到这里'
