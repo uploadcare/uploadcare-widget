@@ -68,7 +68,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           if state == 'loaded'
             doneButton
               .removeClass('uploadcare-disabled-el')
-              .click -> widget.forceDone()
+              .click ->
+                widget.forceDone()
         @file.done (info) =>
           size = [info.originalImageInfo.width, info.originalImageInfo.height]
           widget.croppedImageModifiers(img.attr('src'), size,
