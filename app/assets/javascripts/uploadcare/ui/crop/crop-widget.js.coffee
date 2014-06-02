@@ -104,13 +104,12 @@ namespace 'uploadcare.crop', (ns) ->
             downscale = @__options.scale and coords.width > @__options.preferedSize[0]
             upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
             if downscale or upscale
-              resized = @__options.preferedSize.slice()
+              resized = @__options.preferedSize
             else
               resized = utils.fitSizeInCdnLimit [coords.width, coords.height]
 
             if resized[0] isnt coords.width or resized[1] isnt coords.height
               [opts.crop.sw, opts.crop.sh] = resized
-              resized[0 + (resized[0] > resized[1])] = ''
               opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
 
