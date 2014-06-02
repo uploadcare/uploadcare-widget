@@ -1,5 +1,10 @@
 # History
 
+### 1.2.1, 02.06.2014
+
+* Fixed croping for `minimum` settings and othr rare cases.
+* Fixed uploading in IE9- when jQuery not used on page.
+
 ### 1.2.0, 22.05.2014
 
 * Added Flickr as a source.
