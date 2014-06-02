@@ -113,7 +113,7 @@ namespace 'uploadcare.utils', (ns) ->
       text
 
   ns.fitSizeInCdnLimit = (objSize) ->
-    ns.fitSize(objSize, [1600, 1600])
+    ns.fitSize(objSize, [2048, 2048])
 
   ns.fitSize = (objSize, boxSize, upscale) ->
     if objSize[0] > boxSize[0] or objSize[1] > boxSize[1] or upscale

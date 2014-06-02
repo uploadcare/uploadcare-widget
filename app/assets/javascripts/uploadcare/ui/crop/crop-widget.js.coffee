@@ -104,13 +104,12 @@ namespace 'uploadcare.crop', (ns) ->
             downscale = @__options.scale and coords.width > @__options.preferedSize[0]
             upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
             if downscale or upscale
-              resized = @__options.preferedSize.slice()
+              resized = @__options.preferedSize
             else
               resized = utils.fitSizeInCdnLimit [coords.width, coords.height]
 
             if resized[0] isnt coords.width or resized[1] isnt coords.height
               [opts.crop.sw, opts.crop.sh] = resized
-              resized[0 + (resized[0] > resized[1])] = ''
               opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
 
@@ -130,11 +129,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     # Returns last selected area coords
     getCurrentCoords: ->
-      [scaleX, scaleY] = @__resizedScale
-      left: Math.round @__currentCoords.left / scaleX
-      top: Math.round @__currentCoords.top / scaleY
-      width: Math.round @__currentCoords.width / scaleX
-      height: Math.round @__currentCoords.height / scaleY
+      @__currentCoords
 
     # Destroys widget completly
     destroy: ->
@@ -176,10 +171,6 @@ namespace 'uploadcare.crop', (ns) ->
       resizedSize = utils.fitSize originalSize, widgetSize
       @__originalSize = originalSize
       @__resizedSize = resizedSize
-      @__resizedScale = [
-        resizedSize[0] / originalSize[0],
-        resizedSize[1] / originalSize[1],
-      ]
 
     #             |
     #             v
@@ -199,17 +190,20 @@ namespace 'uploadcare.crop', (ns) ->
     __initJcrop: (previousCoords) ->
       jCropOptions =
         handleSize: 10
+        trueSize: @__originalSize
         onSelect: (coords) =>
-          @__currentCoords =
-            height: coords.h
-            width: coords.w
-            left: coords.x
-            top: coords.y
+          left = Math.floor Math.max(0, coords.x)
+          top = Math.floor Math.max(0, coords.y)
+          @__currentCoords = {
+            left, top
+            width: Math.ceil(Math.min(@__originalSize[0], coords.x2)) - left
+            height: Math.ceil(Math.min(@__originalSize[1], coords.y2)) - top
+          }
 
       if @__options.preferedSize
         jCropOptions.aspectRatio =  @__options.preferedSize[0] / @__options.preferedSize[1]
 
-      unless previousCoords
+      if not previousCoords
         previousCoords = {center: true}
         if @__options.preferedSize
           [
@@ -226,18 +220,15 @@ namespace 'uploadcare.crop', (ns) ->
         left = previousCoords.left or 0
         top = previousCoords.top or 0
 
-      [scaleX, scaleY] = @__resizedScale
-
       if @__options.notLess
         preferedSize = utils.fitSize @__options.preferedSize, @__originalSize
-        jCropOptions.minSize = [Math.ceil preferedSize[0] * scaleX,
-                                Math.ceil preferedSize[1] * scaleY]
+        jCropOptions.minSize = preferedSize
 
       jCropOptions.setSelect = [
-        left * scaleX,
-        top * scaleY,
-        (previousCoords.width + left) * scaleX,
-        (previousCoords.height + top) * scaleY,
+        left,
+        top,
+        (previousCoords.width + left),
+        (previousCoords.height + top),
       ]
 
       @__setState 'loading'
