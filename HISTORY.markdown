@@ -1,5 +1,9 @@
 # History
 
+### 1.2.2, 04.06.2014
+
+* Further crop fixes
+
 ### 1.2.1, 02.06.2014
 
 * Fixed croping for `minimum` settings and othr rare cases.
