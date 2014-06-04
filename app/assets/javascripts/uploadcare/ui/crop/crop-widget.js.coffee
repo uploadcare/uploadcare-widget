@@ -101,8 +101,10 @@ namespace 'uploadcare.crop', (ns) ->
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
-            downscale = @__options.scale and coords.width > @__options.preferedSize[0]
-            upscale = @__options.upscale and coords.width < @__options.preferedSize[0]
+            [pw, ph] = @__options.preferedSize
+            downscale = @__options.scale and (coords.width > pw or coords.height > ph)
+            upscale = @__options.upscale and (coords.width < pw or coords.height < ph)
+
             if downscale or upscale
               resized = @__options.preferedSize
             else
