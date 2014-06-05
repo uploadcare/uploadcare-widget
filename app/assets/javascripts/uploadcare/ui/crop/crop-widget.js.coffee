@@ -46,7 +46,7 @@ namespace 'uploadcare.crop', (ns) ->
       unless options.container
         throw new Error("options.container must be specified")
 
-      unless options.preferedSize
+      if not options.preferedSize
         options.scale = false
         options.upscale = false
         options.notLess = false
@@ -101,7 +101,8 @@ namespace 'uploadcare.crop', (ns) ->
           if notTouched and not @__options.scale
             opts.modifiers = ''
           else
-            [pw, ph] = @__options.preferedSize
+            if @__options.preferedSize
+              [pw, ph] = @__options.preferedSize
             downscale = @__options.scale and (coords.width > pw or coords.height > ph)
             upscale = @__options.upscale and (coords.width < pw or coords.height < ph)
 
