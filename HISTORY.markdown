@@ -1,5 +1,9 @@
 # History
 
+### 1.2.3, 05.06.2014
+
+* Fixed free crop problem introduced in previous version.
+
 ### 1.2.2, 04.06.2014
 
 * Further crop fixes
