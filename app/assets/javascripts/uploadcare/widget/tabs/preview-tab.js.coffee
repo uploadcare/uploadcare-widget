@@ -62,13 +62,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         img = @container.find(PREFIX + 'image')
         doneButton = @container.find(PREFIX + 'done').addClass('uploadcare-disabled-el')
         widget = new CropWidget img.parent(), @settings.crop[0]
-        widget.onStateChange.add (state) =>
-          if state == 'loaded'
-            doneButton
-              .removeClass('uploadcare-disabled-el')
-              .click ->
-                widget.forceDone()
         @file.done (info) =>
+          doneButton
+            .removeClass('uploadcare-disabled-el')
+            .click ->
+              widget.forceDone()
           size = [info.originalImageInfo.width, info.originalImageInfo.height]
           widget.croppedImageModifiers(img.attr('src'), size,
                                        info.cdnUrlModifiers)

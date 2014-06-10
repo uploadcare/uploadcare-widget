@@ -103,11 +103,6 @@ widget.<button id="destroy">destroy()</button>;
       $('#force-done').off().click(function(){
         widget.forceDone();
       });
-
-      widget.onStateChange.add(function(state){
-        log('STATE: ' + state)
-        $('#force-done').prop('disabled', state != 'loaded');
-      });
     }
 
     function setUrl() {

@@ -57,7 +57,6 @@ namespace 'uploadcare.crop', (ns) ->
       @container = $ container
       @__options = $.extend {}, defaultOptions, options
       prepareOptions @__options
-      @onStateChange = $.Callbacks()
       @__buildWidget()
 
     croppedImageUrl: (previewUrl, size) ->
@@ -174,7 +173,6 @@ namespace 'uploadcare.crop', (ns) ->
       @__widgetElement
         .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
         .addClass(prefix + state)
-      @onStateChange.fire state
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
