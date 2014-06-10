@@ -16,10 +16,9 @@ namespace 'uploadcare.crop', (ns) ->
     prepareOptions = (options) ->
       fited = utils.fitSizeInCdnLimit options.preferedSize
       if fited[0] isnt options.preferedSize[0]
-        willBe = "#{fited.join 'x'}#{if options.upscale then '' else ' or smaller'}"
         utils.warnOnce """
           Specified preferred crop size is bigger than our CDN allows.
-          Resulting image size will be #{willBe}.
+          Resulting image size will be #{fited.join 'x'}.
         """
         options.preferedSize = fited
 
@@ -60,6 +59,7 @@ namespace 'uploadcare.crop', (ns) ->
       @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
         .then (coords) =>
           {width: w, height: h} = coords
+          prefered = @__options.preferedSize
 
           opts =
             crop: coords
@@ -68,19 +68,15 @@ namespace 'uploadcare.crop', (ns) ->
           changed = w isnt @__originalSize[0] or h isnt @__originalSize[1]
           if changed
             opts.modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
-            if @__options.preferedSize
-              [pw, ph] = @__options.preferedSize
-            downscale = @__options.downscale and (w > pw or h > ph)
-            upscale = @__options.upscale and (w < pw or h < ph)
 
+            downscale = @__options.downscale and (w > prefered[0] or h > prefered[1])
+            upscale = @__options.upscale and (w < prefered[0] or h < prefered[1])
             if downscale or upscale
-              resized = @__options.preferedSize
+              [opts.crop.sw, opts.crop.sh] = prefered
+              opts.modifiers += "-/resize/#{prefered.join 'x'}/"
             else
-              resized = utils.fitSizeInCdnLimit [w, h]
+              opts.modifiers += "-/preview/"
 
-            if resized[0] isnt w or resized[1] isnt h
-              [opts.crop.sw, opts.crop.sh] = resized
-              opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
 
     croppedImageCoords: (previewUrl, size, coords) ->
