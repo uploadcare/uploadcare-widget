@@ -111,10 +111,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     # This method could be usefull if you want to make your own done button.
     forceDone: ->
-      if @__state is 'loaded'
-        @__deferred.resolve @getCurrentCoords()
-      else
-        throw new Error("not ready")
+      @__deferred.resolve @getCurrentCoords()
 
     # Returns last selected area coords
     getCurrentCoords: ->
@@ -128,14 +125,12 @@ namespace 'uploadcare.crop', (ns) ->
 
     __buildWidget: ->
       @__widgetElement = $(tpl('crop-widget')).appendTo @container
-      @__setState 'waiting'
 
     __clearImage: ->
       @__jCropApi?.destroy()
       @__img?.off().remove()
       @__deferred?.reject(IMAGE_CLEARED)
       @__deferred = $.Deferred()
-      @__setState 'waiting'
 
     __setImage: (@__url) ->
       @__img = $('<img/>')
@@ -160,19 +155,11 @@ namespace 'uploadcare.crop', (ns) ->
       @__originalSize = originalSize
       @__resizedSize = resizedSize
 
-    #             |
-    #             v
-    #   +----> waiting <-----+
-    #   |         |          |
-    #   |         v          |
-    # error <-         -> loaded
+
+    # error
     __setState: (state) ->
-      return if @__state is state
-      @__state = state
       prefix = 'uploadcare-crop-widget--'
-      @__widgetElement
-        .removeClass((prefix + s for s in ['error', 'loaded', 'waiting']).join ' ')
-        .addClass(prefix + state)
+      @__widgetElement.addClass(prefix + state)
 
     __initJcrop: (previousCoords) ->
       jCropOptions =
@@ -219,4 +206,3 @@ namespace 'uploadcare.crop', (ns) ->
       ]
 
       @__jCropApi = $.Jcrop(@__img[0], jCropOptions)
-      @__setState 'loaded'
