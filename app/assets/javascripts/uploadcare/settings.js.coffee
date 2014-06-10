@@ -88,8 +88,8 @@ namespace 'uploadcare.settings', (ns) ->
     ratio = reRatio.exec $.trim(val.toLowerCase()) || []
 
     downscale: ratio[2] == 'x'
-    upscale: !! ratio[5]
-    notLess: ratio[5] == 'minimum'
+    upscale: !! ratio[4]
+    notLess: ratio[4] == 'minimum'
     preferedSize: [+ratio[1], +ratio[3]] if ratio.length
 
   normalize = (settings) ->
