@@ -62,7 +62,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         img = @container.find(PREFIX + 'image')
         container = img.parent()
         doneButton = @container.find(PREFIX + 'done')
-        widget = new CropWidget $.extend({}, @settings.crop, {container})
+        widget = new CropWidget $.extend({}, @settings.crop[0], {container})
         doneButton.addClass('uploadcare-disabled-el')
         widget.onStateChange.add (state) =>
           if state == 'loaded'
