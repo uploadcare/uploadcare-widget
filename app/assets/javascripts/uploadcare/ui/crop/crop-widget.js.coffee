@@ -11,29 +11,6 @@ namespace 'uploadcare.crop', (ns) ->
 
   class ns.CropWidget
 
-    defaultOptions =
-      # If set to `true` "-/resize/%preferedSize%/" will be added
-      # if selected area bigger than `preferedSize`. Default false.
-      scale: false
-
-      # If set to `true` "-/resize/%preferedSize%/" will be added
-      # if selected area smaller than `preferedSize`. Default false.
-      upscale: false
-
-      # Restrict selection to preferedSize area. Default false.
-      notLess: false
-
-      # Defines widget size. if set to `null` widget size will be equal
-      # to the `container` size. Array: [123, 123]. (optional)
-      widgetSize: null
-
-      # Defines image size you want to get at the end.
-      # If `scale` option is set to `false`, it defines only
-      # the prefered aspect ratio.
-      # If set to `null` any aspect ratio will be acceptable.
-      # Array: [123, 123]. (optional)
-      preferedSize: null
-
     LOADING_ERROR = 'loadingerror'
 
     prepareOptions = (options) ->
@@ -47,14 +24,26 @@ namespace 'uploadcare.crop', (ns) ->
           """
           options.preferedSize = fited
 
-    # Example:
-    #   new CropWidget '.crop-widget-home',
-    #     upscale: true
-    #     widgetSize: [500, 300]
-    #     preferedSize: [100, 100]
-    constructor: (container, options) ->
+    # Options:
+    #   scale:
+    # If set to `true` "-/resize/%preferedSize%/" will be added
+    # if selected area bigger than `preferedSize`. Default false.
+
+    #   upscale:
+    # If set to `true` "-/resize/%preferedSize%/" will be added
+    # if selected area smaller than `preferedSize`. Default false.
+
+    #   notLess:
+    # Restrict selection to preferedSize area. Default false.
+
+    #   preferedSize:
+    # Defines image size you want to get at the end.
+    # If `scale` option is set to `false`, it defines only
+    # the prefered aspect ratio.
+    # If set to `null` any aspect ratio will be acceptable.
+    # Array: [123, 123]. (optional)
+    constructor: (container, @__options) ->
       @container = $ container
-      @__options = $.extend {}, defaultOptions, options
       prepareOptions @__options
       @__buildWidget()
 
@@ -128,12 +117,9 @@ namespace 'uploadcare.crop', (ns) ->
         .appendTo @__widgetElement
 
     __calcSizes: (originalSize) ->
-      widgetSize = @__options.widgetSize or [
-        @container.width(), @container.height() or 640]
-      resizedSize = utils.fitSize originalSize, widgetSize
       @__originalSize = originalSize
-      @__resizedSize = resizedSize
-
+      widgetSize = [@container.width(), @container.height() or 640]
+      @__resizedSize = utils.fitSize originalSize, widgetSize
 
     # error
     __setState: (state) ->
