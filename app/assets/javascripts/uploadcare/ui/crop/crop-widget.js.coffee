@@ -35,7 +35,6 @@ namespace 'uploadcare.crop', (ns) ->
       preferedSize: null
 
     LOADING_ERROR = 'loadingerror'
-    IMAGE_CLEARED = 'imagecleared'
 
     prepareOptions = (options) ->
       if options.scale
@@ -58,10 +57,6 @@ namespace 'uploadcare.crop', (ns) ->
       @__options = $.extend {}, defaultOptions, options
       prepareOptions @__options
       @__buildWidget()
-
-    croppedImageUrl: (previewUrl, size) ->
-      @croppedImageModifiers(previewUrl, size).then (opts) =>
-        @__url + opts.modifiers
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
@@ -103,34 +98,18 @@ namespace 'uploadcare.crop', (ns) ->
           opts
 
     croppedImageCoords: (previewUrl, size, coords) ->
-      @__clearImage()
       @__calcSizes size
       @__setImage previewUrl
       @__initJcrop coords
+      @__deferred = $.Deferred()
       @__deferred.promise()
 
     # This method could be usefull if you want to make your own done button.
     forceDone: ->
-      @__deferred.resolve @getCurrentCoords()
-
-    # Returns last selected area coords
-    getCurrentCoords: ->
-      @__currentCoords
-
-    # Destroys widget completly
-    destroy: ->
-      @__clearImage()
-      @__widgetElement.remove()
-      @__widgetElement = null
+      @__deferred.resolve @__currentCoords
 
     __buildWidget: ->
       @__widgetElement = $(tpl('crop-widget')).appendTo @container
-
-    __clearImage: ->
-      @__jCropApi?.destroy()
-      @__img?.off().remove()
-      @__deferred?.reject(IMAGE_CLEARED)
-      @__deferred = $.Deferred()
 
     __setImage: (@__url) ->
       @__img = $('<img/>')
