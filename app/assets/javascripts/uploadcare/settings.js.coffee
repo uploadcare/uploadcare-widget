@@ -87,7 +87,7 @@ namespace 'uploadcare.settings', (ns) ->
     reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
     ratio = reRatio.exec $.trim(val.toLowerCase()) || []
 
-    scale: ratio[2] == 'x'
+    downscale: ratio[2] == 'x'
     upscale: !! ratio[5]
     notLess: ratio[5] == 'minimum'
     preferedSize: [+ratio[1], +ratio[3]] if ratio.length

@@ -40,7 +40,7 @@ Result:
 <h2>Crop widget itself</h2>
 <pre><code>
 widget = <button id="new">new</button> CropWidget('#widget-container', {
-  scale: <input type="checkbox" id="scale" checked>,
+  downscale: <input type="checkbox" id="downscale" checked>,
   upscale: <input type="checkbox" id="upscale">,
   notLess: <input type="checkbox" id="notLess">,
   preferedSize: [<input id="prefered-size" value="200, 300">]
@@ -80,7 +80,7 @@ widget.<button id="force-done">forceDone()</button>;
         });
       }
       widget = new CropWidget('#widget-container', {
-        scale: $('#scale').is(':checked'),
+        downscale: $('#downscale').is(':checked'),
         upscale: $('#upscale').is(':checked'),
         notLess: $('#notLess').is(':checked'),
         preferedSize: preferedSize,

@@ -14,18 +14,17 @@ namespace 'uploadcare.crop', (ns) ->
     LOADING_ERROR = 'loadingerror'
 
     prepareOptions = (options) ->
-      if options.scale
-        fited = utils.fitSizeInCdnLimit options.preferedSize
-        if fited[0] isnt options.preferedSize[0]
-          willBe = "#{fited.join 'x'}#{if options.upscale then '' else ' or smaller'}"
-          utils.warnOnce """
-            Specified preferred crop size is bigger than our CDN allows.
-            Resulting image size will be #{willBe}.
-          """
-          options.preferedSize = fited
+      fited = utils.fitSizeInCdnLimit options.preferedSize
+      if fited[0] isnt options.preferedSize[0]
+        willBe = "#{fited.join 'x'}#{if options.upscale then '' else ' or smaller'}"
+        utils.warnOnce """
+          Specified preferred crop size is bigger than our CDN allows.
+          Resulting image size will be #{willBe}.
+        """
+        options.preferedSize = fited
 
     # Options:
-    #   scale:
+    #   downscale:
     # If set to `true` "-/resize/%preferedSize%/" will be added
     # if selected area bigger than `preferedSize`. Default false.
 
@@ -38,7 +37,7 @@ namespace 'uploadcare.crop', (ns) ->
 
     #   preferedSize:
     # Defines image size you want to get at the end.
-    # If `scale` option is set to `false`, it defines only
+    # If `downscale` option is set to `false`, it defines only
     # the prefered aspect ratio.
     # If set to `null` any aspect ratio will be acceptable.
     # Array: [123, 123]. (optional)
@@ -60,28 +59,26 @@ namespace 'uploadcare.crop', (ns) ->
     croppedImageModifiers: (previewUrl, size, modifiers) ->
       @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
         .then (coords) =>
-          size = "#{coords.width}x#{coords.height}"
-          topLeft = "#{coords.left},#{coords.top}"
+          {width: w, height: h} = coords
 
           opts =
-            crop: $.extend({}, coords)
-            modifiers: "-/crop/#{size}/#{topLeft}/"
+            crop: coords
+            modifiers: ''
 
-          notTouched = coords.width is @__originalSize[0] and coords.height is @__originalSize[1]
-          if notTouched and not @__options.scale
-            opts.modifiers = ''
-          else
+          changed = w isnt @__originalSize[0] or h isnt @__originalSize[1]
+          if changed
+            opts.modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
             if @__options.preferedSize
               [pw, ph] = @__options.preferedSize
-            downscale = @__options.scale and (coords.width > pw or coords.height > ph)
-            upscale = @__options.upscale and (coords.width < pw or coords.height < ph)
+            downscale = @__options.downscale and (w > pw or h > ph)
+            upscale = @__options.upscale and (w < pw or h < ph)
 
             if downscale or upscale
               resized = @__options.preferedSize
             else
-              resized = utils.fitSizeInCdnLimit [coords.width, coords.height]
+              resized = utils.fitSizeInCdnLimit [w, h]
 
-            if resized[0] isnt coords.width or resized[1] isnt coords.height
+            if resized[0] isnt w or resized[1] isnt h
               [opts.crop.sw, opts.crop.sh] = resized
               opts.modifiers += "-/resize/#{resized.join 'x'}/"
           opts
@@ -170,4 +167,4 @@ namespace 'uploadcare.crop', (ns) ->
         (previousCoords.height + top),
       ]
 
-      @__jCropApi = $.Jcrop(@__img[0], jCropOptions)
+      $.Jcrop(@__img[0], jCropOptions)
