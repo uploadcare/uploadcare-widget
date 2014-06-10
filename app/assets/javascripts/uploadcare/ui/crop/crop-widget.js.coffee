@@ -124,12 +124,12 @@ namespace 'uploadcare.crop', (ns) ->
         handleSize: 10
         trueSize: @__originalSize
         onSelect: (coords) =>
-          left = Math.floor Math.max(0, coords.x)
-          top = Math.floor Math.max(0, coords.y)
+          left = Math.round Math.max(0, coords.x)
+          top = Math.round Math.max(0, coords.y)
           @__currentCoords = {
             left, top
-            width: Math.ceil(Math.min(@__originalSize[0], coords.x2)) - left
-            height: Math.ceil(Math.min(@__originalSize[1], coords.y2)) - top
+            width: Math.round(Math.min(@__originalSize[0], coords.x2)) - left
+            height: Math.round(Math.min(@__originalSize[1], coords.y2)) - top
           }
 
       if @__options.preferedSize
