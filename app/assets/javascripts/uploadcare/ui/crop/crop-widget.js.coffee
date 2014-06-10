@@ -12,11 +12,6 @@ namespace 'uploadcare.crop', (ns) ->
   class ns.CropWidget
 
     defaultOptions =
-
-      # DOM element or selector or jQuery object to which widget
-      # will be appended (required)
-      container: null
-
       # If set to `true` "-/resize/%preferedSize%/" will be added
       # if selected area bigger than `preferedSize`. Default false.
       scale: false
@@ -43,14 +38,6 @@ namespace 'uploadcare.crop', (ns) ->
     IMAGE_CLEARED = 'imagecleared'
 
     prepareOptions = (options) ->
-      unless options.container
-        throw new Error("options.container must be specified")
-
-      if not options.preferedSize
-        options.scale = false
-        options.upscale = false
-        options.notLess = false
-
       if options.scale
         fited = utils.fitSizeInCdnLimit options.preferedSize
         if fited[0] isnt options.preferedSize[0]
@@ -62,12 +49,12 @@ namespace 'uploadcare.crop', (ns) ->
           options.preferedSize = fited
 
     # Example:
-    #   new CropWidget
-    #     container: '.crop-widget-home'
+    #   new CropWidget '.crop-widget-home',
     #     upscale: true
     #     widgetSize: [500, 300]
     #     preferedSize: [100, 100]
-    constructor: (options) ->
+    constructor: (container, options) ->
+      @container = $ container
       @__options = $.extend {}, defaultOptions, options
       prepareOptions @__options
       @onStateChange = $.Callbacks()
@@ -141,7 +128,6 @@ namespace 'uploadcare.crop', (ns) ->
       @__widgetElement = null
 
     __buildWidget: ->
-      @container = $ @__options.container
       @__widgetElement = $(tpl('crop-widget')).appendTo @container
       @__setState 'waiting'
 

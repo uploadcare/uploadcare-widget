@@ -60,10 +60,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       # (dialog hidden) so we need timer here
       utils.defer =>
         img = @container.find(PREFIX + 'image')
-        container = img.parent()
-        doneButton = @container.find(PREFIX + 'done')
-        widget = new CropWidget $.extend({}, @settings.crop[0], {container})
-        doneButton.addClass('uploadcare-disabled-el')
+        doneButton = @container.find(PREFIX + 'done').addClass('uploadcare-disabled-el')
+        widget = new CropWidget img.parent(), @settings.crop[0]
         widget.onStateChange.add (state) =>
           if state == 'loaded'
             doneButton
