@@ -47,9 +47,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__afterRender state
 
     __afterRender: (state) ->
-      if state is 'unknown' and @settings.crop.enabled
+      if state is 'unknown' and @settings.crop
         @__hideDoneButton()
-      if state is 'image' and @settings.crop.enabled
+      if state is 'image' and @settings.crop
         @__initCrop()
 
     __hideDoneButton: ->

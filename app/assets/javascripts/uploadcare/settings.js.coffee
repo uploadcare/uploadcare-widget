@@ -84,13 +84,12 @@ namespace 'uploadcare.settings', (ns) ->
     settings
 
   parseCrop = (cropValue) ->
-    crop = enabled: true
+    crop = {}
 
-    reDisabled = /^(disabled|false)$/i
     reRatio = /^([0-9]+)([x:])([0-9]+)(\s+(upscale|minimum))?$/i
 
-    if cropValue.match reDisabled
-      crop.enabled = false
+    if cropValue.match /^(disabled|false)$/i
+      return false
 
     else if ratio = cropValue.toLowerCase().match reRatio
       crop.preferedSize = [+ratio[1], +ratio[3]]
@@ -100,7 +99,6 @@ namespace 'uploadcare.settings', (ns) ->
         crop.upscale = true
         if ratio[5] == 'minimum'
           crop.notLess = true
-    # else should raise?
 
     crop
 
@@ -129,16 +127,16 @@ namespace 'uploadcare.settings', (ns) ->
       'multipleMin'
     ]
 
-    unless $.isPlainObject settings.crop
+    if not $.isPlainObject settings.crop
       if settings.multiple
-        settings.crop = enabled: false
+        settings.crop = false
       else
         settings.crop = parseCrop $.trim settings.crop
 
-    if settings.crop.enabled or settings.multiple
+    if settings.crop or settings.multiple
       settings.previewStep = true
 
-    if settings.crop.enabled
+    if settings.crop
       settings.pathValue = true
 
     if not utils.abilities.sendFileAPI
