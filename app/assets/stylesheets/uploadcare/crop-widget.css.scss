@@ -17,13 +17,6 @@
     -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
   }
 }
-.uploadcare-crop-widget--loading {
-  @extend %loading-image;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.uploadcare-crop-widget--loaded {}
-.uploadcare-crop-widget--error {}
   .uploadcare-crop-widget img {
     display: block;
   }

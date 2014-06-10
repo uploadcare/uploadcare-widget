@@ -165,13 +165,13 @@ namespace 'uploadcare.crop', (ns) ->
     #   +----> waiting <-----+
     #   |         |          |
     #   |         v          |
-    # error <- loading -> loaded
+    # error <-         -> loaded
     __setState: (state) ->
       return if @__state is state
       @__state = state
       prefix = 'uploadcare-crop-widget--'
       @__widgetElement
-        .removeClass((prefix + s for s in ['error', 'loading', 'loaded', 'waiting']).join ' ')
+        .removeClass((prefix + s for s in ['error', 'loaded', 'waiting']).join ' ')
         .addClass(prefix + state)
 
     __initJcrop: (previousCoords) ->
@@ -218,9 +218,5 @@ namespace 'uploadcare.crop', (ns) ->
         (previousCoords.height + top),
       ]
 
-      @__setState 'loading'
-      done = (api) =>
-        @__jCropApi = api
-        @__setState 'loaded'
-      @__img.Jcrop jCropOptions, ->
-        done(this)
+      @__jCropApi = $.Jcrop(@__img[0], jCropOptions)
+      @__setState 'loaded'
