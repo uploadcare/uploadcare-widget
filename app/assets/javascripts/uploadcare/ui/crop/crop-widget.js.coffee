@@ -40,10 +40,8 @@ namespace 'uploadcare.crop', (ns) ->
     # the prefered aspect ratio.
     # If set to `null` any aspect ratio will be acceptable.
     # Array: [123, 123]. (optional)
-    constructor: (container, @__options) ->
-      @container = $ container
+    constructor: (@element, @originalSize, @__options) ->
       prepareOptions @__options
-      @__buildWidget()
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
@@ -55,8 +53,8 @@ namespace 'uploadcare.crop', (ns) ->
         left: parseInt(raw[5], 10) or undefined
         top: parseInt(raw[6], 10) or undefined
 
-    croppedImageModifiers: (previewUrl, size, modifiers) ->
-      @croppedImageCoords(previewUrl, size, @__parseModifiers modifiers)
+    croppedImageModifiers: (modifiers) ->
+      @croppedImageCoords(@__parseModifiers modifiers)
         .then (coords) =>
           {width: w, height: h} = coords
           prefered = @__options.preferedSize
@@ -65,7 +63,7 @@ namespace 'uploadcare.crop', (ns) ->
             crop: coords
             modifiers: ''
 
-          changed = w isnt @__originalSize[0] or h isnt @__originalSize[1]
+          changed = w isnt @originalSize[0] or h isnt @originalSize[1]
           if changed
             opts.modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
 
@@ -79,9 +77,7 @@ namespace 'uploadcare.crop', (ns) ->
 
           opts
 
-    croppedImageCoords: (previewUrl, size, coords) ->
-      @__calcSizes size
-      @__setImage previewUrl
+    croppedImageCoords: (coords) ->
       @__initJcrop coords
       @__deferred = $.Deferred()
       @__deferred.promise()
@@ -90,50 +86,24 @@ namespace 'uploadcare.crop', (ns) ->
     forceDone: ->
       @__deferred.resolve @__currentCoords
 
-    __buildWidget: ->
-      @__widgetElement = $(tpl('crop-widget')).appendTo @container
-
-    __setImage: (@__url) ->
-      @__img = $('<img/>')
-        .css
-          margin: '0 auto'
-          width: @__resizedSize[0]
-          height: @__resizedSize[1]
-        .on 'error', =>
-          @__setState 'error'
-          @__deferred.reject LOADING_ERROR
-          @__img.remove()
-        .attr
-          src: @__url
-          width: @__resizedSize[0]
-          height: @__resizedSize[1]
-        .appendTo @__widgetElement
-
-    __calcSizes: (originalSize) ->
-      @__originalSize = originalSize
-      widgetSize = [@container.width(), @container.height() or 640]
-      @__resizedSize = utils.fitSize originalSize, widgetSize
-
-    # error
-    __setState: (state) ->
-      prefix = 'uploadcare-crop-widget--'
-      @__widgetElement.addClass(prefix + state)
-
     __initJcrop: (previousCoords) ->
       jCropOptions =
         handleSize: 10
-        trueSize: @__originalSize
+        trueSize: @originalSize
         onSelect: (coords) =>
           left = Math.round Math.max(0, coords.x)
           top = Math.round Math.max(0, coords.y)
           @__currentCoords = {
             left, top
-            width: Math.round(Math.min(@__originalSize[0], coords.x2)) - left
-            height: Math.round(Math.min(@__originalSize[1], coords.y2)) - top
+            width: Math.round(Math.min(@originalSize[0], coords.x2)) - left
+            height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
           }
 
       if @__options.preferedSize
         jCropOptions.aspectRatio =  @__options.preferedSize[0] / @__options.preferedSize[1]
+
+      if @__options.notLess
+        jCropOptions.minSize = utils.fitSize @__options.preferedSize, @originalSize
 
       if not previousCoords
         previousCoords = {center: true}
@@ -141,20 +111,16 @@ namespace 'uploadcare.crop', (ns) ->
           [
             previousCoords.width
             previousCoords.height
-          ] = utils.fitSize(@__options.preferedSize, @__originalSize, true)
+          ] = utils.fitSize(@__options.preferedSize, @originalSize, true)
         else
-          [previousCoords.width, previousCoords.height] = @__originalSize
+          [previousCoords.width, previousCoords.height] = @originalSize
 
       if previousCoords.center
-        left = (@__originalSize[0] - previousCoords.width) / 2
-        top = (@__originalSize[1] - previousCoords.height) / 2
+        left = (@originalSize[0] - previousCoords.width) / 2
+        top = (@originalSize[1] - previousCoords.height) / 2
       else
         left = previousCoords.left or 0
         top = previousCoords.top or 0
-
-      if @__options.notLess
-        preferedSize = utils.fitSize @__options.preferedSize, @__originalSize
-        jCropOptions.minSize = preferedSize
 
       jCropOptions.setSelect = [
         left,
@@ -163,4 +129,4 @@ namespace 'uploadcare.crop', (ns) ->
         (previousCoords.height + top),
       ]
 
-      $.Jcrop(@__img[0], jCropOptions)
+      $.Jcrop(@element[0], jCropOptions)

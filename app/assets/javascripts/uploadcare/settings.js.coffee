@@ -85,7 +85,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   parseCrop = (val) ->
     reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
-    ratio = reRatio.exec $.trim(val.toLowerCase()) || []
+    ratio = reRatio.exec($.trim(val.toLowerCase())) or []
 
     downscale: ratio[2] == 'x'
     upscale: !! ratio[4]

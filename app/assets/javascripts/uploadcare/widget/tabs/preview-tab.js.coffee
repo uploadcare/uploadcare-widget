@@ -59,17 +59,17 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here
       utils.defer =>
-        img = @container.find(PREFIX + 'image')
         doneButton = @container.find(PREFIX + 'done').addClass('uploadcare-disabled-el')
-        widget = new CropWidget img.parent(), @settings.crop[0]
         @file.done (info) =>
           doneButton
             .removeClass('uploadcare-disabled-el')
             .click ->
               widget.forceDone()
+
+          img = @container.find(PREFIX + 'image')
           size = [info.originalImageInfo.width, info.originalImageInfo.height]
-          widget.croppedImageModifiers(img.attr('src'), size,
-                                       info.cdnUrlModifiers)
+          widget = new CropWidget img, size, @settings.crop[0]
+          widget.croppedImageModifiers(info.cdnUrlModifiers)
             .done (opts) =>
               @dialogApi.fileColl.replace @file, @file.then (info) =>
                 info.cdnUrlModifiers = opts.modifiers
@@ -77,7 +77,5 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 info.crop = opts.crop
                 info
 
-        # REFACTOR: separate templates?
-        img.remove()
         @container.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
         @container.find('@uploadcare-dialog-preview-done').text t('dialog.tabs.preview.crop.done')
