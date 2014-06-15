@@ -14,10 +14,11 @@ namespace 'uploadcare.files', (ns) ->
       @settings = s.build settings
       @__fileColl = new utils.CollectionOfPromises(files)
 
-      @__allFilesDf = $.when @__fileColl.get()...
+      @__allFilesDf = $.when @files()...
       @__fileInfosDf = do =>
-        files = for file in @__fileColl.get()
-          file.then null, (err, info) -> $.when(info)
+        files = for file in @files()
+          file.then null, (err, info) ->
+            $.when(info)
         $.when(files...)
 
       @__createGroupDf = $.Deferred()
@@ -88,6 +89,7 @@ namespace 'uploadcare.files', (ns) ->
         uuid: @__uuid
         cdnUrl: "#{@settings.cdnBase}/#{@__uuid}/"
         name: t('file', @__fileColl.length())
+        count: @__fileColl.length()
         size: 0
         isImage: true
         isStored: true
