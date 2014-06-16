@@ -65,8 +65,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         return if not @file
 
         imgSize = [data.file.originalImageInfo.width, data.file.originalImageInfo.height]
-        widgetSize = utils.fitSize(imgSize, [img.parent().width(), img.parent().height()])
-        img.css width: widgetSize[0], height: widgetSize[1]
+        parentSize = [img.parent().width(), img.parent().height() or 640]
+        widgetSize = utils.fitSize(imgSize, parentSize)
+        img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
 
         widget = new CropWidget img, imgSize, @settings.crop[0]
         widget.setSelectionFromModifiers(data.file.cdnUrlModifiers)
