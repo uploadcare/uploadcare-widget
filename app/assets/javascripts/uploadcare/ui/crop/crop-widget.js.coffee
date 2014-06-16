@@ -90,6 +90,7 @@ namespace 'uploadcare.crop', (ns) ->
       jCropOptions =
         handleSize: 10
         trueSize: @originalSize
+        addClass: 'uploadcare-crop-widget'
         onSelect: (coords) =>
           left = Math.round Math.max(0, coords.x)
           top = Math.round Math.max(0, coords.y)

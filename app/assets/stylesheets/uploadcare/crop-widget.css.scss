@@ -10,12 +10,8 @@
 
 */
 .uploadcare-crop-widget {
-  font-family: $font-family;
-  position: relative;
-  .jcrop-holder {
-    margin: 0 auto;
-    -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
-  }
+  margin: 0 auto;
+  -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
 }
   .uploadcare-crop-widget img {
     display: block;
