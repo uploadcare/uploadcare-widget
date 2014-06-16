@@ -59,10 +59,9 @@ namespace 'uploadcare.dragdrop', (ns) ->
 
       $(receiver || el).on
         dragenter: ->
-          delayedEnter = setTimeout(->
+          delayedEnter = utils.defer ->
             delayedEnter = false
             changeState on
-          , 0)
 
         dragleave: ->
           if not delayedEnter
@@ -71,8 +70,7 @@ namespace 'uploadcare.dragdrop', (ns) ->
         'drop mouseenter': ->
           if delayedEnter
             clearTimeout delayedEnter
-          setTimeout(->
+          utils.defer ->
             changeState off
-          , 0)
 
     ns.watchDragging 'body', document
