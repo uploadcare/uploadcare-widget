@@ -59,6 +59,30 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @file = null
           @__setState 'error', error: 'loadImage'
 
+      widget = null
+      if @settings.crop.length > 1
+        sizes = @element('crop-sizes').show()
+        child = sizes.children()
+        $.each @settings.crop, (i, crop) =>
+          caption = 'free'
+          prefered = crop.preferedSize
+          size = [40, 30]
+          if prefered
+            gcd = utils.gcd(prefered[0], prefered[1])
+            caption = "#{prefered[0] / gcd}:#{prefered[1] / gcd}"
+            size = utils.fitSize(prefered, [40, 40])
+          child
+            .clone()
+            .attr('data-caption', caption)
+            .on 'click', =>
+              widget.setCrop(crop)
+            .appendTo(sizes)
+            .children()
+              .css
+                width: Math.max 20, size[0]
+                height: Math.max 12, size[1]
+        child.remove()
+
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here
       utils.defer =>

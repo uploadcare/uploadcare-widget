@@ -12,3 +12,39 @@
     margin: -9px;
   }
 }
+
+
+.uploadcare-crop-sizes {
+  text-align: center;
+  display: none;
+}
+.uploadcare-crop-size {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 20px;
+
+  font-size: .6em;
+  cursor: pointer;
+
+  div {
+    @include prefix(box-sizing, border-box);
+    width: 40px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px dashed #bbb;
+    background: white;
+  }
+  &:after {
+    content: attr(data-caption);
+    position: absolute;
+    top: 1px; left: 0;
+    width: 100%;
+  }
+}
+.uploadcare-crop-size--current div {
+  background: transparent;
+}
