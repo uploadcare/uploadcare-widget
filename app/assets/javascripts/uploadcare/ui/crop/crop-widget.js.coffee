@@ -16,14 +16,6 @@ namespace 'uploadcare.crop', (ns) ->
         handleSize: 10
         trueSize: @originalSize
         addClass: 'uploadcare-crop-widget'
-        onSelect: (coords) =>
-          left = Math.round Math.max(0, coords.x)
-          top = Math.round Math.max(0, coords.y)
-          @currentCoords = {
-            left, top
-            width: Math.round(Math.min(@originalSize[0], coords.x2)) - left
-            height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
-          }
 
       @setCrop(crop)
       @setSelection()
@@ -53,23 +45,22 @@ namespace 'uploadcare.crop', (ns) ->
     setSelection: (selection) ->
       if selection
         center = selection.center
-        width = selection.width
-        height = selection.height
+        size = [selection.width, selection.height]
       else
         center = true
-        if @crop.preferedSize
-          [width, height] = utils.fitSize(@crop.preferedSize, @originalSize, true)
-        else
-          [width, height] = @originalSize
+        size = @originalSize
+
+      if @crop.preferedSize
+        size = utils.fitSize(@crop.preferedSize, size, true)
 
       if center
-        left = (@originalSize[0] - width) / 2
-        top = (@originalSize[1] - height) / 2
+        left = (@originalSize[0] - size[0]) / 2
+        top = (@originalSize[1] - size[1]) / 2
       else
         left = selection.left or 0
         top = selection.top or 0
 
-      @__api.setSelect [left, top, (width + left), (height + top)]
+      @__api.setSelect [left, top, (size[0] + left), (size[1] + top)]
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
@@ -84,34 +75,33 @@ namespace 'uploadcare.crop', (ns) ->
     setSelectionFromModifiers: (modifiers) ->
       @setSelection @__parseModifiers modifiers
 
-    croppedImageModifiers: ->
-      @croppedImageCoords()
-        .then (coords) =>
-          {width: w, height: h} = coords
-          prefered = @crop.preferedSize
+    getSelection: ->
+      coords = @__api.tellSelect()
+      left = Math.round Math.max(0, coords.x)
+      top = Math.round Math.max(0, coords.y)
 
-          opts =
-            crop: coords
-            modifiers: ''
+      left: left
+      top: top
+      width: Math.round(Math.min(@originalSize[0], coords.x2)) - left
+      height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
 
-          changed = w isnt @originalSize[0] or h isnt @originalSize[1]
-          if changed
-            opts.modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
 
-            downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
-            upscale = @crop.upscale and (w < prefered[0] or h < prefered[1])
-            if downscale or upscale
-              [opts.crop.sw, opts.crop.sh] = prefered
-              opts.modifiers += "-/resize/#{prefered.join 'x'}/"
-            else
-              opts.modifiers += "-/preview/"
+    getSelectionWithModifiers: ->
+      coords = @getSelection()
+      {width: w, height: h} = coords
+      prefered = @crop.preferedSize
+      modifiers = ''
 
-          opts
+      if w isnt @originalSize[0] or h isnt @originalSize[1]
+        modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
 
-    croppedImageCoords: ->
-      @__deferred = $.Deferred()
-      @__deferred.promise()
+        downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
+        upscale = @crop.upscale and (w < prefered[0] or h < prefered[1])
+        if downscale or upscale
+          [coords.sw, coords.sh] = prefered
+          modifiers += "-/resize/#{prefered.join 'x'}/"
+        else
+          modifiers += "-/preview/"
 
-    # This method could be usefull if you want to make your own done button.
-    forceDone: ->
-      @__deferred.resolve @currentCoords
+      crop: coords
+      modifiers: modifiers
