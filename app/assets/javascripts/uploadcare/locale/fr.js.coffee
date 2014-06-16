@@ -87,7 +87,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Terminer'
       footer:
         text: 'Envoi, stockage et traitement des fichiers par'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

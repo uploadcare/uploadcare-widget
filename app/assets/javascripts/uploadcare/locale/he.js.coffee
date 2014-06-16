@@ -91,7 +91,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'סיום'
       footer:
         text: 'העלאה, מיון ועיבוד קבצים על ידי'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

@@ -71,7 +71,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               text: 'No se pudo cargar la imangen'
       footer:
         text: 'Los archivos ha sido subidos, gestionados y procesados por'
-        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

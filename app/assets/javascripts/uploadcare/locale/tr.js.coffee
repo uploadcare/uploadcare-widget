@@ -88,7 +88,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Bitti'
       footer:
         text: 'Dosya yükleme, saklama ve işleme servisi'
-        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

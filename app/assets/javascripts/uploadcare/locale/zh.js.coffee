@@ -78,7 +78,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: '完成'
       footer:
         text: '为您提供文件上传、存储和编辑功能。 Copyright ©'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

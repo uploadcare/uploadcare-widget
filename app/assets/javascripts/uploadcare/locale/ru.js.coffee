@@ -91,7 +91,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Готово'
       footer:
         text: 'Для загрузки, хранения и обработки файлов используется'
-        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

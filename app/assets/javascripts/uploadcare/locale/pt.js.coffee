@@ -80,7 +80,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'OK'
       footer:
         text: 'Upload, armazenamento e processamento dos arquivos feito por'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

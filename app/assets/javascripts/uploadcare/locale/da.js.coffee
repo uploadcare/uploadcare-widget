@@ -90,7 +90,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Fortsæt'
       footer:
         text: 'Uploader gemmer og behandler filer ved hjælp af'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

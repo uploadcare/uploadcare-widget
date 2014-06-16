@@ -89,7 +89,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Klaar'
       footer:
         text: 'Uploaden, opslaan en verwerken bestanden door'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:
