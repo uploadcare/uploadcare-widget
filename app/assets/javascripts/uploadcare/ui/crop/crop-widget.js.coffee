@@ -16,6 +16,7 @@ namespace 'uploadcare.crop', (ns) ->
         handleSize: 10
         trueSize: @originalSize
         addClass: 'uploadcare-crop-widget'
+        createDragbars: []
 
       @setCrop(crop)
       @setSelection()

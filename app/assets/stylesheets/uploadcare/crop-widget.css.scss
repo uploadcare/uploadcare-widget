@@ -1,29 +1,6 @@
 @import 'jCrop';
 
-/*
-<div class="uploadcare-crop-widget">
-  <div class="uploadcare-crop-widget__error">
-    <div class="uploadcare-crop-widget__error__title">Error</div>
-    <div class="uploadcare-crop-widget__error__text">Can't load image</div>
-  </div>
-</div>
-
-*/
 .uploadcare-crop-widget {
   margin: 0 auto;
   -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
 }
-  .uploadcare-crop-widget img {
-    display: block;
-  }
-  .uploadcare-crop-widget__error {
-    text-align: center;
-    display: none;
-    .uploadcare-crop-widget--error & {display: block}
-  }
-    .uploadcare-crop-widget__error__title {
-      font-size: 20px;
-    }
-    .uploadcare-crop-widget__error__text {
-      font-size: 15px;
-    }
