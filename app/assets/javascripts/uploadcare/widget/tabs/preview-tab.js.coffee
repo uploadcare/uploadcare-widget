@@ -11,8 +11,6 @@
 namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.PreviewTab extends ns.BasePreviewTab
 
-    PREFIX = '@uploadcare-dialog-preview-'
-
     constructor: ->
       super
 
@@ -38,6 +36,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @file.fail ifCur (error, file) =>
         @__setState 'error', {error, file}
 
+    element: (name) ->
+      @container.find('@uploadcare-dialog-preview-' + name)
+
     # error
     # unknown
     # image
@@ -48,24 +49,23 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __afterRender: (state) ->
       if state is 'unknown' and @settings.crop
-        @__hideDoneButton()
+        @element('done').hide()
       if state is 'image' and @settings.crop
         @__initCrop()
-
-    __hideDoneButton: ->
-      @container.find(PREFIX + 'done').hide()
 
     __initCrop: ->
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here
       utils.defer =>
         @file.done (info) =>
-          @container.find(PREFIX + 'done').click ->
-            widget.forceDone()
+          img = @element('image')
+          imgSize = [info.originalImageInfo.width, info.originalImageInfo.height]
+          wrap = img.parent()
+          widgetSize = utils.fitSize(imgSize, [wrap.width(), wrap.height()])
 
-          img = @container.find(PREFIX + 'image')
-          size = [info.originalImageInfo.width, info.originalImageInfo.height]
-          widget = new CropWidget img, size, @settings.crop[0]
+          img.css width: widgetSize[0], height: widgetSize[1]
+
+          widget = new CropWidget img, imgSize, @settings.crop[0]
           widget.croppedImageModifiers(info.cdnUrlModifiers)
             .done (opts) =>
               @dialogApi.fileColl.replace @file, @file.then (info) =>
@@ -73,6 +73,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 info.cdnUrl = "#{@settings.cdnBase}/#{info.uuid}/#{opts.modifiers or ''}"
                 info.crop = opts.crop
                 info
+
+          @element('done').click ->
+            widget.forceDone()
 
         @container.find('.uploadcare-dialog-title').text t('dialog.tabs.preview.crop.title')
         @container.find('@uploadcare-dialog-preview-done').text t('dialog.tabs.preview.crop.done')

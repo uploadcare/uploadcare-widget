@@ -11,17 +11,6 @@ namespace 'uploadcare.crop', (ns) ->
 
   class ns.CropWidget
 
-    LOADING_ERROR = 'loadingerror'
-
-    prepareOptions = (options) ->
-      fited = utils.fitSizeInCdnLimit options.preferedSize
-      if fited[0] isnt options.preferedSize[0]
-        utils.warnOnce """
-          Specified preferred crop size is bigger than our CDN allows.
-          Resulting image size will be #{fited.join 'x'}.
-        """
-        options.preferedSize = fited
-
     # Options:
     #   downscale:
     # If set to `true` "-/resize/%preferedSize%/" will be added
@@ -41,7 +30,6 @@ namespace 'uploadcare.crop', (ns) ->
     # If set to `null` any aspect ratio will be acceptable.
     # Array: [123, 123]. (optional)
     constructor: (@element, @originalSize, @__options) ->
-      prepareOptions @__options
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
