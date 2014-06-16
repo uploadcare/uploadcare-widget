@@ -78,6 +78,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'Den fil du valgte, er desværre større end tilladt.'
               text: 'Venligst prøv med en mindre fil.'
+            loadImage:
+              title: 'Fejl'
+              text: 'Kan ikke åbne billede'
           multiple:
             title: 'Du har valgt %files% filer'
             question: 'Vil du tilføje alle disse filer?'
@@ -88,11 +91,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       footer:
         text: 'Uploader gemmer og behandler filer ved hjælp af'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Fejl'
-        text: 'Kan ikke åbne billede'
-      done: 'Fortsæt'
 
 
 # Pluralization rules taken from:

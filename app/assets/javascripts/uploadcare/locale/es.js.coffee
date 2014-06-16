@@ -52,6 +52,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             change: 'Cancelar'
           crop:
             title: 'Cortar y subir esta imagen'
+            done: 'Listo'
           error:
             default:
               title: 'La subida falló'
@@ -65,14 +66,12 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Límite de tamaño'
               line1: 'El archivo que has seleccinado sobrepasa el límite de los 100MB.'
               line2: 'Por favor trata de nuevo con otro archivo.'
+            loadImage:
+              title: 'Error'
+              text: 'No se pudo cargar la imangen'
       footer:
         text: 'Los archivos ha sido subidos, gestionados y procesados por'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Error'
-        text: 'No se pudo cargar la imangen'
-      done: 'Listo'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

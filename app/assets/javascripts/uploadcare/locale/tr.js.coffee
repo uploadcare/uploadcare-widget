@@ -76,6 +76,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'Seçtiğiniz dosya limitleri aşıyor.'
               text: 'Lütfen başka bir dosya ile tekrar deneyin.'
+            loadImage:
+              title: 'Hata'
+              text: 'Resim dosyası yüklenemedi'
           multiple:
             title: '%files% dosya seçtiniz'
             question: 'Bu dosyaların hepsini eklemek istiyor musunuz?'
@@ -86,11 +89,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       footer:
         text: 'Dosya yükleme, saklama ve işleme servisi'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Hata'
-        text: 'Resim dosyası yüklenemedi'
-      done: 'Bitti'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

@@ -77,6 +77,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'Le fichier sélectionné est trop volumineux.'
               text: 'Merci de bien vouloir recommencer avec un autre fichier.'
+            loadImage:
+              title: 'Erreur'
+              text: 'Impossible de charger l\'image'
           multiple:
             title: 'Vous avez choisi %files%'
             question: 'Voulez vous ajouter tous ces fichiers ?'
@@ -85,11 +88,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       footer:
         text: 'Envoi, stockage et traitement des fichiers par'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Erreur'
-        text: 'Impossible de charger l\'image'
-      done: 'Terminer'
 
 
 # Pluralization rules taken from:

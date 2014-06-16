@@ -57,7 +57,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       img = @element('image')
         .on 'error', =>
           @file = null
-          @__setState 'error', error: 'upload'
+          @__setState 'error', error: 'loadImage'
 
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here

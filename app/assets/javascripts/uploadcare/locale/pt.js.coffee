@@ -70,19 +70,17 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size: 
               title: 'O arquivo que você escolheu excede o limite.'
               text: 'Por favor, tente novamente com outro arquivo.'
-          multiple: 
+            loadImage:
+              title: 'Erro'
+              text: 'Não foi possível carregar a imagem'
+          multiple:
             title: 'Você escolheu'
             question: 'Você quer adicionar todos esses arquivos?'
             clear: 'Excluir todos'
             done: 'OK'
-      footer: 
+      footer:
         text: 'Upload, armazenamento e processamento dos arquivos feito por'
         link: 'Uploadcare.com'
-    crop: 
-      error: 
-        title: 'Erro'
-        text: 'Não foi possível carregar a imagem'
-      done: 'OK'
 
 
 # Pluralization rules taken from:

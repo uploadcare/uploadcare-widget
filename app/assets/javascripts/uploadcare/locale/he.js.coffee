@@ -79,6 +79,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'הקובץ שבחרת חורג מהגבול.'
               text: 'נא נסה שוב עם קובץ אחר.'
+            loadImage:
+              title: 'שגיאה'
+              text: 'טעינת התמונה נכשלה'
           multiple:
             title: 'בחרת %files%'
             question: 'אתה מעוניין להוסיף את כל הקבצים האלו?'
@@ -89,11 +92,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       footer:
         text: 'העלאה, מיון ועיבוד קבצים על ידי'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'שגיאה'
-        text: 'טעינת התמונה נכשלה'
-      done: 'סיום'
 
 
 # Pluralization rules taken from:
