@@ -10,11 +10,13 @@
   (Add a class to the holder and style elements for that extended class)
 */
 .uploadcare-crop-widget {
+
+
+&.jcrop-holder {
   direction: ltr;
   text-align: left;
 }
 
-.uploadcare-crop-widget {
 
 /* These styles define the border lines */
 .jcrop-vline,.jcrop-hline {
@@ -92,6 +94,6 @@
 }
 
 /* Fix for twitter bootstrap et al. */
-img,img.jcrop-preview{ max-width: none; }
+&.jcrop-holder img,img.jcrop-preview{ max-width: none; }
 
 }
