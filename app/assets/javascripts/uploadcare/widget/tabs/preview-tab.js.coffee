@@ -65,8 +65,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         img.css width: widgetSize[0], height: widgetSize[1]
 
         widget = new CropWidget img, imgSize, @settings.crop[0]
-        widget.croppedImageModifiers(data.file.cdnUrlModifiers)
-          .done (opts) =>
+        widget.setSelectionFromModifiers(data.file.cdnUrlModifiers)
+        widget.croppedImageModifiers().done (opts) =>
             @dialogApi.fileColl.replace @file, @file.then (info) =>
               info.cdnUrlModifiers = opts.modifiers
               info.cdnUrl = "#{@settings.cdnBase}/#{info.uuid}/#{opts.modifiers or ''}"
