@@ -35,8 +35,9 @@
   line-height: 40px;
   margin: 0 20px;
 
-  font-size: .6em;
+  font-size: .55em;
   cursor: pointer;
+  color: #444;
 
   div {
     @include prefix(box-sizing, border-box);

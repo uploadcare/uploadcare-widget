@@ -19,6 +19,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @dialogApi.fileColl.onAdd.add @__setFile
 
+      @widget = null
+
     __setFile: (@file) =>
       ifCur = (fn) =>
         =>
@@ -53,35 +55,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __initCrop: (data) ->
       @element('title').text t('dialog.tabs.preview.crop.title')
       @element('done').text t('dialog.tabs.preview.crop.done')
+      @populateCropSizes()
 
       img = @element('image')
         .on 'error', =>
           @file = null
           @__setState 'error', error: 'loadImage'
-
-      widget = null
-      if @settings.crop.length > 1
-        sizes = @element('crop-sizes').show()
-        child = sizes.children()
-        $.each @settings.crop, (i, crop) =>
-          caption = 'free'
-          prefered = crop.preferedSize
-          size = [40, 30]
-          if prefered
-            gcd = utils.gcd(prefered[0], prefered[1])
-            caption = "#{prefered[0] / gcd}:#{prefered[1] / gcd}"
-            size = utils.fitSize(prefered, [40, 40], true)
-          child
-            .clone()
-            .attr('data-caption', caption)
-            .on 'click', =>
-              widget.setCrop(crop)
-            .appendTo(sizes)
-            .children()
-              .css
-                width: Math.max 20, size[0]
-                height: Math.max 12, size[1]
-        child.remove()
 
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here
@@ -89,17 +68,51 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         return if not @file
 
         imgSize = [data.file.originalImageInfo.width, data.file.originalImageInfo.height]
-        parentSize = [img.parent().width(), img.parent().height() or 640]
+        parentSize = [img.parent().width(), img.parent().height() or 600]
         widgetSize = utils.fitSize(imgSize, parentSize)
         img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
 
-        widget = new CropWidget img, imgSize, @settings.crop[0]
-        widget.setSelectionFromModifiers(data.file.cdnUrlModifiers)
+        @widget = new CropWidget img, imgSize, @settings.crop[0]
+        @widget.setSelectionFromModifiers(data.file.cdnUrlModifiers)
 
         @element('done').click =>
-          opts = widget.getSelectionWithModifiers()
+          opts = @widget.getSelectionWithModifiers()
           @dialogApi.fileColl.replace @file, @file.then (info) =>
             info.cdnUrlModifiers = opts.modifiers
             info.cdnUrl = "#{info.originalUrl}#{opts.modifiers or ''}"
             info.crop = opts.crop
             info
+
+    populateCropSizes: ->
+      if @settings.crop.length <= 1
+        return
+
+      control = @element('crop-sizes').show()
+      template = control.children()
+      currentClass = 'uploadcare-crop-size--current'
+
+      $.each @settings.crop, (i, crop) =>
+
+        prefered = crop.preferedSize
+        if prefered
+          gcd = utils.gcd(prefered[0], prefered[1])
+          caption = "#{prefered[0] / gcd}:#{prefered[1] / gcd}"
+        else
+          caption = t('dialog.tabs.preview.crop.free')
+
+        item = template.clone().appendTo(control)
+        item
+          .attr('data-caption', caption)
+          .on 'click', (e) =>
+            if @widget
+              @widget.setCrop(crop)
+              control.find('>*').removeClass(currentClass)
+              item.addClass(currentClass)
+        if prefered
+          size = utils.fitSize(prefered, [40, 40], true)
+          item.children()
+            .css
+              width: Math.max 20, size[0]
+              height: Math.max 12, size[1]
+      template.remove()
+      control.find('>*').eq(0).addClass(currentClass)

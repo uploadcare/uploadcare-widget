@@ -74,6 +74,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           crop:
             title: 'Crop and add this image'
             done: 'Done'
+            free: 'free'
           error:
             default:
               title: 'Oops!'
