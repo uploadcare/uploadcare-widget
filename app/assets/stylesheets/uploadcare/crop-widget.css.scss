@@ -2,7 +2,6 @@
 
 .uploadcare-crop-widget {
   margin: 0 auto;
-  -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
 
   .jcrop-handle:before {
     content: '';
@@ -10,6 +9,14 @@
     width: 26px;
     height: 26px;
     margin: -9px;
+  }
+
+  > div:first-child {
+    -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
+  }
+
+  > img {
+    -webkit-filter: grayscale(50%);
   }
 }
 
@@ -37,8 +44,7 @@
     height: 30px;
     display: inline-block;
     vertical-align: middle;
-    border: 1px dashed #bbb;
-    background: white;
+    border: 1px solid #ccc;
   }
   &:after {
     content: attr(data-caption);
@@ -51,5 +57,5 @@
   }
 }
 .uploadcare-crop-size--current div {
-  background: transparent;
+  background: white;
 }
