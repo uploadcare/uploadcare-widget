@@ -328,7 +328,7 @@ html.uploadcare-dialog-opened {
   color: $dialog-body-text-color-lighter;
 }
 
-$dialog-button-height: 33px;
+$dialog-button-height: 32px;
 @mixin dialog-button-constructor (
   $default-a, $default-b,
   $hover-a, $hover-b,

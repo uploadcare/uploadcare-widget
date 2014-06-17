@@ -70,7 +70,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           if prefered
             gcd = utils.gcd(prefered[0], prefered[1])
             caption = "#{prefered[0] / gcd}:#{prefered[1] / gcd}"
-            size = utils.fitSize(prefered, [40, 40])
+            size = utils.fitSize(prefered, [40, 40], true)
           child
             .clone()
             .attr('data-caption', caption)

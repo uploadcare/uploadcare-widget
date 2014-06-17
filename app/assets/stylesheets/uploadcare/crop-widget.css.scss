@@ -15,8 +15,10 @@
 
 
 .uploadcare-crop-sizes {
-  text-align: center;
   display: none;
+  position: relative;
+  top: y(.5);
+  text-align: center;
 }
 .uploadcare-crop-size {
   position: relative;
@@ -43,6 +45,9 @@
     position: absolute;
     top: 1px; left: 0;
     width: 100%;
+    // For ie8
+    text-align: center;
+    margin: 0;
   }
 }
 .uploadcare-crop-size--current div {
