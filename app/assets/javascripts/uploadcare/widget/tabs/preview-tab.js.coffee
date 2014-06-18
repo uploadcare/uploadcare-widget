@@ -87,14 +87,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       if @settings.crop.length <= 1
         return
 
-      @container.find(">*").eq(0).addClass('uploadcare-dialog-preview---with-sizes')
+      @element('root').addClass('uploadcare-dialog-preview---with-sizes')
 
       control = @element('crop-sizes').show()
       template = control.children()
       currentClass = 'uploadcare-crop-size--current'
 
       $.each @settings.crop, (i, crop) =>
-
         prefered = crop.preferedSize
         if prefered
           gcd = utils.gcd(prefered[0], prefered[1])

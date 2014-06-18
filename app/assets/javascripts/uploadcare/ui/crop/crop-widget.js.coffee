@@ -18,7 +18,7 @@ namespace 'uploadcare.crop', (ns) ->
         addClass: 'uploadcare-crop-widget'
         createDragbars: []
         bgColor: 'transparent'
-        bgOpacity: .7
+        bgOpacity: .8
 
 
       @setCrop(crop)
