@@ -451,6 +451,15 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   margin: 0 auto;
 }
 
+.uploadcare-dialog-preview---with-sizes {
+  .uploadcare-dialog-preview-image-wrap1 {
+    height: $dialog-preview-container-height - 40px;
+  }
+  .uploadcare-dialog-preview-image {
+    max-height: $dialog-preview-container-height - 40px;
+  }
+}
+
 .uploadcare-dialog-inner-footer {
   @include prefix(box-sizing, border-box);
   background: #fff3be;

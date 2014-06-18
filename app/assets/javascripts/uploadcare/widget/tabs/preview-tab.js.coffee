@@ -87,6 +87,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       if @settings.crop.length <= 1
         return
 
+      @container.find(">*").eq(0).addClass('uploadcare-dialog-preview---with-sizes')
+
       control = @element('crop-sizes').show()
       template = control.children()
       currentClass = 'uploadcare-crop-size--current'
