@@ -49,39 +49,50 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       if state is 'unknown' and @settings.crop
         @element('done').hide()
-      if state is 'image' and @settings.crop
-        @__initCrop(data)
+      if state is 'image'
+        @initImage(data.file)
 
-    __initCrop: (data) ->
-      @element('title').text t('dialog.tabs.preview.crop.title')
-      @element('done').text t('dialog.tabs.preview.crop.done')
-      @populateCropSizes()
-
+    initImage: (info) ->
       img = @element('image')
-        .on 'error', =>
+      done = @element('done')
+      imgSize = [info.originalImageInfo.width,
+                 info.originalImageInfo.height]
+
+      if @settings.crop
+        @element('title').text t('dialog.tabs.preview.crop.title')
+        done.addClass('uploadcare-disabled-el')
+        done.text t('dialog.tabs.preview.crop.done')
+
+        @populateCropSizes()
+
+        img.on 'error', =>
           @file = null
           @__setState 'error', error: 'loadImage'
 
-      # crop widget can't get container size when container hidden
-      # (dialog hidden) so we need timer here
-      utils.defer =>
-        return if not @file
-
-        imgSize = [data.file.originalImageInfo.width, data.file.originalImageInfo.height]
-        parentSize = [img.parent().width(), img.parent().height() or 600]
-        widgetSize = utils.fitSize(imgSize, parentSize)
-        img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
+      startCrop = =>
+        @element('crop-sizes').css('visibility', 'visible')
+        done.removeClass('uploadcare-disabled-el')
 
         @widget = new CropWidget img, imgSize, @settings.crop[0]
-        @widget.setSelectionFromModifiers(data.file.cdnUrlModifiers)
+        @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
 
-        @element('done').click =>
+        done.click =>
           opts = @widget.getSelectionWithModifiers()
           @dialogApi.fileColl.replace @file, @file.then (info) =>
             info.cdnUrlModifiers = opts.modifiers
             info.cdnUrl = "#{info.originalUrl}#{opts.modifiers or ''}"
             info.crop = opts.crop
             info
+
+      # crop widget can't get container size when container hidden
+      # (dialog hidden) so we need timer here
+      utils.defer =>
+        parentSize = [img.parent().width(), img.parent().height() or 600]
+        widgetSize = utils.fitSize(imgSize, parentSize)
+        img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
+
+        if @settings.crop
+          utils.imageLoader(img.attr('src')).done startCrop
 
     populateCropSizes: ->
       if @settings.crop.length <= 1
