@@ -77,7 +77,6 @@ html.uploadcare-dialog-opened {
   // 768 — ipad size
   min-width: 760px;
   max-width: x(36) + $paddings; // x(36) = 900px — old widget size
-  margin: 0 auto;
   padding: 0 $dialog-close-button-size 0 y(.5);
 }
 
@@ -451,7 +450,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   margin: 0 auto;
 }
 
-.uploadcare-dialog-preview---with-sizes {
+.uploadcare-dialog-preview--with-sizes {
   .uploadcare-dialog-preview-image-wrap1 {
     height: $dialog-preview-container-height - 40px;
   }

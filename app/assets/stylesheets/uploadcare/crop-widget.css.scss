@@ -28,6 +28,13 @@
   position: relative;
   top: y(.5);
   text-align: center;
+
+  .uploadcare-dialog-preview--with-sizes & {
+    display: block;
+  }
+  .uploadcare-dialog-preview--loaded & {
+    visibility: visible;
+  }
 }
 .uploadcare-crop-size {
   position: relative;

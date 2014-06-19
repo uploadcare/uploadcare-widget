@@ -58,6 +58,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       imgSize = [info.originalImageInfo.width,
                  info.originalImageInfo.height]
 
+      imgLoader = utils.imageLoader(img.attr('src'))
+        .done =>
+          @element('root').addClass('uploadcare-dialog-preview--loaded')
+        .fail =>
+          @file = null
+          @__setState 'error', error: 'loadImage'
+
       if @settings.crop
         @element('title').text t('dialog.tabs.preview.crop.title')
         done.addClass('uploadcare-disabled-el')
@@ -65,12 +72,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
         @populateCropSizes()
 
-        img.on 'error', =>
-          @file = null
-          @__setState 'error', error: 'loadImage'
-
       startCrop = =>
-        @element('crop-sizes').css('visibility', 'visible')
         done.removeClass('uploadcare-disabled-el')
 
         @widget = new CropWidget img, imgSize, @settings.crop[0]
@@ -87,20 +89,20 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       # crop widget can't get container size when container hidden
       # (dialog hidden) so we need timer here
       utils.defer =>
-        parentSize = [img.parent().width(), img.parent().height() or 600]
+        parentSize = [img.parent().width(), img.parent().height() or 450]
         widgetSize = utils.fitSize(imgSize, parentSize)
         img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
 
         if @settings.crop
-          utils.imageLoader(img.attr('src')).done startCrop
+          imgLoader.done startCrop
 
     populateCropSizes: ->
       if @settings.crop.length <= 1
         return
 
-      @element('root').addClass('uploadcare-dialog-preview---with-sizes')
+      @element('root').addClass('uploadcare-dialog-preview--with-sizes')
 
-      control = @element('crop-sizes').show()
+      control = @element('crop-sizes')
       template = control.children()
       currentClass = 'uploadcare-crop-size--current'
 
@@ -113,7 +115,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           caption = t('dialog.tabs.preview.crop.free')
 
         item = template.clone().appendTo(control)
-        item
           .attr('data-caption', caption)
           .on 'click', (e) =>
             if @widget
@@ -126,5 +127,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             .css
               width: Math.max 20, size[0]
               height: Math.max 12, size[1]
+
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)
