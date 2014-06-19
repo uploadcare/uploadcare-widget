@@ -1,5 +1,9 @@
 # History
 
+### 1.3.0, 19.06.2014
+
+* Multiple cropping presets can be added divided by comma. User can choose any.
+
 ### 1.2.3, 05.06.2014
 
 * Fixed free crop problem introduced in previous version.
