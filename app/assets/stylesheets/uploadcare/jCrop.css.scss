@@ -1,5 +1,3 @@
-.uploadcare-crop-widget {
-
 /* jquery.Jcrop.css v0.9.10 - MIT License */
 
 /*
@@ -11,10 +9,15 @@
   A better method for styling can be seen below with .jcrop-light
   (Add a class to the holder and style elements for that extended class)
 */
-.jcrop-holder {
+.uploadcare-crop-widget {
+
+
+&.jcrop-holder {
   direction: ltr;
   text-align: left;
+  z-index: 0;
 }
+
 
 /* These styles define the border lines */
 .jcrop-vline,.jcrop-hline {
@@ -92,6 +95,6 @@
 }
 
 /* Fix for twitter bootstrap et al. */
-.jcrop-holder img,img.jcrop-preview{ max-width: none; }
+&.jcrop-holder img,img.jcrop-preview{ max-width: none; }
 
 }

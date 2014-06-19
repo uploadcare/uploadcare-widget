@@ -16,8 +16,23 @@ namespace 'uploadcare.utils', (ns) ->
       result.push(item)
     result
 
+  ns.imageLoader = (src) ->
+    def = $.Deferred()
+    $(new Image)
+      .on('load', def.resolve)
+      .on('error', def.reject)
+      .attr('src', src)
+    def.promise()
+
   ns.defer = (fn) ->
     setTimeout fn, 0
+
+  ns.gcd = (a, b) ->
+    while b
+        c = a % b
+        a = b
+        b = c
+    a
 
   ns.once = (fn) ->
     called = false

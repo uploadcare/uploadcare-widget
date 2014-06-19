@@ -83,27 +83,14 @@ namespace 'uploadcare.settings', (ns) ->
       settings[key] = parseInt(settings[key])
     settings
 
-  parseCrop = (cropValue) ->
-    crop = enabled: true
+  parseCrop = (val) ->
+    reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
+    ratio = reRatio.exec($.trim(val.toLowerCase())) or []
 
-    reDisabled = /^(disabled|false)$/i
-    reRatio = /^([0-9]+)([x:])([0-9]+)(\s+(upscale|minimum))?$/i
-
-    if cropValue.match reDisabled
-      crop.enabled = false
-
-    else if ratio = cropValue.toLowerCase().match reRatio
-      crop.preferedSize = [+ratio[1], +ratio[3]]
-      if ratio[2] == 'x'
-        crop.scale = true
-      if ratio[5]
-        crop.upscale = true
-        if ratio[5] == 'minimum'
-          crop.notLess = true
-    # else should raise?
-
-    crop
-
+    downscale: ratio[2] == 'x'
+    upscale: !! ratio[4]
+    notLess: ratio[4] == 'minimum'
+    preferedSize: [+ratio[1], +ratio[3]] if ratio.length
 
   normalize = (settings) ->
     arrayOptions settings, [
@@ -129,16 +116,18 @@ namespace 'uploadcare.settings', (ns) ->
       'multipleMin'
     ]
 
-    unless $.isPlainObject settings.crop
-      if settings.multiple
-        settings.crop = enabled: false
+    if not $.isArray settings.crop
+      if /^(disabled?|false|null)$/i.test(settings.crop) or settings.multiple
+        settings.crop = false
+      else if $.isPlainObject settings.crop  # old format
+        settings.crop = [settings.crop]
       else
-        settings.crop = parseCrop $.trim settings.crop
+        settings.crop = $.map(settings.crop.split(','), parseCrop)
 
-    if settings.crop.enabled or settings.multiple
+    if settings.crop or settings.multiple
       settings.previewStep = true
 
-    if settings.crop.enabled
+    if settings.crop
       settings.pathValue = true
 
     if not utils.abilities.sendFileAPI

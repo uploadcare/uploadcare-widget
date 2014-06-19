@@ -1,5 +1,7 @@
-<div class="uploadcare-dialog-padding">
-  <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.image.title') %></div>
+<div class="uploadcare-dialog-padding" role="uploadcare-dialog-preview-root">
+  <div class="uploadcare-dialog-title" role="uploadcare-dialog-preview-title">
+    <%- t('dialog.tabs.preview.image.title') %>
+  </div>
 
   <div class="uploadcare-dialog-preview-image-wrap1">
   <div class="uploadcare-dialog-preview-image-wrap2">
@@ -13,6 +15,10 @@
     />
   </div>
   </div>
+
+  <div class="uploadcare-crop-sizes" role="uploadcare-dialog-preview-crop-sizes">
+    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
+  </div>
 </div>
 
 <div class="uploadcare-dialog-inner-footer">
@@ -20,6 +26,6 @@
     class="uploadcare-dialog-button" 
     role="uploadcare-dialog-preview-back"><%- t('dialog.tabs.preview.image.change') %></div>
   <div 
-    class="uploadcare-dialog-button-success" 
+    class="uploadcare-dialog-button-success"
     role="uploadcare-dialog-preview-done"><%- t('dialog.tabs.preview.done') %></div>
 </div>

@@ -74,6 +74,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           crop:
             title: 'Crop and add this image'
             done: 'Done'
+            free: 'free'
           error:
             default:
               title: 'Oops!'
@@ -86,6 +87,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'The file you selected exceeds the limit.'
               text: 'Please try again with another file.'
+            loadImage:
+              title: 'Error'
+              text: 'Can’t load image'
           multiple:
             title: 'You’ve chosen %files%'
             question: 'Do you want to add all of these files?'
@@ -96,11 +100,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       footer:
         text: 'Uploading, storing and processing files by'
         link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Error'
-        text: 'Can’t load image'
-      done: 'Done'
 
 
 # Pluralization rules taken from:

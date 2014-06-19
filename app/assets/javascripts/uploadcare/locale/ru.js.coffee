@@ -67,6 +67,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           crop:
             title: 'Обрезать и добавить это изображение'
             done: 'Готово'
+            free: 'произв.'
           error:
             default:
               title: 'Ой!'
@@ -79,6 +80,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'Размер выбранного файла превышает лимит.'
               text: 'Попробуйте загрузить другой файл.'
+            loadImage:
+              title: 'Ошибка'
+              text: 'Изображение не удалось загрузить'
           multiple:
             title: 'Вы выбрали %files%'
             question: 'Вы хотите добавить все эти файлы?'
@@ -88,12 +92,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Готово'
       footer:
         text: 'Для загрузки, хранения и обработки файлов используется'
-        link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Ошибка'
-        text: 'Изображение не удалось загрузить'
-      done: 'ОК'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

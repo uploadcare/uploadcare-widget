@@ -77,6 +77,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: 'Het geselecteerd bestand is groter dan de limiet.'
               text: 'Probeer het nog eens met een andere bestand.'
+            loadImage:
+              title: 'Fout'
+              text: 'Kan afbeelding niet laden'
           multiple:
             title: 'U heeft de volgende bestanden geselecteerd %files%'
             question: 'Wilt u al deze bestanden toevoegen?'
@@ -86,12 +89,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Klaar'
       footer:
         text: 'Uploaden, opslaan en verwerken bestanden door'
-        link: 'Uploadcare.com'
-    crop:
-      error:
-        title: 'Fout'
-        text: 'Kan afbeelding niet laden'
-      done: 'Klaar'
 
 
 # Pluralization rules taken from:

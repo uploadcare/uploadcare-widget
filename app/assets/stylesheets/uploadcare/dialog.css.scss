@@ -77,7 +77,6 @@ html.uploadcare-dialog-opened {
   // 768 — ipad size
   min-width: 760px;
   max-width: x(36) + $paddings; // x(36) = 900px — old widget size
-  margin: 0 auto;
   padding: 0 $dialog-close-button-size 0 y(.5);
 }
 
@@ -328,7 +327,7 @@ html.uploadcare-dialog-opened {
   color: $dialog-body-text-color-lighter;
 }
 
-$dialog-button-height: 33px;
+$dialog-button-height: 32px;
 @mixin dialog-button-constructor (
   $default-a, $default-b,
   $hover-a, $hover-b,
@@ -451,14 +450,14 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   margin: 0 auto;
 }
 
-.uploadcare-crop-widget .jcrop-handle:before {
-  content: '';
-  display: block;
-  width: 26px;
-  height: 26px;
-  margin: -9px;
+.uploadcare-dialog-preview--with-sizes {
+  .uploadcare-dialog-preview-image-wrap1 {
+    height: $dialog-preview-container-height - 40px;
+  }
+  .uploadcare-dialog-preview-image {
+    max-height: $dialog-preview-container-height - 40px;
+  }
 }
-
 
 .uploadcare-dialog-inner-footer {
   @include prefix(box-sizing, border-box);

@@ -67,6 +67,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             size:
               title: '你选取的文件超过了100MB的上限'
               text: '请用另一个文件再试一次。'
+            loadImage:
+              title: '错误'
+              text: '无法读取图片'
           multiple:
             title: '你已经选择 %files%'
             question: '你要添加所有文件吗？'
@@ -75,12 +78,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: '完成'
       footer:
         text: '为您提供文件上传、存储和编辑功能。 Copyright ©'
-        link: 'Uploadcare.com'
-    crop:
-      error:
-        title: '错误'
-        text: '无法读取图片'
-      done: '完成'
 
 
 # Pluralization rules taken from:

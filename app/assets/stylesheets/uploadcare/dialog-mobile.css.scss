@@ -208,5 +208,13 @@ $dialog-mobile-min-width: 310px;
         }
       }
     }
+
+    .uploadcare-crop-sizes {
+      top: -50px;
+      margin-top: 15px;
+    }
+    .uploadcare-crop-size {
+      margin: 0 10px;
+    }
   }
 }
