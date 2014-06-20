@@ -1,5 +1,9 @@
 # History
 
+### 1.3.1, 20.06.2014
+
+* Fixed preview size for wide images in non-webkit browsers.
+
 ### 1.3.0, 19.06.2014
 
 * Multiple cropping presets can be added divided by comma. User can choose any.
