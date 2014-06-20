@@ -80,6 +80,9 @@ $dialog-mobile-min-width: 310px;
       height: auto;
       padding-bottom: $dialog-mobile-footer-height;
     }
+    .uploadcare-dialog-preview-image {
+      max-height: 450px;
+    }
     .uploadcare-dpm-file-list {
       height: auto;
       margin: 0 -15px 0 0;

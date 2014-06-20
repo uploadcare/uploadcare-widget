@@ -65,13 +65,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @file = null
           @__setState 'error', error: 'loadImage'
 
-      if @settings.crop
-        @element('title').text t('dialog.tabs.preview.crop.title')
-        done.addClass('uploadcare-disabled-el')
-        done.text t('dialog.tabs.preview.crop.done')
-
-        @populateCropSizes()
-
       startCrop = =>
         done.removeClass('uploadcare-disabled-el')
 
@@ -86,15 +79,16 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             info.crop = opts.crop
             info
 
-      # crop widget can't get container size when container hidden
-      # (dialog hidden) so we need timer here
-      utils.defer =>
-        parentSize = [img.parent().width(), img.parent().height() or 450]
-        widgetSize = utils.fitSize(imgSize, parentSize)
-        img.css width: widgetSize[0], height: widgetSize[1], maxHeight: 'none'
+      if @settings.crop
+        @element('title').text t('dialog.tabs.preview.crop.title')
+        done.addClass('uploadcare-disabled-el')
+        done.text t('dialog.tabs.preview.crop.done')
 
-        if @settings.crop
-          imgLoader.done startCrop
+        @populateCropSizes()
+
+        imgLoader.done ->
+          utils.defer startCrop
+
 
     populateCropSizes: ->
       if @settings.crop.length <= 1
