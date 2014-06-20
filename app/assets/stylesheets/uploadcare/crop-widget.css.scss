@@ -1,7 +1,7 @@
 @import 'jCrop';
 
 .uploadcare-crop-widget {
-  margin: 0 auto;
+  @include vertical-centered;
 
   .jcrop-handle:before {
     content: '';

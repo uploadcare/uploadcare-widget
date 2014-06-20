@@ -434,28 +434,21 @@ $dialog-button-height: 32px;
 
 $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-footer-height;
 
-.uploadcare-dialog-preview-image-wrap1 {
+.uploadcare-dialog-preview-image-wrap {
+  @include vertical-centered-wrap;
+  text-align: center;
   width: 100%;
   height: $dialog-preview-container-height;
-  display: table;
-}
-.uploadcare-dialog-preview-image-wrap2 {
-  display: table-cell;
-  vertical-align: middle;
 }
 .uploadcare-dialog-preview-image {
+  @include vertical-centered;
   max-width: 100%;
-  max-height: $dialog-preview-container-height;
-  display: block;
-  margin: 0 auto;
+  max-height: 100%;
 }
 
 .uploadcare-dialog-preview--with-sizes {
-  .uploadcare-dialog-preview-image-wrap1 {
+  .uploadcare-dialog-preview-image-wrap {
     height: $dialog-preview-container-height - 40px;
-  }
-  .uploadcare-dialog-preview-image {
-    max-height: $dialog-preview-container-height - 40px;
   }
 }
 
