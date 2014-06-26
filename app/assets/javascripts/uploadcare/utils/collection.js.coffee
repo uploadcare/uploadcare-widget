@@ -26,8 +26,10 @@ namespace 'uploadcare.utils', (utils) ->
         @onRemove.fire(item)
 
     clear: ->
-      for item in @get()
-        @remove(item)
+      items = @get()
+      @__items.length = 0
+      for item in items
+        @onRemove.fire(item)
 
     replace: (oldItem, newItem) ->
       if not (oldItem is newItem)
