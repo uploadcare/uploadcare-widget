@@ -20,6 +20,13 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons: 
       cancel: 'Cancelar'
       remove: 'Excluir'
+      choose:
+        files:
+          one: 'Escolha um arquivo'
+          other: 'Escolha arquivos'
+        images:
+          one: 'Escolha um imagem'
+          other: 'Escolha imagens'
     dialog:
       done: 'OK'
       showFiles: 'Mostrar arquivos'
@@ -58,6 +65,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           crop: 
             title: 'Cortar e adicionar essa imagem'
             done: 'OK'
+            free: 'livre'
           error: 
             default: 
               title: 'Oops!'
