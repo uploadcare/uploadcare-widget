@@ -46,14 +46,6 @@ namespace 'uploadcare.utils', (ns) ->
   ns.wrapToPromise = (value) ->
     $.Deferred().resolve(value).promise()
 
-  ns.remove = (array, item) ->
-    index = $.inArray(item, array)
-    if index isnt -1
-      array.splice(index, 1)
-      true
-    else
-      false
-
   # same as promise.then(), but if filter returns promise
   # it will be just passed forward without any special behavior
   ns.then = (pr, doneFilter, failFilter, progressFilter) ->

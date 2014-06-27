@@ -10,7 +10,6 @@ namespace 'uploadcare.utils', (utils) ->
     constructor: (items = []) ->
       @onAdd = $.Callbacks()
       @onRemove = $.Callbacks()
-      @onReplaced = $.Callbacks()
       @onSorted = $.Callbacks()
 
       @__items = []
@@ -18,28 +17,37 @@ namespace 'uploadcare.utils', (utils) ->
         @add(item)
 
     add: (item) ->
-      @__items.push(item)
-      @onAdd.fire(item)
+      @__add(item, @__items.length)
+
+    __add: (item, i) ->
+      @__items.splice(i, 0, item)
+      @onAdd.fire(item, i)
 
     remove: (item) ->
-      if utils.remove(@__items, item)
-        @onRemove.fire(item)
+      i = $.inArray(item, @__items)
+      if i isnt -1
+        @__remove(item, i)
+
+    __remove: (item, i) ->
+      @__items.splice(i, 1)
+      @onRemove.fire(item, i)
 
     clear: ->
       items = @get()
       @__items.length = 0
-      for item in items
-        @onRemove.fire(item)
+      for item, i in items
+        @onRemove.fire(item, i)
 
     replace: (oldItem, newItem) ->
-      if not (oldItem is newItem)
-        for item, i in @__items
-          if item is oldItem
-            @__replace(oldItem, newItem, i)
+      if oldItem isnt newItem
+        i = $.inArray(oldItem, @__items)
+        if i isnt -1
+          @__replace(oldItem, newItem, i)
 
     __replace: (oldItem, newItem, i) ->
       @__items[i] = newItem
-      @onReplaced.fire(oldItem, newItem, i)
+      @onRemove.fire(oldItem, i)
+      @onAdd.fire(newItem, i)
 
     sort: (comparator) ->
       @__items.sort(comparator)
