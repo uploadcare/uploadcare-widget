@@ -65,6 +65,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           crop:
             title: 'Recadrer et ajouter cette image'
             done: 'Terminer'
+            free: 'libre'
           error:
             default:
               title: 'Oups!'
