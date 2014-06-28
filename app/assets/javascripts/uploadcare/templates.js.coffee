@@ -3,15 +3,14 @@
 {
   namespace,
   locale,
-  utils
+  utils,
+  jQuery: $,
 } = uploadcare
 
 namespace 'uploadcare.templates', (ns) ->
   ns.tpl = (key, ctx={}) ->
     fn = JST["uploadcare/templates/#{key}"]
     if fn?
-      ctx.t = locale.t
-      ctx.utils = utils
-      fn(ctx)
+      fn($.extend({t: locale.t, utils}, ctx))
     else
       ''
