@@ -32,7 +32,7 @@ namespace 'uploadcare', (ns) ->
     unless getSettings(el).multiple
       initializeWidget(el, ns.widget.Widget)
     else
-      throw new Error 'This element should be processed using MupltipleWidget'
+      throw new Error 'This element should be processed using MultipleWidget'
 
   ns.MultipleWidget = (target) ->
     el = $(target).eq(0)
