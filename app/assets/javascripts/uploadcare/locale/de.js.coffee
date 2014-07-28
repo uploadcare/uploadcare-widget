@@ -1,6 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
-  ns.en =
+  ns.de =
     uploading: 'Hochladen... Bitte warten.'
     loadingInfo: 'Laden der Informationen...'
     errors:
