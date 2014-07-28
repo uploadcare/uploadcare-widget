@@ -1,5 +1,12 @@
 # History
 
+### 1.4.0, 28.07.2014
+
+* `CDN_BASE`, `URL_BASE` and `SOCIAL_BASE` without leading '//'
+  are considered as relative urls, not as domains. 
+* `utils` and `t` no more exposed to file info.
+* Fix Franch and Portuguese locales. 
+
 ### 1.3.1, 20.06.2014
 
 * Fixed preview size for wide images in non-webkit browsers.
