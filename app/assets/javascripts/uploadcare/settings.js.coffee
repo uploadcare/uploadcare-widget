@@ -101,6 +101,7 @@ namespace 'uploadcare.settings', (ns) ->
       'cdnBase'
       'socialBase'
       'urlBase'
+      'scriptBase'
     ]
     flagOptions settings, [
       'autostore'

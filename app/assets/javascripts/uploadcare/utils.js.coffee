@@ -116,7 +116,12 @@ namespace 'uploadcare.utils', (ns) ->
     new RegExp("^" + parts.join('.+') + "$", flags)
 
   ns.normalizeUrl = (url) ->
-    url = "https://#{url}" unless url.match /^([a-z][a-z0-9+\-\.]*:)?\/\//i
+    scheme = document.location.protocol
+    if scheme != 'http:'
+      scheme = 'https:'
+
+    if url.match /^\/\//
+      url = "#{scheme}#{url}"
     url.replace(/\/+$/, '')
 
   ns.fitText = (text, max) ->
@@ -225,7 +230,7 @@ namespace 'uploadcare.utils', (ns) ->
     return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
 
   ns.imagePath = (name) ->
-    uploadcare.settings.build().scriptBase + 'images/' + name
+    uploadcare.settings.common().scriptBase + '/images/' + name
 
   ns.ajaxDefaults =
     dataType: 'json'
