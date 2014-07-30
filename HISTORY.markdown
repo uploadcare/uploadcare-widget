@@ -1,9 +1,11 @@
 # History
 
-### 1.4.0, 28.07.2014
+### 1.4.0, 30.07.2014
 
-* `CDN_BASE`, `URL_BASE` and `SOCIAL_BASE` without leading '//'
-  are considered as relative urls, not as domains. 
+* German localization.
+* Retina icons for all social networks.
+* Updated "local files" tab for mobile devices.
+* Widget works on local pages (without web server).
 * `utils` and `t` are no more exposed to file info.
 * Fix French and Portuguese locales. 
 
