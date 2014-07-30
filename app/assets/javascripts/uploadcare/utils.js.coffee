@@ -116,12 +116,20 @@ namespace 'uploadcare.utils', (ns) ->
     new RegExp("^" + parts.join('.+') + "$", flags)
 
   ns.normalizeUrl = (url) ->
+    # google.com/ → http://google.com
+    # /google.com/ → /google.com
+    # //google.com/ → http://google.com
+    # http://google.com/ → http://google.com
     scheme = document.location.protocol
     if scheme != 'http:'
       scheme = 'https:'
 
-    if url.match /^\/\//
-      url = "#{scheme}#{url}"
+    parts = url.match /^([^:/?#]+:)?\/?(\/)?/
+    if not parts[1]  # if no scheme
+      if parts[2]  # if two slashes
+        url = "#{scheme}#{url}"
+      else if not parts[0] # if no one slash
+        url = "#{scheme}//#{url}"
     url.replace(/\/+$/, '')
 
   ns.fitText = (text, max) ->
