@@ -4,8 +4,8 @@
 
 * `CDN_BASE`, `URL_BASE` and `SOCIAL_BASE` without leading '//'
   are considered as relative urls, not as domains. 
-* `utils` and `t` no more exposed to file info.
-* Fix Franch and Portuguese locales. 
+* `utils` and `t` are no more exposed to file info.
+* Fix French and Portuguese locales. 
 
 ### 1.3.1, 20.06.2014
 
