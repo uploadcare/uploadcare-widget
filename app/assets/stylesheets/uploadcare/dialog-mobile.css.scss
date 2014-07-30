@@ -1,7 +1,7 @@
 $dialog-mobile-footer-height: 50px;
 $dialog-mobile-min-width: 310px;
 
-.uploadcare-if-mobile { display: none; }
+.uploadcare-if-mobile {display: none}
 
 @media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
@@ -50,6 +50,7 @@ $dialog-mobile-min-width: 310px;
 
   .uploadcare-dialog {
 
+
     // § Panels
 
     .uploadcare-dialog-panel {
@@ -74,6 +75,7 @@ $dialog-mobile-min-width: 310px;
             padding: y(1) 15px;
         }
 
+
     // § Preview tabs
 
     .uploadcare-dialog-preview-image-wrap {
@@ -97,6 +99,7 @@ $dialog-mobile-min-width: 310px;
       display: inline-block;
     }
 
+
     // § Computer tab
 
     .uploadcare-dialog-file-sources,
@@ -105,12 +108,37 @@ $dialog-mobile-min-width: 310px;
     }
 
     .uploadcare-dialog-file-title {
-      font-size: 30px;
-      margin: y(1) 0;
+      display: none;
     }
     .uploadcare-dialog-file-drop-area {
       padding-top: 0;
+      border: 0;
+      background: transparent;
     }
+
+    .uploadcare-dialog-big-button {
+      margin: y(5) 0 0;
+    }
+
+    .uploadcare-clouds-tip {
+      color: #909498;
+      font-size: .75em;
+      line-height: 1.4;
+      text-align: left;
+      padding: 10px 0 0 50px;
+    }
+    .uploadcare-clouds-tip:before {
+      background-image: url("<%= utils.imagePath('arrow.png') %>");
+      background-repeat: no-repeat;
+      background-size: 51px 33px;
+      content: '';
+      position: absolute;
+      margin: -20px -36px;
+      display: block;
+      width: 28px;
+      height: 30px;
+    }
+
 
     // § Mulltiple
 
@@ -142,6 +170,7 @@ $dialog-mobile-min-width: 310px;
         padding-bottom: y(1) + $dialog-mobile-footer-height;
       }
     }
+
 
     // § Tabs
 

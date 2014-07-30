@@ -537,20 +537,18 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 .uploadcare-if-draganddrop {display: none}
 
-@media screen and (min-width: $switch-to-mobile-width) {
-  .uploadcare-draganddrop {
-    .uploadcare-if-no-draganddrop {display: none}
-    .uploadcare-if-draganddrop {display: block}
+.uploadcare-draganddrop {
+  .uploadcare-if-no-draganddrop {display: none}
+  .uploadcare-if-draganddrop {display: block}
 
-    .uploadcare-dialog-file-drop-area {
-      border: dashed 3px #c5cacd;
-      background: rgba(255,255,255,.64);
-    }
-    .uploadcare-dialog-file-title {
-      color: #dee0e1;
-      text-shadow: 0 1px white;
-      margin-top: 0;
-    }
+  .uploadcare-dialog-file-drop-area {
+    border: dashed 3px #c5cacd;
+    background: rgba(255,255,255,.64);
+  }
+  .uploadcare-dialog-file-title {
+    color: #dee0e1;
+    text-shadow: 0 1px white;
+    margin-top: 0;
   }
 }
 
