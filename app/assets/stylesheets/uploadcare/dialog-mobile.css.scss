@@ -23,6 +23,7 @@ $dialog-mobile-min-width: 310px;
   .uploadcare-dialog {
     position: absolute;
     overflow: visible;
+    -webkit-text-size-adjust: 100%;
 
     &:before {
       display: none;
