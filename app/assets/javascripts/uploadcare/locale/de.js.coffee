@@ -33,7 +33,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       tabs:
         names:
           preview: 'Vorschau'
-          file: 'Computer'
+          file: 'Lokale Dateien'
           facebook: 'Facebook'
           dropbox: 'Dropbox'
           gdrive: 'Google Drive'
@@ -47,8 +47,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         file:
           drag: 'Ziehen Sie eine Datei hier hinein'
           nodrop: 'Laden Sie Dateien von Ihrem PC hoch'
+          cloudsTip: 'Cloud Speicher<br>und soziale Dienste'
           or: 'oder'
-          button: 'Wählen Sie eine Datei von Ihrem PC'
+          button: 'Wählen Sie eine lokale Datei'
           also: 'Sie köhnen es auch wählen von'
         url:
           title: 'Dateien vom Web'
