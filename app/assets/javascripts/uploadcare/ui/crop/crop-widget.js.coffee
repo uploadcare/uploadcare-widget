@@ -20,7 +20,6 @@ namespace 'uploadcare.crop', (ns) ->
         bgColor: 'transparent'
         bgOpacity: .8
 
-
       @setCrop(crop)
       @setSelection()
 
@@ -89,23 +88,23 @@ namespace 'uploadcare.crop', (ns) ->
       width: Math.round(Math.min(@originalSize[0], coords.x2)) - left
       height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
 
-
     getSelectionWithModifiers: ->
       coords = @getSelection()
       {width: w, height: h} = coords
       prefered = @crop.preferedSize
       modifiers = ''
 
-      if w isnt @originalSize[0] or h isnt @originalSize[1]
-        modifiers = "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
+      wholeImage = w is @originalSize[0] and h is @originalSize[1]
+      if not wholeImage
+        modifiers += "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
 
-        downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
-        upscale = @crop.upscale and (w < prefered[0] or h < prefered[1])
-        if downscale or upscale
-          [coords.sw, coords.sh] = prefered
-          modifiers += "-/resize/#{prefered.join 'x'}/"
-        else
-          modifiers += "-/preview/"
+      downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
+      upscale = @crop.upscale and (w < prefered[0] or h < prefered[1])
+      if downscale or upscale
+        [coords.sw, coords.sh] = prefered
+        modifiers += "-/resize/#{prefered.join 'x'}/"
+      else if not wholeImage
+        modifiers += "-/preview/"
 
       crop: coords
       modifiers: modifiers
