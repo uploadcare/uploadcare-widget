@@ -94,7 +94,8 @@ namespace 'uploadcare.crop', (ns) ->
       prefered = @crop.preferedSize
       modifiers = ''
 
-      if w isnt @originalSize[0] or h isnt @originalSize[1]
+      wholeImage = w is @originalSize[0] and h is @originalSize[1]
+      if not wholeImage
         modifiers += "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
 
       downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
@@ -102,7 +103,7 @@ namespace 'uploadcare.crop', (ns) ->
       if downscale or upscale
         [coords.sw, coords.sh] = prefered
         modifiers += "-/resize/#{prefered.join 'x'}/"
-      else
+      else if not wholeImage
         modifiers += "-/preview/"
 
       crop: coords
