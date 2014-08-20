@@ -154,7 +154,7 @@ namespace 'uploadcare.utils', (ns) ->
     else
       objSize.slice()
 
-  ns.fileInput = (container, multiple, fn) ->
+  ns.fileInput = (container, multiple, accept, fn) ->
     input = null
 
     do run = ->
@@ -164,6 +164,7 @@ namespace 'uploadcare.utils', (ns) ->
         else
           $('<input type="file">')
       )
+        .attr('accept', accept or null)
         .css(
           position: 'absolute'
           top: 0
@@ -195,13 +196,14 @@ namespace 'uploadcare.utils', (ns) ->
           left: e.pageX - left - width + 10
           top: e.pageY - top - 10
 
-  ns.fileSelectDialog = (container, multiple, fn) ->
+  ns.fileSelectDialog = (container, multiple, accept, fn) ->
     (
       if multiple
         $('<input type="file" multiple>')
       else
         $('<input type="file">')
     )
+      .attr('accept', accept or null)
       .css(
         position: 'fixed'
         bottom: 0

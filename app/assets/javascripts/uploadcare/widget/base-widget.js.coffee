@@ -124,7 +124,8 @@ namespace 'uploadcare.widget', (ns) ->
 
     openDialog: (tab) ->
       if @settings.systemDialog
-        utils.fileSelectDialog @template.content, @settings.multiple, (input) =>
+        accept = if @settings.imagesOnly then 'image/*' else null
+        utils.fileSelectDialog @template.content, @settings.multiple, accept, (input) =>
           @__handleDirectSelection 'object', input.files
       else
         uploadcare.openDialog(@currentObject, tab, @settings)
