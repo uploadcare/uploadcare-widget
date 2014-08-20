@@ -48,7 +48,7 @@ namespace 'uploadcare.files', (ns) ->
           xhr = $.ajaxSettings.xhr()
           if xhr.upload
             xhr.upload.addEventListener 'progress', (e) =>
-              @__uploadDf.notify(e.loaded / @fileSize)
+              @__uploadDf.notify(e.loaded / e.total)
             , false
           xhr
         crossDomain: true
