@@ -26,6 +26,7 @@ namespace 'uploadcare.settings', (ns) ->
     'path-value': false
     'tabs': 'file url facebook instagram flickr gdrive evernote box skydrive'
     'preferred-types': ''
+    'input-accept-types': ''  # '' means default, null means "disable accept"
     # upload settings
     'autostore': false
     'public-key': null
@@ -148,7 +149,7 @@ namespace 'uploadcare.settings', (ns) ->
     values = {}
     for own key, fallback of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
-      values[$.camelCase(key)] = if value? then value else fallback
+      values[$.camelCase(key)] = if value isnt undefined then value else fallback
 
     unless values.publicKey
       utils.commonWarning('publicKey')
