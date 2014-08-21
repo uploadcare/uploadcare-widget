@@ -56,6 +56,7 @@ namespace 'uploadcare.widget', (ns) ->
       if @settings.clearable
         @template.addButton('remove', t('buttons.remove')).on 'click', =>
           @__setObject(null)
+          @element.val('')
 
       @template.content.on 'click', '@uploadcare-widget-file-name', =>
         @openDialog()
@@ -77,7 +78,6 @@ namespace 'uploadcare.widget', (ns) ->
       @currentObject = null
       object?.cancel?()
       @template.reset()
-      @element.val('')
 
     __setObject: (newFile) =>
       unless newFile == @currentObject
