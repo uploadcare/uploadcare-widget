@@ -1,5 +1,11 @@
 # History
 
+### 1.4.1, 21.08.2014
+
+* Fixed crop to fixed size when whole image is selected
+* Fixed progress indication for files smaller than 1kb
+* Added `accept="image/*"` input attribute for images only widgets
+
 ### 1.4.0, 30.07.2014
 
 * German localization.
