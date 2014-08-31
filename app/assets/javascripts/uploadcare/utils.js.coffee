@@ -180,7 +180,7 @@ namespace 'uploadcare.utils', (ns) ->
         )
         .on 'change', ->
           fn(this)
-          input.remove()
+          $(this).hide()
           run()
 
       container.append(input)
