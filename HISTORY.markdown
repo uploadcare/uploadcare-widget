@@ -1,5 +1,9 @@
 # History
 
+### 1.4.2, 31.08.2014
+
+* Fixed ui freeze in IE 10+ after file choosing.
+
 ### 1.4.1, 21.08.2014
 
 * Fixed crop to fixed size when whole image is selected
