@@ -33,13 +33,14 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       tabs:
         names:
           preview: 'Avant-première'
-          file: 'Ordinateur'
+          file: 'Fichier en local'
           url: 'Une adresse web'
         file:
           drag: 'Glissez-déposez un fichier ici'
           nodrop: 'Envoyez des fichiers depuis votre ordinateur'
+          cloudsTip: 'Stockage sur le cloud<br>et réseaux sociaux'
           or: 'ou'
-          button: 'Choisissez un fichier depuis votre ordinateur'
+          button: 'Choisir un fichier local'
           also: 'Vous pouvez également le sélectionner depuis'
         url:
           title: 'Fichiers depuis le Web'
