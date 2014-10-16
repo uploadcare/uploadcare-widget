@@ -1,5 +1,11 @@
 # History
 
+### 1.4.3, 16.10.2014
+
+* Japanese localization.
+* French localization updated.
+* Use progressive jpeg for preview and crop.
+
 ### 1.4.2, 31.08.2014
 
 * Fixed ui freeze in IE 10+ after file choosing.
