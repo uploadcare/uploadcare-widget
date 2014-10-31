@@ -1,5 +1,11 @@
 # History
 
+
+### 1.4.4, 31.10.2014
+
+* Fix conflict with host pages Pusher. Built-in pusher
+  isn't exposed to global namesapse anymore. 
+
 ### 1.4.3, 16.10.2014
 
 * Japanese localization.
