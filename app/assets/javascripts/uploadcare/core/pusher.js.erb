@@ -11,6 +11,9 @@
  */
 
 ;(function() {
+  var Pusher, _require;
+
+;(function() {
   if (Function.prototype.scopedTo === undefined) {
     Function.prototype.scopedTo = function(context, args) {
       var f = this;
@@ -21,7 +24,7 @@
     };
   }
 
-  var Pusher = function(app_key, options) {
+  Pusher = function(app_key, options) {
     this.options = options || {};
     this.key = app_key;
     this.channels = new Pusher.Channels();
@@ -208,8 +211,7 @@
     }
   };
 
-  this.Pusher = Pusher;
-}).call(this);
+})();
 
 ;(function() {
 /* Abstract event binding
@@ -295,12 +297,10 @@ Example:
     return this;
   };
 
-  this.Pusher.EventsDispatcher = EventsDispatcher;
-}).call(this);
+  Pusher.EventsDispatcher = EventsDispatcher;
+})();
 
 ;(function() {
-  var Pusher = this.Pusher;
-
   /*-----------------------------------------------
     Helpers:
   -----------------------------------------------*/
@@ -379,8 +379,8 @@ Example:
 
   Pusher.Util.extend(Machine.prototype, Pusher.EventsDispatcher.prototype);
 
-  this.Pusher.Machine = Machine;
-}).call(this);
+  Pusher.Machine = Machine;
+})();
 
 ;(function() {
   /*
@@ -415,12 +415,10 @@ Example:
 
   Pusher.Util.extend(NetInfo.prototype, Pusher.EventsDispatcher.prototype);
 
-  this.Pusher.NetInfo = NetInfo;
-}).call(this);
+  Pusher.NetInfo = NetInfo;
+})();
 
 ;(function() {
-  var Pusher = this.Pusher;
-
   var machineTransitions = {
     'initialized': ['waiting', 'failed'],
     'waiting': ['connecting', 'permanentlyClosed'],
@@ -900,8 +898,8 @@ Example:
   };
 
   Pusher.Util.extend(Connection.prototype, Pusher.EventsDispatcher.prototype);
-  this.Pusher.Connection = Connection;
-}).call(this);
+  Pusher.Connection = Connection;
+})();
 
 ;(function() {
   Pusher.Channels = function() {
@@ -1073,7 +1071,8 @@ Example:
     channel.init();
     return channel;
   };
-}).call(this);
+})();
+
 ;(function() {
   Pusher.Channel.Authorizer = function(channel, type, options) {
     this.channel = channel;
@@ -1166,7 +1165,8 @@ Example:
       head.insertBefore( script, head.firstChild );
     }
   };
-}).call(this);
+})();
+
 // _require(dependencies, callback) takes an array of dependency urls and a
 // callback to call when all the dependecies have finished loading
 var _require = (function() {
@@ -1282,3 +1282,7 @@ var _require = (function() {
   }
 })();
 
+
+this.Pusher = Pusher;
+
+}).call(this);
