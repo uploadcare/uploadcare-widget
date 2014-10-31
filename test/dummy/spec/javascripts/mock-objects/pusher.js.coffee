@@ -2,7 +2,7 @@
 
 mocks.define 'pusher', ->
 
-  orig = Pusher
+  orig = uploadcare.utils.pusher.Pusher
   channels = {}
 
 
@@ -37,10 +37,10 @@ mocks.define 'pusher', ->
 
 
   turnOn: ->
-    window.Pusher = FakePusher
+    uploadcare.utils.pusher.Pusher = FakePusher
 
   turnOff: ->
     channels = {}
-    window.Pusher = orig
+    uploadcare.utils.pusher.Pusher = orig
 
   channel: getChanel
