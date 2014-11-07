@@ -1,5 +1,8 @@
 # History
 
+### 1.4.5, 07.11.2014
+
+* Restored IE8 compatibility.
 
 ### 1.4.4, 31.10.2014
 
