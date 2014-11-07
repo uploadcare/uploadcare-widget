@@ -11,9 +11,6 @@
 uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
   pushers = {}
 
-  ns.Pusher = Pusher
-  delete Pusher
-
   ns.getPusher = (key, owner) ->
     if key not of pushers
       pushers[key] =
@@ -58,7 +55,7 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     if pushers[key]?.instance?
       return pushers[key].instance
     
-    pushers[key].instance = new ns.Pusher(key)
+    pushers[key].instance = new uploadcare.Pusher(key)
 
 
   pusherWrapped = (key, owner) ->
