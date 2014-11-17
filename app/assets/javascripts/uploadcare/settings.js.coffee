@@ -24,7 +24,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-max': 0
     'multiple-min': 1
     'path-value': false
-    'tabs': 'file url facebook instagram flickr gdrive evernote box skydrive'
+    'tabs': 'file url facebook instagram flickr dropbox gdrive evernote box skydrive'
     'preferred-types': ''
     'input-accept-types': ''  # '' means default, null means "disable accept"
     # upload settings
