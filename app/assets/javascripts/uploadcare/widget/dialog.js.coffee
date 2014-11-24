@@ -21,10 +21,6 @@
 
 namespace 'uploadcare', (ns) ->
 
-  # Fixes touch events inside iframes.
-  # http://stackoverflow.com/a/13442473/253146
-  $(window).on('touchstart', $.noop)
-
   lockScroll = (el, toTop) ->
     top = el.scrollTop()
     left = el.scrollLeft()
