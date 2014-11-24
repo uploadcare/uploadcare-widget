@@ -100,7 +100,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Ferdig'
       footer:
         text: 'Laster opp, lagrer og prosesserer filer med'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

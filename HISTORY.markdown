@@ -1,5 +1,12 @@
 # History
 
+### 1.4.6, 24.11.2014
+
+* Added Norwegian locale
+* Impoved iOS scrolling performance in some cases
+* Dropbox added to default tabs list (no additional setup is required anymore)
+* All default tabs rearranged according to their usage
+
 ### 1.4.5, 07.11.2014
 
 * Restored IE8 compatibility.
