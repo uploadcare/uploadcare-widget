@@ -3,7 +3,7 @@
 ### 1.4.6, 24.11.2014
 
 * Added Norwegian locale
-* Impoved iOS scrolling performance in some cases
+* Improved iOS scrolling performance in some cases
 * Dropbox added to default tabs list (no additional setup is required anymore)
 * All default tabs rearranged according to their usage
 
