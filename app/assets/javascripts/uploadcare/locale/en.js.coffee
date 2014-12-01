@@ -57,6 +57,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: 'Just provide the link.'
           input: 'Paste your link here...'
           button: 'Upload'
+        camera:
+          capture: 'Capture'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'
