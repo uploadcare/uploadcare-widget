@@ -640,6 +640,14 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 }
 
 
+// § Camera tab
+
+.uploadcare-dialog-camera-video {
+  max-width: 640px;
+  max-height: 480px;
+}
+
+
 // § Multiple preview
 
 .uploadcare-dpm-file-list {
