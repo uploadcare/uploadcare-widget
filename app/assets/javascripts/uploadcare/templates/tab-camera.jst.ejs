@@ -1,3 +1,14 @@
-<video class="uploadcare-dialog-camera-video"></video>
-
-<button class="uploadcare-dialog-camera-capture"><%- t('dialog.tabs.camera.capture') %></button>
+<div class="uploadcare-dialog-camera-holder">
+  <video class="uploadcare-dialog-camera-video"></video>
+  <div class="uploadcare-dialog-camera-please-allow">
+    <%- t('dialog.tabs.camera.pleaseAllow') %>
+  </div>
+</div>
+<div class="uploadcare-dialog-camera-controls">
+  <div class="uploadcare-dialog-camera-capture uploadcare-dialog-button-success">
+    <%- t('dialog.tabs.camera.capture') %>
+  </div>
+  <div class="uploadcare-dialog-camera-retry uploadcare-dialog-button">
+    <%- t('dialog.tabs.camera.retry') %>
+  </div>
+</div>

@@ -20,14 +20,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__loaded = false
 
       @wrap.append tpl 'tab-camera'
-      @wrap.addClass('uploadcare-dialog-padding')
+      @wrap.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
       @video = @wrap.find('video')
-      @capture = @wrap.find('.uploadcare-dialog-camera-capture')
 
       @video.on 'loadeddata', =>
         @URL.revokeObjectURL(@video.prop('src'))
 
-      @capture.on 'click', =>
+      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', =>
         video = @video[0]
         w = video.videoWidth
         h = video.videoHeight
@@ -38,6 +37,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
         utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
           @dialogApi.addFiles 'object', [blob]
+
+      @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
 
       @dialogApi.onSwitched.add (_, switchedToMe) =>
         if switchedToMe and not @__loaded
@@ -52,15 +53,21 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @URL = window.URL || window.webkitURL
       return !! @getUserMedia and Uint8Array
 
-    __requestCamera: ->
+    __requestCamera: =>
       @__loaded = true
       @getUserMedia.call(navigator,
         video: true
       , (stream) =>
+        @wrap
+          .removeClass('uploadcare-dialog-camera-requested')
+          .removeClass('uploadcare-dialog-camera-denied')
+          .addClass('uploadcare-dialog-camera-ready')
         @__stream = stream
         @video.prop('src', @URL.createObjectURL(stream))
         @video[0].play()
       , (error) =>
-        console.log error.name
+        if error.name == 'PermissionDeniedError'
+          @wrap.addClass('uploadcare-dialog-camera-denied')
+
         @__loaded = false
       )

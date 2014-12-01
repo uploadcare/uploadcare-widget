@@ -58,7 +58,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           input: 'Paste your link here...'
           button: 'Upload'
         camera:
-          capture: 'Capture'
+          capture: 'Take photo'
+          retry: 'Request permissions again'
+          pleaseAllow: 'You have been requested pemissions to access camera from this site. ' +
+                       'In order to take pictures from your cam you should approve this request.'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'

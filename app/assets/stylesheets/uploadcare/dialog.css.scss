@@ -642,9 +642,44 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 // § Camera tab
 
+.uploadcare-dialog-camera-holder {
+  margin-top: y(1);
+  line-height: 480px;
+  text-align: center;
+}
 .uploadcare-dialog-camera-video {
-  max-width: 640px;
+  display: none;
+  max-width: 100%;
   max-height: 480px;
+  vertical-align: middle;
+}
+.uploadcare-dialog-camera-please-allow {
+  display: none;
+  line-height: y(1);
+}
+.uploadcare-dialog-camera-controls {
+  margin-top: y(1);
+  text-align: center;
+}
+.uploadcare-dialog-camera-capture,
+.uploadcare-dialog-camera-retry {
+  display: none;
+}
+.uploadcare-dialog-camera-requested {
+  .uploadcare-dialog-camera-please-allow {
+    display: block;
+  }
+}
+.uploadcare-dialog-camera-denied {
+  .uploadcare-dialog-camera-retry {
+    display: inline-block;
+  }
+}
+.uploadcare-dialog-camera-ready {
+  .uploadcare-dialog-camera-video,
+  .uploadcare-dialog-camera-capture {
+    display: inline-block;
+  }
 }
 
 
