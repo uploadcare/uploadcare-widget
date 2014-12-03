@@ -60,8 +60,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         camera:
           capture: 'Take photo'
           retry: 'Request permissions again'
-          pleaseAllow: 'You have been requested pemissions to access camera from this site. ' +
-                       'In order to take pictures from your cam you should approve this request.'
+          pleaseAllow:
+            title: 'Please, allow access to your camera'
+            text: 'You have been requested pemissions to access camera from this site. ' +
+                  'In order to take pictures from your cam you should approve this request.'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'

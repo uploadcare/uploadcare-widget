@@ -68,6 +68,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       , (error) =>
         if error.name == 'PermissionDeniedError'
           @wrap.addClass('uploadcare-dialog-camera-denied')
-
+        else if error.name == 'DevicesNotFoundError'
+          @wrap.addClass('uploadcare-dialog-camera-not-found')
         @__loaded = false
       )
