@@ -36,6 +36,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         canvas.getContext('2d').drawImage(video, 0, 0, w, h)
 
         utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
+          blob.name = "camera.jpg"
           @dialogApi.addFiles 'object', [blob]
 
       @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
