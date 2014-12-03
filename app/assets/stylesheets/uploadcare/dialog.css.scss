@@ -662,7 +662,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   max-width: 100%;
   max-height: 480px;
 }
-.uploadcare-dialog-camera-please-allow {
+.uploadcare-dialog-camera-message {
   @include vertical-centered;
   display: none;
   max-width: 450px;
@@ -676,8 +676,19 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   display: none;
 }
 .uploadcare-dialog-camera-requested {
-  .uploadcare-dialog-camera-please-allow {
+  .uploadcare-dialog-camera-message {
     display: inline-block;
+  }
+}
+.uploadcare-dialog-camera-not-found {
+  display: none;
+}
+.uploadcare-dialog-camera-not-founded {
+  .uploadcare-dialog-camera-please-allow {
+    display: none;
+  }
+  .uploadcare-dialog-camera-not-found {
+    display: block;
   }
 }
 .uploadcare-dialog-camera-denied {

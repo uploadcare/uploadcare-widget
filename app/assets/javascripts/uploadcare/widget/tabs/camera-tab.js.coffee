@@ -24,7 +24,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @video = @wrap.find('video')
 
       @video.on 'loadeddata', =>
-        @URL.revokeObjectURL(@video.prop('src'))
+        @URL?.revokeObjectURL(@video.prop('src'))
 
       @wrap.find('.uploadcare-dialog-camera-capture').on 'click', =>
         video = @video[0]
@@ -45,8 +45,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @__requestCamera()
 
       @dialogApi.dialog.always =>
-        if @__stream
-          @__stream.stop()
+        @__stream?.stop?()
 
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
@@ -63,12 +62,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           .removeClass('uploadcare-dialog-camera-denied')
           .addClass('uploadcare-dialog-camera-ready')
         @__stream = stream
-        @video.prop('src', @URL.createObjectURL(stream))
+        if @URL
+          @video.prop('src', @URL.createObjectURL(stream))
+        else
+          @video.prop('src', stream)
         @video[0].play()
       , (error) =>
-        if error.name == 'PermissionDeniedError'
+        if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
+          @wrap.addClass('uploadcare-dialog-camera-not-founded')
+        else
           @wrap.addClass('uploadcare-dialog-camera-denied')
-        else if error.name == 'DevicesNotFoundError'
-          @wrap.addClass('uploadcare-dialog-camera-not-found')
         @__loaded = false
       )

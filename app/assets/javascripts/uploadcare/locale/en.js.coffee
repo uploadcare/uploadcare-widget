@@ -63,7 +63,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           pleaseAllow:
             title: 'Please, allow access to your camera'
             text: 'You have been requested pemissions to access camera from this site. ' +
-                  'In order to take pictures from your cam you should approve this request.'
+                  'In order to take pictures from your cam you should approve this request.'
+          notFound:
+            title: "Camera doesn't found"
+            text: 'Looks like you have no camera connected to this computer.'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'
