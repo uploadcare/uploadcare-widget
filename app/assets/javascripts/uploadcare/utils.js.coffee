@@ -271,3 +271,19 @@ namespace 'uploadcare.utils', (ns) ->
 
   ns.plugin = (fn) ->
     fn uploadcare
+
+
+  ns.canvasToBlob = (canvas, type, quality, callback) ->
+    if HTMLCanvasElement.prototype.toBlob
+      return canvas.toBlob(callback, type, quality)
+
+    dataURL = canvas.toDataURL(type, quality);
+    dataURL = dataURL.split(',');
+
+    binStr = atob(dataURL[1])
+    arr = new Uint8Array(binStr.length)
+
+    for i in [0...binStr.length] by 1
+      arr[i] = binStr.charCodeAt(i)
+
+    callback(new Blob( [arr], {type: /:(.+\/.+);/.exec(dataURL[0])[1]} ))

@@ -44,6 +44,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           skydrive: 'OneDrive'
           flickr: 'Flickr'
           url: 'Arbitrary Links'
+          camera: 'Camera'
         file:
           drag: 'Drop a file here'
           nodrop: 'Upload files from your computer'
@@ -57,6 +58,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: 'Just provide the link.'
           input: 'Paste your link here...'
           button: 'Upload'
+        camera:
+          capture: 'Take a photo'
+          retry: 'Request permissions again'
+          pleaseAllow:
+            title: 'Please, allow access to your camera'
+            text: 'You have been requested pemissions to access camera from this site. ' +
+                  'In order to take pictures from your cam you should approve this request.'
+          notFound:
+            title: 'No camera detected'
+            text: 'Looks like you have no camera connected to this device.'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'

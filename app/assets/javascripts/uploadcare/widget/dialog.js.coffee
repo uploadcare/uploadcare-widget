@@ -1,6 +1,7 @@
 # = require ./tabs/base-source-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
+# = require ./tabs/camera-tab
 # = require ./tabs/remote-tab
 # = require ./tabs/base-preview-tab
 # = require ./tabs/preview-tab
@@ -105,6 +106,7 @@ namespace 'uploadcare', (ns) ->
 
   ns.registerTab('file', tabs.FileTab)
   ns.registerTab('url', tabs.UrlTab)
+  ns.registerTab('camera', tabs.CameraTab)
   ns.registerTab('facebook', tabs.RemoteTabFor 'facebook')
   ns.registerTab('dropbox', tabs.RemoteTabFor 'dropbox')
   ns.registerTab('gdrive', tabs.RemoteTabFor 'gdrive')
@@ -182,6 +184,7 @@ namespace 'uploadcare', (ns) ->
       addFiles: @addFiles
       done: @__resolve
       switchTab: @switchTab
+      dialog: @dfd.promise()
 
     __resolve: =>
       @dfd.resolve @files.get()

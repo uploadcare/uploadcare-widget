@@ -219,6 +219,9 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab-flickr:before {
       background-position: 0 ($frame-size * -11);
     }
+    .uploadcare-dialog-tab-camera:before {
+      background-position: 0 ($frame-size * -12);
+    }
 
 
 .uploadcare-dialog-tabs-panel {
@@ -508,7 +511,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   .uploadcare-dialog-title {
     margin-bottom: 12px;
   }
-  .uploadcare-dialog-error-tab-illustration,
   .uploadcare-dialog-normal-text {
     margin-bottom: 38px;
   }
@@ -527,6 +529,8 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
       height: 120px;
       background-position: center;
       background-repeat: no-repeat;
+      margin-bottom: 38px;
+      .uploadcare-dialog-camera-holder &,
       .uploadcare-dialog-error-tab-image & {
         @extend %error-image-image;
       }
@@ -636,6 +640,69 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
   .uploadcare-dialog-file-title {
     color: $dragndrop-hover-text-color;
+  }
+}
+
+
+// § Camera tab
+
+.uploadcare-dialog-camera-holder {
+  @include vertical-centered-wrap;
+  text-align: center;
+  height: 480px;
+  margin-top: y(1);
+
+  .uploadcare-dialog-normal-text {
+    margin-bottom: 38px;
+  }
+}
+.uploadcare-dialog-camera-illustration {
+
+}
+.uploadcare-dialog-camera-video {
+  @include vertical-centered;
+  display: none;
+  max-width: 100%;
+  max-height: 480px;
+}
+.uploadcare-dialog-camera-message {
+  @include vertical-centered;
+  display: none;
+  max-width: 450px;
+}
+.uploadcare-dialog-camera-controls {
+  margin-top: y(1);
+  text-align: center;
+}
+.uploadcare-dialog-camera-capture,
+.uploadcare-dialog-camera-retry {
+  display: none;
+}
+.uploadcare-dialog-camera-requested {
+  .uploadcare-dialog-camera-message {
+    display: inline-block;
+  }
+}
+.uploadcare-dialog-camera-not-found {
+  display: none;
+}
+.uploadcare-dialog-camera-not-founded {
+  .uploadcare-dialog-camera-please-allow {
+    display: none;
+  }
+  .uploadcare-dialog-camera-not-found {
+    display: block;
+  }
+}
+.uploadcare-dialog-camera-denied {
+  .uploadcare-dialog-camera-retry {
+    display: inline-block;
+  }
+}
+.uploadcare-dialog-camera-ready {
+  .uploadcare-dialog-camera-video,
+  .uploadcare-dialog-camera-capture {
+    display: inline-block;
   }
 }
 

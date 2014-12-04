@@ -37,6 +37,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'Локальные файлы'
           vk: 'ВКонтакте'
           url: 'Произвольная ссылка'
+          camera: 'Камера'
         file:
           drag: 'Перетащите файл сюда'
           nodrop: 'Загрузка файлов с вашего компьютера'
@@ -50,6 +51,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: ''
           input: 'Укажите здесь ссылку...'
           button: 'Загрузить'
+        camera:
+          capture: 'Сделать снимок'
+          retry: 'Повторно запросить разрешение'
+          pleaseAllow:
+            title: 'Пожалуйста, разрешите доступ к камере'
+            text: 'Для того, чтобы сделать снимок, мы запросили разрешение ' +
+                  'на доступ к камере с этого сайта.'
+          notFound:
+            title: 'Камера не найдена'
+            text: 'Скорее всего камера не подключена или не настроена.'
         preview:
           unknownName: 'неизвестно'
           change: 'Отмена'
