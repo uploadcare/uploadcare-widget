@@ -66,7 +66,6 @@ namespace 'uploadcare.ui.progress', (ns) ->
       default:
         back: '#e1e5e7'
         front: '#d0bf26'
-        center: '#ffffff'
       grey:
         back: '#c5cacd'
         front: '#a0a3a5'
@@ -131,30 +130,30 @@ namespace 'uploadcare.ui.progress', (ns) ->
     __reRender: ->
       if @canvasCtx
         ctx = @canvasCtx
-        halfSize = @canvasSize/2
+        half = @canvasSize/2
+
+        arc = (radius, val) ->
+          offset = -Math.PI / 2
+          ctx.beginPath()
+          ctx.moveTo(half, half)
+          ctx.arc(half, half, radius, offset, offset + 2 * Math.PI * val, false)
+          ctx.fill()
 
         # Clear
-        ctx.clearRect 0, 0, @canvasSize, @canvasSize
+        ctx.clearRect(0, 0, @canvasSize, @canvasSize)
 
         # Background circle
+        ctx.globalCompositeOperation = 'source-over'
         ctx.fillStyle = @colorTheme.back
-        ctx.beginPath()
-        ctx.arc(halfSize, halfSize, halfSize, 0, 2*Math.PI, false)
-        ctx.fill()
+        arc(half - .5, 1)
 
         # Progress circle
-        offset = -Math.PI / 2
         ctx.fillStyle = @colorTheme.front
-        ctx.beginPath()
-        ctx.moveTo(halfSize, halfSize)
-        ctx.arc(halfSize, halfSize, halfSize, offset, 2*Math.PI * @val + offset, false)
-        ctx.fill()
+        arc(half, @val)
 
-        # Center circle
-        ctx.fillStyle = @colorTheme.center
-        ctx.beginPath()
-        ctx.arc(halfSize, halfSize, @canvasSize/15, 0, 2*Math.PI, false)
-        ctx.fill()
+        # Make a hole
+        ctx.globalCompositeOperation = 'xor'
+        arc(half / 7, 1)
 
     __animateValue: (targetValue) ->
       perStep = if targetValue > @val then 0.05 else -0.05
