@@ -109,7 +109,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
         arc(half, @val)
 
         # Make a hole
-        ctx.globalCompositeOperation = 'xor'
+        ctx.globalCompositeOperation = 'destination-out'
         arc(half / 7, 1)
 
     __animateValue: (target) ->
