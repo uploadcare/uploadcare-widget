@@ -112,17 +112,17 @@ namespace 'uploadcare.ui.progress', (ns) ->
         ctx.globalCompositeOperation = 'xor'
         arc(half / 7, 1)
 
-    __animateValue: (targetValue) ->
-      perStep = if targetValue > @val then 0.05 else -0.05
+    __animateValue: (target) ->
+      val = @val
+      start = new Date()
+      speed = if target > val then 2 else -2
       @__animIntervalId = setInterval =>
-        # TODO: rewrite with timers, not perStep
-        newValue = @val + perStep
-        if (perStep > 0 and newValue > targetValue) or (perStep < 0 and newValue < targetValue)
-          newValue = targetValue
-        if newValue == targetValue
+        current = val + (new Date() - start) / 1000 * speed
+        current = (if speed > 0 then Math.min else Math.max)(current, target)
+        if current == target
           @__stopAnimation()
-        @__setValue newValue
-      , 25
+        @__setValue current
+      , 15
 
     __stopAnimation: ->
       if @__animIntervalId

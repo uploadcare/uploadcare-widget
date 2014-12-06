@@ -128,3 +128,25 @@
     })
   });
 </script>
+
+
+<div id="progress" style="width: 100px; height: 100px; color:rgb(142, 207, 255); border-color: #eee;"></div>
+
+<button id="0">0</button> <button id="50">50</button> <button id="100">100</button>
+
+<script>
+  $(function() {
+    var circle = new uploadcare.Circle(progress);
+
+    $('#0').on('click', function() {
+      circle.renderer.setValue(0);
+    });
+    $('#50').on('click', function() {
+      circle.renderer.setValue(0.5, true);
+    });
+    $('#100').on('click', function() {
+      circle.renderer.setValue(1);
+    });
+
+  });
+</script>
