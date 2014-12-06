@@ -1,5 +1,10 @@
 # History
 
+### 1.5.0, 06.12.2014
+
+* Camera tab
+* Progress circle color can be cahanged through CSS
+
 ### 1.4.6, 24.11.2014
 
 * Added Norwegian locale
