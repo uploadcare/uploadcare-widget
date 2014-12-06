@@ -183,9 +183,24 @@ html.uploadcare-dialog-opened {
       }
     }
 
-    .uploadcare-dialog-tab-preview:before {
-      display: none;
+    .uploadcare-dialog-tab-preview {
+      .uploadcare-widget-circle {
+        padding: 10px;
+      }
+      .uploadcare-widget-circle--canvas {
+        color: #828689;
+        border-color: #bfbfbf;
+      }
+      &.uploadcare-dialog-tab_current .uploadcare-widget-circle--canvas {
+        color: #d0bf26;
+        border-color: #e1e5e7;
+      }
+
+      &:before {
+        display: none;
+      }
     }
+
     .uploadcare-dialog-tab-file:before {
       background-position: 0 ($frame-size * -1);
     }
@@ -267,6 +282,7 @@ html.uploadcare-dialog-opened {
 
 .uploadcare-dialog-footer {
   font-size: $dialog-body-font-size-smaller;
+  line-height: 1.4em;
   text-align: center;
   color: #ddd;
   margin: x(.6);

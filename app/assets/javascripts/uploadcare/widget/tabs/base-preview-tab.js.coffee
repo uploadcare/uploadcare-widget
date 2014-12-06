@@ -19,7 +19,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __initTabButtonCircle: ->
       circleEl = $('<div class="uploadcare-dialog-icon">')
-        .css({padding: '11px'})
         .appendTo(@tabButton)
 
       circleDf = $.Deferred()
@@ -38,26 +37,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       circle = new Circle(circleEl).listen circleDf.promise(), 'progress'
 
-      updateTheme = ->
-        circle.setColorTheme(
-          if tabActive
-            'default'
-          else 
-            if buttonHovered
-              'darkGrey'
-            else
-              'grey'
-        )
-
-      tabActive = false
-      @dialogApi.onSwitched.add (_, switchedToMe) =>
-        tabActive = switchedToMe
-        updateTheme()
-
-      buttonHovered = false
-      @tabButton.hover ->
-        buttonHovered = true
-        updateTheme()
-      , ->
-        buttonHovered = false
-        updateTheme()
+      @dialogApi.onSwitched.add circle.update

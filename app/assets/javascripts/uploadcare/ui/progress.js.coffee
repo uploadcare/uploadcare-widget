@@ -44,8 +44,8 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @observed = null
       @renderer.setValue (if filled then 1 else 0), true
 
-    setColorTheme: (theme) ->
-      @renderer.setColorTheme theme
+    update: =>
+      @renderer.update()
 
 
   class ns.BaseRenderer
@@ -54,51 +54,15 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @element.data 'uploadcare-progress-renderer', this
       @element.addClass 'uploadcare-widget-circle'
 
-    setColorTheme: (theme) ->
-      if $.type(theme) is 'string'
-        theme = @colorThemes[theme]
-      @colorTheme = $.extend {}, @colorThemes.default, theme
-
-    setValue: (value, instant=false) ->
-      throw new Error 'not implemented'
-
-    colorThemes:
-      default:
-        back: '#e1e5e7'
-        front: '#d0bf26'
-        center: '#ffffff'
-      grey:
-        back: '#c5cacd'
-        front: '#a0a3a5'
-      darkGrey:
-        back: '#bfbfbf'
-        front: '#8c8c8c'
+    update: ->
 
 
   class ns.TextRenderer extends ns.BaseRenderer
     constructor: ->
       super
-
-      $.extend true, @colorThemes, {
-        default:
-          front: '#000'
-        grey:
-          front: '#888'
-        darkGrey:
-          front: '#555'
-      }
-
       @element.addClass 'uploadcare-widget-circle--text'
       @element.html(tpl('circle-text'))
-      @background = @element.find('@uploadcare-circle-back')
       @text = @element.find('@uploadcare-circle-text')
-      @setColorTheme 'default'
-
-
-    setColorTheme: (theme) ->
-      super
-      @background.css 'background', @colorTheme.back
-      @text.css 'color', @colorTheme.front
 
     setValue: (val) ->
       val = Math.round(val * 100)
@@ -109,11 +73,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     constructor: ->
       super
-
       @canvasSize = Math.floor(Math.min(@element.width(), @element.height())) * 2
-
-      @setColorTheme 'default'
-      @setValue 0, true
 
       @canvasEl = $('<canvas>')
                   .prop(width: @canvasSize, height: @canvasSize)
@@ -122,51 +82,47 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @element.addClass 'uploadcare-widget-circle--canvas'
       @element.html(@canvasEl)
 
-      @__reRender()
+      @setValue 0, true
 
-    setColorTheme: (theme) ->
-      super
-      @__reRender()
-
-    __reRender: ->
+    update: ->
       if @canvasCtx
         ctx = @canvasCtx
-        halfSize = @canvasSize/2
+        half = @canvasSize/2
+
+        arc = (radius, val) ->
+          offset = -Math.PI / 2
+          ctx.beginPath()
+          ctx.moveTo(half, half)
+          ctx.arc(half, half, radius, offset, offset + 2 * Math.PI * val, false)
+          ctx.fill()
 
         # Clear
-        ctx.clearRect 0, 0, @canvasSize, @canvasSize
+        ctx.clearRect(0, 0, @canvasSize, @canvasSize)
 
         # Background circle
-        ctx.fillStyle = @colorTheme.back
-        ctx.beginPath()
-        ctx.arc(halfSize, halfSize, halfSize, 0, 2*Math.PI, false)
-        ctx.fill()
+        ctx.globalCompositeOperation = 'source-over'
+        ctx.fillStyle = @element.css('border-left-color')
+        arc(half - .5, 1)
 
         # Progress circle
-        offset = -Math.PI / 2
-        ctx.fillStyle = @colorTheme.front
-        ctx.beginPath()
-        ctx.moveTo(halfSize, halfSize)
-        ctx.arc(halfSize, halfSize, halfSize, offset, 2*Math.PI * @val + offset, false)
-        ctx.fill()
+        ctx.fillStyle = @element.css('color')
+        arc(half, @val)
 
-        # Center circle
-        ctx.fillStyle = @colorTheme.center
-        ctx.beginPath()
-        ctx.arc(halfSize, halfSize, @canvasSize/15, 0, 2*Math.PI, false)
-        ctx.fill()
+        # Make a hole
+        ctx.globalCompositeOperation = 'xor'
+        arc(half / 7, 1)
 
-    __animateValue: (targetValue) ->
-      perStep = if targetValue > @val then 0.05 else -0.05
+    __animateValue: (target) ->
+      val = @val
+      start = new Date()
+      speed = if target > val then 2 else -2
       @__animIntervalId = setInterval =>
-        # TODO: rewrite with timers, not perStep
-        newValue = @val + perStep
-        if (perStep > 0 and newValue > targetValue) or (perStep < 0 and newValue < targetValue)
-          newValue = targetValue
-        if newValue == targetValue
+        current = val + (new Date() - start) / 1000 * speed
+        current = (if speed > 0 then Math.min else Math.max)(current, target)
+        if current == target
           @__stopAnimation()
-        @__setValue newValue
-      , 25
+        @__setValue current
+      , 15
 
     __stopAnimation: ->
       if @__animIntervalId
@@ -175,7 +131,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     __setValue: (val) ->
       @val = val
-      @__reRender()
+      @update()
 
     setValue: (val, instant = false) ->
       @__stopAnimation()
