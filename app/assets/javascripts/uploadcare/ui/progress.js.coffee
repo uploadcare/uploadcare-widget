@@ -44,8 +44,8 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @observed = null
       @renderer.setValue (if filled then 1 else 0), true
 
-    setColorTheme: (theme) ->
-      @renderer.setColorTheme theme
+    update: =>
+      @renderer.update()
 
 
   class ns.BaseRenderer
@@ -54,50 +54,15 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @element.data 'uploadcare-progress-renderer', this
       @element.addClass 'uploadcare-widget-circle'
 
-    setColorTheme: (theme) ->
-      if $.type(theme) is 'string'
-        theme = @colorThemes[theme]
-      @colorTheme = $.extend {}, @colorThemes.default, theme
-
-    setValue: (value, instant=false) ->
-      throw new Error 'not implemented'
-
-    colorThemes:
-      default:
-        back: '#e1e5e7'
-        front: '#d0bf26'
-      grey:
-        back: '#c5cacd'
-        front: '#a0a3a5'
-      darkGrey:
-        back: '#bfbfbf'
-        front: '#8c8c8c'
+    update: ->
 
 
   class ns.TextRenderer extends ns.BaseRenderer
     constructor: ->
       super
-
-      $.extend true, @colorThemes, {
-        default:
-          front: '#000'
-        grey:
-          front: '#888'
-        darkGrey:
-          front: '#555'
-      }
-
       @element.addClass 'uploadcare-widget-circle--text'
       @element.html(tpl('circle-text'))
-      @background = @element.find('@uploadcare-circle-back')
       @text = @element.find('@uploadcare-circle-text')
-      @setColorTheme 'default'
-
-
-    setColorTheme: (theme) ->
-      super
-      @background.css 'background', @colorTheme.back
-      @text.css 'color', @colorTheme.front
 
     setValue: (val) ->
       val = Math.round(val * 100)
@@ -108,11 +73,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     constructor: ->
       super
-
       @canvasSize = Math.floor(Math.min(@element.width(), @element.height())) * 2
-
-      @setColorTheme 'default'
-      @setValue 0, true
 
       @canvasEl = $('<canvas>')
                   .prop(width: @canvasSize, height: @canvasSize)
@@ -121,13 +82,9 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @element.addClass 'uploadcare-widget-circle--canvas'
       @element.html(@canvasEl)
 
-      @__reRender()
+      @setValue 0, true
 
-    setColorTheme: (theme) ->
-      super
-      @__reRender()
-
-    __reRender: ->
+    update: ->
       if @canvasCtx
         ctx = @canvasCtx
         half = @canvasSize/2
@@ -144,11 +101,11 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
         # Background circle
         ctx.globalCompositeOperation = 'source-over'
-        ctx.fillStyle = @colorTheme.back
+        ctx.fillStyle = @element.css('border-left-color')
         arc(half - .5, 1)
 
         # Progress circle
-        ctx.fillStyle = @colorTheme.front
+        ctx.fillStyle = @element.css('color')
         arc(half, @val)
 
         # Make a hole
@@ -174,7 +131,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     __setValue: (val) ->
       @val = val
-      @__reRender()
+      @update()
 
     setValue: (val, instant = false) ->
       @__stopAnimation()
