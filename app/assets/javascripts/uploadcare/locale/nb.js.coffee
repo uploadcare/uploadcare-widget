@@ -26,7 +26,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           other: 'Velg filer'
         images:
           one: 'Velg et bilde'
-          other: 'Velg bilders'
+          other: 'Velg bilder'
     dialog:
       done: 'Ferdig'
       showFiles: 'Vis filer'
@@ -43,7 +43,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           box: 'Box'
           skydrive: 'OneDrive'
           flickr: 'Flickr'
-          url: 'Direkte link'
+          url: 'Direktelink'
         file:
           drag: 'Dra og slipp en fil her'
           nodrop: 'Last opp filer fra datamaskinen'
@@ -92,7 +92,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Feil'
               text: 'Kan ikke laste bildet'
           multiple:
-            title: 'Dar har valgt %files%'
+            title: 'Du har valgt %files%'
             question: 'Ønsker du å legge til alle filene?'
             tooManyFiles: 'Du har valgt for mange filer. %max% er maksimum.'
             tooFewFiles: 'Du har valgt %files%. Minimum %min% er påkrevd.'
