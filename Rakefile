@@ -60,8 +60,8 @@ def ensure_dir(filename)
   FileUtils.mkdir_p(path) unless Dir.exists?(path)
 end
 
-def write_file(filename, contents)
-  widget_path = in_root("pkg/#{filename}")
+def write_file(filename, contents, root="pkg")
+  widget_path = in_root("#{root}/#{filename}")
   ensure_dir widget_path
   File.open(widget_path, "wb") do |f|
     f.write(contents)
@@ -69,8 +69,8 @@ def write_file(filename, contents)
   puts "Created #{widget_path}"
 end
 
-def cp_file(src, dest)
-  widget_path = in_root("pkg/#{dest}")
+def cp_file(src, dest, root="pkg")
+  widget_path = in_root("#{root}/#{dest}")
   ensure_dir widget_path
   FileUtils.copy_file src, widget_path
   puts "Copied #{widget_path}"
@@ -110,6 +110,22 @@ def build_widget(version)
 
   IMAGES.each do |full, base|
     cp_file full, "#{version}/images/#{base}"
+  end
+end
+
+def build_bower_widget(version)
+  comment = header_comment(version)
+  js = Rails.application.assets['uploadcare/widget-bower.js'].source
+  js = wrap_namespace(js, version)
+
+  write_file(
+    "#{version}/uploadcare-#{version}.js",
+    comment + js,
+    "bower"
+  )
+
+  IMAGES.each do |full, base|
+    cp_file full, "#{version}/images/#{base}", "bower"
   end
 end
 
@@ -194,6 +210,13 @@ namespace :js do
     task upload: [:application] do
       setup_prefix(UploadcareWidget::VERSION)
       upload_widget(UploadcareWidget::VERSION)
+    end
+  end
+
+  namespace :bower do
+    task build: [:application] do
+      setup_prefix(UploadcareWidget::VERSION)
+      build_bower_widget(UploadcareWidget::VERSION)
     end
   end
 
