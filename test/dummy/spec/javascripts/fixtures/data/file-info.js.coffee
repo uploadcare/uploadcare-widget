@@ -16,3 +16,14 @@ jasmine.ns 'fixtures', (ns) ->
           geo_location: null
           datetime_original: null
           height: 725
+    doc:
+      uuid: '0701908a-725c-42ed-89b0-d7b9a911f1f2'
+      cdnUrlModifiers: ''
+      originalUrl: 'http://example.com/doc.doc'
+      info:
+        original_filename: 'doc.doc'
+        size: 500
+        is_image: false
+        is_stored: false
+        is_ready: true
+        image_info: null

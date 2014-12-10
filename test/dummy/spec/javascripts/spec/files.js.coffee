@@ -2,7 +2,7 @@
   mocks
   utils
   fixtures:
-    fileInfo: {kitty}
+    fileInfo: {kitty, doc}
 } = jasmine
 
 describe "UploadedFile", ->
@@ -96,3 +96,47 @@ describe "UrlFile", ->
       file.done (info) ->
         for prop in ['uuid', 'name', 'size', 'isImage', 'isStored']
           expect(info[prop]).toBe utils.toFileInfo(kitty)[prop]
+
+
+
+describe "Validators", ->
+
+  imagesOnly = (info) ->
+    if info.isImage is false
+      throw new Error('image')
+
+  it "should fails if validator added before", ->
+    file = null
+    runs ->
+      mocks.use 'jsonp'
+      mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
+        doc.info
+
+      v = [];
+      v.push(imagesOnly);
+      file = uploadcare.fileFrom('uploaded', doc.uuid, {validators: v})
+
+    waitsFor ->
+      file.state() isnt 'pending'
+    , "successfuly created", 100
+
+    runs ->
+      expect(file.state()).toBe('rejected')
+
+  it "should passes if validator added after", ->
+    file = null
+    runs ->
+      mocks.use 'jsonp'
+      mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
+        doc.info
+
+      v = [];
+      file = uploadcare.fileFrom('uploaded', doc.uuid, {validators: v})
+      v.push(imagesOnly);
+
+    waitsFor ->
+      file.state() isnt 'pending'
+    , "successfuly created", 100
+
+    runs ->
+      expect(file.state()).toBe('resolved')
