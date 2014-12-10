@@ -60,8 +60,8 @@ def ensure_dir(filename)
   FileUtils.mkdir_p(path) unless Dir.exists?(path)
 end
 
-def write_file(filename, contents, root="pkg")
-  widget_path = in_root("#{root}/#{filename}")
+def write_file(filename, contents)
+  widget_path = in_root("pkg/#{filename}")
   ensure_dir widget_path
   File.open(widget_path, "wb") do |f|
     f.write(contents)
@@ -69,8 +69,8 @@ def write_file(filename, contents, root="pkg")
   puts "Created #{widget_path}"
 end
 
-def cp_file(src, dest, root="pkg")
-  widget_path = in_root("#{root}/#{dest}")
+def cp_file(src, dest)
+  widget_path = in_root("pkg/#{dest}")
   ensure_dir widget_path
   FileUtils.copy_file src, widget_path
   puts "Copied #{widget_path}"
@@ -119,13 +119,16 @@ def build_bower_widget(version)
   js = wrap_namespace(js, version)
 
   write_file(
-    "#{version}/uploadcare-#{version}.js",
-    comment + js,
-    "bower"
+    "bower/uploadcare.min.js",
+    comment + YUI::JavaScriptCompressor.new.compress(js)
+  )
+  write_file(
+    "bower/uploadcare.js",
+    comment + js
   )
 
   IMAGES.each do |full, base|
-    cp_file full, "#{version}/images/#{base}", "bower"
+    cp_file full, "bower/images/#{base}"
   end
 end
 
