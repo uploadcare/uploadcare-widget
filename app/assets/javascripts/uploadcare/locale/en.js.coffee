@@ -62,9 +62,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           capture: 'Take a photo'
           retry: 'Request permissions again'
           pleaseAllow:
-            title: 'Please, allow access to your camera'
-            text: 'You have been requested pemissions to access camera from this site. ' +
-                  'In order to take pictures from your cam you should approve this request.'
+            title: 'Please allow access to your camera'
+            text: 'You have been prompted to allow camera access from this site. ' +
+                  'In order to take pictures with your camera you must approve this request.'
           notFound:
             title: 'No camera detected'
             text: 'Looks like you have no camera connected to this device.'
