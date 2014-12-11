@@ -77,7 +77,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       canvas = document.createElement('canvas')
       canvas.width = w;
       canvas.height = h;
-      canvas.getContext('2d').drawImage(video, 0, 0, w, h)
+      ctx = canvas.getContext('2d')
+      if @mirrored
+        ctx.translate(w, 0)
+        ctx.scale(-1, 1)
+      ctx.drawImage(video, 0, 0, w, h)
 
       utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
         blob.name = "camera.jpg"
