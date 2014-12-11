@@ -26,18 +26,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @video.on 'loadeddata', =>
         @URL?.revokeObjectURL(@video.prop('src'))
 
-      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', =>
-        video = @video[0]
-        w = video.videoWidth
-        h = video.videoHeight
-        canvas = document.createElement('canvas')
-        canvas.width = w;
-        canvas.height = h;
-        canvas.getContext('2d').drawImage(video, 0, 0, w, h)
-
-        utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
-          blob.name = "camera.jpg"
-          @dialogApi.addFiles 'object', [blob]
+      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', @__capture
 
       @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
 
@@ -75,3 +64,16 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @wrap.addClass('uploadcare-dialog-camera-denied')
         @__loaded = false
       )
+
+    __capture: =>
+      video = @video[0]
+      w = video.videoWidth
+      h = video.videoHeight
+      canvas = document.createElement('canvas')
+      canvas.width = w;
+      canvas.height = h;
+      canvas.getContext('2d').drawImage(video, 0, 0, w, h)
+
+      utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
+        blob.name = "camera.jpg"
+        @dialogApi.addFiles 'object', [blob]
