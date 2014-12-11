@@ -1,5 +1,5 @@
 <div class="uploadcare-dialog-camera-holder"><!--
-  --><video class="uploadcare-dialog-camera-video"></video><!--
+  --><video class="uploadcare-dialog-camera-video uploadcare-dialog-camera--mirrored"></video><!--
   --><div class="uploadcare-dialog-camera-message">
     <div class="uploadcare-dialog-error-tab-illustration"></div>
 
@@ -23,6 +23,9 @@
   </div><!--
 --></div>
 <div class="uploadcare-dialog-camera-controls">
+  <div class="uploadcare-dialog-camera-mirror uploadcare-dialog-button">
+    <%- t('dialog.tabs.camera.mirror') %>
+  </div>
   <div class="uploadcare-dialog-camera-capture uploadcare-dialog-button-success">
     <%- t('dialog.tabs.camera.capture') %>
   </div>

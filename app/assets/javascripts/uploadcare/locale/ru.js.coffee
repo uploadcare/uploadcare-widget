@@ -53,6 +53,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           button: 'Загрузить'
         camera:
           capture: 'Сделать снимок'
+          mirror: 'Отразить'
           retry: 'Повторно запросить разрешение'
           pleaseAllow:
             title: 'Пожалуйста, разрешите доступ к камере'

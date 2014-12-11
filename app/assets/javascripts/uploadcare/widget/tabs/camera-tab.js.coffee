@@ -18,17 +18,18 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         return
 
       @__loaded = false
+      @mirrored = true
 
       @wrap.append tpl 'tab-camera'
       @wrap.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
-      @video = @wrap.find('video')
+      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', @__capture
+      @wrap.find('.uploadcare-dialog-camera-mirror').on 'click', @__mirror
+      @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
 
+      @video = @wrap.find('video')
       @video.on 'loadeddata', =>
         @URL?.revokeObjectURL(@video.prop('src'))
 
-      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', @__capture
-
-      @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
 
       @dialogApi.onSwitched.add (_, switchedToMe) =>
         if switchedToMe and not @__loaded
@@ -39,7 +40,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
-      @URL = window.URL || window.webkitURL
+      @URL = window.URL or window.webkitURL
       return !! @getUserMedia and Uint8Array
 
     __requestCamera: =>
@@ -64,6 +65,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @wrap.addClass('uploadcare-dialog-camera-denied')
         @__loaded = false
       )
+
+    __mirror: =>
+      @mirrored = ! @mirrored
+      @video.toggleClass('uploadcare-dialog-camera--mirrored', @mirrored)
 
     __capture: =>
       video = @video[0]

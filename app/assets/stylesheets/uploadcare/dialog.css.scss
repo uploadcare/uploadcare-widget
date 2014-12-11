@@ -680,6 +680,12 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   display: none;
   max-width: 100%;
   max-height: 480px;
+  transition: transform .8s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition: -webkit-transform .8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.uploadcare-dialog-camera--mirrored {
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
 }
 .uploadcare-dialog-camera-message {
   @include vertical-centered;
@@ -690,8 +696,14 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   margin-top: y(1);
   text-align: center;
 }
+.uploadcare-dialog-camera-mirror {
+  position: absolute;
+  margin-right: 0;
+  right: x(1);
+}
 .uploadcare-dialog-camera-capture,
-.uploadcare-dialog-camera-retry {
+.uploadcare-dialog-camera-retry,
+.uploadcare-dialog-camera-mirror {
   display: none;
 }
 .uploadcare-dialog-camera-requested {
@@ -717,7 +729,8 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 }
 .uploadcare-dialog-camera-ready {
   .uploadcare-dialog-camera-video,
-  .uploadcare-dialog-camera-capture {
+  .uploadcare-dialog-camera-capture,
+  .uploadcare-dialog-camera-mirror {
     display: inline-block;
   }
 }

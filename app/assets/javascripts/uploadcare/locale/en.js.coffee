@@ -60,6 +60,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           button: 'Upload'
         camera:
           capture: 'Take a photo'
+          mirror: 'Mirror'
           retry: 'Request permissions again'
           pleaseAllow:
             title: 'Please allow access to your camera'
