@@ -123,6 +123,7 @@ describe "Validators", ->
     runs ->
       expect(file.state()).toBe('rejected')
 
+
   it "should passes if validator added after", ->
     file = null
     runs ->
@@ -140,3 +141,23 @@ describe "Validators", ->
 
     runs ->
       expect(file.state()).toBe('resolved')
+
+
+  it "should work with obsolete settings name", ->
+
+    file = null
+    runs ->
+      mocks.use 'jsonp'
+      mocks.jsonp.addHandler /\/info\/$/, (url, data) ->
+        doc.info
+
+      file = uploadcare.fileFrom('uploaded', doc.uuid, {
+        __validators: [imagesOnly],
+      })
+
+    waitsFor ->
+      file.state() isnt 'pending'
+    , "successfuly created", 100
+
+    runs ->
+      expect(file.state()).toBe('rejected')
