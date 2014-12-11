@@ -27,15 +27,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
 
       @video = @wrap.find('video')
-      @video.on 'loadeddata', =>
-        @URL?.revokeObjectURL(@video.prop('src'))
-
+      @video.on 'loadeddata', ->
+        @play()
 
       @dialogApi.onSwitched.add (_, switchedToMe) =>
         if switchedToMe and not @__loaded
           @__requestCamera()
 
       @dialogApi.dialog.always =>
+        @URL?.revokeObjectURL(@video.prop('src'))
         @__stream?.stop?()
 
     __checkCompatibility: ->
