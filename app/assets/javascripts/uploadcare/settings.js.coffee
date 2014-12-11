@@ -135,6 +135,9 @@ namespace 'uploadcare.settings', (ns) ->
     if not utils.abilities.sendFileAPI
       settings.systemDialog = false
 
+    if settings.validators
+      settings.validators = settings.validators.slice()
+
     settings
 
 

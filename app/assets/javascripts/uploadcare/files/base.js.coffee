@@ -88,7 +88,7 @@ namespace 'uploadcare.files', (ns) ->
       @__uploadDf.reject()
 
     __setupValidation: ->
-      @validators = (@settings.__validators or []).slice()
+      @validators = @settings.validators or @settings.__validators or []
 
       if @settings.imagesOnly
         @validators.push (info) ->
