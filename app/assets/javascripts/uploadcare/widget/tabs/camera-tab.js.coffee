@@ -46,7 +46,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __requestCamera: =>
       @__loaded = true
       @getUserMedia.call(navigator,
-        video: true
+        video:
+          optional: [
+            {minWidth: 320},
+            {minWidth: 640},
+            {minWidth: 1024},
+            {minWidth: 1280},
+            {minWidth: 1920}
+          ]
       , (stream) =>
         @wrap
           .removeClass('uploadcare-dialog-camera-requested')
