@@ -52,7 +52,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             {minWidth: 640},
             {minWidth: 1024},
             {minWidth: 1280},
-            {minWidth: 1920}
+            {minWidth: 1920},
           ]
       , (stream) =>
         @wrap

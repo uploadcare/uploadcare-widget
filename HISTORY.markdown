@@ -1,9 +1,22 @@
 # History
 
+
+### 1.5.1, 12.12.2014
+
+* Built-in jQuery updated to 1.11.1
+* Mirror option in camera tab
+* Capture highest possible video resolution from camera
+* Go to preview tab after camera shot for multiple widget
+* Fixed buttons on camera tab for multiple widget
+* Fixed video preview on camera tab
+* Fixed English locale for camera dialog
+* Fixed some typos in the norwegian locale
+
 ### 1.5.0, 06.12.2014
 
 * Camera tab
-* Progress circle color can be cahanged through CSS
+* Progress circle color can be changed through CSS
+* Version without built-in jQuery
 
 ### 1.4.6, 24.11.2014
 
