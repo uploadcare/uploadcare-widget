@@ -176,8 +176,6 @@ def upload_bower(version)
     cp.call "images/#{base}"
   end
 
-  version = '0.0.4'
-
   # Update version number in boser.json
   `#{submodule} sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' bower.json`
   `#{submodule} git add bower.json`
