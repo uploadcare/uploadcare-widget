@@ -93,3 +93,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
         blob.name = "camera.jpg"
         @dialogApi.addFiles 'object', [blob]
+        @dialogApi.switchTab 'preview'
