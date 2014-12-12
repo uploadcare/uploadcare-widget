@@ -184,7 +184,7 @@ def upload_bower(version)
   # Commit, create a tag, and push
   `#{submodule} git commit -m"New widget release: #{version}"`
   `#{submodule} git tag #{version}`
-  `#{submodule} git push && git push --tags`
+  `#{submodule} git push --all`
 end
 
 namespace :js do
