@@ -155,7 +155,7 @@ def upload_bower(version)
   submodule = "cd submodules/uploadcare-bower &&"
 
   # Check if such verion already exists
-  `#{submodule} git pull`
+  `#{submodule} git reset && git checkout . && git clean -fdx && git checkout master && git pull`
   tag = `#{submodule} git tag -l #{version}`
   if not tag.empty?
       print "ERROR: The version already exists: <#{tag}>\n"
