@@ -96,17 +96,20 @@ end
 
 def build_widget(version)
   comment = header_comment(version)
+
+  js = Rails.application.assets['uploadcare/widget-full.js'].source
+  js = wrap_namespace(js, version)
+  write_file("#{version}/uploadcare.full.js", comment + js)
+  write_file("#{version}/uploadcare-#{version}.js", comment + js)
+  minified = YUI::JavaScriptCompressor.new.compress(js)
+  write_file("#{version}/uploadcare.full.min.js", comment + minified)
+  write_file("#{version}/uploadcare-#{version}.min.js", comment + minified)
+
   js = Rails.application.assets['uploadcare/widget.js'].source
   js = wrap_namespace(js, version)
-
-  write_file(
-    "#{version}/uploadcare-#{version}.min.js",
-    comment + YUI::JavaScriptCompressor.new.compress(js)
-  )
-  write_file(
-    "#{version}/uploadcare-#{version}.js",
-    comment + js
-  )
+  write_file("#{version}/uploadcare.js", comment + js)
+  minified = YUI::JavaScriptCompressor.new.compress(js)
+  write_file("#{version}/uploadcare.min.js", comment + minified)
 
   IMAGES.each do |full, base|
     cp_file full, "#{version}/images/#{base}"
