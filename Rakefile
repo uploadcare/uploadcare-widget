@@ -138,8 +138,12 @@ def upload_widget(version)
     upload.call name, 'application/javascript'
   end
 
-  upload_js.call "uploadcare-#{version}.min.js"
+  upload_js.call "uploadcare.js"
+  upload_js.call "uploadcare.min.js"
+  upload_js.call "uploadcare.full.js"
+  upload_js.call "uploadcare.full.min.js"
   upload_js.call "uploadcare-#{version}.js"
+  upload_js.call "uploadcare-#{version}.min.js"
 
   IMAGES.each do |full, base, type|
     upload.call "images/#{base}", type
