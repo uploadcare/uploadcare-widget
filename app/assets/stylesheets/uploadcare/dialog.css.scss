@@ -662,14 +662,19 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 // § Camera tab
 
+$dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
+
 .uploadcare-dialog-camera-holder {
   @include vertical-centered-wrap;
   text-align: center;
-  height: 480px;
-  margin-top: y(1);
+  height: $dialog-camera-video-height;
 
   .uploadcare-dialog-normal-text {
     margin-bottom: 38px;
+  }
+
+  .uploadcare-dialog-multiple & {
+    height: $dialog-camera-video-height - $dialog-footer-height;
   }
 }
 .uploadcare-dialog-camera-illustration {
@@ -679,9 +684,13 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   @include vertical-centered;
   display: none;
   max-width: 100%;
-  max-height: 480px;
+  max-height: $dialog-camera-video-height;
   transition: transform .8s cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-transition: -webkit-transform .8s cubic-bezier(0.23, 1, 0.32, 1);
+
+  .uploadcare-dialog-multiple & {
+    max-height: $dialog-camera-video-height - $dialog-footer-height;
+  }
 }
 .uploadcare-dialog-camera--mirrored {
   transform: scale(-1, 1);
@@ -693,7 +702,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   max-width: 450px;
 }
 .uploadcare-dialog-camera-controls {
-  margin-top: y(1);
+  margin-top: ($dialog-footer-height - $dialog-button-height) / 2;
   text-align: center;
 }
 .uploadcare-dialog-camera-mirror {
