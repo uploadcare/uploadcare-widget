@@ -96,7 +96,7 @@ end
 
 def build_widget(version)
   comment = header_comment(version)
-  js = Rails.application.assets['uploadcare/widget.js'].source
+  js = Rails.application.assets['uploadcare/widget-full.js'].source
   js = wrap_namespace(js, version)
 
   write_file(
@@ -110,25 +110,6 @@ def build_widget(version)
 
   IMAGES.each do |full, base|
     cp_file full, "#{version}/images/#{base}"
-  end
-end
-
-def build_bower_widget(version)
-  comment = header_comment(version)
-  js = Rails.application.assets['uploadcare/widget-bower.js'].source
-  js = wrap_namespace(js, version)
-
-  write_file(
-    "bower/uploadcare.min.js",
-    comment + YUI::JavaScriptCompressor.new.compress(js)
-  )
-  write_file(
-    "bower/uploadcare.js",
-    comment + js
-  )
-
-  IMAGES.each do |full, base|
-    cp_file full, "bower/images/#{base}"
   end
 end
 
@@ -213,13 +194,6 @@ namespace :js do
     task upload: [:application] do
       setup_prefix(UploadcareWidget::VERSION)
       upload_widget(UploadcareWidget::VERSION)
-    end
-  end
-
-  namespace :bower do
-    task build: [:application] do
-      setup_prefix(UploadcareWidget::VERSION)
-      build_bower_widget(UploadcareWidget::VERSION)
     end
   end
 
