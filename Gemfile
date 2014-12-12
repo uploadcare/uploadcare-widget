@@ -26,5 +26,5 @@ gem 'jquery-rails'
 gem 'yui-compressor', '0.9.6'
 gem 'fog'
 
-# newer versions generates bigger js files
+# newer versions generates bigger js files and ha other differences
 gem 'coffee-script-source', '1.6.3'
