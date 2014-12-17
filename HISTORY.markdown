@@ -4,11 +4,12 @@
 ### 1.5.1, 12.12.2014
 
 * Built-in jQuery updated to 1.11.1
+* Validators for `openDialog()`, `openPanel()` and `filesFrom`
 * Mirror option in camera tab
 * Capture highest possible video resolution from camera
 * Go to preview tab after camera shot for multiple widget
 * Fixed buttons on camera tab for multiple widget
-* Fixed video preview on camera tab
+* Fixed video preview on camera tab on Android
 * Fixed English locale for camera dialog
 * Fixed some typos in the norwegian locale
 
