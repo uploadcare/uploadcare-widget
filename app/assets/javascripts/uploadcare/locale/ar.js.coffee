@@ -1,8 +1,8 @@
-# Note: English locale is the default and used as a fallback.
+﻿# Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.ar =
-    uploading: 'Uploading... Please wait.'
-    loadingInfo: 'Loading info...'
+    uploading: 'الرجاء الإنتظار.... يتم الرفع'
+    loadingInfo: '...تحميل المعلومات'
     errors:
       default: 'خطأ'
       baddata: 'قيمة غير صحيحة'
@@ -35,7 +35,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           preview: 'معاينة'
           file: 'الملفات المحلية'
           url: 'روابط التعسفية'
-          camera: 'Camera'
+          camera: 'كاميرا'
         file:
           drag: 'إفلات الملف هنا'
           nodrop: 'تحميل الملفات من جهاز الكمبيوتر الخاص بك'
@@ -50,16 +50,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           input: 'الصق الرابط الخاص بك هنا ...'
           button: 'تحميل'
         camera:
-          capture: 'Take a photo'
-          mirror: 'Mirror'
-          retry: 'Request permissions again'
+          capture: 'إلتقط صورة'
+          mirror: 'مرآة'
+          retry: 'إعادة طلب الأذونات'
           pleaseAllow:
-            title: 'Please allow access to your camera'
-            text: 'You have been prompted to allow camera access from this site. ' +
-                  'In order to take pictures with your camera you must approve this request.'
+            title: 'الرجاء السماح بتشغيل كميرتك '
+            text: 'لقد تم السماح للكاميرا بالوصول لهذا الموقع. ' +
+                  'لكي تلتقط الصور بكاميرتك، يجب السماح لهذا الطلب '
           notFound:
-            title: 'No camera detected'
-            text: 'Looks like you have no camera connected to this device.'
+            title: 'لم يتم العثور على كاميرا '
+            text: 'يبدو أنه لا يوجد كاميرا موصولة بهذا الجهاز'
         preview:
           unknownName: 'غير معروف'
           change: 'إلغاء'
