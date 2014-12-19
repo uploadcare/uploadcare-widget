@@ -49,7 +49,8 @@ namespace 'uploadcare', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialog.on 'click', (e) ->
+    dialog.on 'click', '.uploadcare-dialog-close', ns.closeDialog
+    dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
         return
