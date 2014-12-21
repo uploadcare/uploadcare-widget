@@ -36,7 +36,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'Computer'
           url: 'Directe links'
         file:
-          drag: 'Drop een bestand hier'
+          drag: 'Drop hier een bestand'
           nodrop: 'Upload bestanden van je computer'
           or: 'of'
           button: 'Selecteer een bestand van je computer'
@@ -81,10 +81,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Fout'
               text: 'Kan afbeelding niet laden'
           multiple:
-            title: 'U heeft de volgende bestanden geselecteerd %files%'
-            question: 'Wilt u al deze bestanden toevoegen?'
-            tooManyFiles: 'U heeft teveel bestanden geselecteerd. %max% is het maximum.'
-            tooFewFiles: 'U heeft de volgende bestanden geselecteerd %files%. Minimaal %min% is verplicht.'
+            title: 'Je hebt de volgende bestanden geselecteerd %files%'
+            question: 'Wil je al deze bestanden toevoegen?'
+            tooManyFiles: 'Je hebt teveel bestanden geselecteerd. %max% is het maximum.'
+            tooFewFiles: 'Je hebt de volgende bestanden geselecteerd %files%. Minimaal %min% is verplicht.'
             clear: 'Verwijder alle bestanden'
             done: 'Klaar'
       footer:
