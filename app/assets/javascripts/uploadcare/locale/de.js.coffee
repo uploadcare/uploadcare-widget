@@ -34,15 +34,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'Vorschau'
           file: 'Lokale Dateien'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
           url: 'Web-Links'
         file:
           drag: 'Ziehen Sie eine Datei hier hinein'
@@ -100,7 +91,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Fertig'
       footer:
         text: 'Hochladen, Speichern und Verarbeitung der Dateien durch'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

@@ -33,15 +33,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'プレビュー'
           file: 'ローカルファイル'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
           url: 'URLを直接入力'
         file:
           drag: 'ここにファイルをドロップ'
@@ -99,7 +90,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: '完了'
       footer:
         text: '画像のアップロード、保存および加工の提供：'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:
