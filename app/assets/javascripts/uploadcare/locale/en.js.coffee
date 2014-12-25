@@ -34,6 +34,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'Preview'
           file: 'Local Files'
+          url: 'Arbitrary Links'
+          camera: 'Camera'
           facebook: 'Facebook'
           dropbox: 'Dropbox'
           gdrive: 'Google Drive'
@@ -43,8 +45,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           box: 'Box'
           skydrive: 'OneDrive'
           flickr: 'Flickr'
-          url: 'Arbitrary Links'
-          camera: 'Camera'
+          huddle: 'Huddle'
         file:
           drag: 'Drop a file here'
           nodrop: 'Upload files from your computer'

@@ -237,6 +237,9 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab-camera:before {
       background-position: 0 ($frame-size * -12);
     }
+    .uploadcare-dialog-tab-huddle:before {
+      background-position: 0 ($frame-size * -13);
+    }
 
 
 .uploadcare-dialog-tabs-panel {

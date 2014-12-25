@@ -34,15 +34,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           preview: 'Forhåndsvising'
           file: 'Lokale filer'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Disk'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
           url: 'Direktelink'
         file:
           drag: 'Dra og slipp en fil her'
