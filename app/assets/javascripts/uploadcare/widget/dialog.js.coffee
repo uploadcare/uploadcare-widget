@@ -116,6 +116,7 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('evernote', tabs.RemoteTabFor 'evernote')
   ns.registerTab('box', tabs.RemoteTabFor 'box')
   ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
+  ns.registerTab('huddle', tabs.RemoteTabFor 'huddle')
   ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
   ns.registerTab 'preview', (tabPanel, tabButton, apiForTab, settings) ->
     tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
