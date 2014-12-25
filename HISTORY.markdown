@@ -1,6 +1,14 @@
 # History
 
 
+### 1.5.2, 26.12.2014
+
+* New Arabic locale.
+* New file source Huddle (huddle.com).
+* Dialog is closed by double click on gray background instead of single click.
+* New `uploadcare.closeDialog()` method close current active dialog
+  (usefull for single-page applications).
+
 ### 1.5.1, 12.12.2014
 
 * Built-in jQuery updated to 1.11.1
