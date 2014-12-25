@@ -15,7 +15,11 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'تم حذف ملف'
     draghere: 'إفلت الملف هنا'
     file:
+      zero: '%1 ملفات'
       one: '%1 ملف'
+      two: '%1 ملفات'
+      few: '%1 ملفات'
+      many: '%1 ملفات'
       other: '%1 ملفات'
     buttons:
       cancel: 'إلغاء'
