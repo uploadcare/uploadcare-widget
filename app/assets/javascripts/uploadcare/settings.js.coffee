@@ -142,7 +142,9 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   # Defaults (not normalized)
-  publicDefaults = {}
+  publicDefaults = {
+    allTabs: presets.tabs.all
+  }
   for own key, value of defaults
     publicDefaults[$.camelCase(key)] = value
   expose 'defaults', publicDefaults
