@@ -155,8 +155,8 @@ def upload_bower(version)
   submodule = "cd submodules/uploadcare-bower &&"
 
   # Check if such verion already exists
-  `#{submodule} git reset && git checkout . && git clean -fdx && git checkout master && git pull`
-  tag = `#{submodule} git tag -l #{version}`
+  print `#{submodule} git reset --hard && git checkout master && git clean -fdx && git pull`
+  tag = `#{submodule} git tag -l #{version}`.strip
   if not tag.empty?
       print "ERROR: The version already exists: <#{tag}>\n"
       return
@@ -184,7 +184,7 @@ def upload_bower(version)
   # Commit, create a tag, and push
   `#{submodule} git commit -m"New widget release: #{version}"`
   `#{submodule} git tag #{version}`
-  `#{submodule} git push --all`
+  `#{submodule} git push origin master && git push --tags`
 end
 
 namespace :js do
