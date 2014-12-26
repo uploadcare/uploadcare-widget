@@ -150,6 +150,43 @@ def upload_widget(version)
   end
 end
 
+def upload_bower(version)
+
+  submodule = "cd submodules/uploadcare-bower &&"
+
+  # Check if such verion already exists
+  print `#{submodule} git reset --hard && git checkout master && git clean -fdx && git pull`
+  tag = `#{submodule} git tag -l #{version}`.strip
+  if not tag.empty?
+      print "ERROR: The version already exists: <#{tag}>\n"
+      return
+  end
+
+  cp = lambda do |name|
+    FileUtils.cp "pkg/#{version}/#{name}", "submodules/uploadcare-bower/#{name}"
+    `#{submodule} git add "#{name}"`
+  end
+
+  # Copy files from release
+  cp.call "uploadcare.js"
+  cp.call "uploadcare.min.js"
+  cp.call "uploadcare.full.js"
+  cp.call "uploadcare.full.min.js"
+
+  IMAGES.each do |full, base, type|
+    cp.call "images/#{base}"
+  end
+
+  # Update version number in boser.json
+  `#{submodule} sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' bower.json`
+  `#{submodule} git add bower.json`
+
+  # Commit, create a tag, and push
+  `#{submodule} git commit -m"New widget release: #{version}"`
+  `#{submodule} git tag #{version}`
+  `#{submodule} git push origin master && git push --tags`
+end
+
 namespace :js do
   task :application do
     require 'rubygems'
@@ -201,6 +238,11 @@ namespace :js do
     task upload: [:application] do
       setup_prefix(UploadcareWidget::VERSION)
       upload_widget(UploadcareWidget::VERSION)
+    end
+
+    task bower: [:application] do
+      setup_prefix(UploadcareWidget::VERSION)
+      upload_bower(UploadcareWidget::VERSION)
     end
   end
 

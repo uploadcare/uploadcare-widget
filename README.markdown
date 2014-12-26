@@ -17,6 +17,25 @@ Add following code to your document's `<head>`.
 The official [Widget documentation](https://uploadcare.com/documentation/widget/)
 has more information on using the widget itself.
 
+## Using with Bower
+
+Install uploadcare using `bower` command:
+
+```sh
+$ bower install uploadcare
+```
+
+Add following code to your document's `<head>`.
+
+```html
+<script>
+  // Widget settings
+  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+</script>
+<script src="/bower_components/jquery/jquery.js" charset="utf-8"></script>
+<script src="/bower_components/uploadcare/uploadcare.js" charset="utf-8"></script>
+```
+
 ## Building Your Own
 
 You need a working Ruby 1.9.3 environment
