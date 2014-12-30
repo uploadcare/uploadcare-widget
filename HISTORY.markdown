@@ -1,6 +1,11 @@
 # History
 
 
+### 1.5.3, 30.12.2014
+
+* Fixed the error preventing any file uploading in old versions of
+  Google Chrome. Bug was instroduced in 1.5.0.
+
 ### 1.5.2, 26.12.2014
 
 * New Arabic locale.
