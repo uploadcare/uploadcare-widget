@@ -40,7 +40,7 @@ namespace 'uploadcare.files', (ns) ->
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
       if @settings.autostore
         formData.append('UPLOADCARE_STORE', '1')
-      formData.append('file', @__file, @fileName, "extra")
+      formData.append('file', @__file, @fileName)
       formData.append('file_name', @fileName)
 
       @__autoAbort $.ajax
