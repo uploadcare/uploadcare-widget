@@ -169,7 +169,7 @@ namespace 'uploadcare.utils', (utils) ->
   utils.valueToGroup = (value, settings) ->
     if value
       if $.isArray(value)
-        files = utils.valueToFile(item, settings) for item in value
+        files = (utils.valueToFile(item, settings) for item in value)
         value = uploadcare.FileGroup(files, settings)
       else
         if not utils.isFileGroup(value)
