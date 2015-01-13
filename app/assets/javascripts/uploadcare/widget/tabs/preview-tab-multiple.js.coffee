@@ -39,9 +39,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAdd.add [@__fileAdded, @__updateContainerView]
       @dialogApi.fileColl.onRemove.add [@__fileRemoved, @__updateContainerView]
 
-      @dialogApi.fileColl.onAnyProgress.add @__fileProgress
       @dialogApi.fileColl.onAnyDone.add @__fileDone
       @dialogApi.fileColl.onAnyFail.add @__fileFailed
+      @dialogApi.fileColl.onAnyProgress.add @__fileProgress
 
       @__setupSorting()
 
@@ -91,24 +91,28 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
         .text(if tooManyFiles or tooFewFiles then footer else title)
 
-    __fileProgress: (file, progressInfo) =>
-      fileEl = @__fileToEl(file)
-
-      @__find('file-progressbar-value', fileEl)
-        .css('width', Math.round(progressInfo.progress * 100) + '%')
-
-      info = progressInfo.incompleteFileInfo
-
+    __updateFileInfo: (fileEl, info) ->
       @__find('file-name', fileEl)
         .text(info.name or t('dialog.tabs.preview.unknownName'))
 
       @__find('file-size', fileEl)
         .text(utils.readableFileSize(info.size, '–'))
 
-    __fileDone: (file, info) =>
+    __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
 
+      @__find('file-progressbar-value', fileEl)
+        .css('width', Math.round(progressInfo.progress * 100) + '%')
+
+      @__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
+
+    __fileDone: (file, info) =>
+      fileEl = @__fileToEl(file)
       fileEl.addClass(CLASS_PREFIX + 'uploaded')
+
+      @__find('file-progressbar-value', fileEl)
+        .css('width', '100%')
+      @__updateFileInfo(fileEl, info)
 
       if info.isImage
         @__find('file-preview-wrap', fileEl).html $('<img>')
