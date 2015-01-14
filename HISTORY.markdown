@@ -1,5 +1,11 @@
 # History
 
+### 1.5.4, 19.01.2015
+
+* Fixed assiging array of files as value to multiple widget.
+* Fixed filename and progress indication for piped file objects
+  in multiple dialog.
+* Fixed progress drawing when progress element size is 0.
 
 ### 1.5.3, 30.12.2014
 
