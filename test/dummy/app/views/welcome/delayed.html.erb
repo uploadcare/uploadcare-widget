@@ -3,7 +3,7 @@
 UPLOADCARE_MANUAL_START = true;
 
 jQuery(function($) {
-  var countdown = 5;
+  var countdown = 3;
   var counter = $('#countdown').html(countdown);
   var tick = function() {
     countdown--;
@@ -20,4 +20,7 @@ jQuery(function($) {
 </script>
 <% end %>
 <div id="countdown" style="font-size: 60px;"></div>
-<p><input type="hidden" role="uploadcare-uploader" /></p>
+<div class="hidden">
+  <input type="hidden" role="uploadcare-uploader" />
+  <input type="hidden" role="uploadcare-uploader" value="cdd5795a-ae83-49ea-9b2e-e9c6999f3421"/>
+</div>

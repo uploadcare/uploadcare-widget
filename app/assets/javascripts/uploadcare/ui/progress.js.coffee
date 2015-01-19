@@ -73,11 +73,8 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     constructor: ->
       super
-      @canvasSize = Math.floor(Math.min(@element.width(), @element.height())) * 2
 
-      @canvasEl = $('<canvas>')
-                  .prop(width: @canvasSize, height: @canvasSize)
-      @canvasCtx = @canvasEl.get(0).getContext '2d'
+      @canvasEl = $('<canvas>').get(0)
 
       @element.addClass 'uploadcare-widget-circle--canvas'
       @element.html(@canvasEl)
@@ -85,9 +82,13 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @setValue 0, true
 
     update: ->
-      if @canvasCtx
-        ctx = @canvasCtx
-        half = @canvasSize/2
+      half = Math.floor(Math.min(@element.width(), @element.height()))
+      size = half * 2
+      if half
+        if @canvasEl.width != size or @canvasEl.height != size
+          @canvasEl.width = size
+          @canvasEl.height = size
+        ctx = @canvasEl.getContext('2d')
 
         arc = (radius, val) ->
           offset = -Math.PI / 2
@@ -97,7 +98,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
           ctx.fill()
 
         # Clear
-        ctx.clearRect(0, 0, @canvasSize, @canvasSize)
+        ctx.clearRect(0, 0, size, size)
 
         # Background circle
         ctx.globalCompositeOperation = 'source-over'
