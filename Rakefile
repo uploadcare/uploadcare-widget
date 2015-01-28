@@ -259,5 +259,5 @@ namespace :js do
   end
 
   task latest: ["latest:build", "latest:upload"]
-  task release: ["release:build", "release:upload"]
+  task release: ["release:build", "release:upload", "release:bower"]
 end

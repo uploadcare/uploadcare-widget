@@ -1,5 +1,9 @@
 # History
 
+### 1.5.5, 28.01.2015
+
+* Fixed creation of group with modifiers.
+
 ### 1.5.4, 19.01.2015
 
 * Fixed assiging array of files as value to multiple widget.
