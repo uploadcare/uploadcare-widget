@@ -1,0 +1,40 @@
+<input type="text" size="100" role="uploadcare-uploader" style="display: block"
+   data-multiple="true" id="uploader" data-path-value=""
+   value="dd7ea981-a2b4-41be-bc48-3a00e5d7a7a2~4"/>
+
+<div id="list"></div>
+
+
+<script>
+var $ = uploadcare.jQuery;
+var widget = uploadcare.MultipleWidget('#uploader');
+
+widget.onChange(function(group) {
+  var $list = $('#list').empty();
+  if ( ! group) {
+    return;
+  }
+  $.when.apply(this, group.files()).done(function() {
+    $.each(group.files(), function(i) {
+      var file = this;
+      file.done(function(fileInfo) {
+        $list.append(
+          $('<div/>').append(
+            $('<a href="#"/>').text(fileInfo.name)
+             .on('click', function() {
+               uploadcare.openDialog(file, {
+                 crop: "150x150"
+               }).done(function(file) {
+                 var files = group.files();
+                 files[i] = file;
+                 widget.value(uploadcare.FileGroup(files));
+               });
+               return false;
+             })
+          )
+        );
+      });
+    });
+  });
+});
+</script>
