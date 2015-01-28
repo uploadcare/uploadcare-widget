@@ -106,7 +106,8 @@ namespace 'uploadcare.files', (ns) ->
         @__fileInfosDf.done (infos...) =>
           utils.jsonp "#{@settings.urlBase}/group/", 'POST',
             pub_key: @settings.publicKey
-            files: (info.uuid for info in infos)
+            files: for info in infos
+              "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
           .fail(df.reject)
           .done(df.resolve)
       else

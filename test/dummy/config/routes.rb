@@ -11,6 +11,7 @@ Dummy::Application.routes.draw do
   get "welcome/ui"
   get "welcome/in_hidden_el"
   get "welcome/multiple"
+  get "welcome/multiple_crop"
   get "welcome/validators"
   get "welcome/delayed"
   get "welcome/require"
