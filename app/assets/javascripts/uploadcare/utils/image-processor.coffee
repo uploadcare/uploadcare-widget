@@ -22,30 +22,37 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.reject('support')
 
     else
-      ns.readJpegChunks(file).progress (marker, view) ->
+      op = ns.readJpegChunks(file)
+      op.progress (marker, view) ->
         if marker == 0xe1
           exifTags = ns.parseExifTags(view)
           if exifTags?
             exif = view.buffer
-          console.log(exifTags)
+      op.always ->
+        start = new Date()
+        img = new Image()
+        img.onload = ->
+          console.log('load: ' + (new Date() - start))
+          op = ns.reduceImage(img, settings)
+          op.fail df.reject
+          op.done (canvas) ->
+            start = new Date()
+            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
+              (blob) ->
+                if exif
+                  intro = new DataView(new ArrayBuffer(6))
+                  intro.setUint32(0, 0xffd8ffe1)
+                  intro.setUint16(4, exif.byteLength + 2)
+                  blob = new Blob([
+                    intro, exif, blob.slice(2, blob.size)
+                  ], {type: blob.type})
+                console.log('to blob: ' + (new Date() - start))
+                df.resolve(blob)
 
-      start = new Date()
-      img = new Image()
-      img.onload = ->
-        console.log('load: ' + (new Date() - start))
-        op = ns.reduceImage(img, settings)
-        op.fail df.reject
-        op.done (canvas) ->
-          start = new Date()
-          utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
-            (blob) ->
-              console.log('to blob: ' + (new Date() - start))
-              df.resolve(blob)
+        img.onerror = ->
+          df.reject('not image')
 
-      img.onerror = ->
-        df.reject('not image')
-
-      img.src = URL.createObjectURL(file)
+        img.src = URL.createObjectURL(file)
 
     df.promise()
 
@@ -159,7 +166,6 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     type = view.getUint16(entryOffset, littleEnd)
     numValues = view.getUint32(entryOffset += 2, littleEnd)
     valueOffset = view.getUint32(entryOffset += 4, littleEnd) + 6
-
 
     if type == 2  # ascii, 8-bit byte
       offset = if numValues > 4 then valueOffset else entryOffset
