@@ -32,6 +32,11 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       img = new Image()
       img.onload = ->
         # console.log('load: ' + (new Date() - start))
+        if exifTags and exifTags[0x0112] >= 5
+          # transpose size
+          settings = $.extend(
+            {}, settings, {size: [settings.size[1], settings.size[0]]}
+          )
         op = ns.reduceImage(img, settings)
         op.fail df.reject
         op.done (canvas) ->
