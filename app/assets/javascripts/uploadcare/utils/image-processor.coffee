@@ -18,7 +18,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     exif = null
     exifTags = null
 
-    if not URL
+    if not (URL and DataView)
       df.reject('support')
 
     else
@@ -29,14 +29,14 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
           if exifTags?
             exif = view.buffer
       op.always ->
-        start = new Date()
+        # start = new Date()
         img = new Image()
         img.onload = ->
-          console.log('load: ' + (new Date() - start))
+          # console.log('load: ' + (new Date() - start))
           op = ns.reduceImage(img, settings)
           op.fail df.reject
           op.done (canvas) ->
-            start = new Date()
+            # start = new Date()
             utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
               (blob) ->
                 if exif
@@ -46,7 +46,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
                   blob = new Blob([
                     intro, exif, blob.slice(2, blob.size)
                   ], {type: blob.type})
-                console.log('to blob: ' + (new Date() - start))
+                # console.log('to blob: ' + (new Date() - start))
                 df.resolve(blob)
 
         img.onerror = ->
@@ -68,7 +68,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.reject('not required')
 
     else
-      start = new Date()
+      # start = new Date()
 
       if img.width / w > img.height / h
         h = img.height * w / img.width
@@ -80,7 +80,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       canvas.height = h
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
 
-      console.log('draw: ' + (new Date() - start))
+      # console.log('draw: ' + (new Date() - start))
       df.resolve(canvas)
 
     df.promise()
@@ -100,7 +100,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
         marker = view.getUint8(1)
         if marker == 0xda # Start Of Scan
-          console.log('read jpeg chunks: ' + (new Date() - start))
+          # console.log('read jpeg chunks: ' + (new Date() - start))
           return df.resolve()
         length = view.getUint16(2) - 2
 
@@ -116,8 +116,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.reject('support')
 
     else
+      # start = new Date()
       pos = 2
-      start = new Date()
 
       readToView file.slice(0, 2), (view) ->
         if view.getUint16(0) != 0xffd8
