@@ -101,7 +101,7 @@ namespace 'uploadcare.settings', (ns) ->
     if not reduce.length
       return false
 
-    size: [+reduce[1], +reduce[2]]
+    size: reduce[1] * reduce[2]
 
   normalize = (settings) ->
     arrayOptions settings, [

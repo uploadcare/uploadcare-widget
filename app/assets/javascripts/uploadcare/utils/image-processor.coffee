@@ -32,11 +32,6 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       img = new Image()
       img.onload = ->
         # console.log('load: ' + (new Date() - start))
-        if exifTags and exifTags[0x0112] >= 5
-          # transpose size
-          settings = $.extend(
-            {}, settings, {size: [settings.size[1], settings.size[0]]}
-          )
         op = ns.reduceImage(img, settings)
         op.fail df.reject
         op.done (canvas) ->
@@ -66,17 +61,12 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # out <- canvas
     df = $.Deferred()
 
-    [w, h] = settings.size
-
-    if img.width < w and img.height < h
+    if img.width * img.height < settings.size * 1.5
       return df.reject('not required')
 
     # start = new Date()
-
-    if img.width / w > img.height / h
-      h = img.height * w / img.width
-    else
-      w = img.width * h / img.height
+    w = Math.round(Math.sqrt(settings.size * img.width / img.height))
+    h = Math.round(settings.size / w)
 
     canvas = document.createElement('canvas')
     canvas.width = w
@@ -130,7 +120,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
 
   ns.parseExifTags = (view) ->
-    if view.byteLength < 6 + 2
+    if view.byteLength < 14
       return
     if view.getUint32(0) != 0x45786966 or view.getUint16(4) != 0
       return
