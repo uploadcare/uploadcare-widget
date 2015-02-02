@@ -95,12 +95,13 @@ namespace 'uploadcare.settings', (ns) ->
     preferedSize: [+ratio[1], +ratio[3]] if ratio.length
 
   parseReduce = (val) ->
-    reReduce = /^([0-9]+)x([0-9]+)$/i
+    reReduce = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
     reduce = reReduce.exec($.trim(val.toLowerCase())) or []
 
     if not reduce.length
       return false
 
+    quality: reduce[3] / 100 if reduce[3]
     size: reduce[1] * reduce[2]
 
   normalize = (settings) ->
