@@ -19,40 +19,39 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     exifTags = null
 
     if not (URL and DataView)
-      df.reject('support')
+      return df.reject('support')
 
-    else
-      op = ns.readJpegChunks(file)
-      op.progress (marker, view) ->
-        if marker == 0xe1
-          exifTags = ns.parseExifTags(view)
-          if exifTags?
-            exif = view.buffer
-      op.always ->
-        # start = new Date()
-        img = new Image()
-        img.onload = ->
-          # console.log('load: ' + (new Date() - start))
-          op = ns.reduceImage(img, settings)
-          op.fail df.reject
-          op.done (canvas) ->
-            # start = new Date()
-            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
-              (blob) ->
-                if exif
-                  intro = new DataView(new ArrayBuffer(6))
-                  intro.setUint32(0, 0xffd8ffe1)
-                  intro.setUint16(4, exif.byteLength + 2)
-                  blob = new Blob([
-                    intro, exif, blob.slice(2, blob.size)
-                  ], {type: blob.type})
-                # console.log('to blob: ' + (new Date() - start))
-                df.resolve(blob)
+    op = ns.readJpegChunks(file)
+    op.progress (marker, view) ->
+      if marker == 0xe1
+        exifTags = ns.parseExifTags(view)
+        if exifTags?
+          exif = view.buffer
+    op.always ->
+      # start = new Date()
+      img = new Image()
+      img.onload = ->
+        # console.log('load: ' + (new Date() - start))
+        op = ns.reduceImage(img, settings)
+        op.fail df.reject
+        op.done (canvas) ->
+          # start = new Date()
+          utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
+            (blob) ->
+              if exif
+                intro = new DataView(new ArrayBuffer(6))
+                intro.setUint32(0, 0xffd8ffe1)
+                intro.setUint16(4, exif.byteLength + 2)
+                blob = new Blob([
+                  intro, exif, blob.slice(2, blob.size)
+                ], {type: blob.type})
+              # console.log('to blob: ' + (new Date() - start))
+              df.resolve(blob)
 
-        img.onerror = ->
-          df.reject('not image')
+      img.onerror = ->
+        df.reject('not image')
 
-        img.src = URL.createObjectURL(file)
+      img.src = URL.createObjectURL(file)
 
     df.promise()
 
@@ -65,23 +64,22 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     [w, h] = settings.size
 
     if img.width < w and img.height < h
-      df.reject('not required')
+      return df.reject('not required')
 
+    # start = new Date()
+
+    if img.width / w > img.height / h
+      h = img.height * w / img.width
     else
-      # start = new Date()
+      w = img.width * h / img.height
 
-      if img.width / w > img.height / h
-        h = img.height * w / img.width
-      else
-        w = img.width * h / img.height
+    canvas = document.createElement('canvas')
+    canvas.width = w
+    canvas.height = h
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
 
-      canvas = document.createElement('canvas')
-      canvas.width = w
-      canvas.height = h
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-
-      # console.log('draw: ' + (new Date() - start))
-      df.resolve(canvas)
+    # console.log('draw: ' + (new Date() - start))
+    df.resolve(canvas)
 
     df.promise()
 
@@ -113,17 +111,15 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     df = $.Deferred()
 
     if not (FileReader and DataView)
-      df.reject('support')
+      return df.reject('support')
 
-    else
-      # start = new Date()
-      pos = 2
+    # start = new Date()
+    pos = 2
 
-      readToView file.slice(0, 2), (view) ->
-        if view.getUint16(0) != 0xffd8
-          return df.reject('not jpeg')
-
-        readNext()
+    readToView file.slice(0, 2), (view) ->
+      if view.getUint16(0) != 0xffd8
+        return df.reject('not jpeg')
+      readNext()
 
     df.promise()
 
@@ -136,18 +132,18 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
     tiffOffset = 6
     if view.getUint16(tiffOffset) == 0x4949
-        littleEnd = true
+      littleEnd = true
     else if view.getUint16(tiffOffset) == 0x4d4d
-        littleEnd = false
+      littleEnd = false
     else
-        return
+      return
 
     if view.getUint16(tiffOffset + 2, littleEnd) != 0x002a
-        return
+      return
 
     entryOffset = view.getUint32(tiffOffset + 4, littleEnd)
     if entryOffset < 8
-        return
+      return
     entryOffset += tiffOffset + 2
 
     entries = view.getUint16(entryOffset - 2, littleEnd)
