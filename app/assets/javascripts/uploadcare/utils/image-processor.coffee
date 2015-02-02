@@ -15,13 +15,19 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # in -> file
     # out <- blob
     df = $.Deferred()
+    exif = null
+    exifTags = null
 
     if not URL
       df.reject('support')
 
     else
       ns.readJpegChunks(file).progress (marker, view) ->
-        console.log(marker, view.byteLength)
+        if marker == 0xe1
+          exifTags = ns.parseExifTags(view)
+          if exifTags?
+            exif = view.buffer
+          console.log(exifTags)
 
       start = new Date()
       img = new Image()
@@ -113,3 +119,71 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         readNext()
 
     df.promise()
+
+
+  ns.parseExifTags = (view) ->
+    if view.byteLength < 6 + 2
+      return
+    if view.getUint32(0) != 0x45786966 or view.getUint16(4) != 0
+      return
+
+    tiffOffset = 6
+    if view.getUint16(tiffOffset) == 0x4949
+        littleEnd = true
+    else if view.getUint16(tiffOffset) == 0x4d4d
+        littleEnd = false
+    else
+        return
+
+    if view.getUint16(tiffOffset + 2, littleEnd) != 0x002a
+        return
+
+    entryOffset = view.getUint32(tiffOffset + 4, littleEnd)
+    if entryOffset < 8
+        return
+    entryOffset += tiffOffset + 2
+
+    entries = view.getUint16(entryOffset - 2, littleEnd)
+    tags = {}
+
+    for i in [0...entries]
+      tag = view.getUint16(entryOffset, littleEnd)
+      value = readTagValue(view, entryOffset + 2, littleEnd)
+      if value?
+        tags[tag] = value
+      entryOffset += 12
+    tags
+
+
+  readTagValue = (view, entryOffset, littleEnd) ->
+    type = view.getUint16(entryOffset, littleEnd)
+    numValues = view.getUint32(entryOffset += 2, littleEnd)
+    valueOffset = view.getUint32(entryOffset += 4, littleEnd) + 6
+
+
+    if type == 2  # ascii, 8-bit byte
+      offset = if numValues > 4 then valueOffset else entryOffset
+      buffer = view.buffer.slice(offset, offset + numValues - 1)
+      return String.fromCharCode.apply(null, new Uint8Array(buffer))
+
+    if numValues == 1
+      switch type
+        # byte, 8-bit unsigned int
+        # undefined, 8-bit byte, value depending on field
+        when 1, 7
+          return view.getUint8(entryOffset)
+
+        when 3  # short, 16 bit int
+          return view.getUint16(entryOffset, littleEnd)
+
+        when 4  # long, 32 bit int
+          return view.getUint32(entryOffset, littleEnd)
+
+        when 5  # rational = two long values, first is numerator, second is denominator
+          return view.getUint32(valueOffset, littleEnd) / view.getUint32(valueOffset + 4, littleEnd)
+
+        when 9  # slong, 32 bit signed int
+          return view.getInt32(entryOffset, littleEnd)
+
+        when 10  # signed rational, two slongs, first is numerator, second is denominator
+          return view.getInt32(valueOffset, littleEnd) / view.getInt32(valueOffset + 4, littleEnd)
