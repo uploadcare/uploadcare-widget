@@ -2,6 +2,7 @@
 # = require uploadcare/utils/pusher
 # = require uploadcare/utils/collection
 # = require uploadcare/utils/warnings
+# = require uploadcare/utils/image-processor
 
 {
   namespace,

@@ -25,7 +25,16 @@ namespace 'uploadcare.files', (ns) ->
       if @fileSize >= @MP_MIN_SIZE and utils.abilities.blob
         @multipartUpload()
       else
-        @directUpload()
+        if @settings.imageReduce and utils.abilities.blob
+          op = utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
+          op.done (file) =>
+            @__file = file
+            @fileSize = @__file.size
+            @fileType = @__file.type or 'application/octet-stream'
+          op.always =>
+            @directUpload()
+        else
+          @directUpload()
 
     __autoAbort: (xhr) ->
       @__uploadDf.always xhr.abort
