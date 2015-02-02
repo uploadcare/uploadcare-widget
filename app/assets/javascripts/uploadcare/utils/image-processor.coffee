@@ -6,7 +6,10 @@
 
 namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
+  DataView = window.DataView
+  FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
   URL = window.URL or window.webkitURL
+  URL = URL.createObjectURL && URL
 
   ns.reduceFile = (file, settings) ->
     # in -> file
@@ -17,6 +20,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.reject('support')
 
     else
+      ns.readJpegChunks(file).progress (marker, view) ->
+        console.log(marker, view.byteLength)
+
       start = new Date()
       img = new Image()
       img.onload = ->
@@ -63,5 +69,47 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
       console.log('draw: ' + (new Date() - start))
       df.resolve(canvas)
+
+    df.promise()
+
+
+  ns.readJpegChunks = (file) ->
+    readToView = (file, cb) ->
+      reader = new FileReader()
+      reader.onload = ->
+        cb(new DataView(reader.result))
+      reader.readAsArrayBuffer(file)
+
+    readNext = ->
+      readToView file.slice(pos, pos += 4), (view) ->
+        if view.byteLength != 4 or view.getUint8(0) != 0xff
+          return df.reject('corrupted')
+
+        marker = view.getUint8(1)
+        if marker == 0xda # Start Of Scan
+          console.log('read jpeg chunks: ' + (new Date() - start))
+          return df.resolve()
+        length = view.getUint16(2) - 2
+
+        readToView file.slice(pos, pos += length), (view) ->
+          if view.byteLength != length
+            return df.reject('corrupted')
+          df.notify(marker, view)
+          readNext()
+
+    df = $.Deferred()
+
+    if not (FileReader and DataView)
+      df.reject('support')
+
+    else
+      pos = 2
+      start = new Date()
+
+      readToView file.slice(0, 2), (view) ->
+        if view.getUint16(0) != 0xffd8
+          return df.reject('not jpeg')
+
+        readNext()
 
     df.promise()
