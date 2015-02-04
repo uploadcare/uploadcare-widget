@@ -16,14 +16,13 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # out <- blob
     df = $.Deferred()
     exif = null
-    exifTags = null
 
     if not (URL and DataView)
       return df.reject('support')
 
     op = ns.readJpegChunks(file)
-    op.progress (marker, view) ->
-      if marker == 0xe1
+    op.progress (pos, length, marker, view) ->
+      if not exif and marker == 0xe1
         if view.byteLength >= 14
           if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
             exif = view.buffer
@@ -35,20 +34,19 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         op = ns.reduceImage(img, settings)
         op.progress (progress) ->
           console.log(progress)
-        op.fail df.reject
+        op.fail(df.reject)
         op.done (canvas) ->
           # start = new Date()
           utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
             (blob) ->
-              if exif
-                intro = new DataView(new ArrayBuffer(6))
-                intro.setUint32(0, 0xffd8ffe1)
-                intro.setUint16(4, exif.byteLength + 2)
-                blob = new Blob([
-                  intro, exif, blob.slice(2, blob.size)
-                ], {type: blob.type})
               # console.log('to blob: ' + (new Date() - start))
-              df.resolve(blob)
+              if exif
+                op = ns.replaceJpegChunk(blob, 0xe1, [exif])
+                op.done(df.resolve)
+                op.fail ->
+                  df.resolve(blob)
+              else
+                df.resolve(blob)
 
       img.onerror = ->
         df.reject('not image')
@@ -117,6 +115,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       reader.readAsArrayBuffer(file)
 
     readNext = ->
+      startPos = pos
       readToView file.slice(pos, pos += 4), (view) ->
         if view.byteLength != 4 or view.getUint8(0) != 0xff
           return df.reject('corrupted')
@@ -130,7 +129,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         readToView file.slice(pos, pos += length), (view) ->
           if view.byteLength != length
             return df.reject('corrupted')
-          df.notify(marker, view)
+          df.notify(startPos, length, marker, view)
           readNext()
 
     df = $.Deferred()
@@ -145,5 +144,36 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       if view.getUint16(0) != 0xffd8
         return df.reject('not jpeg')
       readNext()
+
+    df.promise()
+
+  ns.replaceJpegChunk = (blob, marker, chunks) ->
+    df = $.Deferred()
+    oldChunkPos = []
+    oldChunkLength = []
+
+    op = ns.readJpegChunks(blob)
+    op.fail(df.reject)
+    op.progress (pos, length, oldMarker) ->
+      if oldMarker == marker
+        oldChunkPos.push(pos)
+        oldChunkLength.push(length)
+    op.done ->
+      newChunks = [blob.slice(0, 2)]
+      for chunk in chunks
+        intro = new DataView(new ArrayBuffer(4))
+        intro.setUint16(0, 0xff00 + marker)
+        intro.setUint16(2, chunk.byteLength + 2)
+        newChunks.push(intro.buffer)
+        newChunks.push(chunk)
+
+      pos = 2
+      for i in [0...oldChunkPos.length]
+        if oldChunkPos[i] > pos
+          newChunks.push(blob.slice(pos, oldChunkPos[i]))
+        pos = oldChunkPos[i] + oldChunkLength[i] + 4
+      newChunks.push(blob.slice(pos, blob.size))
+
+      df.resolve(new Blob(newChunks, {type: blob.type}))
 
     df.promise()
