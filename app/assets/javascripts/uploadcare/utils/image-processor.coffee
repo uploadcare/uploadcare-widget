@@ -28,17 +28,20 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
             exif = view.buffer
     op.always ->
       # start = new Date()
+      df.notify(.1)
       img = new Image()
       img.onload = ->
         # console.log('load: ' + (new Date() - start))
+        df.notify(.3)
         op = ns.reduceImage(img, settings)
         op.progress (progress) ->
-          console.log(progress)
+          df.notify(.3 + progress * .5)
         op.fail(df.reject)
         op.done (canvas) ->
           # start = new Date()
           utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
             (blob) ->
+              df.notify(.9)
               # console.log('to blob: ' + (new Date() - start))
               if exif
                 op = ns.replaceJpegChunk(blob, 0xe1, [exif])
