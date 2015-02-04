@@ -68,8 +68,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     sW = img.width
     sH = img.height
     ratio = sW / sH
-    w = Math.round(Math.sqrt(settings.size * ratio))
-    h = Math.round(settings.size / Math.sqrt(settings.size * ratio))
+    w = Math.floor(Math.sqrt(settings.size * ratio))
+    h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
 
     x = 1.4
     maxSquare = 5000000  # ios max canvas square
@@ -85,10 +85,10 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
       if sW > maxSize
         sW = maxSize
-        sH = sW / ratio
+        sH = Math.round(sW / ratio)
       if sH > maxSize
         sH = maxSize
-        sW = maxSize * sH
+        sW = Math.round(ratio * sH)
       canvas = document.createElement('canvas')
       canvas.width = sW
       canvas.height = sH
