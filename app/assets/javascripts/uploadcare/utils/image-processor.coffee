@@ -61,17 +61,39 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # out <- canvas
     df = $.Deferred()
 
-    if img.width * img.height < settings.size * 1.5
+    if img.width * img.height < settings.size * settings.tolerance
       return df.reject('not required')
 
     # start = new Date()
-    w = Math.round(Math.sqrt(settings.size * img.width / img.height))
-    h = Math.round(settings.size / w)
+    sW = img.width
+    sH = img.height
+    ratio = sW / sH
+    w = Math.round(Math.sqrt(settings.size * ratio))
+    h = Math.round(settings.size / Math.sqrt(settings.size * ratio))
 
-    canvas = document.createElement('canvas')
-    canvas.width = w
-    canvas.height = h
-    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    x = 1.4
+    maxSquare = 5000000  # ios max canvas square
+    maxSize = 4096 # ie max canvas dimensions
+    while sW > w
+      sW = Math.round(sW / x)
+      sH = Math.round(sH / x)
+      if sW < w * x
+        sW = w
+        sH = h
+      if sW * sH > maxSquare
+        sW = Math.floor(Math.sqrt(maxSquare * ratio))
+        sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
+      if sW > maxSize
+        sW = maxSize
+        sH = sW / ratio
+      if sH > maxSize
+        sH = maxSize
+        sW = maxSize * sH
+      canvas = document.createElement('canvas')
+      canvas.width = sW
+      canvas.height = sH
+      canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+      img = canvas
 
     # console.log('draw: ' + (new Date() - start))
     df.resolve(canvas)

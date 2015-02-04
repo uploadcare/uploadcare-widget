@@ -103,6 +103,7 @@ namespace 'uploadcare.settings', (ns) ->
 
     quality: reduce[3] / 100 if reduce[3]
     size: reduce[1] * reduce[2]
+    tolerance: 1.5
 
   normalize = (settings) ->
     arrayOptions settings, [
