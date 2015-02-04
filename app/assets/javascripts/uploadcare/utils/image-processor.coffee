@@ -33,6 +33,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       img.onload = ->
         # console.log('load: ' + (new Date() - start))
         op = ns.reduceImage(img, settings)
+        op.progress (progress) ->
+          console.log(progress)
         op.fail df.reject
         op.done (canvas) ->
           # start = new Date()
@@ -65,7 +67,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       return df.reject('not required')
 
     # start = new Date()
-    sW = img.width
+    sW = originalW = img.width
     sH = img.height
     ratio = sW / sH
     w = Math.floor(Math.sqrt(settings.size * ratio))
@@ -74,7 +76,13 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     x = 1.4
     maxSquare = 5000000  # ios max canvas square
     maxSize = 4096 # ie max canvas dimensions
-    while sW > w
+
+    do run = ->
+      if sW <= w
+        # console.log('draw: ' + (new Date() - start))
+        df.resolve(img)
+        return
+
       sW = Math.round(sW / x)
       sH = Math.round(sH / x)
       if sW < w * x
@@ -95,8 +103,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
       img = canvas
 
-    # console.log('draw: ' + (new Date() - start))
-    df.resolve(canvas)
+      df.notify((originalW - sW) / (originalW - w))
+      setTimeout(run, 0)
 
     df.promise()
 
