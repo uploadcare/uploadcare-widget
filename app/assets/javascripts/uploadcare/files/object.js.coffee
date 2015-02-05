@@ -26,13 +26,22 @@ namespace 'uploadcare.files', (ns) ->
         @multipartUpload()
       else
         if @settings.imageReduce and utils.abilities.blob
-          op = utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
-          op.done (file) =>
-            @__file = file
-            @fileSize = @__file.size
-            @fileType = @__file.type or 'application/octet-stream'
-          op.always =>
-            @directUpload()
+          df = $.Deferred()
+
+          utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
+            .progress (progress) ->
+              df.notify(progress * .4)
+            .done (file) =>
+              @__file = file
+              @fileSize = @__file.size
+              @fileType = @__file.type or 'application/octet-stream'
+            .always =>
+              @directUpload()
+                .done(df.resolve)
+                .fail(df.reject)
+                .progress (progress) ->
+                  df.notify(.4 + progress * .6)
+          df
         else
           @directUpload()
 
