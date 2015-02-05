@@ -16,13 +16,20 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings, @__file) ->
       super
 
-      @fileSize = @__file.size
       @fileName = @__file.name or 'original'
+      @__notifyApi()
+
+    setFile: (file) =>
+      if file
+        @__file = file
+      @fileSize = @__file.size
       @fileType = @__file.type or 'application/octet-stream'
+      @__runValidators()
       @__notifyApi()
 
     __startUpload: ->
       if @fileSize >= @MP_MIN_SIZE and utils.abilities.blob
+        @setFile()
         @multipartUpload()
       else
         if @settings.imageReduce and utils.abilities.blob
@@ -32,11 +39,9 @@ namespace 'uploadcare.files', (ns) ->
           utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
             .progress (progress) ->
               df.notify(progress * resizeShare)
-            .done (file) =>
-              @__file = file
-              @fileSize = @__file.size
-              @fileType = @__file.type or 'application/octet-stream'
-            .fail (reason) ->
+            .done(@setFile)
+            .fail (reason) =>
+              @setFile()
               resizeShare = resizeShare * .1
             .always =>
               df.notify(resizeShare)
@@ -47,6 +52,7 @@ namespace 'uploadcare.files', (ns) ->
                   df.notify(resizeShare + progress * (1 - resizeShare))
           df
         else
+          @setFile()
           @directUpload()
 
     __autoAbort: (xhr) ->
