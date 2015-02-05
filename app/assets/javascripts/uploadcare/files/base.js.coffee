@@ -148,6 +148,7 @@ namespace 'uploadcare.files', (ns) ->
               @__notifyApi()
           op.fail =>
             @__rejectApi('upload')
+          @apiDeferred.always(op.reject)
 
       @__apiPromise
 
