@@ -32,7 +32,7 @@ namespace 'uploadcare.files', (ns) ->
       @__initApi()
 
     __startUpload: ->
-      throw new Error('not implemented')
+      $.Deferred().resolve()
 
     __completeUpload: =>
       # Update info until @apiPromise resolved.

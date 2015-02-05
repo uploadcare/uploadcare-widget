@@ -14,9 +14,6 @@ namespace 'uploadcare.files', (ns) ->
       else
         @__rejectApi('baddata')
 
-    __startUpload: ->
-      @__uploadDf.resolve()
-
 
   class ns.ReadyFile extends ns.BaseFile
     constructor: (settings, data) ->
@@ -26,6 +23,3 @@ namespace 'uploadcare.files', (ns) ->
       else
         @fileId = data.uuid
         @__handleFileData(data)
-
-    __startUpload: ->
-      @__uploadDf.resolve()
