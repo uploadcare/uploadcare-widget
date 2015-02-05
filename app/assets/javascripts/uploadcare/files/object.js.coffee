@@ -80,15 +80,20 @@ namespace 'uploadcare.files', (ns) ->
         @__rejectApi 'image'
         return
 
+      df = $.Deferred()
+
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
           @multipartComplete(data.uuid).done (data) =>
             @fileId = data.uuid
             @__handleFileData(data)
-            @__completeUpload()
-          .fail @__uploadDf.reject
-        .fail @__uploadDf.reject
-      .fail @__uploadDf.reject
+            df.resolve()
+          .fail(df.reject)
+        .progress(df.notify)
+        .fail(df.reject)
+      .fail(df.reject)
+
+      df
 
     multipartStart: ->
       data =
@@ -116,7 +121,7 @@ namespace 'uploadcare.files', (ns) ->
         total = 0
         for loaded in progress
           total += loaded
-        @__uploadDf.notify(total / @fileSize)
+        df.notify(total / @fileSize)
 
       df = $.Deferred()
 
@@ -139,7 +144,7 @@ namespace 'uploadcare.files', (ns) ->
 
         attempts = 0
         do retry = =>
-          if @__uploadDf.state() != 'pending'
+          if @apiDeferred.state() != 'pending'
             return
 
           attempts += 1
