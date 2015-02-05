@@ -35,10 +35,10 @@ namespace 'uploadcare.files', (ns) ->
       $.Deferred().resolve()
 
     __completeUpload: =>
-      # Update info until @apiPromise resolved.
+      # Update info until @apiDeferred resolved.
       timeout = 100
       do check = =>
-        if @apiPromise.state() == 'pending'
+        if @apiDeferred.state() == 'pending'
           @__updateInfo().done =>
             setTimeout check, timeout
             timeout += 50
@@ -83,9 +83,6 @@ namespace 'uploadcare.files', (ns) ->
 
     __cancel: =>
       @__rejectApi('user')
-      # This will call __rejectApi again, but it'll be noop
-      # becouse apiDeferred already reolved.
-      @__uploadDf.reject()
 
     __setupValidation: ->
       @validators = @settings.validators or @settings.__validators or []
@@ -114,46 +111,45 @@ namespace 'uploadcare.files', (ns) ->
       api # extended promise
 
     __notifyApi: ->
-      @apiDeferred.notify @__progressInfo()
+      @apiDeferred.notify(@__progressInfo())
 
     __rejectApi: (err) =>
       @__progressState = 'error'
       @__notifyApi()
-      @apiDeferred.reject err, @__fileInfo()
+      @apiDeferred.reject(err, @__fileInfo())
 
     __resolveApi: =>
       @__progressState = 'ready'
       @__notifyApi()
-      @apiDeferred.resolve @__fileInfo()
+      @apiDeferred.resolve(@__fileInfo())
 
     __initApi: ->
       @apiDeferred = $.Deferred()
-      @apiPromise = @__extendApi @apiDeferred.promise()
 
       @__progressState = 'uploading'
       @__progress = 0
       @__notifyApi()
 
-      @__uploadDf = $.Deferred()
-        .done(@__completeUpload)
-        .done =>
-          @__progressState = 'uploaded'
-          @__progress = 1
-          @__notifyApi()
-        .progress (progress) =>
-          if progress > @__progress
-            @__progress = progress
-            @__notifyApi()
-        .fail =>
-          @__rejectApi('upload')
-
     promise: ->
-      unless @__uploadStarted
-        @__uploadStarted = true
-        @__runValidators @__fileInfo()
-        if @apiPromise.state() == 'pending'
-          @__startUpload()
-      @apiPromise
+      if not @__apiPromise
+        @__apiPromise = @__extendApi @apiDeferred.promise()
+
+        @__runValidators(@__fileInfo())
+        if @apiDeferred.state() == 'pending'
+          op = @__startUpload()
+          op.done(@__completeUpload)
+          op.done =>
+            @__progressState = 'uploaded'
+            @__progress = 1
+            @__notifyApi()
+          op.progress (progress) =>
+            if progress > @__progress
+              @__progress = progress
+              @__notifyApi()
+          op.fail =>
+            @__rejectApi('upload')
+
+      @__apiPromise
 
 
 namespace 'uploadcare.utils', (utils) ->
