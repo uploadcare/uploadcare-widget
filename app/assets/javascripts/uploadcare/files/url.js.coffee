@@ -34,9 +34,10 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
+      df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings.pusherKey)
       pollWatcher = new PollWatcher("#{@settings.urlBase}/status/")
-      @__listenWatcher($([pusherWatcher, pollWatcher]))
+      @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
 
       # turn off pollWatcher if we receive any message from pusher
       $(pusherWatcher).one @allEvents, =>
@@ -53,29 +54,29 @@ namespace 'uploadcare.files', (ns) ->
         .fail (error) =>
           if @settings.autostore && /autostore/i.test(error)
             utils.commonWarning('autostore')
-          @__uploadDf.reject()
+          df.reject()
         .done (data) =>
           pusherWatcher.watch data.token
           pollWatcher.watch data.token
 
-      @__uploadDf.always =>
+      df.always =>
         $([pusherWatcher, pollWatcher]).off(@allEvents)
         pusherWatcher.stopWatching()
         pollWatcher.stopWatching()
 
-    __listenWatcher: (watcher) =>
+    __listenWatcher: (df, watcher) =>
       watcher
         .on 'progress', (e, data) =>
           @fileSize = data.total
-          @__uploadDf.notify(data.done / data.total)
+          df.notify(data.done / data.total)
 
         .on 'success', (e, data) =>
           $(e.target).trigger('progress', data)
           @fileId = data.uuid
           @fileName = data.original_filename
-          @__uploadDf.resolve()
+          df.resolve()
 
-        .on 'error fail', @__uploadDf.reject
+        .on 'error fail', df.reject
 
 
   class PusherWatcher
