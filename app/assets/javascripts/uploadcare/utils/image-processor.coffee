@@ -32,10 +32,10 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       img = new Image()
       img.onload = ->
         # console.log('load: ' + (new Date() - start))
-        df.notify(.3)
+        df.notify(.2)
         op = ns.reduceImage(img, settings)
         op.progress (progress) ->
-          df.notify(.3 + progress * .5)
+          df.notify(.2 + progress * .6)
         op.fail(df.reject)
         op.done (canvas) ->
           # start = new Date()

@@ -27,20 +27,24 @@ namespace 'uploadcare.files', (ns) ->
       else
         if @settings.imageReduce and utils.abilities.blob
           df = $.Deferred()
+          resizeShare = .4
 
           utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
             .progress (progress) ->
-              df.notify(progress * .4)
+              df.notify(progress * resizeShare)
             .done (file) =>
               @__file = file
               @fileSize = @__file.size
               @fileType = @__file.type or 'application/octet-stream'
+            .fail (reason) ->
+              resizeShare = resizeShare * .1
             .always =>
+              df.notify(resizeShare)
               @directUpload()
                 .done(df.resolve)
                 .fail(df.reject)
                 .progress (progress) ->
-                  df.notify(.4 + progress * .6)
+                  df.notify(resizeShare + progress * (1 - resizeShare))
           df
         else
           @directUpload()
