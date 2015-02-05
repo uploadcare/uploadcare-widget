@@ -13,9 +13,8 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
+      df = $.Deferred()
       targetUrl = "#{@settings.urlBase}/iframe/"
-      @__uploadDf.always => @__cleanUp()
-
       iframeId = "uploadcare-iframe-#{@fileId}"
 
       @__iframe = $('<iframe>')
@@ -25,8 +24,8 @@ namespace 'uploadcare.files', (ns) ->
         })
         .css('display', 'none')
         .appendTo('body')
-        .on('load', @__uploadDf.resolve)
-        .on('error', @__uploadDf.reject)
+        .on('load', df.resolve)
+        .on('error', df.reject)
 
       formParam = (name, value) ->
         $('<input/>',
@@ -52,7 +51,9 @@ namespace 'uploadcare.files', (ns) ->
         .appendTo('body')
         .submit()
 
-    __cleanUp: ->
+      df.always(@__cleanUp)
+
+    __cleanUp: =>
       @__iframe?.off('load error').remove()
       @__iframeForm?.remove()
       @__iframe = null
