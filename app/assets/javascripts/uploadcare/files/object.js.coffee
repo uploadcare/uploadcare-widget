@@ -37,13 +37,15 @@ namespace 'uploadcare.files', (ns) ->
           @directUpload()
 
     __autoAbort: (xhr) ->
-      @__uploadDf.always xhr.abort
+      @apiDeferred.fail(xhr.abort)
       xhr
 
     directUpload: ->
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi 'size'
         return
+
+      df = $.Deferred()
 
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
@@ -58,7 +60,7 @@ namespace 'uploadcare.files', (ns) ->
           xhr = $.ajaxSettings.xhr()
           if xhr.upload
             xhr.upload.addEventListener 'progress', (e) =>
-              @__uploadDf.notify(e.loaded / e.total)
+              df.notify(e.loaded / e.total)
             , false
           xhr
         crossDomain: true
@@ -70,30 +72,37 @@ namespace 'uploadcare.files', (ns) ->
         processData: false
         data: formData
         dataType: 'json'
-        error: @__uploadDf.reject
+        error: df.reject
         success: (data) =>
           if data?.file
             @fileId = data.file
-            @__uploadDf.resolve()
+            df.resolve()
           else
             if @settings.autostore && /autostore/i.test(data.error.content)
               utils.commonWarning('autostore')
-            @__uploadDf.reject()
+            df.reject()
+
+      df
 
     multipartUpload: ->
       if @settings.imagesOnly
         @__rejectApi 'image'
         return
 
+      df = $.Deferred()
+
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
           @multipartComplete(data.uuid).done (data) =>
             @fileId = data.uuid
             @__handleFileData(data)
-            @__completeUpload()
-          .fail @__uploadDf.reject
-        .fail @__uploadDf.reject
-      .fail @__uploadDf.reject
+            df.resolve()
+          .fail(df.reject)
+        .progress(df.notify)
+        .fail(df.reject)
+      .fail(df.reject)
+
+      df
 
     multipartStart: ->
       data =
@@ -121,7 +130,7 @@ namespace 'uploadcare.files', (ns) ->
         total = 0
         for loaded in progress
           total += loaded
-        @__uploadDf.notify(total / @fileSize)
+        df.notify(total / @fileSize)
 
       df = $.Deferred()
 
@@ -144,7 +153,7 @@ namespace 'uploadcare.files', (ns) ->
 
         attempts = 0
         do retry = =>
-          if @__uploadDf.state() != 'pending'
+          if @apiDeferred.state() != 'pending'
             return
 
           attempts += 1
