@@ -40,7 +40,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     listen: (file) ->
       @__file = file
-      @circle.listen file
+      @circle.listen(file, 'uploadProgress')
       @setStatus 'started'
       file.progress (info) =>
         if file == @__file

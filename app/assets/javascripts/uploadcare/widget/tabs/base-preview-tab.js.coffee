@@ -28,13 +28,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         progress = 0
         for progressInfo in infos
           progress += (progressInfo?.progress or 0) / infos.length
-        circleDf.notify {progress}
+        circleDf.notify(progress)
 
       @dialogApi.fileColl.onAnyProgress.add update
       @dialogApi.fileColl.onAdd.add update
       @dialogApi.fileColl.onRemove.add update
       update()
 
-      circle = new Circle(circleEl).listen circleDf.promise(), 'progress'
+      circle = new Circle(circleEl).listen(circleDf.promise())
 
-      @dialogApi.onSwitched.add circle.update
+      @dialogApi.onSwitched.add(circle.update)
