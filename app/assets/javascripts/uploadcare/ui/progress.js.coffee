@@ -17,7 +17,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
         @renderer = new ns.TextRenderer element
       @observed = null
 
-    listen: (file, selector = 'uploadProgress') ->
+    listen: (file, selector) ->
       @reset()
       selectorFn = if selector?
         (info) -> info[selector]
