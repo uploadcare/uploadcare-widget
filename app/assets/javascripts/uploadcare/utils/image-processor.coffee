@@ -11,6 +11,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
   URL = window.URL or window.webkitURL
   URL = URL.createObjectURL && URL
 
+  taskRunner = utils.taskRunner(1)
+
   ns.reduceFile = (file, settings) ->
     # in -> file
     # out <- blob
@@ -20,41 +22,49 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     if not (URL and DataView)
       return df.reject('support')
 
-    op = ns.readJpegChunks(file)
-    op.progress (pos, length, marker, view) ->
-      if not exif and marker == 0xe1
-        if view.byteLength >= 14
-          if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-            exif = view.buffer
-    op.always ->
-      # start = new Date()
-      df.notify(.1)
-      img = new Image()
-      img.onload = ->
-        # console.log('load: ' + (new Date() - start))
-        df.notify(.2)
-        op = ns.reduceImage(img, settings)
-        op.progress (progress) ->
-          df.notify(.2 + progress * .6)
-        op.fail(df.reject)
-        op.done (canvas) ->
-          # start = new Date()
-          utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
-            (blob) ->
-              df.notify(.9)
-              # console.log('to blob: ' + (new Date() - start))
-              if exif
-                op = ns.replaceJpegChunk(blob, 0xe1, [exif])
-                op.done(df.resolve)
-                op.fail ->
+    # start = new Date()
+    taskRunner (release) =>
+      # console.log('delayed: ' + (new Date() - start))
+
+      op = ns.readJpegChunks(file)
+      op.progress (pos, length, marker, view) ->
+        if not exif and marker == 0xe1
+          if view.byteLength >= 14
+            if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
+              exif = view.buffer
+      op.always ->
+        df.notify(.1)
+
+        # start = new Date()
+        img = new Image()
+        img.onload = ->
+          # console.log('load: ' + (new Date() - start))
+          df.notify(.2)
+          op = ns.reduceImage(img, settings)
+          op.progress (progress) ->
+            df.notify(.2 + progress * .6)
+          op.fail(df.reject, release)
+          op.done (canvas) ->
+            # start = new Date()
+            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
+              (blob) ->
+                df.notify(.9)
+                # console.log('to blob: ' + (new Date() - start))
+                if exif
+                  op = ns.replaceJpegChunk(blob, 0xe1, [exif])
+                  op.done(df.resolve)
+                  op.fail ->
+                    df.resolve(blob)
+                else
                   df.resolve(blob)
-              else
-                df.resolve(blob)
+                release()
+          img = null  # free reference
 
-      img.onerror = ->
-        df.reject('not image')
+        img.onerror = ->
+          release()
+          df.reject('not image')
 
-      img.src = URL.createObjectURL(file)
+        img.src = URL.createObjectURL(file)
 
     df.promise()
 
