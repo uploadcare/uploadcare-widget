@@ -48,7 +48,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
           op.fail(df.reject, release)
           op.done (canvas) ->
             # start = new Date()
-            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
+            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.9,
               (blob) ->
                 canvas.width = 1
                 canvas.height = 1
