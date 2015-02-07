@@ -94,28 +94,29 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         df.resolve(img)
         return
 
-      sW = Math.round(sW / x)
-      sH = Math.round(sH / x)
-      if sW < w * x
-        sW = w
-        sH = h
-      if sW * sH > maxSquare
-        sW = Math.floor(Math.sqrt(maxSquare * ratio))
-        sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
-      if sW > maxSize
-        sW = maxSize
-        sH = Math.round(sW / ratio)
-      if sH > maxSize
-        sH = maxSize
-        sW = Math.round(ratio * sH)
-      canvas = document.createElement('canvas')
-      canvas.width = sW
-      canvas.height = sH
-      canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
-      img = canvas
+      utils.defer ->
+        sW = Math.round(sW / x)
+        sH = Math.round(sH / x)
+        if sW < w * x
+          sW = w
+          sH = h
+        if sW * sH > maxSquare
+          sW = Math.floor(Math.sqrt(maxSquare * ratio))
+          sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
+        if sW > maxSize
+          sW = maxSize
+          sH = Math.round(sW / ratio)
+        if sH > maxSize
+          sH = maxSize
+          sW = Math.round(ratio * sH)
+        canvas = document.createElement('canvas')
+        canvas.width = sW
+        canvas.height = sH
+        canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+        img = canvas
 
-      df.notify((originalW - sW) / (originalW - w))
-      setTimeout(run, 0)
+        df.notify((originalW - sW) / (originalW - w))
+        run()
 
     df.promise()
 
