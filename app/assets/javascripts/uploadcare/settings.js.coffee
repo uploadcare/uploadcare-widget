@@ -103,7 +103,7 @@ namespace 'uploadcare.settings', (ns) ->
 
     size = reduce[1] * reduce[2]
 
-    if size > 5000000  # ios max canvas square5000000  # ios max canvas square
+    if size > 5000000  # ios max canvas square
       utils.warnOnce("Reduced size can not be larger than 5MP. " +
                      "You have set #{reduce[1]}x#{reduce[2]} (" +
                      "#{Math.ceil(size/1000/100) / 10}MP).")
@@ -111,7 +111,6 @@ namespace 'uploadcare.settings', (ns) ->
 
     quality: reduce[3] / 100 if reduce[3]
     size: size
-    tolerance: 1.5
 
   normalize = (settings) ->
     arrayOptions settings, [

@@ -78,7 +78,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # out <- canvas
     df = $.Deferred()
 
-    if img.width * img.height < settings.size * settings.tolerance
+    step = 0.71  # sohuld be > sqrt(0.5)
+
+    if img.width * step * img.height * step < settings.size
       return df.reject('not required')
 
     # start = new Date()
@@ -88,7 +90,6 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     w = Math.floor(Math.sqrt(settings.size * ratio))
     h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
 
-    x = 1.4
     maxSquare = 5000000  # ios max canvas square
     maxSize = 4096 # ie max canvas dimensions
 
@@ -99,9 +100,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         return
 
       utils.defer ->
-        sW = Math.round(sW / x)
-        sH = Math.round(sH / x)
-        if sW < w * x
+        sW = Math.round(sW * step)
+        sH = Math.round(sH * step)
+        if sW * step < w
           sW = w
           sH = h
         if sW * sH > maxSquare
