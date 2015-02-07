@@ -28,6 +28,8 @@ namespace 'uploadcare.files', (ns) ->
       @__notifyApi()
 
     __startUpload: ->
+      @apiDeferred.always =>
+        @__file = null
       if @fileSize >= @MP_MIN_SIZE and utils.abilities.blob
         @setFile()
         @multipartUpload()

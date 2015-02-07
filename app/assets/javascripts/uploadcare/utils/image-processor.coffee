@@ -39,6 +39,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         img = new Image()
         img.onload = ->
           # console.log('load: ' + (new Date() - start))
+          URL.revokeObjectURL(img.src)
+          img.onerror = null  # do not fire when set to blank
           df.notify(.2)
           op = ns.reduceImage(img, settings)
           op.progress (progress) ->
@@ -48,6 +50,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
             # start = new Date()
             utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.95,
               (blob) ->
+                canvas.width = 1
+                canvas.height = 1
                 df.notify(.9)
                 # console.log('to blob: ' + (new Date() - start))
                 if exif
@@ -113,6 +117,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         canvas.width = sW
         canvas.height = sH
         canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+        img.src = 'about:blank'  # for image
+        img.width = 1            # for canvas
+        img.height = 1
         img = canvas
 
         df.notify((originalW - sW) / (originalW - w))
