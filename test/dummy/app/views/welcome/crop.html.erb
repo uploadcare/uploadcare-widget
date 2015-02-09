@@ -23,7 +23,7 @@ Try:
 
 Result:
 <div id="widget-with-crop-wrap">
-  <input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url" data-image-reduce="800x600" data-crop="1170x650 minimum" value="">
+  <input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url" data-crop="1170x650 minimum" value="">
 </div>
 
 <script>
@@ -39,3 +39,10 @@ Result:
     uploadcare.initialize(wraper);
   });
 </script>
+
+
+<p>
+  Shrink before upload:
+  <input class="long-input" role="uploadcare-uploader" placeholder="here will be result CDN url"
+         data-image-shrink="800x680" data-multiple="" data-path-value="" value="">
+</p>
