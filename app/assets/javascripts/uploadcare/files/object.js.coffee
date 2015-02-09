@@ -34,11 +34,11 @@ namespace 'uploadcare.files', (ns) ->
         @setFile()
         @multipartUpload()
       else
-        if @settings.imageReduce and utils.abilities.blob
+        if @settings.imageShrink and utils.abilities.blob
           df = $.Deferred()
           resizeShare = .4
 
-          utils.imageProcessor.reduceFile(@__file, @settings.imageReduce)
+          utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
             .progress (progress) ->
               df.notify(progress * resizeShare)
             .done(@setFile)

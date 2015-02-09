@@ -13,7 +13,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
   taskRunner = utils.taskRunner(1)
 
-  ns.reduceFile = (file, settings) ->
+  ns.shrinkFile = (file, settings) ->
     # in -> file
     # out <- blob
     df = $.Deferred()
@@ -42,7 +42,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
           URL.revokeObjectURL(img.src)
           img.onerror = null  # do not fire when set to blank
           df.notify(.2)
-          op = ns.reduceImage(img, settings)
+          op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
           op.fail(df.reject, release)
@@ -73,7 +73,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     df.promise()
 
 
-  ns.reduceImage = (img, settings) ->
+  ns.shrinkImage = (img, settings) ->
     # in -> image
     # out <- canvas
     df = $.Deferred()
@@ -91,7 +91,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
 
     maxSquare = 5000000  # ios max canvas square
-    maxSize = 4096 # ie max canvas dimensions
+    maxSize = 4096  # ie max canvas dimensions
 
     do run = ->
       if sW <= w

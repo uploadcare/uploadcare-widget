@@ -23,7 +23,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple': false
     'multiple-max': 0
     'multiple-min': 1
-    'image-reduce': false
+    'image-shrink': false
     'path-value': false
     'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
     'preferred-types': ''
@@ -94,22 +94,22 @@ namespace 'uploadcare.settings', (ns) ->
     notLess: ratio[4] == 'minimum'
     preferedSize: [+ratio[1], +ratio[3]] if ratio.length
 
-  parseReduce = (val) ->
-    reReduce = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
-    reduce = reReduce.exec($.trim(val.toLowerCase())) or []
+  parseShrink = (val) ->
+    reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
+    shrink = reShrink.exec($.trim(val.toLowerCase())) or []
 
-    if not reduce.length
+    if not shrink.length
       return false
 
-    size = reduce[1] * reduce[2]
+    size = shrink[1] * shrink[2]
 
     if size > 5000000  # ios max canvas square
-      utils.warnOnce("Reduced size can not be larger than 5MP. " +
-                     "You have set #{reduce[1]}x#{reduce[2]} (" +
+      utils.warnOnce("Shrinked size can not be larger than 5MP. " +
+                     "You have set #{shrink[1]}x#{shrink[2]} (" +
                      "#{Math.ceil(size/1000/100) / 10}MP).")
       return false
 
-    quality: reduce[3] / 100 if reduce[3]
+    quality: shrink[3] / 100 if shrink[3]
     size: size
 
   normalize = (settings) ->
@@ -145,8 +145,8 @@ namespace 'uploadcare.settings', (ns) ->
       else
         settings.crop = $.map(settings.crop.split(','), parseCrop)
 
-    if settings.imageReduce and not $.isPlainObject(settings.imageReduce)
-      settings.imageReduce = parseReduce(settings.imageReduce)
+    if settings.imageShrink and not $.isPlainObject(settings.imageShrink)
+      settings.imageShrink = parseShrink(settings.imageShrink)
 
     if settings.crop or settings.multiple
       settings.previewStep = true
