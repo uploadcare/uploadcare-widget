@@ -91,6 +91,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       ctx.drawImage(video, 0, 0, w, h)
 
       utils.canvasToBlob canvas, 'image/jpeg', 0.9, (blob) =>
+        canvas.width = 1
+        canvas.height = 1
         blob.name = "camera.jpg"
         @dialogApi.addFiles 'object', [blob]
         @dialogApi.switchTab 'preview'

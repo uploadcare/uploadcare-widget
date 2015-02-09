@@ -16,13 +16,14 @@ namespace 'uploadcare.settings', (ns) ->
     'locale-translations': null
     # widget settings
     'system-dialog': false
-    'crop': 'disabled'
+    'crop': false
     'preview-step': false
     'images-only': false
     'clearable': false
     'multiple': false
     'multiple-max': 0
     'multiple-min': 1
+    'image-shrink': false
     'path-value': false
     'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
     'preferred-types': ''
@@ -93,6 +94,24 @@ namespace 'uploadcare.settings', (ns) ->
     notLess: ratio[4] == 'minimum'
     preferedSize: [+ratio[1], +ratio[3]] if ratio.length
 
+  parseShrink = (val) ->
+    reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
+    shrink = reShrink.exec($.trim(val.toLowerCase())) or []
+
+    if not shrink.length
+      return false
+
+    size = shrink[1] * shrink[2]
+
+    if size > 5000000  # ios max canvas square
+      utils.warnOnce("Shrinked size can not be larger than 5MP. " +
+                     "You have set #{shrink[1]}x#{shrink[2]} (" +
+                     "#{Math.ceil(size/1000/100) / 10}MP).")
+      return false
+
+    quality: shrink[3] / 100 if shrink[3]
+    size: size
+
   normalize = (settings) ->
     arrayOptions settings, [
       'tabs'
@@ -118,13 +137,16 @@ namespace 'uploadcare.settings', (ns) ->
       'multipleMin'
     ]
 
-    if not $.isArray settings.crop
+    if settings.crop and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop) or settings.multiple
         settings.crop = false
       else if $.isPlainObject settings.crop  # old format
         settings.crop = [settings.crop]
       else
         settings.crop = $.map(settings.crop.split(','), parseCrop)
+
+    if settings.imageShrink and not $.isPlainObject(settings.imageShrink)
+      settings.imageShrink = parseShrink(settings.imageShrink)
 
     if settings.crop or settings.multiple
       settings.previewStep = true

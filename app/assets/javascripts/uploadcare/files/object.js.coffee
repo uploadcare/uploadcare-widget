@@ -16,16 +16,46 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (settings, @__file) ->
       super
 
-      @fileSize = @__file.size
       @fileName = @__file.name or 'original'
+      @__notifyApi()
+
+    setFile: (file) =>
+      if file
+        @__file = file
+      @fileSize = @__file.size
       @fileType = @__file.type or 'application/octet-stream'
+      @__runValidators()
       @__notifyApi()
 
     __startUpload: ->
+      @apiDeferred.always =>
+        @__file = null
       if @fileSize >= @MP_MIN_SIZE and utils.abilities.blob
+        @setFile()
         @multipartUpload()
       else
-        @directUpload()
+        if @settings.imageShrink and utils.abilities.blob
+          df = $.Deferred()
+          resizeShare = .4
+
+          utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
+            .progress (progress) ->
+              df.notify(progress * resizeShare)
+            .done(@setFile)
+            .fail (reason) =>
+              @setFile()
+              resizeShare = resizeShare * .1
+            .always =>
+              df.notify(resizeShare)
+              @directUpload()
+                .done(df.resolve)
+                .fail(df.reject)
+                .progress (progress) ->
+                  df.notify(resizeShare + progress * (1 - resizeShare))
+          df
+        else
+          @setFile()
+          @directUpload()
 
     __autoAbort: (xhr) ->
       @apiDeferred.fail(xhr.abort)

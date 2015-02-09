@@ -269,6 +269,7 @@ namespace 'uploadcare.utils', (ns) ->
       ns.warn("JSONP unexpected error: #{text} while loading #{url}")
       text
 
+
   ns.plugin = (fn) ->
     fn uploadcare
 
@@ -287,3 +288,23 @@ namespace 'uploadcare.utils', (ns) ->
       arr[i] = binStr.charCodeAt(i)
 
     callback(new Blob( [arr], {type: /:(.+\/.+);/.exec(dataURL[0])[1]} ))
+
+
+  ns.taskRunner = (capacity) ->
+    running = 0
+    queue = []
+
+    release = ->
+      if queue.length
+        task = queue.shift()
+        ns.defer ->
+          task(release)
+      else
+        running -= 1
+
+    run = (task) ->
+      if running < capacity
+        running += 1
+        task(release)
+      else
+        queue.push(task)
