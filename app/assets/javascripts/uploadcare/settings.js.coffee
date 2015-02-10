@@ -24,7 +24,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-max': 0
     'multiple-min': 1
     'image-shrink': false
-    'path-value': false
+    'path-value': true
     'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
     'preferred-types': ''
     'input-accept-types': ''  # '' means default, null means "disable accept"
@@ -150,9 +150,6 @@ namespace 'uploadcare.settings', (ns) ->
 
     if settings.crop or settings.multiple
       settings.previewStep = true
-
-    if settings.crop
-      settings.pathValue = true
 
     if not utils.abilities.sendFileAPI
       settings.systemDialog = false
