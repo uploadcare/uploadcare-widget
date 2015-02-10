@@ -24,6 +24,7 @@ namespace 'uploadcare.settings', (ns) ->
     'multiple-max': 0
     'multiple-min': 1
     'image-shrink': false
+    'path-value': true
     'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
     'preferred-types': ''
     'input-accept-types': ''  # '' means default, null means "disable accept"
@@ -127,6 +128,7 @@ namespace 'uploadcare.settings', (ns) ->
       'imagesOnly'
       'multiple'
       'clearable'
+      'pathValue'
       'previewStep'
       'systemDialog'
     ]
