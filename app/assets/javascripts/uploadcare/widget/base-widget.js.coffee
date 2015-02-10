@@ -66,10 +66,7 @@ namespace 'uploadcare.widget', (ns) ->
       @template.reset()
 
     __infoToValue: (info) ->
-      if info.cdnUrlModifiers || @settings.pathValue
-        info.cdnUrl
-      else
-        info.uuid
+      info.cdnUrl
 
     __reset: =>
       # low-level primitive. @__setObject(null) could be better.
