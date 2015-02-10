@@ -1,17 +1,45 @@
+<style>
+  input {
+    width: 300px;
+    display: block;
+  }
+</style>
+
+
 <p>With CDN URL value:<br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="http://staging0.ucarecdn.com/f1577f70-7559-4f87-97a7-86801d8f1753/-/crop/200x300/center/-/scale_crop/100x100/center/" data-crop/></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="https://ucarecdn.com/a15a0473-5262-48c7-82e3-2fefcd14e293/-/crop/200x300/center/-/scale_crop/100x100/center/" data-crop/>
+  <button>Clear</button>
 
 <p>With custom domain CDN URL value:<br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="http://my-static.com/f1577f70-7559-4f87-97a7-86801d8f1753/-/scale_crop/100x100/center/" /></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="http://my-static.com/a15a0473-5262-48c7-82e3-2fefcd14e293/-/scale_crop/100x100/center/" />
+  <button>Clear</button>
 
 <p>With UUID value:<br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="f1577f70-7559-4f87-97a7-86801d8f1753" /></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="a15a0473-5262-48c7-82e3-2fefcd14e293" />
+  <button>Clear</button>
 
 <p>With custom URL value (incorrect): <br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="https://staging0.ucarecdn.com/assets/images/olympia.0939bbb3e820.jpg" /></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="https://staging0.ucarecdn.com/assets/images/olympia.0939bbb3e820.jpg" />
+  <button>Clear</button>
 
 <p>With invalid value:<br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="error" /></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="error" />
+  <button>Clear</button>
 
 <p>With invalid UUID value:<br>
-  <input type="hidden" data-public-key="4e403b891fa45b0b5f5b" role="uploadcare-uploader" value="error/f1577f70-7559-4f87-97a7-86801d8f1753" /></p>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader"
+         value="error/a15a0473-5262-48c7-82e3-2fefcd14e293" />
+  <button>Clear</button>
+
+
+<script>
+  UPLOADCARE_CLEARABLE = true;
+  $('p > button').on('click', function() {
+    uploadcare.Widget($(this).prevAll('input')).value(null);
+  });
+</script>
