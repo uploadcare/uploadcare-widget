@@ -95,6 +95,7 @@ namespace 'uploadcare.files', (ns) ->
       @onInfoReady.add @__runValidators
 
     __runValidators: (info) =>
+      info = info || @__fileInfo()
       try
         for v in @validators
             v(info)
@@ -134,7 +135,7 @@ namespace 'uploadcare.files', (ns) ->
       if not @__apiPromise
         @__apiPromise = @__extendApi @apiDeferred.promise()
 
-        @__runValidators(@__fileInfo())
+        @__runValidators()
         if @apiDeferred.state() == 'pending'
           op = @__startUpload()
           op.done(@__completeUpload)
