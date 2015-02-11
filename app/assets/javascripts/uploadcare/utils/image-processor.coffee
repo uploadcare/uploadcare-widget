@@ -10,6 +10,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
   FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
   URL = window.URL or window.webkitURL
   URL = URL.createObjectURL && URL
+  Blob = utils.abilities.blob && window.Blob
 
   taskRunner = utils.taskRunner(1)
 
@@ -19,7 +20,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     df = $.Deferred()
     exif = null
 
-    if not (URL and DataView)
+    if not (URL and DataView and Blob)
       return df.reject('support')
 
     # start = new Date()

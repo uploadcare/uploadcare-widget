@@ -21,3 +21,8 @@ uploadcare.namespace 'uploadcare.utils.abilities', (ns) ->
     !!(el.getContext && el.getContext('2d'))
 
   ns.fileDragAndDrop = ns.fileAPI and ns.dragAndDrop
+
+  ns.iOSVersion = null
+  if ios = /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
+    if ver = /OS (\d)_(\d)/.exec(ios[1])
+      ns.iOSVersion = + ver[1] + ver[2] / 10

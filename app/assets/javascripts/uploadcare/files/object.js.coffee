@@ -34,7 +34,8 @@ namespace 'uploadcare.files', (ns) ->
         @setFile()
         @multipartUpload()
       else
-        if @settings.imageShrink and utils.abilities.blob
+        ios = utils.abilities.iOSVersion
+        if @settings.imageShrink and (not ios or ios >= 8)
           df = $.Deferred()
           resizeShare = .4
 
@@ -42,7 +43,7 @@ namespace 'uploadcare.files', (ns) ->
             .progress (progress) ->
               df.notify(progress * resizeShare)
             .done(@setFile)
-            .fail (reason) =>
+            .fail =>
               @setFile()
               resizeShare = resizeShare * .1
             .always =>
