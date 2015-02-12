@@ -29,7 +29,7 @@ namespace 'uploadcare.settings', (ns) ->
     'preferred-types': ''
     'input-accept-types': ''  # '' means default, null means "disable accept"
     # upload settings
-    'autostore': false
+    'do-not-store': false
     'public-key': null
     'pusher-key': '79ae88bd931ea68464d9'
     'cdn-base': 'http://www.ucarecdn.com'
@@ -124,7 +124,7 @@ namespace 'uploadcare.settings', (ns) ->
       'scriptBase'
     ]
     flagOptions settings, [
-      'autostore'
+      'doNotStore'
       'imagesOnly'
       'multiple'
       'clearable'

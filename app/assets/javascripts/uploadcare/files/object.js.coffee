@@ -71,8 +71,7 @@ namespace 'uploadcare.files', (ns) ->
 
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
-      if @settings.autostore
-        formData.append('UPLOADCARE_STORE', '1')
+      formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
       formData.append('file', @__file, @fileName)
       formData.append('file_name', @fileName)
 
@@ -130,8 +129,7 @@ namespace 'uploadcare.files', (ns) ->
         filename: @fileName
         size: @fileSize
         content_type: @fileType
-      if @settings.autostore
-        data.UPLOADCARE_STORE = '1'
+        UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
       @__autoAbort utils.jsonp(
         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data

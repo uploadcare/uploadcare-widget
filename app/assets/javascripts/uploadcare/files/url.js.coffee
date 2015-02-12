@@ -47,8 +47,7 @@ namespace 'uploadcare.files', (ns) ->
         pub_key: @settings.publicKey
         source_url: @__url
         filename: @__realFileName or ''
-      if @settings.autostore
-        data.store = 1
+        store: if @settings.doNotStore then '' else 'auto'
 
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
         .fail(df.reject)
