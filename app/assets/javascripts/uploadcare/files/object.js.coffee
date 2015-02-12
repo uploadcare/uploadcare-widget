@@ -100,8 +100,6 @@ namespace 'uploadcare.files', (ns) ->
             @fileId = data.file
             df.resolve()
           else
-            if @settings.autostore && /autostore/i.test(data.error.content)
-              utils.commonWarning('autostore')
             df.reject()
 
       df

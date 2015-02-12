@@ -51,10 +51,7 @@ namespace 'uploadcare.files', (ns) ->
         data.store = 1
 
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
-        .fail (error) =>
-          if @settings.autostore && /autostore/i.test(error)
-            utils.commonWarning('autostore')
-          df.reject()
+        .fail(df.reject)
         .done (data) =>
           pusherWatcher.watch data.token
           pollWatcher.watch data.token
