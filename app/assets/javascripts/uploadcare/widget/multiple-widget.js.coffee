@@ -17,7 +17,6 @@ namespace 'uploadcare.widget', (ns) ->
 
     __setExternalValue: (value) ->
       @__lastGroupPr = groupPr = utils.valueToGroup(value, @settings)
-      @__reset()
       @template.setStatus('started')
       @template.statusText.text(t('loadingInfo'))
       groupPr
@@ -26,12 +25,7 @@ namespace 'uploadcare.widget', (ns) ->
             @__setObject(group)
         .fail =>
           if @__lastGroupPr == groupPr
-            @template.error('createGroup')
-
-    __onUploadingFailed: (error) ->
-      if error is 'createGroup'
-        @__setObject(null)
-      @template.error error
+            @__onUploadingFailed('createGroup')
 
     __handleDirectSelection: (type, data) =>
       files = uploadcare.filesFrom(type, data, @settings)
