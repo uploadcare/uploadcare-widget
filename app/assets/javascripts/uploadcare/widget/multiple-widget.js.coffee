@@ -12,13 +12,14 @@ namespace 'uploadcare.widget', (ns) ->
       @currentObject?.promise()
 
     __setObject: (group) =>
-      unless utils.isFileGroupsEqual(@currentObject, group)
+      if not utils.isFileGroupsEqual(@currentObject, group)
         super
 
     __setExternalValue: (value) ->
       @__lastGroupPr = groupPr = utils.valueToGroup(value, @settings)
-      @template.setStatus('started')
-      @template.statusText.text(t('loadingInfo'))
+      if value
+        @template.setStatus('started')
+        @template.statusText.text(t('loadingInfo'))
       groupPr
         .done (group) =>
           if @__lastGroupPr == groupPr
