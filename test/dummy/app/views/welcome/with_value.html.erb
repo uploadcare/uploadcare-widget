@@ -42,18 +42,29 @@
   <button>Clear</button>
 
 
+<p>Group UUID:<br>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader" name="GroupUUID"
+         value="cd334b26-c641-4393-bcce-b5041546430d~11" data-images-only="" data-multiple="true"/>
+  <button>Clear</button>
+
+<p>Group incorrect:<br>
+  <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader" name="GroupIncorrect"
+         value="cd334b26-c641-4393-bcce-b5041546430d~" data-images-only="" data-multiple="true"/>
+  <button>Clear</button>
+
+
 <script>
   UPLOADCARE_CLEARABLE = true;
   $('p > button').on('click', function() {
-    uploadcare.Widget($(this).prevAll('input')).value(null);
+    uploadcare.AnyWidget($(this).prevAll('input')).value(null);
   });
 
   $('input[role="uploadcare-uploader"]').each(function() {
     var input = this;
-    uploadcare.Widget(input).onChange(function(file) {
+    uploadcare.AnyWidget(input).onChange(function(file) {
       console.log('change:', input.name, file);
       if (file) {
-        file
+        file.promise()
           .done(function(info) {
             console.log('done:', input.name, info);
           })
