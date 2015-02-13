@@ -24,13 +24,6 @@ namespace 'uploadcare.utils', (ns) ->
       ns.warn(msg)
 
   common =
-    autostore: """
-      You have enabled autostore in the widget, but not on the server.
-      To use autostore, make sure it's enabled in project settings.
-
-      https://uploadcare.com/accounts/settings/
-      """
-
     publicKey: """
       Global public key not set. Uploads may not work!
       Add this to the <head> tag to set your key:
