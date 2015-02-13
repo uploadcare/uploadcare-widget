@@ -1,5 +1,31 @@
 # History
 
+### 2.0.0, 
+
+**Compatibility breaking changes in this release.**
+
+#### New features and fixes
+
+* Resize images on client before uploading (`image-shrink` option).
+* Autostore option was removed (but not autostore itself).
+  Now file is automatically stored if project allows autostore.
+* New option `do-not-store`. Use it when autostore is enabled in the project,
+  but you don't want to store files uploaded with particular widget.
+* Common widget constructor `AnyWidget` both for single and multiple widgets.
+* Fixed group info `cdnUrl` property when group creation is failed.
+* Assigning of `null` value for multiple widget doesn't break it.
+ 
+#### Breaking changes
+
+* `path-value` is on by default. Widget will always return URL to a file,
+  not only when crop is used.
+* Widget value no longer cleared when file is failed to upload.
+* Input value no longer cleared when new uploading is started,
+  previous value remains until upload of a new file is successful.
+* `uploadcare.Circle.listen` now expects what progress will be the first
+  argument of `progress` callback.
+
+
 ### 1.5.5, 28.01.2015
 
 * Fixed creation of group with modifiers.
