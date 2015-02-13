@@ -21,11 +21,7 @@ namespace 'uploadcare', (ns) ->
         # widget already exists
         continue
 
-      widgetClass = if getSettings(target).multiple
-        ns.widget.MultipleWidget
-      else
-        ns.widget.Widget
-      initializeWidget($(target), widgetClass)
+      ns.AnyWidget(target)
 
   ns.Widget = (target) ->
     el = $(target).eq(0)
@@ -40,6 +36,14 @@ namespace 'uploadcare', (ns) ->
       initializeWidget(el, ns.widget.MultipleWidget)
     else
       throw new Error 'This element should be processed using Widget'
+
+  ns.AnyWidget = (target) ->
+    el = $(target).eq(0)
+    widgetClass = if getSettings(el).multiple
+      ns.widget.MultipleWidget
+    else
+      ns.widget.Widget
+    initializeWidget(el, widgetClass)
 
   initializeWidget = (el, Widget) ->
     widget = el.data(dataAttr)

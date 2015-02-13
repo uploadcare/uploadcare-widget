@@ -77,15 +77,16 @@ namespace 'uploadcare.widget', (ns) ->
       @currentObject = null
       object?.cancel?()
       @template.reset()
-      @element.val('')
 
     __setObject: (newFile) =>
-      unless newFile == @currentObject
+      if newFile != @currentObject
         @__reset()
         if newFile
           @currentObject = newFile
           @__watchCurrentObject()
-        @__onChange.fire @currentObject
+        @__onChange.fire(@currentObject)
+      if not newFile
+        @element.val('')
 
     __watchCurrentObject: ->
       object = @__currentFile()
@@ -105,8 +106,8 @@ namespace 'uploadcare.widget', (ns) ->
       @template.loaded()
 
     __onUploadingFailed: (error) ->
-      @__setObject(null)
-      @template.error error
+      @template.reset()
+      @template.error(error)
 
     __setExternalValue: (value) ->
       @__setObject utils.valueToFile(value, @settings)
@@ -120,7 +121,7 @@ namespace 'uploadcare.widget', (ns) ->
         @currentObject
 
     reloadInfo: =>
-      @value @element.val()
+      @value(@element.val())
 
     openDialog: (tab) ->
       if @settings.systemDialog

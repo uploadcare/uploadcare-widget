@@ -11,6 +11,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.FileGroup
 
     constructor: (files, settings) ->
+      @__uuid = null
       @settings = s.build settings
       @__fileColl = new utils.CollectionOfPromises(files)
 
@@ -87,7 +88,7 @@ namespace 'uploadcare.files', (ns) ->
     __buildInfo: (cb) ->
       info = 
         uuid: @__uuid
-        cdnUrl: "#{@settings.cdnBase}/#{@__uuid}/"
+        cdnUrl: if @__uuid then "#{@settings.cdnBase}/#{@__uuid}/" else null
         name: t('file', @__fileColl.length())
         count: @__fileColl.length()
         size: 0
