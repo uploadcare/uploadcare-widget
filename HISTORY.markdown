@@ -11,7 +11,9 @@
   Now file is automatically stored if project allows autostore.
 * New option `do-not-store`. Use it when autostore is enabled in the project,
   but you don't want to store files uploaded with particular widget.
-* Common widget constructor `AnyWidget` both for single and multiple widgets.
+* `uploadcare.Widget` now can return either single or multiple widgets.
+* New `uploadcare.SingleWidget` function reproduce old `uploadcare.Widget`
+  behavior — it rises on multiple widgets.
 * Fixed group info `cdnUrl` property when group creation is failed.
 * Assigning of `null` value for multiple widget doesn't break it.
  
