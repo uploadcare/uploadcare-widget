@@ -23,7 +23,7 @@ namespace 'uploadcare', (ns) ->
 
       ns.AnyWidget(target)
 
-  ns.Widget = (target) ->
+  ns.SingleWidget = (target) ->
     el = $(target).eq(0)
     unless getSettings(el).multiple
       initializeWidget(el, ns.widget.Widget)

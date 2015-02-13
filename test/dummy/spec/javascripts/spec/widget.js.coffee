@@ -6,13 +6,13 @@
 } = jasmine
 
 $ ->
-  describe 'uploadcare.Widget() should', ->
+  describe 'uploadcare.SingleWidget() should', ->
 
     widget = null
 
     beforeEach ->
       loadFixtures('widget-input')
-      widget = uploadcare.Widget('#widget-input')
+      widget = uploadcare.SingleWidget('#widget-input')
 
     it 'retutn an object', ->
       expect(widget).toEqual jasmine.any(Object)

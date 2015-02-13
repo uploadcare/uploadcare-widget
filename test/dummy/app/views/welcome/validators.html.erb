@@ -59,12 +59,12 @@
       }
     }
 
-    uploadcare.Widget('#test1').validators.push(imagesOnly);
-    uploadcare.Widget('#test1').validators.push(maxSize(512 * 1024));
+    uploadcare.SingleWidget('#test1').validators.push(imagesOnly);
+    uploadcare.SingleWidget('#test1').validators.push(maxSize(512 * 1024));
 
     uploadcare.MultipleWidget('#test2').validators.push(maxSize(1024 * 1024));
 
-    uploadcare.Widget('#test3').validators.push(imagesOnly);
-    uploadcare.Widget('#test3').validators.push(horizontalImage);
+    uploadcare.SingleWidget('#test3').validators.push(imagesOnly);
+    uploadcare.SingleWidget('#test3').validators.push(horizontalImage);
   });
 </script>
