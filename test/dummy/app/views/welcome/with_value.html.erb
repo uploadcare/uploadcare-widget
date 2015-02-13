@@ -56,12 +56,12 @@
 <script>
   UPLOADCARE_CLEARABLE = true;
   $('p > button').on('click', function() {
-    uploadcare.AnyWidget($(this).prevAll('input')).value(null);
+    uploadcare.Widget($(this).prevAll('input')).value(null);
   });
 
   $('input[role="uploadcare-uploader"]').each(function() {
     var input = this;
-    uploadcare.AnyWidget(input).onChange(function(file) {
+    uploadcare.Widget(input).onChange(function(file) {
       console.log('change:', input.name, file);
       if (file) {
         file.promise()

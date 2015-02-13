@@ -114,7 +114,7 @@
 <script>
   $(function() {
     var all = $('table input').map(function() {
-      return uploadcare.Widget(this);
+      return uploadcare.SingleWidget(this);
     }).get();
     $.each(all, function() {
       var widget = this;
