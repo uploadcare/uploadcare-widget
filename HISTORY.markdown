@@ -13,7 +13,7 @@
   but you don't want to store files uploaded with particular widget.
 * `uploadcare.Widget` now can return either single or multiple widgets.
 * New `uploadcare.SingleWidget` function reproduce old `uploadcare.Widget`
-  behavior — it rises on multiple widgets.
+  behavior — it raises exception on multiple widgets.
 * Fixed group info `cdnUrl` property when group creation is failed.
 * Assigning of `null` value for multiple widget doesn't break it.
  
