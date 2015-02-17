@@ -95,9 +95,7 @@ namespace 'uploadcare', (ns) ->
     filter = (files) ->
       if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
-    promise = utils.then(panel, filter, filter)
-    promise.reject = panel.reject
-    promise
+    utils.then(panel, filter, filter).promise(panel)
 
 
   registeredTabs = {}
@@ -152,13 +150,12 @@ namespace 'uploadcare', (ns) ->
         @__welcome()
 
     publicPromise: ->
-      promise = @dfd.promise()
-      promise.reject = @__reject
-      promise.resolve = @__resolve
-      promise.fileColl = @files
-      promise.addFiles = @addFiles
-      promise.switchTab = @switchTab
-      return promise
+      @dfd.promise
+        reject: @__reject
+        resolve: @__resolve
+        fileColl: @files
+        addFiles: @addFiles
+        switchTab: @switchTab
 
     # (fileType, data) or ([fileObject, fileObject])
     addFiles: (files, data) =>
@@ -184,15 +181,15 @@ namespace 'uploadcare', (ns) ->
       @dfd.progress (name) ->
         onSwitched.fire name, (name is tabName)
 
-      # return
-      fileColl: @files
-      addFiles: @addFiles
-      resolve: @__resolve
-      switchTab: @switchTab
-      progress: @dfd.progress
-      onSwitched: onSwitched  # obsolete
-      done: @__resolve  # obsolete
-      dialog: @dfd.promise()  # obsolete
+      @dfd.promise
+        reject: @__reject
+        resolve: @__resolve
+        fileColl: @files
+        addFiles: @addFiles
+        switchTab: @switchTab
+        onSwitched: onSwitched  # obsolete
+        done: @__resolve  # obsolete
+        dialog: @dfd.promise()  # obsolete
 
     __resolve: =>
       @dfd.resolve @files.get()

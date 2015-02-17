@@ -34,7 +34,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         if name == @name and not @__loaded
           @__requestCamera()
 
-      @dialogApi.dialog.always =>
+      @dialogApi.always =>
         @URL?.revokeObjectURL(@video.prop('src'))
         @__stream?.stop?()
 
