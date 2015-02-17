@@ -154,6 +154,10 @@ namespace 'uploadcare', (ns) ->
     publicPromise: ->
       promise = @dfd.promise()
       promise.reject = @__reject
+      promise.resolve = @__resolve
+      promise.fileColl = @files
+      promise.addFiles = @addFiles
+      promise.switchTab = @switchTab
       return promise
 
     # (fileType, data) or ([fileObject, fileObject])
@@ -184,7 +188,8 @@ namespace 'uploadcare', (ns) ->
       fileColl: @files
       onSwitched: onSwitched
       addFiles: @addFiles
-      done: @__resolve
+      done: @__resolve  # obsolete
+      resolve: @__resolve
       switchTab: @switchTab
       dialog: @dfd.promise()
 

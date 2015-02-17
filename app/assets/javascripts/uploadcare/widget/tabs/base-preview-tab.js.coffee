@@ -15,7 +15,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       notDisabled = ':not(.uploadcare-disabled-el)'
       @container.on('click', PREFIX + 'back' + notDisabled, =>
         @dialogApi.fileColl.clear())
-      @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.done)
+      @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
       circleEl = $('<div class="uploadcare-dialog-icon">')
