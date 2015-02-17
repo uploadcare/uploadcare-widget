@@ -186,12 +186,13 @@ namespace 'uploadcare', (ns) ->
 
       # return
       fileColl: @files
-      onSwitched: onSwitched
       addFiles: @addFiles
-      done: @__resolve  # obsolete
       resolve: @__resolve
       switchTab: @switchTab
-      dialog: @dfd.promise()
+      progress: @dfd.progress
+      onSwitched: onSwitched  # obsolete
+      done: @__resolve  # obsolete
+      dialog: @dfd.promise()  # obsolete
 
     __resolve: =>
       @dfd.resolve @files.get()
@@ -242,7 +243,7 @@ namespace 'uploadcare', (ns) ->
         )
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
-      @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
+      @tabs[name] = new TabCls(tabPanel, tabButton, @apiForTab(name), @settings, name)
 
     __addFakeTab: (name) ->
       $('<div>')

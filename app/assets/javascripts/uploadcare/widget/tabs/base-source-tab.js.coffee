@@ -12,7 +12,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     CLASS_PREFIX = 'uploadcare-dialog-source-base-'
     ROLE_PREFIX = '@' + CLASS_PREFIX
 
-    constructor: (@container, @tabButton, @dialogApi, @settings) ->
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
 
       @container.append tpl 'source-tab-base'
 

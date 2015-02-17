@@ -54,14 +54,14 @@
     }
   </style>
   <script>
-    function GroupTab(container, button, dialogApi, settings) {
+    function GroupTab(container, button, dialogApi, settings, name) {
       var group = settings.favoriteGroup;
       if ( ! group) {
         throw new Error('No group found in options.')
       }
 
-      dialogApi.onSwitched.add(function(name, toThis) {
-        if (toThis) {
+      dialogApi.progress(function(tabName) {
+        if (tabName == name) {
           container.empty();
           uploadcare.loadFileGroup(group).done(function(fileGroup) {
             $.each(fileGroup.files(), function(i, file) {
