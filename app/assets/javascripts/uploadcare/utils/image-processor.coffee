@@ -135,6 +135,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       reader = new FileReader()
       reader.onload = ->
         cb(new DataView(reader.result))
+      reader.onerror = (e) ->
+        df.reject('reader', e)
       reader.readAsArrayBuffer(file)
 
     readNext = ->
