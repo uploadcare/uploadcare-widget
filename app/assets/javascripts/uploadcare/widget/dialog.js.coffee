@@ -106,20 +106,20 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('file', tabs.FileTab)
   ns.registerTab('url', tabs.UrlTab)
   ns.registerTab('camera', tabs.CameraTab)
-  ns.registerTab('facebook', tabs.RemoteTabFor 'facebook')
-  ns.registerTab('dropbox', tabs.RemoteTabFor 'dropbox')
-  ns.registerTab('gdrive', tabs.RemoteTabFor 'gdrive')
-  ns.registerTab('instagram', tabs.RemoteTabFor 'instagram')
-  ns.registerTab('flickr', tabs.RemoteTabFor 'flickr')
-  ns.registerTab('vk', tabs.RemoteTabFor 'vk')
-  ns.registerTab('evernote', tabs.RemoteTabFor 'evernote')
-  ns.registerTab('box', tabs.RemoteTabFor 'box')
-  ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
-  ns.registerTab('huddle', tabs.RemoteTabFor 'huddle')
-  ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
-  ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings) ->
+  ns.registerTab('facebook', tabs.RemoteTab)
+  ns.registerTab('dropbox', tabs.RemoteTab)
+  ns.registerTab('gdrive', tabs.RemoteTab)
+  ns.registerTab('instagram', tabs.RemoteTab)
+  ns.registerTab('flickr', tabs.RemoteTab)
+  ns.registerTab('vk', tabs.RemoteTab)
+  ns.registerTab('evernote', tabs.RemoteTab)
+  ns.registerTab('box', tabs.RemoteTab)
+  ns.registerTab('skydrive', tabs.RemoteTab)
+  ns.registerTab('huddle', tabs.RemoteTab)
+  ns.registerTab('welcome', tabs.StaticTab)
+  ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
     tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
-    new tabCls(tabPanel, tabButton, dialogApi, settings)
+    new tabCls(tabPanel, tabButton, dialogApi, settings, name)
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
