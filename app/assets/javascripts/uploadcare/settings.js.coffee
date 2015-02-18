@@ -137,10 +137,10 @@ namespace 'uploadcare.settings', (ns) ->
       'multipleMin'
     ]
 
-    if settings.crop and not $.isArray(settings.crop)
+    if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop) or settings.multiple
         settings.crop = false
-      else if $.isPlainObject settings.crop  # old format
+      else if $.isPlainObject(settings.crop)  # old format
         settings.crop = [settings.crop]
       else
         settings.crop = $.map(settings.crop.split(','), parseCrop)
