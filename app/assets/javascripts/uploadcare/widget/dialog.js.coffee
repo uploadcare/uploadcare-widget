@@ -117,9 +117,9 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
   ns.registerTab('huddle', tabs.RemoteTabFor 'huddle')
   ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
-  ns.registerTab 'preview', (tabPanel, tabButton, apiForTab, settings) ->
+  ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings) ->
     tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
-    new tabCls(tabPanel, tabButton, apiForTab, settings)
+    new tabCls(tabPanel, tabButton, dialogApi, settings)
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
@@ -150,12 +150,14 @@ namespace 'uploadcare', (ns) ->
         @__welcome()
 
     publicPromise: ->
-      @dfd.promise
-        reject: @__reject
-        resolve: @__resolve
-        fileColl: @files
-        addFiles: @addFiles
-        switchTab: @switchTab
+      if not @promise
+        @promise = @dfd.promise
+          reject: @__reject
+          resolve: @__resolve
+          fileColl: @files
+          addFiles: @addFiles
+          switchTab: @switchTab
+      @promise
 
     # (fileType, data) or ([fileObject, fileObject])
     addFiles: (files, data) =>
@@ -175,21 +177,6 @@ namespace 'uploadcare', (ns) ->
           @switchTab 'preview'
       else
         @__resolve()
-
-    apiForTab: (tabName) ->
-      onSwitched = $.Callbacks()
-      @dfd.progress (name) ->
-        onSwitched.fire name, (name is tabName)
-
-      @dfd.promise
-        reject: @__reject
-        resolve: @__resolve
-        fileColl: @files
-        addFiles: @addFiles
-        switchTab: @switchTab
-        onSwitched: onSwitched  # obsolete
-        done: @__resolve  # obsolete
-        dialog: @dfd.promise()  # obsolete
 
     __resolve: =>
       @dfd.resolve @files.get()
@@ -240,7 +227,7 @@ namespace 'uploadcare', (ns) ->
         )
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
-      @tabs[name] = new TabCls(tabPanel, tabButton, @apiForTab(name), @settings, name)
+      @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
     __addFakeTab: (name) ->
       $('<div>')

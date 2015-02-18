@@ -14,23 +14,13 @@
 * `uploadcare.Widget` now can return either single or multiple widgets.
 * New `uploadcare.SingleWidget` function reproduce old `uploadcare.Widget`
   behavior — it raises exception on multiple widgets.
-* `dialogApi` for custom tabs now pretty much the same as dialog and panel
+* `dialogApi` for custom tabs is now the same objects as dialog and panel
   objects. `dialogApi` now supports promise interface, and dialog and panel
-  objects has `fileColl`, `addFiles` and `switchTab` properties. New method
-  `resolve` is added for both of them.
+  objects have `fileColl`, `addFiles` and `switchTab` properties.
+  New method `resolve` is also added.
 * Custom tabs constructors now receive tab name as last argument.
 * Fixed group info `cdnUrl` property when group creation is failed.
 * Assigning of `null` value for multiple widget doesn't break it.
-
-#### Deprecations
-
-This properties will be removed in one of the 2.x versions.
-
-* `dialogApi.done` is obsoleted in favor of `dialogApi.resolve`.
-* `dialogApi.onSwitched` is obsoleted in favor of `dialogApi.progress`
-  and tab name.
-* `dialogApi.dialog` is obsoleted in favor of `dialogApi` itself, which
-  now supports promise interface.
  
 #### Breaking changes
 
@@ -39,6 +29,12 @@ This properties will be removed in one of the 2.x versions.
 * Widget value no longer cleared when file is failed to upload.
 * Input value no longer cleared when new uploading is started,
   previous value remains until upload of a new file is successful.
+* `dialogApi.dialog` is removed in favor of `dialogApi` itself, which
+  now supports promise interface.
+* `dialogApi.done` is part of promise interface and receve callback,
+  not triggers resolving. To resolve use `dialogApi.resolve`.
+* `dialogApi.onSwitched` is removed in favor of `dialogApi.progress`
+  and tab name.
 * `uploadcare.Circle.listen` now expects what progress will be the first
   argument of `progress` callback.
 
