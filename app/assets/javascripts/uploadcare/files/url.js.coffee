@@ -24,13 +24,14 @@ namespace 'uploadcare.files', (ns) ->
 
       @__notifyApi()
 
-    setName: (name) ->
-      @__realFileName = name
-      @fileName = name
+    setName: (@fileName) ->
+      @__realFileName = fileName
       @__notifyApi()
 
-    setIsImage: (isImage) ->
-      @isImage = isImage
+    setIsImage: (@isImage) ->
+      @__notifyApi()
+
+    setSourceInfo: (@sourceInfo) ->
       @__notifyApi()
 
     __startUpload: ->

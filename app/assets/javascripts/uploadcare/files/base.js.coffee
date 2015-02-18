@@ -24,6 +24,7 @@ namespace 'uploadcare.files', (ns) ->
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
+      @sourceInfo = null
 
       # this can be exposed in future
       @onInfoReady = $.Callbacks('once memory')
@@ -80,6 +81,7 @@ namespace 'uploadcare.files', (ns) ->
       originalUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/" else null
       cdnUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}" else null
       cdnUrlModifiers: @cdnUrlModifiers
+      sourceInfo: @sourceInfo
 
     __cancel: =>
       @__rejectApi('user')
