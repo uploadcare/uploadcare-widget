@@ -9,13 +9,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     PREFIX = '@uploadcare-dialog-preview-'
 
-    constructor: (@container, @tabButton, @dialogApi, @settings) ->
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @__initTabButtonCircle()
 
       notDisabled = ':not(.uploadcare-disabled-el)'
       @container.on('click', PREFIX + 'back' + notDisabled, =>
         @dialogApi.fileColl.clear())
-      @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.done)
+      @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
       circleEl = $('<div class="uploadcare-dialog-icon">')
@@ -37,4 +37,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       circle = new Circle(circleEl).listen(circleDf.promise())
 
-      @dialogApi.onSwitched.add(circle.update)
+      @dialogApi.progress(circle.update)

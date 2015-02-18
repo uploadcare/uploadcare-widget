@@ -17,12 +17,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
         @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
 
-        @dialogApi.onSwitched.add (_, switchedToMe) =>
-          if switchedToMe
+        @dialogApi.progress (name) =>
+          if name == @name
             @__createIframe()
           @__sendMessage
             type: 'visibility-changed'
-            visible: switchedToMe
+            visible: name == @name
 
       remoteUrl: ->
         "#{@settings.socialBase}/window/#{service}?" + $.param

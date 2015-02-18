@@ -12,16 +12,16 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     CLASS_PREFIX = 'uploadcare-dialog-source-base-'
     ROLE_PREFIX = '@' + CLASS_PREFIX
 
-    constructor: (@container, @tabButton, @dialogApi, @settings) ->
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
 
       @container.append tpl 'source-tab-base'
 
       @wrap = @container.find ROLE_PREFIX + 'wrap'
 
       notDisabled = ':not(.uploadcare-disabled-el)'
-      @container.on('click', ROLE_PREFIX + 'show-files' + notDisabled, =>
-        @dialogApi.switchTab 'preview')
-      @container.on('click', ROLE_PREFIX + 'done' + notDisabled, @dialogApi.done)
+      @container.on 'click', ROLE_PREFIX + 'show-files' + notDisabled, =>
+        @dialogApi.switchTab('preview')
+      @container.on('click', ROLE_PREFIX + 'done' + notDisabled, @dialogApi.resolve)
 
       updateFooter = =>
         files = @dialogApi.fileColl.length()

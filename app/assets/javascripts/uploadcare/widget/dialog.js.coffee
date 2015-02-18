@@ -95,9 +95,7 @@ namespace 'uploadcare', (ns) ->
     filter = (files) ->
       if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
 
-    promise = utils.then(panel, filter, filter)
-    promise.reject = panel.reject
-    promise
+    utils.then(panel, filter, filter).promise(panel)
 
 
   registeredTabs = {}
@@ -119,9 +117,9 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('skydrive', tabs.RemoteTabFor 'skydrive')
   ns.registerTab('huddle', tabs.RemoteTabFor 'huddle')
   ns.registerTab('welcome', tabs.StaticTabWith 'welcome')
-  ns.registerTab 'preview', (tabPanel, tabButton, apiForTab, settings) ->
+  ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings) ->
     tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
-    new tabCls(tabPanel, tabButton, apiForTab, settings)
+    new tabCls(tabPanel, tabButton, dialogApi, settings)
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
@@ -152,9 +150,14 @@ namespace 'uploadcare', (ns) ->
         @__welcome()
 
     publicPromise: ->
-      promise = @dfd.promise()
-      promise.reject = @__reject
-      return promise
+      if not @promise
+        @promise = @dfd.promise
+          reject: @__reject
+          resolve: @__resolve
+          fileColl: @files
+          addFiles: @addFiles
+          switchTab: @switchTab
+      @promise
 
     # (fileType, data) or ([fileObject, fileObject])
     addFiles: (files, data) =>
@@ -174,19 +177,6 @@ namespace 'uploadcare', (ns) ->
           @switchTab 'preview'
       else
         @__resolve()
-
-    apiForTab: (tabName) ->
-      onSwitched = $.Callbacks()
-      @dfd.progress (name) ->
-        onSwitched.fire name, (name is tabName)
-
-      # return
-      fileColl: @files
-      onSwitched: onSwitched
-      addFiles: @addFiles
-      done: @__resolve
-      switchTab: @switchTab
-      dialog: @dfd.promise()
 
     __resolve: =>
       @dfd.resolve @files.get()
@@ -237,7 +227,7 @@ namespace 'uploadcare', (ns) ->
         )
         .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
-      @tabs[name] = new TabCls tabPanel, tabButton, @apiForTab(name), @settings
+      @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
     __addFakeTab: (name) ->
       $('<div>')

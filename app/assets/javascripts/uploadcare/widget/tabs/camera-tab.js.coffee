@@ -30,11 +30,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @video.on 'loadeddata', ->
         @play()
 
-      @dialogApi.onSwitched.add (_, switchedToMe) =>
-        if switchedToMe and not @__loaded
+      @dialogApi.progress (name) =>
+        if name == @name and not @__loaded
           @__requestCamera()
 
-      @dialogApi.dialog.always =>
+      @dialogApi.always =>
         @URL?.revokeObjectURL(@video.prop('src'))
         @__stream?.stop?()
 
