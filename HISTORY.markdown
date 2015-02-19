@@ -1,6 +1,6 @@
 # History
 
-### 2.0.0, 
+### 2.0.0, 20.02.2015
 
 **Compatibility breaking changes in this release.**
 
