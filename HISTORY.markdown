@@ -14,6 +14,9 @@
 * `uploadcare.Widget` now can return either single or multiple widgets.
 * New `uploadcare.SingleWidget` function reproduce old `uploadcare.Widget`
   behavior — it raises exception on multiple widgets.
+* New `sourceInfo` property is added to the info of the files
+  uploaded from social sources. At the moment only extended info
+  about Instagram files is provided.
 * `dialogApi` for custom tabs is now the same objects as dialog and panel
   objects. `dialogApi` now supports promise interface, and dialog and panel
   objects have `fileColl`, `addFiles` and `switchTab` properties.
