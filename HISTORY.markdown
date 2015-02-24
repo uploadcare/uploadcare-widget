@@ -1,5 +1,9 @@
 # History
 
+### 2.0.1, 24.02.2015
+
+* Restored compatibility with IE 8-9 and other old browsers.
+
 ### 2.0.0, 20.02.2015
 
 **Compatibility breaking changes in this release.**
@@ -8,37 +12,38 @@
 
 * Resize images on client before uploading (`image-shrink` option).
 * Autostore option was removed (but not autostore itself).
-  Now file is automatically stored if project allows autostore.
+  Now file is automatically stored if the project allows autostore.
 * New option `do-not-store`. Use it when autostore is enabled in the project,
-  but you don't want to store files uploaded with particular widget.
+  but you don’t want to store files uploaded with a particular widget.
 * `uploadcare.Widget` now can return either single or multiple widgets.
 * New `uploadcare.SingleWidget` function reproduce old `uploadcare.Widget`
-  behavior — it raises exception on multiple widgets.
+  behavior — it raises an exception on multiple widgets.
 * New `sourceInfo` property is added to the info of the files
   uploaded from social sources. At the moment only extended info
   about Instagram files is provided.
-* `dialogApi` for custom tabs is now the same objects as dialog and panel
+* `dialogApi` for custom tabs is now the same object as dialog and panel
   objects. `dialogApi` now supports promise interface, and dialog and panel
   objects have `fileColl`, `addFiles` and `switchTab` properties.
   New method `resolve` is also added.
 * Custom tabs constructors now receive tab name as last argument.
-* Fixed group info `cdnUrl` property when group creation is failed.
-* Assigning of `null` value for multiple widget doesn't break it.
+* Fix group `cdnUrl` property when group creation is failed.
+* Multi-upload widget does not break when `null` value assigned to it.
  
 #### Breaking changes
 
-* `path-value` is on by default. Widget will always return URL to a file,
+* `path-value` is on by default. Widget will always return file URL,
   not only when crop is used.
-* Widget value no longer cleared when file is failed to upload.
-* Input value no longer cleared when new uploading is started,
-  previous value remains until upload of a new file is successful.
+* Widget value is no longer cleared when file is failed to upload.
+* Input value is no longer cleared when a new uploading is started.
+  Previous value remains until upload of a new file is successful.
 * `dialogApi.dialog` is removed in favor of `dialogApi` itself, which
   now supports promise interface.
-* `dialogApi.done` is part of promise interface and receve callback,
-  not triggers resolving. To resolve use `dialogApi.resolve`.
+* `dialogApi.done`  is part of the promise interface and receives a callback
+  (instead of triggering resolving).
+  In order to resolve use `dialogApi.resolve`.
 * `dialogApi.onSwitched` is removed in favor of `dialogApi.progress`
   and tab name.
-* `uploadcare.Circle.listen` now expects what progress will be the first
+* `uploadcare.Circle.listen` now expects progress value to be the first
   argument of `progress` callback.
 
 
