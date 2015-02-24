@@ -9,7 +9,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
   DataView = window.DataView
   FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
   URL = window.URL or window.webkitURL
-  URL = URL.createObjectURL && URL
+  URL = URL && URL.createObjectURL && URL
   Blob = utils.abilities.blob && window.Blob
 
   taskRunner = utils.taskRunner(1)
