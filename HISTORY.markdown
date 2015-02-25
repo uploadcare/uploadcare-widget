@@ -1,5 +1,9 @@
 # History
 
+### 2.0.2, 25.02.2015
+
+* Fixed uploading of large images.
+
 ### 2.0.1, 24.02.2015
 
 * Restored compatibility with IE 8-9 and other old browsers.
