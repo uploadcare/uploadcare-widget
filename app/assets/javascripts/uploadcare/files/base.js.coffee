@@ -50,6 +50,7 @@ namespace 'uploadcare.files', (ns) ->
       @isImage = data.is_image
       @imageInfo = data.image_info
       @isStored = data.is_stored
+      @cdnUrlModifiers = data.default_effects or null
 
       if not @onInfoReady.fired()
         @onInfoReady.fire @__fileInfo()
