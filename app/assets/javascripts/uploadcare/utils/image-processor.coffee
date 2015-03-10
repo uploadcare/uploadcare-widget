@@ -37,6 +37,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         df.notify(.1)
 
         # start = new Date()
+        isJPEG = op.state() is 'resolved'
         img = new Image()
         img.onload = ->
           # console.log('load: ' + (new Date() - start))
@@ -49,7 +50,12 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
           op.fail(df.reject, release)
           op.done (canvas) ->
             # start = new Date()
-            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.8,
+            format = 'image/jpeg'
+            quality = settings.quality or 0.8
+            if not isJPEG and ns.hasTransparency(canvas)
+              format = 'image/png'
+              quality = undefined
+            utils.canvasToBlob canvas, format, quality,
               (blob) ->
                 canvas.width = 1
                 canvas.height = 1
@@ -202,3 +208,20 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.resolve(new Blob(newChunks, {type: blob.type}))
 
     df.promise()
+
+
+  ns.hasTransparency = (img) ->
+    pcsn = 50
+
+    canvas = document.createElement('canvas')
+    canvas.width = canvas.height = pcsn
+    ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, pcsn, pcsn)
+    data = ctx.getImageData(0, 0, pcsn, pcsn).data
+    canvas.width = canvas.height = 1
+
+    for i in [3...data.length] by 4
+      if data[i] < 254
+        return true
+
+    return false
