@@ -18,7 +18,6 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # in -> file
     # out <- blob
     df = $.Deferred()
-    exif = null
 
     if not (URL and DataView and Blob)
       return df.reject('support')
@@ -28,23 +27,27 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       # console.log('delayed: ' + (new Date() - start))
       df.always(release)
 
-      op = ns.readJpegChunks(file)
-      op.progress (pos, length, marker, view) ->
-        if not exif and marker == 0xe1
-          if view.byteLength >= 14
-            if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-              exif = view.buffer
-      op.always ->
-        df.notify(.1)
+      # start = new Date()
+      img = new Image()
+      img.onerror = ->
+          df.reject('not image')
+      img.onload = ->
+        # console.log('load: ' + (new Date() - start))
+        URL.revokeObjectURL(img.src)
+        img.onerror = null  # do not fire when set to blank
+        df.notify(.10)
 
-        # start = new Date()
-        isJPEG = op.state() is 'resolved'
-        img = new Image()
-        img.onload = ->
-          # console.log('load: ' + (new Date() - start))
-          URL.revokeObjectURL(img.src)
-          img.onerror = null  # do not fire when set to blank
+        exif = null
+        op = ns.readJpegChunks(file)
+        op.progress (pos, length, marker, view) ->
+          if not exif and marker == 0xe1
+            if view.byteLength >= 14
+              if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
+                exif = view.buffer
+        op.always ->
           df.notify(.2)
+          isJPEG = op.state() is 'resolved'
+
           op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
@@ -70,10 +73,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
                   df.resolve(blob)
           img = null  # free reference
 
-        img.onerror = ->
-          df.reject('not image')
-
-        img.src = URL.createObjectURL(file)
+      img.src = URL.createObjectURL(file)
 
     df.promise()
 
