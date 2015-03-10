@@ -26,6 +26,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # start = new Date()
     taskRunner (release) =>
       # console.log('delayed: ' + (new Date() - start))
+      df.always(release)
 
       op = ns.readJpegChunks(file)
       op.progress (pos, length, marker, view) ->
@@ -47,7 +48,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
           op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
-          op.fail(df.reject, release)
+          op.fail(df.reject)
           op.done (canvas) ->
             # start = new Date()
             format = 'image/jpeg'
@@ -57,8 +58,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
               quality = undefined
             utils.canvasToBlob canvas, format, quality,
               (blob) ->
-                canvas.width = 1
-                canvas.height = 1
+                canvas.width = canvas.height = 1
                 df.notify(.9)
                 # console.log('to blob: ' + (new Date() - start))
                 if exif
@@ -68,11 +68,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
                     df.resolve(blob)
                 else
                   df.resolve(blob)
-                release()
           img = null  # free reference
 
         img.onerror = ->
-          release()
           df.reject('not image')
 
         img.src = URL.createObjectURL(file)
@@ -125,9 +123,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         canvas.width = sW
         canvas.height = sH
         canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
-        img.src = 'about:blank'  # for image
-        img.width = 1            # for canvas
-        img.height = 1
+        img.src = 'about:blank'     # for image
+        img.width = img.height = 1  # for canvas
         img = canvas
 
         df.notify((originalW - sW) / (originalW - w))
@@ -177,6 +174,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       readNext()
 
     df.promise()
+
 
   ns.replaceJpegChunk = (blob, marker, chunks) ->
     df = $.Deferred()
