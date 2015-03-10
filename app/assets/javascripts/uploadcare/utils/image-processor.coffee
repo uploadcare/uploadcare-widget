@@ -18,7 +18,6 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # in -> file
     # out <- blob
     df = $.Deferred()
-    exif = null
 
     if not (URL and DataView and Blob)
       return df.reject('support')
@@ -26,33 +25,43 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
     # start = new Date()
     taskRunner (release) =>
       # console.log('delayed: ' + (new Date() - start))
+      df.always(release)
 
-      op = ns.readJpegChunks(file)
-      op.progress (pos, length, marker, view) ->
-        if not exif and marker == 0xe1
-          if view.byteLength >= 14
-            if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-              exif = view.buffer
-      op.always ->
-        df.notify(.1)
+      # start = new Date()
+      img = new Image()
+      img.onerror = ->
+          df.reject('not image')
+      img.onload = ->
+        # console.log('load: ' + (new Date() - start))
+        URL.revokeObjectURL(img.src)
+        img.onerror = null  # do not fire when set to blank
+        df.notify(.10)
 
-        # start = new Date()
-        img = new Image()
-        img.onload = ->
-          # console.log('load: ' + (new Date() - start))
-          URL.revokeObjectURL(img.src)
-          img.onerror = null  # do not fire when set to blank
+        exif = null
+        op = ns.readJpegChunks(file)
+        op.progress (pos, length, marker, view) ->
+          if not exif and marker == 0xe1
+            if view.byteLength >= 14
+              if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
+                exif = view.buffer
+        op.always ->
           df.notify(.2)
+          isJPEG = op.state() is 'resolved'
+
           op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
-          op.fail(df.reject, release)
+          op.fail(df.reject)
           op.done (canvas) ->
             # start = new Date()
-            utils.canvasToBlob canvas, 'image/jpeg', settings.quality or 0.8,
+            format = 'image/jpeg'
+            quality = settings.quality or 0.8
+            if not isJPEG and ns.hasTransparency(canvas)
+              format = 'image/png'
+              quality = undefined
+            utils.canvasToBlob canvas, format, quality,
               (blob) ->
-                canvas.width = 1
-                canvas.height = 1
+                canvas.width = canvas.height = 1
                 df.notify(.9)
                 # console.log('to blob: ' + (new Date() - start))
                 if exif
@@ -62,14 +71,9 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
                     df.resolve(blob)
                 else
                   df.resolve(blob)
-                release()
           img = null  # free reference
 
-        img.onerror = ->
-          release()
-          df.reject('not image')
-
-        img.src = URL.createObjectURL(file)
+      img.src = URL.createObjectURL(file)
 
     df.promise()
 
@@ -119,9 +123,8 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         canvas.width = sW
         canvas.height = sH
         canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
-        img.src = 'about:blank'  # for image
-        img.width = 1            # for canvas
-        img.height = 1
+        img.src = 'about:blank'     # for image
+        img.width = img.height = 1  # for canvas
         img = canvas
 
         df.notify((originalW - sW) / (originalW - w))
@@ -172,6 +175,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
 
     df.promise()
 
+
   ns.replaceJpegChunk = (blob, marker, chunks) ->
     df = $.Deferred()
     oldChunkPos = []
@@ -202,3 +206,20 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       df.resolve(new Blob(newChunks, {type: blob.type}))
 
     df.promise()
+
+
+  ns.hasTransparency = (img) ->
+    pcsn = 50
+
+    canvas = document.createElement('canvas')
+    canvas.width = canvas.height = pcsn
+    ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, pcsn, pcsn)
+    data = ctx.getImageData(0, 0, pcsn, pcsn).data
+    canvas.width = canvas.height = 1
+
+    for i in [3...data.length] by 4
+      if data[i] < 254
+        return true
+
+    return false
