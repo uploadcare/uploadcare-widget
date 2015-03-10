@@ -1,8 +1,13 @@
 # History
 
+### 2.0.3, 10.03.2015
+
+* Transparent images are automatically shrinked to PNG.
+* Considering `cdnUrlModifiers` when group is loaded.
+
 ### 2.0.2, 25.02.2015
 
-* Fixed uploading of large images.
+* Fixed uploading of large files.
 
 ### 2.0.1, 24.02.2015
 
