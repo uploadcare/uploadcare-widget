@@ -135,7 +135,7 @@ def upload_widget(version)
   end
 
   upload_js = lambda do |name|
-    upload.call name, 'application/javascript'
+    upload.call name, 'application/javascript; charset=utf-8'
   end
 
   upload_js.call "uploadcare.js"
