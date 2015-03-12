@@ -69,7 +69,7 @@ namespace 'uploadcare.files', (ns) ->
         return df
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi 'size'
-        return
+        return df
 
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
@@ -112,7 +112,7 @@ namespace 'uploadcare.files', (ns) ->
         return df
       if @settings.imagesOnly
         @__rejectApi 'image'
-        return
+        return df
 
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
