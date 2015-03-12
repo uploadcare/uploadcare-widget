@@ -1,5 +1,11 @@
 # History
 
+### 2.0.4, 12.03.2015
+
+* Fixed error if validation is failed.
+* Fixed error in case of large file with imagesOnly settings
+  and files larger than 100 MB in old browsers. 
+
 ### 2.0.3, 10.03.2015
 
 * Transparent images are automatically shrinked to PNG.
