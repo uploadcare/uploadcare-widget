@@ -63,11 +63,13 @@ namespace 'uploadcare.files', (ns) ->
       xhr
 
     directUpload: ->
+      df = $.Deferred()
+
+      if @apiDeferred.state() != 'pending'
+        return df
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi 'size'
         return
-
-      df = $.Deferred()
 
       formData = new FormData()
       formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
@@ -104,11 +106,13 @@ namespace 'uploadcare.files', (ns) ->
       df
 
     multipartUpload: ->
+      df = $.Deferred()
+
+      if @apiDeferred.state() != 'pending'
+        return df
       if @settings.imagesOnly
         @__rejectApi 'image'
         return
-
-      df = $.Deferred()
 
       @multipartStart().done (data) =>
         @uploadParts(data.parts).done =>
