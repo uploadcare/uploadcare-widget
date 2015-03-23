@@ -123,7 +123,7 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
         canvas.width = sW
         canvas.height = sH
         canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
-        img.src = 'about:blank'     # for image
+        img.src = '//:0'            # for image
         img.width = img.height = 1  # for canvas
         img = canvas
 
