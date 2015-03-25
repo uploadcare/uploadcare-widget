@@ -1,5 +1,10 @@
 # History
 
+### 2.0.5, 25.03.2015
+
+* Added compatibility with [FastClick](https://github.com/ftlabs/fastclick).
+* Warnings from `image-shrink` option are suppressed.
+
 ### 2.0.4, 12.03.2015
 
 * Fixed error if validation is failed.
