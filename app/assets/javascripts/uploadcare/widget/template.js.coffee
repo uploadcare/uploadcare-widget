@@ -53,4 +53,6 @@ namespace 'uploadcare.widget', (ns) ->
       @setStatus 'error'
 
     setFileInfo: (info) ->
-      @statusText.html tpl('widget-file-name', info)
+      @statusText.html(tpl('widget-file-name', info))
+        .find('.uploadcare-widget-file-name')
+        .toggleClass('needsclick', @settings.systemDialog)
