@@ -47,8 +47,10 @@ namespace 'uploadcare.widget', (ns) ->
       path.push(if @settings.imagesOnly then 'images' else 'files')
       path.push(if @settings.multiple then 'other' else 'one')
 
-      @template.addButton('open', t(path.join('.'))).on 'click', =>
-        @openDialog()
+      @template.addButton('open', t(path.join('.')))
+        .toggleClass('needsclick', @settings.systemDialog)
+        .on 'click', =>
+          @openDialog()
 
       @template.addButton('cancel', t('buttons.cancel')).on 'click', =>
         @__setObject(null)
@@ -57,7 +59,7 @@ namespace 'uploadcare.widget', (ns) ->
         @template.addButton('remove', t('buttons.remove')).on 'click', =>
           @__setObject(null)
 
-      @template.content.on 'click', '@uploadcare-widget-file-name', =>
+      @template.content.on 'click', '.uploadcare-widget-file-name', =>
         @openDialog()
 
       # Enable drag and drop
