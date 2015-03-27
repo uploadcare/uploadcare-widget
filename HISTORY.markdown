@@ -1,5 +1,10 @@
 # History
 
+### 2.0.6, 28.03.2015
+
+* Fix exception when multiple files are uploaded simalteniously with 
+  `image-shrink` option and uploading is cancelled.
+
 ### 2.0.5, 25.03.2015
 
 * Added compatibility with [FastClick](https://github.com/ftlabs/fastclick).
