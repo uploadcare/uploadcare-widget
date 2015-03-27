@@ -22,6 +22,8 @@ namespace 'uploadcare.files', (ns) ->
     setFile: (file) =>
       if file
         @__file = file
+      if not @__file
+        return
       @fileSize = @__file.size
       @fileType = @__file.type or 'application/octet-stream'
       @__runValidators()
@@ -65,7 +67,7 @@ namespace 'uploadcare.files', (ns) ->
     directUpload: ->
       df = $.Deferred()
 
-      if @apiDeferred.state() != 'pending'
+      if not @__file
         return df
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi 'size'
@@ -108,7 +110,7 @@ namespace 'uploadcare.files', (ns) ->
     multipartUpload: ->
       df = $.Deferred()
 
-      if @apiDeferred.state() != 'pending'
+      if not @__file
         return df
       if @settings.imagesOnly
         @__rejectApi 'image'
