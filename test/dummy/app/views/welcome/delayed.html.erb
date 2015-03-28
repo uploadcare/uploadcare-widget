@@ -1,6 +1,7 @@
 <% content_for :head do %>
 <script>
 UPLOADCARE_MANUAL_START = true;
+UPLOADCARE_PUBLIC_KEY = '';
 
 jQuery(function($) {
   var countdown = 3;
@@ -12,7 +13,10 @@ jQuery(function($) {
       setTimeout(tick, 1000);
     } else {
       counter.remove();
-      uploadcare.start({localeTranslations: {ready: 'BANG!'}});
+      uploadcare.start({
+        publicKey: 'demopublickey',
+        localeTranslations: {ready: 'BANG!'}
+      });
     }
   };
   setTimeout(tick, 1000);

@@ -245,9 +245,6 @@ namespace 'uploadcare.utils', (ns) ->
     value = Number(value.toFixed(fixedTo))
     return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
 
-  ns.imagePath = (name) ->
-    uploadcare.settings.common().scriptBase + '/images/' + name
-
   ns.ajaxDefaults =
     dataType: 'json'
     crossDomain: true

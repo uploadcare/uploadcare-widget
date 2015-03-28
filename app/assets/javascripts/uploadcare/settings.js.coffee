@@ -191,12 +191,7 @@ namespace 'uploadcare.settings', (ns) ->
   ns.build = (settings) ->
     normalize $.extend({}, ns.common(), settings or {})
 
-  waitForSettingsCb = $.Callbacks "once memory"
-
-  # Like build() but won't cause settings freezing if they still didn't
-  ns.waitForSettings = (settings, fn) ->
-    waitForSettingsCb.add (common) ->
-      fn normalize $.extend({}, common, settings or {})
+  ns.waitForSettings = $.Callbacks "once memory"
 
   class ns.CssCollector
     constructor: () ->

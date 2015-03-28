@@ -62,6 +62,7 @@ namespace 'uploadcare', (ns) ->
       el.remove()
 
   ns.start = (settings) ->
+    # TODO: call live() immediately even if settings.live
     live = ->
       initialize $('@uploadcare-uploader')
     if s.common(settings).live

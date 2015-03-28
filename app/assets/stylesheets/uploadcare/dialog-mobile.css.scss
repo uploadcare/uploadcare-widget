@@ -129,7 +129,7 @@ $dialog-mobile-min-width: 310px;
       padding: 10px 0 0 50px;
     }
     .uploadcare-clouds-tip:before {
-      background-image: url("<%= utils.imagePath('arrow.png') %>");
+      background-image: url("<%= settings.scriptBase %>/images/arrow.png");
       background-repeat: no-repeat;
       background-size: 51px 33px;
       content: '';
