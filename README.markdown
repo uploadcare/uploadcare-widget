@@ -11,7 +11,19 @@ Add following code to your document's `<head>`.
   // Widget settings
   UPLOADCARE_PUBLIC_KEY = 'your_public_key';
 </script>
-<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare-x.y.z.min.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare.full.min.js" charset="utf-8"></script>
+```
+
+Where `x.y.z` is widget version (2.0.6 for example).
+Here is also version without builtin jQuery:
+
+```html
+<script>
+  // Widget settings
+  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare.min.js" charset="utf-8"></script>
 ```
 
 The official [Widget documentation](https://uploadcare.com/documentation/widget/)
