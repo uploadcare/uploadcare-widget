@@ -9,10 +9,10 @@ namespace 'uploadcare', (ns) ->
   dataAttr = 'uploadcareWidget'
 
   ns.initialize = (container = 'body') ->
-    initialize $(container).find('@uploadcare-uploader')
+    initialize($(container).find('@uploadcare-uploader'))
 
   getSettings = (el) ->
-    s.build $(el).data()
+    s.build($(el).data())
 
   initialize = (targets) ->
     for target in targets
@@ -64,11 +64,12 @@ namespace 'uploadcare', (ns) ->
   ns.start = (settings) ->
     # TODO: call live() immediately even if settings.live
     live = ->
-      initialize $('@uploadcare-uploader')
+      initialize($('@uploadcare-uploader'))
     if s.common(settings).live
       setInterval(live, 100)
     else
       live()
 
   $ ->
-    ns.start() unless s.globals().manualStart
+    if not s.globals().manualStart
+      ns.start()

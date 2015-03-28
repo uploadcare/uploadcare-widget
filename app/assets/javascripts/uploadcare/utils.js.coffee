@@ -25,7 +25,7 @@ namespace 'uploadcare.utils', (ns) ->
     def.promise()
 
   ns.defer = (fn) ->
-    setTimeout fn, 0
+    setTimeout(fn, 0)
 
   ns.gcd = (a, b) ->
     while b
@@ -38,7 +38,7 @@ namespace 'uploadcare.utils', (ns) ->
     called = false
     result = null
     ->
-      unless called
+      if not called
         result = fn.apply(this, arguments)
         called = true
       result
