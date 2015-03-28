@@ -71,5 +71,5 @@ namespace 'uploadcare', (ns) ->
       live()
 
   $ ->
-    if not s.globals().manualStart
+    if not window["UPLOADCARE_MANUAL_START"]
       ns.start()
