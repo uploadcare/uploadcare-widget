@@ -175,15 +175,14 @@ namespace 'uploadcare.settings', (ns) ->
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       values[$.camelCase(key)] = if value isnt undefined then value else fallback
 
-    unless values.publicKey
-      utils.commonWarning('publicKey')
-
     normalize(values)
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
   ns.common = utils.once (settings) ->
     result = normalize($.extend({}, ns.globals(), settings or {}))
+    if not result.publicKey
+      utils.commonWarning('publicKey')
     ns.waitForSettings.fire(result)
     result
 
