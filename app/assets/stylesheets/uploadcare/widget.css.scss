@@ -83,10 +83,14 @@
     border-bottom: 1px dotted #1a85ad;
     border-color: -moz-initial;
     border-color: initial;
+    outline: none;
   }
   .uploadcare-link:hover,
-  .uploadcare-link:active {
+  .uploadcare-link:focus {
     color: #176E8F;
+  }
+  .uploadcare-link:focus {
+    outline: 1px dotted;
   }
 
 
@@ -101,14 +105,17 @@
   background: #c3c3c3;
   cursor: default;
 }
-.uploadcare-widget-button:hover {
+.uploadcare-widget-button:hover,
+.uploadcare-widget-button:focus {
   background: #b3b3b3;
+  outline: none;
 }
 .uploadcare-widget-button-open {
   padding: .5em .8em;
   background: #18a5d0;
 }
-.uploadcare-widget-button-open:hover {
+.uploadcare-widget-button-open:hover,
+.uploadcare-widget-button-open:focus {
   background: #0094c0;
 }
 
