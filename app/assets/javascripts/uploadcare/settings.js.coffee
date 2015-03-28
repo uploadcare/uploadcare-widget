@@ -188,7 +188,10 @@ namespace 'uploadcare.settings', (ns) ->
 
   # Defaults + global variables + global overrides + local overrides
   ns.build = (settings) ->
-    normalize($.extend({}, ns.common(), settings or {}))
+    result = $.extend({}, ns.common())
+    if not $.isEmptyObject(settings)
+      result = normalize($.extend(result, settings))
+    result
 
   ns.waitForSettings = $.Callbacks("once memory")
 

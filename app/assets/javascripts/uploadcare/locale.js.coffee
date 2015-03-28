@@ -28,11 +28,11 @@ namespace 'uploadcare.locale', (ns) ->
     {lang, translations, pluralize}
 
   build = utils.once ->
-    _build s.build()
+    _build(s.build())
 
   # Backdoor for widget constructor
   ns.rebuild = (settings) ->
-    result = _build s.build settings
+    result = _build(s.build(settings))
     build = ->
       result
 
