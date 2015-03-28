@@ -16,7 +16,6 @@
   display: inline-block;
   vertical-align: baseline;
   line-height: 2;
-  white-space: nowrap;
 }
 
 .uploadcare-widget-status-ready .uploadcare-widget-button-open,
@@ -119,6 +118,7 @@
 
   display: none;
   position: absolute;
+  white-space: nowrap;
 
   // Verticlly centered
   top: 50%;
