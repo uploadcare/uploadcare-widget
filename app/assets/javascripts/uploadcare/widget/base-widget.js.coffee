@@ -9,7 +9,6 @@
 {
   namespace,
   utils,
-  settings: s,
   jQuery: $,
   dragdrop,
   locale: {t}
@@ -18,9 +17,7 @@
 namespace 'uploadcare.widget', (ns) ->
   class ns.BaseWidget
 
-    constructor: (element) ->
-      @element = $(element)
-      @settings = s.build @element.data()
+    constructor: (@element, @settings) ->
       @validators = @settings.validators = []
       @currentObject = null
 

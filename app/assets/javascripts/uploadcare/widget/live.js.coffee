@@ -1,7 +1,7 @@
 {
   utils,
   namespace,
-  settings: s,
+  settings,
   jQuery: $
 } = uploadcare
 
@@ -11,45 +11,36 @@ namespace 'uploadcare', (ns) ->
   ns.initialize = (container = 'body') ->
     initialize($(container).find('@uploadcare-uploader'))
 
-  getSettings = (el) ->
-    s.build($(el).data())
-
   initialize = (targets) ->
     for target in targets
       widget = $(target).data(dataAttr)
       if widget && target == widget.element[0]
         # widget already exists
         continue
+      initializeWidget(target)
 
-      ns.Widget(target)
+  ns.SingleWidget = (el) ->
+    initializeWidget(el, ns.widget.Widget)
 
-  ns.SingleWidget = (target) ->
-    el = $(target).eq(0)
-    unless getSettings(el).multiple
-      initializeWidget(el, ns.widget.Widget)
-    else
-      throw new Error 'This element should be processed using MultipleWidget'
+  ns.MultipleWidget = (el) ->
+    initializeWidget(el, ns.widget.MultipleWidget)
 
-  ns.MultipleWidget = (target) ->
-    el = $(target).eq(0)
-    if getSettings(el).multiple
-      initializeWidget(el, ns.widget.MultipleWidget)
-    else
-      throw new Error 'This element should be processed using Widget'
+  ns.Widget = (el) ->
+    initializeWidget(el)
 
-  ns.Widget = (target) ->
-    el = $(target).eq(0)
-    widgetClass = if getSettings(el).multiple
-      ns.widget.MultipleWidget
-    else
-      ns.widget.Widget
-    initializeWidget(el, widgetClass)
+  initializeWidget = (el, targetClass) ->
+    el = $(el).eq(0)
+    s = settings.build(el.data())
 
-  initializeWidget = (el, Widget) ->
+    Widget = if s.multiple then ns.widget.MultipleWidget else ns.widget.Widget
+    if targetClass and Widget isnt targetClass
+      throw new Error "This element should be processed using #{targetClass.name}"
+
     widget = el.data(dataAttr)
     if !widget || el[0] != widget.element[0]
       cleanup(el)
-      widget = new Widget(el)
+      widget = new Widget(el, s)
+      # TODO: Store widget api, not raw object
       el.data(dataAttr, widget)
       widget.template.content.data(dataAttr, widget.template)
     widget.api()
@@ -61,11 +52,11 @@ namespace 'uploadcare', (ns) ->
     if el.length && (!template || el[0] != template.content[0])
       el.remove()
 
-  ns.start = (settings) ->
+  ns.start = (s) ->
     # TODO: call live() immediately even if settings.live
     live = ->
       initialize($('@uploadcare-uploader'))
-    if s.common(settings).live
+    if settings.common(s).live
       setInterval(live, 100)
     else
       live()
