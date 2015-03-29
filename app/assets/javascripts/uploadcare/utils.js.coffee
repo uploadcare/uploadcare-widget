@@ -223,6 +223,16 @@ namespace 'uploadcare.utils', (ns) ->
       .click()
       .hide()
 
+  ns.keyClickable = (el) ->
+    el.on 'click', ->
+        this.blur()
+      .on 'keypress', (e) ->
+        # 13 = Return, 32 = Space
+        if e.which == 13 or e.which == 32
+          $(this).click()
+          e.preventDefault()
+          e.stopPropagation()
+
   ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
 
   ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->

@@ -10,15 +10,6 @@
 } = uploadcare
 
 namespace 'uploadcare.widget', (ns) ->
-
-  keyClickable = (el) ->
-    el.on 'click', ->
-        this.blur()
-      .on 'keypress', (e) ->
-        # 13 = Return, 32 = Space
-        if e.which == 13 or e.which == 32
-          $(this).click()
-
   class ns.Template
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))
@@ -27,7 +18,7 @@ namespace 'uploadcare.widget', (ns) ->
       @statusText = @content.find('@uploadcare-widget-text')
 
     addButton: (name, caption='') ->
-      keyClickable(
+      utils.keyClickable(
         $(tpl('widget-button', {name, caption}))
           .appendTo(@content)
       )
@@ -68,6 +59,6 @@ namespace 'uploadcare.widget', (ns) ->
     setFileInfo: (info) ->
       name = @statusText.html(tpl('widget-file-name', info))
         .find('.uploadcare-widget-file-name')
-      keyClickable(
+      utils.keyClickable(
         name.toggleClass('needsclick', @settings.systemDialog)
       )
