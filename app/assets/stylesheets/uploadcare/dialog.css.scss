@@ -117,6 +117,7 @@ html.uploadcare-dialog-opened {
     position: relative;
     border-bottom: 1px solid $dialog-body-border-color;
     cursor: pointer;
+    outline: none;
 
     // Geometry
     .uploadcare-dialog-icon,
@@ -140,7 +141,8 @@ html.uploadcare-dialog-opened {
       content: '';
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: #e5e7e8;
 
       .uploadcare-dialog-icon {
@@ -155,7 +157,9 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab_current {
       margin-right: -1px;
       border-right: 1px solid $dialog-body-background-color;
-      &, &:hover {
+      &,
+      &:hover,
+      &:focus {
         background-color: $dialog-body-background-color;
         &:before {
           @extend %tab-icons-active-image;
@@ -175,7 +179,8 @@ html.uploadcare-dialog-opened {
 
     .uploadcare-dialog-disabled-tab {
       cursor: default;
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: $dialog-body-shadow-color;
         &:before {
           @extend %tab-icons-image;
@@ -366,18 +371,22 @@ $dialog-button-height: 32px;
   border-radius: 3px;
   cursor: pointer;
   color: $text-color;
+  outline: none;
 
   &,
   &[disabled]:active,
   &.uploadcare-disabled-el:active,
   &[disabled]:hover,
-  &.uploadcare-disabled-el:hover {
+  &.uploadcare-disabled-el:hover,
+  &[disabled]:focus,
+  &.uploadcare-disabled-el:focus {
     @include gradient($default-a, $default-b);
     @include prefix(box-shadow, none);
     border-color: $border-color;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     @include gradient($hover-a, $hover-b);
     @include prefix(box-shadow, inset 0 -1px 3px rgba(black, .05));
   }
