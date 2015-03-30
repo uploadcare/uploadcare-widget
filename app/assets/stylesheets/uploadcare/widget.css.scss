@@ -17,6 +17,9 @@
   vertical-align: baseline;
   line-height: 2;
 
+  :focus {
+    outline: 2px dotted #0094c0;
+  }
   :active,
   .uploadcare-mouse-focused:focus {
     outline: none;
