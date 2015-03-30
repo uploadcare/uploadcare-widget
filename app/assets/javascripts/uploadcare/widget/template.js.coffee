@@ -18,11 +18,7 @@ namespace 'uploadcare.widget', (ns) ->
       @statusText = @content.find('@uploadcare-widget-text')
 
     addButton: (name, caption='') ->
-      utils.keyClickable(
-        $(tpl('widget-button', {name, caption}))
-          .appendTo(@content)
-      )
-
+      $(tpl('widget-button', {name, caption})).appendTo(@content)
 
     setStatus: (status) ->
       prefix = 'uploadcare-widget-status-'
@@ -57,8 +53,6 @@ namespace 'uploadcare.widget', (ns) ->
       @setStatus 'error'
 
     setFileInfo: (info) ->
-      name = @statusText.html(tpl('widget-file-name', info))
+      @statusText.html(tpl('widget-file-name', info))
         .find('.uploadcare-widget-file-name')
-      utils.keyClickable(
-        name.toggleClass('needsclick', @settings.systemDialog)
-      )
+        .toggleClass('needsclick', @settings.systemDialog)
