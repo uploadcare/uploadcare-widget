@@ -16,6 +16,11 @@
   display: inline-block;
   vertical-align: baseline;
   line-height: 2;
+
+  :active,
+  .uploadcare-mouse-focused:focus {
+    outline: none;
+  }
 }
 
 .uploadcare-widget-status-ready .uploadcare-widget-button-open,
@@ -84,14 +89,9 @@
     border-bottom: 1px dotted #1a85ad;
     border-color: -moz-initial;
     border-color: initial;
-    outline: none;
   }
-  .uploadcare-link:hover,
-  .uploadcare-link:focus {
+  .uploadcare-link:hover {
     color: #176E8F;
-  }
-  .uploadcare-link:focus {
-    outline: 1px dotted;
   }
 
 
@@ -107,17 +107,14 @@
   cursor: default;
   white-space: nowrap;
 }
-.uploadcare-widget-button:hover,
-.uploadcare-widget-button:focus {
+.uploadcare-widget-button:hover {
   background: #b3b3b3;
-  outline: none;
 }
 .uploadcare-widget-button-open {
   padding: .5em .8em;
   background: #18a5d0;
 }
-.uploadcare-widget-button-open:hover,
-.uploadcare-widget-button-open:focus {
+.uploadcare-widget-button-open:hover {
   background: #0094c0;
 }
 
