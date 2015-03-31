@@ -7,7 +7,7 @@
 namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.BasePreviewTab
 
-    PREFIX = '@uploadcare-dialog-preview-'
+    PREFIX = '.uploadcare-dialog-preview-'
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @__initTabButtonCircle()

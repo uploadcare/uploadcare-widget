@@ -25,7 +25,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @titleEl = @__find('title')
       @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
-      @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
+      @doneBtnEl = @container.find('.uploadcare-dialog-preview-done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)

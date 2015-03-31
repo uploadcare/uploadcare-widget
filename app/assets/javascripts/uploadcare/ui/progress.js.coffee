@@ -62,7 +62,7 @@ namespace 'uploadcare.ui.progress', (ns) ->
       super
       @element.addClass 'uploadcare-widget-circle--text'
       @element.html(tpl('circle-text'))
-      @text = @element.find('@uploadcare-circle-text')
+      @text = @element.find('.uploadcare-widget-circle-text')
 
     setValue: (val) ->
       val = Math.round(val * 100)
