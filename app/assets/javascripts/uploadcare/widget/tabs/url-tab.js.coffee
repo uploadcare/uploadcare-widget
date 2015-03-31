@@ -25,14 +25,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @wrap.append tpl 'tab-url'
       @wrap.addClass('uploadcare-dialog-padding')
 
-      input = @wrap.find('@uploadcare-dialog-url-input')
+      input = @wrap.find('.uploadcare-dialog-input')
       input.on 'change keyup input', ->
         button.prop('disabled', !$.trim(this.value))
 
-      button = @wrap.find('@uploadcare-dialog-url-submit')
+      button = @wrap.find('.uploadcare-dialog-url-submit')
         .prop('disabled', true)
 
-      @wrap.find('@uploadcare-dialog-url-form').on 'submit', =>
+      @wrap.find('.uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl input.val()
           @dialogApi.addFiles 'url', [url]
           input.val ''
