@@ -53,13 +53,10 @@ namespace 'uploadcare', (ns) ->
       el.remove()
 
   ns.start = (s) ->
-    # TODO: call live() immediately even if settings.live
-    live = ->
-      initialize($('@uploadcare-uploader'))
     if settings.common(s).live
       setInterval(live, 100)
-    else
-      live()
+    do live = ->
+      initialize($('@uploadcare-uploader'))
 
   $ ->
     if not window["UPLOADCARE_MANUAL_START"]
