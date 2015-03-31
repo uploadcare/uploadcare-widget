@@ -38,7 +38,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @__setState 'error', {error, file}
 
     element: (name) ->
-      @container.find('@uploadcare-dialog-preview-' + name)
+      @container.find('.uploadcare-dialog-preview-' + name)
 
     # error
     # unknown

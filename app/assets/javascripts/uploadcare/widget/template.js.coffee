@@ -14,8 +14,8 @@ namespace 'uploadcare.widget', (ns) ->
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))
       @element.after(@content)
-      @circle = new progress.Circle(@content.find('@uploadcare-widget-status'))
-      @statusText = @content.find('@uploadcare-widget-text')
+      @circle = new progress.Circle(@content.find('.uploadcare-widget-status'))
+      @statusText = @content.find('.uploadcare-widget-text')
 
     addButton: (name, caption='') ->
       $(tpl('widget-button', {name, caption})).appendTo(@content)

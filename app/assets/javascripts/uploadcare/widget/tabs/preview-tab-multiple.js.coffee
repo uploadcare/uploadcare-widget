@@ -13,7 +13,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     # dpm — abbreviation of dialog-preview-multiple
     CLASS_PREFIX = 'uploadcare-dpm-'
-    ROLE_PREFIX = '@' + CLASS_PREFIX
 
     constructor: ->
       super
@@ -25,7 +24,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @titleEl = @__find('title')
       @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
-      @doneBtnEl = @container.find('@uploadcare-dialog-preview-done')
+      @doneBtnEl = @container.find('.uploadcare-dialog-preview-done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
@@ -60,7 +59,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             index(a) - index(b)
 
     __find: (s, context = @container) ->
-      $(ROLE_PREFIX + s, context)
+      $('.' + CLASS_PREFIX + s, context)
 
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
@@ -141,5 +140,5 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __createFileEl: (file) ->
       @__fileTpl.clone()
         .appendTo(@fileListEl)
-        .on 'click', ROLE_PREFIX + 'file-remove', =>
+        .on 'click', '.' + CLASS_PREFIX + 'file-remove', =>
           @dialogApi.fileColl.remove file

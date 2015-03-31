@@ -1,4 +1,4 @@
-<div class="uploadcare-dialog-file-drop-area" role="uploadcare-drop-area">
+<div class="uploadcare-dialog-file-drop-area">
   <div class="uploadcare-dialog-file-title uploadcare-if-draganddrop">
     <%- t('dialog.tabs.file.drag') %>
   </div>
@@ -11,7 +11,7 @@
   <div class="uploadcare-clouds-tip uploadcare-if-mobile">
     <%= t('dialog.tabs.file.cloudsTip') %>
   </div>
-  <div class="uploadcare-dialog-big-button needsclick" role="uploadcare-dialog-browse-file">
+  <div class="uploadcare-dialog-big-button needsclick">
     <%- t('dialog.tabs.file.button') %>
   </div>
   <% if (tabs.length > 1) { %>
@@ -22,11 +22,9 @@
       <% for (var i = 0; i < tabs.length; i++) {
         var tab = tabs[i];
         if (tab == 'file') continue; %>
-        <div
-          class="uploadcare-dialog-file-source"
-          role="uploadcare-dialog-switch-tab"
-          data-tab="<%- tab %>"
-        ><%- t('dialog.tabs.names.' + tab) %></div>
+        <div class="uploadcare-dialog-file-source"
+             data-tab="<%- tab %>"
+                ><%- t('dialog.tabs.names.' + tab) %></div>
       <% } %>
     </div>
   <% } %>

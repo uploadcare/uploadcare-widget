@@ -15,14 +15,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @wrap.append tpl 'tab-file', {tabs: @settings.tabs}
       @wrap.addClass('uploadcare-dialog-padding')
 
-      @wrap.on 'click', '@uploadcare-dialog-switch-tab', (e) =>
+      @wrap.on 'click', '.uploadcare-dialog-file-source', (e) =>
         @dialogApi.switchTab $(e.target).data 'tab'
 
       @__setupFileButton()
       @__initDragNDrop()
 
     __initDragNDrop: ->
-      dropArea = @wrap.find('@uploadcare-drop-area')
+      dropArea = @wrap.find('.uploadcare-dialog-file-drop-area')
       if utils.abilities.fileDragAndDrop
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles type, data
@@ -30,7 +30,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @wrap.addClass "uploadcare-draganddrop"
 
     __setupFileButton: ->
-      fileButton = @wrap.find('@uploadcare-dialog-browse-file')
+      fileButton = @wrap.find('.uploadcare-dialog-big-button')
       utils.fileInput fileButton, @settings, (input) =>
         if utils.abilities.sendFileAPI
           @dialogApi.addFiles 'object', input.files
