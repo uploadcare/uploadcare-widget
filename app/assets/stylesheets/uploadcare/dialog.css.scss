@@ -16,7 +16,7 @@ $dialog-body-font-size-smaller: 13px;
 $dialog-footer-height: y(3);
 
 $dialog-close-button-size: y(1.5);
-$switch-to-mobile-width: 600px; // iPhone max side is 568px
+$switch-to-mobile-width: 760px; // iPhone max side is 568px
 
 html.uploadcare-dialog-opened {
   overflow: hidden;
@@ -99,6 +99,14 @@ html.uploadcare-dialog-opened {
   position: relative;
   background: $dialog-body-background-color;
   font-weight: normal;
+
+  :focus {
+    outline: 2px dotted #0094c0;
+  }
+  :active,
+  .uploadcare-mouse-focused:focus {
+    outline: none;
+  }
 }
 
 .uploadcare-dialog-tabs {
@@ -155,7 +163,8 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab_current {
       margin-right: -1px;
       border-right: 1px solid $dialog-body-background-color;
-      &, &:hover {
+      &,
+      &:hover {
         background-color: $dialog-body-background-color;
         &:before {
           @extend %tab-icons-active-image;

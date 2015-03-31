@@ -215,17 +215,16 @@ namespace 'uploadcare', (ns) ->
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
         .appendTo(@panel)
 
-      tabButton = $('<div>')
+      tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass("uploadcare-dialog-tab")
         .addClass("uploadcare-dialog-tab-#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .on('click', =>
+        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
+        .on 'click', =>
           if name is @currentTab
             @panel.toggleClass('uploadcare-dialog-opened-tabs')
           else
             @switchTab(name)
-        )
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 

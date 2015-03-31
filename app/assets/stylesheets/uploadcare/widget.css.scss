@@ -16,7 +16,14 @@
   display: inline-block;
   vertical-align: baseline;
   line-height: 2;
-  white-space: nowrap;
+
+  :focus {
+    outline: 2px dotted #0094c0;
+  }
+  :active,
+  .uploadcare-mouse-focused:focus {
+    outline: none;
+  }
 }
 
 .uploadcare-widget-status-ready .uploadcare-widget-button-open,
@@ -71,6 +78,7 @@
 .uploadcare-widget-text {
   display: none !important;
   margin-right: 1ex;
+  white-space: nowrap;
 }
   .uploadcare-widget-file-name {
     display: inline;
@@ -85,8 +93,7 @@
     border-color: -moz-initial;
     border-color: initial;
   }
-  .uploadcare-link:hover,
-  .uploadcare-link:active {
+  .uploadcare-link:hover {
     color: #176E8F;
   }
 
@@ -101,6 +108,7 @@
   border-radius: .25em;
   background: #c3c3c3;
   cursor: default;
+  white-space: nowrap;
 }
 .uploadcare-widget-button:hover {
   background: #b3b3b3;
@@ -119,6 +127,7 @@
 
   display: none;
   position: absolute;
+  white-space: nowrap;
 
   // Verticlly centered
   top: 50%;

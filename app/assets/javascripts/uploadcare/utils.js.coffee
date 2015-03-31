@@ -223,6 +223,7 @@ namespace 'uploadcare.utils', (ns) ->
       .click()
       .hide()
 
+
   ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
 
   ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
