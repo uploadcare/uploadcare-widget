@@ -14,7 +14,7 @@ namespace 'uploadcare', (ns) ->
   initialize = (targets) ->
     for target in targets
       widget = $(target).data(dataAttr)
-      if widget && target == widget.element[0]
+      if widget && widget.inputElement == target
         # widget already exists
         continue
       initializeWidget(target)
@@ -28,22 +28,22 @@ namespace 'uploadcare', (ns) ->
   ns.Widget = (el) ->
     initializeWidget(el)
 
-  initializeWidget = (el, targetClass) ->
-    el = $(el).eq(0)
-    s = settings.build(el.data())
+  initializeWidget = (input, targetClass) ->
+    input = $(input).eq(0)
+    s = settings.build(input.data())
 
     Widget = if s.multiple then ns.widget.MultipleWidget else ns.widget.Widget
     if targetClass and Widget isnt targetClass
       throw new Error "This element should be processed using #{targetClass.name}"
 
-    widget = el.data(dataAttr)
-    if !widget || el[0] != widget.element[0]
-      cleanup(el)
-      widget = new Widget(el, s)
-      # TODO: Store widget api, not raw object
-      el.data(dataAttr, widget)
+    api = input.data(dataAttr)
+    if ! api or api.inputElement != input[0]
+      cleanup(input)
+      widget = new Widget(input, s)
+      api = widget.api()
+      input.data(dataAttr, api)
       widget.template.content.data(dataAttr, widget.template)
-    widget.api()
+    api
 
   cleanup = (el) ->
     el.off('.uploadcare')
