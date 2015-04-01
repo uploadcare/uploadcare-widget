@@ -42,15 +42,15 @@ namespace 'uploadcare', (ns) ->
       widget = new Widget(input, s)
       api = widget.api()
       input.data(dataAttr, api)
-      widget.template.content.data(dataAttr, widget.template)
+      widget.template.content.data(dataAttr, api)
     api
 
-  cleanup = (el) ->
-    el.off('.uploadcare')
-    el = el.next('.uploadcare-widget')
-    template = el.data(dataAttr)
-    if el.length && (!template || el[0] != template.content[0])
-      el.remove()
+  cleanup = (input) ->
+    input.off('.uploadcare').each ->
+      widgetElement = $(this).next('.uploadcare-widget')
+      widget = widgetElement.data(dataAttr)
+      if widget and widget.inputElement == this
+        widgetElement.remove()
 
   ns.start = (s) ->
     if settings.common(s).live
