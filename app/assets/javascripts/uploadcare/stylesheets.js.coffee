@@ -1,11 +1,8 @@
 {jQuery: $} = uploadcare
 {tpl} = uploadcare.templates
 
-uploadcare.settings.waitForSettings null, ->
-
-  # We need waitForSettings here
-  # because settings.common() indirectly invokes inside template
-  css = tpl('styles')
+uploadcare.settings.waitForSettings.add (settings) ->
+  css = tpl('styles', {settings})
 
   style = document.createElement('style')
   style.setAttribute('type', 'text/css')

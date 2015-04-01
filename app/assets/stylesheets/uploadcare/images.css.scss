@@ -1,10 +1,10 @@
 %tab-icons-image {
-  background-image: url("<%= utils.imagePath('tab-icons.png') %>");
+  background-image: url("<%= settings.scriptBase %>/images/tab-icons.png");
   background-size: 50px;
 }
 
 %tab-icons-active-image {
-  background-image: url("<%= utils.imagePath('tab-icons-active.png') %>");
+  background-image: url("<%= settings.scriptBase %>/images/tab-icons-active.png");
   background-size: 50px;
 }
 
@@ -13,7 +13,7 @@
 }
 
 %arrow-image {
-  background-image: url("<%= utils.imagePath('arrow.png') %>");
+  background-image: url("<%= settings.scriptBase %>/images/arrow.png");
 }
 
 %remove-button-image {
@@ -29,11 +29,11 @@
 }
 
 %error-default-image {
-  background-image: url("<%= utils.imagePath('error-default.png') %>");
+  background-image: url("<%= settings.scriptBase %>/images/error-default.png");
 }
 
 %error-image-image {
-  background-image: url("<%= utils.imagePath('error-image.png') %>");
+  background-image: url("<%= settings.scriptBase %>/images/error-image.png");
 }
 
 %dialog-overlay-image {
@@ -46,10 +46,10 @@
 (-webkit-min-device-pixel-ratio: 1.5),
 (min-resolution: 144dpi){
   %tab-icons-image {
-    background-image: url("<%= utils.imagePath('tab-icons@2x.png') %>");
+    background-image: url("<%= settings.scriptBase %>/images/tab-icons@2x.png");
   }
 
   %tab-icons-active-image {
-    background-image: url("<%= utils.imagePath('tab-icons-active@2x.png') %>");
+    background-image: url("<%= settings.scriptBase %>/images/tab-icons-active@2x.png");
   }
 }

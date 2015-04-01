@@ -25,7 +25,7 @@ namespace 'uploadcare.utils', (ns) ->
     def.promise()
 
   ns.defer = (fn) ->
-    setTimeout fn, 0
+    setTimeout(fn, 0)
 
   ns.gcd = (a, b) ->
     while b
@@ -38,7 +38,7 @@ namespace 'uploadcare.utils', (ns) ->
     called = false
     result = null
     ->
-      unless called
+      if not called
         result = fn.apply(this, arguments)
         called = true
       result
@@ -245,9 +245,6 @@ namespace 'uploadcare.utils', (ns) ->
     # fixed → number → string, to trim trailing zeroes
     value = Number(value.toFixed(fixedTo))
     return "#{prefix}#{value} #{ns.fileSizeLabels[i]}#{postfix}"
-
-  ns.imagePath = (name) ->
-    uploadcare.settings.common().scriptBase + '/images/' + name
 
   ns.ajaxDefaults =
     dataType: 'json'

@@ -45,8 +45,8 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   str2arr = (value) ->
-    unless $.isArray value
-      value = $.trim value
+    unless $.isArray(value)
+      value = $.trim(value)
       value = if value then value.split(' ') else []
     value
 
@@ -175,28 +175,25 @@ namespace 'uploadcare.settings', (ns) ->
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       values[$.camelCase(key)] = if value isnt undefined then value else fallback
 
-    unless values.publicKey
-      utils.commonWarning('publicKey')
-
     normalize(values)
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
   ns.common = utils.once (settings) ->
-    result = normalize $.extend({}, ns.globals(), settings or {})
-    waitForSettingsCb.fire result
+    result = normalize($.extend({}, ns.globals(), settings or {}))
+    if not result.publicKey
+      utils.commonWarning('publicKey')
+    ns.waitForSettings.fire(result)
     result
 
   # Defaults + global variables + global overrides + local overrides
   ns.build = (settings) ->
-    normalize $.extend({}, ns.common(), settings or {})
+    result = $.extend({}, ns.common())
+    if not $.isEmptyObject(settings)
+      result = normalize($.extend(result, settings))
+    result
 
-  waitForSettingsCb = $.Callbacks "once memory"
-
-  # Like build() but won't cause settings freezing if they still didn't
-  ns.waitForSettings = (settings, fn) ->
-    waitForSettingsCb.add (common) ->
-      fn normalize $.extend({}, common, settings or {})
+  ns.waitForSettings = $.Callbacks("once memory")
 
   class ns.CssCollector
     constructor: () ->
@@ -208,9 +205,9 @@ namespace 'uploadcare.settings', (ns) ->
         throw new Error('Embedded urls should be absolute. ' + url)
 
       unless url in @urls
-        @urls.push url
+        @urls.push(url)
 
     addStyle: (style) ->
-      @styles.push style
+      @styles.push(style)
 
   uploadcare.tabsCss = new ns.CssCollector
