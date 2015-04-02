@@ -45,10 +45,10 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     if hasOwners(key)
       instance.connect()
     else
-      setTimeout (->
+      setTimeout(->
         unless hasOwners(key)
           instance.disconnect()
-        ), 5000
+      , 5000)
       
 
   pusherInstance = (key) ->
@@ -61,7 +61,8 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
   pusherWrapped = (key, owner) ->
     Wrapped = ->
       this.owner = owner # just fyi
-      this.release = -> releasePusher(key, owner)
+      this.release = ->
+        releasePusher(key, owner)
       this # is a constructor
 
     Wrapped.prototype = pusherInstance(key)
