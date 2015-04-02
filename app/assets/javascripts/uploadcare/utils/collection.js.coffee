@@ -30,7 +30,7 @@ namespace 'uploadcare.utils', (utils) ->
         @remove(item)
 
     replace: (oldItem, newItem) ->
-      unless oldItem is newItem
+      if not (oldItem is newItem)
         for item, i in @__items
           if item is oldItem
             @__replace(oldItem, newItem, i)
@@ -83,7 +83,7 @@ namespace 'uploadcare.utils', (utils) ->
         $(item).data('lastProgress')
 
     add: (item) ->
-      unless item and item.done and item.fail and item.then
+      if not (item and item.done and item.fail and item.then)
         return
 
       super
@@ -104,7 +104,7 @@ namespace 'uploadcare.utils', (utils) ->
       )
 
     __replace: (oldItem, newItem, i) ->
-      unless newItem and newItem.done and newItem.fail and newItem.then
+      if not (newItem and newItem.done and newItem.fail and newItem.then)
         @remove(oldItem)
       else
         super

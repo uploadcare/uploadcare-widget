@@ -131,7 +131,7 @@ namespace 'uploadcare.widget', (ns) ->
           .done(@__setObject)
 
     api: ->
-      unless @__api
+      if not @__api
         @__api = utils.bindAll(this, [
           'openDialog'
           'reloadInfo'

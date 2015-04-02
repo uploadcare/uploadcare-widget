@@ -28,7 +28,7 @@ namespace 'uploadcare.files', (ns) ->
       @__fileColl.get()
 
     __save: ->
-      unless @__saved
+      if not @__saved
         @__saved = true
         @__allFilesDf.done =>
           @__createGroup()
@@ -123,7 +123,7 @@ namespace 'uploadcare.files', (ns) ->
       return df.promise()
 
     api: ->
-      unless @__api
+      if not @__api
         @__api = utils.bindAll(this, ['promise', 'files'])
       @__api
 

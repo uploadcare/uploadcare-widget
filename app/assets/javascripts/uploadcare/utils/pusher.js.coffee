@@ -46,7 +46,7 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
       instance.connect()
     else
       setTimeout(->
-        unless hasOwners(key)
+        if not hasOwners(key)
           instance.disconnect()
       , 5000)
       

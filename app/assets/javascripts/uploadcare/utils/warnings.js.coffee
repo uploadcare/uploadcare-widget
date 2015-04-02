@@ -19,7 +19,7 @@ namespace 'uploadcare.utils', (ns) ->
 
   messages = {}
   ns.warnOnce = (msg) ->
-    unless messages[msg]?
+    if not messages[msg]?
       messages[msg] = true
       ns.warn(msg)
 

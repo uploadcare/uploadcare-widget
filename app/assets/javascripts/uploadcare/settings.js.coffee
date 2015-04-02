@@ -45,7 +45,7 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   str2arr = (value) ->
-    unless $.isArray(value)
+    if not $.isArray(value)
       value = $.trim(value)
       value = if value
           value.split(' ')
@@ -210,7 +210,7 @@ namespace 'uploadcare.settings', (ns) ->
       if not /^https?:\/\//i.test(url)
         throw new Error('Embedded urls should be absolute. ' + url)
 
-      unless url in @urls
+      if not (url in @urls)
         @urls.push(url)
 
     addStyle: (style) ->

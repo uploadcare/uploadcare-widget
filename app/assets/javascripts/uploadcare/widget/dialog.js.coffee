@@ -172,7 +172,7 @@ namespace 'uploadcare', (ns) ->
         # 'files' is actually file type
         files = ns.filesFrom(files, data, @settings)
 
-      unless @settings.multiple
+      if not @settings.multiple
         @files.clear()
 
       for file in files
@@ -180,7 +180,7 @@ namespace 'uploadcare', (ns) ->
 
       if @settings.previewStep
         @__showTab('preview')
-        unless @settings.multiple
+        if not @settings.multiple
           @switchTab('preview')
       else
         @__resolve()
