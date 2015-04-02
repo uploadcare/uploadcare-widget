@@ -41,7 +41,7 @@ namespace 'uploadcare.files', (ns) ->
       do check = =>
         if @apiDeferred.state() == 'pending'
           @__updateInfo().done =>
-            setTimeout check, timeout
+            setTimeout(check, timeout)
             timeout += 50
 
     __handleFileData: (data) =>
@@ -54,23 +54,26 @@ namespace 'uploadcare.files', (ns) ->
         @cdnUrlModifiers = "-/" + data.default_effects
 
       if not @onInfoReady.fired()
-        @onInfoReady.fire @__fileInfo()
+        @onInfoReady.fire(@__fileInfo())
 
       if data.is_ready
         @__resolveApi()
 
     __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-        file_id: @fileId,
-        pub_key: @settings.publicKey
-      .fail =>
-        @__rejectApi('info')
-      .done @__handleFileData
+          file_id: @fileId,
+          pub_key: @settings.publicKey
+        .fail =>
+          @__rejectApi('info')
+        .done(@__handleFileData)
 
     __progressInfo: ->
       state: @__progressState
       uploadProgress: @__progress
-      progress: if @__progressState in ['ready', 'error'] then 1 else @__progress * 0.9
+      progress: if @__progressState in ['ready', 'error']
+          1
+        else
+          @__progress * 0.9
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
@@ -80,8 +83,14 @@ namespace 'uploadcare.files', (ns) ->
       isStored: @isStored
       isImage: @isImage
       originalImageInfo: @imageInfo
-      originalUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/" else null
-      cdnUrl: if @fileId then "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}" else null
+      originalUrl: if @fileId
+          "#{@settings.cdnBase}/#{@fileId}/"
+        else
+          null
+      cdnUrl: if @fileId
+          "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+        else
+          null
       cdnUrlModifiers: @cdnUrlModifiers
       sourceInfo: @sourceInfo
 
@@ -96,7 +105,7 @@ namespace 'uploadcare.files', (ns) ->
           if info.isImage is false
             throw new Error('image')
 
-      @onInfoReady.add @__runValidators
+      @onInfoReady.add(@__runValidators)
 
     __runValidators: (info) =>
       info = info || @__fileInfo()
@@ -111,7 +120,7 @@ namespace 'uploadcare.files', (ns) ->
 
       __then = api.then
       api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
-        @__extendApi __then.apply(api, arguments)
+        @__extendApi(__then.apply(api, arguments))
 
       api # extended promise
 
@@ -137,7 +146,7 @@ namespace 'uploadcare.files', (ns) ->
 
     promise: ->
       if not @__apiPromise
-        @__apiPromise = @__extendApi @apiDeferred.promise()
+        @__apiPromise = @__extendApi(@apiDeferred.promise())
 
         @__runValidators()
         if @apiDeferred.state() == 'pending'

@@ -34,7 +34,7 @@ namespace 'uploadcare.files', (ns) ->
           value: value
         )
 
-      $(@__input).attr 'name', 'file'
+      $(@__input).attr('name', 'file')
 
       @__iframeForm = $('<form>')
         .attr({

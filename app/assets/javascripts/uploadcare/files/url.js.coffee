@@ -73,7 +73,7 @@ namespace 'uploadcare.files', (ns) ->
           @fileName = data.original_filename
           df.resolve()
 
-        .on 'error fail', df.reject
+        .on('error fail', df.reject)
 
 
   class PusherWatcher
@@ -84,7 +84,7 @@ namespace 'uploadcare.files', (ns) ->
       channel = @pusher.subscribe("task-status-#{token}")
 
       channel.bind_all (ev, data) =>
-        $(this).trigger ev, data
+        $(this).trigger(ev, data)
 
     stopWatching: ->
       @pusher.release()
@@ -97,18 +97,18 @@ namespace 'uploadcare.files', (ns) ->
       bind = =>
         @__updateStatus().done =>
           if @interval  # Do not schedule next request if watcher stopped.
-            @interval = setTimeout bind, 250
-      @interval = setTimeout bind, 0
+            @interval = setTimeout(bind, 250)
+      @interval = setTimeout(bind, 0)
 
     stopWatching: ->
       if @interval
-        clearTimeout @interval
+        clearTimeout(@interval)
       @interval = null
 
     __updateStatus: ->
       utils.jsonp(@poolUrl, {@token})
         .fail (error) =>
           @stopWatching()
-          $(this).trigger 'error'
+          $(this).trigger('error')
         .done (data) =>
-          $(this).trigger data.status, data
+          $(this).trigger(data.status, data)
