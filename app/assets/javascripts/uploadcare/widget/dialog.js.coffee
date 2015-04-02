@@ -49,7 +49,7 @@ namespace 'uploadcare', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialog.on 'click', '.uploadcare-dialog-close', ns.closeDialog
+    dialog.on('click', '.uploadcare-dialog-close', ns.closeDialog)
     dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
@@ -89,11 +89,14 @@ namespace 'uploadcare', (ns) ->
     else if not $.isArray(files)
       files = [files]
 
-    settings = s.build settings
+    settings = s.build(settings)
     panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
     filter = (files) ->
-      if settings.multiple then uploadcare.FileGroup(files, settings) else files[0]
+      if settings.multiple
+        uploadcare.FileGroup(files, settings)
+      else
+        files[0]
 
     utils.then(panel, filter, filter).promise(panel)
 
@@ -118,13 +121,16 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('huddle', tabs.RemoteTab)
   ns.registerTab('welcome', tabs.StaticTab)
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
-    tabCls = if settings.multiple then tabs.PreviewTabMultiple else tabs.PreviewTab
+    tabCls = if settings.multiple
+        tabs.PreviewTabMultiple
+      else
+        tabs.PreviewTab
     new tabCls(tabPanel, tabButton, dialogApi, settings, name)
 
   class Panel
     constructor: (@settings, placeholder, files, tab) ->
       @dfd = $.Deferred()
-      @dfd.always @__closePanel
+      @dfd.always(@__closePanel)
 
       sel = '.uploadcare-dialog-panel'
       @content = $(tpl('panel'))
@@ -140,7 +146,7 @@ namespace 'uploadcare', (ns) ->
 
       @files.onRemove.add =>
         if @files.length() == 0
-          @__hideTab 'preview'
+          @__hideTab('preview')
 
       @tabs = {}
 
@@ -151,12 +157,13 @@ namespace 'uploadcare', (ns) ->
 
     publicPromise: ->
       if not @promise
-        @promise = @dfd.promise
+        @promise = @dfd.promise(
           reject: @__reject
           resolve: @__resolve
           fileColl: @files
           addFiles: @addFiles
           switchTab: @switchTab
+        )
       @promise
 
     # (fileType, data) or ([fileObject, fileObject])
@@ -169,31 +176,31 @@ namespace 'uploadcare', (ns) ->
         @files.clear()
 
       for file in files
-        @files.add file
+        @files.add(file)
 
       if @settings.previewStep
-        @__showTab 'preview'
+        @__showTab('preview')
         unless @settings.multiple
-          @switchTab 'preview'
+          @switchTab('preview')
       else
         @__resolve()
 
     __resolve: =>
-      @dfd.resolve @files.get()
+      @dfd.resolve(@files.get())
 
     __reject: =>
-      @dfd.reject @files.get()
+      @dfd.reject(@files.get())
 
     __prepareTabs: (tab) ->
-      @addTab 'preview'
+      @addTab('preview')
       for tabName in @settings.tabs
-        @addTab tabName
+        @addTab(tabName)
 
       if @files.length()
-        @__showTab 'preview'
-        @switchTab 'preview'
+        @__showTab('preview')
+        @switchTab('preview')
       else
-        @__hideTab 'preview'
+        @__hideTab('preview')
         @switchTab(tab || @settings.tabs[0])
 
     __closePanel: =>
@@ -201,7 +208,6 @@ namespace 'uploadcare', (ns) ->
       @content.remove()
 
     addTab: (name) ->
-
       if name of @tabs
         return
 
@@ -250,7 +256,7 @@ namespace 'uploadcare', (ns) ->
             .filter(".#{className}-#{@currentTab}")
             .addClass("#{className}_current")
 
-      @dfd.notify @currentTab
+      @dfd.notify(@currentTab)
 
     __showTab: (tab) ->
       className = 'uploadcare-dialog-tab'
@@ -259,7 +265,7 @@ namespace 'uploadcare', (ns) ->
 
     __hideTab: (tab) ->
       if @currentTab == tab
-        @switchTab @settings.tabs[0]
+        @switchTab(@settings.tabs[0])
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .addClass("#{className}_hidden")
@@ -267,5 +273,5 @@ namespace 'uploadcare', (ns) ->
     __welcome: ->
       @addTab('welcome')
       for tabName in @settings.tabs
-        @__addFakeTab tabName
+        @__addFakeTab(tabName)
       @switchTab('welcome')

@@ -12,7 +12,7 @@ submitPreventionState = (form, prevent) ->
 
 $(document).on 'submit', '@uploadcare-upload-form', ->
   form = $(this)
-  if canSubmit form
+  if canSubmit(form)
     true # allow submit
   else
     submitPreventionState(form, true)
@@ -25,4 +25,5 @@ $(document).on 'loaded.uploadcare', submittedForm, ->
 cancelEvents = 'ready.uploadcare error.uploadcare'
 $(document).on cancelEvents, submittedForm, ->
   form = $(this)
-  submitPreventionState(form, false) if canSubmit form
+  if canSubmit(form)
+    submitPreventionState(form, false)
