@@ -1,3 +1,5 @@
+{utils} = uploadcare
+
 fakeButtons = [
   'div.uploadcare-link',
   'div.uploadcare-widget-button',
@@ -11,14 +13,13 @@ mouseFocusedClass = 'uploadcare-mouse-focused'
 $(document.documentElement)
   .on 'mousedown', fakeButtons, (e) ->
     # http://wd.dizaina.net/internet-maintenance/on-outlines/
-    setTimeout(->
+    utils.defer ->
       activeElement = document.activeElement
       if activeElement and activeElement != document.body
         $(activeElement)
           .addClass(mouseFocusedClass)
           .one 'blur', ->
             $(activeElement).removeClass(mouseFocusedClass)
-    , 0)
 
   .on 'keypress', fakeButtons, (e) ->
     # 13 = Return, 32 = Space

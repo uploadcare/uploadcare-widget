@@ -74,19 +74,21 @@ describe "UrlFile", ->
 
       file = uploadcare.fileFrom('url', 'http://example.com/kitty.jpg')
 
-      setTimeout ->
-        updateStatus
+      setTimeout(->
+        updateStatus(
           status: 'progress'
           total: kitty.info.size
           done: 70
-      , 50
+        )
+      , 50)
 
-      setTimeout ->
-        updateStatus
+      setTimeout(->
+        updateStatus(
           status: 'success'
           original_filename: kitty.info.original_filename
           uuid: kitty.uuid
-      , 100
+        )
+      , 100)
 
     waitsFor ->
       file.state() is 'resolved'

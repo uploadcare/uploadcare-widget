@@ -8,12 +8,12 @@ mocks.define 'jsonp', ->
   respond = (handler, url, data) ->
     df = $.Deferred()
     result = handler.callback(url, data)
-    setTimeout ->
+    setTimeout(->
       if result.error
         df.reject result.error
       else
         df.resolve result
-    , handler.delay
+    , handler.delay)
     df.promise()
 
   handle = (url, data) ->

@@ -98,7 +98,7 @@ namespace 'uploadcare.files', (ns) ->
         @__updateStatus().done =>
           if @interval  # Do not schedule next request if watcher stopped.
             @interval = setTimeout(bind, 250)
-      @interval = setTimeout(bind, 0)
+      @interval = utils.defer(bind)
 
     stopWatching: ->
       if @interval
