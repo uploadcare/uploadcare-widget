@@ -13,8 +13,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__initTabButtonCircle()
 
       notDisabled = ':not(.uploadcare-disabled-el)'
-      @container.on('click', PREFIX + 'back' + notDisabled, =>
-        @dialogApi.fileColl.clear())
+      @container.on 'click', PREFIX + 'back' + notDisabled, =>
+        @dialogApi.fileColl.clear()
       @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
@@ -30,9 +30,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           progress += (progressInfo?.progress or 0) / infos.length
         circleDf.notify(progress)
 
-      @dialogApi.fileColl.onAnyProgress.add update
-      @dialogApi.fileColl.onAdd.add update
-      @dialogApi.fileColl.onRemove.add update
+      @dialogApi.fileColl.onAnyProgress.add(update)
+      @dialogApi.fileColl.onAdd.add(update)
+      @dialogApi.fileColl.onRemove.add(update)
       update()
 
       circle = new Circle(circleEl).listen(circleDf.promise())

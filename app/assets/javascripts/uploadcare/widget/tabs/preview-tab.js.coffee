@@ -15,9 +15,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       super
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
-        @__setFile file
+        @__setFile(file)
 
-      @dialogApi.fileColl.onAdd.add @__setFile
+      @dialogApi.fileColl.onAdd.add(@__setFile)
 
       @widget = null
 
@@ -28,14 +28,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             fn.apply(null, arguments)
 
       @file.progress ifCur utils.once (info) =>
-        @__setState 'unknown', {file: info.incompleteFileInfo}
+        @__setState('unknown', {file: info.incompleteFileInfo})
 
       @file.done ifCur (file) =>
         state = if file.isImage then 'image' else 'regular'
-        @__setState state, {file}
+        @__setState(state, {file})
 
       @file.fail ifCur (error, file) =>
-        @__setState 'error', {error, file}
+        @__setState('error', {error, file})
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)
@@ -45,7 +45,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
-      @container.empty().append tpl("tab-preview-#{state}", data)
+      @container.empty().append(tpl("tab-preview-#{state}", data))
 
       if state is 'unknown' and @settings.crop
         @element('done').hide()
@@ -63,31 +63,32 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @element('root').addClass('uploadcare-dialog-preview--loaded')
         .fail =>
           @file = null
-          @__setState 'error', error: 'loadImage'
+          @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
         done.removeClass('uploadcare-disabled-el')
 
-        @widget = new CropWidget img, imgSize, @settings.crop[0]
+        @widget = new CropWidget(img, imgSize, @settings.crop[0])
         @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
 
         done.click =>
           opts = @widget.getSelectionWithModifiers()
-          @dialogApi.fileColl.replace @file, @file.then (info) =>
+          newFile = @file.then (info) =>
             info.cdnUrlModifiers = opts.modifiers
             info.cdnUrl = "#{info.originalUrl}#{opts.modifiers or ''}"
             info.crop = opts.crop
             info
+          @dialogApi.fileColl.replace(@file, newFile)
 
       if @settings.crop
-        @element('title').text t('dialog.tabs.preview.crop.title')
+        @element('title').text(t('dialog.tabs.preview.crop.title'))
         done.addClass('uploadcare-disabled-el')
-        done.text t('dialog.tabs.preview.crop.done')
+        done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
 
         imgLoader.done ->
-          utils.defer startCrop
+          utils.defer(startCrop)
 
 
     populateCropSizes: ->
@@ -118,9 +119,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         if prefered
           size = utils.fitSize(prefered, [40, 40], true)
           item.children()
-            .css
+            .css(
               width: Math.max 20, size[0]
               height: Math.max 12, size[1]
+            )
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)

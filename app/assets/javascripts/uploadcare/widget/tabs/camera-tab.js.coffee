@@ -20,11 +20,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__loaded = false
       @mirrored = true
 
-      @wrap.append tpl 'tab-camera'
+      @wrap.append(tpl('tab-camera'))
       @wrap.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
-      @wrap.find('.uploadcare-dialog-camera-capture').on 'click', @__capture
-      @wrap.find('.uploadcare-dialog-camera-mirror').on 'click', @__mirror
-      @wrap.find('.uploadcare-dialog-camera-retry').on 'click', @__requestCamera
+      @wrap.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
+      @wrap.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
+      @wrap.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
 
       @video = @wrap.find('video')
       @video.on 'loadeddata', ->
@@ -94,5 +94,5 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         canvas.width = 1
         canvas.height = 1
         blob.name = "camera.jpg"
-        @dialogApi.addFiles 'object', [blob]
-        @dialogApi.switchTab 'preview'
+        @dialogApi.addFiles('object', [blob])
+        @dialogApi.switchTab('preview')
