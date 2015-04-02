@@ -47,7 +47,10 @@ namespace 'uploadcare.settings', (ns) ->
   str2arr = (value) ->
     unless $.isArray(value)
       value = $.trim(value)
-      value = if value then value.split(' ') else []
+      value = if value
+          value.split(' ')
+        else
+          []
     value
 
   arrayOptions = (settings, keys) ->
@@ -113,17 +116,17 @@ namespace 'uploadcare.settings', (ns) ->
     size: size
 
   normalize = (settings) ->
-    arrayOptions settings, [
+    arrayOptions(settings, [
       'tabs'
       'preferredTypes'
-    ]
-    urlOptions settings, [
+    ])
+    urlOptions(settings, [
       'cdnBase'
       'socialBase'
       'urlBase'
       'scriptBase'
-    ]
-    flagOptions settings, [
+    ])
+    flagOptions(settings, [
       'doNotStore'
       'imagesOnly'
       'multiple'
@@ -131,11 +134,11 @@ namespace 'uploadcare.settings', (ns) ->
       'pathValue'
       'previewStep'
       'systemDialog'
-    ]
-    intOptions settings, [
+    ])
+    intOptions(settings, [
       'multipleMax'
       'multipleMin'
-    ]
+    ])
 
     if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop) or settings.multiple
@@ -166,14 +169,17 @@ namespace 'uploadcare.settings', (ns) ->
   }
   for own key, value of defaults
     publicDefaults[$.camelCase(key)] = value
-  expose 'defaults', publicDefaults
+  expose('defaults', publicDefaults)
 
   # Defaults + global variables
   ns.globals = utils.once ->
     values = {}
     for own key, fallback of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
-      values[$.camelCase(key)] = if value isnt undefined then value else fallback
+      values[$.camelCase(key)] = if value isnt undefined
+          value
+        else
+          fallback
 
     normalize(values)
 
