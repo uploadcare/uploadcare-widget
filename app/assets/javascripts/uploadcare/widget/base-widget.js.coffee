@@ -24,18 +24,17 @@ namespace 'uploadcare.widget', (ns) ->
       @__onUploadComplete = $.Callbacks()
       @__onChange = $.Callbacks().add (object) =>
         object?.promise().done (info) =>
-          @__onUploadComplete.fire info
+          @__onUploadComplete.fire(info)
 
       @__setupWidget()
 
-      @element.on 'change.uploadcare', @reloadInfo
+      @element.on('change.uploadcare', @reloadInfo)
       # Delay loading info to allow set custom validators on page load.
       @__hasValue = false
-      setTimeout =>
+      utils.defer =>
         # Do not reload info if user call uc.Widget().value(uuid) manual.
-        unless @__hasValue
+        if not @__hasValue
           @reloadInfo()
-      , 0
 
     __setupWidget: ->
       @template = new ns.Template(@settings, @element)
@@ -90,7 +89,7 @@ namespace 'uploadcare.widget', (ns) ->
     __watchCurrentObject: ->
       object = @__currentFile()
       if object
-        @template.listen object
+        @template.listen(object)
         object
           .done (info) =>
             if object == @__currentFile()
@@ -109,12 +108,12 @@ namespace 'uploadcare.widget', (ns) ->
       @template.error(error)
 
     __setExternalValue: (value) ->
-      @__setObject utils.valueToFile(value, @settings)
+      @__setObject(utils.valueToFile(value, @settings))
 
     value: (value) ->
       if value isnt undefined
         @__hasValue = true
-        @__setExternalValue value
+        @__setExternalValue(value)
         this
       else
         @currentObject
@@ -125,20 +124,20 @@ namespace 'uploadcare.widget', (ns) ->
     openDialog: (tab) ->
       if @settings.systemDialog
         utils.fileSelectDialog @template.content, @settings, (input) =>
-          @__handleDirectSelection 'object', input.files
+          @__handleDirectSelection('object', input.files)
       else
         uploadcare.openDialog(@currentObject, tab, @settings)
           .done(@__setObject)
 
     api: ->
-      unless @__api
-        @__api = utils.bindAll this, [
+      if not @__api
+        @__api = utils.bindAll(this, [
           'openDialog'
           'reloadInfo'
           'value'
           'validators'
-        ]
-        @__api.onChange = utils.publicCallbacks @__onChange
-        @__api.onUploadComplete = utils.publicCallbacks @__onUploadComplete
+        ])
+        @__api.onChange = utils.publicCallbacks(@__onChange)
+        @__api.onUploadComplete = utils.publicCallbacks(@__onUploadComplete)
         @__api.inputElement = @element.get(0)
       @__api

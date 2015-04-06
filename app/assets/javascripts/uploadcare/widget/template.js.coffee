@@ -31,17 +31,17 @@ namespace 'uploadcare.widget', (ns) ->
 
     reset: ->
       @circle.reset()
-      @setStatus 'ready'
+      @setStatus('ready')
       @__file = null
 
     loaded: ->
-      @setStatus 'loaded'
-      @circle.reset true
+      @setStatus('loaded')
+      @circle.reset(true)
 
     listen: (file) ->
       @__file = file
       @circle.listen(file, 'uploadProgress')
-      @setStatus 'started'
+      @setStatus('started')
       file.progress (info) =>
         if file == @__file
           switch info.state
@@ -50,7 +50,7 @@ namespace 'uploadcare.widget', (ns) ->
 
     error: (type) ->
       @statusText.text(t("errors.#{type || 'default'}"))
-      @setStatus 'error'
+      @setStatus('error')
 
     setFileInfo: (info) ->
       @statusText.html(tpl('widget-file-name', info))

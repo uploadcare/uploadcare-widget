@@ -39,7 +39,8 @@ namespace 'uploadcare.locale', (ns) ->
   translate = (key, node) ->
     path = key.split('.')
     for subkey in path
-      return null unless node?
+      if not node?
+        return null
       node = node[subkey]
     node
 

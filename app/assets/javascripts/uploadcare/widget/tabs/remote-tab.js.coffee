@@ -13,7 +13,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @wrap.addClass 'uploadcare-dialog-remote-iframe-wrap'
+      @wrap.addClass('uploadcare-dialog-remote-iframe-wrap')
 
       @dialogApi.progress (name) =>
         if name == @name
@@ -23,14 +23,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           visible: name == @name
 
     remoteUrl: ->
-      "#{@settings.socialBase}/window/#{@name}?" + $.param
+      "#{@settings.socialBase}/window/#{@name}?" + $.param(
         lang: @settings.locale
         public_key: @settings.publicKey
         widget_version: uploadcare.version
         images_only: @settings.imagesOnly
+      )
 
     __sendMessage: (messageObj) ->
-      @iframe?[0].contentWindow.postMessage JSON.stringify(messageObj), '*'
+      @iframe?[0].contentWindow.postMessage(JSON.stringify(messageObj), '*')
 
     __createIframe: =>
       if @iframe
@@ -46,15 +47,17 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .addClass('uploadcare-dialog-remote-iframe')
         .appendTo(@wrap)
         .on 'load', =>
-          @iframe.css 'opacity', '1'
+          @iframe.css('opacity', '1')
           for url in tabsCss.urls
-            @__sendMessage
+            @__sendMessage(
               type: 'embed-css'
               url: url
+            )
           for style in tabsCss.styles
-            @__sendMessage
+            @__sendMessage(
               type: 'embed-css'
               style: style
+            )
           return
 
       $(window).on "message", ({originalEvent: e}) =>
@@ -62,7 +65,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           return
 
         try
-          message = JSON.parse e.data
+          message = JSON.parse(e.data)
         catch
           return
 
@@ -76,7 +79,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                     return message.alternatives[key]
             return message.url
 
-          file = new files.UrlFile @settings, url
+          file = new files.UrlFile(@settings, url)
           if message.filename
             file.setName(message.filename)
           if message.is_image?

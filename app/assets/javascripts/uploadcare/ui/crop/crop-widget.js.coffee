@@ -12,13 +12,14 @@ namespace 'uploadcare.crop', (ns) ->
   class ns.CropWidget
 
     constructor: (@element, @originalSize, crop={}) ->
-      @__api = $.Jcrop @element[0],
+      @__api = $.Jcrop(@element[0],
         handleSize: 10
         trueSize: @originalSize
         addClass: 'uploadcare-crop-widget'
         createDragbars: []
         bgColor: 'transparent'
         bgOpacity: .8
+      )
 
       @setCrop(crop)
       @setSelection()
@@ -41,9 +42,10 @@ namespace 'uploadcare.crop', (ns) ->
     # If set to `null` any aspect ratio will be acceptable.
     # Array: [123, 123]. (optional)
     setCrop: (@crop) ->
-      @__api.setOptions
+      @__api.setOptions(
         aspectRatio: if crop.preferedSize then crop.preferedSize[0] / crop.preferedSize[1] else 0
         minSize: if crop.notLess then utils.fitSize(crop.preferedSize, @originalSize) else [0, 0]
+      )
 
     setSelection: (selection) ->
       if selection
@@ -63,7 +65,7 @@ namespace 'uploadcare.crop', (ns) ->
         left = selection.left or 0
         top = selection.top or 0
 
-      @__api.setSelect [left, top, (size[0] + left), (size[1] + top)]
+      @__api.setSelect([left, top, (size[0] + left), (size[1] + top)])
 
     cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
@@ -76,12 +78,12 @@ namespace 'uploadcare.crop', (ns) ->
         top: parseInt(raw[6], 10) or undefined
 
     setSelectionFromModifiers: (modifiers) ->
-      @setSelection @__parseModifiers modifiers
+      @setSelection(@__parseModifiers(modifiers))
 
     getSelection: ->
       coords = @__api.tellSelect()
-      left = Math.round Math.max(0, coords.x)
-      top = Math.round Math.max(0, coords.y)
+      left = Math.round(Math.max(0, coords.x))
+      top = Math.round(Math.max(0, coords.y))
 
       left: left
       top: top

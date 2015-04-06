@@ -9,7 +9,7 @@ namespace 'uploadcare.files', (ns) ->
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
     MP_PART_SIZE: 5 * 1024 * 1024
-    MP_MIN_LAST_PART_SIZE: 1 * 1024 * 1024
+    MP_MIN_LAST_PART_SIZE: 1024 * 1024
     MP_CONCURRENCY: 4
     MP_MAX_ATTEMPTS: 3
 
@@ -70,7 +70,7 @@ namespace 'uploadcare.files', (ns) ->
       if not @__file
         return df
       if @fileSize > 100 * 1024 * 1024
-        @__rejectApi 'size'
+        @__rejectApi('size')
         return df
 
       formData = new FormData()
@@ -79,7 +79,7 @@ namespace 'uploadcare.files', (ns) ->
       formData.append('file', @__file, @fileName)
       formData.append('file_name', @fileName)
 
-      @__autoAbort $.ajax
+      @__autoAbort($.ajax(
         xhr: =>
           # Naked XHR for progress tracking
           xhr = $.ajaxSettings.xhr()
@@ -104,6 +104,7 @@ namespace 'uploadcare.files', (ns) ->
             df.resolve()
           else
             df.reject()
+      ))
 
       df
 
@@ -113,7 +114,7 @@ namespace 'uploadcare.files', (ns) ->
       if not @__file
         return df
       if @settings.imagesOnly
-        @__rejectApi 'image'
+        @__rejectApi('image')
         return df
 
       @multipartStart().done (data) =>
@@ -137,9 +138,9 @@ namespace 'uploadcare.files', (ns) ->
         content_type: @fileType
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
-      @__autoAbort utils.jsonp(
+      @__autoAbort(utils.jsonp(
         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
-      )
+      ))
 
     uploadParts: (parts) ->
       progress = []
@@ -187,7 +188,7 @@ namespace 'uploadcare.files', (ns) ->
 
           progress[partNo] = 0
 
-          @__autoAbort $.ajax
+          @__autoAbort($.ajax(
             xhr: =>
               # Naked XHR for progress tracking
               xhr = $.ajaxSettings.xhr()
@@ -208,6 +209,7 @@ namespace 'uploadcare.files', (ns) ->
               submit()
               if not inProgress
                 df.resolve()
+          ))
 
       for i in [0...@MP_CONCURRENCY]
         submit()
@@ -218,6 +220,6 @@ namespace 'uploadcare.files', (ns) ->
         UPLOADCARE_PUB_KEY: @settings.publicKey
         uuid: uuid
 
-      @__autoAbort utils.jsonp(
+      @__autoAbort(utils.jsonp(
         "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data
-      )
+      ))

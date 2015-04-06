@@ -8,10 +8,10 @@ $ ->
       multipleWidget = uploadcare.MultipleWidget('#multiple-widget-input')
 
     it 'retutn an object', ->
-      expect(multipleWidget).toEqual jasmine.any(Object)
+      expect(multipleWidget).toEqual(jasmine.any(Object))
 
     it 'that have `value()` method', ->
-      expect(multipleWidget.value).toEqual jasmine.any(Function)
+      expect(multipleWidget.value).toEqual(jasmine.any(Function))
 
   describe """
     If uploadcare.MultipleWidget() was called
@@ -20,4 +20,6 @@ $ ->
 
     it 'an exception should be thrown', ->
       loadFixtures('widget-input')
-      expect(-> uploadcare.MultipleWidget '#widget-input').toThrow()
+      expect( ->
+        uploadcare.MultipleWidget('#widget-input')
+      ).toThrow()

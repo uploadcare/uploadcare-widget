@@ -17,7 +17,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @container.append tpl('tab-preview-multiple')
+      @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
       @fileListEl = @__find('file-list')
@@ -35,28 +35,29 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         )
       @__updateContainerView()
 
-      @dialogApi.fileColl.onAdd.add [@__fileAdded, @__updateContainerView]
-      @dialogApi.fileColl.onRemove.add [@__fileRemoved, @__updateContainerView]
+      @dialogApi.fileColl.onAdd.add(@__fileAdded, @__updateContainerView)
+      @dialogApi.fileColl.onRemove.add(@__fileRemoved, @__updateContainerView)
 
-      @dialogApi.fileColl.onAnyDone.add @__fileDone
-      @dialogApi.fileColl.onAnyFail.add @__fileFailed
-      @dialogApi.fileColl.onAnyProgress.add @__fileProgress
+      @dialogApi.fileColl.onAnyDone.add(@__fileDone)
+      @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
+      @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
 
       @__setupSorting()
 
     __setupSorting: ->
-      @fileListEl.sortable
+      @fileListEl.sortable(
         touch: false
         axis: 'y'
         start: (info) ->
           info.dragged.css('visibility', 'hidden')
         finish: (info) =>
           info.dragged.css('visibility', 'visible')
-          elements = @__find 'file-item'
+          elements = @__find('file-item')
           index = (file) =>
-            elements.index @__fileToEl(file)
+            elements.index(@__fileToEl(file))
           @dialogApi.fileColl.sort (a, b) ->
             index(a) - index(b)
+      )
 
     __find: (s, context = @container) ->
       $('.' + CLASS_PREFIX + s, context)
@@ -70,7 +71,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
-      @titleEl.text title
+      @titleEl.text(title)
 
       footer = if tooManyFiles
         t('dialog.tabs.preview.multiple.tooManyFiles')
@@ -114,22 +115,23 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        @__find('file-preview-wrap', fileEl).html $('<img>')
-          .attr
-            src: "#{info.originalUrl}-/scale_crop/90x90/center/"
-          .css
+        @__find('file-preview-wrap', fileEl).html($('<img>')
+          .attr('src', "#{info.originalUrl}-/scale_crop/90x90/center/")
+          .css(
             width: 'auto'
             height: 45
+          )
+        )
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
 
       fileEl.addClass(CLASS_PREFIX + 'error')
       @__find('file-error', fileEl)
-        .text t("errors.#{error}")
+        .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
-      $(file).data 'dmp-el', @__createFileEl(file)
+      $(file).data('dmp-el', @__createFileEl(file))
 
     __fileRemoved: (file) =>
       @__fileToEl(file).remove()
@@ -141,4 +143,4 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__fileTpl.clone()
         .appendTo(@fileListEl)
         .on 'click', '.' + CLASS_PREFIX + 'file-remove', =>
-          @dialogApi.fileColl.remove file
+          @dialogApi.fileColl.remove(file)

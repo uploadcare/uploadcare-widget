@@ -13,8 +13,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     urlRegexp = /^[a-z][a-z0-9+\-.]*:?\/\//
 
     fixUrl = (url) ->
-      url = $.trim url
-      if urlRegexp.test url
+      url = $.trim(url)
+      if urlRegexp.test(url)
         url
       else
         'http://' + url
@@ -22,7 +22,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     constructor: ->
       super
 
-      @wrap.append tpl 'tab-url'
+      @wrap.append(tpl('tab-url'))
       @wrap.addClass('uploadcare-dialog-padding')
 
       input = @wrap.find('.uploadcare-dialog-input')
@@ -33,8 +33,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .prop('disabled', true)
 
       @wrap.find('.uploadcare-dialog-url-form').on 'submit', =>
-        if url = fixUrl input.val()
-          @dialogApi.addFiles 'url', [url]
-          input.val ''
+        if url = fixUrl(input.val())
+          @dialogApi.addFiles('url', [url])
+          input.val('')
 
         false

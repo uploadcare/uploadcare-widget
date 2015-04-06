@@ -32,7 +32,10 @@ namespace 'uploadcare', (ns) ->
     input = $(input).eq(0)
     s = settings.build(input.data())
 
-    Widget = if s.multiple then ns.widget.MultipleWidget else ns.widget.Widget
+    Widget = if s.multiple
+        ns.widget.MultipleWidget
+      else
+        ns.widget.Widget
     if targetClass and Widget isnt targetClass
       throw new Error "This element should be processed using #{targetClass.name}"
 

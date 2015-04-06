@@ -30,17 +30,17 @@ namespace 'uploadcare.utils', (utils) ->
         @remove(item)
 
     replace: (oldItem, newItem) ->
-      unless oldItem is newItem
+      if not (oldItem is newItem)
         for item, i in @__items
           if item is oldItem
-            @__replace oldItem, newItem, i
+            @__replace(oldItem, newItem, i)
 
     __replace: (oldItem, newItem, i) ->
       @__items[i] = newItem
-      @onReplaced.fire oldItem, newItem, i
+      @onReplaced.fire(oldItem, newItem, i)
 
     sort: (comparator) ->
-      @__items.sort comparator
+      @__items.sort(comparator)
       @onSorted.fire()
 
     get: (index) ->
@@ -62,7 +62,7 @@ namespace 'uploadcare.utils', (utils) ->
 
     __replace: (oldItem, newItem, i) ->
       if newItem in @__items
-        @remove oldItem
+        @remove(oldItem)
       else
         super
 
@@ -83,12 +83,12 @@ namespace 'uploadcare.utils', (utils) ->
         $(item).data('lastProgress')
 
     add: (item) ->
-      unless item and item.done and item.fail and item.then
+      if not (item and item.done and item.fail and item.then)
         return
 
       super
 
-      @__watchItem item
+      @__watchItem(item)
 
     __watchItem: (item) ->
       handler = (callbacks) =>
@@ -104,9 +104,9 @@ namespace 'uploadcare.utils', (utils) ->
       )
 
     __replace: (oldItem, newItem, i) ->
-      unless newItem and newItem.done and newItem.fail and newItem.then
-        @remove oldItem
+      if not (newItem and newItem.done and newItem.fail and newItem.then)
+        @remove(oldItem)
       else
         super
 
-        @__watchItem newItem
+        @__watchItem(newItem)

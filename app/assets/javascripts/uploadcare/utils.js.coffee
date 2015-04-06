@@ -79,7 +79,11 @@ namespace 'uploadcare.utils', (ns) ->
       if $.isFunction(fn)
         target[method] = ->
           result = fn.apply(source, arguments)
-          if result == source then target else result # Fix chaining
+          # Fix chaining
+          if result == source
+            target
+          else
+            result
       else
         target[method] = fn
     target
@@ -106,7 +110,7 @@ namespace 'uploadcare.utils', (ns) ->
   ns.groupIdRegex = new RegExp("#{ns.uuidRegex.source}~[0-9]+", 'i')
   ns.cdnUrlRegex = new RegExp("^/?(#{ns.uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$", 'i')
   ns.splitCdnUrl = (url) ->
-    ns.cdnUrlRegex.exec ns.splitUrlRegex.exec(url)[3]
+    ns.cdnUrlRegex.exec(ns.splitUrlRegex.exec(url)[3])
 
   ns.escapeRegExp = (str) ->
     str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
@@ -124,7 +128,7 @@ namespace 'uploadcare.utils', (ns) ->
     if scheme != 'http:'
       scheme = 'https:'
 
-    parts = url.match /^([^:/?#]+:)?\/?(\/)?/
+    parts = url.match(/^([^:/?#]+:)?\/?(\/)?/)
     if not parts[1]  # if no scheme
       if parts[2]  # if two slashes
         url = "#{scheme}#{url}"
@@ -158,7 +162,10 @@ namespace 'uploadcare.utils', (ns) ->
     input = null
     accept = settings.inputAcceptTypes
     if accept is ''
-      accept = if settings.imagesOnly then 'image/*' else null
+      accept = if settings.imagesOnly
+          'image/*'
+        else
+          null
 
     do run = ->
       input = (
@@ -202,7 +209,10 @@ namespace 'uploadcare.utils', (ns) ->
   ns.fileSelectDialog = (container, settings, fn) ->
     accept = settings.inputAcceptTypes
     if accept is ''
-      accept = if settings.imagesOnly then 'image/*' else null
+      accept = if settings.imagesOnly
+          'image/*'
+        else
+          null
     (
       if settings.multiple
         $('<input type="file" multiple>')
@@ -224,7 +234,7 @@ namespace 'uploadcare.utils', (ns) ->
       .hide()
 
 
-  ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split ' '
+  ns.fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split(' ')
 
   ns.readableFileSize = (value, onNaN='', prefix='', postfix='') ->
     value = parseInt(value, 10)
@@ -252,10 +262,10 @@ namespace 'uploadcare.utils', (ns) ->
     cache: false
 
   ns.jsonp = (url, type, data) ->
-    if $.isPlainObject type
+    if $.isPlainObject(type)
       data = type
       type = 'GET'
-    $.ajax($.extend {url, type, data}, ns.ajaxDefaults).then (data) ->
+    $.ajax($.extend({url, type, data}, ns.ajaxDefaults)).then (data) ->
       if data.error
         text = data.error.content or data.error
         ns.warn("JSONP error: #{text} while loading #{url}")
@@ -269,15 +279,15 @@ namespace 'uploadcare.utils', (ns) ->
 
 
   ns.plugin = (fn) ->
-    fn uploadcare
+    fn(uploadcare)
 
 
   ns.canvasToBlob = (canvas, type, quality, callback) ->
     if HTMLCanvasElement.prototype.toBlob
       return canvas.toBlob(callback, type, quality)
 
-    dataURL = canvas.toDataURL(type, quality);
-    dataURL = dataURL.split(',');
+    dataURL = canvas.toDataURL(type, quality)
+    dataURL = dataURL.split(',')
 
     binStr = atob(dataURL[1])
     arr = new Uint8Array(binStr.length)

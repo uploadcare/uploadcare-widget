@@ -12,9 +12,9 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
     constructor: (element) ->
       if abilities.canvas
-        @renderer = new ns.CanvasRenderer element
+        @renderer = new ns.CanvasRenderer(element)
       else
-        @renderer = new ns.TextRenderer element
+        @renderer = new ns.TextRenderer(element)
       @observed = null
 
     listen: (file, selector) ->
@@ -27,22 +27,22 @@ namespace 'uploadcare.ui.progress', (ns) ->
       @observed = file
 
       if @observed.state() is "resolved"
-        @renderer.setValue 1, true
+        @renderer.setValue(1, true)
       else
         @observed
           .progress (progress) =>
             # if we are still listening to this one
             if file == @observed
-              @renderer.setValue selectorFn(progress)
+              @renderer.setValue(selectorFn(progress))
 
           .always (uploadedFile) =>
             if file == @observed
-              @renderer.setValue 1, false
+              @renderer.setValue(1, false)
       @
 
     reset: (filled = false) ->
       @observed = null
-      @renderer.setValue (if filled then 1 else 0), true
+      @renderer.setValue((if filled then 1 else 0), true)
 
     update: =>
       @renderer.update()
@@ -51,8 +51,8 @@ namespace 'uploadcare.ui.progress', (ns) ->
   class ns.BaseRenderer
     constructor: (el) ->
       @element = $(el)
-      @element.data 'uploadcare-progress-renderer', this
-      @element.addClass 'uploadcare-widget-circle'
+      @element.data('uploadcare-progress-renderer', this)
+      @element.addClass('uploadcare-widget-circle')
 
     update: ->
 
@@ -60,13 +60,13 @@ namespace 'uploadcare.ui.progress', (ns) ->
   class ns.TextRenderer extends ns.BaseRenderer
     constructor: ->
       super
-      @element.addClass 'uploadcare-widget-circle--text'
+      @element.addClass('uploadcare-widget-circle--text')
       @element.html(tpl('circle-text'))
       @text = @element.find('.uploadcare-widget-circle-text')
 
     setValue: (val) ->
       val = Math.round(val * 100)
-      @text.html "#{val} %"
+      @text.html("#{val} %")
 
 
   class ns.CanvasRenderer extends ns.BaseRenderer
@@ -76,10 +76,10 @@ namespace 'uploadcare.ui.progress', (ns) ->
 
       @canvasEl = $('<canvas>').get(0)
 
-      @element.addClass 'uploadcare-widget-circle--canvas'
+      @element.addClass('uploadcare-widget-circle--canvas')
       @element.html(@canvasEl)
 
-      @setValue 0, true
+      @setValue(0, true)
 
     update: ->
       half = Math.floor(Math.min(@element.width(), @element.height()))
@@ -122,13 +122,13 @@ namespace 'uploadcare.ui.progress', (ns) ->
         current = (if speed > 0 then Math.min else Math.max)(current, target)
         if current == target
           @__stopAnimation()
-        @__setValue current
+        @__setValue(current)
       , 15
 
     __stopAnimation: ->
       if @__animIntervalId
-        clearInterval @__animIntervalId
-        @__animIntervalId = null
+        clearInterval(@__animIntervalId)
+      @__animIntervalId = null
 
     __setValue: (val) ->
       @val = val

@@ -9,13 +9,12 @@
 namespace 'uploadcare.files', (ns) ->
 
   class ns.FileGroup
-
     constructor: (files, settings) ->
       @__uuid = null
-      @settings = s.build settings
+      @settings = s.build(settings)
       @__fileColl = new utils.CollectionOfPromises(files)
 
-      @__allFilesDf = $.when @files()...
+      @__allFilesDf = $.when(@files()...)
       @__fileInfosDf = do =>
         files = for file in @files()
           file.then null, (err, info) ->
@@ -29,7 +28,7 @@ namespace 'uploadcare.files', (ns) ->
       @__fileColl.get()
 
     __save: ->
-      unless @__saved
+      if not @__saved
         @__saved = true
         @__allFilesDf.done =>
           @__createGroup()
@@ -54,27 +53,27 @@ namespace 'uploadcare.files', (ns) ->
 
       reject = (err) =>
         @__buildInfo (info) =>
-          @__apiDf.reject err, info
+          @__apiDf.reject(err, info)
       resolve = (info) =>
-        @__apiDf.resolve info
+        @__apiDf.resolve(info)
       notify = =>
-        @__apiDf.notify @__progressInfo()
+        @__apiDf.notify(@__progressInfo())
 
       notify()
-      @__fileColl.onAnyProgress.add notify
+      @__fileColl.onAnyProgress.add(notify)
 
       @__allFilesDf
         .done =>
           @__progressState = 'uploaded'
           notify()
-        .fail reject
+        .fail(reject)
 
       @__createGroupDf
         .done (info) =>
           @__progressState = 'ready'
           notify()
           resolve(info)
-        .fail reject
+        .fail(reject)
 
     __progressInfo: ->
       progress = 0
@@ -83,12 +82,18 @@ namespace 'uploadcare.files', (ns) ->
         progress += (progressInfo?.progress or 0) / progressInfos.length
       state: @__progressState
       uploadProgress: progress
-      progress: if @__progressState == 'ready' then 1 else progress * 0.9
+      progress: if @__progressState == 'ready'
+          1
+        else
+          progress * 0.9
 
     __buildInfo: (cb) ->
       info = 
         uuid: @__uuid
-        cdnUrl: if @__uuid then "#{@settings.cdnBase}/#{@__uuid}/" else null
+        cdnUrl: if @__uuid
+            "#{@settings.cdnBase}/#{@__uuid}/"
+          else
+            null
         name: t('file', @__fileColl.length())
         count: @__fileColl.length()
         size: 0
@@ -97,8 +102,10 @@ namespace 'uploadcare.files', (ns) ->
       @__fileInfosDf.done (infos...) ->
         for _info in infos
           info.size += _info.size
-          info.isImage = false if !_info.isImage
-          info.isStored = false if !_info.isStored
+          if not _info.isImage
+            info.isImage = false
+          if not _info.isStored
+            info.isStored = false
         cb(info)
 
     __createGroup: ->
@@ -116,16 +123,12 @@ namespace 'uploadcare.files', (ns) ->
       return df.promise()
 
     api: ->
-      unless @__api
-        @__api = utils.bindAll this, [
-          'promise'
-          'files'
-        ]
+      if not @__api
+        @__api = utils.bindAll(this, ['promise', 'files'])
       @__api
 
 
   class ns.SavedFileGroup extends ns.FileGroup
-
     constructor: (@__data, settings) ->
       files = uploadcare.filesFrom('ready', @__data.files, settings)
       super(files, settings)
@@ -140,14 +143,14 @@ namespace 'uploadcare', (ns) ->
     files = []
     for item in filesAndGroups
       if utils.isFile(item)
-        files.push item
+        files.push(item)
       else if utils.isFileGroup(item)
         for file in item.files()
-          files.push file
+          files.push(file)
     return new uploadcare.files.FileGroup(files, settings).api()
 
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
-    settings = s.build settings
+    settings = s.build(settings)
     df = $.Deferred()
     id = utils.groupIdRegex.exec(groupIdOrUrl)
     if id
@@ -156,7 +159,8 @@ namespace 'uploadcare', (ns) ->
           group_id: id[0]
       .fail(df.reject)
       .done (data) ->
-        df.resolve new uploadcare.files.SavedFileGroup(data, settings).api()
+        group = new uploadcare.files.SavedFileGroup(data, settings)
+        df.resolve(group.api())
     else
       df.reject()
     df.promise()
@@ -182,18 +186,18 @@ namespace 'uploadcare.utils', (utils) ->
   # check if two groups contains same files in same order
   utils.isFileGroupsEqual = (group1, group2) ->
     if group1 == group2
-      true
-    else
-      if utils.isFileGroup(group1) and utils.isFileGroup(group2)
-        files1 = group1.files()
-        files2 = group2.files()
-        if files1.length isnt files2.length
-          false
-        else
-          mismatches = (1 for file, i in files1 when file isnt files2[i])
-          if mismatches.length
-            false
-          else
-            true
-      else
-        false
+      return true
+
+    if not (utils.isFileGroup(group1) and utils.isFileGroup(group2))
+      return false
+
+    files1 = group1.files()
+    files2 = group2.files()
+    if files1.length != files2.length
+      return false
+
+    for file, i in files1
+      if file isnt files2[i]
+        return false
+
+    true

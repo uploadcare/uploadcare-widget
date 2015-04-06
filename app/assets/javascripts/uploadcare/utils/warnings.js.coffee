@@ -6,20 +6,20 @@ namespace 'uploadcare.utils', (ns) ->
 
   ns.log = (msg) ->
     if window.console and console.log
-      console.log msg
+      console.log(msg)
     else
       # Uncomment this to see anything in ie8:
       # $('<div style="display:none!important"/>').text(msg).appendTo('body')
 
   ns.warn = (msg) ->
     if window.console and console.warn
-      console.warn msg
+      console.warn(msg)
     else
-      ns.log "Warning: #{msg}"
+      ns.log("Warning: #{msg}")
 
   messages = {}
   ns.warnOnce = (msg) ->
-    unless messages[msg]?
+    if not messages[msg]?
       messages[msg] = true
       ns.warn(msg)
 
@@ -34,4 +34,5 @@ namespace 'uploadcare.utils', (ns) ->
       """
 
   ns.commonWarning = (name) ->
-    ns.warnOnce(common[name]) if common[name]?
+    if common[name]?
+      ns.warnOnce(common[name])

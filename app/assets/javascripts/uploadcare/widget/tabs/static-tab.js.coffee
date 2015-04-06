@@ -6,4 +6,4 @@
 namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.StaticTab
     constructor: (@container) ->
-      @container.append tpl("tab-#{@name}")
+      @container.append(tpl("tab-#{@name}"))

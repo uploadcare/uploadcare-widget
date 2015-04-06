@@ -10,7 +10,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.BaseSourceTab
 
     CLASS_PREFIX = '.uploadcare-dialog-source-base-'
-    ROLE_PREFIX = '@uploadcare-dialog-source-base-'
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
 
@@ -29,10 +28,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         tooFewFiles = files < @settings.multipleMin
 
         @container.find(CLASS_PREFIX + 'done')
-          .toggleClass 'uploadcare-disabled-el', tooManyFiles or tooFewFiles
+          .toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
 
         @container.find(CLASS_PREFIX + 'show-files')
-          .toggleClass 'uploadcare-disabled-el', files is 0
+          .toggleClass('uploadcare-disabled-el', files is 0)
 
         footer = if tooManyFiles
           t('dialog.tabs.preview.multiple.tooManyFiles')
@@ -52,5 +51,5 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           .text(if files then "(#{files})" else "")
 
       updateFooter()
-      @dialogApi.fileColl.onAdd.add updateFooter
-      @dialogApi.fileColl.onRemove.add updateFooter
+      @dialogApi.fileColl.onAdd.add(updateFooter)
+      @dialogApi.fileColl.onRemove.add(updateFooter)
