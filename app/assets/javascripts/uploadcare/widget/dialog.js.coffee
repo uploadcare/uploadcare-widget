@@ -146,7 +146,7 @@ namespace 'uploadcare', (ns) ->
 
       @files.onRemove.add =>
         if @files.length() == 0
-          @__hideTab('preview')
+          @hideTab('preview')
 
       @tabs = {}
 
@@ -163,6 +163,8 @@ namespace 'uploadcare', (ns) ->
           fileColl: @files
           addFiles: @addFiles
           switchTab: @switchTab
+          hideTab: @hideTab
+          showTab: @showTab
         )
       @promise
 
@@ -179,7 +181,7 @@ namespace 'uploadcare', (ns) ->
         @files.add(file)
 
       if @settings.previewStep
-        @__showTab('preview')
+        @showTab('preview')
         if not @settings.multiple
           @switchTab('preview')
       else
@@ -197,10 +199,10 @@ namespace 'uploadcare', (ns) ->
         @addTab(tabName)
 
       if @files.length()
-        @__showTab('preview')
+        @showTab('preview')
         @switchTab('preview')
       else
-        @__hideTab('preview')
+        @hideTab('preview')
         @switchTab(tab || @settings.tabs[0])
 
     __closePanel: =>
@@ -258,12 +260,12 @@ namespace 'uploadcare', (ns) ->
 
       @dfd.notify(@currentTab)
 
-    __showTab: (tab) ->
+    showTab: (tab) =>
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .removeClass("#{className}_hidden")
 
-    __hideTab: (tab) ->
+    hideTab: (tab) =>
       if @currentTab == tab
         @switchTab(@settings.tabs[0])
       className = 'uploadcare-dialog-tab'

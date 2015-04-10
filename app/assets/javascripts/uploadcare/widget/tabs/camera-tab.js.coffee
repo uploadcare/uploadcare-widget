@@ -13,8 +13,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       super
 
       if not @__checkCompatibility()
-        @wrap.hide()
-        @tabButton.hide()
+        @dialogApi.hideTab(@name)
         return
 
       @__loaded = false
