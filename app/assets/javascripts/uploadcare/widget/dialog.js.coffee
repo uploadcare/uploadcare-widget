@@ -1,4 +1,3 @@
-# = require ./tabs/base-source-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
 # = require ./tabs/camera-tab
@@ -6,7 +5,6 @@
 # = require ./tabs/base-preview-tab
 # = require ./tabs/preview-tab
 # = require ./tabs/preview-tab-multiple
-# = require ./tabs/static-tab
 
 {
   namespace,
@@ -119,7 +117,8 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('box', tabs.RemoteTab)
   ns.registerTab('skydrive', tabs.RemoteTab)
   ns.registerTab('huddle', tabs.RemoteTab)
-  ns.registerTab('welcome', tabs.StaticTab)
+  ns.registerTab 'empty-pubkey', (tabPanel) ->
+    tabPanel.append(tpl("tab-welcome"))
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
     tabCls = if settings.multiple
         tabs.PreviewTabMultiple
@@ -134,7 +133,7 @@ namespace 'uploadcare', (ns) ->
 
       sel = '.uploadcare-dialog-panel'
       @content = $(tpl('panel'))
-      @panel = @content.find(sel).add(@content.filter(sel));
+      @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
@@ -146,11 +145,12 @@ namespace 'uploadcare', (ns) ->
 
       @files.onRemove.add =>
         if @files.length() == 0
-          @__hideTab('preview')
+          @hideTab('preview')
 
       @tabs = {}
 
       if @settings.publicKey
+        @__prepareFooter()
         @__prepareTabs(tab)
       else
         @__welcome()
@@ -163,6 +163,8 @@ namespace 'uploadcare', (ns) ->
           fileColl: @files
           addFiles: @addFiles
           switchTab: @switchTab
+          hideTab: @hideTab
+          showTab: @showTab
         )
       @promise
 
@@ -179,7 +181,7 @@ namespace 'uploadcare', (ns) ->
         @files.add(file)
 
       if @settings.previewStep
-        @__showTab('preview')
+        @showTab('preview')
         if not @settings.multiple
           @switchTab('preview')
       else
@@ -197,11 +199,50 @@ namespace 'uploadcare', (ns) ->
         @addTab(tabName)
 
       if @files.length()
-        @__showTab('preview')
+        @showTab('preview')
         @switchTab('preview')
       else
-        @__hideTab('preview')
+        @hideTab('preview')
         @switchTab(tab || @settings.tabs[0])
+
+    __prepareFooter: ->
+      @footer = @panel.find('.uploadcare-panel-footer')
+      notDisabled = ':not(.uploadcare-disabled-el)'
+      @footer.on 'click', '.uploadcare-dialog-button' + notDisabled, =>
+        @switchTab('preview')
+      @footer.on('click', '.uploadcare-dialog-button-success' + notDisabled, @__resolve)
+
+      @__updateFooter()
+      @files.onAdd.add(@__updateFooter)
+      @files.onRemove.add(@__updateFooter)
+
+    __updateFooter: =>
+        files = @files.length()
+        tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+        tooFewFiles = files < @settings.multipleMin
+
+        @footer.find('.uploadcare-dialog-button-success')
+          .toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
+
+        @footer.find('.uploadcare-dialog-button')
+          .toggleClass('uploadcare-disabled-el', files is 0)
+
+        footer = if tooManyFiles
+          t('dialog.tabs.preview.multiple.tooManyFiles')
+            .replace('%max%', @settings.multipleMax)
+        else if files and tooFewFiles
+          t('dialog.tabs.preview.multiple.tooFewFiles')
+            .replace('%min%', @settings.multipleMin)
+        else
+          t('dialog.tabs.preview.multiple.title')
+
+        @footer.find('.uploadcare-panel-footer-text')
+          .toggleClass('uploadcare-error', tooManyFiles)
+          .text(footer.replace('%files%', t('file', files)))
+
+        @footer.find('.uploadcare-panel-footer-counter')
+          .toggleClass('uploadcare-error', tooManyFiles)
+          .text(if files then "(#{files})" else "")
 
     __closePanel: =>
       @panel.replaceWith(@placeholder)
@@ -219,7 +260,7 @@ namespace 'uploadcare', (ns) ->
       tabPanel = $('<div>')
         .addClass("uploadcare-dialog-tabs-panel")
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .appendTo(@panel)
+        .insertBefore(@footer)
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass("uploadcare-dialog-tab")
@@ -233,13 +274,6 @@ namespace 'uploadcare', (ns) ->
             @switchTab(name)
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
-
-    __addFakeTab: (name) ->
-      $('<div>')
-        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
-        .addClass('uploadcare-dialog-disabled-tab')
-        .attr('title', t("tabs.#{name}.title"))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
 
     switchTab: (@currentTab) =>
       @panel.removeClass('uploadcare-dialog-opened-tabs')
@@ -258,12 +292,12 @@ namespace 'uploadcare', (ns) ->
 
       @dfd.notify(@currentTab)
 
-    __showTab: (tab) ->
+    showTab: (tab) =>
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .removeClass("#{className}_hidden")
 
-    __hideTab: (tab) ->
+    hideTab: (tab) =>
       if @currentTab == tab
         @switchTab(@settings.tabs[0])
       className = 'uploadcare-dialog-tab'
@@ -271,7 +305,14 @@ namespace 'uploadcare', (ns) ->
             .addClass("#{className}_hidden")
 
     __welcome: ->
-      @addTab('welcome')
+      @addTab('empty-pubkey')
+      @switchTab('empty-pubkey')
       for tabName in @settings.tabs
         @__addFakeTab(tabName)
-      @switchTab('welcome')
+
+    __addFakeTab: (name) ->
+      $('<div>')
+        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
+        .addClass('uploadcare-dialog-disabled-tab')
+        .attr('title', t("dialog.tabs.names.#{name}"))
+        .appendTo(@panel.find('.uploadcare-dialog-tabs'))

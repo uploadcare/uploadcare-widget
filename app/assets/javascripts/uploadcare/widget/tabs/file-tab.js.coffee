@@ -7,30 +7,28 @@
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.FileTab extends ns.BaseSourceTab
+  class ns.FileTab
 
-    constructor: ->
-      super
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
+      @container.append(tpl('tab-file', {tabs: @settings.tabs}))
+      @container.addClass('uploadcare-dialog-padding')
 
-      @wrap.append(tpl('tab-file', {tabs: @settings.tabs}))
-      @wrap.addClass('uploadcare-dialog-padding')
-
-      @wrap.on 'click', '.uploadcare-dialog-file-source', (e) =>
+      @container.on 'click', '.uploadcare-dialog-file-source', (e) =>
         @dialogApi.switchTab($(e.target).data('tab'))
 
       @__setupFileButton()
       @__initDragNDrop()
 
     __initDragNDrop: ->
-      dropArea = @wrap.find('.uploadcare-dialog-file-drop-area')
+      dropArea = @container.find('.uploadcare-dialog-file-drop-area')
       if utils.abilities.fileDragAndDrop
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles(type, data)
           @dialogApi.switchTab('preview')
-        @wrap.addClass("uploadcare-draganddrop")
+        @container.addClass("uploadcare-draganddrop")
 
     __setupFileButton: ->
-      fileButton = @wrap.find('.uploadcare-dialog-big-button')
+      fileButton = @container.find('.uploadcare-dialog-big-button')
       utils.fileInput fileButton, @settings, (input) =>
         if utils.abilities.sendFileAPI
           @dialogApi.addFiles('object', input.files)

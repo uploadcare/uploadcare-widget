@@ -7,7 +7,7 @@
 {t} = uploadcare.locale
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.UrlTab extends ns.BaseSourceTab
+  class ns.UrlTab
 
     # starts with scheme
     urlRegexp = /^[a-z][a-z0-9+\-.]*:?\/\//
@@ -19,20 +19,18 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       else
         'http://' + url
 
-    constructor: ->
-      super
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
+      @container.append(tpl('tab-url'))
+      @container.addClass('uploadcare-dialog-padding')
 
-      @wrap.append(tpl('tab-url'))
-      @wrap.addClass('uploadcare-dialog-padding')
-
-      input = @wrap.find('.uploadcare-dialog-input')
+      input = @container.find('.uploadcare-dialog-input')
       input.on 'change keyup input', ->
         button.prop('disabled', !$.trim(this.value))
 
-      button = @wrap.find('.uploadcare-dialog-url-submit')
+      button = @container.find('.uploadcare-dialog-url-submit')
         .prop('disabled', true)
 
-      @wrap.find('.uploadcare-dialog-url-form').on 'submit', =>
+      @container.find('.uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl(input.val())
           @dialogApi.addFiles('url', [url])
           input.val('')

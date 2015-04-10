@@ -7,26 +7,23 @@
 
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.CameraTab extends ns.BaseSourceTab
+  class ns.CameraTab
 
-    constructor: ->
-      super
-
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       if not @__checkCompatibility()
-        @wrap.hide()
-        @tabButton.hide()
+        @dialogApi.hideTab(@name)
         return
 
       @__loaded = false
       @mirrored = true
 
-      @wrap.append(tpl('tab-camera'))
-      @wrap.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
-      @wrap.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
-      @wrap.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
-      @wrap.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
+      @container.append(tpl('tab-camera'))
+      @container.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
+      @container.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
+      @container.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
+      @container.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
 
-      @video = @wrap.find('video')
+      @video = @container.find('video')
       @video.on 'loadeddata', ->
         @play()
 
@@ -55,7 +52,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             {minWidth: 1920},
           ]
       , (stream) =>
-        @wrap
+        @container
           .removeClass('uploadcare-dialog-camera-requested')
           .removeClass('uploadcare-dialog-camera-denied')
           .addClass('uploadcare-dialog-camera-ready')
@@ -67,9 +64,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @video[0].play()
       , (error) =>
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
-          @wrap.addClass('uploadcare-dialog-camera-not-founded')
+          @container.addClass('uploadcare-dialog-camera-not-founded')
         else
-          @wrap.addClass('uploadcare-dialog-camera-denied')
+          @container.addClass('uploadcare-dialog-camera-denied')
         @__loaded = false
       )
 

@@ -57,17 +57,13 @@ $dialog-mobile-min-width: 310px;
     .uploadcare-dialog-panel {
       overflow: visible;
       height: 100%;
+      padding: $frame-size 0 0;
       border-radius: 0;
       @include prefix(box-shadow, none);
     }
       .uploadcare-dialog-tabs-panel {
-        padding: $frame-size 0 0;
-        margin: 0;
-        height: 100%;
+        height: auto;
       }
-        .uploadcare-dialog-source-base-wrap {
-          height: auto;
-        }
         .uploadcare-dialog-remote-iframe-wrap {
           overflow: visible;
           height: 100%;
@@ -151,9 +147,9 @@ $dialog-mobile-min-width: 310px;
     }
 
 
-    // § Mulltiple
+    // § Multiple
 
-    .uploadcare-dialog-inner-footer {
+    .uploadcare-panel-footer {
       position: fixed;
       left: 0; bottom: 0;
       width: 100%;
@@ -162,20 +158,20 @@ $dialog-mobile-min-width: 310px;
       padding: ($dialog-mobile-footer-height - $dialog-button-height) / 2 15px 0;
       background: rgba(255, 243, 190, 0.95);
     }
-    .uploadcare-dialog-inner-footer-text {
+    .uploadcare-panel-footer-text {
       display: none;
     }
-    .uploadcare-dialog-source-base-counter {
+    .uploadcare-panel-footer-counter {
       display: inline;
     }
     .uploadcare-dialog-multiple {
+      &.uploadcare-dialog-panel {
+        padding-bottom: $dialog-mobile-footer-height;
+      }
       .uploadcare-dialog-remote-iframe-wrap:after {
         content: '';
         display: block;
         height: $dialog-mobile-footer-height;
-      }
-      .uploadcare-dialog-source-base-wrap {
-        padding-bottom: $dialog-mobile-footer-height;
       }
       .uploadcare-dialog-padding {
         padding-bottom: y(1) + $dialog-mobile-footer-height;
@@ -193,6 +189,7 @@ $dialog-mobile-min-width: 310px;
       min-width: $dialog-mobile-min-width;
       height: auto;
       float: none;
+      margin: 0;
       z-index: 1;
       background: transparent;
     }
@@ -221,11 +218,12 @@ $dialog-mobile-min-width: 310px;
       }
 
     .uploadcare-dialog-opened-tabs {
-      .uploadcare-dialog-tabs-panel_current {
+      .uploadcare-dialog-tabs-panel_current,
+      .uploadcare-panel-footer {
         display: none;
       }
       .uploadcare-dialog-tabs {
-        position: relative;
+        position: absolute;
         // overlap close icon
         z-index: 3;
       }
