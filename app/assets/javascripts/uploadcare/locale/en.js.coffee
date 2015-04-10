@@ -32,6 +32,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       showFiles: 'Show files'
       tabs:
         names:
+          'empty-pubkey': 'Welcome'
           preview: 'Preview'
           file: 'Local Files'
           url: 'Arbitrary Links'

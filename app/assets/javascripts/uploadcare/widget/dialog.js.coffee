@@ -6,7 +6,6 @@
 # = require ./tabs/base-preview-tab
 # = require ./tabs/preview-tab
 # = require ./tabs/preview-tab-multiple
-# = require ./tabs/static-tab
 
 {
   namespace,
@@ -119,7 +118,8 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('box', tabs.RemoteTab)
   ns.registerTab('skydrive', tabs.RemoteTab)
   ns.registerTab('huddle', tabs.RemoteTab)
-  ns.registerTab('welcome', tabs.StaticTab)
+  ns.registerTab 'empty-pubkey', (tabPanel) ->
+    tabPanel.append(tpl("tab-welcome"))
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
     tabCls = if settings.multiple
         tabs.PreviewTabMultiple
@@ -236,13 +236,6 @@ namespace 'uploadcare', (ns) ->
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
-    __addFakeTab: (name) ->
-      $('<div>')
-        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
-        .addClass('uploadcare-dialog-disabled-tab')
-        .attr('title', t("tabs.#{name}.title"))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
-
     switchTab: (@currentTab) =>
       @panel.removeClass('uploadcare-dialog-opened-tabs')
 
@@ -273,7 +266,14 @@ namespace 'uploadcare', (ns) ->
             .addClass("#{className}_hidden")
 
     __welcome: ->
-      @addTab('welcome')
+      @addTab('empty-pubkey')
+      @switchTab('empty-pubkey')
       for tabName in @settings.tabs
         @__addFakeTab(tabName)
-      @switchTab('welcome')
+
+    __addFakeTab: (name) ->
+      $('<div>')
+        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
+        .addClass('uploadcare-dialog-disabled-tab')
+        .attr('title', t("dialog.tabs.names.#{name}"))
+        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
