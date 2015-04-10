@@ -134,7 +134,7 @@ namespace 'uploadcare', (ns) ->
 
       sel = '.uploadcare-dialog-panel'
       @content = $(tpl('panel'))
-      @panel = @content.find(sel).add(@content.filter(sel));
+      @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
@@ -151,6 +151,7 @@ namespace 'uploadcare', (ns) ->
       @tabs = {}
 
       if @settings.publicKey
+        @__prepareFooter()
         @__prepareTabs(tab)
       else
         @__welcome()
@@ -205,6 +206,45 @@ namespace 'uploadcare', (ns) ->
         @hideTab('preview')
         @switchTab(tab || @settings.tabs[0])
 
+    __prepareFooter: ->
+      @footer = @panel.find('.uploadcare-panel-footer')
+      notDisabled = ':not(.uploadcare-disabled-el)'
+      @footer.on 'click', '.uploadcare-dialog-button' + notDisabled, =>
+        @switchTab('preview')
+      @footer.on('click', '.uploadcare-dialog-button-success' + notDisabled, @__resolve)
+
+      @__updateFooter()
+      @files.onAdd.add(@__updateFooter)
+      @files.onRemove.add(@__updateFooter)
+
+    __updateFooter: =>
+        files = @files.length()
+        tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+        tooFewFiles = files < @settings.multipleMin
+
+        @footer.find('.uploadcare-dialog-button-success')
+          .toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
+
+        @footer.find('.uploadcare-dialog-button')
+          .toggleClass('uploadcare-disabled-el', files is 0)
+
+        footer = if tooManyFiles
+          t('dialog.tabs.preview.multiple.tooManyFiles')
+            .replace('%max%', @settings.multipleMax)
+        else if files and tooFewFiles
+          t('dialog.tabs.preview.multiple.tooFewFiles')
+            .replace('%min%', @settings.multipleMin)
+        else
+          t('dialog.tabs.preview.multiple.title')
+
+        @footer.find('.uploadcare-panel-footer-text')
+          .toggleClass('uploadcare-error', tooManyFiles)
+          .text(footer.replace('%files%', t('file', files)))
+
+        @footer.find('.uploadcare-panel-footer-counter')
+          .toggleClass('uploadcare-error', tooManyFiles)
+          .text(if files then "(#{files})" else "")
+
     __closePanel: =>
       @panel.replaceWith(@placeholder)
       @content.remove()
@@ -221,7 +261,7 @@ namespace 'uploadcare', (ns) ->
       tabPanel = $('<div>')
         .addClass("uploadcare-dialog-tabs-panel")
         .addClass("uploadcare-dialog-tabs-panel-#{name}")
-        .appendTo(@panel)
+        .insertBefore(@footer)
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass("uploadcare-dialog-tab")

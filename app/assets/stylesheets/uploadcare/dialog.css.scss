@@ -896,12 +896,12 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   opacity: 0;
 }
 
-.uploadcare-dialog-source-base-footer {
+.uploadcare-panel-footer__summary {
   display: none;
   .uploadcare-dialog-multiple & {
     display: block;
   }
 }
-.uploadcare-dialog-source-base-counter {
+.uploadcare-panel-footer-counter {
   display: none;
 }
