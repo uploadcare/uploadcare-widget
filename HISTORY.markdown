@@ -1,5 +1,19 @@
 # History
 
+### 2.1.0, 10.04.2015
+
+* Keyboard navigation.
+* Widgets are initialized immediately after page loading, not after 100ms. 
+* Role attributes inside the widget were aligned with ARIA.
+  The `uploadcare-uploader` role is still used for widget identification.
+* Multiple panels's footer is now maintained by panel itself, not by tabs.
+  As a result the footer will appear on custom tabs too.  
+* New `showTab` and `hideTab` methods for dialog api.
+* `uploadcare.globals()` now includes settings from `uploadcare.start()`.
+* Removed `white-space: nowrap` around the widget.
+* Reduced the number of relatively slow `settings.build`
+  and `settings.normalize` calls.
+
 ### 2.0.6, 28.03.2015
 
 * Fix exception when multiple files are uploaded simalteniously with 
