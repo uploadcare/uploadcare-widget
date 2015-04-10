@@ -42,7 +42,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         else
           t('dialog.tabs.preview.multiple.title')
 
-        @container.find('.uploadcare-dialog-inner-footer-text')
+        @container.find('.uploadcare-panel-footer-text')
           .toggleClass('uploadcare-error', tooManyFiles)
           .text(footer.replace('%files%', t('file', files)))
 

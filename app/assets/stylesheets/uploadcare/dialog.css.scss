@@ -483,7 +483,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   }
 }
 
-.uploadcare-dialog-inner-footer {
+.uploadcare-panel-footer {
   @include prefix(box-sizing, border-box);
   background: #fff3be;
   border-top: 1px solid #efe2a9;
@@ -505,7 +505,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     color: red;
   }
 }
-  .uploadcare-dialog-inner-footer-text {
+  .uploadcare-panel-footer-text {
     text-align: center;
     color: #85732c;
     font-size: 15px;

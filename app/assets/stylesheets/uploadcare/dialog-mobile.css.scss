@@ -151,9 +151,9 @@ $dialog-mobile-min-width: 310px;
     }
 
 
-    // § Mulltiple
+    // § Multiple
 
-    .uploadcare-dialog-inner-footer {
+    .uploadcare-panel-footer {
       position: fixed;
       left: 0; bottom: 0;
       width: 100%;
@@ -162,7 +162,7 @@ $dialog-mobile-min-width: 310px;
       padding: ($dialog-mobile-footer-height - $dialog-button-height) / 2 15px 0;
       background: rgba(255, 243, 190, 0.95);
     }
-    .uploadcare-dialog-inner-footer-text {
+    .uploadcare-panel-footer-text {
       display: none;
     }
     .uploadcare-dialog-source-base-counter {
