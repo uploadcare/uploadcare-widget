@@ -9,11 +9,9 @@
 } = uploadcare
 
 namespace 'uploadcare.widget.tabs', (ns) ->
-  class ns.RemoteTab extends ns.BaseSourceTab
-    constructor: ->
-      super
-
-      @wrap.addClass('uploadcare-dialog-remote-iframe-wrap')
+  class ns.RemoteTab
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
+      @container.addClass('uploadcare-dialog-remote-iframe-wrap')
 
       @dialogApi.progress (name) =>
         if name == @name
@@ -45,7 +43,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           allowTransparency: "true"
         )
         .addClass('uploadcare-dialog-remote-iframe')
-        .appendTo(@wrap)
+        .appendTo(@container)
         .on 'load', =>
           @iframe.css('opacity', '1')
           for url in tabsCss.urls

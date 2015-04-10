@@ -1,4 +1,3 @@
-# = require ./tabs/base-source-tab
 # = require ./tabs/file-tab
 # = require ./tabs/url-tab
 # = require ./tabs/camera-tab
