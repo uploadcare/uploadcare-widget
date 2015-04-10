@@ -99,6 +99,8 @@ html.uploadcare-dialog-opened {
   position: relative;
   background: $dialog-body-background-color;
   font-weight: normal;
+  padding-left: $dialog-tab-width;
+  @include prefix(box-sizing, border-box);
 
   :focus {
     outline: 2px dotted #0094c0;
@@ -113,6 +115,7 @@ html.uploadcare-dialog-opened {
   @include prefix(box-sizing, border-box);
   width: $dialog-tab-width;
   height: $dialog-body-height;
+  margin-left: -$dialog-tab-width;
   float: left;
   background: $dialog-body-shadow-color;
   border-right: 1px solid $dialog-body-border-color;
@@ -255,11 +258,14 @@ html.uploadcare-dialog-opened {
   position: relative;
   display: none;
   @include prefix(box-sizing, border-box);
-  margin-left: $dialog-tab-width;
   height: $dialog-body-height;
   line-height: y(1);
   font-size: $dialog-body-font-size;
   color: $dialog-body-text-color;
+
+  .uploadcare-dialog-multiple & {
+    height: $dialog-body-height - $dialog-footer-height;
+  }
 
   .uploadcare-dialog-input {
     @include prefix(box-sizing, border-box);
@@ -481,6 +487,11 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   .uploadcare-dialog-preview-image-wrap {
     height: $dialog-preview-container-height - 40px;
   }
+}
+
+.uploadcare-dialog-tabs-panel-preview.uploadcare-dialog-tabs-panel_current
+~ .uploadcare-panel-footer {
+  display: none;
 }
 
 .uploadcare-panel-footer {
@@ -871,18 +882,9 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 // § Base source tab
 
-.uploadcare-dialog-source-base-wrap {
-  height: $dialog-body-height;
-  @include prefix(box-sizing, border-box);
-
-  .uploadcare-dialog-multiple & {
-    height: $dialog-body-height - $dialog-footer-height;
-  }
-}
 .uploadcare-dialog-padding {
     padding: y(1) x(1);
 }
-
 
 .uploadcare-dialog-remote-iframe-wrap {
   overflow: auto;
