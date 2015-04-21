@@ -1,4 +1,7 @@
-{utils} = uploadcare
+{
+  utils,
+  jQuery: $
+} = uploadcare
 
 fakeButtons = [
   'div.uploadcare-link',
