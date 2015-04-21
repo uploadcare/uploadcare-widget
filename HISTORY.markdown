@@ -1,5 +1,9 @@
 # History
 
+### 2.1.1, 21.04.2015
+
+* Fixed error messages in console in jQuery build.
+
 ### 2.1.0, 10.04.2015
 
 * Keyboard navigation.
