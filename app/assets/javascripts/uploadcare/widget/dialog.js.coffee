@@ -117,8 +117,8 @@ namespace 'uploadcare', (ns) ->
   ns.registerTab('box', tabs.RemoteTab)
   ns.registerTab('skydrive', tabs.RemoteTab)
   ns.registerTab('huddle', tabs.RemoteTab)
-  ns.registerTab 'empty-pubkey', (tabPanel) ->
-    tabPanel.append(tpl("tab-welcome"))
+  ns.registerTab 'empty-pubkey', (tabPanel, _1, _2, settings) ->
+    tabPanel.append(settings._emptyKeyText)
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
     tabCls = if settings.multiple
         tabs.PreviewTabMultiple
