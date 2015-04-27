@@ -148,9 +148,9 @@ namespace 'uploadcare', (ns) ->
           @hideTab('preview')
 
       @tabs = {}
+      @__prepareFooter()
 
       if @settings.publicKey
-        @__prepareFooter()
         @__prepareTabs(tab)
       else
         @__welcome()
