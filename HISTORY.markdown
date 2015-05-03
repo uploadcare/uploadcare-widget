@@ -1,5 +1,9 @@
 # History
 
+### 2.1.2, 27.04.2015
+
+* Fixed welcome text when public key is not set.
+
 ### 2.1.1, 21.04.2015
 
 * Fixed error messages in console in jQuery build.
