@@ -10,7 +10,10 @@ submitPreventionState = (form, prevent) ->
   form.attr('data-uploadcare-submitted', prevent)
   form.find(':submit').attr('disabled', prevent)
 
-$(document).on 'submit', '@uploadcare-upload-form', ->
+uploadForm = '[role~="uploadcare-upload-form"]'
+submittedForm = uploadForm + '[data-uploadcare-submitted]'
+
+$(document).on 'submit', uploadForm, ->
   form = $(this)
   if canSubmit(form)
     true # allow submit
@@ -18,7 +21,6 @@ $(document).on 'submit', '@uploadcare-upload-form', ->
     submitPreventionState(form, true)
     false
 
-submittedForm = '@uploadcare-upload-form[data-uploadcare-submitted]'
 $(document).on 'loaded.uploadcare', submittedForm, ->
   $(this).submit()
 
