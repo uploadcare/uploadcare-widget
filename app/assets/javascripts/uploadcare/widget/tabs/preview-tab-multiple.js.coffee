@@ -131,13 +131,13 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
-      $(file).data('dmp-el', @__createFileEl(file))
+      $(file).data('dpm-el', @__createFileEl(file))
 
     __fileRemoved: (file) =>
       @__fileToEl(file).remove()
 
     __fileToEl: (file) ->
-      $(file).data('dmp-el')
+      $(file).data('dpm-el')
 
     __createFileEl: (file) ->
       @__fileTpl.clone()
