@@ -771,9 +771,12 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 // § Multiple preview
 
 .uploadcare-dpm-file-list {
-  height: $dialog-preview-container-height + y(1);
+  height: $dialog-body-height - y(3);
   overflow: auto;
   margin: 0 x(-1) y(-1) 0;
+  .uploadcare-dialog-multiple & {
+    height: $dialog-preview-container-height + y(1);
+  }
 }
   .uploadcare-dpm-file-item {
     $border: 1px solid #e3e3e3;
