@@ -26,8 +26,7 @@ namespace 'uploadcare.widget', (ns) ->
       @content.attr('data-status', status)
       @content.addClass(prefix + status)
 
-      form = @element.closest('@uploadcare-upload-form')
-      form.trigger("#{status}.uploadcare")
+      @element.trigger("#{status}.uploadcare")
 
     reset: ->
       @circle.reset()

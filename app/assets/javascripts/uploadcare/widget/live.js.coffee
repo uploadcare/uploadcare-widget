@@ -7,9 +7,10 @@
 
 namespace 'uploadcare', (ns) ->
   dataAttr = 'uploadcareWidget'
+  selector = '[role~="uploadcare-uploader"]'
 
-  ns.initialize = (container = 'body') ->
-    initialize($(container).find('@uploadcare-uploader'))
+  ns.initialize = (container = ':root') ->
+    initialize($(container).find(selector))
 
   initialize = (targets) ->
     for target in targets
@@ -59,7 +60,7 @@ namespace 'uploadcare', (ns) ->
     if settings.common(s).live
       setInterval(live, 100)
     do live = ->
-      initialize($('@uploadcare-uploader'))
+      initialize($(selector))
 
   $ ->
     if not window["UPLOADCARE_MANUAL_START"]
