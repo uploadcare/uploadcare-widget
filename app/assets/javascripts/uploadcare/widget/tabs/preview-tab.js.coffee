@@ -120,8 +120,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           size = utils.fitSize(prefered, [40, 40], true)
           item.children()
             .css(
-              width: Math.max 20, size[0]
-              height: Math.max 12, size[1]
+              width: Math.max(20, size[0])
+              height: Math.max(12, size[1])
             )
 
       template.remove()
