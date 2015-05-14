@@ -42,6 +42,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
       @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
 
+      @dialogApi.fileColl.onReplace.add (oldFile, newFile) =>
+        $(newFile).data('dpm-el', @__fileToEl(oldFile))
+
       @__setupSorting()
 
     __setupSorting: ->
@@ -116,7 +119,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       if info.isImage
         @__find('file-preview-wrap', fileEl).html($('<img>')
-          .attr('src', "#{info.originalUrl}-/scale_crop/90x90/center/")
+          .attr('src', "#{info.cdnUrl}-/scale_crop/90x90/center/")
           .css(
             width: 'auto'
             height: 45
