@@ -10,7 +10,8 @@ namespace 'uploadcare.utils', (utils) ->
     constructor: (items = []) ->
       @onAdd = $.Callbacks()
       @onRemove = $.Callbacks()
-      @onSorted = $.Callbacks()
+      @onSort = $.Callbacks()
+      @onReplace = $.Callbacks()
 
       @__items = []
       for item in items
@@ -46,12 +47,11 @@ namespace 'uploadcare.utils', (utils) ->
 
     __replace: (oldItem, newItem, i) ->
       @__items[i] = newItem
-      @onRemove.fire(oldItem, i)
-      @onAdd.fire(newItem, i)
+      @onReplace.fire(oldItem, newItem, i)
 
     sort: (comparator) ->
       @__items.sort(comparator)
-      @onSorted.fire()
+      @onSort.fire()
 
     get: (index) ->
       if index?
