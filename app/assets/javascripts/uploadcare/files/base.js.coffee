@@ -118,9 +118,8 @@ namespace 'uploadcare.files', (ns) ->
     __extendApi: (api) =>
       api.cancel = @__cancel
 
-      __then = api.then
       api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
-        @__extendApi(__then.apply(api, arguments))
+        @__extendApi(utils.fixedPipe(api, arguments...))
 
       api # extended promise
 
