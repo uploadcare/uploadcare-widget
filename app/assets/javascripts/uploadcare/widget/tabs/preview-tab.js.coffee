@@ -71,7 +71,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
 
-        done.click =>
+        done.on 'click', =>
           opts = @widget.getSelectionWithModifiers()
           newFile = @file.then (info) =>
             info.cdnUrlModifiers = opts.modifiers
@@ -79,6 +79,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             info.crop = opts.crop
             info
           @dialogApi.fileColl.replace(@file, newFile)
+          true
 
       if @settings.crop
         @element('title').text(t('dialog.tabs.preview.crop.title'))
