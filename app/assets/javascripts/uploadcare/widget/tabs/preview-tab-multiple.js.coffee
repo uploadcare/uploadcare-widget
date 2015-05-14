@@ -118,13 +118,23 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        @__find('file-preview-wrap', fileEl).html($('<img>')
+        preview = @__find('file-preview-wrap', fileEl).html($('<img>')
           .attr('src', "#{info.cdnUrl}-/scale_crop/90x90/center/")
           .css(
             width: 'auto'
             height: 45
           )
         )
+        if @settings.crop
+          preview
+            .addClass('uploadcare__zoomable')
+            .on 'click', =>
+              s = $.extend({}, @settings)
+              s.multiple = false
+              s.tabs = 'preview'
+              uploadcare.openDialog(file, 'preview', s).done (newFile) =>
+                @dialogApi.fileColl.replace(file, newFile)
+                uploadcare.openDialog(@dialogApi.fileColl.get(), 'preview', @settings)
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
