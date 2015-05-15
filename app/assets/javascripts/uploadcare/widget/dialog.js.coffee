@@ -43,11 +43,14 @@ namespace 'uploadcare', (ns) ->
   ns.closeDialog = ->
     currentDialogPr?.reject()
 
-  ns.openDialog = (files, tab, settings) ->
-    ns.closeDialog()
+  ns.openDialog = (files, tab, settings, leaveOpened) ->
+    # hack to leave dialog opened during opening second dialog
+    if not leaveOpened
+      ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialog.on('click', '.uploadcare-dialog-close', ns.closeDialog)
+    dialog.on 'click', '.uploadcare-dialog-close', ->
+      dialogPr.reject()
     dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
@@ -57,19 +60,24 @@ namespace 'uploadcare', (ns) ->
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
-      ns.closeDialog()
+      dialogPr.reject()
 
-    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+    dialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                                    files, tab, settings)
 
     dialog.addClass('uploadcare-active')
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
+    if not leaveOpened
+      currentDialogPr = dialogPr
+
+    dialogPr.always ->
+      dialog.remove()
+
     currentDialogPr.always ->
       $('html, body').removeClass(openedClass)
       currentDialogPr = null
-      dialog.remove()
       cancelLock()
 
 
