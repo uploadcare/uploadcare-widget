@@ -308,3 +308,32 @@ namespace 'uploadcare.utils', (ns) ->
         task(release)
       else
         queue.push(task)
+
+  # This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
+  pipeTuples = [
+    # action, add listener, callbacks,
+    # ... .then handlers, argument index, [final state]
+    ["notify", "progress", 2],
+    ["resolve", "done", 0],
+    ["reject", "fail", 1],
+  ]
+
+  ns.fixedPipe = (promise, fns...) ->
+    $.Deferred((newDefer) ->
+      $.each pipeTuples, (i, tuple) ->
+        # Map tuples (progress, done, fail) to arguments (done, fail, progress)
+        fn = jQuery.isFunction( fns[tuple[2]] ) and fns[tuple[2]]
+
+        promise[ tuple[1] ] ->
+          returned = fn and fn.apply(this, arguments)
+          if returned and jQuery.isFunction(returned.promise)
+            returned.promise()
+              .progress(newDefer.notify)
+              .done(newDefer.resolve)
+              .fail(newDefer.reject)
+          else
+            newDefer[tuple[0] + "With"](
+              if this == promise then newDefer.promise() else this,
+              if fn then [returned] else arguments
+            )
+    ).promise()
