@@ -45,7 +45,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__setupSorting()
 
     __setupSorting: ->
-      @fileListEl.sortable(
+      @fileListEl.uploadcareSortable(
         touch: false
         axis: 'y'
         start: (info) ->

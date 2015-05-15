@@ -1,5 +1,10 @@
 # History
 
+### 2.1.3, 15.05.2015
+
+* Fixed compatibility with jQuery-ui (internal `sortable` plugin renamed
+  to `uploadcareSortble`).
+
 ### 2.1.2, 27.04.2015
 
 * Fixed welcome text when public key is not set.
