@@ -91,7 +91,6 @@ namespace 'uploadcare.files', (ns) ->
         crossDomain: true
         type: 'POST'
         url: "#{@settings.urlBase}/base/?jsonerrors=1"
-        xhrFields: {withCredentials: true}
         headers: {'X-PINGOTHER': 'pingpong'}
         contentType: false # For correct boundary string
         processData: false
