@@ -37,13 +37,11 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @dialogApi.fileColl.onAdd.add(@__fileAdded, @__updateContainerView)
       @dialogApi.fileColl.onRemove.add(@__fileRemoved, @__updateContainerView)
+      @dialogApi.fileColl.onReplace.add(@__fileReplaced, @__updateContainerView)
 
       @dialogApi.fileColl.onAnyDone.add(@__fileDone)
       @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
       @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
-
-      @dialogApi.fileColl.onReplace.add (oldFile, newFile) =>
-        $(newFile).data('dpm-el', @__fileToEl(oldFile))
 
       @__setupSorting()
 
@@ -139,17 +137,27 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__find('file-error', fileEl)
         .text(t("errors.#{error}"))
 
-    __fileAdded: (file) =>
-      $(file).data('dpm-el', @__createFileEl(file))
+    __fileAdded: (file, afterFile) =>
+      fileEl = @__createFileEl(file)
+      if afterFile?
+        afterFileEl = @__fileToEl(afterFile)
+        fileEl.insertAfter(afterFileEl)
+      else
+        fileEl.appendTo(@fileListEl)
+      $(file).data('dpm-el', fileEl)
 
     __fileRemoved: (file) =>
       @__fileToEl(file).remove()
+      $(file).removeData()
+
+    __fileReplaced: (oldFile, newFile) =>
+      @__fileAdded(newFile, oldFile)
+      @__fileRemoved(oldFile)
 
     __fileToEl: (file) ->
       $(file).data('dpm-el')
 
     __createFileEl: (file) ->
       @__fileTpl.clone()
-        .appendTo(@fileListEl)
         .on 'click', '.' + CLASS_PREFIX + 'file-remove', =>
           @dialogApi.fileColl.remove(file)
