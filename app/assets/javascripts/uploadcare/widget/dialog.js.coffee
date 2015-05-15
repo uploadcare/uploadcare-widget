@@ -220,6 +220,9 @@ namespace 'uploadcare', (ns) ->
         @hideTab('preview')
         @switchTab(tab || @__firstVisibleTab())
 
+      if @settings.tabs.length == 0
+        @panel.addClass('uploadcare-panel-hide-tabs')
+
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare-panel-footer')
       notDisabled = ':not(.uploadcare-disabled-el)'

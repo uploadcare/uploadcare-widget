@@ -109,6 +109,10 @@ html.uploadcare-dialog-opened {
   .uploadcare-mouse-focused:focus {
     outline: none;
   }
+
+  &.uploadcare-panel-hide-tabs {
+    padding-left: 0;
+  }
 }
 
 .uploadcare-dialog-tabs {
@@ -119,6 +123,10 @@ html.uploadcare-dialog-opened {
   float: left;
   background: $dialog-body-shadow-color;
   border-right: 1px solid $dialog-body-border-color;
+
+  .uploadcare-panel-hide-tabs & {
+    display: none;
+  }
 }
 
   $frame-size: 50px;

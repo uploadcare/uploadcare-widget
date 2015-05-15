@@ -60,6 +60,10 @@ $dialog-mobile-min-width: 310px;
       padding: $frame-size 0 0;
       border-radius: 0;
       @include prefix(box-shadow, none);
+
+      &.uploadcare-panel-hide-tabs {
+        padding-top: 0;
+      }
     }
       .uploadcare-dialog-tabs-panel {
         height: auto;
