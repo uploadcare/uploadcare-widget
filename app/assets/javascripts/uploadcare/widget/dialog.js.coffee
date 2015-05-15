@@ -72,13 +72,13 @@ namespace 'uploadcare', (ns) ->
     if not leaveOpened
       currentDialogPr = dialogPr
 
-    dialogPr.always ->
-      dialog.remove()
-
     currentDialogPr.always ->
       $('html, body').removeClass(openedClass)
       currentDialogPr = null
       cancelLock()
+
+    dialogPr.always ->
+      dialog.remove()
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
