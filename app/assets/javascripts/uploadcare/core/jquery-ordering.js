@@ -59,8 +59,10 @@
 	};
 
 
-	$.fn.extend({
-		moveable: function(o) {
+	var movableName = 'uploadcareMoveble';
+	var sortableName = 'uploadcareSortable';
+	var extend = {};
+		extend[movableName] = function(o) {
 			o = $.extend({
 				distance: 4,
 				anyButton: false,
@@ -95,7 +97,8 @@
 				e.which = 1;
 			}
 
-			this.on('mousedown.moveable touchstart.movable', o.items, null, function(eDown) {
+			var events = 'mousedown.{} touchstart.{}'.replace(/\{}/g, movableName);
+			this.on(events, o.items, null, function(eDown) {
 				fixTouch(eDown);
 
 				if ( ! o.anyButton && eDown.which != 1) {
@@ -111,7 +114,8 @@
 				originalPos.top += $dragged.offsetParent().scrollTop();
 				originalPos.left += $dragged.offsetParent().scrollLeft();
 
-				$(document).on('mousemove.moveable touchmove.movable', function(eMove) {
+				var events = 'mousemove.{} touchmove.{}'.replace(/\{}/g, movableName);
+				$(document).on(events, function(eMove) {
 					fixTouch(eMove);
 
 					if ( ! dragged && (Math.abs(eMove.pageX - eDown.pageX) > o.distance || Math.abs(eMove.pageY - eDown.pageY) > o.distance)) {
@@ -144,11 +148,12 @@
 					});
 				});
 
-				$(document).on('mouseup.moveable touchend.movable touchcancel.movable touchleave.movable', function(eUp) {
+				var events = 'mouseup.{} touchend.{} touchcancel.{} touchleave.{}';
+				$(document).on(events.replace(/\{}/g, movableName), function(eUp) {
 					fixTouch(eUp);
 
-					$(document).off('mousemove.moveable touchmove.movable');
-					$(document).off('mouseup.moveable touchend.movable touchcancel.movable touchleave.movable');
+					var events = 'mousemove.{} touchmove.{} mouseup.{} touchend.{} touchcancel.{} touchleave.{}';
+					$(document).off(events.replace(/\{}/g, movableName));
 
 					if ( ! dragged) {
 						return;
@@ -170,9 +175,9 @@
 					}
 				});
 			});
-		},
+		};
 
-		sortable: function(o) {
+		extend[sortableName] = function(o) {
 			var oMovable = $.extend({
 				items: '>*'
 			}, o);
@@ -237,7 +242,7 @@
 				finder = null;
 			};
 
-			return this.moveable(oMovable);
-		}
-	});
+			return this[movableName](oMovable);
+		};
+	$.fn.extend(extend);
 })(jQuery);
