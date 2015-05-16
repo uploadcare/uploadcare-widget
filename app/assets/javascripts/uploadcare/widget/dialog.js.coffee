@@ -32,6 +32,7 @@ namespace 'uploadcare', (ns) ->
     if ns.isDialogOpened()
       if e.which == 27  # Escape
         e.stopImmediatePropagation()
+        # close only topmost dialog
         currentDialogPr?.reject()
 
   currentDialogPr = null
@@ -74,6 +75,7 @@ namespace 'uploadcare', (ns) ->
 
 
   ns.openPreviewDialog = (file, settings) ->
+    # hide current opened dialog and open new one
     oldDialogPr = currentDialogPr
     currentDialogPr = null
     settings = $.extend({}, settings, {
@@ -82,6 +84,8 @@ namespace 'uploadcare', (ns) ->
     })
     uploadcare.openDialog(file, 'preview', settings).always ->
       currentDialogPr = oldDialogPr
+      # still opened
+      $('html, body').addClass(openedClass)
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
