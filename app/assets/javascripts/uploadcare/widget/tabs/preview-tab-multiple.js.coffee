@@ -123,12 +123,9 @@ namespace 'uploadcare.widget.tabs', (ns) ->
             height: 45
           )
         ).on 'click', =>
-          s = $.extend({}, @settings, {
-            multiple: false
-            tabs: ''
-          })
-          uploadcare.openDialog(file, 'preview', s, true).done (newFile) =>
-            @dialogApi.fileColl.replace(file, newFile)
+          uploadcare.openPreviewDialog(file, @settings)
+            .done (newFile) =>
+              @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
