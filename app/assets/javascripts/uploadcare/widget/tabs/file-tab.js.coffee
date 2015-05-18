@@ -2,6 +2,7 @@
   namespace,
   utils,
   dragdrop,
+  locale: {t},
   jQuery: $,
   templates: {tpl}
 } = uploadcare
@@ -10,7 +11,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
   class ns.FileTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
-      @container.append(tpl('tab-file', {tabs: @settings.tabs}))
+      @container.append(tpl('tab-file'))
       @container.addClass('uploadcare-dialog-padding')
 
       @container.on 'click', '.uploadcare-dialog-file-source', (e) =>
@@ -18,6 +19,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @__setupFileButton()
       @__initDragNDrop()
+      @__updateTabsList()
+      @dialogApi.onTabVisibility(@__updateTabsList)
 
     __initDragNDrop: ->
       dropArea = @container.find('.uploadcare-dialog-file-drop-area')
@@ -35,3 +38,25 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         else
           @dialogApi.addFiles('input', [input])
         @dialogApi.switchTab('preview')
+
+    __updateTabsList: =>
+      list = @container.find('.uploadcare-dialog-file-sources').empty()
+      n = 0
+      for tab in @settings.tabs
+        if tab == @name
+          continue
+        if not @dialogApi.isTabVisible(tab)
+          continue
+
+        n += 1
+        list.append([
+          $('<div/>', {
+            class: "uploadcare-dialog-file-source"
+            'data-tab': tab
+            html: t('dialog.tabs.names.' + tab)
+          }),
+          ' '
+        ])
+
+      list.toggle(n > 0)
+      @container.find('.uploadcare-dialog-file-source-or').toggle(n > 0)

@@ -166,7 +166,7 @@ namespace 'uploadcare', (ns) ->
           hideTab: @hideTab
           showTab: @showTab
           isTabVisible: @isTabVisible
-          onTabVisibility: @onTabVisibility
+          onTabVisibility: utils.publicCallbacks(@onTabVisibility)
         )
       @promise
 
