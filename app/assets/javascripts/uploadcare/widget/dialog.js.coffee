@@ -82,10 +82,15 @@ namespace 'uploadcare', (ns) ->
       multiple: false
       tabs: ''
     })
-    uploadcare.openDialog(file, 'preview', settings).always ->
+    dialog = uploadcare.openDialog(file, 'preview', settings).always ->
       currentDialogPr = oldDialogPr
       # still opened
       $('html, body').addClass(openedClass)
+    dialog.onTabVisibility (tab, shown) =>
+      if tab == 'preview' and not shown
+        dialog.reject()
+
+    dialog
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
