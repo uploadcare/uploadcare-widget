@@ -1,6 +1,6 @@
 # Note: English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
-  ns.zh-TW =
+  ns.zhTW =
     uploading: '上傳中...請等待'
     loadingInfo: '正在讀取資訊...'
     errors:
@@ -15,7 +15,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: '檔案已被刪除'
     draghere: '拖放檔案到這裡'
     file:
-      one: '%1 個檔案'
       other: '%1 個檔案'
     buttons:
       cancel: '取消'
@@ -37,16 +36,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: '從電腦中選取檔案'
           url: '任意圖片連結'
           camera: '相機'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: '拖放檔案到這裡'
           nodrop: '從你的電腦中上傳'
@@ -68,7 +57,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             title: '請允許使存取您的相機'
             text: '你一直在提示允許來自這個網站的訪問攝像頭。' +
                   '為了拍照用你的相機，你必須批准這一請求。'
-		  notFound:
+          notFound:
             title: '沒有找到相機'
             text: '看起來你有沒有將連接相機。'
         preview:
@@ -114,12 +103,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: '完成'
       footer:
         text: '為您提供檔案上傳、存儲和編輯功能。 Copyright ©'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
-  ns.zh-TW = (n) ->
-    return 'one' if n == 1
+  ns.zhTW = (n) ->
     'other'

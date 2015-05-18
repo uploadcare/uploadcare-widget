@@ -1,5 +1,14 @@
 # History
 
+### 2.1.4, 18.05.2015
+
+* Traditional Chinese locale (zhTW).
+* Hidden tabs (camera, for example) excluded from list of sources on first
+  dialog's tab.
+* New method in dialog api: `isTabVisible()`.
+* New callback in dialog api: `onTabVisibility`. Triggered when some tab is
+  showed or hidden.
+
 ### 2.1.3, 15.05.2015
 
 * Fixed compatibility with jQuery-ui (internal `sortable` plugin renamed
