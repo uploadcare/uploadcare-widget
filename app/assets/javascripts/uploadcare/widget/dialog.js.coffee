@@ -142,13 +142,13 @@ namespace 'uploadcare', (ns) ->
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
-
       @files.onRemove.add =>
         if @files.length() == 0
           @hideTab('preview')
 
       @tabs = {}
       @__prepareFooter()
+      @onTabVisibility = $.Callbacks()
 
       if @settings.publicKey
         @__prepareTabs(tab)
@@ -165,6 +165,8 @@ namespace 'uploadcare', (ns) ->
           switchTab: @switchTab
           hideTab: @hideTab
           showTab: @showTab
+          isTabVisible: @isTabVisible
+          onTabVisibility: utils.publicCallbacks(@onTabVisibility)
         )
       @promise
 
@@ -203,7 +205,7 @@ namespace 'uploadcare', (ns) ->
         @switchTab('preview')
       else
         @hideTab('preview')
-        @switchTab(tab || @settings.tabs[0])
+        @switchTab(tab || @__firstVisibleTab())
 
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare-panel-footer')
@@ -275,40 +277,57 @@ namespace 'uploadcare', (ns) ->
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
-    switchTab: (@currentTab) =>
+    switchTab: (tab) =>
+      if not tab
+        return
+      @currentTab = tab
+
       @panel.removeClass('uploadcare-dialog-opened-tabs')
 
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}-#{@currentTab}")
+            .filter(".#{className}-#{tab}")
             .addClass("#{className}_current")
 
       className = 'uploadcare-dialog-tabs-panel'
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}-#{@currentTab}")
+            .filter(".#{className}-#{tab}")
             .addClass("#{className}_current")
 
-      @dfd.notify(@currentTab)
+      @dfd.notify(tab)
 
     showTab: (tab) =>
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .removeClass("#{className}_hidden")
+      @onTabVisibility.fire(tab, true)
 
     hideTab: (tab) =>
       if @currentTab == tab
-        @switchTab(@settings.tabs[0])
+        @switchTab(@__firstVisibleTab())
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .addClass("#{className}_hidden")
+      @onTabVisibility.fire(tab, false)
+
+    isTabVisible: (tab) =>
+      className = 'uploadcare-dialog-tab'
+      not @panel.find(".#{className}-#{tab}")\
+            .is(".#{className}_hidden")
+
+    __firstVisibleTab: ->
+      for tab in @settings.tabs
+        if @isTabVisible(tab)
+          return tab
 
     __welcome: ->
       @addTab('empty-pubkey')
       @switchTab('empty-pubkey')
       for tabName in @settings.tabs
         @__addFakeTab(tabName)
+      null
 
     __addFakeTab: (name) ->
       $('<div>')
