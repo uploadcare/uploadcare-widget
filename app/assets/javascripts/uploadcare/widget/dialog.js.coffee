@@ -142,13 +142,13 @@ namespace 'uploadcare', (ns) ->
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
-
       @files.onRemove.add =>
         if @files.length() == 0
           @hideTab('preview')
 
       @tabs = {}
       @__prepareFooter()
+      @onTabVisibility = $.Callbacks()
 
       if @settings.publicKey
         @__prepareTabs(tab)
@@ -165,6 +165,8 @@ namespace 'uploadcare', (ns) ->
           switchTab: @switchTab
           hideTab: @hideTab
           showTab: @showTab
+          isTabVisible: @isTabVisible
+          onTabVisibility: @onTabVisibility
         )
       @promise
 
@@ -281,7 +283,7 @@ namespace 'uploadcare', (ns) ->
       @currentTab = tab
 
       @panel.removeClass('uploadcare-dialog-opened-tabs')
-      
+
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
@@ -300,6 +302,7 @@ namespace 'uploadcare', (ns) ->
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .removeClass("#{className}_hidden")
+      @onTabVisibility.fire(tab, true)
 
     hideTab: (tab) =>
       if @currentTab == tab
@@ -307,13 +310,17 @@ namespace 'uploadcare', (ns) ->
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .addClass("#{className}_hidden")
+      @onTabVisibility.fire(tab, false)
+
+    isTabVisible: (tab) =>
+      className = 'uploadcare-dialog-tab'
+      not @panel.find(".#{className}-#{tab}")\
+            .is(".#{className}_hidden")
 
     __firstVisibleTab: ->
-      className = 'uploadcare-dialog-tab'
-      for tabName in @settings.tabs
-        if not @panel.find(".#{className}-#{tabName}")\
-            .is(".#{className}_hidden")
-          return tabName
+      for tab in @settings.tabs
+        if @isTabVisible(tab)
+          return tab
 
     __welcome: ->
       @addTab('empty-pubkey')
