@@ -203,7 +203,7 @@ namespace 'uploadcare', (ns) ->
         @switchTab('preview')
       else
         @hideTab('preview')
-        @switchTab(tab || @settings.tabs[0])
+        @switchTab(tab || @__firstVisibleTab())
 
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare-panel-footer')
@@ -275,22 +275,26 @@ namespace 'uploadcare', (ns) ->
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
-    switchTab: (@currentTab) =>
-      @panel.removeClass('uploadcare-dialog-opened-tabs')
+    switchTab: (tab) =>
+      if not tab
+        return
+      @currentTab = tab
 
+      @panel.removeClass('uploadcare-dialog-opened-tabs')
+      
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}-#{@currentTab}")
+            .filter(".#{className}-#{tab}")
             .addClass("#{className}_current")
 
       className = 'uploadcare-dialog-tabs-panel'
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}-#{@currentTab}")
+            .filter(".#{className}-#{tab}")
             .addClass("#{className}_current")
 
-      @dfd.notify(@currentTab)
+      @dfd.notify(tab)
 
     showTab: (tab) =>
       className = 'uploadcare-dialog-tab'
@@ -299,16 +303,24 @@ namespace 'uploadcare', (ns) ->
 
     hideTab: (tab) =>
       if @currentTab == tab
-        @switchTab(@settings.tabs[0])
+        @switchTab(@__firstVisibleTab())
       className = 'uploadcare-dialog-tab'
       @panel.find(".#{className}-#{tab}")
             .addClass("#{className}_hidden")
+
+    __firstVisibleTab: ->
+      className = 'uploadcare-dialog-tab'
+      for tabName in @settings.tabs
+        if not @panel.find(".#{className}-#{tabName}")\
+            .is(".#{className}_hidden")
+          return tabName
 
     __welcome: ->
       @addTab('empty-pubkey')
       @switchTab('empty-pubkey')
       for tabName in @settings.tabs
         @__addFakeTab(tabName)
+      null
 
     __addFakeTab: (name) ->
       $('<div>')
