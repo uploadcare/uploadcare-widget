@@ -127,6 +127,8 @@ namespace 'uploadcare', (ns) ->
     new tabCls(tabPanel, tabButton, dialogApi, settings, name)
 
   class Panel
+    tabClass = 'uploadcare-dialog-tab'
+
     constructor: (@settings, placeholder, files, tab) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
@@ -148,7 +150,10 @@ namespace 'uploadcare', (ns) ->
 
       @tabs = {}
       @__prepareFooter()
-      @onTabVisibility = $.Callbacks()
+
+      @onTabVisibility = $.Callbacks().add (tab, show) =>
+        @panel.find(".#{tabClass}-#{tab}")
+              .toggleClass("#{tabClass}_hidden", not show)
 
       if @settings.publicKey
         @__prepareTabs(tab)
@@ -260,15 +265,15 @@ namespace 'uploadcare', (ns) ->
         throw new Error("No such tab: #{name}")
 
       tabPanel = $('<div>')
-        .addClass("uploadcare-dialog-tabs-panel")
-        .addClass("uploadcare-dialog-tabs-panel-#{name}")
+        .addClass("#{tabClass}s-panel")
+        .addClass("#{tabClass}s-panel-#{name}")
         .insertBefore(@footer)
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
-        .addClass("uploadcare-dialog-tab")
-        .addClass("uploadcare-dialog-tab-#{name}")
+        .addClass(tabClass)
+        .addClass("#{tabClass}-#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
+        .appendTo(@panel.find(".#{tabClass}s"))
         .on 'click', =>
           if name is @currentTab
             @panel.toggleClass('uploadcare-dialog-opened-tabs')
@@ -284,13 +289,12 @@ namespace 'uploadcare', (ns) ->
 
       @panel.removeClass('uploadcare-dialog-opened-tabs')
 
-      className = 'uploadcare-dialog-tab'
-      @panel.find(".#{className}")
-            .removeClass("#{className}_current")
-            .filter(".#{className}-#{tab}")
-            .addClass("#{className}_current")
+      @panel.find(".#{tabClass}")
+            .removeClass("#{tabClass}_current")
+            .filter(".#{tabClass}-#{tab}")
+            .addClass("#{tabClass}_current")
 
-      className = 'uploadcare-dialog-tabs-panel'
+      className = "#{tabClass}s-panel"
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
             .filter(".#{className}-#{tab}")
@@ -299,23 +303,16 @@ namespace 'uploadcare', (ns) ->
       @dfd.notify(tab)
 
     showTab: (tab) =>
-      className = 'uploadcare-dialog-tab'
-      @panel.find(".#{className}-#{tab}")
-            .removeClass("#{className}_hidden")
       @onTabVisibility.fire(tab, true)
 
     hideTab: (tab) =>
+      @onTabVisibility.fire(tab, false)
       if @currentTab == tab
         @switchTab(@__firstVisibleTab())
-      className = 'uploadcare-dialog-tab'
-      @panel.find(".#{className}-#{tab}")
-            .addClass("#{className}_hidden")
-      @onTabVisibility.fire(tab, false)
 
     isTabVisible: (tab) =>
-      className = 'uploadcare-dialog-tab'
-      not @panel.find(".#{className}-#{tab}")\
-            .is(".#{className}_hidden")
+      not @panel.find(".#{tabClass}-#{tab}")\
+            .is(".#{tabClass}_hidden")
 
     __firstVisibleTab: ->
       for tab in @settings.tabs
@@ -331,7 +328,7 @@ namespace 'uploadcare', (ns) ->
 
     __addFakeTab: (name) ->
       $('<div>')
-        .addClass("uploadcare-dialog-tab uploadcare-dialog-tab-#{name}")
+        .addClass("#{tabClass} #{tabClass}-#{name}")
         .addClass('uploadcare-dialog-disabled-tab')
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find('.uploadcare-dialog-tabs'))
+        .appendTo(@panel.find(".#{tabClass}s"))
