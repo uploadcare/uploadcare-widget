@@ -1,14 +1,5 @@
 # History
 
-### 2.2.0,
-
-* Role plugin removed from built-in jQuery. `@some-role` can't be used anymore
-  in selectors passed to API methods.
-* `uploadcare.initialize()` now initializes widgets in whole document,
-  not only 'body' descendants.
-* Fix progress callback after crop. This fixes progresss indication
-  in some cases.
-
 ### 2.1.3, 15.05.2015
 
 * Fixed compatibility with jQuery-ui (internal `sortable` plugin renamed
