@@ -141,7 +141,7 @@ namespace 'uploadcare.settings', (ns) ->
     ])
 
     if settings.crop != false and not $.isArray(settings.crop)
-      if /^(disabled?|false|null)$/i.test(settings.crop) or settings.multiple
+      if /^(disabled?|false|null)$/i.test(settings.crop)
         settings.crop = false
       else if $.isPlainObject(settings.crop)  # old format
         settings.crop = [settings.crop]

@@ -109,6 +109,10 @@ html.uploadcare-dialog-opened {
   .uploadcare-mouse-focused:focus {
     outline: none;
   }
+
+  &.uploadcare-panel-hide-tabs {
+    padding-left: 0;
+  }
 }
 
 .uploadcare-dialog-tabs {
@@ -119,6 +123,10 @@ html.uploadcare-dialog-opened {
   float: left;
   background: $dialog-body-shadow-color;
   border-right: 1px solid $dialog-body-border-color;
+
+  .uploadcare-panel-hide-tabs & {
+    display: none;
+  }
 }
 
   $frame-size: 50px;
@@ -773,6 +781,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 .uploadcare-dpm-file-list {
   height: $dialog-body-height - y(3);
   overflow: auto;
+  position: relative;
   margin: 0 x(-1) y(-1) 0;
   .uploadcare-dialog-multiple & {
     height: $dialog-preview-container-height + y(1);
@@ -805,6 +814,10 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     &:hover {
       background: #ececec;
       .uploadcare-dpm-file-remove {display: inline-block}
+      .uploadcare-zoomable-icon:before {
+        display: block;
+        width: 55px; height: 55px;
+      }
     }
   }
 
@@ -829,7 +842,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     margin: $margin .7em $margin 0;
   }
   .uploadcare-dpm-file-preview-wrap {
-    width: 45px;
+    width: 55px;
     display: table-cell;
     text-align: center;
     line-height: 0;
@@ -882,6 +895,18 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       cursor: pointer;
     }
 
+.uploadcare-zoomable-icon {
+  cursor: pointer;
+  &:before {
+    content: '';
+    position: absolute;
+    opacity: .75;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    @extend %zoom-icon-image;
+  }
+}
 
 // § Base source tab
 

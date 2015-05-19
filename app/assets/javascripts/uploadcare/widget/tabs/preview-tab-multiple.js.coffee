@@ -37,6 +37,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @dialogApi.fileColl.onAdd.add(@__fileAdded, @__updateContainerView)
       @dialogApi.fileColl.onRemove.add(@__fileRemoved, @__updateContainerView)
+      @dialogApi.fileColl.onReplace.add(@__fileReplaced, @__updateContainerView)
 
       @dialogApi.fileColl.onAnyDone.add(@__fileDone)
       @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
@@ -115,13 +116,19 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        @__find('file-preview-wrap', fileEl).html($('<img>')
-          .attr('src', "#{info.originalUrl}-/scale_crop/90x90/center/")
-          .css(
-            width: 'auto'
-            height: 45
-          )
-        )
+        @__find('file-preview-wrap', fileEl)
+          .addClass('uploadcare-zoomable-icon')
+          .html(
+            $('<img>')
+              .attr('src', "#{info.cdnUrl}-/scale_crop/110x110/center/-/quality/lightest/")
+              .css(
+                width: 'auto'
+                height: 55
+              )
+          ).on 'click', =>
+            uploadcare.openPreviewDialog(file, @settings)
+              .done (newFile) =>
+                @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
@@ -131,16 +138,24 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
-      $(file).data('dpm-el', @__createFileEl(file))
+      fileEl = @__createFileEl(file)
+      fileEl.appendTo(@fileListEl)
 
     __fileRemoved: (file) =>
       @__fileToEl(file).remove()
+      $(file).removeData()
+
+    __fileReplaced: (oldFile, newFile) =>
+      fileEl = @__createFileEl(newFile)
+      fileEl.insertAfter(@__fileToEl(oldFile))
+      @__fileRemoved(oldFile)
 
     __fileToEl: (file) ->
       $(file).data('dpm-el')
 
     __createFileEl: (file) ->
-      @__fileTpl.clone()
-        .appendTo(@fileListEl)
+      fileEl = @__fileTpl.clone()
         .on 'click', '.' + CLASS_PREFIX + 'file-remove', =>
           @dialogApi.fileColl.remove(file)
+      $(file).data('dpm-el', fileEl)
+      fileEl

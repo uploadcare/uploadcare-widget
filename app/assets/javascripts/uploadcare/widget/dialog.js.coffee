@@ -32,7 +32,8 @@ namespace 'uploadcare', (ns) ->
     if ns.isDialogOpened()
       if e.which == 27  # Escape
         e.stopImmediatePropagation()
-        ns.closeDialog()
+        # close only topmost dialog
+        currentDialogPr?.reject()
 
   currentDialogPr = null
   openedClass = 'uploadcare-dialog-opened'
@@ -41,13 +42,20 @@ namespace 'uploadcare', (ns) ->
     currentDialogPr != null
 
   ns.closeDialog = ->
-    currentDialogPr?.reject()
+    while currentDialogPr
+      currentDialogPr.reject()
 
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialog.on('click', '.uploadcare-dialog-close', ns.closeDialog)
+    dialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+                            files, tab, settings)
+    dialog.addClass('uploadcare-active')
+    cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
+    $('html, body').addClass(openedClass)
+
+    dialog.on('click', '.uploadcare-dialog-close', dialogPr.reject)
     dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
@@ -57,20 +65,32 @@ namespace 'uploadcare', (ns) ->
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
-      ns.closeDialog()
+      dialogPr.reject()
 
-    currentDialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
-                                   files, tab, settings)
-
-    dialog.addClass('uploadcare-active')
-    cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
-    $('html, body').addClass(openedClass)
-
-    currentDialogPr.always ->
+    currentDialogPr = dialogPr.always ->
       $('html, body').removeClass(openedClass)
       currentDialogPr = null
       dialog.remove()
       cancelLock()
+
+
+  ns.openPreviewDialog = (file, settings) ->
+    # hide current opened dialog and open new one
+    oldDialogPr = currentDialogPr
+    currentDialogPr = null
+    settings = $.extend({}, settings, {
+      multiple: false
+      tabs: ''
+    })
+    dialog = uploadcare.openDialog(file, 'preview', settings).always ->
+      currentDialogPr = oldDialogPr
+      # still opened
+      $('html, body').addClass(openedClass)
+    dialog.onTabVisibility (tab, shown) =>
+      if tab == 'preview' and not shown
+        dialog.reject()
+
+    dialog
 
 
   # files - null, or File object, or array of File objects, or FileGroup object
@@ -211,6 +231,9 @@ namespace 'uploadcare', (ns) ->
       else
         @hideTab('preview')
         @switchTab(tab || @__firstVisibleTab())
+
+      if @settings.tabs.length == 0
+        @panel.addClass('uploadcare-panel-hide-tabs')
 
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare-panel-footer')
