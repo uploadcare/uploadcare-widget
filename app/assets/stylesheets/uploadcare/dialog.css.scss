@@ -778,7 +778,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 // § Multiple preview
 
-.uploadcare-dpm-file-list {
+.uploadcare-file-list {
   height: $dialog-body-height - y(3);
   overflow: auto;
   position: relative;

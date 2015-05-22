@@ -20,7 +20,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
-      @fileListEl = @__find('file-list')
+      @fileListEl = @container.find('.uploadcare-file-list')
       @titleEl = @__find('title')
       @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
@@ -42,6 +42,12 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onAnyDone.add(@__fileDone)
       @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
       @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
+
+      @fileListEl.addClass(
+        if @settings.imagesOnly
+        then 'uploadcare-file-list_tiles'
+        else 'uploadcare-file-list_table'
+      )
 
       @__setupSorting()
 
