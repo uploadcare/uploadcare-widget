@@ -161,7 +161,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __createFileEl: (file) ->
       fileEl = @__fileTpl.clone()
-        .on 'click', '.' + CLASS_PREFIX + 'file-remove', =>
+        .on 'click', '.uploadcare-remove', =>
           @dialogApi.fileColl.remove(file)
       $(file).data('dpm-el', fileEl)
       fileEl
