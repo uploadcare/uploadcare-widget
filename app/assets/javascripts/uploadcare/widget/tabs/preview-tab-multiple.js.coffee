@@ -137,11 +137,10 @@ namespace 'uploadcare.widget.tabs', (ns) ->
                 @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
-      fileEl = @__fileToEl(file)
-
-      fileEl.addClass(CLASS_PREFIX + 'error')
-      @__find('file-error', fileEl)
-        .text(t("errors.#{error}"))
+      @__fileToEl(file)
+        .addClass(CLASS_PREFIX + 'error')
+        .find('.uploadcare-file-item__error')
+          .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
       fileEl = @__createFileEl(file)
