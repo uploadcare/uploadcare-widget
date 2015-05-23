@@ -852,7 +852,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     @extend %file-inline-icon, %file-icon-image;
     margin: 0;
   }
-  .uploadcare-dpm-file-name {
+  .uploadcare-file-item__name {
     width: 100%;
     word-wrap: break-word;
   }

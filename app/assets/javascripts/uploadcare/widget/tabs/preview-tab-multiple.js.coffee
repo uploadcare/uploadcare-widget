@@ -99,7 +99,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         .text(if tooManyFiles or tooFewFiles then footer else title)
 
     __updateFileInfo: (fileEl, info) ->
-      @__find('file-name', fileEl)
+      fileEl.find('.uploadcare-file-item__name')
         .text(info.name or t('dialog.tabs.preview.unknownName'))
 
       @__find('file-size', fileEl)
