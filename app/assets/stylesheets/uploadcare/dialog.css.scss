@@ -848,10 +848,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     line-height: 0;
     padding-right: 10px;
   }
-  .uploadcare-dpm-file-preview {
-    @extend %file-inline-icon, %file-icon-image;
-    margin: 0;
-  }
   .uploadcare-file-item__name {
     width: 100%;
     word-wrap: break-word;
@@ -908,6 +904,11 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     background: #d6b849;
     border-radius: 100px;
   }
+
+.uploadcare-file-icon {
+  @extend %file-inline-icon, %file-icon-image;
+  margin: 0;
+}
 
 // § Base source tab
 
