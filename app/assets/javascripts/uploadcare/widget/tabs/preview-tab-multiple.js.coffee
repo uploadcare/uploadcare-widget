@@ -59,7 +59,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           info.dragged.css('visibility', 'hidden')
         finish: (info) =>
           info.dragged.css('visibility', 'visible')
-          elements = @__find('file-item')
+          elements = @container.find('.uploadcare-file-item')
           index = (file) =>
             elements.index(@__fileToEl(file))
           @dialogApi.fileColl.sort (a, b) ->
