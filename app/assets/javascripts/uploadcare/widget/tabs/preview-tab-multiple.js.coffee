@@ -102,7 +102,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl.find('.uploadcare-file-item__name')
         .text(info.name or t('dialog.tabs.preview.unknownName'))
 
-      @__find('file-size', fileEl)
+      fileEl.find('.uploadcare-file-item__size')
         .text(utils.readableFileSize(info.size, '–'))
 
     __fileProgress: (file, progressInfo) =>

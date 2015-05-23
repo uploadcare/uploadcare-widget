@@ -827,7 +827,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   }
   .uploadcare-dpm-error {
     .uploadcare-dpm-file-error {display: table-cell}
-    .uploadcare-dpm-file-size,
+    .uploadcare-file-item__size,
     .uploadcare-dpm-file-progressbar-wrap {display: none}
   }
 
@@ -856,7 +856,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     width: 100%;
     word-wrap: break-word;
   }
-  .uploadcare-dpm-file-size {
+  .uploadcare-file-item__size {
     width: 3.5em;
     text-align: left;
   }
