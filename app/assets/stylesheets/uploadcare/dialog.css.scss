@@ -823,12 +823,12 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
   // States
   .uploadcare-dpm-uploaded {
-    .uploadcare-dpm-file-progressbar-wrap {display: none}
+    .uploadcare-file-item__progressbar {display: none}
   }
   .uploadcare-dpm-error {
     .uploadcare-dpm-file-error {display: table-cell}
     .uploadcare-file-item__size,
-    .uploadcare-dpm-file-progressbar-wrap {display: none}
+    .uploadcare-file-item__progressbar {display: none}
   }
 
   // Elements
@@ -860,7 +860,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     width: 3.5em;
     text-align: left;
   }
-  .uploadcare-dpm-file-progressbar-wrap {
+  .uploadcare-file-item__progressbar {
     width: 80px;
   }
   .uploadcare-dpm-file-error {
