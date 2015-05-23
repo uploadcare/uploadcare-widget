@@ -108,7 +108,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
 
-      @__find('file-progressbar-value', fileEl)
+      fileEl.find('.uploadcare-progressbar__value')
         .css('width', Math.round(progressInfo.progress * 100) + '%')
 
       @__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
@@ -117,7 +117,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       fileEl = @__fileToEl(file)
       fileEl.addClass(CLASS_PREFIX + 'uploaded')
 
-      @__find('file-progressbar-value', fileEl)
+      fileEl.find('.uploadcare-progressbar__value')
         .css('width', '100%')
       @__updateFileInfo(fileEl, info)
 
