@@ -122,7 +122,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        @__find('file-preview-wrap', fileEl)
+        fileEl.find('.uploadcare-file-item__preview')
           .addClass('uploadcare-zoomable-icon')
           .html(
             $('<img>')

@@ -841,7 +841,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     height: $height;
     margin: $margin .7em $margin 0;
   }
-  .uploadcare-dpm-file-preview-wrap {
+  .uploadcare-file-item__preview {
     width: 55px;
     display: table-cell;
     text-align: center;
