@@ -51,7 +51,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
     __setupSorting: ->
       @fileListEl.uploadcareSortable(
         touch: false
-        axis: 'y'
+        axis: if @settings.imagesOnly then 'xy' else 'y'
         start: (info) ->
           info.dragged.css('visibility', 'hidden')
         finish: (info) =>
@@ -123,7 +123,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       if info.isImage
         cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/250x250/"
+          then "-/preview/340x340/"
           else "-/scale_crop/110x110/center/"
         fileEl.find('.uploadcare-file-item__preview')
           .addClass('uploadcare-zoomable-icon')
