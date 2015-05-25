@@ -121,15 +121,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
+        cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
+          if @settings.imagesOnly
+          then "-/preview/250x250/"
+          else "-/scale_crop/110x110/center/"
         fileEl.find('.uploadcare-file-item__preview')
           .addClass('uploadcare-zoomable-icon')
           .html(
-            $('<img>')
-              .attr('src', "#{info.cdnUrl}-/scale_crop/110x110/center/-/quality/lightest/")
-              .css(
-                width: 'auto'
-                height: 55
-              )
+            $('<img>').attr('src', cdnURL)
           ).on 'click', =>
             uploadcare.openPreviewDialog(file, @settings)
               .done (newFile) =>

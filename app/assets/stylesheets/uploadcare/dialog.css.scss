@@ -708,9 +708,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     height: $dialog-camera-video-height - $dialog-footer-height;
   }
 }
-.uploadcare-dialog-camera-illustration {
-
-}
 .uploadcare-dialog-camera-video {
   @include vertical-centered;
   display: none;
@@ -815,6 +812,13 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
         background: #ececec;
       }
     }
+    .uploadcare-file-item__preview > img {
+      width: auto;
+      height: 55px;
+    }
+    .uploadcare-zoomable-icon:before {
+      width: 55px; height: 55px;
+    }
   }
 
 %file-inline-icon {
@@ -833,11 +837,8 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   line-height: 1.2;
 
   &:hover {
-    .uploadcare-file-item__remove {visibility: visible;}
-    .uploadcare-zoomable-icon:before {
-      display: block;
-      width: 55px; height: 55px;
-    }
+    .uploadcare-file-item__remove {visibility: visible}
+    .uploadcare-zoomable-icon:before {display: block}
   }
 }
   // States
@@ -897,6 +898,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     content: '';
     position: absolute;
     opacity: .75;
+    display: none;
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: center;
