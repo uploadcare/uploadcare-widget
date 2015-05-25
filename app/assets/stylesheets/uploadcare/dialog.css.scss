@@ -822,10 +822,10 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   }
 
   // States
-  .uploadcare-dpm-uploaded {
+  .uploadcare-file-item_uploaded {
     .uploadcare-file-item__progressbar {display: none}
   }
-  .uploadcare-dpm-error {
+  .uploadcare-file-item_error {
     .uploadcare-file-item__error {display: table-cell}
     .uploadcare-file-item__size,
     .uploadcare-file-item__progressbar {display: none}

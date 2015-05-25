@@ -11,9 +11,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
   class ns.PreviewTabMultiple extends ns.BasePreviewTab
 
-    # dpm — abbreviation of dialog-preview-multiple
-    CLASS_PREFIX = 'uploadcare-dpm-'
-
     constructor: ->
       super
 
@@ -67,7 +64,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       )
 
     __find: (s, context = @container) ->
-      $('.' + CLASS_PREFIX + s, context)
+      # dpm — abbreviation of dialog-preview-multiple
+      $('.uploadcare-dpm-' + s, context)
 
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
@@ -115,7 +113,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __fileDone: (file, info) =>
       fileEl = @__fileToEl(file)
-      fileEl.addClass(CLASS_PREFIX + 'uploaded')
+      fileEl.addClass('uploadcare-file-item_uploaded')
 
       fileEl.find('.uploadcare-progressbar__value')
         .css('width', '100%')
@@ -138,7 +136,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
     __fileFailed: (file, error, info) =>
       @__fileToEl(file)
-        .addClass(CLASS_PREFIX + 'error')
+        .addClass('uploadcare-file-item_error')
         .find('.uploadcare-file-item__error')
           .text(t("errors.#{error}"))
 
