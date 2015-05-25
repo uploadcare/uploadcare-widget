@@ -778,49 +778,49 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 // § Multiple preview
 
-.uploadcare-file-list {
-  height: $dialog-body-height - y(3);
-  overflow: auto;
-  position: relative;
-  margin: 0 x(-1) y(-1) 0;
-  .uploadcare-dialog-multiple & {
-    height: $dialog-preview-container-height + y(1);
+%file-inline-icon {
+  $height: 20px;
+  $margin: ($height - $dialog-body-font-size-smaller) / -2;
+  content: '';
+  display: inline-block;
+  width: $height;
+  height: $height;
+  margin: $margin .7em $margin 0;
+}
+
+.uploadcare-file-item {
+  $border: 1px solid #e3e3e3;
+  border-top: $border;
+  border-bottom: $border;
+  margin-bottom: -1px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  padding: 10px 0;
+  min-height: 20px;
+  font-size: $dialog-body-font-size-smaller;
+  line-height: 1.2;
+
+  // for each columns
+  > * {
+    @include prefix(box-sizing, content-box);
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 20px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:hover {
+    background: #ececec;
+    .uploadcare-file-item__remove {visibility: visible;}
+    .uploadcare-zoomable-icon:before {
+      display: block;
+      width: 55px; height: 55px;
+    }
   }
 }
-  .uploadcare-file-item {
-    $border: 1px solid #e3e3e3;
-    border-top: $border;
-    border-bottom: $border;
-    margin-bottom: -1px;
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    padding: 10px 0;
-    min-height: 20px;
-    font-size: $dialog-body-font-size-smaller;
-    line-height: 1.2;
-
-    // for each columns
-    > * {
-      @include prefix(box-sizing, content-box);
-      display: table-cell;
-      vertical-align: middle;
-      padding-right: 20px;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-    &:hover {
-      background: #ececec;
-      .uploadcare-file-item__remove {visibility: visible;}
-      .uploadcare-zoomable-icon:before {
-        display: block;
-        width: 55px; height: 55px;
-      }
-    }
-  }
-
   // States
   .uploadcare-file-item_uploaded {
     .uploadcare-file-item__progressbar {display: none}
@@ -830,17 +830,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     .uploadcare-file-item__size,
     .uploadcare-file-item__progressbar {display: none}
   }
-
   // Elements
-  %file-inline-icon {
-    $height: 20px;
-    $margin: ($height - $dialog-body-font-size-smaller) / -2;
-    content: '';
-    display: inline-block;
-    width: $height;
-    height: $height;
-    margin: $margin .7em $margin 0;
-  }
   .uploadcare-file-item__preview {
     width: 55px;
     display: table-cell;
@@ -873,12 +863,13 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     text-align: right;
     line-height: 0;
   }
-    .uploadcare-remove {
-      @extend %remove-button-image;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
+
+.uploadcare-remove {
+  @extend %remove-button-image;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 
 .uploadcare-zoomable-icon {
   cursor: pointer;
@@ -908,6 +899,16 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 .uploadcare-file-icon {
   @extend %file-inline-icon, %file-icon-image;
   margin: 0;
+}
+
+.uploadcare-file-list {
+  height: $dialog-body-height - y(3);
+  overflow: auto;
+  position: relative;
+  margin: 0 x(-1) y(-1) 0;
+  .uploadcare-dialog-multiple & {
+    height: $dialog-preview-container-height + y(1);
+  }
 }
 
 // § Base source tab
