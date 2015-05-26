@@ -66,10 +66,10 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           retry: 'Genehmigungen erneut anfordern'
           pleaseAllow:
             title: 'Bitte erlauben Sie den Zugriff auf Ihre Kamera'
-            text: 'Sie wurden gebeten| dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können| müssen Sie diese Erlaubnis erteilen.'
+            text: 'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
           notFound:
             title: 'Keine Kamera festgestellt'
-            text: 'Es sieht so aus| als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
+            text: 'Es sieht so aus, als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
         preview:
           unknownName: 'nicht bekannt'
           change: 'Abbrechen'
@@ -112,7 +112,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             clear: 'Alle löschen'
             done: 'Fertig'
       footer:
-        text: 'Hochladen| Speichern und Verarbeiten von Dateien durch'
+        text: 'Hochladen, Speichern und Verarbeiten von Dateien durch'
         link: 'Uploadcare.com'
 
 
