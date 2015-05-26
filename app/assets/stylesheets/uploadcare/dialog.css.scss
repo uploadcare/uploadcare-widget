@@ -812,9 +812,18 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
         background: #ececec;
       }
     }
+    .uploadcare-file-item__preview {
+      padding-right: 10px;
+    }
     .uploadcare-file-item__preview > img {
       width: auto;
       height: 55px;
+    }
+    .uploadcare-file-item__size {
+      width: 3.5em;
+    }
+    .uploadcare-file-item__progressbar {
+      width: 80px;
     }
     .uploadcare-zoomable-icon:before {
       width: 55px;
@@ -825,10 +834,23 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     text-align: justify;
     .uploadcare-file-item {
       text-align: left;
+      position: relative;
       display: inline-block;
       vertical-align: top;
-      width: 200px;
-      padding-bottom: 20px;
+      width: 170px;
+      min-height: 180px;
+      padding-right: 30px;
+
+      > * {
+        padding-bottom: 10px;
+      }
+    }
+    .uploadcare-file-item__name {
+      padding-top: 10px;
+    }
+    .uploadcare-file-item__remove {
+      position: absolute;
+      top: 0; right: 20px;
     }
     .uploadcare-file-item__preview {
       display: table-cell;
@@ -843,8 +865,20 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       max-height: 100%;
     }
     .uploadcare-zoomable-icon:before {
+      background-size: 45px 45px;
       width: 170px;
       height: 170px;
+    }
+    .uploadcare-file-item_uploading {
+      .uploadcare-file-item__preview {
+        display: none;
+      }
+    }
+    .uploadcare-file-item_uploaded {
+      .uploadcare-file-item__size,
+      .uploadcare-file-item__name {
+        display: none;
+      }
     }
   }
 
@@ -885,20 +919,10 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     width: 55px;
     text-align: center;
     line-height: 0;
-    .uploadcare-file-item & {
-      padding-right: 10px;
-    }
   }
   .uploadcare-file-item__name {
     width: 100%;
     word-wrap: break-word;
-  }
-  .uploadcare-file-item__size {
-    width: 3.5em;
-    text-align: left;
-  }
-  .uploadcare-file-item__progressbar {
-    width: 80px;
   }
   .uploadcare-file-item__error {
     width: 200px;
