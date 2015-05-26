@@ -63,7 +63,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         camera:
           capture: 'Machen Sie ein Foto'
           mirror: 'Spiegel'
-          retry: 'Genehmigungen erneut anfordern'
+          retry: 'Berechtigungen erneut anfordern'
           pleaseAllow:
             title: 'Bitte erlauben Sie den Zugriff auf Ihre Kamera'
             text: 'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
