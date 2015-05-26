@@ -57,10 +57,10 @@ namespace 'uploadcare', (ns) ->
         widgetElement.remove()
 
   ns.start = (s) ->
-    if settings.common(s).live
-      setInterval(live, 100)
     do live = ->
       initialize($(selector))
+    if settings.common(s).live
+      setInterval(live, 100)
 
   $ ->
     if not window["UPLOADCARE_MANUAL_START"]

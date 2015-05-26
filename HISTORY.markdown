@@ -1,5 +1,11 @@
 # History
 
+### 2.1.5, 26.05.2015
+
+* Fixed live initialization (when a new widget is added to the page
+  after loading). Broken since 2.1.0.
+* Restored compatibility with IE8. Broken since 2.1.0.
+
 ### 2.1.4, 18.05.2015
 
 * Traditional Chinese locale (zhTW).
