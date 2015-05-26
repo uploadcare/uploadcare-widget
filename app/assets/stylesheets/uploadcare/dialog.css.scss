@@ -825,13 +825,12 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     .uploadcare-file-item__progressbar {
       width: 80px;
     }
-    .uploadcare-zoomable-icon:before {
+    .uploadcare-zoomable-icon:after {
       width: 55px;
     }
   }
 
   .uploadcare-file-list_tiles {
-    text-align: justify;
     .uploadcare-file-item {
       text-align: left;
       position: relative;
@@ -839,7 +838,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       vertical-align: top;
       width: 170px;
       min-height: 170px;
-      padding: 0 30px 10px 0;
+      padding: 0 20px 10px 0;
 
       > * {
         padding-bottom: 10px;
@@ -850,14 +849,16 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     }
     .uploadcare-file-item__remove {
       position: absolute;
-      top: 0; right: 20px;
+      top: 0; right: 10px;
     }
     .uploadcare-file-item__preview {
-      display: table-cell;
-      vertical-align: middle;
+      @include vertical-centered-wrap;
       width: 170px;
       height: 170px;
       padding-bottom: 0;
+    }
+    .uploadcare-file-item__preview img {
+      @include vertical-centered;
     }
     .uploadcare-file-item_uploading {
       .uploadcare-file-item__preview {
@@ -889,7 +890,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
   &:hover {
     .uploadcare-file-item__remove {visibility: visible}
-    .uploadcare-zoomable-icon:before {display: block}
+    .uploadcare-zoomable-icon:after {display: block}
   }
 }
   // States
@@ -944,7 +945,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 .uploadcare-zoomable-icon {
   position: relative;
   cursor: pointer;
-  &:before {
+  &:after {
     content: '';
     position: absolute;
     top: 0; left: 0;

@@ -86,20 +86,35 @@ $dialog-mobile-min-width: 310px;
     .uploadcare-dialog-preview-image {
       max-height: 450px;
     }
+
     .uploadcare-file-list {
       height: auto;
       margin: 0 -15px 0 0;
     }
-    .uploadcare-file-item > * {
-      padding-right: 10px;
+    .uploadcare-file-list_table {
+      .uploadcare-file-item > * {
+        padding-right: 10px;
+      }
+      .uploadcare-file-item__progressbar {
+        width: 40px;
+      }
     }
-    .uploadcare-file-item__progressbar {
-      width: 40px;
+    .uploadcare-file-list_tiles {
+      .uploadcare-file-item {
+        width: 140px;
+        min-height: 140px;
+        padding-right: 10px;
+      }
+      .uploadcare-file-item__preview {
+        width: 140px; height: 140px;
+      }
+      .uploadcare-file-item__remove {
+        right: 10px;
+      }
     }
     .uploadcare-file-item__remove {
       visibility: visible;
     }
-
 
     // § Computer tab
 
