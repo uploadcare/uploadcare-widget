@@ -37,16 +37,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           url: 'Une adresse web'
           'empty-pubkey': 'Bienvenue'
           camera: 'Appareil photo'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Glissez-déposez un fichier ici'
           nodrop: 'Envoyez des fichiers depuis votre ordinateur'
@@ -113,7 +103,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             tooFewFiles: 'Vous avez choisi %fichiers%. %min% est le minimum.'
       footer:
         text: 'Envoi, stockage et traitement des fichiers par'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

@@ -37,16 +37,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'File locali'
           url: 'Link arbitrari'
           camera: 'Fotocamera'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Trascina un file qui'
           nodrop: 'Carica file dal tuo computer'
@@ -113,5 +103,3 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Fatto'
       footer:
         text: 'Caricamento, memorizzazione ed elaborazione file eseguiti da'
-        link: 'Uploadcare.com'
-  return

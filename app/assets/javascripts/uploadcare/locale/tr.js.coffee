@@ -37,16 +37,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'Bilgisayar'
           url: 'Dış Bağlantılar'
           camera: 'Kamera'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Braya bir dosya bakın'
           nodrop: 'Bilgisayarınızdan dosya yükleyin'
@@ -112,7 +102,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Bitti'
       footer:
         text: 'Dosya yükleme, saklama ve işleme servisi'
-        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
