@@ -15,7 +15,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'Dosya silinmiş'
     draghere: 'Buraya bir dosya bırakın'
     file:
-      other: '%1 dosya'
+      one: '%1 dosya'
+      other: '%1 dosyalar'
     buttons:
       cancel: 'İptal'
       remove: 'Kaldır'
@@ -31,21 +32,44 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       showFiles: 'Dosyaları Göster'
       tabs:
         names:
+          'empty-pubkey': 'Hoş geldiniz'
           preview: 'Önizleme'
           file: 'Bilgisayar'
           url: 'Dış Bağlantılar'
+          camera: 'Kamera'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
+          huddle: 'Huddle'
         file:
           drag: 'Braya bir dosya bakın'
           nodrop: 'Bilgisayarınızdan dosya yükleyin'
           or: 'or'
           button: 'Bilgisayardan bir dosya seç'
           also: 'Diğer yükleme seçenekleri'
+          cloudsTip: 'Bulut depolamalar<br>ve sosyal hizmetler'
         url:
           title: 'Webden dosyalar'
           line1: 'Webden herhangi bir dosya seçin.'
           line2: 'Dosya bağlantısını sağlayın.'
           input: 'Bağlantınızı buraya yapıştırın...'
           button: 'Yükle'
+        camera:
+          capture: 'Fotoğraf çek'
+          mirror: 'Ayna'
+          retry: 'Tekrar izin iste'
+          pleaseAllow:
+            title: 'Lütfen kameranıza erişilmesine izin verin'
+            text: 'Bu siteden kamera erişimine izin vermeniz talep ediliyor. Kameranızla fotoğraf çekmek için bu isteği onaylamanız gerekmektedir.'
+          notFound:
+            title: 'Kamera algılanamadı'
+            text: 'Bu cihaza kamera bağlantısının olmadığı görünüyor.'
         preview:
           unknownName: 'bilinmeyen'
           change: 'İptal'
@@ -88,6 +112,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Bitti'
       footer:
         text: 'Dosya yükleme, saklama ve işleme servisi'
+        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->

@@ -32,9 +32,21 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       showFiles: 'Dateien anzeigen'
       tabs:
         names:
+          'empty-pubkey': 'Willkommen'
           preview: 'Vorschau'
           file: 'Lokale Dateien'
           url: 'Web-Links'
+          camera: 'Kamera'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
+          huddle: 'Huddle'
         file:
           drag: 'Ziehen Sie eine Datei hier hinein'
           nodrop: 'Laden Sie Dateien von Ihrem PC hoch'
@@ -48,6 +60,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: 'Geben Sie einfach den Link an.'
           input: 'Bitte geben Sie den Link hier an...'
           button: 'Hochladen'
+        camera:
+          capture: 'Machen Sie ein Foto'
+          mirror: 'Spiegel'
+          retry: 'Genehmigungen erneut anfordern'
+          pleaseAllow:
+            title: 'Bitte erlauben Sie den Zugriff auf Ihre Kamera'
+            text: 'Sie wurden gebeten| dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können| müssen Sie diese Erlaubnis erteilen.'
+          notFound:
+            title: 'Keine Kamera festgestellt'
+            text: 'Es sieht so aus| als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
         preview:
           unknownName: 'nicht bekannt'
           change: 'Abbrechen'
@@ -90,7 +112,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             clear: 'Alle löschen'
             done: 'Fertig'
       footer:
-        text: 'Hochladen, Speichern und Verarbeitung der Dateien durch'
+        text: 'Hochladen| Speichern und Verarbeiten von Dateien durch'
+        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

@@ -34,10 +34,20 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       tabs:
         names:
           preview: 'Предпросмотр'
+          'empty-pubkey': 'Приветствие'
           file: 'Локальные файлы'
           vk: 'ВКонтакте'
           url: 'Произвольная ссылка'
           camera: 'Камера'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
+          huddle: 'Huddle'
         file:
           drag: 'Перетащите файл сюда'
           nodrop: 'Загрузка файлов с вашего компьютера'
@@ -105,6 +115,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Готово'
       footer:
         text: 'Для загрузки, хранения и обработки файлов используется'
+        link: 'Uploadcare.com'
 
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
