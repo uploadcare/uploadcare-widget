@@ -813,10 +813,10 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       }
     }
     .uploadcare-file-item__preview {
+      width: 55px;
       padding-right: 10px;
     }
     .uploadcare-file-item__preview > img {
-      width: auto;
       height: 55px;
     }
     .uploadcare-file-item__size {
@@ -827,9 +827,9 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     }
     .uploadcare-zoomable-icon:before {
       width: 55px;
-      height: 55px;
     }
   }
+
   .uploadcare-file-list_tiles {
     text-align: justify;
     .uploadcare-file-item {
@@ -838,8 +838,8 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       display: inline-block;
       vertical-align: top;
       width: 170px;
-      min-height: 180px;
-      padding-right: 30px;
+      min-height: 170px;
+      padding: 0 30px 10px 0;
 
       > * {
         padding-bottom: 10px;
@@ -857,16 +857,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
       vertical-align: middle;
       width: 170px;
       height: 170px;
-    }
-    .uploadcare-file-item__preview > img {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-    }
-    .uploadcare-zoomable-icon:before {
-      width: 170px;
-      height: 170px;
+      padding-bottom: 0;
     }
     .uploadcare-file-item_uploading {
       .uploadcare-file-item__preview {
@@ -915,9 +906,15 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   }
   // Elements
   .uploadcare-file-item__preview {
-    width: 55px;
     text-align: center;
     line-height: 0;
+  }
+  .uploadcare-file-item__preview > img {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
   }
   .uploadcare-file-item__name {
     width: 100%;
@@ -952,7 +949,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     position: absolute;
     top: 0; left: 0;
     display: none;
-    opacity: .75;
+    width: 100%; height: 100%;
     background-size: 45px 45px;
     background-repeat: no-repeat;
     background-position: center;
