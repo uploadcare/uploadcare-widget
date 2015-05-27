@@ -34,6 +34,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       tabs:
         names:
           preview: 'Предпросмотр'
+          'empty-pubkey': 'Приветствие'
           file: 'Локальные файлы'
           vk: 'ВКонтакте'
           url: 'Произвольная ссылка'

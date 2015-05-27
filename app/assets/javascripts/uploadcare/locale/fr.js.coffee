@@ -35,6 +35,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           preview: 'Avant-première'
           file: 'Fichier en local'
           url: 'Une adresse web'
+          'empty-pubkey': 'Bienvenue'
+          camera: 'Appareil photo'
         file:
           drag: 'Glissez-déposez un fichier ici'
           nodrop: 'Envoyez des fichiers depuis votre ordinateur'
@@ -48,6 +50,16 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: 'Saisissez simplement son adresse.'
           input: 'Collez le lien ici...'
           button: 'Envoi'
+        camera:
+          capture: 'Prendre une photo'
+          mirror: 'Miroir'
+          retry: 'Envoyer une nouvelle demande de permission'
+          pleaseAllow:
+            title: 'Autorisez l\'accès à votre appareil photo'
+            text: 'Vous avez été invité à autoriser l\'accès à votre appareil photo. Pour prendre des photos avec votre appareil photo vous devez approuver cette demande.'
+          notFound:
+            title: 'Aucun appareil photo détecté'
+            text: 'Il semblerait que vous n\'ayez pas d\'appareil photo connecté à cet appareil.'
         preview:
           unknownName: 'inconnu'
           change: 'Annuler'
@@ -87,6 +99,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             question: 'Voulez vous ajouter tous ces fichiers ?'
             clear: 'Tout retirer'
             done: 'Terminer'
+            tooManyFiles: 'Vous avez choisi trop de fichiers. %max% est le maximum.'
+            tooFewFiles: 'Vous avez choisi %fichiers%. %min% est le minimum.'
       footer:
         text: 'Envoi, stockage et traitement des fichiers par'
 
