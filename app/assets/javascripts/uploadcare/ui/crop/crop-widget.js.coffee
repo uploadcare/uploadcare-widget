@@ -91,22 +91,6 @@ namespace 'uploadcare.crop', (ns) ->
       height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
 
     getSelectionWithModifiers: ->
-      coords = @getSelection()
-      {width: w, height: h} = coords
-      prefered = @crop.preferedSize
-      modifiers = ''
-
-      wholeImage = w is @originalSize[0] and h is @originalSize[1]
-      if not wholeImage
-        modifiers += "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
-
-      downscale = @crop.downscale and (w > prefered[0] or h > prefered[1])
-      upscale = @crop.upscale and (w < prefered[0] or h < prefered[1])
-      if downscale or upscale
-        [coords.sw, coords.sh] = prefered
-        modifiers += "-/resize/#{prefered.join 'x'}/"
-      else if not wholeImage
-        modifiers += "-/preview/"
-
-      crop: coords
-      modifiers: modifiers
+      utils.cropCoordsToModifiers(
+        @crop, @originalSize, @getSelection()
+      )

@@ -150,6 +150,27 @@ namespace 'uploadcare.utils', (ns) ->
     else
       objSize.slice()
 
+  ns.cropCoordsToModifiers = (crop, size, coords) ->
+    {width: w, height: h} = coords
+    prefered = crop.preferedSize
+    modifiers = ''
+
+    wholeImage = w is size[0] and h is size[1]
+    if not wholeImage
+      modifiers += "-/crop/#{w}x#{h}/#{coords.left},#{coords.top}/"
+
+    downscale = crop.downscale and (w > prefered[0] or h > prefered[1])
+    upscale = crop.upscale and (w < prefered[0] or h < prefered[1])
+    if downscale or upscale
+      [coords.sw, coords.sh] = prefered
+      modifiers += "-/resize/#{prefered.join 'x'}/"
+    else if not wholeImage
+      modifiers += "-/preview/"
+
+    crop: coords
+    modifiers: modifiers
+
+
   ns.fileInput = (container, settings, fn) ->
     input = null
     accept = settings.inputAcceptTypes
