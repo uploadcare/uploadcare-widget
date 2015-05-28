@@ -58,5 +58,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           ' '
         ])
 
-      list.toggle(n > 0)
-      @container.find('.uploadcare-dialog-file-source-or').toggle(n > 0)
+      list.toggleClass('uploadcare-hidden', n == 0)
+      @container
+        .find('.uploadcare-dialog-file-source-or')
+        .toggleClass('uploadcare-hidden', n == 0)

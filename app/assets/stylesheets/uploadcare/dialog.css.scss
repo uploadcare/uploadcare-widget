@@ -907,3 +907,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 .uploadcare-panel-footer-counter {
   display: none;
 }
+
+.uploadcare-hidden {
+  display: none;
+}
