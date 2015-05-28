@@ -155,7 +155,8 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @__fileRemoved(oldFile)
 
     __fileToEl: (file) ->
-      $(file).data('dpm-el')
+      # File can be removed before.
+      $(file).data('dpm-el') or $()
 
     __createFileEl: (file) ->
       fileEl = @__fileTpl.clone()
