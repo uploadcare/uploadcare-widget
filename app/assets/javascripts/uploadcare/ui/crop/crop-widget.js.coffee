@@ -90,7 +90,7 @@ namespace 'uploadcare.crop', (ns) ->
       width: Math.round(Math.min(@originalSize[0], coords.x2)) - left
       height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
 
-    getSelectionWithModifiers: ->
-      utils.cropCoordsToModifiers(
-        @crop, @originalSize, @getSelection()
+    applySelectionToFile: (file) ->
+      utils.applyCropSelectionToFile(
+        file, @crop, @originalSize, @getSelection()
       )

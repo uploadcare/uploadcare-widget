@@ -150,7 +150,7 @@ namespace 'uploadcare.utils', (ns) ->
     else
       objSize.slice()
 
-  ns.cropCoordsToModifiers = (crop, size, coords) ->
+  ns.applyCropSelectionToFile = (file, crop, size, coords) ->
     {width: w, height: h} = coords
     prefered = crop.preferedSize
     modifiers = ''
@@ -167,8 +167,11 @@ namespace 'uploadcare.utils', (ns) ->
     else if not wholeImage
       modifiers += "-/preview/"
 
-    crop: coords
-    modifiers: modifiers
+    file.then (info) =>
+      info.cdnUrlModifiers = modifiers
+      info.cdnUrl = "#{info.originalUrl}#{modifiers or ''}"
+      info.crop = coords
+      info
 
 
   ns.fileInput = (container, settings, fn) ->
