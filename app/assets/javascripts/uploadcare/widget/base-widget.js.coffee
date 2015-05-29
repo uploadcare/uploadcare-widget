@@ -21,7 +21,7 @@ namespace 'uploadcare.widget', (ns) ->
       @validators = @settings.validators = []
       @currentObject = null
 
-      @__onOpenDialog = $.Callbacks()
+      @__onDialogOpen = $.Callbacks()
       @__onUploadComplete = $.Callbacks()
       @__onChange = $.Callbacks().add (object) =>
         object?.promise().done (info) =>
@@ -128,7 +128,7 @@ namespace 'uploadcare.widget', (ns) ->
           @__handleDirectSelection('object', input.files)
       else
         dialogApi = uploadcare.openDialog(@currentObject, tab, @settings)
-        @__onOpenDialog.fire(dialogApi)
+        @__onDialogOpen.fire(dialogApi)
         dialogApi.done(@__setObject)
 
     api: ->
@@ -141,6 +141,6 @@ namespace 'uploadcare.widget', (ns) ->
         ])
         @__api.onChange = utils.publicCallbacks(@__onChange)
         @__api.onUploadComplete = utils.publicCallbacks(@__onUploadComplete)
-        @__api.onOpenDialog = utils.publicCallbacks(@__onOpenDialog)
+        @__api.onDialogOpen = utils.publicCallbacks(@__onDialogOpen)
         @__api.inputElement = @element.get(0)
       @__api
