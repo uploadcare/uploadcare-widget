@@ -163,10 +163,13 @@ namespace 'uploadcare', (ns) ->
         @panel.addClass('uploadcare-dialog-multiple')
 
       # files collection
-      @files = new utils.CollectionOfPromises(files)
+      @files = new utils.CollectionOfPromises()
       @files.onRemove.add =>
         if @files.length() == 0
           @hideTab('preview')
+      @__autoCrop(@files)
+      for file in files
+        @files.add(file)
 
       @tabs = {}
       @__prepareFooter()
@@ -213,6 +216,37 @@ namespace 'uploadcare', (ns) ->
           @switchTab('preview')
       else
         @__resolve()
+
+    __autoCrop: (files) ->
+      if not @settings.crop or not @settings.multiple
+        return
+
+      for crop in @settings.crop
+        # if even one of crop option sets allow free crop,
+        # we don't need to crop automatically
+        if not crop.preferedSize
+          return
+
+      files.onAnyDone.add (file, fileInfo) =>
+        if not fileInfo.isImage or fileInfo.cdnUrlModifiers
+          return
+
+        info = fileInfo.originalImageInfo
+        size = uploadcare.utils.fitSize(
+          @settings.crop[0].preferedSize,
+          [info.width, info.height],
+          true
+        )
+
+        newFile = utils.applyCropSelectionToFile(
+          file, @settings.crop[0], [info.width, info.height], {
+            width: size[0]
+            height: size[1]
+            left: Math.round((info.width - size[0]) / 2)
+            top: Math.round((info.height - size[1]) / 2)
+          }
+        )
+        files.replace(file, newFile)
 
     __resolve: =>
       @dfd.resolve(@files.get())

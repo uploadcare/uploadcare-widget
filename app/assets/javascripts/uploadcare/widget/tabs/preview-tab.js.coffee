@@ -72,12 +72,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
 
         done.on 'click', =>
-          opts = @widget.getSelectionWithModifiers()
-          newFile = @file.then (info) =>
-            info.cdnUrlModifiers = opts.modifiers
-            info.cdnUrl = "#{info.originalUrl}#{opts.modifiers or ''}"
-            info.crop = opts.crop
-            info
+          newFile = @widget.applySelectionToFile(@file)
           @dialogApi.fileColl.replace(@file, newFile)
           true
 

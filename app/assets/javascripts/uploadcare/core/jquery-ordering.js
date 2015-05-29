@@ -197,7 +197,7 @@
 
     oMovable.start = function(info) {
       o.start(info);
-      finder = new nearestFinder(parent.find(oMovable.items));
+      finder = new nearestFinder(parent.find(oMovable.items).not(info.fake));
       initialNext = info.dragged.next();
     };
 
