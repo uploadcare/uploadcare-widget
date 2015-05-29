@@ -15,8 +15,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'Il file è stato eliminato'
     draghere: 'Trascina un file qui'
     file:
-      one: 'File %1'
-      other: 'File %1'
+      one: 'file %1'
+      other: 'file %1'
     buttons:
       cancel: 'Cancella'
       remove: 'Rimuovi'
@@ -95,11 +95,19 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               title: 'Errore'
               text: 'Impossibile caricare l’immagine'
           multiple:
-            title: 'Hai selezionato %file%'
+            title: 'Hai selezionato %files%'
             question: 'Vuoi aggiungere tutti questi file?'
             tooManyFiles: 'Hai selezionato troppi file. %max% è il massimo.'
-            tooFewFiles: 'Hai selezionato %file%. È richiesto almeno %min%.'
+            tooFewFiles: 'Hai selezionato %files%. È richiesto almeno %min%.'
             clear: 'Rimuovi tutto'
             done: 'Fatto'
       footer:
         text: 'Caricamento, memorizzazione ed elaborazione file eseguiti da'
+
+
+# Pluralization rules taken from:
+# http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+  ns.it = (n) ->
+    return 'one' if n == 1
+    'other'

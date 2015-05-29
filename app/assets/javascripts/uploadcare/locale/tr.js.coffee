@@ -15,8 +15,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: 'Dosya silinmiş'
     draghere: 'Buraya bir dosya bırakın'
     file:
-      one: '%1 dosya'
-      other: '%1 dosyalar'
+      other: '%1 dosya'
     buttons:
       cancel: 'İptal'
       remove: 'Kaldır'
