@@ -19,12 +19,14 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (@settings) ->
       @fileId = null
       @fileName = null
+      @sanitizedName = null
       @fileSize = null
       @isStored = null
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
       @sourceInfo = null
+      @s3Bucket = null
 
       # this can be exposed in future
       @onInfoReady = $.Callbacks('once memory')
@@ -46,12 +48,17 @@ namespace 'uploadcare.files', (ns) ->
 
     __handleFileData: (data) =>
       @fileName = data.original_filename
+      @sanitizedName = data.filename
       @fileSize = data.size
       @isImage = data.is_image
       @imageInfo = data.image_info
       @isStored = data.is_stored
+      @s3Bucket = data.s3_bucket
       if data.default_effects
         @cdnUrlModifiers = "-/" + data.default_effects
+
+      if @s3Bucket and @cdnUrlModifiers
+        @__rejectApi('baddata')
 
       if not @onInfoReady.fired()
         @onInfoReady.fire(@__fileInfo())
@@ -77,18 +84,20 @@ namespace 'uploadcare.files', (ns) ->
       incompleteFileInfo: @__fileInfo()
 
     __fileInfo: =>
+      if @s3Bucket
+        urlBase = "https://#{@s3Bucket}.s3.amazonaws.com/#{@fileId}/#{@sanitizedName}"
+      else
+        urlBase = "#{@settings.cdnBase}/#{@fileId}/"
+
       uuid: @fileId
       name: @fileName
       size: @fileSize
       isStored: @isStored
-      isImage: @isImage
+      isImage: not @s3Bucket and @isImage
       originalImageInfo: @imageInfo
-      originalUrl: if @fileId
-          "#{@settings.cdnBase}/#{@fileId}/"
-        else
-          null
+      originalUrl: if @fileId then urlBase else null
       cdnUrl: if @fileId
-          "#{@settings.cdnBase}/#{@fileId}/#{@cdnUrlModifiers or ''}"
+          "#{urlBase}#{@cdnUrlModifiers or ''}"
         else
           null
       cdnUrlModifiers: @cdnUrlModifiers
