@@ -17,7 +17,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       one: '%1 файл'
       few: '%1 файла'
       many: '%1 файлов'
-      other: '%1 файла'
     buttons:
       cancel: 'Отмена'
       remove: 'Удалить'
@@ -110,7 +109,5 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
   ns.ru = (n) ->
-    return 'one' if (n % 10 == 1) && (n % 100 != 11)
-    return 'few' if (n % 10 in [2..4]) && (n % 100 not in [12..14])
-    return 'many' if (n % 10 == 0) || (n % 10 in [5..9]) || (n % 100 in [11..14])
-    'other'
+    if ((n/10%10|0) == 1) or (n%10 == 0) or (n%10 > 4)
+    then 'many' else if n%10 == 1 then 'one' else 'few'

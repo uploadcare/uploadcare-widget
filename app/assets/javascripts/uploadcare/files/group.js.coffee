@@ -35,7 +35,7 @@ namespace 'uploadcare.files', (ns) ->
             .done (groupInfo) =>
               @__uuid = groupInfo.id
               @__buildInfo (info) =>
-                if @settings.imagesOnly && !info.isImage
+                if @settings.imagesOnly and not info.isImage
                   @__createGroupDf.reject('image', info)
                 else
                   @__createGroupDf.resolve(info)
