@@ -1,5 +1,9 @@
 # History
 
+### 2.1.6, 28.05.2015
+
+* Fixed "also choose file from" list on mobile layout.
+
 ### 2.1.5, 26.05.2015
 
 * Fixed live initialization (when a new widget is added to the page
