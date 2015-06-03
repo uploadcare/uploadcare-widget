@@ -860,7 +860,8 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
     .uploadcare-file-item__preview img {
       @include vertical-centered;
     }
-    .uploadcare-file-item_uploading {
+    .uploadcare-file-item_uploading,
+    .uploadcare-file-item_error {
       .uploadcare-file-item__preview {
         display: none;
       }
