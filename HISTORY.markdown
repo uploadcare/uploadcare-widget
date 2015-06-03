@@ -1,5 +1,22 @@
 # History
 
+### 2.2.0, 03.06.2015
+
+* New preview page for multiple images (when flag imagesOnly is set).
+* Crop now works with multiple files (even when flag imagesOnly is not set).
+* New Italian locale.
+* Camera tab is hidden for mobile layout now. Mobile devices have camera
+  or regular file tab.
+* New `widget.onDialogOpen` callback.
+* Role plugin removed from built-in jQuery. `@some-role` can't be used anymore
+  in selectors passed to API methods. Use `[role="some-role"]` instead.
+* Fixed jQuery bug related to promises. https://github.com/jquery/jquery/issues/2013
+  Progress was not shown in some cases with crop.
+* `uploadcare.initialize()` now initializes widgets in whole document,
+  not only 'body' descendants.
+* Custom events `#{status}.uploadcare` are fired on widget instead of form.
+  (works with built-in jQuery only).
+
 ### 2.1.6, 28.05.2015
 
 * Fixed "also choose file from" list on mobile layout.
