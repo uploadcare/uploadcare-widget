@@ -59,7 +59,7 @@
   };
 
 
-  var movableName = 'uploadcareMoveble';
+  var movableName = 'uploadcareMovable';
   var sortableName = 'uploadcareSortable';
   var extend = {};
   extend[movableName] = function(o) {
