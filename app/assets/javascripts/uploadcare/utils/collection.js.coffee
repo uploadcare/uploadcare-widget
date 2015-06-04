@@ -77,7 +77,7 @@ namespace 'uploadcare.utils', (utils) ->
 
   class utils.CollectionOfPromises extends utils.UniqCollection
     constructor: ->
-      @onAnyDone = $.Callbacks()
+      @anyDoneList = $.Callbacks()
       @onAnyFail = $.Callbacks()
       @onAnyProgress = $.Callbacks()
 
@@ -85,6 +85,13 @@ namespace 'uploadcare.utils', (utils) ->
         $(item).data('lastProgress', firstArgument)
 
       super
+
+    onAnyDone: (cb) =>
+      @anyDoneList.add(cb)
+      for file in @__items
+        if file.state() == 'resolved'
+          file.done ->
+            cb(file, arguments...)
 
     lastProgresses: ->
       for item in @__items
@@ -112,7 +119,7 @@ namespace 'uploadcare.utils', (utils) ->
             callbacks.fire(item, arguments...)
 
       item.then(
-        handler(@onAnyDone),
+        handler(@anyDoneList),
         handler(@onAnyFail),
         handler(@onAnyProgress)
       )
