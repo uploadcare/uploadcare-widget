@@ -37,7 +37,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
       @dialogApi.fileColl.onReplace.add(@__fileReplaced, @__updateContainerView)
 
       @dialogApi.fileColl.onAnyDone(@__fileDone)
-      @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
+      @dialogApi.fileColl.onAnyFail(@__fileFailed)
       @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
 
       @fileListEl.addClass(
