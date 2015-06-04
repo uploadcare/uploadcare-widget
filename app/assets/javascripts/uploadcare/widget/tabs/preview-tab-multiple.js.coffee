@@ -25,11 +25,6 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
-        file.then(
-          (info) =>
-          (info) => @__fileFailed(file, info),
-          (info) => @__fileProgress(file, info)
-        )
       @__updateContainerView()
 
       @dialogApi.fileColl.onAdd.add(@__fileAdded, @__updateContainerView)
@@ -38,7 +33,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       @dialogApi.fileColl.onAnyDone(@__fileDone)
       @dialogApi.fileColl.onAnyFail(@__fileFailed)
-      @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
+      @dialogApi.fileColl.onAnyProgress(@__fileProgress)
 
       @fileListEl.addClass(
         if @settings.imagesOnly

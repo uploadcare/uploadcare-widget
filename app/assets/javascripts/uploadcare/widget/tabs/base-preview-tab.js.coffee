@@ -30,7 +30,7 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           progress += (progressInfo?.progress or 0) / infos.length
         circleDf.notify(progress)
 
-      @dialogApi.fileColl.onAnyProgress.add(update)
+      @dialogApi.fileColl.onAnyProgress(update)
       @dialogApi.fileColl.onAdd.add(update)
       @dialogApi.fileColl.onRemove.add(update)
       update()

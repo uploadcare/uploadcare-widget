@@ -79,9 +79,9 @@ namespace 'uploadcare.utils', (utils) ->
     constructor: ->
       @anyDoneList = $.Callbacks()
       @anyFailList = $.Callbacks()
-      @onAnyProgress = $.Callbacks()
+      @anyProgressList = $.Callbacks()
 
-      @onAnyProgress.add (item, firstArgument) ->
+      @anyProgressList.add (item, firstArgument) ->
         $(item).data('lastProgress', firstArgument)
 
       super
@@ -99,6 +99,11 @@ namespace 'uploadcare.utils', (utils) ->
         if file.state() == 'rejected'
           file.fail ->
             cb(file, arguments...)
+
+    onAnyProgress: (cb) =>
+      @anyProgressList.add(cb)
+      for file in @__items
+        cb(file, $(file).data('lastProgress'))
 
     lastProgresses: ->
       for item in @__items
@@ -128,5 +133,5 @@ namespace 'uploadcare.utils', (utils) ->
       item.then(
         handler(@anyDoneList),
         handler(@anyFailList),
-        handler(@onAnyProgress)
+        handler(@anyProgressList)
       )
