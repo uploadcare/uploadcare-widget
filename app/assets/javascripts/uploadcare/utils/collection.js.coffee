@@ -6,7 +6,6 @@
 namespace 'uploadcare.utils', (utils) ->
 
   class utils.Collection
-
     constructor: (items = []) ->
       @onAdd = $.Callbacks()
       @onRemove = $.Callbacks()
@@ -64,7 +63,6 @@ namespace 'uploadcare.utils', (utils) ->
 
 
   class utils.UniqCollection extends utils.Collection
-
     add: (item) ->
       if item in @__items
         return
@@ -76,8 +74,8 @@ namespace 'uploadcare.utils', (utils) ->
       else
         super
 
-  class utils.CollectionOfPromises extends utils.UniqCollection
 
+  class utils.CollectionOfPromises extends utils.UniqCollection
     constructor: ->
       @onAnyDone = $.Callbacks()
       @onAnyFail = $.Callbacks()
@@ -93,30 +91,28 @@ namespace 'uploadcare.utils', (utils) ->
         $(item).data('lastProgress')
 
     add: (item) ->
-      if not (item and item.done and item.fail and item.then)
+      if not (item and item.then)
         return
 
       super
 
       @__watchItem(item)
 
+    __replace: (oldItem, newItem, i) ->
+      if not (newItem and newItem.then)
+        @remove(oldItem)
+      else
+        super
+        @__watchItem(newItem)
+
     __watchItem: (item) ->
       handler = (callbacks) =>
-        (args...) =>
+        =>
           if item in @__items
-            args.unshift(item)
-            callbacks.fire(args...)
+            callbacks.fire(item, arguments...)
 
       item.then(
         handler(@onAnyDone),
         handler(@onAnyFail),
         handler(@onAnyProgress)
       )
-
-    __replace: (oldItem, newItem, i) ->
-      if not (newItem and newItem.done and newItem.fail and newItem.then)
-        @remove(oldItem)
-      else
-        super
-
-        @__watchItem(newItem)
