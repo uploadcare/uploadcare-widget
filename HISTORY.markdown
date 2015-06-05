@@ -1,5 +1,12 @@
 # History
 
+### 2.3.0, 05.06.2015
+
+* Clicking to image in dialog led to opening of two crop dialogs in some cases.
+* Dialog api change: undocumented `fileColl.onAnyDone`, `fileColl.onAnyFail`
+  and `onAnyProgress` become a functions with guarantee of callback execution
+  for each object in `fileColl`.
+
 ### 2.2.0, 03.06.2015
 
 * New preview page for multiple images (when flag imagesOnly is set).
