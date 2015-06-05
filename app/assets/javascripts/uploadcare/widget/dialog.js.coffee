@@ -163,13 +163,12 @@ namespace 'uploadcare', (ns) ->
         @panel.addClass('uploadcare-dialog-multiple')
 
       # files collection
-      @files = new utils.CollectionOfPromises()
+      @files = new utils.CollectionOfPromises(files)
       @files.onRemove.add =>
         if @files.length() == 0
           @hideTab('preview')
+
       @__autoCrop(@files)
-      for file in files
-        @files.add(file)
 
       @tabs = {}
       @__prepareFooter()
@@ -227,7 +226,7 @@ namespace 'uploadcare', (ns) ->
         if not crop.preferedSize
           return
 
-      files.onAnyDone.add (file, fileInfo) =>
+      files.onAnyDone (file, fileInfo) =>
         if not fileInfo.isImage or fileInfo.cdnUrlModifiers
           return
 

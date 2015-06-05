@@ -60,7 +60,7 @@ namespace 'uploadcare.files', (ns) ->
         @__apiDf.notify(@__progressInfo())
 
       notify()
-      @__fileColl.onAnyProgress.add(notify)
+      @__fileColl.onAnyProgress(notify)
 
       @__allFilesDf
         .done =>

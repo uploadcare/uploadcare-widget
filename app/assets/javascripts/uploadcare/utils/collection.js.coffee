@@ -6,7 +6,6 @@
 namespace 'uploadcare.utils', (utils) ->
 
   class utils.Collection
-
     constructor: (items = []) ->
       @onAdd = $.Callbacks()
       @onRemove = $.Callbacks()
@@ -64,7 +63,6 @@ namespace 'uploadcare.utils', (utils) ->
 
 
   class utils.UniqCollection extends utils.Collection
-
     add: (item) ->
       if item in @__items
         return
@@ -76,47 +74,64 @@ namespace 'uploadcare.utils', (utils) ->
       else
         super
 
+
   class utils.CollectionOfPromises extends utils.UniqCollection
-
     constructor: ->
-      @onAnyDone = $.Callbacks()
-      @onAnyFail = $.Callbacks()
-      @onAnyProgress = $.Callbacks()
+      @anyDoneList = $.Callbacks()
+      @anyFailList = $.Callbacks()
+      @anyProgressList = $.Callbacks()
 
-      @onAnyProgress.add (item, firstArgument) ->
+      @anyProgressList.add (item, firstArgument) ->
         $(item).data('lastProgress', firstArgument)
 
       super
+
+    onAnyDone: (cb) =>
+      @anyDoneList.add(cb)
+      for file in @__items
+        if file.state() == 'resolved'
+          file.done ->
+            cb(file, arguments...)
+
+    onAnyFail: (cb) =>
+      @anyFailList.add(cb)
+      for file in @__items
+        if file.state() == 'rejected'
+          file.fail ->
+            cb(file, arguments...)
+
+    onAnyProgress: (cb) =>
+      @anyProgressList.add(cb)
+      for file in @__items
+        cb(file, $(file).data('lastProgress'))
 
     lastProgresses: ->
       for item in @__items
         $(item).data('lastProgress')
 
     add: (item) ->
-      if not (item and item.done and item.fail and item.then)
+      if not (item and item.then)
         return
 
       super
 
       @__watchItem(item)
 
-    __watchItem: (item) ->
-      handler = (callbacks) =>
-        (args...) =>
-          if item in @__items
-            args.unshift(item)
-            callbacks.fire(args...)
-
-      item.then(
-        handler(@onAnyDone),
-        handler(@onAnyFail),
-        handler(@onAnyProgress)
-      )
-
     __replace: (oldItem, newItem, i) ->
-      if not (newItem and newItem.done and newItem.fail and newItem.then)
+      if not (newItem and newItem.then)
         @remove(oldItem)
       else
         super
-
         @__watchItem(newItem)
+
+    __watchItem: (item) ->
+      handler = (callbacks) =>
+        =>
+          if item in @__items
+            callbacks.fire(item, arguments...)
+
+      item.then(
+        handler(@anyDoneList),
+        handler(@anyFailList),
+        handler(@anyProgressList)
+      )

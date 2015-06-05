@@ -37,3 +37,56 @@ describe 'UploadedCollection.', ->
 
     collection.sort()
     expect(collection.get()).toEqual('1345'.split(''));
+
+
+describe 'UploadedCollectionOfPromises.', ->
+
+  it 'Resolved promises are added.', ->
+    fired = 0
+
+    collection = new uploadcare.utils.CollectionOfPromises()
+    collection.onAnyDone (promise, value) ->
+      expect(value).toBe('done')
+      fired += 1
+    collection.add($.Deferred().resolve('done').promise())
+    collection.add($.Deferred().resolve('done').promise())
+
+    waitsFor(->
+      fired == 2
+    , "Should fire", 100)
+
+
+  it 'Not resolved promises are added and then resolved.', ->
+    fired = 0
+
+    collection = new uploadcare.utils.CollectionOfPromises()
+    collection.onAnyDone (promise, value) ->
+      expect(value).toBe('done')
+      fired += 1
+
+    deferred = $.Deferred()
+    collection.add(deferred.promise())
+    deferred.resolve('done')
+    deferred = $.Deferred()
+    collection.add(deferred.promise())
+    deferred.resolve('done')
+
+    waitsFor(->
+      fired == 2
+    , "Should fire", 100)
+
+
+  it 'Promise resolved before callback.', ->
+    fired = 0
+
+    collection = new uploadcare.utils.CollectionOfPromises()
+    collection.add($.Deferred().resolve('done').promise())
+    collection.add($.Deferred().resolve('done').promise())
+
+    collection.onAnyDone (promise, value) ->
+      expect(value).toBe('done')
+      fired += 1
+
+    waitsFor(->
+      fired == 2
+    , "Should fire", 100)

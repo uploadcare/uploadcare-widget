@@ -25,20 +25,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
-        file.then(
-          (info) => @__fileDone(file, info),
-          (info) => @__fileFailed(file, info),
-          (info) => @__fileProgress(file, info)
-        )
       @__updateContainerView()
 
       @dialogApi.fileColl.onAdd.add(@__fileAdded, @__updateContainerView)
       @dialogApi.fileColl.onRemove.add(@__fileRemoved, @__updateContainerView)
       @dialogApi.fileColl.onReplace.add(@__fileReplaced, @__updateContainerView)
 
-      @dialogApi.fileColl.onAnyDone.add(@__fileDone)
-      @dialogApi.fileColl.onAnyFail.add(@__fileFailed)
-      @dialogApi.fileColl.onAnyProgress.add(@__fileProgress)
+      @dialogApi.fileColl.onAnyProgress(@__fileProgress)
+      @dialogApi.fileColl.onAnyDone(@__fileDone)
+      @dialogApi.fileColl.onAnyFail(@__fileFailed)
 
       @fileListEl.addClass(
         if @settings.imagesOnly
