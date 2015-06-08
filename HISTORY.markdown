@@ -1,5 +1,9 @@
 # History
 
+### 2.3.1, 08.06.2015
+
+* Camera are revoked when user switches on another tab if page runs over HTTPS.
+
 ### 2.3.0, 05.06.2015
 
 * Clicking to image in dialog led to opening of two crop dialogs in some cases.
