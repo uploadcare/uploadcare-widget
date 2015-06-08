@@ -28,12 +28,14 @@ namespace 'uploadcare.widget.tabs', (ns) ->
         @play()
 
       @dialogApi.progress (name) =>
-        if name == @name and not @__loaded
-          @__requestCamera()
+        if name == @name
+          if not @__loaded
+            @__requestCamera()
+        else
+          if @__loaded and document.location.protocol == 'https:'
+            @__revoke()
 
-      @dialogApi.always =>
-        @URL?.revokeObjectURL(@video.prop('src'))
-        @__stream?.stop?()
+      @dialogApi.always(@__revoke)
 
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
@@ -69,6 +71,15 @@ namespace 'uploadcare.widget.tabs', (ns) ->
           @container.addClass('uploadcare-dialog-camera-denied')
         @__loaded = false
       )
+
+    __revoke: =>
+      @__loaded = false
+      @container
+          .removeClass('uploadcare-dialog-camera-denied')
+          .removeClass('uploadcare-dialog-camera-ready')
+          .addClass('uploadcare-dialog-camera-requested')
+      @URL?.revokeObjectURL(@video.prop('src'))
+      @__stream?.stop?()
 
     __mirror: =>
       @mirrored = ! @mirrored
