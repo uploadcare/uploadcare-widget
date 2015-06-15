@@ -1,5 +1,10 @@
 # History
 
+### 2.3.2, 15.06.2015
+
+* jQuery updated to 1.11.3.
+* Fixed version with builtin jQuery.
+
 ### 2.3.1, 08.06.2015
 
 * Camera are revoked when user switches on another tab if page runs over HTTPS.
