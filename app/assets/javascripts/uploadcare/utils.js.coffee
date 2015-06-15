@@ -346,11 +346,11 @@ namespace 'uploadcare.utils', (ns) ->
     $.Deferred((newDefer) ->
       $.each pipeTuples, (i, tuple) ->
         # Map tuples (progress, done, fail) to arguments (done, fail, progress)
-        fn = jQuery.isFunction( fns[tuple[2]] ) and fns[tuple[2]]
+        fn = $.isFunction( fns[tuple[2]] ) and fns[tuple[2]]
 
         promise[ tuple[1] ] ->
           returned = fn and fn.apply(this, arguments)
-          if returned and jQuery.isFunction(returned.promise)
+          if returned and $.isFunction(returned.promise)
             returned.promise()
               .progress(newDefer.notify)
               .done(newDefer.resolve)
