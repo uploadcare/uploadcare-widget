@@ -54,7 +54,7 @@ ns.az =
         also: 'Həmçinin, buradan seçə bilərsiniz'
       url:
         title: 'Vebdən fayllar'
-        line1: 'Vebdən istənilən faylı  götürün.'
+        line1: 'Vebdən istənilən faylı götürün.'
         line2: 'Sadəcə, link verin.'
         input: 'Linkinizi bura yerləşdirin...'
         button: 'Yükləyin'
