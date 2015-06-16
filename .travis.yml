@@ -1,13 +1,12 @@
+sudo: false
 language: ruby
 cache: bundler
 rvm: "1.9.3"
 before_install:
-  - gem install bundler
   # http://blog.travis-ci.com/2014-10-30-november--build-environment-updates/
-  - sudo rm -rf /usr/local/phantomjs
   - curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
   - tar xjf phantomjs-1.9.7-linux-x86_64.tar.bz2
-  - sudo mv phantomjs-1.9.7-linux-x86_64 /usr/local/phantomjs
+  - export PATH=$PATH:phantomjs-1.9.7-linux-x86_64/bin/
 script:
   - cd test/dummy
   - export BUNDLE_GEMFILE=$PWD/Gemfile
