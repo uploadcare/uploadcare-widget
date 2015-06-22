@@ -15,6 +15,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: '檔案已被刪除'
     draghere: '拖放檔案到這裡'
     file:
+      one: '%1 個檔案',
       other: '%1 個檔案'
     buttons:
       cancel: '取消'
@@ -33,15 +34,15 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         names:
           'empty-pubkey': '歡迎'
           preview: '預覽'
-          file: '從電腦中選取檔案'
+          file: '從本機上傳'
           url: '任意圖片連結'
           camera: '相機'
         file:
           drag: '拖放檔案到這裡'
-          nodrop: '從你的電腦中上傳'
+          nodrop: '從你的本機中上傳'
           cloudsTip: '雲端硬碟<br>與社群網站'
           or: '或者'
-          button: '從電腦中選取檔案'
+          button: '從本機中選取檔案'
           also: '你也可以選自'
         url:
           title: '來自網際網路的檔案'
