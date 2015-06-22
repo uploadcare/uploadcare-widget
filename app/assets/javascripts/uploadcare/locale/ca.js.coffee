@@ -6,9 +6,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       default: 'Error'
       baddata: 'Valor incorrecte'
       size: 'Massa gran'
-      upload: 'No s'ha pogut carregar'
+      upload: 'No s\'ha pogut carregar'
       user: 'Carrega cancel·lada'
-      info: 'No s'ha pogut carregar la informació'
+      info: 'No s\'ha pogut carregar la informació'
       image: 'Només es permeten imatges'
     draghere: 'Arrossega els fitxers fins aquí'
     file:
@@ -56,11 +56,11 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           error:
             default:
               title: 'La pujada ha fallat'
-              line1: 'S'ha produït un error durant la pujada.'
+              line1: 'S\'ha produït un error durant la pujada.'
               line2: 'Si us plau, provi-ho de nou.'
             image:
               title: 'Només imatges'
-              line1: 'Només s'accepten fitxers d'imatges.'
+              line1: 'Només s\'accepten fitxers d\'imatges.'
               line2: 'Si us plau, provi-ho de nou amb un altre fitxer.'
             size:
               title: 'Límit de mida'
@@ -68,7 +68,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
               line2: 'Si us plau provi-ho de nou amb un altre fitxer.'
             loadImage:
               title: 'Error'
-              text: 'No s'ha pogut carregar la imatge'
+              text: 'No s\'ha pogut carregar la imatge'
       footer:
         text: 'Els fitxers han estat carregats, gestionats i processats per'
 
