@@ -1,5 +1,13 @@
 # History
 
+### 2.3.3, 23.06.2015
+
+* New Azerbaijan locale.
+* New Catalan locale. Incomplete.
+* Updated Taiwan locale.
+* Updated Turkish locale.
+
+
 ### 2.3.2, 15.06.2015
 
 * jQuery updated to 1.11.3.
