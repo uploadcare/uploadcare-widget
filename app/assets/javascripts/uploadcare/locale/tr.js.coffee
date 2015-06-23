@@ -37,9 +37,9 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           url: 'Dış Bağlantılar'
           camera: 'Kamera'
         file:
-          drag: 'Braya bir dosya bakın'
+          drag: 'Buraya bir dosya bırakın'
           nodrop: 'Bilgisayarınızdan dosya yükleyin'
-          or: 'or'
+          or: 'ya da'
           button: 'Bilgisayardan bir dosya seç'
           also: 'Diğer yükleme seçenekleri'
           cloudsTip: 'Bulut depolamalar<br>ve sosyal hizmetler'
