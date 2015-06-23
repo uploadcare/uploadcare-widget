@@ -15,7 +15,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       deleted: '檔案已被刪除'
     draghere: '拖放檔案到這裡'
     file:
-      one: '%1 個檔案',
       other: '%1 個檔案'
     buttons:
       cancel: '取消'
