@@ -1,3 +1,11 @@
+##
+## Please, do not use this locale as a reference for new translations.
+## It could be outdated or incomplete. Always use the latest English versions:
+## https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/javascripts/uploadcare/locale/en.js.coffee
+##
+## Any fixes are welcome.
+##
+
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.ru =
     uploading: 'Идет загрузка'

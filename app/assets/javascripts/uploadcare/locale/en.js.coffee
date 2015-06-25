@@ -1,4 +1,7 @@
-# Note: English locale is the default and used as a fallback.
+##
+## English locale is the default and used as a fallback.
+##
+
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.en =
     uploading: 'Uploading... Please wait.'
