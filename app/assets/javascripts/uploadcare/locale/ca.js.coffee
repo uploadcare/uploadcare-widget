@@ -1,4 +1,3 @@
-# Note: Catalan translation. English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.ca =
     uploading: 'Carregant... Si us plau esperi.'
