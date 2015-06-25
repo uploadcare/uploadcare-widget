@@ -1,4 +1,3 @@
-# Note: Spanish translation. English locale is the default and used as a fallback.
 uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
   ns.es =
     uploading: 'Subiendo... Por favor espere.'
