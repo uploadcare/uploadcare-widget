@@ -50,7 +50,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         file:
           drag: 'Arrossega un fitxer aquí'
           nodrop: 'Carrega fitxers des del teu ordinador'
-          cloudsTip: 'Emmagatzematge al núvol<br>i serveis socials'
+          cloudsTip: 'Emmagatzematge al núvol<br>i xarxes socials'
           or: 'o'
           button: 'Escull un fitxer des del teu ordinador'
           also: 'També pots seleccionar-lo de'
