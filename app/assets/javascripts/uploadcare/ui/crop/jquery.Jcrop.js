@@ -317,9 +317,6 @@
           overflow: 'hidden'
         }),
 
-        $hdl_holder = $('<div />') 
-        .width('100%').height('100%').css('zIndex', 320), 
-
         $sel = $('<div />') 
         .css({
           position: 'absolute',
@@ -327,7 +324,7 @@
         }).dblclick(function(){
           var c = Coords.getFixed();
           options.onDblClick.call(api,c);
-        }).insertBefore($img).append($img_holder, $hdl_holder); 
+        }).insertBefore($img).append($img_holder);
 
     if (img_mode) {
 
@@ -820,7 +817,6 @@
     // Selection Module {{{
     var Selection = (function () {
       var awake,
-          hdep = 370,
           borders = {},
           handle = {},
           dragbar = {},
@@ -832,16 +828,15 @@
         var jq = $('<div />').css({
           position: 'absolute'
         }).addClass(cssClass(type));
-        $img_holder.append(jq);
+        $sel.append(jq);
         return jq;
       }
       //}}}
-      function dragDiv(ord, zi) //{{{
+      function dragDiv(ord) //{{{
       {
         var jq = $('<div />').mousedown(createDragger(ord)).css({
           cursor: ord + '-resize',
-          position: 'absolute',
-          zIndex: zi
+          position: 'absolute'
         }).append('<div/>')
           .addClass('ord-'+ord);
 
@@ -849,13 +844,13 @@
           jq.bind('touchstart.jcrop', Touch.createDragger(ord));
         }
 
-        $hdl_holder.append(jq);
+        $sel.append(jq);
         return jq;
       }
       //}}}
       function insertHandle(ord) //{{{
       {
-        return dragDiv(ord, hdep++).addClass(cssClass('handle'));
+        return dragDiv(ord).addClass(cssClass('handle'));
       }
       //}}}
       function createBorders(li) //{{{
@@ -972,18 +967,10 @@
         options.onRelease.call(api);
       }
       //}}}
-      function showHandles() //{{{
-      {
-        if (seehandles) {
-          $hdl_holder.show();
-        }
-      }
-      //}}}
       function enableHandles() //{{{
       {
         seehandles = true;
         if (options.allowResize) {
-          $hdl_holder.show();
           return true;
         }
       }
@@ -991,8 +978,7 @@
       function disableHandles() //{{{
       {
         seehandles = false;
-        $hdl_holder.hide();
-      } 
+      }
       //}}}
       function animMode(v) //{{{
       {
@@ -1055,7 +1041,6 @@
         enableOnly: function () {
           seehandles = true;
         },
-        showHandles: showHandles,
         disableHandles: disableHandles,
         animMode: animMode,
         setBgOpacity: setBgOpacity,
@@ -1382,7 +1367,6 @@
     //}}}
     //}}}
 
-    $hdl_holder.hide();
     interfaceUpdate(true);
 
     var api = {
