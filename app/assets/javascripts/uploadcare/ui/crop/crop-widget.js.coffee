@@ -16,7 +16,7 @@ namespace 'uploadcare.crop', (ns) ->
         handleSize: 10
         trueSize: @originalSize
         addClass: 'uploadcare-crop-widget'
-        createDragbars: []
+        createHandles: ['nw','ne','se','sw']
         bgColor: 'transparent'
         bgOpacity: .8
       )

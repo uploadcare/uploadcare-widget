@@ -858,19 +858,6 @@
         return dragDiv(ord, hdep++).width(hs).height(hs).addClass(cssClass('handle'));
       }
       //}}}
-      function insertDragbar(ord) //{{{
-      {
-        return dragDiv(ord, hdep++).addClass('jcrop-dragbar');
-      }
-      //}}}
-      function createDragbars(li) //{{{
-      {
-        var i;
-        for (i = 0; i < li.length; i++) {
-          dragbar[li[i]] = insertDragbar(li[i]);
-        }
-      }
-      //}}}
       function createBorders(li) //{{{
       {
         var cl,i;
@@ -1026,9 +1013,6 @@
       //}}}
       // Insert draggable elements {{{
       // Insert border divs for outline
-
-      if (options.dragEdges && $.isArray(options.createDragbars))
-        createDragbars(options.createDragbars);
 
       if ($.isArray(options.createHandles))
         createHandles(options.createHandles);
@@ -1518,7 +1502,6 @@
     aspectRatio: 0,
     keySupport: true,
     createHandles: ['n','s','e','w','nw','ne','se','sw'],
-    createDragbars: ['n','s','e','w'],
     createBorders: ['n','s','e','w'],
     drawBorders: true,
     dragEdges: true,
