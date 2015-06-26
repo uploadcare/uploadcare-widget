@@ -830,8 +830,7 @@
       function insertBorder(type) //{{{
       {
         var jq = $('<div />').css({
-          position: 'absolute',
-          opacity: options.borderOpacity
+          position: 'absolute'
         }).addClass(cssClass(type));
         $img_holder.append(jq);
         return jq;
@@ -856,9 +855,7 @@
       function insertHandle(ord) //{{{
       {
         var hs = options.handleSize;
-        return dragDiv(ord, hdep++).css({
-          opacity: options.handleOpacity
-        }).width(hs).height(hs).addClass(cssClass('handle'));
+        return dragDiv(ord, hdep++).width(hs).height(hs).addClass(cssClass('handle'));
       }
       //}}}
       function insertDragbar(ord) //{{{
@@ -1516,8 +1513,6 @@
     bgColor: 'black',
     bgOpacity: 0.6,
     bgFade: false,
-    borderOpacity: 0.4,
-    handleOpacity: 0.5,
     handleSize: 7,
 
     aspectRatio: 0,
