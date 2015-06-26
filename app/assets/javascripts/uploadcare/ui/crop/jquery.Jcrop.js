@@ -842,7 +842,8 @@
           cursor: ord + '-resize',
           position: 'absolute',
           zIndex: zi
-        }).addClass('ord-'+ord);
+        }).append('<div/>')
+          .addClass('ord-'+ord);
 
         if (Touch.support) {
           jq.bind('touchstart.jcrop', Touch.createDragger(ord));

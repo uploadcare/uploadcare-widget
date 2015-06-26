@@ -3,12 +3,10 @@
 .uploadcare-crop-widget {
   @include vertical-centered;
 
-  .jcrop-handle:before {
-    content: '';
-    display: block;
-    width: 26px;
-    height: 26px;
-    margin: -9px;
+  .jcrop-handle > div {
+    width: 35px;
+    height: 35px;
+    margin: -12px;
   }
 
   > div:first-child {
