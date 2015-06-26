@@ -69,7 +69,6 @@
     function startDragMode(mode, pos) //{{{
     {
       docOffset = getPos($img);
-      Tracker.setCursor(mode === 'move' ? mode : mode + '-resize');
 
       if (mode === 'move') {
         return Tracker.activateHandlers(createMover(pos), doneSelect);
@@ -1131,11 +1130,6 @@
         return trackUp(e);
       }
       //}}}
-      function setCursor(t) //{{{
-      {
-        $trk.css('cursor', t);
-      }
-      //}}}
 
       if (!trackDoc) {
         $trk.mousemove(trackMove).mouseup(trackUp).mouseout(trackUp);
@@ -1143,8 +1137,7 @@
 
       $img.before($trk);
       return {
-        activateHandlers: activateHandlers,
-        setCursor: setCursor
+        activateHandlers: activateHandlers
       };
     }());
     //}}}
@@ -1271,7 +1264,6 @@
       options.disabled = true;
       Selection.disableHandles();
       Selection.setCursor('default');
-      Tracker.setCursor('default');
     }
     //}}}
     function enableCrop() //{{{
