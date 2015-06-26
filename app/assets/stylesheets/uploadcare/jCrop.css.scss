@@ -25,7 +25,7 @@
   position: absolute;
   font-size: 0;
   background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .25);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);
   z-index: 320;
 }
 .jcrop-vline{height:100%;width:1px!important;}
@@ -47,8 +47,8 @@
 /* Handle style - size is set by Jcrop handleSize option (currently) */
 .jcrop-handle {
   border-radius: 50%;
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   z-index: 330;
 }
 .jcrop-handle:before,
@@ -60,21 +60,21 @@
   height: 1px;
   background: white;
 }
-.jcrop-handle:before {width: 6px; top: 5px;}
-.jcrop-handle:after {height: 6px; left: 5px;}
+.jcrop-handle:before {width: 6px; top: 6px;}
+.jcrop-handle:after {height: 6px; left: 6px;}
 .jcrop-handle.ord-nw:before,
-.jcrop-handle.ord-sw:before {left: 9px}
+.jcrop-handle.ord-sw:before {left: 11px}
 .jcrop-handle.ord-ne:before,
 .jcrop-handle.ord-se:before {left: -4px}
 .jcrop-handle.ord-nw:after,
-.jcrop-handle.ord-ne:after {top: 9px}
+.jcrop-handle.ord-ne:after {top: 11px}
 .jcrop-handle.ord-sw:after,
 .jcrop-handle.ord-se:after {top: -4px}
 /* Positioning of handles and drag bars */
-.jcrop-handle.ord-nw{left:0;margin-left:-5px;margin-top:-5px;top:0;}
-.jcrop-handle.ord-ne{margin-right:-5px;margin-top:-5px;right:0;top:0;}
-.jcrop-handle.ord-se{bottom:0;margin-bottom:-5px;margin-right:-5px;right:0;}
-.jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-5px;margin-left:-5px;}
+.jcrop-handle.ord-nw{left:0;margin-left:-6px;margin-top:-6px;top:0;}
+.jcrop-handle.ord-ne{margin-right:-6px;margin-top:-6px;right:0;top:0;}
+.jcrop-handle.ord-se{bottom:0;margin-bottom:-6px;margin-right:-6px;right:0;}
+.jcrop-handle.ord-sw{bottom:0;left:0;margin-bottom:-6px;margin-left:-6px;}
 
 
 /* Fix for twitter bootstrap et al. */
