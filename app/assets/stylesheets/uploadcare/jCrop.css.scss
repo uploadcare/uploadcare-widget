@@ -29,19 +29,25 @@
 .jcrop-vline.right{right:0;}
 .jcrop-hline.bottom{bottom:0;}
 
-/* Handle style - size is set by Jcrop handleSize option (currently) */
-.jcrop-handle{background-color:#333;border:1px #eee solid;font-size:1px;}
-
 /* This style is used for invisible click targets */
 .jcrop-tracker
 {
-  height: 100%; 
+  height: 100%;
   width: 100%;
   -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
   -webkit-touch-callout: none;              /* disable callout, image save panel */
   -webkit-user-select: none;                /* disable cut copy paste */
 }
 
+
+/* Handle style - size is set by Jcrop handleSize option (currently) */
+.jcrop-handle {
+  background-color: white;
+  font-size: 1px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
 /* Positioning of handles and drag bars */
 .jcrop-handle.ord-n{left:50%;margin-left:-4px;margin-top:-4px;top:0;}
 .jcrop-handle.ord-s{bottom:0;left:50%;margin-bottom:-4px;margin-left:-4px;}

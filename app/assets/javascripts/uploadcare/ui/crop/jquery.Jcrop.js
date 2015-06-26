@@ -854,8 +854,7 @@
       //}}}
       function insertHandle(ord) //{{{
       {
-        var hs = options.handleSize;
-        return dragDiv(ord, hdep++).width(hs).height(hs).addClass(cssClass('handle'));
+        return dragDiv(ord, hdep++).addClass(cssClass('handle'));
       }
       //}}}
       function createBorders(li) //{{{
@@ -1497,7 +1496,6 @@
     bgColor: 'black',
     bgOpacity: 0.6,
     bgFade: false,
-    handleSize: 7,
 
     aspectRatio: 0,
     keySupport: true,
