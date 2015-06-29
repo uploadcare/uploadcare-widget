@@ -18,6 +18,8 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
       user: 'Carrega cancel·lada'
       info: 'No s\'ha pogut carregar la informació'
       image: 'Només es permeten imatges'
+      createGroup: 'No es pot crear el grup d\'arxius'
+      deleted: 'Fitxer eliminat'
     draghere: 'Arrossega els fitxers fins aquí'
     file:
       one: '%1 fitxer'
@@ -25,15 +27,37 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
     buttons:
       cancel: 'Cancel·lar'
       remove: 'Eliminar'
+      choose:
+        files:
+          one: 'Escull un fitxer'
+          other: 'Escull fitxers'
+        images:
+          one: 'Escull una imatge'
+          other: 'Escull imatges'
     dialog:
+      done: 'Fet'
+      showFiles: 'Mostra fitxers'
       tabs:
         names:
+          'empty-pubkey': 'Benvingut'
           preview: 'Avanci'
           file: 'Ordinador'
-          url: 'Una adreça qualsevol'
+          url: 'Enllaços arbitraris'
+          camera: 'Càmera'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
+          huddle: 'Huddle'
         file:
           drag: 'Arrossega un fitxer aquí'
-          nodrop: 'Carrega fotos des del teu ordinador'
+          nodrop: 'Carrega fitxers des del teu ordinador'
+          cloudsTip: 'Emmagatzematge al núvol<br>i xarxes socials'
           or: 'o'
           button: 'Escull un fitxer des del teu ordinador'
           also: 'També pots seleccionar-lo de'
@@ -43,6 +67,17 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           line2: 'Només proporcioni el link.'
           input: 'Copiï el link aquí...'
           button: 'Pujar'
+        camera:
+          capture: 'Realitza una foto'
+          mirror: 'Mirall'
+          retry: 'Demanar permisos una altra vegada'
+          pleaseAllow:
+            title: 'Si us plau, permet accés a la teva càmera'
+            text: 'Aquest lloc t\'ha demanat de permetre accés a la càmera. ' +
+                  'Per tal de realitzar imatges amb la teva càmera has d\'acceptar aquesta petició.'
+          notFound:
+            title: 'No s\'ha detectat cap càmera'
+            text: 'Sembla que no tens cap càmera connectada a aquest dispositiu.'
         preview:
           unknownName: 'desconegut'
           change: 'Cancel·lar'
@@ -54,33 +89,42 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           regular:
             title: 'Vols pujar aquest fitxer?'
             line1: 'Estàs a punt de pujar el fitxer superior.'
-            line2: 'Confirmi si us plau.'
+            line2: 'Confirmi, si us plau.'
           image:
             title: 'Vols pujar aquesta imatge?'
             change: 'Cancel·lar'
           crop:
             title: 'Tallar i pujar aquesta imatge'
             done: 'Fet'
+            free: 'lliure'
           error:
             default:
-              title: 'La pujada ha fallat'
-              line1: 'S\'ha produït un error durant la pujada.'
-              line2: 'Si us plau, provi-ho de nou.'
+              title: 'La pujada ha fallat!'
+              text: 'S\'ha produït un error durant la pujada.'
+              back: 'Si us plau, provi-ho de nou.'
             image:
-              title: 'Només imatges'
-              line1: 'Només s\'accepten fitxers d\'imatges.'
-              line2: 'Si us plau, provi-ho de nou amb un altre fitxer.'
+              title: 'Només s\'accepten fitxers d\'imatges.'
+              text: 'Si us plau, provi-ho de nou amb un altre fitxer.'
+              back: 'Escull imatge'
             size:
-              title: 'Límit de mida'
-              line1: 'El fitxer que has seleccionat sobrepassa el límit dels 100MB.'
-              line2: 'Si us plau provi-ho de nou amb un altre fitxer.'
+              title: 'La mida del fitxer que has seleccionat sobrepassa el límit.'
+              text: 'Si us plau, provi-ho de nou amb un altre fitxer.'
             loadImage:
               title: 'Error'
               text: 'No s\'ha pogut carregar la imatge'
+          multiple:
+            title: 'N\'has escollit %files%'
+            question: 'Vols afegir tots aquests fitxers?'
+            tooManyFiles: 'Has escollit massa fitxers. %max% és el màxim.'
+            tooFewFiles: 'Has escollit %files%. Com a mínim en calen %min%.'
+            clear: 'Eliminar-los tots'
+            done: 'Fet'
       footer:
         text: 'Els fitxers han estat carregats, gestionats i processats per'
+        link: 'Uploadcare.com'
 
-
+# Pluralization rules taken from:
+# http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
   ns.ca = (n) ->
     return 'one' if n == 1
