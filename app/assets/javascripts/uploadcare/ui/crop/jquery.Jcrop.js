@@ -212,12 +212,8 @@
     function doneSelect(pos) //{{{
     {
       var c = Coords.getFixed();
-      if ((c.w > options.minSelect[0]) && (c.h > options.minSelect[1])) {
-        Selection.enableHandles();
-        Selection.done();
-      } else {
-        Selection.release();
-      }
+      Selection.enableHandles();
+      Selection.done();
     }
     //}}}
     function selectDrag(pos) //{{{
@@ -1492,7 +1488,6 @@
     animationDelay: 20,
     swingSpeed: 3,
 
-    minSelect: [0, 0],
     maxSize: [0, 0],
     minSize: [0, 0],
 
