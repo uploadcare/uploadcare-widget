@@ -60,16 +60,16 @@
   height: 1px;
   background: white;
 }
-.jcrop-handle:before {width: 6px; top: 6px;}
-.jcrop-handle:after {height: 6px; left: 6px;}
+.jcrop-handle:before {width: 3px; top: 6px;}
+.jcrop-handle:after {height: 3px; left: 6px;}
 .jcrop-handle.ord-nw:before,
-.jcrop-handle.ord-sw:before {left: 11px}
+.jcrop-handle.ord-sw:before {left: 12px}
 .jcrop-handle.ord-ne:before,
-.jcrop-handle.ord-se:before {left: -4px}
+.jcrop-handle.ord-se:before {left: -2px}
 .jcrop-handle.ord-nw:after,
-.jcrop-handle.ord-ne:after {top: 11px}
+.jcrop-handle.ord-ne:after {top: 12px}
 .jcrop-handle.ord-sw:after,
-.jcrop-handle.ord-se:after {top: -4px}
+.jcrop-handle.ord-se:after {top: -2px}
 /* Positioning of handles and drag bars */
 .jcrop-handle.ord-nw{left:0;margin-left:-6px;margin-top:-6px;top:0;}
 .jcrop-handle.ord-ne{margin-right:-6px;margin-top:-6px;right:0;top:0;}
