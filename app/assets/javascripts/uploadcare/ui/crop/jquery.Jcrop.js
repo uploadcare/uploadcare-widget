@@ -69,7 +69,6 @@
     function startDragMode(mode, pos) //{{{
     {
       docOffset = getPos($img);
-      Tracker.setCursor(mode === 'move' ? mode : mode + '-resize');
 
       if (mode === 'move') {
         return Tracker.activateHandlers(createMover(pos), doneSelect);
@@ -213,12 +212,8 @@
     function doneSelect(pos) //{{{
     {
       var c = Coords.getFixed();
-      if ((c.w > options.minSelect[0]) && (c.h > options.minSelect[1])) {
-        Selection.enableHandles();
-        Selection.done();
-      } else {
-        Selection.release();
-      }
+      Selection.enableHandles();
+      Selection.done();
     }
     //}}}
     function selectDrag(pos) //{{{
@@ -317,9 +312,6 @@
           overflow: 'hidden'
         }),
 
-        $hdl_holder = $('<div />') 
-        .width('100%').height('100%').css('zIndex', 320), 
-
         $sel = $('<div />') 
         .css({
           position: 'absolute',
@@ -327,7 +319,7 @@
         }).dblclick(function(){
           var c = Coords.getFixed();
           options.onDblClick.call(api,c);
-        }).insertBefore($img).append($img_holder, $hdl_holder); 
+        }).insertBefore($img).append($img_holder);
 
     if (img_mode) {
 
@@ -820,7 +812,6 @@
     // Selection Module {{{
     var Selection = (function () {
       var awake,
-          hdep = 370,
           borders = {},
           handle = {},
           dragbar = {},
@@ -830,48 +821,31 @@
       function insertBorder(type) //{{{
       {
         var jq = $('<div />').css({
-          position: 'absolute',
-          opacity: options.borderOpacity
+          position: 'absolute'
         }).addClass(cssClass(type));
-        $img_holder.append(jq);
+        $sel.append(jq);
         return jq;
       }
       //}}}
-      function dragDiv(ord, zi) //{{{
+      function dragDiv(ord) //{{{
       {
         var jq = $('<div />').mousedown(createDragger(ord)).css({
           cursor: ord + '-resize',
-          position: 'absolute',
-          zIndex: zi
-        }).addClass('ord-'+ord);
+          position: 'absolute'
+        }).append('<div/>')
+          .addClass('ord-'+ord);
 
         if (Touch.support) {
           jq.bind('touchstart.jcrop', Touch.createDragger(ord));
         }
 
-        $hdl_holder.append(jq);
+        $sel.append(jq);
         return jq;
       }
       //}}}
       function insertHandle(ord) //{{{
       {
-        var hs = options.handleSize;
-        return dragDiv(ord, hdep++).css({
-          opacity: options.handleOpacity
-        }).width(hs).height(hs).addClass(cssClass('handle'));
-      }
-      //}}}
-      function insertDragbar(ord) //{{{
-      {
-        return dragDiv(ord, hdep++).addClass('jcrop-dragbar');
-      }
-      //}}}
-      function createDragbars(li) //{{{
-      {
-        var i;
-        for (i = 0; i < li.length; i++) {
-          dragbar[li[i]] = insertDragbar(li[i]);
-        }
+        return dragDiv(ord).addClass(cssClass('handle'));
       }
       //}}}
       function createBorders(li) //{{{
@@ -988,18 +962,10 @@
         options.onRelease.call(api);
       }
       //}}}
-      function showHandles() //{{{
-      {
-        if (seehandles) {
-          $hdl_holder.show();
-        }
-      }
-      //}}}
       function enableHandles() //{{{
       {
         seehandles = true;
         if (options.allowResize) {
-          $hdl_holder.show();
           return true;
         }
       }
@@ -1007,8 +973,7 @@
       function disableHandles() //{{{
       {
         seehandles = false;
-        $hdl_holder.hide();
-      } 
+      }
       //}}}
       function animMode(v) //{{{
       {
@@ -1029,9 +994,6 @@
       //}}}
       // Insert draggable elements {{{
       // Insert border divs for outline
-
-      if (options.dragEdges && $.isArray(options.createDragbars))
-        createDragbars(options.createDragbars);
 
       if ($.isArray(options.createHandles))
         createHandles(options.createHandles);
@@ -1074,7 +1036,6 @@
         enableOnly: function () {
           seehandles = true;
         },
-        showHandles: showHandles,
         disableHandles: disableHandles,
         animMode: animMode,
         setBgOpacity: setBgOpacity,
@@ -1165,11 +1126,6 @@
         return trackUp(e);
       }
       //}}}
-      function setCursor(t) //{{{
-      {
-        $trk.css('cursor', t);
-      }
-      //}}}
 
       if (!trackDoc) {
         $trk.mousemove(trackMove).mouseup(trackUp).mouseout(trackUp);
@@ -1177,8 +1133,7 @@
 
       $img.before($trk);
       return {
-        activateHandlers: activateHandlers,
-        setCursor: setCursor
+        activateHandlers: activateHandlers
       };
     }());
     //}}}
@@ -1305,7 +1260,6 @@
       options.disabled = true;
       Selection.disableHandles();
       Selection.setCursor('default');
-      Tracker.setCursor('default');
     }
     //}}}
     function enableCrop() //{{{
@@ -1401,7 +1355,6 @@
     //}}}
     //}}}
 
-    $hdl_holder.hide();
     interfaceUpdate(true);
 
     var api = {
@@ -1516,14 +1469,10 @@
     bgColor: 'black',
     bgOpacity: 0.6,
     bgFade: false,
-    borderOpacity: 0.4,
-    handleOpacity: 0.5,
-    handleSize: 7,
 
     aspectRatio: 0,
     keySupport: true,
     createHandles: ['n','s','e','w','nw','ne','se','sw'],
-    createDragbars: ['n','s','e','w'],
     createBorders: ['n','s','e','w'],
     drawBorders: true,
     dragEdges: true,
@@ -1539,7 +1488,6 @@
     animationDelay: 20,
     swingSpeed: 3,
 
-    minSelect: [0, 0],
     maxSize: [0, 0],
     minSize: [0, 0],
 
