@@ -143,6 +143,14 @@ namespace 'uploadcare.utils.imageProcessor', (ns) ->
       reader.readAsArrayBuffer(file)
 
     readNext = ->
+      readToView file.slice(pos, pos + 128), (view) ->
+        for i in [0...view.byteLength]
+          if view.getUint8(i) == 0xff
+            pos += i
+            break
+        readNextChunk()
+
+    readNextChunk = ->
       startPos = pos
       readToView file.slice(pos, pos += 4), (view) ->
         if view.byteLength != 4 or view.getUint8(0) != 0xff
