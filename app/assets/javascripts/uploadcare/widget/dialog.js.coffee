@@ -227,7 +227,9 @@ namespace 'uploadcare', (ns) ->
           return
 
       files.onAnyDone (file, fileInfo) =>
-        if not fileInfo.isImage or fileInfo.cdnUrlModifiers
+        # .cdnUrlModifiers came from already cropped files
+        # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
+        if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
           return
 
         info = fileInfo.originalImageInfo
