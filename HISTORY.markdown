@@ -1,5 +1,11 @@
 # History
 
+### 2.3.5, 11.07.2015
+
+* Prevent infinity loop when multiupload dialog is used with crop with 
+  some ratio and uploaded image is already has this ratio.
+* Correct reading of EXIF data from some corrupeted JPEGs. 
+
 ### 2.3.4, 29.06.2015
 
 * New crop visual style.
