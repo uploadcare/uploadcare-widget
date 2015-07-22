@@ -1,4 +1,4 @@
-# = require uploadcare/core/jquery.1.11.3.min.js
+# = require uploadcare/core/jquery.2.1.4.min.js
 # = require uploadcare/widget
 
 jQuery.noConflict(true)
