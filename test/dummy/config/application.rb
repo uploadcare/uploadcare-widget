@@ -74,7 +74,8 @@ module Sprockets
   class MyJstProcessor < JstProcessor
 
     def evaluate(scope, locals, &block)
-      "uploadcare.templates.JST[#{scope.logical_path.inspect}] = #{indent(data)};"
+      name = scope.logical_path.split('/').slice(2..-1).join('/')
+      "uploadcare.templates.JST[#{name.inspect}] = #{indent(data)};"
     end
   end
 
