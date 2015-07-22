@@ -171,22 +171,21 @@ namespace 'uploadcare.settings', (ns) ->
     publicDefaults[$.camelCase(key)] = value
   expose('defaults', publicDefaults)
 
-  # Defaults + global variables
-  ns.globals = utils.once ->
+  # global variables only
+  ns.globals = ->
     values = {}
-    for own key, fallback of defaults
+    for key of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
-      values[$.camelCase(key)] = if value isnt undefined
-          value
-        else
-          fallback
-
-    normalize(values)
+      if value isnt undefined
+        values[$.camelCase(key)] = value
+    values
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
-  ns.common = utils.once (settings) ->
-    result = normalize($.extend({}, ns.globals(), settings or {}))
+  ns.common = utils.once (settings, ignoreGlobals) ->
+    if not ignoreGlobals
+      defaults = $.extend(defaults, ns.globals())
+    result = normalize($.extend(defaults, settings or {}))
     if not result.publicKey
       utils.commonWarning('publicKey')
     ns.waitForSettings.fire(result)
