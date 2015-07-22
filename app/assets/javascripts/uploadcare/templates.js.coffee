@@ -1,4 +1,3 @@
-# = require_directory ./templates
 
 {
   namespace,
@@ -8,8 +7,10 @@
 } = uploadcare
 
 namespace 'uploadcare.templates', (ns) ->
+  ns.JST = {}
+
   ns.tpl = (key, ctx={}) ->
-    fn = JST["uploadcare/templates/#{key}"]
+    fn = ns.JST["uploadcare/templates/#{key}"]
     if fn?
       fn($.extend({t: locale.t, utils}, ctx))
     else

@@ -66,3 +66,17 @@ module Dummy
     config.assets.version = '1.0'
   end
 end
+
+
+require "sprockets"
+module Sprockets
+
+  class MyJstProcessor < JstProcessor
+
+    def evaluate(scope, locals, &block)
+      "uploadcare.templates.JST[#{scope.logical_path.inspect}] = #{indent(data)};"
+    end
+  end
+
+  Sprockets.register_engine '.jst', MyJstProcessor
+end

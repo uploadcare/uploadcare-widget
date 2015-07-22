@@ -161,7 +161,7 @@
   Previous value remains until upload of a new file is successful.
 * `dialogApi.dialog` is removed in favor of `dialogApi` itself, which
   now supports promise interface.
-* `dialogApi.done`  is part of the promise interface and receives a callback
+* `dialogApi.done` is part of the promise interface and receives a callback
   (instead of triggering resolving).
   In order to resolve use `dialogApi.resolve`.
 * `dialogApi.onSwitched` is removed in favor of `dialogApi.progress`
