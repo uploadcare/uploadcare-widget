@@ -2,10 +2,10 @@
 
 ### 2.4.0, 23.07.2015
 
-* Built-in jQuery upgraded to 2.1.4. This automatically means what
+* Built-in jQuery upgraded to 2.1.4. This automatically means that
   widget version with built-in jQuery will no longer work in IE8.
   But we still support IE8 in version without built-in jQuery.
-* Uploadcare don't expose and don't use global `window.JST` object anymore.
+* Uploadcare doesn't expose and doesn't use global `window.JST` object anymore.
   This enhances widget isolation on the page.
 
 ### 2.3.5, 11.07.2015
