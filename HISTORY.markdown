@@ -1,5 +1,13 @@
 # History
 
+### 2.4.0, 23.07.2015
+
+* Built-in jQuery upgraded to 2.1.4. This automatically means what
+  widget version with built-in jQuery will no longer work in IE8.
+  But we still support IE8 in version without built-in jQuery.
+* Uploadcare don't expose and don't use global `window.JST` object anymore.
+  This enhances widget isolation on the page.
+
 ### 2.3.5, 11.07.2015
 
 * Prevent infinity loop when multiupload dialog is used with crop with 
@@ -323,7 +331,7 @@
   properties are null.
 * Fixed scrolling on social tabs on touch devices.
 * Fixed file size labels.
-* Fixed images in multiple preview in ie8.
+* Fixed images in multiple preview in IE8.
 * Fixed impossible to set null value to widget.
 * Removed deprecated `preview()` and `previewUrl` fields of `fileInfo` object.
 
