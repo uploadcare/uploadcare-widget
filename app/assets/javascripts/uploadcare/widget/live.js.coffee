@@ -56,11 +56,15 @@ namespace 'uploadcare', (ns) ->
       if widget and widget.inputElement == this
         widgetElement.remove()
 
-  ns.start = (s) ->
-    do live = ->
-      initialize($(selector))
-    if settings.common(s).live
-      setInterval(live, 100)
+  ns.start = utils.once (s, isolated) ->
+    # when isolated, call settings.common(s) only
+    s = settings.common(s, isolated)
+    if isolated
+      return
+    if s.live
+      setInterval(ns.initialize, 100)
+    # should be after settings.common(s) call
+    ns.initialize()
 
   $ ->
     if not window["UPLOADCARE_MANUAL_START"]

@@ -81,7 +81,7 @@ namespace 'uploadcare.utils', (ns) ->
     target
 
   ns.upperCase = (s) ->
-    s.replace(/-/g, '_').toUpperCase()
+    s.replace(/([A-Z])/g, '_$1').toUpperCase()
 
   ns.publicCallbacks = (callbacks) ->
     result = callbacks.add
