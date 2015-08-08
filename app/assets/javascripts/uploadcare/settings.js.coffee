@@ -10,33 +10,33 @@ namespace 'uploadcare.settings', (ns) ->
   defaults =
     # developer hooks
     'live': true
-    'manual-start': false
+    'manualStart': false
     'locale': null
-    'locale-pluralize': null
-    'locale-translations': null
+    'localePluralize': null
+    'localeTranslations': null
     # widget settings
-    'system-dialog': false
+    'systemDialog': false
     'crop': false
-    'preview-step': false
-    'images-only': false
+    'previewStep': false
+    'imagesOnly': false
     'clearable': false
     'multiple': false
-    'multiple-max': 0
-    'multiple-min': 1
-    'image-shrink': false
-    'path-value': true
+    'multipleMax': 0
+    'multipleMin': 1
+    'imageShrink': false
+    'pathValue': true
     'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
-    'preferred-types': ''
-    'input-accept-types': ''  # '' means default, null means "disable accept"
+    'preferredTypes': ''
+    'inputAcceptTypes': ''  # '' means default, null means "disable accept"
     # upload settings
-    'do-not-store': false
-    'public-key': null
-    'pusher-key': '79ae88bd931ea68464d9'
-    'cdn-base': 'http://www.ucarecdn.com'
-    'url-base': 'https://upload.uploadcare.com'
-    'social-base': 'https://social.uploadcare.com'
+    'doNotStore': false
+    'publicKey': null
+    'pusherKey': '79ae88bd931ea68464d9'
+    'cdnBase': 'http://www.ucarecdn.com'
+    'urlBase': 'https://upload.uploadcare.com'
+    'socialBase': 'https://social.uploadcare.com'
     # maintain settings
-    'script-base': if SCRIPT_BASE? then SCRIPT_BASE else ''
+    'scriptBase': if SCRIPT_BASE? then SCRIPT_BASE else ''
 
   presets =
     'tabs':
@@ -164,12 +164,9 @@ namespace 'uploadcare.settings', (ns) ->
 
 
   # Defaults (not normalized)
-  publicDefaults = {
+  expose('defaults', $.extend({
     allTabs: presets.tabs.all
-  }
-  for own key, value of defaults
-    publicDefaults[$.camelCase(key)] = value
-  expose('defaults', publicDefaults)
+  }, defaults))
 
   # global variables only
   ns.globals = ->
@@ -177,7 +174,7 @@ namespace 'uploadcare.settings', (ns) ->
     for key of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       if value isnt undefined
-        values[$.camelCase(key)] = value
+        values[key] = value
     values
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
@@ -217,7 +214,7 @@ namespace 'uploadcare.settings', (ns) ->
 
   uploadcare.tabsCss = new ns.CssCollector
 
-  defaults['_empty-key-text'] = """<div class="uploadcare-dialog-message-center">
+  defaults['_emptyKeyText'] = """<div class="uploadcare-dialog-message-center">
   <div class="uploadcare-dialog-big-title">Hello!</div>
   <div class="uploadcare-dialog-large-text">
     <div>Your <a class="uploadcare-link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>
