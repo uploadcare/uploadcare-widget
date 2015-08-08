@@ -1,5 +1,9 @@
 # History
 
+### 2.4.1, 08.08.2015
+
+* `uploadcare.start()` is fixed and accepts global settings again.
+
 ### 2.4.0, 23.07.2015
 
 * Built-in jQuery upgraded to 2.1.4. This automatically means that
