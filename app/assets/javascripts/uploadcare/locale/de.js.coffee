@@ -50,7 +50,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           cloudsTip: 'Cloud Speicher<br>und soziale Dienste'
           or: 'oder'
           button: 'Wählen Sie eine lokale Datei'
-          also: 'Sie köhnen es auch wählen von'
+          also: 'Sie können sie auch wählen von'
         url:
           title: 'Dateien vom Web'
           line1: 'Holen Sie sich irgendeine Datei vom Web.'
