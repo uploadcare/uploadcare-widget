@@ -53,7 +53,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         file:
           drag: 'Drop a file here'
           nodrop: 'Upload files from your computer'
-          cloudsTip: 'Cloud storages<br>and social services'
+          cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
           button: 'Choose a local file'
           also: 'You can also choose it from'
