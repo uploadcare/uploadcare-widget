@@ -1,5 +1,10 @@
 # History
 
+
+### 2.4.2, 17.08.2015
+
+* Fixes in English, Russian and German locales.
+
 ### 2.4.1, 08.08.2015
 
 * `uploadcare.start()` is fixed and accepts global settings again.
