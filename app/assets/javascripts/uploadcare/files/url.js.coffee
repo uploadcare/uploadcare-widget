@@ -53,8 +53,8 @@ namespace 'uploadcare.files', (ns) ->
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
         .fail(df.reject)
         .done (data) =>
-          pusherWatcher.watch data.token
-          pollWatcher.watch data.token
+          pusherWatcher.watch(data.token)
+          pollWatcher.watch(data.token)
 
       df.always =>
         $([pusherWatcher, pollWatcher]).off(@allEvents)
@@ -78,7 +78,7 @@ namespace 'uploadcare.files', (ns) ->
 
   class PusherWatcher
     constructor: (pusherKey) ->
-      @pusher = pusher.getPusher(pusherKey, 'url-upload')
+      @pusher = pusher.getPusher(pusherKey)
 
     watch: (token) ->
       channel = @pusher.subscribe("task-status-#{token}")
@@ -87,7 +87,6 @@ namespace 'uploadcare.files', (ns) ->
         $(this).trigger(ev, data)
 
     stopWatching: ->
-      @pusher.release()
 
 
   class PollWatcher
