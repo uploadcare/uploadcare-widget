@@ -37,7 +37,7 @@ namespace 'uploadcare.files', (ns) ->
     __startUpload: ->
       df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings.pusherKey)
-      pollWatcher = new PollWatcher("#{@settings.urlBase}/status/")
+      pollWatcher = new PollWatcher("#{@settings.urlBase}/from_url/status/")
       @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
 
       # turn off pollWatcher if we receive any message from pusher
