@@ -101,7 +101,7 @@ namespace 'uploadcare.files', (ns) ->
           @__updateStatus().done =>
             if @interval  # Do not schedule next request if watcher stopped.
               bind()
-        , 250)
+        , 333)
 
     stopWatching: ->
       if @interval
@@ -111,7 +111,6 @@ namespace 'uploadcare.files', (ns) ->
     __updateStatus: ->
       utils.jsonp(@poolUrl, {@token})
         .fail (error) =>
-          @stopWatching()
           $(this).trigger('error')
         .done (data) =>
           $(this).trigger(data.status, data)
