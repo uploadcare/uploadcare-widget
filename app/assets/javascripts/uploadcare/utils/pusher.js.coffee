@@ -14,17 +14,19 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
   class ManagedPusher extends uploadcare.Pusher
     subscribe: (name) ->
       # Ensure we are connected when subscribing.
-#      console.log('subscribed', name, @channels.channels)
+      if @disconnectTimeout
+        clearTimeout(@disconnectTimeout)
+        @disconnectTimeout = null
       @connect()
       super
 
     unsubscribe: (name) ->
       super
-#      console.log('unsubscribe', name, @channels.channels)
       if $.isEmptyObject(@channels.channels)
-        setTimeout =>
+        @disconnectTimeout = setTimeout =>
+          @disconnectTimeout = null
           @disconnect()
-        , 0
+        , 5000
 
   ns.getPusher = (key) ->
     if not pushers[key]?
