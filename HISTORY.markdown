@@ -1,6 +1,10 @@
 # History
 
 
+### 2.4.3, 19.08.2015
+
+* Fixed uploading from url for large files.
+
 ### 2.4.2, 17.08.2015
 
 * Fixes in English, Russian and German locales.
