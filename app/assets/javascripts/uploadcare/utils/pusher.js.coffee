@@ -1,69 +1,38 @@
-#
-# USAGE:
-# 
-#     var pusher = uploadcare.utils.pusher.getPusher(key, 'owner')
-#     # owner is your module which uses pusher
-#
-#     # when you're done
-#     pusher.release()
-#
+{
+  jQuery: $,
+} = uploadcare
 
 uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
   pushers = {}
 
-  ns.getPusher = (key, owner) ->
-    if key not of pushers
-      pushers[key] =
-        instance: null,
-        owners: {}
+  # This fixes Pusher's prototype. Because Pusher replaces it:
+  # Pusher.prototype = {method: ...}
+  # instead of extending:
+  # Pusher.prototype.method = ...
+  uploadcare.Pusher.prototype.constructor = uploadcare.Pusher
 
-    if not pushers[key].owners[owner]
-      pushers[key].owners[owner] = true
+  class ManagedPusher extends uploadcare.Pusher
+    subscribe: (name) ->
+      # Ensure we are connected when subscribing.
+      if @disconnectTimeout
+        clearTimeout(@disconnectTimeout)
+        @disconnectTimeout = null
+      @connect()
+      super
 
-    updateConnection(key)
+    unsubscribe: (name) ->
+      super
+      # Schedule disconnect if no channels left.
+      if $.isEmptyObject(@channels.channels)
+        @disconnectTimeout = setTimeout =>
+          @disconnectTimeout = null
+          @disconnect()
+        , 5000
 
-    pusherWrapped(key, owner)
+  ns.getPusher = (key) ->
+    if not pushers[key]?
+      pushers[key] = new ManagedPusher(key)
 
-
-  releasePusher = (key, owner) ->
-    if not pushers[key].owners[owner]
-      return 
-
-    pushers[key].owners[owner] = false
-
-    updateConnection(key)
-
-  hasOwners = (key) ->
-    (owner for owner of pushers[key].owners when pushers[key].owners[owner])
-      .length > 0
-
-  updateConnection = (key) ->
-    instance = pusherInstance(key)
-
-    # .connect() and disconnect() seems to be no-ops
-    # if it's already in this state. so not checking.
-    if hasOwners(key)
-      instance.connect()
-    else
-      setTimeout(->
-        if not hasOwners(key)
-          instance.disconnect()
-      , 5000)
-      
-
-  pusherInstance = (key) ->
-    if pushers[key]?.instance?
-      return pushers[key].instance
-    
-    pushers[key].instance = new uploadcare.Pusher(key)
-
-
-  pusherWrapped = (key, owner) ->
-    Wrapped = ->
-      this.owner = owner # just fyi
-      this.release = ->
-        releasePusher(key, owner)
-      this # is a constructor
-
-    Wrapped.prototype = pusherInstance(key)
-    new Wrapped()
+    # Preconnect before we actually need channel.
+    pushers[key].connect()
+    return pushers[key]

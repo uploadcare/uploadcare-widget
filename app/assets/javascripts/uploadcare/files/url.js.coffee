@@ -37,12 +37,7 @@ namespace 'uploadcare.files', (ns) ->
     __startUpload: ->
       df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings.pusherKey)
-      pollWatcher = new PollWatcher("#{@settings.urlBase}/status/")
-      @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
-
-      # turn off pollWatcher if we receive any message from pusher
-      $(pusherWatcher).one @allEvents, =>
-        pollWatcher.stopWatching()
+      pollWatcher = new PollWatcher("#{@settings.urlBase}/from_url/status/")
 
       data =
         pub_key: @settings.publicKey
@@ -53,13 +48,20 @@ namespace 'uploadcare.files', (ns) ->
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
         .fail(df.reject)
         .done (data) =>
-          pusherWatcher.watch data.token
-          pollWatcher.watch data.token
+          @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
+          df.always =>
+            $([pusherWatcher, pollWatcher]).off(@allEvents)
+            pusherWatcher.stopWatching()
+            pollWatcher.stopWatching()
 
-      df.always =>
-        $([pusherWatcher, pollWatcher]).off(@allEvents)
-        pusherWatcher.stopWatching()
-        pollWatcher.stopWatching()
+          # turn off pollWatcher if we receive any message from pusher
+          $(pusherWatcher).one @allEvents, =>
+            pollWatcher.stopWatching()
+
+          pusherWatcher.watch(data.token)
+          pollWatcher.watch(data.token)
+
+      df
 
     __listenWatcher: (df, watcher) =>
       watcher
@@ -78,16 +80,16 @@ namespace 'uploadcare.files', (ns) ->
 
   class PusherWatcher
     constructor: (pusherKey) ->
-      @pusher = pusher.getPusher(pusherKey, 'url-upload')
+      @pusher = pusher.getPusher(pusherKey)
 
-    watch: (token) ->
-      channel = @pusher.subscribe("task-status-#{token}")
+    watch: (@token) ->
+      channel = @pusher.subscribe("task-status-#{@token}")
 
       channel.bind_all (ev, data) =>
         $(this).trigger(ev, data)
 
     stopWatching: ->
-      @pusher.release()
+      @pusher.unsubscribe("task-status-#{@token}")
 
 
   class PollWatcher
