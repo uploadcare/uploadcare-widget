@@ -96,11 +96,12 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (@poolUrl) ->
 
     watch: (@token) ->
-      bind = =>
-        @__updateStatus().done =>
-          if @interval  # Do not schedule next request if watcher stopped.
-            @interval = setTimeout(bind, 250)
-      @interval = utils.defer(bind)
+      do bind = =>
+        @interval = setTimeout( =>
+          @__updateStatus().done =>
+            if @interval  # Do not schedule next request if watcher stopped.
+              bind()
+        , 250)
 
     stopWatching: ->
       if @interval
