@@ -80,13 +80,14 @@ namespace 'uploadcare.files', (ns) ->
     constructor: (pusherKey) ->
       @pusher = pusher.getPusher(pusherKey)
 
-    watch: (token) ->
-      channel = @pusher.subscribe("task-status-#{token}")
+    watch: (@token) ->
+      channel = @pusher.subscribe("task-status-#{@token}")
 
       channel.bind_all (ev, data) =>
         $(this).trigger(ev, data)
 
     stopWatching: ->
+      @pusher.unsubscribe("task-status-#{@token}")
 
 
   class PollWatcher
