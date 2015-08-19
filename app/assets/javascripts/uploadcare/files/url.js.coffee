@@ -38,11 +38,6 @@ namespace 'uploadcare.files', (ns) ->
       df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings.pusherKey)
       pollWatcher = new PollWatcher("#{@settings.urlBase}/from_url/status/")
-      @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
-
-      # turn off pollWatcher if we receive any message from pusher
-      $(pusherWatcher).one @allEvents, =>
-        pollWatcher.stopWatching()
 
       data =
         pub_key: @settings.publicKey
@@ -53,13 +48,20 @@ namespace 'uploadcare.files', (ns) ->
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
         .fail(df.reject)
         .done (data) =>
+          @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
+          df.always =>
+            $([pusherWatcher, pollWatcher]).off(@allEvents)
+            pusherWatcher.stopWatching()
+            pollWatcher.stopWatching()
+
+          # turn off pollWatcher if we receive any message from pusher
+          $(pusherWatcher).one @allEvents, =>
+            pollWatcher.stopWatching()
+
           pusherWatcher.watch(data.token)
           pollWatcher.watch(data.token)
 
-      df.always =>
-        $([pusherWatcher, pollWatcher]).off(@allEvents)
-        pusherWatcher.stopWatching()
-        pollWatcher.stopWatching()
+      df
 
     __listenWatcher: (df, watcher) =>
       watcher

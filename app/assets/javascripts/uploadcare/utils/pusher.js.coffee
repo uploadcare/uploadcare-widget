@@ -22,6 +22,7 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
 
     unsubscribe: (name) ->
       super
+      # Schedule disconnect if no channels left.
       if $.isEmptyObject(@channels.channels)
         @disconnectTimeout = setTimeout =>
           @disconnectTimeout = null
@@ -32,5 +33,6 @@ uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
     if not pushers[key]?
       pushers[key] = new ManagedPusher(key)
 
+    # Preconnect before we actually need channel.
     pushers[key].connect()
     return pushers[key]
