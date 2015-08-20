@@ -1,12 +1,11 @@
 
 {
-  namespace,
   locale,
   utils,
   jQuery: $,
 } = uploadcare
 
-namespace 'uploadcare.templates', (ns) ->
+uploadcare.namespace 'templates', (ns) ->
   ns.JST = {}
 
   ns.tpl = (key, ctx={}) ->

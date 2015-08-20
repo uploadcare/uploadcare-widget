@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.zhTW =
     uploading: '上傳中...請等待'
     loadingInfo: '正在讀取資訊...'
@@ -114,6 +114,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.zhTW = (n) ->
     'other'

@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.pl =
     uploading: 'Przesyłanie... Proszę czekać.'
     errors:
@@ -23,7 +23,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           title: 'Pliki z sieci'
 
 
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.pl = (n) ->
     return 'one' if n == 1
     return 'few' if (n % 10 in [2..4]) && (n % 100 not in [12..14])

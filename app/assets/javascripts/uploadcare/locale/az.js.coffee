@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.az =
     uploading: 'Yüklənilir... Lütfən, gözləyin.'
     loadingInfo: 'İnfo yüklənilir...'
@@ -114,6 +114,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         text: 'Faylları yükləyən, yadda saxlayan və icra edən'
 
 
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.az = (n) ->
     'other'

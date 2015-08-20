@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.ru =
     uploading: 'Идет загрузка'
     loadingInfo: 'Загрузка информации...'
@@ -115,7 +115,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
         text: 'Для загрузки, хранения и обработки файлов используется'
 
 
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.ru = (n) ->
     if ((n/10%10|0) == 1) or (n%10 == 0) or (n%10 > 4)
     then 'many' else if n%10 == 1 then 'one' else 'few'

@@ -1,10 +1,9 @@
 {
-  namespace,
   jQuery: $,
   utils,
 } = uploadcare
 
-namespace 'uploadcare.utils.imageProcessor', (ns) ->
+uploadcare.namespace 'utils.imageProcessor', (ns) ->
 
   DataView = window.DataView
   FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader

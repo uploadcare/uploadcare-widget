@@ -2,7 +2,7 @@
 ## English locale is the default and used as a fallback.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.en =
     uploading: 'Uploading... Please wait.'
     loadingInfo: 'Loading info...'
@@ -122,7 +122,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.en = (n) ->
     return 'one' if n == 1
     'other'

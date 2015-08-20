@@ -1,11 +1,10 @@
 {
   expose
-  namespace,
   utils,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.settings', (ns) ->
+uploadcare.namespace 'settings', (ns) ->
 
   defaults =
     # developer hooks

@@ -7,14 +7,13 @@
 # = require ./multiple-widget
 
 {
-  namespace,
   utils,
   jQuery: $,
   dragdrop,
   locale: {t}
 } = uploadcare
 
-namespace 'uploadcare.widget', (ns) ->
+uploadcare.namespace 'widget', (ns) ->
   class ns.BaseWidget
 
     constructor: (@element, @settings) ->

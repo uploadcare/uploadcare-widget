@@ -1,13 +1,12 @@
 # = require_directory ./locale
 
 {
-  namespace,
   utils,
   settings: s,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.locale', (ns) ->
+uploadcare.namespace 'locale', (ns) ->
   defaultLang = 'en'
   defaults =
     lang: defaultLang

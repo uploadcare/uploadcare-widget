@@ -1,9 +1,8 @@
 {
-  namespace,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.utils', (utils) ->
+uploadcare.namespace 'utils', (utils) ->
 
   class utils.Collection
     constructor: (items = []) ->

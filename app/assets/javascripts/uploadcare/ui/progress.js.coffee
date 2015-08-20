@@ -1,12 +1,11 @@
 {
-  namespace,
   files,
   jQuery: $,
   utils: {abilities},
   templates: {tpl},
 } = uploadcare
 
-namespace 'uploadcare.ui.progress', (ns) ->
+uploadcare.namespace 'ui.progress', (ns) ->
 
   class ns.Circle
 

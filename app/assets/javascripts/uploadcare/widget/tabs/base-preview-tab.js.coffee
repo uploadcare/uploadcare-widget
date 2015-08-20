@@ -1,10 +1,9 @@
 {
-  namespace,
   ui: {progress: {Circle}},
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.BasePreviewTab
 
     PREFIX = '.uploadcare-dialog-preview-'
