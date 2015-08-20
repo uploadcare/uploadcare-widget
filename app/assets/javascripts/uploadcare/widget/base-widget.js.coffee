@@ -127,9 +127,12 @@ namespace 'uploadcare.widget', (ns) ->
         utils.fileSelectDialog @template.content, @settings, (input) =>
           @__handleDirectSelection('object', input.files)
       else
-        dialogApi = uploadcare.openDialog(@currentObject, tab, @settings)
+        return @__openDialog(@currentObject, tab)
+
+    __openDialog: (files, tab) ->
+        dialogApi = uploadcare.openDialog(files, tab, @settings)
         @__onDialogOpen.fire(dialogApi)
-        dialogApi.done(@__setObject)
+        return dialogApi.done(@__setObject)
 
     api: ->
       if not @__api
