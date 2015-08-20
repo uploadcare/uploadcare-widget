@@ -11,7 +11,6 @@
   utils,
   locale: {t},
   templates: {tpl},
-  ui: {progress: {Circle}},
   files,
   widget: {tabs},
   settings: s,
