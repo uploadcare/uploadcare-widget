@@ -1,4 +1,4 @@
-uploadcare.namespace 'uploadcare.utils.abilities', (ns) ->
+uploadcare.namespace 'utils.abilities', (ns) ->
 
   ns.fileAPI = !!(window.File and window.FileList and window.FileReader)
 

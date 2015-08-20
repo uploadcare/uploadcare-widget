@@ -1,7 +1,6 @@
 # = require uploadcare/ui/progress
 
 {
-  namespace,
   jQuery: $,
   utils,
   ui: {progress},
@@ -9,7 +8,7 @@
   templates: {tpl}
 } = uploadcare
 
-namespace 'uploadcare.widget', (ns) ->
+uploadcare.namespace 'widget', (ns) ->
   class ns.Template
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))

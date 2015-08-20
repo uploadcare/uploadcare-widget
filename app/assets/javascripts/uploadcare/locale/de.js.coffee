@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.de =
     uploading: 'Hochladen... Bitte warten.'
     loadingInfo: 'Laden der Informationen...'
@@ -114,7 +114,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.de = (n) ->
     return 'one' if n == 1
     'other'

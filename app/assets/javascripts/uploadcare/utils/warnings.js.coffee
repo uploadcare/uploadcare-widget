@@ -1,8 +1,4 @@
-{
-  namespace,
-} = uploadcare
-
-namespace 'uploadcare.utils', (ns) ->
+uploadcare.namespace 'utils', (ns) ->
 
   ns.log = (msg) ->
     if window.console and console.log

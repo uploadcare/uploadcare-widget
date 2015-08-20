@@ -6,14 +6,13 @@
 # = require ./files/group
 
 {
-  namespace,
   utils,
   jQuery: $,
   files: f,
   settings
 } = uploadcare
 
-namespace 'uploadcare', (ns) ->
+uploadcare.namespace '', (ns) ->
 
   ns.fileFrom = (type, data, s) ->
     ns.filesFrom(type, [data], s)[0]

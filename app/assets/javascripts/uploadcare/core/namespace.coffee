@@ -1,21 +1,15 @@
 window.uploadcare ||= {}
 
+
 uploadcare.namespace = (path, fn) ->
-  parts = path.split('.')
-  first = parts[0]
-  rest = parts[1..]
-
-  if first == 'uploadcare'
-    target = uploadcare
-  else
-    window[first] ||= {}
-    target = window[first]
-
-  for part in rest
-    target[part] ||= {}
-    target = target[part]
+  target = uploadcare
+  if path
+    for part in path.split('.')
+      target[part] ||= {}
+      target = target[part]
 
   fn(target)
+
 
 uploadcare.expose = (key, value) ->
   parts = key.split('.')

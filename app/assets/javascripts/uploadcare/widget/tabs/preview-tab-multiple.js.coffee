@@ -1,5 +1,4 @@
 {
-  namespace,
   utils,
   ui: {progress},
   templates: {tpl},
@@ -7,7 +6,7 @@
   locale: {t}
 } = uploadcare
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
 
   class ns.PreviewTabMultiple extends ns.BasePreviewTab
 

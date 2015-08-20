@@ -1,12 +1,11 @@
 {
-  namespace,
   jQuery: $,
   templates: {tpl}
 } = uploadcare
 
 {t} = uploadcare.locale
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.UrlTab
 
     # starts with scheme

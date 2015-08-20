@@ -5,7 +5,7 @@
   utils
 } = uploadcare
 
-namespace 'uploadcare.files', (ns) ->
+namespace 'files', (ns) ->
 
   # progressState: one of 'error', 'ready', 'uploading', 'uploaded'
   # internal api
@@ -175,7 +175,7 @@ namespace 'uploadcare.files', (ns) ->
       @__apiPromise
 
 
-namespace 'uploadcare.utils', (utils) ->
+namespace 'utils', (utils) ->
 
   # Check if given obj is file API promise (aka File object)
   utils.isFile = (obj) ->

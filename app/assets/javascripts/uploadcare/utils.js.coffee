@@ -4,11 +4,10 @@
 # = require uploadcare/utils/warnings
 
 {
-  namespace,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.utils', (ns) ->
+uploadcare.namespace 'utils', (ns) ->
 
   ns.unique = (arr) ->
     result = []

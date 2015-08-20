@@ -2,7 +2,7 @@
   jQuery: $,
 } = uploadcare
 
-uploadcare.namespace 'uploadcare.utils.pusher', (ns) ->
+uploadcare.namespace 'utils.pusher', (ns) ->
   pushers = {}
 
   # This fixes Pusher's prototype. Because Pusher replaces it:

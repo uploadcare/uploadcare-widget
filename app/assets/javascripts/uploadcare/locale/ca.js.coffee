@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.ca =
     uploading: 'Carregant... Si us plau esperi.'
     loadingInfo: 'Carregant informació...'
@@ -44,16 +44,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'Ordinador'
           url: 'Enllaços arbitraris'
           camera: 'Càmera'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Arrossega un fitxer aquí'
           nodrop: 'Carrega fitxers des del teu ordinador'
@@ -121,11 +111,11 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Fet'
       footer:
         text: 'Els fitxers han estat carregats, gestionats i processats per'
-        link: 'Uploadcare.com'
+
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.ca = (n) ->
     return 'one' if n == 1
     'other'

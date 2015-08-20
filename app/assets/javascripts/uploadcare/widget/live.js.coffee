@@ -1,11 +1,10 @@
 {
   utils,
-  namespace,
   settings,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare', (ns) ->
+uploadcare.namespace '', (ns) ->
   dataAttr = 'uploadcareWidget'
   selector = '[role~="uploadcare-uploader"]'
 

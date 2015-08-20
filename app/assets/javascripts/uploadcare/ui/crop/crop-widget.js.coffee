@@ -1,13 +1,12 @@
 # = require ./jquery.Jcrop
 
 {
-  namespace,
   jQuery: $,
   templates: {tpl},
   utils
 } = uploadcare
 
-namespace 'uploadcare.crop', (ns) ->
+uploadcare.namespace 'crop', (ns) ->
 
   class ns.CropWidget
 

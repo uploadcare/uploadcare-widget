@@ -1,5 +1,4 @@
 {
-  namespace,
   utils,
   dragdrop,
   locale: {t},
@@ -7,7 +6,7 @@
   templates: {tpl}
 } = uploadcare
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.FileTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->

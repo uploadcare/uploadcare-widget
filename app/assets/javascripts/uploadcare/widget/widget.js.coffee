@@ -1,11 +1,10 @@
 {
-  namespace,
   utils,
   files,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.widget', (ns) ->
+uploadcare.namespace 'widget', (ns) ->
   class ns.Widget extends ns.BaseWidget
 
     __currentFile: ->

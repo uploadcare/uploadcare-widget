@@ -1,6 +1,9 @@
-{namespace, jQuery: $, utils} = uploadcare
+{
+  jQuery: $,
+  utils
+} = uploadcare
 
-namespace 'uploadcare.files', (ns) ->
+uploadcare.namespace 'files', (ns) ->
 
   class ns.UploadedFile extends ns.BaseFile
     constructor: (settings, fileIdOrUrl) ->

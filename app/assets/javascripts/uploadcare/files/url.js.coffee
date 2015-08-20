@@ -1,13 +1,12 @@
 # = require uploadcare/utils/pusher
 
 {
-  namespace,
   jQuery: $,
   utils
 } = uploadcare
 {pusher} = uploadcare.utils
 
-namespace 'uploadcare.files', (ns) ->
+uploadcare.namespace 'files', (ns) ->
 
   class ns.UrlFile extends ns.BaseFile
     allEvents: 'progress success error fail'

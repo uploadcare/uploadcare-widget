@@ -1,12 +1,11 @@
 {
-  namespace,
   utils,
   jQuery: $,
   templates: {tpl}
 } = uploadcare
 
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.CameraTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->

@@ -7,18 +7,16 @@
 # = require ./tabs/preview-tab-multiple
 
 {
-  namespace,
   utils,
   locale: {t},
   templates: {tpl},
-  ui: {progress: {Circle}},
   files,
   widget: {tabs},
   settings: s,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare', (ns) ->
+uploadcare.namespace '', (ns) ->
 
   lockScroll = (el, toTop) ->
     top = el.scrollTop()

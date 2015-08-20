@@ -1,5 +1,4 @@
 {
-  namespace,
   locale,
   utils,
   tabsCss,
@@ -8,7 +7,7 @@
   files
 } = uploadcare
 
-namespace 'uploadcare.widget.tabs', (ns) ->
+uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.RemoteTab
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @container.addClass('uploadcare-dialog-remote-iframe-wrap')

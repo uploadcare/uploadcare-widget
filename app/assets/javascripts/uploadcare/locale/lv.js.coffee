@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.lv =
     uploading: 'Augšupielādē... Lūdzu, gaidiet.'
     errors:
@@ -42,7 +42,7 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           button: 'Ielādēt'
 
 
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.lv = (n) ->
     return 'zero' if n == 0
     return 'one' if (n % 10 == 1) && (n % 100 != 11)

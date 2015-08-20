@@ -6,7 +6,7 @@
 ## Any fixes are welcome.
 ##
 
-uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
+uploadcare.namespace 'locale.translations', (ns) ->
   ns.es =
     uploading: 'Subiendo... Por favor espere.'
     loadingInfo: 'Cargando Información...'
@@ -44,16 +44,6 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
           file: 'Computadora'
           url: 'Una dirección arbitraria'
           camera: 'Cámara'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Arrastra una archivo aquí'
           nodrop: 'Sube fotos desde tu computadora'
@@ -121,11 +111,11 @@ uploadcare.namespace 'uploadcare.locale.translations', (ns) ->
             done: 'Hecho'
       footer:
         text: 'Los archivos ha sido subidos, gestionados y procesados por'
-        link: 'Uploadcare.com'
+
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-uploadcare.namespace 'uploadcare.locale.pluralize', (ns) ->
+uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.es = (n) ->
     return 'one' if n == 1
     'other'

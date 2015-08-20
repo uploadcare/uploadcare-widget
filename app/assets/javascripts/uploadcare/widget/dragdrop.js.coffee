@@ -1,11 +1,10 @@
 {
-  namespace,
   utils,
   settings: s,
   jQuery: $
 } = uploadcare
 
-namespace 'uploadcare.dragdrop', (ns) ->
+uploadcare.namespace 'dragdrop', (ns) ->
   ns.support = utils.abilities.fileDragAndDrop
 
   ns.uploadDrop = (el, callback, settings) ->

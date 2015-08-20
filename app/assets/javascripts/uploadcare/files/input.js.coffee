@@ -1,10 +1,9 @@
 {
-  namespace,
   jQuery: $,
   utils
 } = uploadcare
 
-namespace 'uploadcare.files', (ns) ->
+uploadcare.namespace 'files', (ns) ->
   class ns.InputFile extends ns.BaseFile
     constructor: (settings, @__input) ->
       super

@@ -6,7 +6,7 @@
   settings: s
 } = uploadcare
 
-namespace 'uploadcare.files', (ns) ->
+namespace 'files', (ns) ->
 
   class ns.FileGroup
     constructor: (files, settings) ->
@@ -137,7 +137,7 @@ namespace 'uploadcare.files', (ns) ->
       utils.wrapToPromise(@__data)
 
 
-namespace 'uploadcare', (ns) ->
+namespace '', (ns) ->
 
   ns.FileGroup = (filesAndGroups = [], settings) ->
     files = []
@@ -166,7 +166,7 @@ namespace 'uploadcare', (ns) ->
     df.promise()
 
 
-namespace 'uploadcare.utils', (utils) ->
+namespace 'utils', (utils) ->
 
   utils.isFileGroup = (obj) ->
     return obj and obj.files and obj.promise

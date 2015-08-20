@@ -1,10 +1,9 @@
 {
-  namespace,
   jQuery: $,
   utils
 } = uploadcare
 
-namespace 'uploadcare.files', (ns) ->
+uploadcare.namespace 'files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
     MP_MIN_SIZE: 25 * 1024 * 1024
