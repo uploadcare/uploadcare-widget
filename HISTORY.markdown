@@ -5,8 +5,8 @@
 
 * Fixed `onDialogOpen` event which did not fire when files were dropped. 
 * Optimized info loading for files uploaded from URLs.
-* Internal `uploadcare.namespace` function acccepts namespace name without
-  "uploadcare" prefix. I.e. "uploadcare.files.utils" becomes "files.utils".
+* Internal `uploadcare.namespace` function accepts namespace name without
+  `uploadcare` prefix. I.e. `uploadcare.files.utils` becomes `files.utils`.
 
 ### 2.4.3, 19.08.2015
 
