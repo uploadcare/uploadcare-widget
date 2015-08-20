@@ -44,16 +44,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
           file: 'Computadora'
           url: 'Una dirección arbitraria'
           camera: 'Cámara'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Arrastra una archivo aquí'
           nodrop: 'Sube fotos desde tu computadora'
@@ -121,7 +111,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
             done: 'Hecho'
       footer:
         text: 'Los archivos ha sido subidos, gestionados y procesados por'
-        link: 'Uploadcare.com'
+
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
