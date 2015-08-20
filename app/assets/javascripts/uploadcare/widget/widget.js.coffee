@@ -16,4 +16,4 @@ namespace 'uploadcare.widget', (ns) ->
       if @settings.systemDialog or not @settings.previewStep
         @__setObject(file)
       else
-        uploadcare.openDialog(file, @settings).done(@__setObject)
+        @__openDialog(file)

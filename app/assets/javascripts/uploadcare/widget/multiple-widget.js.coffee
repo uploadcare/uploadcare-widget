@@ -33,4 +33,4 @@ namespace 'uploadcare.widget', (ns) ->
       if @settings.systemDialog
         @__setObject(uploadcare.FileGroup(files, @settings))
       else
-        uploadcare.openDialog(files, @settings).done(@__setObject)
+        @__openDialog(files)
