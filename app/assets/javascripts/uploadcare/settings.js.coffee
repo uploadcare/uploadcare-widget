@@ -31,7 +31,7 @@ uploadcare.namespace 'settings', (ns) ->
     'doNotStore': false
     'publicKey': null
     'pusherKey': '79ae88bd931ea68464d9'
-    'cdnBase': 'http://www.ucarecdn.com'
+    'cdnBase': 'https://ucarecdn.com'
     'urlBase': 'https://upload.uploadcare.com'
     'socialBase': 'https://social.uploadcare.com'
     # maintain settings
