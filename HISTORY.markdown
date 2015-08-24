@@ -1,5 +1,8 @@
 # History
 
+### 2.5.0, 24.08.2015
+
+* HTTPS is default protocol for CDN.
 
 ### 2.4.4, 20.08.2015
 
