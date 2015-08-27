@@ -31,12 +31,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __setupFileButton: ->
       fileButton = @container.find('.uploadcare-dialog-big-button')
-      utils.fileInput fileButton, @settings, (input) =>
-        if utils.abilities.sendFileAPI
-          @dialogApi.addFiles('object', input.files)
-        else
+      if utils.abilities.sendFileAPI
+        fileButton.on 'click', =>
+          utils.fileSelectDialog @container, @settings, (input) =>
+            @dialogApi.addFiles('object', input.files)
+            @dialogApi.switchTab('preview')
+          false
+      else
+        utils.fileInput fileButton, @settings, (input) =>
           @dialogApi.addFiles('input', [input])
-        @dialogApi.switchTab('preview')
+          @dialogApi.switchTab('preview')
 
     __updateTabsList: =>
       list = @container.find('.uploadcare-dialog-file-sources').empty()
