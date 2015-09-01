@@ -1,5 +1,10 @@
 # History
 
+
+### 2.5.1, 01.09.2015
+
+* The choose file button occasionally was not clickable on iOS 8.
+
 ### 2.5.0, 24.08.2015
 
 * HTTPS is default protocol for CDN.
