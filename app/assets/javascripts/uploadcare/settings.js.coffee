@@ -8,37 +8,38 @@ uploadcare.namespace 'settings', (ns) ->
 
   defaults =
     # developer hooks
-    'live': true
-    'manualStart': false
-    'locale': null
-    'localePluralize': null
-    'localeTranslations': null
+    live: true
+    manualStart: false
+    locale: null
+    localePluralize: null
+    localeTranslations: null
     # widget settings
-    'systemDialog': false
-    'crop': false
-    'previewStep': false
-    'imagesOnly': false
-    'clearable': false
-    'multiple': false
-    'multipleMax': 0
-    'multipleMin': 1
-    'imageShrink': false
-    'pathValue': true
-    'tabs': 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
-    'preferredTypes': ''
-    'inputAcceptTypes': ''  # '' means default, null means "disable accept"
+    systemDialog: false
+    crop: false
+    previewStep: false
+    imagesOnly: false
+    clearable: false
+    multiple: false
+    multipleMax: 0
+    multipleMin: 1
+    imageShrink: false
+    pathValue: true
+    tabs: 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
+    preferredTypes: ''
+    inputAcceptTypes: ''  # '' means default, null means "disable accept"
     # upload settings
-    'doNotStore': false
-    'publicKey': null
-    'pusherKey': '79ae88bd931ea68464d9'
-    'cdnBase': 'https://ucarecdn.com'
-    'urlBase': 'https://upload.uploadcare.com'
-    'socialBase': 'https://social.uploadcare.com'
+    doNotStore: false
+    publicKey: null
+    pusherKey: '79ae88bd931ea68464d9'
+    cdnBase: 'https://ucarecdn.com'
+    urlBase: 'https://upload.uploadcare.com'
+    socialBase: 'https://social.uploadcare.com'
     # maintain settings
-    'scriptBase': if SCRIPT_BASE? then SCRIPT_BASE else ''
+    scriptBase: if SCRIPT_BASE? then SCRIPT_BASE else ''
+    debugUploads: false
 
   presets =
-    'tabs':
+    tabs:
       all: 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive box vk huddle'
       default: defaults.tabs
 
@@ -133,6 +134,7 @@ uploadcare.namespace 'settings', (ns) ->
       'pathValue'
       'previewStep'
       'systemDialog'
+      'debugUploads'
     ])
     intOptions(settings, [
       'multipleMax'
