@@ -68,9 +68,13 @@ namespace 'files', (ns) ->
 
     __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-          file_id: @fileId,
+          jsonerrors: 1
+          file_id: @fileId
           pub_key: @settings.publicKey
-        .fail =>
+        .fail (reason) =>
+          if @settings.debugUploads
+            utils.log("Can't load file info. Probably removed.",
+                      @fileId, @settings.publicKey, reason)
           @__rejectApi('info')
         .done(@__handleFileData)
 

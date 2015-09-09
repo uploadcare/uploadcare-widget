@@ -283,7 +283,6 @@ uploadcare.namespace 'utils', (ns) ->
     $.ajax($.extend({url, type, data}, ns.ajaxDefaults)).then (data) ->
       if data.error
         text = data.error.content or data.error
-        ns.warn("JSONP error: #{text} while loading #{url}")
         $.Deferred().reject(text)
       else
         data

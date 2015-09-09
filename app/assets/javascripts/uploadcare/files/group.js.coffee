@@ -155,9 +155,14 @@ namespace '', (ns) ->
     id = utils.groupIdRegex.exec(groupIdOrUrl)
     if id
       utils.jsonp "#{settings.urlBase}/group/info/",
-          pub_key: settings.publicKey
-          group_id: id[0]
-      .fail(df.reject)
+        jsonerrors: 1
+        pub_key: settings.publicKey
+        group_id: id[0]
+      .fail (reason) =>
+        if settings.debugUploads
+          utils.log("Can't load group info. Probably removed.",
+                    id[0], settings.publicKey, reason)
+        df.reject()
       .done (data) ->
         group = new uploadcare.files.SavedFileGroup(data, settings)
         df.resolve(group.api())
