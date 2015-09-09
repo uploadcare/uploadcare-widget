@@ -1,17 +1,19 @@
 uploadcare.namespace 'utils', (ns) ->
 
-  ns.log = (msg) ->
-    if window.console and console.log
-      console.log(msg)
-    else
-      # Uncomment this to see anything in ie8:
-      # $('<div style="display:none!important"/>').text(msg).appendTo('body')
+  ns.log = () ->
+    window.console?.log?(arguments...)
 
-  ns.warn = (msg) ->
-    if window.console and console.warn
-      console.warn(msg)
+  ns.debug = () ->
+    if window.console?.debug
+      window.console.debug(arguments...)
     else
-      ns.log("Warning: #{msg}")
+      ns.log("Debug:", arguments...)
+
+  ns.warn = () ->
+    if window.console?.warn
+      window.console.warn(arguments...)
+    else
+      ns.log("Warning:", arguments...)
 
   messages = {}
   ns.warnOnce = (msg) ->
