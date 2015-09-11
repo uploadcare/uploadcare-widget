@@ -33,33 +33,34 @@ uploadcare.namespace 'files', (ns) ->
     __startUpload: ->
       @apiDeferred.always =>
         @__file = null
+
       if @__file.size >= @MP_MIN_SIZE and utils.abilities.blob
         @setFile()
-        @multipartUpload()
-      else
-        ios = utils.abilities.iOSVersion
-        if @settings.imageShrink and (not ios or ios >= 8)
-          df = $.Deferred()
-          resizeShare = .4
+        return @multipartUpload()
 
-          utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
-            .progress (progress) ->
-              df.notify(progress * resizeShare)
-            .done(@setFile)
-            .fail =>
-              @setFile()
-              resizeShare = resizeShare * .1
-            .always =>
-              df.notify(resizeShare)
-              @directUpload()
-                .done(df.resolve)
-                .fail(df.reject)
-                .progress (progress) ->
-                  df.notify(resizeShare + progress * (1 - resizeShare))
-          df
-        else
+      ios = utils.abilities.iOSVersion
+      if not @settings.imageShrink or (ios and ios < 8)
+        @setFile()
+        return @directUpload()
+
+      # if @settings.imageShrink
+      df = $.Deferred()
+      resizeShare = .4
+      utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
+        .progress (progress) ->
+          df.notify(progress * resizeShare)
+        .done(@setFile)
+        .fail =>
           @setFile()
+          resizeShare = resizeShare * .1
+        .always =>
+          df.notify(resizeShare)
           @directUpload()
+            .done(df.resolve)
+            .fail(df.reject)
+            .progress (progress) ->
+              df.notify(resizeShare + progress * (1 - resizeShare))
+      return df
 
     __autoAbort: (xhr) ->
       @apiDeferred.fail(xhr.abort)
