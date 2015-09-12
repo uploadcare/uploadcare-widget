@@ -116,7 +116,10 @@ namespace 'files', (ns) ->
             pub_key: @settings.publicKey
             files: for info in infos
               "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
-          .fail(df.reject)
+          .fail (reason) =>
+            if @settings.debugUploads
+              utils.log("Can't create group.", @settings.publicKey, reason)
+            df.reject()
           .done(df.resolve)
       else
         df.reject()
