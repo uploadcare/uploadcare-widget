@@ -39,7 +39,6 @@ namespace 'files', (ns) ->
 
     __completeUpload: =>
       # Update info until @apiDeferred resolved.
-      timeout = 100
       ncalls = 0
       if @settings.debugUploads
         utils.debug("Load file info.", @fileId, @settings.publicKey)
@@ -47,12 +46,17 @@ namespace 'files', (ns) ->
             utils.debug("Still waiting for file ready.", ncalls, @fileId,
                         @settings.publicKey)
           , 5000)
-        @apiDeferred.always =>
-          clearInterval(logger)
+        @apiDeferred
+          .done =>
+            utils.debug("File uploaded.", ncalls, @fileId, @settings.publicKey)
+          .always =>
+            clearInterval(logger)
+
+      timeout = 100
       do check = =>
         if @apiDeferred.state() == 'pending'
+          ncalls += 1
           @__updateInfo().done =>
-            ncalls += 1
             setTimeout(check, timeout)
             timeout += 50
 

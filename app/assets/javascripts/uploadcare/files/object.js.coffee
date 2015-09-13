@@ -26,7 +26,7 @@ uploadcare.namespace 'files', (ns) ->
       @fileSize = @__file.size
       @fileType = @__file.type or 'application/octet-stream'
       if @settings.debugUploads
-        utils.debug("Set file.", @fileName, @fileType, @fileSize)
+        utils.debug("Use local file.", @fileName, @fileType, @fileSize)
       @__runValidators()
       @__notifyApi()
 
