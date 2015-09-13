@@ -1,6 +1,10 @@
 # History
 
 
+### 2.5.2, 13.09.2015
+
+* File uploading logging via `debugUploads` settings.
+
 ### 2.5.1, 01.09.2015
 
 * The choose file button occasionally was not clickable on iOS 8.
