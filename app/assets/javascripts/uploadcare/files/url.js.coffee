@@ -35,18 +35,33 @@ uploadcare.namespace 'files', (ns) ->
 
     __startUpload: ->
       df = $.Deferred()
-      pusherWatcher = new PusherWatcher(@settings.pusherKey)
-      pollWatcher = new PollWatcher("#{@settings.urlBase}/from_url/status/")
+      pusherWatcher = new PusherWatcher(@settings)
+      pollWatcher = new PollWatcher(@settings)
 
       data =
         pub_key: @settings.publicKey
         source_url: @__url
         filename: @__realFileName or ''
         store: if @settings.doNotStore then '' else 'auto'
+        jsonerrors: 1
 
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
-        .fail(df.reject)
+        .fail (reason) =>
+          if @settings.debugUploads
+            utils.debug("Can't start upload from URL.", reason, data)
+          df.reject()
         .done (data) =>
+          if @settings.debugUploads
+            utils.debug("Start watchers.", data.token)
+            logger = setInterval(=>
+                utils.debug("Still watching.", data.token)
+              , 5000)
+            df
+              .done =>
+                utils.debug("Stop watchers.", data.token)
+              .always =>
+                clearInterval(logger)
+
           @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
           df.always =>
             $([pusherWatcher, pollWatcher]).off(@allEvents)
@@ -55,6 +70,10 @@ uploadcare.namespace 'files', (ns) ->
 
           # turn off pollWatcher if we receive any message from pusher
           $(pusherWatcher).one @allEvents, =>
+            if not pollWatcher.interval
+              return
+            if @settings.debugUploads
+              utils.debug("Start using pusher.", data.token)
             pollWatcher.stopWatching()
 
           pusherWatcher.watch(data.token)
@@ -78,8 +97,8 @@ uploadcare.namespace 'files', (ns) ->
 
 
   class PusherWatcher
-    constructor: (pusherKey) ->
-      @pusher = pusher.getPusher(pusherKey)
+    constructor: (@settings) ->
+      @pusher = pusher.getPusher(@settings.pusherKey)
 
     watch: (@token) ->
       channel = @pusher.subscribe("task-status-#{@token}")
@@ -92,7 +111,8 @@ uploadcare.namespace 'files', (ns) ->
 
 
   class PollWatcher
-    constructor: (@poolUrl) ->
+    constructor: (@settings) ->
+      @poolUrl = "#{@settings.urlBase}/from_url/status/"
 
     watch: (@token) ->
       do bind = =>
@@ -109,7 +129,7 @@ uploadcare.namespace 'files', (ns) ->
 
     __updateStatus: ->
       utils.jsonp(@poolUrl, {@token})
-        .fail (error) =>
+        .fail (reason) =>
           $(this).trigger('error')
         .done (data) =>
           $(this).trigger(data.status, data)

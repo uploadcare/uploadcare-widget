@@ -25,39 +25,42 @@ uploadcare.namespace 'files', (ns) ->
         return
       @fileSize = @__file.size
       @fileType = @__file.type or 'application/octet-stream'
+      if @settings.debugUploads
+        utils.debug("Use local file.", @fileName, @fileType, @fileSize)
       @__runValidators()
       @__notifyApi()
 
     __startUpload: ->
       @apiDeferred.always =>
         @__file = null
+
       if @__file.size >= @MP_MIN_SIZE and utils.abilities.blob
         @setFile()
-        @multipartUpload()
-      else
-        ios = utils.abilities.iOSVersion
-        if @settings.imageShrink and (not ios or ios >= 8)
-          df = $.Deferred()
-          resizeShare = .4
+        return @multipartUpload()
 
-          utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
-            .progress (progress) ->
-              df.notify(progress * resizeShare)
-            .done(@setFile)
-            .fail =>
-              @setFile()
-              resizeShare = resizeShare * .1
-            .always =>
-              df.notify(resizeShare)
-              @directUpload()
-                .done(df.resolve)
-                .fail(df.reject)
-                .progress (progress) ->
-                  df.notify(resizeShare + progress * (1 - resizeShare))
-          df
-        else
+      ios = utils.abilities.iOSVersion
+      if not @settings.imageShrink or (ios and ios < 8)
+        @setFile()
+        return @directUpload()
+
+      # if @settings.imageShrink
+      df = $.Deferred()
+      resizeShare = .4
+      utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
+        .progress (progress) ->
+          df.notify(progress * resizeShare)
+        .done(@setFile)
+        .fail =>
           @setFile()
+          resizeShare = resizeShare * .1
+        .always =>
+          df.notify(resizeShare)
           @directUpload()
+            .done(df.resolve)
+            .fail(df.reject)
+            .progress (progress) ->
+              df.notify(resizeShare + progress * (1 - resizeShare))
+      return df
 
     __autoAbort: (xhr) ->
       @apiDeferred.fail(xhr.abort)
@@ -116,7 +119,7 @@ uploadcare.namespace 'files', (ns) ->
         return df
 
       @multipartStart().done (data) =>
-        @uploadParts(data.parts).done =>
+        @uploadParts(data.parts, data.uuid).done =>
           @multipartComplete(data.uuid).done (data) =>
             @fileId = data.uuid
             @__handleFileData(data)
@@ -136,11 +139,13 @@ uploadcare.namespace 'files', (ns) ->
         content_type: @fileType
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
-      @__autoAbort(utils.jsonp(
-        "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
-      ))
+      @__autoAbort utils.jsonp(
+         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
+        ).fail (reason) =>
+          if @settings.debugUploads
+            utils.log("Can't start multipart upload.", reason, data)
 
-    uploadParts: (parts) ->
+    uploadParts: (parts, uuid) ->
       progress = []
       lastUpdate = $.now()
       updateProgress = (i, loaded) =>
@@ -179,11 +184,6 @@ uploadcare.namespace 'files', (ns) ->
           if @apiDeferred.state() != 'pending'
             return
 
-          attempts += 1
-          if attempts > @MP_MAX_ATTEMPTS
-            df.reject()
-            return
-
           progress[partNo] = 0
 
           @__autoAbort($.ajax(
@@ -201,7 +201,17 @@ uploadcare.namespace 'files', (ns) ->
             processData: false
             contentType: @fileType
             data: blob
-            error: retry
+            error: =>
+              attempts += 1
+              if attempts > @MP_MAX_ATTEMPTS
+                if @settings.debugUploads
+                  utils.info("Part ##{partNo} and file upload is failed.", uuid)
+                df.reject()
+              else
+                if @settings.debugUploads
+                  utils.debug("Part ##{partNo}(#{attempts}) upload is failed.", uuid)
+                retry()
+
             success: ->
               inProgress -= 1
               submit()
@@ -218,6 +228,9 @@ uploadcare.namespace 'files', (ns) ->
         UPLOADCARE_PUB_KEY: @settings.publicKey
         uuid: uuid
 
-      @__autoAbort(utils.jsonp(
-        "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data
-      ))
+      @__autoAbort utils.jsonp(
+          "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data
+        ).fail (reason) =>
+          if @settings.debugUploads
+            utils.log("Can't complete multipart upload.",
+                      uuid, @settings.publicKey, reason)

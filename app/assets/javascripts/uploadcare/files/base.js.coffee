@@ -39,9 +39,23 @@ namespace 'files', (ns) ->
 
     __completeUpload: =>
       # Update info until @apiDeferred resolved.
+      ncalls = 0
+      if @settings.debugUploads
+        utils.debug("Load file info.", @fileId, @settings.publicKey)
+        logger = setInterval(=>
+            utils.debug("Still waiting for file ready.", ncalls, @fileId,
+                        @settings.publicKey)
+          , 5000)
+        @apiDeferred
+          .done =>
+            utils.debug("File uploaded.", ncalls, @fileId, @settings.publicKey)
+          .always =>
+            clearInterval(logger)
+
       timeout = 100
       do check = =>
         if @apiDeferred.state() == 'pending'
+          ncalls += 1
           @__updateInfo().done =>
             setTimeout(check, timeout)
             timeout += 50
@@ -68,9 +82,13 @@ namespace 'files', (ns) ->
 
     __updateInfo: =>
       utils.jsonp "#{@settings.urlBase}/info/",
-          file_id: @fileId,
+          jsonerrors: 1
+          file_id: @fileId
           pub_key: @settings.publicKey
-        .fail =>
+        .fail (reason) =>
+          if @settings.debugUploads
+            utils.log("Can't load file info. Probably removed.",
+                      @fileId, @settings.publicKey, reason)
           @__rejectApi('info')
         .done(@__handleFileData)
 
