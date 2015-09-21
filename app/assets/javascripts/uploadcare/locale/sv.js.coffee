@@ -44,16 +44,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
           file: 'Lokala filer'
           url: 'Direkta länkar'
           camera: 'Kamera'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Släpp en fil hit'
           nodrop: 'Ladda upp filer från din dator'
@@ -121,7 +111,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             done: 'Klar'
       footer:
         text: 'Laddar upp, lagrar och bearbetar filer genom'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:
