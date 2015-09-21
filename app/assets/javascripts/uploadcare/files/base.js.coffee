@@ -85,6 +85,7 @@ namespace 'files', (ns) ->
           jsonerrors: 1
           file_id: @fileId
           pub_key: @settings.publicKey
+          wait_is_ready: +@onInfoReady.fired()
         .fail (reason) =>
           if @settings.debugUploads
             utils.log("Can't load file info. Probably removed.",
