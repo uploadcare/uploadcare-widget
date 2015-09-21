@@ -131,6 +131,7 @@ uploadcare.namespace 'files', (ns) ->
         filename: @fileName
         size: @fileSize
         content_type: @fileType
+        part_size: @settings.multipartPartSize
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
       @__autoAbort utils.jsonp(
