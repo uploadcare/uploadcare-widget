@@ -34,6 +34,12 @@ uploadcare.namespace 'settings', (ns) ->
     cdnBase: 'https://ucarecdn.com'
     urlBase: 'https://upload.uploadcare.com'
     socialBase: 'https://social.uploadcare.com'
+    # fine tuning
+    multipartMinSize: 25 * 1024 * 1024
+    multipartPartSize: 5 * 1024 * 1024
+    multipartMinLastPartSize: 1024 * 1024
+    multipartConcurrency: 4
+    multipartMaxAttempts: 3
     # maintain settings
     scriptBase: if SCRIPT_BASE? then SCRIPT_BASE else ''
     debugUploads: false
@@ -139,6 +145,11 @@ uploadcare.namespace 'settings', (ns) ->
     intOptions(settings, [
       'multipleMax'
       'multipleMin'
+      'multipartMinSize'
+      'multipartPartSize'
+      'multipartMinLastPartSize'
+      'multipartConcurrency'
+      'multipartMaxAttempts'
     ])
 
     if settings.crop != false and not $.isArray(settings.crop)

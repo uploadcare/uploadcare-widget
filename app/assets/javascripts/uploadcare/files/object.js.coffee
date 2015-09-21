@@ -6,12 +6,6 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
-    MP_MIN_SIZE: 25 * 1024 * 1024
-    MP_PART_SIZE: 5 * 1024 * 1024
-    MP_MIN_LAST_PART_SIZE: 1024 * 1024
-    MP_CONCURRENCY: 4
-    MP_MAX_ATTEMPTS: 3
-
     constructor: (settings, @__file) ->
       super
 
@@ -34,7 +28,7 @@ uploadcare.namespace 'files', (ns) ->
       @apiDeferred.always =>
         @__file = null
 
-      if @__file.size >= @MP_MIN_SIZE and utils.abilities.blob
+      if @__file.size >= @settings.multipartMinSize and utils.abilities.blob
         @setFile()
         return @multipartUpload()
 
@@ -137,6 +131,7 @@ uploadcare.namespace 'files', (ns) ->
         filename: @fileName
         size: @fileSize
         content_type: @fileType
+        part_size: @settings.multipartPartSize
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
       @__autoAbort utils.jsonp(
@@ -169,8 +164,8 @@ uploadcare.namespace 'files', (ns) ->
         if submittedBytes >= @fileSize
           return
 
-        bytesToSubmit = submittedBytes + @MP_PART_SIZE
-        if @fileSize < bytesToSubmit + @MP_MIN_LAST_PART_SIZE
+        bytesToSubmit = submittedBytes + @settings.multipartPartSize
+        if @fileSize < bytesToSubmit + @settings.multipartMinLastPartSize
           bytesToSubmit = @fileSize
 
         blob = @__file.slice(submittedBytes, bytesToSubmit)
@@ -203,7 +198,7 @@ uploadcare.namespace 'files', (ns) ->
             data: blob
             error: =>
               attempts += 1
-              if attempts > @MP_MAX_ATTEMPTS
+              if attempts > @settings.multipartMaxAttempts
                 if @settings.debugUploads
                   utils.info("Part ##{partNo} and file upload is failed.", uuid)
                 df.reject()
@@ -219,7 +214,7 @@ uploadcare.namespace 'files', (ns) ->
                 df.resolve()
           ))
 
-      for i in [0...@MP_CONCURRENCY]
+      for i in [0...@settings.multipartConcurrency]
         submit()
       df
 
