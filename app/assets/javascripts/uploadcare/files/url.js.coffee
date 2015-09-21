@@ -90,7 +90,7 @@ uploadcare.namespace 'files', (ns) ->
         .on 'success', (e, data) =>
           $(e.target).trigger('progress', data)
           @fileId = data.uuid
-          @fileName = data.original_filename
+          @__handleFileData(data)
           df.resolve()
 
         .on('error fail', df.reject)
