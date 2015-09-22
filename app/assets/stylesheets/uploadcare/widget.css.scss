@@ -31,11 +31,20 @@
 .uploadcare-widget-status-started .uploadcare-widget-text,
 .uploadcare-widget-status-started .uploadcare-widget-button-cancel,
 .uploadcare-widget-status-loaded .uploadcare-widget-text,
-.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
 .uploadcare-widget-status-error .uploadcare-widget-text,
 .uploadcare-widget-status-error .uploadcare-widget-button-open {
   // We have to use important to avoid overriding display: none.
   display: inline-block !important;
+}
+
+.uploadcare-widget-option-clearable {
+  &.uploadcare-widget-status-error .uploadcare-widget-button-open {
+    display: none !important;
+  }
+  &.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
+  &.uploadcare-widget-status-error .uploadcare-widget-button-remove {
+    display: inline-block !important;
+  }
 }
 
 

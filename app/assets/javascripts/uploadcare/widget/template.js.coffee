@@ -15,6 +15,8 @@ uploadcare.namespace 'widget', (ns) ->
       @element.after(@content)
       @circle = new progress.Circle(@content.find('.uploadcare-widget-status'))
       @statusText = @content.find('.uploadcare-widget-text')
+      @content.toggleClass('uploadcare-widget-option-clearable',
+                           @settings.clearable)
 
     addButton: (name, caption='') ->
       $(tpl('widget-button', {name, caption})).appendTo(@content)

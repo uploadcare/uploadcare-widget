@@ -51,9 +51,8 @@ uploadcare.namespace 'widget', (ns) ->
       @template.addButton('cancel', t('buttons.cancel')).on 'click', =>
         @__setObject(null)
 
-      if @settings.clearable
-        @template.addButton('remove', t('buttons.remove')).on 'click', =>
-          @__setObject(null)
+      @template.addButton('remove', t('buttons.remove')).on 'click', =>
+        @__setObject(null)
 
       @template.content.on 'click', '.uploadcare-widget-file-name', =>
         @openDialog()
