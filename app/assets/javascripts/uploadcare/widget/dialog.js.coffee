@@ -50,6 +50,8 @@ uploadcare.namespace '', (ns) ->
     dialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
                             files, tab, settings)
     dialog.addClass('uploadcare-active')
+    dialogPr.dialogElement = dialog
+
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
@@ -65,7 +67,7 @@ uploadcare.namespace '', (ns) ->
 
       dialogPr.reject()
 
-    currentDialogPr = dialogPr.always ->
+    return currentDialogPr = dialogPr.always ->
       $('html, body').removeClass(openedClass)
       currentDialogPr = null
       dialog.remove()
@@ -76,14 +78,19 @@ uploadcare.namespace '', (ns) ->
     # hide current opened dialog and open new one
     oldDialogPr = currentDialogPr
     currentDialogPr = null
+
     settings = $.extend({}, settings, {
       multiple: false
       tabs: ''
     })
-    dialog = uploadcare.openDialog(file, 'preview', settings).always ->
+    dialog = uploadcare.openDialog(file, 'preview', settings)
+    oldDialogPr.dialogElement.addClass('uploadcare-inactive')
+
+    dialog.always ->
       currentDialogPr = oldDialogPr
       # still opened
       $('html, body').addClass(openedClass)
+      oldDialogPr.dialogElement.removeClass('uploadcare-inactive')
     dialog.onTabVisibility (tab, shown) =>
       if tab == 'preview' and not shown
         dialog.reject()

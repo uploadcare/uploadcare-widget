@@ -13,7 +13,7 @@ $dialog-mobile-min-width: 310px;
     background: $dialog-body-background-color !important;
   }
   // hide anything else on the page
-  body.uploadcare-dialog-opened > :not(:last-child),
+  body.uploadcare-dialog-opened > .uploadcare-inactive,
   body.uploadcare-dialog-opened > :not(.uploadcare-dialog) {
     display: none !important;
   }
