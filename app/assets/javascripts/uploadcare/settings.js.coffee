@@ -158,7 +158,7 @@ uploadcare.namespace 'settings', (ns) ->
       else if $.isPlainObject(settings.crop)  # old format
         settings.crop = [settings.crop]
       else
-        settings.crop = $.map(settings.crop.split(','), parseCrop)
+        settings.crop = $.map(('' + settings.crop).split(','), parseCrop)
 
     if settings.imageShrink and not $.isPlainObject(settings.imageShrink)
       settings.imageShrink = parseShrink(settings.imageShrink)
