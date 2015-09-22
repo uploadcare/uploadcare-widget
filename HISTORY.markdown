@@ -1,6 +1,12 @@
 # History
 
 
+### 2.5.3, 22.09.2015
+
+* New Swedish locale.
+* File info pooling optimization. 
+* Multipart uploading tuning via settings.
+
 ### 2.5.2, 13.09.2015
 
 * File uploading logging via `debugUploads` settings.
