@@ -40,6 +40,7 @@ uploadcare.namespace 'settings', (ns) ->
     multipartMinLastPartSize: 1024 * 1024
     multipartConcurrency: 4
     multipartMaxAttempts: 3
+    parallelDirectUploads: 10
     # maintain settings
     scriptBase: if SCRIPT_BASE? then SCRIPT_BASE else ''
     debugUploads: false
@@ -150,6 +151,7 @@ uploadcare.namespace 'settings', (ns) ->
       'multipartMinLastPartSize'
       'multipartConcurrency'
       'multipartMaxAttempts'
+      'parallelDirectUploads'
     ])
 
     if settings.crop != false and not $.isArray(settings.crop)
