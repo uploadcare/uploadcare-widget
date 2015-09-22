@@ -78,13 +78,13 @@ uploadcare.namespace '', (ns) ->
     # hide current opened dialog and open new one
     oldDialogPr = currentDialogPr
     currentDialogPr = null
-    oldDialogPr.dialogElement.addClass('uploadcare-inactive')
 
     settings = $.extend({}, settings, {
       multiple: false
       tabs: ''
     })
     dialog = uploadcare.openDialog(file, 'preview', settings)
+    oldDialogPr.dialogElement.addClass('uploadcare-inactive')
 
     dialog.always ->
       currentDialogPr = oldDialogPr
