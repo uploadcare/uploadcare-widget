@@ -325,7 +325,7 @@ uploadcare.namespace 'utils', (ns) ->
         running -= 1
 
     run = (task) ->
-      if running < capacity
+      if not capacity or running < capacity
         running += 1
         task(release)
       else
