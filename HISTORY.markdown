@@ -1,6 +1,10 @@
 # History
 
 
+### 2.5.5, 22.09.2015
+
+* Fixed the dialog disappearing in some cases in the mobile layout.
+
 ### 2.5.4, 22.09.2015
 
 * Show remove button on uploading error when widget is clearable.
