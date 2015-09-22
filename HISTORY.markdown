@@ -1,6 +1,12 @@
 # History
 
 
+### 2.5.4, 22.09.2015
+
+* Show remove button on uploading error when widget is clearable.
+* Optimize parallel uploading of big amount of files at once.
+* Accept `data-crop="true"` as free.
+
 ### 2.5.3, 22.09.2015
 
 * New Swedish locale.
