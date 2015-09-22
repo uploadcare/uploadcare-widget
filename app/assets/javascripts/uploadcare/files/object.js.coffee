@@ -6,6 +6,8 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
+    _directRunner = null
+
     constructor: (settings, @__file) ->
       super
 
@@ -60,6 +62,11 @@ uploadcare.namespace 'files', (ns) ->
       @apiDeferred.fail(xhr.abort)
       xhr
 
+    directRunner: (task) ->
+      if not _directRunner
+        _directRunner = utils.taskRunner(@settings.parallelDirectUploads)
+      _directRunner(task)
+
     directUpload: ->
       df = $.Deferred()
 
@@ -75,31 +82,34 @@ uploadcare.namespace 'files', (ns) ->
       formData.append('file', @__file, @fileName)
       formData.append('file_name', @fileName)
 
-      @__autoAbort($.ajax(
-        xhr: =>
-          # Naked XHR for progress tracking
-          xhr = $.ajaxSettings.xhr()
-          if xhr.upload
-            xhr.upload.addEventListener 'progress', (e) =>
-              df.notify(e.loaded / e.total)
-            , false
-          xhr
-        crossDomain: true
-        type: 'POST'
-        url: "#{@settings.urlBase}/base/?jsonerrors=1"
-        headers: {'X-PINGOTHER': 'pingpong'}
-        contentType: false # For correct boundary string
-        processData: false
-        data: formData
-        dataType: 'json'
-        error: df.reject
-        success: (data) =>
-          if data?.file
-            @fileId = data.file
-            df.resolve()
-          else
-            df.reject()
-      ))
+      @directRunner (release) =>
+        df.always(release)
+
+        @__autoAbort($.ajax(
+          xhr: =>
+            # Naked XHR for progress tracking
+            xhr = $.ajaxSettings.xhr()
+            if xhr.upload
+              xhr.upload.addEventListener 'progress', (e) =>
+                df.notify(e.loaded / e.total)
+              , false
+            xhr
+          crossDomain: true
+          type: 'POST'
+          url: "#{@settings.urlBase}/base/?jsonerrors=1"
+          headers: {'X-PINGOTHER': 'pingpong'}
+          contentType: false # For correct boundary string
+          processData: false
+          data: formData
+          dataType: 'json'
+          error: df.reject
+          success: (data) =>
+            if data?.file
+              @fileId = data.file
+              df.resolve()
+            else
+              df.reject()
+        ))
 
       df
 
