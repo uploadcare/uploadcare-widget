@@ -45,6 +45,9 @@ uploadcare.namespace 'files', (ns) ->
         store: if @settings.doNotStore then '' else 'auto'
         jsonerrors: 1
 
+      if @sourceInfo
+        data.source = @sourceInfo.source
+
       utils.jsonp("#{@settings.urlBase}/from_url/", data)
         .fail (reason) =>
           if @settings.debugUploads

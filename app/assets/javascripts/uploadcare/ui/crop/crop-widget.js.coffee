@@ -2,7 +2,6 @@
 
 {
   jQuery: $,
-  templates: {tpl},
   utils
 } = uploadcare
 
