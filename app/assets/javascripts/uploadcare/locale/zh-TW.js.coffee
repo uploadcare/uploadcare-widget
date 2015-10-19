@@ -85,7 +85,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           crop:
             title: '裁切並加入這個圖片'
             done: '完成'
-            free: '剩餘'
+            free: '自由裁切'
           error:
             default:
               title: '錯誤！'
