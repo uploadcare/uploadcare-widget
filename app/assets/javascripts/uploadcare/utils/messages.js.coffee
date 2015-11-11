@@ -27,5 +27,6 @@ uploadcare.namespace 'utils', (ns) ->
 
   ns.unregisterMessage = (type, sender) ->
     if type of callbacks
-      callbacks[type] = $.filter callbacks[type], ->
-        return this[0] != sender
+      callbacks[type] = $.grep callbacks[type], (item) ->
+        return item[0] != sender
+      console.log(callbacks)

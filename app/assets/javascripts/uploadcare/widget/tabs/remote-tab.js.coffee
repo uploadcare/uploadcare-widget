@@ -59,6 +59,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       window = @iframe[0].contentWindow
 
+      @dialogApi.done =>
+        utils.unregisterMessage 'file-selected', window
+
       utils.registerMessage 'file-selected', window, (message) =>
         url = do =>
           if message.alternatives
