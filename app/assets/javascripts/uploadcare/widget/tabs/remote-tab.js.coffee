@@ -57,33 +57,26 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
-      $(window).on "message", ({originalEvent: e}) =>
-        if e.source isnt @iframe[0].contentWindow
-          return
+      window = @iframe[0].contentWindow
 
-        try
-          message = JSON.parse(e.data)
-        catch
-          return
+      utils.registerMessage 'file-selected', window, (message) =>
+        url = do =>
+          if message.alternatives
+            for type in @settings.preferredTypes
+              type = utils.globRegexp(type)
+              for key of message.alternatives
+                if type.test(key)
+                  return message.alternatives[key]
+          return message.url
 
-        if message.type is 'file-selected'
-          url = do =>
-            if message.alternatives
-              for type in @settings.preferredTypes
-                type = utils.globRegexp(type)
-                for key of message.alternatives
-                  if type.test(key)
-                    return message.alternatives[key]
-            return message.url
+        file = new files.UrlFile(@settings, url)
+        if message.filename
+          file.setName(message.filename)
+        if message.is_image?
+          file.setIsImage(message.is_image)
+        info = {source: @name}
+        if message.info
+          $.extend(info, message.info)
+        file.setSourceInfo(info)
 
-          file = new files.UrlFile(@settings, url)
-          if message.filename
-            file.setName(message.filename)
-          if message.is_image?
-            file.setIsImage(message.is_image)
-          info = {source: @name}
-          if message.info
-            $.extend(info, message.info)
-          file.setSourceInfo(info)
-
-          @dialogApi.addFiles [file.promise()]
+        @dialogApi.addFiles [file.promise()]
