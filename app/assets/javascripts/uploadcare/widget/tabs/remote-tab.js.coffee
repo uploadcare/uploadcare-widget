@@ -57,12 +57,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
-      window = @iframe[0].contentWindow
+      iframe = @iframe[0].contentWindow
 
-      @dialogApi.done =>
-        utils.unregisterMessage 'file-selected', window
-
-      utils.registerMessage 'file-selected', window, (message) =>
+      utils.registerMessage 'file-selected', iframe, (message) =>
         url = do =>
           if message.alternatives
             for type in @settings.preferredTypes
@@ -83,3 +80,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         file.setSourceInfo(info)
 
         @dialogApi.addFiles [file.promise()]
+
+
+      @dialogApi.done =>
+        utils.unregisterMessage 'file-selected', iframe
