@@ -82,5 +82,35 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @dialogApi.addFiles [file.promise()]
 
 
+      utils.registerMessage 'open-new-window', iframe, (message) =>
+        if @settings.debugUploads
+          utils.debug("Open new window message.", @name)
+
+        popup = window.open(message.url, '_blank')
+        if not popup
+          utils.warn("Can't open new window. Possible blocked.", @name)
+          return
+
+        resolve = =>
+          if @settings.debugUploads
+            utils.debug("Window is closed.", @name)
+          @__sendMessage
+            type: 'navigate'
+            fragment: ''
+
+        # Detect is window supports "closed".
+        # In browsers we have only "closed" property.
+        # In Cordova addEventListener('exit') does work.
+        if 'closed' of popup
+          interval = setInterval =>
+            if popup.closed
+              clearInterval(interval)
+              resolve()
+          , 100
+
+        else
+          popup.addEventListener('exit', resolve)
+
       @dialogApi.done =>
-        utils.unregisterMessage 'file-selected', iframe
+        utils.unregisterMessage('file-selected', iframe)
+        utils.unregisterMessage('open-new-window', iframe)
