@@ -13,7 +13,7 @@ uploadcare.namespace 'settings', (ns) ->
     locale: null
     localePluralize: null
     localeTranslations: null
-    # widget settings
+    # widget & dialog settings
     systemDialog: false
     crop: false
     previewStep: false
@@ -41,6 +41,7 @@ uploadcare.namespace 'settings', (ns) ->
     multipartConcurrency: 4
     multipartMaxAttempts: 3
     parallelDirectUploads: 10
+    passWindowOpen: false
     # maintain settings
     scriptBase: if SCRIPT_BASE? then SCRIPT_BASE else ''
     debugUploads: false

@@ -25,6 +25,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         public_key: @settings.publicKey
         widget_version: uploadcare.version
         images_only: @settings.imagesOnly
+        pass_window_open: @settings.passWindowOpen
       )
 
     __sendMessage: (messageObj) ->
