@@ -29,4 +29,3 @@ uploadcare.namespace 'utils', (ns) ->
     if type of callbacks
       callbacks[type] = $.grep callbacks[type], (item) ->
         return item[0] != sender
-      console.log(callbacks)
