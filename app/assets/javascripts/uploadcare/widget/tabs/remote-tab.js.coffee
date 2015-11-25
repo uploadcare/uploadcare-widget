@@ -25,6 +25,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         public_key: @settings.publicKey
         widget_version: uploadcare.version
         images_only: @settings.imagesOnly
+        pass_window_open: @settings.passWindowOpen
       )
 
     __sendMessage: (messageObj) ->
@@ -57,33 +58,60 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
-      $(window).on "message", ({originalEvent: e}) =>
-        if e.source isnt @iframe[0].contentWindow
+      iframe = @iframe[0].contentWindow
+
+      utils.registerMessage 'file-selected', iframe, (message) =>
+        url = do =>
+          if message.alternatives
+            for type in @settings.preferredTypes
+              type = utils.globRegexp(type)
+              for key of message.alternatives
+                if type.test(key)
+                  return message.alternatives[key]
+          return message.url
+
+        file = new files.UrlFile(@settings, url)
+        if message.filename
+          file.setName(message.filename)
+        if message.is_image?
+          file.setIsImage(message.is_image)
+        info = {source: @name}
+        if message.info
+          $.extend(info, message.info)
+        file.setSourceInfo(info)
+
+        @dialogApi.addFiles [file.promise()]
+
+
+      utils.registerMessage 'open-new-window', iframe, (message) =>
+        if @settings.debugUploads
+          utils.debug("Open new window message.", @name)
+
+        popup = window.open(message.url, '_blank')
+        if not popup
+          utils.warn("Can't open new window. Possible blocked.", @name)
           return
 
-        try
-          message = JSON.parse(e.data)
-        catch
-          return
+        resolve = =>
+          if @settings.debugUploads
+            utils.debug("Window is closed.", @name)
+          @__sendMessage
+            type: 'navigate'
+            fragment: ''
 
-        if message.type is 'file-selected'
-          url = do =>
-            if message.alternatives
-              for type in @settings.preferredTypes
-                type = utils.globRegexp(type)
-                for key of message.alternatives
-                  if type.test(key)
-                    return message.alternatives[key]
-            return message.url
+        # Detect is window supports "closed".
+        # In browsers we have only "closed" property.
+        # In Cordova addEventListener('exit') does work.
+        if 'closed' of popup
+          interval = setInterval =>
+            if popup.closed
+              clearInterval(interval)
+              resolve()
+          , 100
 
-          file = new files.UrlFile(@settings, url)
-          if message.filename
-            file.setName(message.filename)
-          if message.is_image?
-            file.setIsImage(message.is_image)
-          info = {source: @name}
-          if message.info
-            $.extend(info, message.info)
-          file.setSourceInfo(info)
+        else
+          popup.addEventListener('exit', resolve)
 
-          @dialogApi.addFiles [file.promise()]
+      @dialogApi.done =>
+        utils.unregisterMessage('file-selected', iframe)
+        utils.unregisterMessage('open-new-window', iframe)
