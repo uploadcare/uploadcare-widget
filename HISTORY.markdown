@@ -1,6 +1,14 @@
 # History
 
 
+### 2.5.6, 25.11.2015
+
+* New option `UPLOADCARE_PASS_WINDOW_OPEN` to work with Cordova InAppBrowser.
+* Added Czech locale.
+* Updated Taiwan locale.
+* Updated Spanish locale.
+* Updated Polish locale.
+
 ### 2.5.5, 22.09.2015
 
 * Fixed the dialog disappearing in some cases in the mobile layout.
