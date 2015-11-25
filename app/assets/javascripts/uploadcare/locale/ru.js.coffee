@@ -115,7 +115,13 @@ uploadcare.namespace 'locale.translations', (ns) ->
         text: 'Для загрузки, хранения и обработки файлов используется'
 
 
+# Pluralization rules taken from:
+# http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.ru = (n) ->
-    if ((n/10%10|0) == 1) or (n%10 == 0) or (n%10 > 4)
-    then 'many' else if n%10 == 1 then 'one' else 'few'
+    if ((n / 10 % 10 | 0) == 1) or (n % 10 == 0) or (n % 10 > 4)
+      'many'
+    else if n % 10 == 1
+      'one'
+    else
+      'few'

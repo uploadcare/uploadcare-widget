@@ -8,7 +8,6 @@
 
 uploadcare.namespace 'locale.translations', (ns) ->
   ns.pl =
-
     uploading: 'Przesyłanie... Proszę czekać.'
     loadingInfo: 'Loading info...'
     errors:
@@ -32,12 +31,10 @@ uploadcare.namespace 'locale.translations', (ns) ->
       choose:
         files:
           one: 'Wybierz plik'
-          few: 'Wybierz pliki'
-          many: 'Wybierz pliki'
+          other: 'Wybierz pliki'
         images:
           one: 'Wybierz obraz'
-          few: 'Wybierz obrazy'
-          many: 'Wybierz obrazy'
+          other: 'Wybierz obrazy'
     dialog:
       done: 'Wykonano'
       showFiles: 'Pokaż pliki'
@@ -118,9 +115,13 @@ uploadcare.namespace 'locale.translations', (ns) ->
         link: 'Uploadcare.com'
 
 
+# Pluralization rules taken from:
+# http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.pl = (n) ->
-    return 'one' if n == 1
-    return 'few' if (n % 10 in [2..4]) && (n % 100 not in [12..14])
-    return 'many' if (n != 1) && (n % 10 not in [2..4] || n % 100 in [12..14])
-    'other'
+    if n == 1
+      'one'
+    else if (2 <= n % 10 <= 4) && ((n / 10 % 10 | 0) != 1)
+      'few'
+    else
+      'many'

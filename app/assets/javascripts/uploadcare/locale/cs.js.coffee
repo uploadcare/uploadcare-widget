@@ -1,5 +1,9 @@
 ##
-## Czech translation
+## Please, do not use this locale as a reference for new translations.
+## It could be outdated or incomplete. Always use the latest English versions:
+## https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/javascripts/uploadcare/locale/en.js.coffee
+##
+## Any fixes are welcome.
 ##
 
 uploadcare.namespace 'locale.translations', (ns) ->
@@ -19,7 +23,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
     draghere: 'Přetáhněte soubor sem'
     file:
       one: '%1 soubor'
-      other: '%1 soubory'
+      few: '%1 soubory'
+      many: '%1 souborů'
     buttons:
       cancel: 'Zrušit'
       remove: 'Odstranit'
@@ -123,6 +128,10 @@ uploadcare.namespace 'locale.translations', (ns) ->
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
-  ns.en = (n) ->
-    return 'one' if n == 1
-    'other'
+  ns.cs = (n) ->
+    if n == 1
+      'one'
+    else if (2 <= n <= 4)
+      'few'
+    else
+      'many'
