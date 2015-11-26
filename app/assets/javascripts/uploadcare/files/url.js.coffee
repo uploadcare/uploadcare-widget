@@ -101,15 +101,22 @@ uploadcare.namespace 'files', (ns) ->
 
   class PusherWatcher
     constructor: (@settings) ->
-      @pusher = pusher.getPusher(@settings.pusherKey)
+      try
+        @pusher = pusher.getPusher(@settings.pusherKey)
+      catch
+        @pusher = null
 
     watch: (@token) ->
+      if not @pusher
+        return
       channel = @pusher.subscribe("task-status-#{@token}")
 
       channel.bind_all (ev, data) =>
         $(this).trigger(ev, data)
 
     stopWatching: ->
+      if not @pusher
+        return
       @pusher.unsubscribe("task-status-#{@token}")
 
 
