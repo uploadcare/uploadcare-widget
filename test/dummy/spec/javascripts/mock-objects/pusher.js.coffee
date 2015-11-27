@@ -1,8 +1,7 @@
 {mocks} = jasmine
 
 mocks.define 'pusher', ->
-
-  orig = uploadcare.Pusher
+  orig = uploadcare.utils.pusher.getPusher
   channels = {}
 
 
@@ -34,10 +33,12 @@ mocks.define 'pusher', ->
     connect: ->
     disconnect: ->
     subscribe: getChanel
+    unsubscribe: ->
 
 
   turnOn: ->
-    uploadcare.Pusher = FakePusher
+    uploadcare.utils.pusher.getPusher = ->
+      new FakePusher()
 
   turnOff: ->
     channels = {}
