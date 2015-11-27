@@ -62,7 +62,7 @@ describe "UrlFile", ->
 
       updateStatus = (newStatus) ->
         status = newStatus
-        mocks.pusher.channel('task-status-abc').send status.status, status
+        mocks.pusher.channel('task-status-abc').send(status.status, status)
 
       mocks.jsonp.addHandler /\/from_url\/$/, ->
         updateStatus
@@ -70,7 +70,7 @@ describe "UrlFile", ->
           total: kitty.info.size
           done: 10
         {token: 'abc'}
-      mocks.jsonp.addHandler /\/status\/$/, -> status
+      mocks.jsonp.addHandler /\/from_url\/status\/$/, -> status
       mocks.jsonp.addHandler /\/info\/$/, -> kitty.info
 
       file = uploadcare.fileFrom('url', 'http://example.com/kitty.jpg')
@@ -98,7 +98,7 @@ describe "UrlFile", ->
     runs ->
       file.done (info) ->
         for prop in ['uuid', 'name', 'size', 'isImage', 'isStored']
-          expect(info[prop]).toBe utils.toFileInfo(kitty)[prop]
+          expect(info[prop]).toBe(utils.toFileInfo(kitty)[prop])
 
 
 
