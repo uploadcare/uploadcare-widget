@@ -76,14 +76,15 @@ uploadcare.namespace 'widget', (ns) ->
       @template.reset()
 
     __setObject: (newFile) =>
-      if newFile != @currentObject
-        @__reset()
-        if newFile
-          @currentObject = newFile
-          @__watchCurrentObject()
-        @__onChange.fire(@currentObject)
-      if not newFile
+      if newFile == @currentObject
+        return
+      @__reset()
+      if newFile
+        @currentObject = newFile
+        @__watchCurrentObject()
+      else
         @element.val('')
+      @__onChange.fire(@currentObject)
 
     __watchCurrentObject: ->
       object = @__currentFile()
