@@ -189,7 +189,7 @@ namespace 'utils', (utils) ->
         if not utils.isFileGroup(value)
           return uploadcare.loadFileGroup(value, settings)
 
-    utils.wrapToPromise(value)
+    utils.wrapToPromise(value or null)
 
   # check if two groups contains same files in same order
   utils.isFileGroupsEqual = (group1, group2) ->
