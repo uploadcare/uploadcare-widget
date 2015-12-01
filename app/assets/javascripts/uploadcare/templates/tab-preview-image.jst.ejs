@@ -3,6 +3,10 @@
     <%- t('dialog.tabs.preview.image.title') %>
   </div>
 
+  <div class="uploadcare-crop-sizes uploadcare-dialog-preview-crop-sizes">
+    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
+  </div>
+
   <div class="uploadcare-dialog-preview-image-wrap"><!--
       1162x684 is 1.5 size of conteiner
     --><img
@@ -11,10 +15,6 @@
       alt="<%- (file.name || "") %>"
       class="uploadcare-dialog-preview-image"
     />
-  </div>
-
-  <div class="uploadcare-crop-sizes uploadcare-dialog-preview-crop-sizes">
-    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
   </div>
 </div>
 

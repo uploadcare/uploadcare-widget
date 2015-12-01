@@ -14,6 +14,7 @@ $dialog-body-text-color-lighter: #545454;
 $dialog-body-font-size: 16px;
 $dialog-body-font-size-smaller: 13px;
 $dialog-footer-height: y(3);
+$dialog-crop-options-height: 40px;
 
 $dialog-close-button-size: y(1.5);
 $switch-to-mobile-width: 760px; // iPhone max side is 568px
@@ -484,6 +485,12 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   text-align: center;
   width: 100%;
   height: $dialog-preview-container-height;
+
+  .uploadcare-dialog-preview--with-sizes & {
+    position: relative;
+    top: -$dialog-crop-options-height;
+    height: $dialog-preview-container-height - $dialog-crop-options-height;
+  }
 }
 .uploadcare-dialog-preview-image {
   @include vertical-centered;
@@ -491,11 +498,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   max-height: 100%;
 }
 
-.uploadcare-dialog-preview--with-sizes {
-  .uploadcare-dialog-preview-image-wrap {
-    height: $dialog-preview-container-height - 40px;
-  }
-}
 
 .uploadcare-dialog-tabs-panel-preview.uploadcare-dialog-tabs-panel_current
 ~ .uploadcare-panel-footer {
