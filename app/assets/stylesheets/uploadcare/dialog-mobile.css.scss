@@ -81,6 +81,7 @@ $dialog-mobile-min-width: 310px;
     // § Preview tabs
 
     .uploadcare-dialog-preview-image-wrap {
+      top: auto;
       height: auto;
       padding-bottom: $dialog-mobile-footer-height;
     }
@@ -276,8 +277,8 @@ $dialog-mobile-min-width: 310px;
     }
 
     .uploadcare-crop-sizes {
-      top: -50px;
-      margin-top: 15px;
+      top: auto;
+      margin-bottom: 15px;
     }
     .uploadcare-crop-size {
       margin: 0 10px;

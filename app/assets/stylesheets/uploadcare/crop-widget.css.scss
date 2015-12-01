@@ -24,7 +24,7 @@
   display: none;
   visibility: hidden;
   position: relative;
-  top: y(.5);
+  top: y(.5) + $dialog-preview-container-height - $dialog-crop-options-height;
   text-align: center;
 
   .uploadcare-dialog-preview--with-sizes & {
