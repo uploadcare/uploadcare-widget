@@ -1,6 +1,14 @@
 # History
 
 
+### 2.5.7, 01.12.2015
+
+* Crop presets are moved to the top of crop dialog on mobile layout.
+* It was impossible to clear widget with both `multiple` and `clearable`
+  options after loading a bad group UUID.
+* Settings like `cdnBase`, `urlBase`, `socialBase` and `scriptBase`
+  now can be relative.
+
 ### 2.5.6, 25.11.2015
 
 * New option `UPLOADCARE_PASS_WINDOW_OPEN` to work with Cordova InAppBrowser.
