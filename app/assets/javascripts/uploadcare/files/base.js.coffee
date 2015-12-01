@@ -204,4 +204,4 @@ namespace 'utils', (utils) ->
   utils.valueToFile = (value, settings) ->
     if value and not utils.isFile(value)
       value = uploadcare.fileFrom('uploaded', value, settings)
-    value
+    value or null

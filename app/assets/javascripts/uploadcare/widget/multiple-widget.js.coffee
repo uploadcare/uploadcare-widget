@@ -14,6 +14,13 @@ uploadcare.namespace 'widget', (ns) ->
       if not utils.isFileGroupsEqual(@currentObject, group)
         super
 
+      # special case, when multiple widget is used with clearable
+      # and user or some external code clears the value after
+      # group loading error.
+      else if not group
+        @__reset()
+        @element.val('')
+
     __setExternalValue: (value) ->
       @__lastGroupPr = groupPr = utils.valueToGroup(value, @settings)
       if value
