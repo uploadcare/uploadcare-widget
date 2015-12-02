@@ -126,10 +126,10 @@ uploadcare.namespace 'widget', (ns) ->
         utils.fileSelectDialog @template.content, @settings, (input) =>
           @__handleDirectSelection('object', input.files)
       else
-        return @__openDialog(@currentObject, tab)
+        return @__openDialog(tab)
 
-    __openDialog: (files, tab) ->
-        dialogApi = uploadcare.openDialog(files, tab, @settings)
+    __openDialog: (tab) ->
+        dialogApi = uploadcare.openDialog(@currentObject, tab, @settings)
         @__onDialogOpen.fire(dialogApi)
         return dialogApi.done(@__setObject)
 

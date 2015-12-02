@@ -39,6 +39,5 @@ uploadcare.namespace 'widget', (ns) ->
       if @settings.systemDialog
         @__setObject(uploadcare.FileGroup(files, @settings))
       else
-        dialog = @__openDialog()
+        dialog = @__openDialog('preview')
         dialog.addFiles(files)
-        dialog.switchTab('preview')
