@@ -212,6 +212,10 @@ uploadcare.namespace '', (ns) ->
         @files.clear()
 
       for file in files
+        if @settings.multipleMaxStrict and @settings.multipleMax != 0
+          if @files.length() >= @settings.multipleMax
+            file.cancel()
+            continue
         @files.add(file)
 
       if @settings.previewStep

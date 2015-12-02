@@ -22,6 +22,7 @@ uploadcare.namespace 'settings', (ns) ->
     multiple: false
     multipleMax: 0
     multipleMin: 1
+    multipleMaxStrict: false
     imageShrink: false
     pathValue: true
     tabs: 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive'
@@ -143,6 +144,7 @@ uploadcare.namespace 'settings', (ns) ->
       'previewStep'
       'systemDialog'
       'debugUploads'
+      'multipleMaxStrict'
     ])
     intOptions(settings, [
       'multipleMax'
