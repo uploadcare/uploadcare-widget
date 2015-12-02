@@ -15,4 +15,6 @@ uploadcare.namespace 'widget', (ns) ->
       if @settings.systemDialog or not @settings.previewStep
         @__setObject(file)
       else
-        @__openDialog(file)
+        dialog = @__openDialog()
+        dialog.addFiles([file])
+        dialog.switchTab('preview')
