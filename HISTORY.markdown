@@ -1,6 +1,14 @@
 # History
 
 
+### 2.5.8, 02.12.2015
+
+* Droped files are appended to widget's list of uploaded files
+  instead of replacing it.
+* Fixed camera revoking in Google Chrome 47.
+* New option `multipleMaxStrict`.
+
+
 ### 2.5.7, 01.12.2015
 
 * Crop presets are moved to the top of crop dialog on mobile layout.
