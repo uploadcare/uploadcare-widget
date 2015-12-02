@@ -71,19 +71,22 @@ uploadcare.namespace 'files', (ns) ->
       df = $.Deferred()
 
       if not @__file
+        @__rejectApi('baddata')
         return df
       if @fileSize > 100 * 1024 * 1024
         @__rejectApi('size')
         return df
 
-      formData = new FormData()
-      formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
-      formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
-      formData.append('file', @__file, @fileName)
-      formData.append('file_name', @fileName)
-
       @directRunner (release) =>
         df.always(release)
+        if @apiDeferred.state() != 'pending'
+          return
+
+        formData = new FormData()
+        formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
+        formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
+        formData.append('file', @__file, @fileName)
+        formData.append('file_name', @fileName)
 
         @__autoAbort($.ajax(
           xhr: =>

@@ -39,4 +39,4 @@ uploadcare.namespace 'widget', (ns) ->
       if @settings.systemDialog
         @__setObject(uploadcare.FileGroup(files, @settings))
       else
-        @__openDialog(files)
+        @__openDialog('preview').addFiles(files)

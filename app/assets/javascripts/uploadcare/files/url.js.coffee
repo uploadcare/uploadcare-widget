@@ -48,39 +48,46 @@ uploadcare.namespace 'files', (ns) ->
       if @sourceInfo
         data.source = @sourceInfo.source
 
-      utils.jsonp("#{@settings.urlBase}/from_url/", data)
-        .fail (reason) =>
-          if @settings.debugUploads
-            utils.debug("Can't start upload from URL.", reason, data)
-          df.reject()
-        .done (data) =>
-          if @settings.debugUploads
-            utils.debug("Start watchers.", data.token)
-            logger = setInterval(=>
+      utils.defer =>
+        if @apiDeferred.state() != 'pending'
+          return
+
+        utils.jsonp("#{@settings.urlBase}/from_url/", data)
+          .fail (reason) =>
+            if @settings.debugUploads
+              utils.debug("Can't start upload from URL.", reason, data)
+            df.reject()
+          .done (data) =>
+            if @apiDeferred.state() != 'pending'
+              return
+
+            if @settings.debugUploads
+              utils.debug("Start watchers.", data.token)
+              logger = setInterval( =>
                 utils.debug("Still watching.", data.token)
               , 5000)
-            df
-              .done =>
-                utils.debug("Stop watchers.", data.token)
-              .always =>
-                clearInterval(logger)
+              df
+                .done =>
+                  utils.debug("Stop watchers.", data.token)
+                .always =>
+                  clearInterval(logger)
 
-          @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
-          df.always =>
-            $([pusherWatcher, pollWatcher]).off(@allEvents)
-            pusherWatcher.stopWatching()
-            pollWatcher.stopWatching()
+            @__listenWatcher(df, $([pusherWatcher, pollWatcher]))
+            df.always =>
+              $([pusherWatcher, pollWatcher]).off(@allEvents)
+              pusherWatcher.stopWatching()
+              pollWatcher.stopWatching()
 
-          # turn off pollWatcher if we receive any message from pusher
-          $(pusherWatcher).one @allEvents, =>
-            if not pollWatcher.interval
-              return
-            if @settings.debugUploads
-              utils.debug("Start using pusher.", data.token)
-            pollWatcher.stopWatching()
+            # turn off pollWatcher if we receive any message from pusher
+            $(pusherWatcher).one @allEvents, =>
+              if not pollWatcher.interval
+                return
+              if @settings.debugUploads
+                utils.debug("Start using pusher.", data.token)
+              pollWatcher.stopWatching()
 
-          pusherWatcher.watch(data.token)
-          pollWatcher.watch(data.token)
+            pusherWatcher.watch(data.token)
+            pollWatcher.watch(data.token)
 
       df
 

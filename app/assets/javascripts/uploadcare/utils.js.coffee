@@ -322,9 +322,11 @@ uploadcare.namespace 'utils', (ns) ->
     run = (task) ->
       if not capacity or running < capacity
         running += 1
-        task(release)
+        ns.defer ->
+          task(release)
       else
         queue.push(task)
+
 
   # This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
   pipeTuples = [
