@@ -77,11 +77,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .removeClass('uploadcare-dialog-camera-denied')
           .removeClass('uploadcare-dialog-camera-ready')
           .addClass('uploadcare-dialog-camera-requested')
-      @URL?.revokeObjectURL(@video.prop('src'))
+      if not @__stream
+        return
+      if @URL
+        @URL.revokeObjectURL(@video.prop('src'))
       if @__stream.getVideoTracks
         $.each @__stream.getVideoTracks(), ->
           @stop?()
-      @__stream?.stop?()
+      @__stream.stop?()
 
     __mirror: =>
       @mirrored = ! @mirrored
