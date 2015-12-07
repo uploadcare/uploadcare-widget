@@ -1,5 +1,9 @@
 # History
 
+### 2.5.9, 07.12.2015
+
+* Fixed "cannot read property 'getVideoTracks' of undefined" error
+  in case when camera is blocked.
 
 ### 2.5.8, 02.12.2015
 
