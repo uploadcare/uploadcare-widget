@@ -223,11 +223,11 @@ uploadcare.namespace 'utils', (ns) ->
           'image/*'
         else
           null
-    (
+    $(
       if settings.multiple
-        $('<input type="file" multiple>')
+        '<input type="file" multiple>'
       else
-        $('<input type="file">')
+        '<input type="file">'
     )
       .attr('accept', accept)
       .css(
