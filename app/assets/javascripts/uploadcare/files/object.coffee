@@ -1,3 +1,5 @@
+# = require ../utils/image-processor
+
 {
   jQuery: $,
   utils
