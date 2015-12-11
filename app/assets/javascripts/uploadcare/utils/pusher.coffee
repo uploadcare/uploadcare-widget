@@ -1,3 +1,5 @@
+# = require ../vendor/pusher
+
 {
   jQuery: $,
 } = uploadcare
