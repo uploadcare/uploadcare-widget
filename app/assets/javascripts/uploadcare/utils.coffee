@@ -1,8 +1,8 @@
-# = require uploadcare/utils/abilities
-# = require uploadcare/utils/pusher
-# = require uploadcare/utils/collection
-# = require uploadcare/utils/warnings
-# = require uploadcare/utils/messages
+# = require ./utils/abilities
+# = require ./utils/pusher
+# = require ./utils/collection
+# = require ./utils/warnings
+# = require ./utils/messages
 
 {
   jQuery: $

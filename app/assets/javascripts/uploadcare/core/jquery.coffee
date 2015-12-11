@@ -1,4 +1,4 @@
-# = require uploadcare/core/jquery-xdr.js
-# = require uploadcare/core/jquery-ordering.js
+# = require ./jquery-xdr.js
+# = require ./jquery-ordering.js
 
 uploadcare.jQuery = jQuery
