@@ -1,2 +1,0 @@
-# = require ./namespace
-# = require ./jquery

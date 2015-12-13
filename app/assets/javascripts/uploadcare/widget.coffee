@@ -1,4 +1,4 @@
-# = require ./core/boot
+# = require ./boot
 # = require ./utils
 # = require ./settings
 # = require ./locale
@@ -11,12 +11,8 @@
 # = require ./widget/submit-guard
 # = require ./widget/accessibility
 
-uploadcare.version = '<%= UploadcareWidget::VERSION %>'
-
 {expose} = uploadcare
 
-expose('version')
-expose('jQuery')
 expose('globals', uploadcare.settings.common)
 expose('start')
 expose('initialize')
@@ -33,12 +29,7 @@ expose('Circle', uploadcare.ui.progress.Circle)
 expose('SingleWidget')
 expose('MultipleWidget')
 expose('Widget')
-expose('plugin', uploadcare.utils.plugin)
 expose('tabsCss')
 expose('dragdrop.support')
 expose('dragdrop.receiveDrop')
 expose('dragdrop.uploadDrop')
-
-# back compatibility
-expose 'whenReady', (fn) ->
-  fn()

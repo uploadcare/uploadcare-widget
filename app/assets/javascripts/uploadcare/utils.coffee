@@ -287,10 +287,6 @@ uploadcare.namespace 'utils', (ns) ->
       text
 
 
-  ns.plugin = (fn) ->
-    fn(uploadcare)
-
-
   ns.canvasToBlob = (canvas, type, quality, callback) ->
     if HTMLCanvasElement.prototype.toBlob
       return canvas.toBlob(callback, type, quality)

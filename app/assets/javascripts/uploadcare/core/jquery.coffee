@@ -1,3 +1,0 @@
-
-
-uploadcare.jQuery = jQuery
