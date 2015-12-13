@@ -1,3 +1,5 @@
+# = require_self
+# = require_directory ./templates
 
 {
   locale,

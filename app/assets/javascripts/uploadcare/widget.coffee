@@ -3,7 +3,6 @@
 # = require ./settings
 # = require ./locale
 # = require ./templates
-# = require_directory ./templates
 # = require ./stylesheets
 # = require ./ui/crop-widget
 # = require ./widget/base-widget
