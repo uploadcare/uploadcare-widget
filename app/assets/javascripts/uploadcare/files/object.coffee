@@ -1,5 +1,5 @@
 # = require ../vendor/jquery-xdr.js
-# = require ../utils/image-processor
+# = require ../utils/image-processor.coffee
 
 {
   jQuery: $,

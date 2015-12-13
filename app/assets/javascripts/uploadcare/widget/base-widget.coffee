@@ -1,10 +1,10 @@
-# = require ../files
-# = require ./dragdrop
-# = require ./template
-# = require ./dialog
+# = require ../files.coffee
+# = require ./dragdrop.coffee
+# = require ./template.coffee
+# = require ./dialog.coffee
 # = require_self
-# = require ./widget
-# = require ./multiple-widget
+# = require ./widget.coffee
+# = require ./multiple-widget.coffee
 
 {
   utils,

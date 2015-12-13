@@ -1,4 +1,4 @@
-# = require ../vendor/pusher
+# = require ../vendor/pusher.js
 
 {
   jQuery: $,

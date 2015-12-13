@@ -1,4 +1,4 @@
-# = require ../ui/progress
+# = require ../ui/progress.coffee
 
 {
   jQuery: $,

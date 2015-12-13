@@ -1,4 +1,4 @@
-# = require ../utils/pusher
+# = require ../utils/pusher.coffee
 
 {
   jQuery: $,

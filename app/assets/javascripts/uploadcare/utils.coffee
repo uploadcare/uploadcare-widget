@@ -1,8 +1,8 @@
 # = require ./vendor/jquery-xdr.js
-# = require ./utils/abilities
-# = require ./utils/collection
-# = require ./utils/warnings
-# = require ./utils/messages
+# = require ./utils/abilities.coffee
+# = require ./utils/collection.coffee
+# = require ./utils/warnings.coffee
+# = require ./utils/messages.coffee
 
 {
   jQuery: $

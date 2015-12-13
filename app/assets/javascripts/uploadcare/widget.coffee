@@ -1,14 +1,14 @@
-# = require ./boot
-# = require ./utils
-# = require ./settings
-# = require ./locale
-# = require ./templates
-# = require ./stylesheets
-# = require ./ui/crop-widget
-# = require ./widget/base-widget
-# = require ./widget/live
-# = require ./widget/submit-guard
-# = require ./widget/accessibility
+# = require ./boot.coffee.erb
+# = require ./utils.coffee
+# = require ./settings.coffee
+# = require ./locale.coffee
+# = require ./templates.coffee
+# = require ./stylesheets.coffee
+# = require ./ui/crop-widget.coffee
+# = require ./widget/base-widget.coffee
+# = require ./widget/live.coffee
+# = require ./widget/submit-guard.coffee
+# = require ./widget/accessibility.coffee
 
 {expose} = uploadcare
 
