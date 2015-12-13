@@ -1,3 +1,4 @@
+# = require ../vendor/jquery-xdr.js
 # = require ../utils/image-processor
 
 {
