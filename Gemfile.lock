@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     uploadcare-widget (2.5.9)
-      bourbon
       coffee-rails
       ejs
       sass-rails
@@ -41,9 +40,6 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     arel (3.0.3)
-    bourbon (4.2.6)
-      sass (~> 3.4)
-      thor (~> 0.19)
     builder (3.0.4)
     coderay (1.1.0)
     coffee-rails (3.2.2)
@@ -244,7 +240,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bourbon
   coffee-rails (~> 3.2.1)
   coffee-script-source (= 1.6.3)
   fog

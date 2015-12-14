@@ -21,7 +21,6 @@ gem 'sprockets'
 gem 'sprockets-rails'
 gem 'sass-rails',   '~> 3.2.3'
 gem 'coffee-rails', '~> 3.2.1'
-gem 'bourbon'
 gem 'yui-compressor', '0.12.0'
 gem 'fog'
 
