@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.14'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -11,8 +11,6 @@ group :assets do
   gem 'uploadcare-widget', path: '../..'
 end
 
-gem 'jquery-rails'
-
 group :development, :test do
   gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'rb-fsevent', '~> 0.9'
@@ -20,4 +18,3 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'rails-dev-tweaks', '~> 0.6.1'
 end
-

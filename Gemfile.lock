@@ -5,7 +5,6 @@ PATH
       bourbon
       coffee-rails
       ejs
-      jquery-rails
       sass-rails
       spans (= 0.0.7)
       yui-compressor (= 0.12.0)
@@ -175,9 +174,6 @@ GEM
       sass-rails
     ipaddress (0.8.0)
     journey (1.0.4)
-    jquery-rails (3.1.4)
-      railties (>= 3.0, < 5.0)
-      thor (>= 0.14, < 2.0)
     json (1.8.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -252,7 +248,6 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   coffee-script-source (= 1.6.3)
   fog
-  jquery-rails
   pry
   pry-rails
   rails (= 3.2.14)
@@ -261,6 +256,3 @@ DEPENDENCIES
   sprockets-rails
   uploadcare-widget!
   yui-compressor (= 0.12.0)
-
-BUNDLED WITH
-   1.11.0
