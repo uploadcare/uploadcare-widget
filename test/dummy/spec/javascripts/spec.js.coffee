@@ -1,11 +1,13 @@
 # This pulls in all your specs from the javascripts directory into Jasmine:
 #
+# = require application
 # = require_self
 # = require ./utils
-# = require application
 # = require mock-objects/manager
 # = require_tree ./
 # = require_tree ./fixtures/data
+
+window.$ = window.jQuery = uploadcare.jQuery
 
 window.UPLOADCARE_PUBLIC_KEY = 'demopublickey'
 window.UPLOADCARE_URL_BASE = 'https://upload.staging0.uploadcare.com'
