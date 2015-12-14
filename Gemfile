@@ -23,7 +23,7 @@ gem 'sass-rails',   '~> 3.2.3'
 gem 'coffee-rails', '~> 3.2.1'
 gem 'bourbon'
 gem 'jquery-rails'
-gem 'yui-compressor', '0.9.6'
+gem 'yui-compressor', '0.12.0'
 gem 'fog'
 
 # newer versions generates bigger js files and ha other differences
