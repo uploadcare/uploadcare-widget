@@ -13,6 +13,6 @@ uploadcare.namespace 'templates', (ns) ->
   ns.tpl = (key, ctx={}) ->
     fn = ns.JST[key]
     if fn?
-      fn($.extend({t: locale.t, utils}, ctx))
+      fn($.extend({t: locale.t, utils, uploadcare}, ctx))
     else
       ''
