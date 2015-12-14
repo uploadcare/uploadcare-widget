@@ -50,7 +50,7 @@ Add following code to your document's `<head>`.
 
 ## Building Your Own
 
-You need a working Ruby 1.9.3 environment
+You need a working Ruby 2.0.0 environment
 with [Bundler](http://gembundler.com/).
 
 * `bundle install` to get build dependencies.
