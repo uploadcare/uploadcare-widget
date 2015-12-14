@@ -12,7 +12,7 @@ PATH
       coffee-rails
       ejs
       sass-rails
-      yui-compressor (= 0.12.0)
+      yui-compressor
 
 GEM
   remote: http://rubygems.org/
@@ -149,14 +149,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  coffee-rails (~> 3.2.1)
-  coffee-script-source (= 1.6.3)
+  coffee-rails (~> 3.2.2)
+  coffee-script-source (~> 1.6.3)
   guard (~> 1.8)
   guard-jasmine
   jasminerice!
   rails (= 3.2.14)
   rails-dev-tweaks (~> 0.6.1)
   rb-fsevent (~> 0.9)
-  sass-rails (~> 3.2.3)
+  sass-rails (~> 3.2.6)
   uploadcare-widget!
-  yui-compressor (= 0.12.0)
+  yui-compressor (~> 0.12.0)

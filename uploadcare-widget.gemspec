@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
   s.add_dependency "coffee-rails"
   s.add_dependency "ejs"
-  s.add_dependency "yui-compressor", '0.12.0'
+  s.add_dependency "yui-compressor"
 end

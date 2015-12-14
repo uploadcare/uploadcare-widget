@@ -15,14 +15,12 @@ gemspec
 
 
 gem 'rails', '3.2.14'
-gem 'pry'
-gem 'pry-rails'
 gem 'sprockets'
 gem 'sprockets-rails'
-gem 'sass-rails',   '~> 3.2.3'
-gem 'coffee-rails', '~> 3.2.1'
-gem 'yui-compressor', '0.12.0'
-gem 'fog'
+gem 'sass-rails',   '~> 3.2.6'
+gem 'coffee-rails', '~> 3.2.2'
+gem 'yui-compressor', '~> 0.12.0'
+gem 'fog', '~> 1.36.0'
 
-# newer versions generates bigger js files and ha other differences
-gem 'coffee-script-source', '1.6.3'
+# newer versions generates bigger js files and have other differences
+gem 'coffee-script-source', '~> 1.6.3'
