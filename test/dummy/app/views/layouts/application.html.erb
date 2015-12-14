@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html id="noblink">
 <head>
+    <title>Dummy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=.25, minimal-ui" />
+    <%= csrf_meta_tags %>
 
     <%= yield :javascript_includes %>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
 
     <script>
     UPLOADCARE_PUBLIC_KEY = 'demopublickey';
@@ -16,11 +21,6 @@
     // UPLOADCARE_CDN_BASE = 'http://robots.lacolhost.com:8888/';
     // UPLOADCARE_LOCALE = 'lv';
     </script>
-    <title>Dummy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=.25, minimal-ui" />
-    <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tags %>
     <%= yield :head %>
 </head>
 <body>

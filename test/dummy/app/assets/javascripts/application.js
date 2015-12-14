@@ -1,3 +1,2 @@
 // = require_self
-// = require jquery
-// = require uploadcare/widget
+// = require uploadcare/widget-full.coffee
