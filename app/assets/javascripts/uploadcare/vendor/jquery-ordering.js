@@ -248,4 +248,4 @@
     return this[movableName](oMovable);
   };
   $.fn.extend(extend);
-})(jQuery);
+})(uploadcare.jQuery);

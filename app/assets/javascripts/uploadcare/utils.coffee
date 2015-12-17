@@ -1,8 +1,8 @@
-# = require uploadcare/utils/abilities
-# = require uploadcare/utils/pusher
-# = require uploadcare/utils/collection
-# = require uploadcare/utils/warnings
-# = require uploadcare/utils/messages
+# = require ./vendor/jquery-xdr.js
+# = require ./utils/abilities.coffee
+# = require ./utils/collection.coffee
+# = require ./utils/warnings.coffee
+# = require ./utils/messages.coffee
 
 {
   jQuery: $
@@ -223,11 +223,11 @@ uploadcare.namespace 'utils', (ns) ->
           'image/*'
         else
           null
-    (
+    $(
       if settings.multiple
-        $('<input type="file" multiple>')
+        '<input type="file" multiple>'
       else
-        $('<input type="file">')
+        '<input type="file">'
     )
       .attr('accept', accept)
       .css(
@@ -285,10 +285,6 @@ uploadcare.namespace 'utils', (ns) ->
       text = "#{textStatus} (#{errorThrown})"
       ns.warn("JSONP unexpected error: #{text} while loading #{url}")
       text
-
-
-  ns.plugin = (fn) ->
-    fn(uploadcare)
 
 
   ns.canvasToBlob = (canvas, type, quality, callback) ->

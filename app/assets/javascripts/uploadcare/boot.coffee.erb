@@ -1,0 +1,17 @@
+# = require ./namespace.coffee
+
+uploadcare.version = '<%= UploadcareWidget::VERSION %>'
+uploadcare.jQuery = jQuery
+
+{expose} = uploadcare
+
+expose('version')
+expose('jQuery')
+
+expose 'plugin', (fn) ->
+  fn(uploadcare)
+
+# back compatibility
+expose 'whenReady', (fn) ->
+  fn()
+

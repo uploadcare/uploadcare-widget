@@ -1,3 +1,5 @@
+# = require ../../vendor/jquery-ordering.js
+
 {
   utils,
   ui: {progress},

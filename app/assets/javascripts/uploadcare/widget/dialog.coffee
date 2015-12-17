@@ -1,10 +1,10 @@
-# = require ./tabs/file-tab
-# = require ./tabs/url-tab
-# = require ./tabs/camera-tab
-# = require ./tabs/remote-tab
-# = require ./tabs/base-preview-tab
-# = require ./tabs/preview-tab
-# = require ./tabs/preview-tab-multiple
+# = require ./tabs/file-tab.coffee
+# = require ./tabs/url-tab.coffee
+# = require ./tabs/camera-tab.coffee
+# = require ./tabs/remote-tab.coffee
+# = require ./tabs/base-preview-tab.coffee
+# = require ./tabs/preview-tab.coffee
+# = require ./tabs/preview-tab-multiple.coffee
 
 {
   utils,

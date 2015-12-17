@@ -1,9 +1,9 @@
-# = require ./files/base
-# = require ./files/object
-# = require ./files/input
-# = require ./files/url
-# = require ./files/uploaded
-# = require ./files/group
+# = require ./files/base.coffee
+# = require ./files/object.coffee
+# = require ./files/input.coffee
+# = require ./files/url.coffee
+# = require ./files/uploaded.coffee
+# = require ./files/group.coffee
 
 {
   utils,

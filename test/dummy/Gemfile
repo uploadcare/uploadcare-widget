@@ -1,23 +1,21 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.14'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'coffee-script-source', '1.6.3'
-
-  gem 'yui-compressor', '0.9.6'
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'yui-compressor', '~> 0.12.0'
+  gem 'coffee-script-source', '~> 1.6.3'
+  
   gem 'uploadcare-widget', path: '../..'
 end
-
-gem 'jquery-rails'
 
 group :development, :test do
   gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'rb-fsevent', '~> 0.9'
   gem 'guard', '~> 1.8'
   gem 'guard-jasmine'
-  gem 'rails-dev-tweaks', '~> 0.6.1'
+  gem 'rails-dev-tweaks', '~> 1.2.0'
+  gem 'therubyracer'
 end
-

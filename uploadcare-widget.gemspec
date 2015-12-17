@@ -19,11 +19,8 @@ Gem::Specification.new do |s|
 
   s.test_files = FileList["test/**/*"].exclude('test/dummy/vendor/bundle/**/*').exclude('test/dummy/tmp/**/*')
 
-  s.add_dependency "jquery-rails"
   s.add_dependency "sass-rails"
   s.add_dependency "coffee-rails"
   s.add_dependency "ejs"
-  s.add_dependency "spans", '0.0.7'
-  s.add_dependency "bourbon"
-  s.add_dependency "yui-compressor", '0.9.6'
+  s.add_dependency "yui-compressor"
 end

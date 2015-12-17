@@ -1,4 +1,4 @@
-# = require ./jquery.Jcrop
+# = require ../vendor/jquery-jcrop.js
 
 {
   jQuery: $,
