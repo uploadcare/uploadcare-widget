@@ -20,6 +20,7 @@ gem 'sprockets-rails'
 gem 'sass-rails',   '~> 3.2.6'
 gem 'coffee-rails', '~> 3.2.2'
 gem 'yui-compressor', '~> 0.12.0'
+gem "autoprefixer-rails", "~> 6.1.2"
 gem 'fog', '~> 1.36.0'
 
 # newer versions generates bigger js files and have other differences

@@ -9,7 +9,7 @@ PATH
   remote: ../..
   specs:
     uploadcare-widget (2.5.9)
-      autoprefixer-rails (= 6.1.2)
+      autoprefixer-rails
       coffee-rails
       ejs
       sass-rails
