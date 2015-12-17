@@ -10,12 +10,11 @@
   }
 
   > div:first-child {
-    -webkit-transform: translateZ(0);  // Create rendering layer for webkit.
+    transform: translateZ(0);  // Create rendering layer for webkit.
   }
 
   > img {
-    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'.5\'/></filter></svg>#grayscale");
-    -webkit-filter: grayscale(50%);
+    filter: grayscale(50%);
   }
 }
 

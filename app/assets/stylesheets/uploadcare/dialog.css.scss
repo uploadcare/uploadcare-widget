@@ -716,7 +716,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   max-width: 100%;
   max-height: $dialog-camera-video-height;
   transition: transform .8s cubic-bezier(0.23, 1, 0.32, 1);
-  -webkit-transition: -webkit-transform .8s cubic-bezier(0.23, 1, 0.32, 1);
 
   .uploadcare-dialog-multiple & {
     max-height: $dialog-camera-video-height - $dialog-footer-height;
@@ -724,7 +723,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 }
 .uploadcare-dialog-camera--mirrored {
   transform: scale(-1, 1);
-  -webkit-transform: scale(-1, 1);
 }
 .uploadcare-dialog-camera-message {
   @include vertical-centered;
