@@ -43,23 +43,23 @@ html.uploadcare-dialog-opened {
 
   .uploadcare-dialog-panel {
     border-radius: $dialog-corner-radius;
-    @include prefix(box-shadow, 0 1px 2px rgba(black, 0.35));
+    box-shadow: 0 1px 2px rgba(black, 0.35);
   }
 }
 
 .uploadcare-dialog {
-  @include prefix(transition, opacity .33s cubic-bezier(0.05,.7,.25,1));
+  transition: opacity .33s cubic-bezier(0.05,.7,.25,1);
   opacity: 0;
   .uploadcare-dialog-inner-wrap {
-    @include prefixprefix(transition, transform .33s cubic-bezier(0.05,.7,.25,1));
-    @include prefix(transform, scale(.8));
-    @include prefix(transform-origin, 50% 100%);
+    transition: transform .33s cubic-bezier(0.05,.7,.25,1);
+    transform: scale(.8);
+    transform-origin: 50% 100%;
   }
 }
 .uploadcare-dialog.uploadcare-active {
   opacity: 1;
   .uploadcare-dialog-inner-wrap {
-    @include prefix(transform, none);
+    transform: none;
   }
 }
 
@@ -68,7 +68,7 @@ html.uploadcare-dialog-opened {
   text-align: left;
 
   // We need width 100% and paddings.
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   $paddings: $dialog-close-button-size + y(.5);
   position: relative;
   width: 100%;
@@ -101,7 +101,7 @@ html.uploadcare-dialog-opened {
   background: $dialog-body-background-color;
   font-weight: normal;
   padding-left: $dialog-tab-width;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
 
   :focus {
     outline: 2px dotted #0094c0;
@@ -117,7 +117,7 @@ html.uploadcare-dialog-opened {
 }
 
 .uploadcare-dialog-tabs {
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   width: $dialog-tab-width;
   height: $dialog-body-height;
   margin-left: -$dialog-tab-width;
@@ -132,7 +132,7 @@ html.uploadcare-dialog-opened {
 
   $frame-size: 50px;
   .uploadcare-dialog-tab {
-    @include prefix(box-sizing, border-box);
+    box-sizing: border-box;
     height: 56px;
     position: relative;
     border-bottom: 1px solid $dialog-body-border-color;
@@ -141,7 +141,7 @@ html.uploadcare-dialog-opened {
     // Geometry
     .uploadcare-dialog-icon,
     &:before {
-      @include prefix(box-sizing, border-box);
+      box-sizing: border-box;
 
       position: absolute;
       top: 50%;
@@ -266,7 +266,7 @@ html.uploadcare-dialog-opened {
 .uploadcare-dialog-tabs-panel {
   position: relative;
   display: none;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   height: $dialog-body-height;
   line-height: y(1);
   font-size: $dialog-body-font-size;
@@ -277,7 +277,7 @@ html.uploadcare-dialog-opened {
   }
 
   .uploadcare-dialog-input {
-    @include prefix(box-sizing, border-box);
+    box-sizing: border-box;
     width: 100%;
     height: y(2);
     margin-bottom: y(1);
@@ -397,18 +397,18 @@ $dialog-button-height: 32px;
   &[disabled]:hover,
   &.uploadcare-disabled-el:hover {
     @include gradient($default-a, $default-b);
-    @include prefix(box-shadow, none);
+    box-shadow: none;
     border-color: $border-color;
   }
 
   &:hover {
     @include gradient($hover-a, $hover-b);
-    @include prefix(box-shadow, inset 0 -1px 3px rgba(black, .05));
+    box-shadow: inset 0 -1px 3px rgba(black, .05);
   }
 
   &:active {
     @include gradient($active-a, $active-b);
-    @include prefix(box-shadow, inset 0 2px 2px rgba(black, .05));
+    box-shadow: inset 0 2px 2px rgba(black, .05);
   }
 
   &[disabled], &.uploadcare-disabled-el {
@@ -442,10 +442,10 @@ $dialog-button-height: 32px;
     border-color: #266eca #1f62b7 #1753a1;
   }
   &:hover {
-    @include prefix(box-shadow, inset 0 -1px 3px rgba(#1652a0, .5));
+    box-shadow: inset 0 -1px 3px rgba(#1652a0, .5);
   }
   &:active {
-    @include prefix(box-shadow, inset 0 1px 3px rgba(#1652a0, .4));
+    box-shadow: inset 0 1px 3px rgba(#1652a0, .4);
   }
 }
 
@@ -461,16 +461,16 @@ $dialog-button-height: 32px;
   display: inline-block;
   padding: y(0.75) 2em;
   cursor: pointer;
-  @include prefix(box-shadow, inset 0 -2px #1f66c1);
+  box-shadow: inset 0 -2px #1f66c1;
   @include gradient(#4892f6, #4289e6);
 
   &:hover {
-    @include prefix(box-shadow, inset 0 -2px #1652a0);
+    box-shadow: inset 0 -2px #1652a0;
     @include gradient(#3986eb, #2c6dc2);
   }
 
   &:active {
-    @include prefix(box-shadow, inset 0 2px #2561b9);
+    box-shadow: inset 0 2px #2561b9;
     @include gradient(#2c6ec3, #2c6ec3);
   }
 }
@@ -505,7 +505,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 }
 
 .uploadcare-panel-footer {
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-footer-height;
@@ -608,7 +608,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 .uploadcare-dialog-file-drop-area {
   width: 100%;
   height: 100%;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   border: none;
   text-align: center;
   border-radius: 3px;
@@ -716,7 +716,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   max-width: 100%;
   max-height: $dialog-camera-video-height;
   transition: transform .8s cubic-bezier(0.23, 1, 0.32, 1);
-  -webkit-transition: -webkit-transform .8s cubic-bezier(0.23, 1, 0.32, 1);
 
   .uploadcare-dialog-multiple & {
     max-height: $dialog-camera-video-height - $dialog-footer-height;
@@ -724,7 +723,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 }
 .uploadcare-dialog-camera--mirrored {
   transform: scale(-1, 1);
-  -webkit-transform: scale(-1, 1);
 }
 .uploadcare-dialog-camera-message {
   @include vertical-centered;
@@ -801,7 +799,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
       // for each columns
       > * {
-        @include prefix(box-sizing, content-box);
+        box-sizing: content-box;
         display: table-cell;
         vertical-align: middle;
         padding-right: 20px;
