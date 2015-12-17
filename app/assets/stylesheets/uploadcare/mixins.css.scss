@@ -4,16 +4,8 @@
   #{$prop}: $value;
 }
 
-@mixin prefixprefix($prop, $value) {
-  -webkit-#{$prop}: -webkit-#{$value};
-  -moz-#{$prop}: -moz-#{$value};
-  #{$prop}: $value;
-}
-
 @mixin gradient($from, $to) {
   background: mix($from, $to);
-  background: -webkit-linear-gradient($from, $to);
-  background: -moz-linear-gradient($from, $to);
   background: linear-gradient($from, $to);
 }
 

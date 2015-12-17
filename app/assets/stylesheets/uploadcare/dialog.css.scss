@@ -48,12 +48,12 @@ html.uploadcare-dialog-opened {
 }
 
 .uploadcare-dialog {
-  @include prefix(transition, opacity .33s cubic-bezier(0.05,.7,.25,1));
+  transition: opacity .33s cubic-bezier(0.05,.7,.25,1);
   opacity: 0;
   .uploadcare-dialog-inner-wrap {
-    @include prefixprefix(transition, transform .33s cubic-bezier(0.05,.7,.25,1));
-    @include prefix(transform, scale(.8));
-    @include prefix(transform-origin, 50% 100%);
+    transition: transform .33s cubic-bezier(0.05,.7,.25,1);
+    transform: scale(.8);
+    transform-origin: 50% 100%;
   }
 }
 .uploadcare-dialog.uploadcare-active {
