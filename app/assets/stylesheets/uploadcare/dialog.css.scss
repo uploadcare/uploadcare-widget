@@ -43,7 +43,7 @@ html.uploadcare-dialog-opened {
 
   .uploadcare-dialog-panel {
     border-radius: $dialog-corner-radius;
-    @include prefix(box-shadow, 0 1px 2px rgba(black, 0.35));
+    box-shadow: 0 1px 2px rgba(black, 0.35);
   }
 }
 
@@ -59,7 +59,7 @@ html.uploadcare-dialog-opened {
 .uploadcare-dialog.uploadcare-active {
   opacity: 1;
   .uploadcare-dialog-inner-wrap {
-    @include prefix(transform, none);
+    transform: none;
   }
 }
 
@@ -397,18 +397,18 @@ $dialog-button-height: 32px;
   &[disabled]:hover,
   &.uploadcare-disabled-el:hover {
     @include gradient($default-a, $default-b);
-    @include prefix(box-shadow, none);
+    box-shadow: none;
     border-color: $border-color;
   }
 
   &:hover {
     @include gradient($hover-a, $hover-b);
-    @include prefix(box-shadow, inset 0 -1px 3px rgba(black, .05));
+    box-shadow: inset 0 -1px 3px rgba(black, .05);
   }
 
   &:active {
     @include gradient($active-a, $active-b);
-    @include prefix(box-shadow, inset 0 2px 2px rgba(black, .05));
+    box-shadow: inset 0 2px 2px rgba(black, .05);
   }
 
   &[disabled], &.uploadcare-disabled-el {
@@ -442,10 +442,10 @@ $dialog-button-height: 32px;
     border-color: #266eca #1f62b7 #1753a1;
   }
   &:hover {
-    @include prefix(box-shadow, inset 0 -1px 3px rgba(#1652a0, .5));
+    box-shadow: inset 0 -1px 3px rgba(#1652a0, .5);
   }
   &:active {
-    @include prefix(box-shadow, inset 0 1px 3px rgba(#1652a0, .4));
+    box-shadow: inset 0 1px 3px rgba(#1652a0, .4);
   }
 }
 
@@ -461,16 +461,16 @@ $dialog-button-height: 32px;
   display: inline-block;
   padding: y(0.75) 2em;
   cursor: pointer;
-  @include prefix(box-shadow, inset 0 -2px #1f66c1);
+  box-shadow: inset 0 -2px #1f66c1;
   @include gradient(#4892f6, #4289e6);
 
   &:hover {
-    @include prefix(box-shadow, inset 0 -2px #1652a0);
+    box-shadow: inset 0 -2px #1652a0;
     @include gradient(#3986eb, #2c6dc2);
   }
 
   &:active {
-    @include prefix(box-shadow, inset 0 2px #2561b9);
+    box-shadow: inset 0 2px #2561b9;
     @include gradient(#2c6ec3, #2c6ec3);
   }
 }
