@@ -68,7 +68,7 @@ html.uploadcare-dialog-opened {
   text-align: left;
 
   // We need width 100% and paddings.
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   $paddings: $dialog-close-button-size + y(.5);
   position: relative;
   width: 100%;
@@ -101,7 +101,7 @@ html.uploadcare-dialog-opened {
   background: $dialog-body-background-color;
   font-weight: normal;
   padding-left: $dialog-tab-width;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
 
   :focus {
     outline: 2px dotted #0094c0;
@@ -117,7 +117,7 @@ html.uploadcare-dialog-opened {
 }
 
 .uploadcare-dialog-tabs {
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   width: $dialog-tab-width;
   height: $dialog-body-height;
   margin-left: -$dialog-tab-width;
@@ -132,7 +132,7 @@ html.uploadcare-dialog-opened {
 
   $frame-size: 50px;
   .uploadcare-dialog-tab {
-    @include prefix(box-sizing, border-box);
+    box-sizing: border-box;
     height: 56px;
     position: relative;
     border-bottom: 1px solid $dialog-body-border-color;
@@ -141,7 +141,7 @@ html.uploadcare-dialog-opened {
     // Geometry
     .uploadcare-dialog-icon,
     &:before {
-      @include prefix(box-sizing, border-box);
+      box-sizing: border-box;
 
       position: absolute;
       top: 50%;
@@ -266,7 +266,7 @@ html.uploadcare-dialog-opened {
 .uploadcare-dialog-tabs-panel {
   position: relative;
   display: none;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   height: $dialog-body-height;
   line-height: y(1);
   font-size: $dialog-body-font-size;
@@ -277,7 +277,7 @@ html.uploadcare-dialog-opened {
   }
 
   .uploadcare-dialog-input {
-    @include prefix(box-sizing, border-box);
+    box-sizing: border-box;
     width: 100%;
     height: y(2);
     margin-bottom: y(1);
@@ -505,7 +505,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 }
 
 .uploadcare-panel-footer {
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   background: #fff3be;
   border-top: 1px solid #efe2a9;
   height: $dialog-footer-height;
@@ -608,7 +608,7 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 .uploadcare-dialog-file-drop-area {
   width: 100%;
   height: 100%;
-  @include prefix(box-sizing, border-box);
+  box-sizing: border-box;
   border: none;
   text-align: center;
   border-radius: 3px;
@@ -801,7 +801,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
       // for each columns
       > * {
-        @include prefix(box-sizing, content-box);
+        box-sizing: content-box;
         display: table-cell;
         vertical-align: middle;
         padding-right: 20px;
