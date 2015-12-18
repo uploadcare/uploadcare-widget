@@ -1,15 +1,14 @@
-sudo: required
+sudo: false
 language: ruby
 cache: bundler
 rvm: "2.0.0"
 before_install:
   # http://blog.travis-ci.com/2014-10-30-november--build-environment-updates/
-  - sudo rm -rf /usr/local/phantomjs
-  - curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
-  - tar xjf phantomjs-1.9.7-linux-x86_64.tar.bz2
-  - sudo mv phantomjs-1.9.7-linux-x86_64 /usr/local/phantomjs
+  - curl -L -o phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
+  - mkdir ./phantomjs
+  - tar xjf phantomjs.tar.bz2 -C ./phantomjs --strip-components=1
 script:
   - cd test/dummy
   - export BUNDLE_GEMFILE=$PWD/Gemfile
-  - bundle install
-  - bundle exec guard-jasmine --server-timeout=60
+  - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-../../vendor/bundle}
+  - bundle exec guard-jasmine -b ../../phantomjs/bin/phantomjs --server-timeout=60
