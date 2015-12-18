@@ -12,6 +12,7 @@ group :assets do
   gem 'uploadcare-widget', path: '../..'
 end
 
+
 group :development, :test do
   gem 'jasminerice', :git => 'https://github.com/bradphelan/jasminerice.git'
   gem 'rb-fsevent', '~> 0.9'
