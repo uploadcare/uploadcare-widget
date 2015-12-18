@@ -1,7 +1,7 @@
 sudo: required
 language: ruby
 cache: bundler
-rvm: "1.9.3"
+rvm: "2.0.0"
 before_install:
   # http://blog.travis-ci.com/2014-10-30-november--build-environment-updates/
   - sudo rm -rf /usr/local/phantomjs
