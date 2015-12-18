@@ -4,6 +4,7 @@ cache: bundler
 rvm: "2.0.0"
 before_install:
   # http://blog.travis-ci.com/2014-10-30-november--build-environment-updates/
+  - phantomjs --version
   - sudo rm -rf /usr/local/phantomjs
   - curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
   - tar xjf phantomjs-1.9.7-linux-x86_64.tar.bz2
