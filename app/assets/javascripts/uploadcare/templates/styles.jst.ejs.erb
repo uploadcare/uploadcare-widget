@@ -1,13 +1,13 @@
-// = depend_on uploadcare/widget.css.scss
-// = depend_on uploadcare/dialog.css.scss
-// = depend_on uploadcare/dialog-mobile.css.scss
-// = depend_on uploadcare/images.css.scss
-// = depend_on uploadcare/mixins.css.scss
-// = depend_on uploadcare/crop-widget.css.scss
-// = depend_on uploadcare/jCrop.css.scss
-// = depend_on uploadcare/colors.css.scss
+// = depend_on uploadcare/widget.scss
+// = depend_on uploadcare/dialog.scss
+// = depend_on uploadcare/dialog-mobile.scss
+// = depend_on uploadcare/images.scss
+// = depend_on uploadcare/mixins.scss
+// = depend_on uploadcare/crop-widget.scss
+// = depend_on uploadcare/jCrop.scss
+// = depend_on uploadcare/colors.scss
 <%=
   require 'yui/compressor' # if not already
-  raw = Rails.application.assets.find_asset('uploadcare/widget.css').body
+  raw = Rails.application.assets.find_asset('uploadcare/widget.scss').body
   YUI::CssCompressor.new.compress(raw)
 %>

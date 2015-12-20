@@ -192,9 +192,7 @@ namespace :js do
     require 'rubygems'
     ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __FILE__)
     require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
-    # require "active_record/railtie"
     require "action_controller/railtie"
-    require "active_resource/railtie"
     require "sprockets/railtie"
 
     if defined?(Bundler)
@@ -203,17 +201,18 @@ namespace :js do
 
     class Application < Rails::Application
       config.encoding = "utf-8"
+      config.eager_load = false
       config.assets.enabled = true
-      config.assets.version = rand # no cache
       config.assets.compress = false
       config.assets.compile = true
       config.assets.digest = false
       config.assets.debug = false
+      config.assets.cache_store = :memory_store
 
       config.active_support.deprecation = :notify
-      config.assets.js_compressor = :yui
       config.action_controller.asset_host = 'https://ucarecdn.com'
     end
+
     Application.initialize!
   end
 
