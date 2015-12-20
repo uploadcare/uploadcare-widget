@@ -1,4 +1,4 @@
-window.uploadcare ||= {}
+window.uploadcare = {}
 
 
 uploadcare.namespace = (path, fn) ->
