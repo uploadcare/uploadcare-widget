@@ -123,13 +123,14 @@ def upload_widget(version)
   directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
 
   upload = lambda do |name, type|
+    key = "#{Rails.application.config.assets.prefix}/uploadcare/#{name}"
     file = directory.files.create(
       body: File.read(in_root("pkg/#{version}/#{name}")),
-      key: "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
+      key: key,
       public: true,
       content_type: type
     )
-    puts "Uploaded #{CGI::unescape file.public_url}"
+    puts "Uploaded https://#{ENV['AWS_BUCKET_NAME']}.s3.amazonaws.com/#{CGI::unescape key}"
   end
 
   upload_js = lambda do |name|
