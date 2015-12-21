@@ -91,21 +91,19 @@ def header_comment(version)
 end
 
 def wrap_namespace(js, version)
-  ";(function(uploadcare, SCRIPT_BASE){#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
+  ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
 end
 
 def build_widget(version)
   comment = header_comment(version)
 
-  js = Rails.application.assets['uploadcare/widget-full.js'].source
+  js = Rails.application.assets['uploadcare/widget-full.coffee'].source
   js = wrap_namespace(js, version)
   write_file("#{version}/uploadcare.full.js", comment + js)
-  write_file("#{version}/uploadcare-#{version}.js", comment + js)
   minified = YUI::JavaScriptCompressor.new.compress(js)
   write_file("#{version}/uploadcare.full.min.js", comment + minified)
-  write_file("#{version}/uploadcare-#{version}.min.js", comment + minified)
 
-  js = Rails.application.assets['uploadcare/widget.js'].source
+  js = Rails.application.assets['uploadcare/widget.coffee'].source
   js = wrap_namespace(js, version)
   write_file("#{version}/uploadcare.js", comment + js)
   minified = YUI::JavaScriptCompressor.new.compress(js)
@@ -125,13 +123,14 @@ def upload_widget(version)
   directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
 
   upload = lambda do |name, type|
+    key = "#{Rails.application.config.assets.prefix}/uploadcare/#{name}"
     file = directory.files.create(
       body: File.read(in_root("pkg/#{version}/#{name}")),
-      key: "#{Rails.application.config.assets.prefix}/uploadcare/#{name}",
+      key: key,
       public: true,
       content_type: type
     )
-    puts "Uploaded #{CGI::unescape file.public_url}"
+    puts "Uploaded https://#{ENV['AWS_BUCKET_NAME']}.s3.amazonaws.com/#{CGI::unescape key}"
   end
 
   upload_js = lambda do |name|
@@ -142,8 +141,6 @@ def upload_widget(version)
   upload_js.call "uploadcare.min.js"
   upload_js.call "uploadcare.full.js"
   upload_js.call "uploadcare.full.min.js"
-  upload_js.call "uploadcare-#{version}.js"
-  upload_js.call "uploadcare-#{version}.min.js"
 
   IMAGES.each do |full, base, type|
     upload.call "images/#{base}", type
