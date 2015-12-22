@@ -118,25 +118,31 @@ def upload_widget(version)
   })
   directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
 
-  upload = lambda do |name, type|
-    key = "widget/#{version}/uploadcare/#{name}"
+  upload = lambda do |name, type, force_version=false|
+    key = "widget/#{force_version or version}/uploadcare/#{name}"
     file = directory.files.create(
       body: File.read(in_root("pkg/#{version}/#{name}")),
       key: key,
       public: true,
       content_type: type
     )
-    puts "Uploaded https://#{ENV['AWS_BUCKET_NAME']}.s3.amazonaws.com/#{CGI::unescape key}"
+    puts "Uploaded https://#{ENV['AWS_BUCKET_NAME']}.s3.amazonaws.com/#{key}"
   end
 
-  upload_js = lambda do |name|
-    upload.call(name, 'application/javascript; charset=utf-8')
+  upload_js = lambda do |force_version=false|
+    [
+      "uploadcare.js", "uploadcare.min.js",
+      "uploadcare.full.js", "uploadcare.full.min.js"
+    ].each do |name|
+      upload.call(name, 'application/javascript; charset=utf-8', force_version)
+    end
   end
 
-  upload_js.call "uploadcare.js"
-  upload_js.call "uploadcare.min.js"
-  upload_js.call "uploadcare.full.js"
-  upload_js.call "uploadcare.full.min.js"
+  upload_js.call()
+  if version =~ /^\d+\.\d+\.\d+$/
+    upload_js.call(version[/^\d+\.\d+/] + '+')
+    upload_js.call(version[/^\d+/] + '+')
+  end
 
   IMAGES.each do |full, base, type|
     upload.call "images/#{base}", type
