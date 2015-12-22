@@ -95,18 +95,20 @@ def wrap_namespace(js, version)
 end
 
 def build_widget(version)
+  setup_prefix(version)
+
   comment = header_comment(version)
 
   js = Rails.application.assets['uploadcare/widget-full.coffee'].source
   js = wrap_namespace(js, version)
-  write_file("#{version}/uploadcare.full.js", comment + js)
   minified = YUI::JavaScriptCompressor.new.compress(js)
+  write_file("#{version}/uploadcare.full.js", comment + js)
   write_file("#{version}/uploadcare.full.min.js", comment + minified)
 
   js = Rails.application.assets['uploadcare/widget.coffee'].source
   js = wrap_namespace(js, version)
-  write_file("#{version}/uploadcare.js", comment + js)
   minified = YUI::JavaScriptCompressor.new.compress(js)
+  write_file("#{version}/uploadcare.js", comment + js)
   write_file("#{version}/uploadcare.min.js", comment + minified)
 
   IMAGES.each do |full, base|
@@ -115,6 +117,8 @@ def build_widget(version)
 end
 
 def upload_widget(version)
+  setup_prefix(version)
+
   storage = Fog::Storage.new({
     provider: 'AWS',
     aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
@@ -123,7 +127,7 @@ def upload_widget(version)
   directory = storage.directories.get(ENV['AWS_BUCKET_NAME'])
 
   upload = lambda do |name, type|
-    key = "#{Rails.application.config.assets.prefix}/uploadcare/#{name}"
+    key = "widget/#{version}/uploadcare/#{name}"
     file = directory.files.create(
       body: File.read(in_root("pkg/#{version}/#{name}")),
       key: key,
@@ -134,7 +138,7 @@ def upload_widget(version)
   end
 
   upload_js = lambda do |name|
-    upload.call name, 'application/javascript; charset=utf-8'
+    upload.call(name, 'application/javascript; charset=utf-8')
   end
 
   upload_js.call "uploadcare.js"
@@ -148,6 +152,7 @@ def upload_widget(version)
 end
 
 def upload_bower(version)
+  setup_prefix(version)
 
   submodule = "cd submodules/uploadcare-bower &&"
 
@@ -215,41 +220,34 @@ namespace :js do
 
   namespace :latest do
     task build: [:application] do
-      setup_prefix('latest')
       build_widget('latest')
     end
 
     task upload: [:application] do
-      setup_prefix('latest')
       upload_widget('latest')
     end
   end
 
   namespace :release do
     task build: [:application] do
-      setup_prefix(UploadcareWidget::VERSION)
       build_widget(UploadcareWidget::VERSION)
     end
 
     task upload: [:application] do
-      setup_prefix(UploadcareWidget::VERSION)
       upload_widget(UploadcareWidget::VERSION)
     end
 
     task bower: [:application] do
-      setup_prefix(UploadcareWidget::VERSION)
       upload_bower(UploadcareWidget::VERSION)
     end
   end
 
   namespace :prefixed do
     task :build, [:prefix] => [:application] do | t, args |
-      setup_prefix("latest-" + args[:prefix])
       build_widget("latest-" + args[:prefix])
     end
 
     task :upload, [:prefix] => [:application] do | t, args |
-      setup_prefix("latest-" + args[:prefix])
       upload_widget("latest-" + args[:prefix])
     end
   end
