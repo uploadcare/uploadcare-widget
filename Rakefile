@@ -76,10 +76,6 @@ def cp_file(src, dest)
   puts "Copied #{widget_path}"
 end
 
-def setup_prefix(version)
-  Rails.application.config.assets.prefix = "widget/#{version}"
-end
-
 def header_comment(version)
   <<-eos
 /*
@@ -95,8 +91,6 @@ def wrap_namespace(js, version)
 end
 
 def build_widget(version)
-  setup_prefix(version)
-
   comment = header_comment(version)
 
   js = Rails.application.assets['uploadcare/widget-full.coffee'].source
@@ -117,8 +111,6 @@ def build_widget(version)
 end
 
 def upload_widget(version)
-  setup_prefix(version)
-
   storage = Fog::Storage.new({
     provider: 'AWS',
     aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
@@ -152,8 +144,6 @@ def upload_widget(version)
 end
 
 def upload_bower(version)
-  setup_prefix(version)
-
   submodule = "cd submodules/uploadcare-bower &&"
 
   # Check if such verion already exists
