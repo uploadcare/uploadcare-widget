@@ -40,14 +40,14 @@ uploadcare.namespace 'locale.translations', (ns) ->
       tabs:
         names:
           preview: 'Vis'
-          file: 'Komputer'
+          file: 'Computer'
           gdrive: 'Google Drev'
           url: 'Direkte link'
         file:
           drag: 'Drop en fil her'
-          nodrop: 'Hent filer fra din komputer'
+          nodrop: 'Hent filer fra din computer'
           or: 'eller'
-          button: 'Hent fil fra din komputer'
+          button: 'Hent fil fra din computer'
           also: 'Du kan også hente fra'
         url:
           title: 'Filer fra en Web adresse'
