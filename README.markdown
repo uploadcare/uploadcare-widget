@@ -1,4 +1,4 @@
-This is the [Uploadcare](http://uploadcare.com) widget source.
+This is the [Uploadcare](https://uploadcare.com/) widget source.
 
 [![Build Status](https://travis-ci.org/uploadcare/uploadcare-widget.png?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
 
@@ -51,7 +51,7 @@ Add following code to your document's `<head>`.
 ## Building Your Own
 
 You need a working Ruby 2.0.0 environment
-with [Bundler](http://gembundler.com/).
+with [Bundler](http://bundler.io).
 
 * `bundle install` to get build dependencies.
 * `bundle exec rake js:latest:build` to build assets
@@ -86,7 +86,7 @@ For more information see
 ### guard-jasmine
 
 To run tests in a terminal you must first 
-[install phantomjs](https://github.com/netzpirat/guard-jasmine#phantomjs).
+[install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
 
 Then you have two options:
 
