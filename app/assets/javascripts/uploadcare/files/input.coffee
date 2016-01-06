@@ -5,6 +5,8 @@
 
 uploadcare.namespace 'files', (ns) ->
   class ns.InputFile extends ns.BaseFile
+    sourceName: 'local-compat'
+
     constructor: (settings, @__input) ->
       super
       @fileId = utils.uuid()

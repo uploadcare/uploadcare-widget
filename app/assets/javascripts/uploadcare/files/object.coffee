@@ -10,6 +10,7 @@ uploadcare.namespace 'files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
     _directRunner = null
+    sourceName: 'local'
 
     constructor: (settings, @__file) ->
       super

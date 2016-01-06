@@ -25,7 +25,7 @@ namespace 'files', (ns) ->
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
-      @sourceInfo = null
+      @sourceInfo = {source: @sourceName}
       @s3Bucket = null
 
       # this can be exposed in the future

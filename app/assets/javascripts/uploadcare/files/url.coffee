@@ -9,6 +9,7 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.UrlFile extends ns.BaseFile
+    sourceName: 'url'
     allEvents: 'progress success error fail'
 
     constructor: (settings, @__url) ->
@@ -42,11 +43,9 @@ uploadcare.namespace 'files', (ns) ->
         pub_key: @settings.publicKey
         source_url: @__url
         filename: @__realFileName or ''
+        source: @sourceInfo.source
         store: if @settings.doNotStore then '' else 'auto'
         jsonerrors: 1
-
-      if @sourceInfo
-        data.source = @sourceInfo.source
 
       utils.defer =>
         if @apiDeferred.state() != 'pending'

@@ -6,6 +6,8 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.UploadedFile extends ns.BaseFile
+    sourceName: 'uploaded'
+
     constructor: (settings, fileIdOrUrl) ->
       super
 
@@ -19,6 +21,8 @@ uploadcare.namespace 'files', (ns) ->
 
 
   class ns.ReadyFile extends ns.BaseFile
+    sourceName: 'uploaded'
+
     constructor: (settings, data) ->
       super
       if not data
