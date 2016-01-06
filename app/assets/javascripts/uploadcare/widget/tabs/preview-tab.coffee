@@ -26,15 +26,18 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if file == @file
             fn.apply(null, arguments)
 
-      @file.progress ifCur utils.once (info) =>
-        @__setState('unknown', {file: info.incompleteFileInfo})
+      @__setState('unknown', {})
+      @file.progress ifCur (info) =>
+        info = info.incompleteFileInfo
+        label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
+        @element('label').text(label)
 
-      @file.done ifCur (file) =>
-        state = if file.isImage then 'image' else 'regular'
-        @__setState(state, {file})
+      @file.done ifCur (info) =>
+        state = if info.isImage then 'image' else 'regular'
+        @__setState(state, {file: info})
 
-      @file.fail ifCur (error, file) =>
-        @__setState('error', {error, file})
+      @file.fail ifCur (error, info) =>
+        @__setState('error', {error, file: info})
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)
