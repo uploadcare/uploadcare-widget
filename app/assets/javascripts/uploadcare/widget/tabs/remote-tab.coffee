@@ -75,10 +75,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           file.setName(message.filename)
         if message.is_image?
           file.setIsImage(message.is_image)
-        info = {source: @name}
         if message.info
-          $.extend(info, message.info)
-        file.setSourceInfo(info)
+          file.updateSourceInfo(message.info)
+        file.updateSourceInfo({source: @name})
 
         @dialogApi.addFiles [file.promise()]
 

@@ -31,7 +31,8 @@ uploadcare.namespace 'files', (ns) ->
     setIsImage: (@isImage) ->
       @__notifyApi()
 
-    setSourceInfo: (@sourceInfo) ->
+    updateSourceInfo: (sourceInfo) ->
+      $.extend(@sourceInfo, sourceInfo)
       @__notifyApi()
 
     __startUpload: ->
