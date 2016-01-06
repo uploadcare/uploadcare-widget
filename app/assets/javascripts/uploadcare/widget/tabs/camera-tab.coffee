@@ -1,7 +1,8 @@
 {
   utils,
   jQuery: $,
-  templates: {tpl}
+  templates: {tpl},
+  files
 } = uploadcare
 
 
@@ -107,5 +108,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         canvas.width = 1
         canvas.height = 1
         blob.name = "camera.jpg"
-        @dialogApi.addFiles('object', [blob])
+
+        file = new files.ObjectFile(@settings, blob)
+        file.updateSourceInfo({source: 'camera'})
+        @dialogApi.addFiles([file.promise()])
+
         @dialogApi.switchTab('preview')

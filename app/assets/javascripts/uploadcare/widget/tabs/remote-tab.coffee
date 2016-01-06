@@ -79,7 +79,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           file.updateSourceInfo(message.info)
         file.updateSourceInfo({source: @name})
 
-        @dialogApi.addFiles [file.promise()]
+        @dialogApi.addFiles([file.promise()])
 
 
       utils.registerMessage 'open-new-window', iframe, (message) =>

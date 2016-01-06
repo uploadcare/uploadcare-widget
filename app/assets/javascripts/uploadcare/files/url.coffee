@@ -31,10 +31,6 @@ uploadcare.namespace 'files', (ns) ->
     setIsImage: (@isImage) ->
       @__notifyApi()
 
-    updateSourceInfo: (sourceInfo) ->
-      $.extend(@sourceInfo, sourceInfo)
-      @__notifyApi()
-
     __startUpload: ->
       df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings)

@@ -101,6 +101,10 @@ namespace 'files', (ns) ->
     # Retrieve info
     #
 
+    updateSourceInfo: (sourceInfo) ->
+      $.extend(@sourceInfo, sourceInfo)
+      @__notifyApi()
+
     __progressInfo: ->
       state: @__progressState
       uploadProgress: @__progress

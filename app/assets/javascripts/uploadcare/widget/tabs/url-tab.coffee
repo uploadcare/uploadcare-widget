@@ -1,6 +1,7 @@
 {
   jQuery: $,
-  templates: {tpl}
+  templates: {tpl},
+  files
 } = uploadcare
 
 {t} = uploadcare.locale
@@ -31,7 +32,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.find('.uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl(input.val())
-          @dialogApi.addFiles('url', [url])
+          file = new files.UrlFile(@settings, url)
+          file.updateSourceInfo({source: 'url-tab'})
+          @dialogApi.addFiles([file.promise()])
           input.val('')
 
         false
