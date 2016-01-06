@@ -28,7 +28,7 @@ namespace 'files', (ns) ->
       @sourceInfo = null
       @s3Bucket = null
 
-      # this can be exposed in future
+      # this can be exposed in the future
       @onInfoReady = $.Callbacks('once memory')
 
       @__setupValidation()
@@ -36,6 +36,10 @@ namespace 'files', (ns) ->
 
     __startUpload: ->
       $.Deferred().resolve()
+
+    #
+    # Complete uploading
+    #
 
     __completeUpload: =>
       # Update info until @apiDeferred resolved.
@@ -60,6 +64,19 @@ namespace 'files', (ns) ->
             setTimeout(check, timeout)
             timeout += 50
 
+    __updateInfo: =>
+      utils.jsonp "#{@settings.urlBase}/info/",
+          jsonerrors: 1
+          file_id: @fileId
+          pub_key: @settings.publicKey
+          wait_is_ready: +@onInfoReady.fired()
+        .fail (reason) =>
+          if @settings.debugUploads
+            utils.log("Can't load file info. Probably removed.",
+                      @fileId, @settings.publicKey, reason)
+          @__rejectApi('info')
+        .done(@__handleFileData)
+
     __handleFileData: (data) =>
       @fileName = data.original_filename
       @sanitizedName = data.filename
@@ -80,18 +97,9 @@ namespace 'files', (ns) ->
       if data.is_ready
         @__resolveApi()
 
-    __updateInfo: =>
-      utils.jsonp "#{@settings.urlBase}/info/",
-          jsonerrors: 1
-          file_id: @fileId
-          pub_key: @settings.publicKey
-          wait_is_ready: +@onInfoReady.fired()
-        .fail (reason) =>
-          if @settings.debugUploads
-            utils.log("Can't load file info. Probably removed.",
-                      @fileId, @settings.publicKey, reason)
-          @__rejectApi('info')
-        .done(@__handleFileData)
+    #
+    # Retrieve info
+    #
 
     __progressInfo: ->
       state: @__progressState
@@ -122,8 +130,9 @@ namespace 'files', (ns) ->
       cdnUrlModifiers: @cdnUrlModifiers
       sourceInfo: @sourceInfo
 
-    __cancel: =>
-      @__rejectApi('user')
+    #
+    # Validators
+    #
 
     __setupValidation: ->
       @validators = @settings.validators or @settings.__validators or []
@@ -139,17 +148,20 @@ namespace 'files', (ns) ->
       info = info || @__fileInfo()
       try
         for v in @validators
-            v(info)
+          v(info)
       catch err
         @__rejectApi(err.message)
 
-    __extendApi: (api) =>
-      api.cancel = @__cancel
+    #
+    # Internal API control
+    #
 
-      api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
-        @__extendApi(utils.fixedPipe(api, arguments...))
+    __initApi: ->
+      @apiDeferred = $.Deferred()
 
-      api # extended promise
+      @__progressState = 'uploading'
+      @__progress = 0
+      @__notifyApi()
 
     __notifyApi: ->
       @apiDeferred.notify(@__progressInfo())
@@ -164,12 +176,20 @@ namespace 'files', (ns) ->
       @__notifyApi()
       @apiDeferred.resolve(@__fileInfo())
 
-    __initApi: ->
-      @apiDeferred = $.Deferred()
+    #
+    # External API
+    #
 
-      @__progressState = 'uploading'
-      @__progress = 0
-      @__notifyApi()
+    __cancel: =>
+      @__rejectApi('user')
+
+    __extendApi: (api) =>
+      api.cancel = @__cancel
+
+      api.pipe = api.then = =>  # 'pipe' is alias to 'then' from jQuery 1.8
+        @__extendApi(utils.fixedPipe(api, arguments...))
+
+      api # extended promise
 
     promise: ->
       if not @__apiPromise
@@ -178,11 +198,11 @@ namespace 'files', (ns) ->
         @__runValidators()
         if @apiDeferred.state() == 'pending'
           op = @__startUpload()
-          op.done(@__completeUpload)
           op.done =>
             @__progressState = 'uploaded'
             @__progress = 1
             @__notifyApi()
+            @__completeUpload()
           op.progress (progress) =>
             if progress > @__progress
               @__progress = progress
