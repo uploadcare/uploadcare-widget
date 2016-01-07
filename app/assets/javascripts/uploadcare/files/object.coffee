@@ -21,6 +21,7 @@ uploadcare.namespace 'files', (ns) ->
     setFile: (file) =>
       if file
         @__file = file
+      @sourceInfo.file = @__file
       if not @__file
         return
       @fileSize = @__file.size
