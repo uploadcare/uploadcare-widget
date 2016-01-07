@@ -10,9 +10,13 @@
   <div class="uploadcare-dialog-preview-image-wrap"><!--
       1162x684 is 1.5 size of conteiner
     --><img
-      src="<%- file.originalUrl %>-/preview/1162x684/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
-      title="<%- (file.name || "") %>"
-      alt="<%- (file.name || "") %>"
+      <% if (file) { %>
+        src="<%- file.originalUrl %>-/preview/1162x684/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
+        title="<%- (file.name || "") %>"
+        alt="<%- (file.name || "") %>"
+      <% } else { %>
+        src="//:0"
+      <% } %>
       class="uploadcare-dialog-preview-image"
     />
   </div>

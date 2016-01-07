@@ -5,6 +5,7 @@
   jQuery: $,
   crop: {CropWidget},
   locale: {t}
+  utils: {abilities: {URL}}
 } = uploadcare
 
 uploadcare.namespace 'widget.tabs', (ns) ->
@@ -26,11 +27,30 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if file == @file
             fn.apply(null, arguments)
 
+      tryLoadImage = utils.once (file) =>
+        if not URL
+          return
+        if not file.size or file.size >= @settings.multipartMinSize
+          return
+        src = URL.createObjectURL(file)
+        utils.imageLoader(src)
+          .done (e) =>
+            if @file.state() == 'pending'
+              @__setState('image', {file: false})
+              img = @element('image').attr('src', src)[0]
+              @initImage([img.width, img.height])
+          .always =>
+            URL.revokeObjectURL(src)
+
       @__setState('unknown', {})
       @file.progress ifCur (info) =>
         info = info.incompleteFileInfo
         label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
         @element('label').text(label)
+
+        source = info.sourceInfo
+        if source.source == 'local' and source.file
+          tryLoadImage(source.file)
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
@@ -51,14 +71,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if state is 'unknown' and @settings.crop
         @element('done').hide()
-      if state is 'image'
-        @initImage(data.file)
 
-    initImage: (info) ->
+      if state is 'image' and data.file
+        imgInfo = data.file.originalImageInfo
+        @initImage([imgInfo.width, imgInfo.height], data.file.cdnUrlModifiers)
+
+    initImage: (imgSize, cdnModifiers) ->
       img = @element('image')
       done = @element('done')
-      imgSize = [info.originalImageInfo.width,
-                 info.originalImageInfo.height]
 
       imgLoader = utils.imageLoader(img.attr('src'))
         .done =>
@@ -71,7 +91,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         done.removeClass('uploadcare-disabled-el')
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
-        @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
+        if cdnModifiers
+          @widget.setSelectionFromModifiers(cdnModifiers)
 
         done.on 'click', =>
           newFile = @widget.applySelectionToFile(@file)
