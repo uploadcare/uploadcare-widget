@@ -107,5 +107,5 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         canvas.width = 1
         canvas.height = 1
         blob.name = "camera.jpg"
-        @dialogApi.addFiles('object', [blob])
+        @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')

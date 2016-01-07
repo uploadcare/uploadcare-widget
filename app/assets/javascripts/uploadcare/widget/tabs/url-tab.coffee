@@ -31,7 +31,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.find('.uploadcare-dialog-url-form').on 'submit', =>
         if url = fixUrl(input.val())
-          @dialogApi.addFiles('url', [url])
+          @dialogApi.addFiles('url', [[url, {source: 'url-tab'}]])
           input.val('')
 
         false

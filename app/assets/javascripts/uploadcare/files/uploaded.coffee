@@ -6,7 +6,9 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.UploadedFile extends ns.BaseFile
-    constructor: (settings, fileIdOrUrl) ->
+    sourceName: 'uploaded'
+
+    constructor: (fileIdOrUrl) ->
       super
 
       cdnUrl = utils.splitCdnUrl(fileIdOrUrl)
@@ -19,7 +21,9 @@ uploadcare.namespace 'files', (ns) ->
 
 
   class ns.ReadyFile extends ns.BaseFile
-    constructor: (settings, data) ->
+    sourceName: 'uploaded'
+
+    constructor: (data) ->
       super
       if not data
         @__rejectApi('deleted')

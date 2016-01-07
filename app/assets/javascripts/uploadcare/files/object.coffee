@@ -10,8 +10,9 @@ uploadcare.namespace 'files', (ns) ->
 
   class ns.ObjectFile extends ns.BaseFile
     _directRunner = null
+    sourceName: 'local'
 
-    constructor: (settings, @__file) ->
+    constructor: (@__file) ->
       super
 
       @fileName = @__file.name or 'original'
@@ -20,6 +21,7 @@ uploadcare.namespace 'files', (ns) ->
     setFile: (file) =>
       if file
         @__file = file
+      @sourceInfo.file = @__file
       if not @__file
         return
       @fileSize = @__file.size
@@ -90,6 +92,7 @@ uploadcare.namespace 'files', (ns) ->
         formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
         formData.append('file', @__file, @fileName)
         formData.append('file_name', @fileName)
+        formData.append('source', @sourceInfo.source)
 
         @__autoAbort($.ajax(
           xhr: =>
@@ -145,6 +148,7 @@ uploadcare.namespace 'files', (ns) ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         filename: @fileName
+        source: @sourceInfo.source
         size: @fileSize
         content_type: @fileType
         part_size: @settings.multipartPartSize

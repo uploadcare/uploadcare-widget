@@ -9,9 +9,10 @@
 uploadcare.namespace 'files', (ns) ->
 
   class ns.UrlFile extends ns.BaseFile
+    sourceName: 'url'
     allEvents: 'progress success error fail'
 
-    constructor: (settings, @__url) ->
+    constructor: (@__url) ->
       super
 
       filename = utils.splitUrlRegex.exec(@__url)[3].split('/').pop()
@@ -30,9 +31,6 @@ uploadcare.namespace 'files', (ns) ->
     setIsImage: (@isImage) ->
       @__notifyApi()
 
-    setSourceInfo: (@sourceInfo) ->
-      @__notifyApi()
-
     __startUpload: ->
       df = $.Deferred()
       pusherWatcher = new PusherWatcher(@settings)
@@ -42,11 +40,9 @@ uploadcare.namespace 'files', (ns) ->
         pub_key: @settings.publicKey
         source_url: @__url
         filename: @__realFileName or ''
+        source: @sourceInfo.source
         store: if @settings.doNotStore then '' else 'auto'
         jsonerrors: 1
-
-      if @sourceInfo
-        data.source = @sourceInfo.source
 
       utils.defer =>
         if @apiDeferred.state() != 'pending'

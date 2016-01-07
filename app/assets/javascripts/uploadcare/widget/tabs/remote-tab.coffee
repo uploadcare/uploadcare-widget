@@ -70,17 +70,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
                   return message.alternatives[key]
           return message.url
 
-        file = new files.UrlFile(@settings, url)
+        sourceInfo = $.extend({source: @name}, message.info or {})
+        file = new files.UrlFile(url, @settings, sourceInfo)
         if message.filename
           file.setName(message.filename)
         if message.is_image?
           file.setIsImage(message.is_image)
-        info = {source: @name}
-        if message.info
-          $.extend(info, message.info)
-        file.setSourceInfo(info)
-
-        @dialogApi.addFiles [file.promise()]
+        @dialogApi.addFiles([file.promise()])
 
 
       utils.registerMessage 'open-new-window', iframe, (message) =>
