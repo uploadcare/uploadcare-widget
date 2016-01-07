@@ -20,6 +20,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @dialogApi.fileColl.onAdd.add(@__setFile)
 
       @widget = null
+      @__state = null
 
     __setFile: (@file) =>
       ifCur = (fn) =>
@@ -40,7 +41,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               img = @element('image').attr('src', src)[0]
               @initImage([img.width, img.height])
           .always =>
-            URL.revokeObjectURL(src)
+#             URL.revokeObjectURL(src)
 
       @__setState('unknown', {})
       @file.progress ifCur (info) =>
@@ -54,7 +55,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
-        @__setState(state, {file: info})
+        if state != 'image' or state != @__state
+          @__setState(state, {file: info})
 
       @file.fail ifCur (error, info) =>
         @__setState('error', {error, file: info})
@@ -67,6 +69,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
+      @__state = state
       @container.empty().append(tpl("tab-preview-#{state}", data))
 
       if state is 'unknown' and @settings.crop
