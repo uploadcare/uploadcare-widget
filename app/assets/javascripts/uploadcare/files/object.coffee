@@ -35,7 +35,7 @@ uploadcare.namespace 'files', (ns) ->
       @apiDeferred.always =>
         @__file = null
 
-      if @__file.size >= @settings.multipartMinSize and utils.abilities.blob
+      if @__file.size >= @settings.multipartMinSize and utils.abilities.Blob
         @setFile()
         return @multipartUpload()
 
@@ -47,7 +47,7 @@ uploadcare.namespace 'files', (ns) ->
       # if @settings.imageShrink
       df = $.Deferred()
       resizeShare = .4
-      utils.imageProcessor.shrinkFile(@__file, @settings.imageShrink)
+      utils.image.shrinkFile(@__file, @settings.imageShrink)
         .progress (progress) ->
           df.notify(progress * resizeShare)
         .done(@setFile)

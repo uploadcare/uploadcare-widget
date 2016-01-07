@@ -1,16 +1,13 @@
+# = require ./abilities.js
+
 {
   jQuery: $,
   utils,
+  utils: {abilities: {Blob, FileReader, URL}}
 } = uploadcare
 
-uploadcare.namespace 'utils.imageProcessor', (ns) ->
-
+uploadcare.namespace 'utils.image', (ns) ->
   DataView = window.DataView
-  FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
-  URL = window.URL or window.webkitURL
-  URL = URL && URL.createObjectURL && URL
-  Blob = utils.abilities.blob && window.Blob
-
   taskRunner = utils.taskRunner(1)
 
   ns.shrinkFile = (file, settings) ->

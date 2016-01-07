@@ -4,12 +4,6 @@ uploadcare.namespace 'utils.abilities', (ns) ->
 
   ns.sendFileAPI = !!(window.FormData and ns.fileAPI)
 
-  ns.blob = do ->
-    try
-      !! new Blob
-    catch
-      false
-
   # https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
   ns.dragAndDrop = do ->
     el = document.createElement("div")
@@ -26,3 +20,13 @@ uploadcare.namespace 'utils.abilities', (ns) ->
   if ios = /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
     if ver = /OS (\d)_(\d)/.exec(ios[1])
       ns.iOSVersion = + ver[1] + ver[2] / 10
+
+  ns.Blob = false
+  try
+    if new window.Blob
+      ns.Blob = window.Blob
+
+  url = window.URL or window.webkitURL or false
+  ns.URL = url && url.createObjectURL && url
+
+  ns.FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
