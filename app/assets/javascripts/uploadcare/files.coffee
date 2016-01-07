@@ -21,8 +21,12 @@ uploadcare.namespace '', (ns) ->
   ns.filesFrom = (type, data, s) ->
     s = settings.build(s or {})
 
-    for part in data
-      new converters[type](s, part).promise()
+    for param in data
+      info = null
+      if $.isArray(param)
+        info = param[1]
+        param = param[0]
+      new converters[type](param, s, info).promise()
 
 
   converters =

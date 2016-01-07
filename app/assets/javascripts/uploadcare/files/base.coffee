@@ -16,7 +16,7 @@ namespace 'files', (ns) ->
 
   class ns.BaseFile
 
-    constructor: (@settings) ->
+    constructor: (param, @settings, @sourceInfo={}) ->
       @fileId = null
       @fileName = null
       @sanitizedName = null
@@ -25,8 +25,8 @@ namespace 'files', (ns) ->
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
-      @sourceInfo = {source: @sourceName}
       @s3Bucket = null
+      @sourceInfo.source ||= @sourceName
 
       # this can be exposed in the future
       @onInfoReady = $.Callbacks('once memory')
@@ -100,10 +100,6 @@ namespace 'files', (ns) ->
     #
     # Retrieve info
     #
-
-    updateSourceInfo: (sourceInfo) ->
-      $.extend(@sourceInfo, sourceInfo)
-      @__notifyApi()
 
     __progressInfo: ->
       state: @__progressState

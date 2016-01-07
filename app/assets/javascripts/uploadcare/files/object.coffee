@@ -12,7 +12,7 @@ uploadcare.namespace 'files', (ns) ->
     _directRunner = null
     sourceName: 'local'
 
-    constructor: (settings, @__file) ->
+    constructor: (@__file) ->
       super
 
       @fileName = @__file.name or 'original'

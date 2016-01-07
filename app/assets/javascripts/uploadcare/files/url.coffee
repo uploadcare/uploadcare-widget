@@ -12,7 +12,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'url'
     allEvents: 'progress success error fail'
 
-    constructor: (settings, @__url) ->
+    constructor: (@__url) ->
       super
 
       filename = utils.splitUrlRegex.exec(@__url)[3].split('/').pop()

@@ -70,15 +70,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
                   return message.alternatives[key]
           return message.url
 
-        file = new files.UrlFile(@settings, url)
+        sourceInfo = $.extend({source: @name}, message.info or {})
+        file = new files.UrlFile(url, @settings, sourceInfo)
         if message.filename
           file.setName(message.filename)
         if message.is_image?
           file.setIsImage(message.is_image)
-        if message.info
-          file.updateSourceInfo(message.info)
-        file.updateSourceInfo({source: @name})
-
         @dialogApi.addFiles([file.promise()])
 
 
