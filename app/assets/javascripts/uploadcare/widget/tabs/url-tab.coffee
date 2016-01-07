@@ -1,7 +1,6 @@
 {
   jQuery: $,
-  templates: {tpl},
-  files
+  templates: {tpl}
 } = uploadcare
 
 {t} = uploadcare.locale
