@@ -33,16 +33,9 @@ uploadcare.namespace 'utils.image', (ns) ->
         img.onerror = null  # do not fire when set to blank
         df.notify(.10)
 
-        exif = null
-        op = ns.readJpegChunks(file)
-        op.progress (pos, length, marker, view) ->
-          if not exif and marker == 0xe1
-            if view.byteLength >= 14
-              if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-                exif = view.buffer
-        op.always ->
+        ns.readExif(file).always (exif) ->
           df.notify(.2)
-          isJPEG = op.state() is 'resolved'
+          isJPEG = @state() is 'resolved'
 
           op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
@@ -211,6 +204,19 @@ uploadcare.namespace 'utils.image', (ns) ->
 
     df.promise()
 
+
+  ns.readExif = (file) ->
+    exif = null
+    op = ns.readJpegChunks(file)
+    op.progress (pos, l, marker, view) ->
+      if not exif and marker == 0xe1
+        if view.byteLength >= 14
+          if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
+            exif = view.buffer
+    return op.then ->
+      return exif
+    , (reason) ->
+      return $.Deferred().reject(exif, reason)
 
   ns.hasTransparency = (img) ->
     pcsn = 50
