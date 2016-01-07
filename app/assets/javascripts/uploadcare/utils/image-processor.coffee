@@ -33,7 +33,7 @@ uploadcare.namespace 'utils.image', (ns) ->
         img.onerror = null  # do not fire when set to blank
         df.notify(.10)
 
-        ns.readExif(file).always (exif) ->
+        ns.getExif(file).always (exif) ->
           df.notify(.2)
           isJPEG = @state() is 'resolved'
 
@@ -54,7 +54,7 @@ uploadcare.namespace 'utils.image', (ns) ->
                 df.notify(.9)
                 # console.log('to blob: ' + (new Date() - start))
                 if exif
-                  op = ns.replaceJpegChunk(blob, 0xe1, [exif])
+                  op = ns.replaceJpegChunk(blob, 0xe1, [exif.buffer])
                   op.done(df.resolve)
                   op.fail ->
                     df.resolve(blob)
@@ -205,18 +205,44 @@ uploadcare.namespace 'utils.image', (ns) ->
     df.promise()
 
 
-  ns.readExif = (file) ->
+  ns.getExif = (file) ->
     exif = null
     op = ns.readJpegChunks(file)
     op.progress (pos, l, marker, view) ->
       if not exif and marker == 0xe1
         if view.byteLength >= 14
           if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-            exif = view.buffer
+            exif = view
     return op.then ->
       return exif
     , (reason) ->
       return $.Deferred().reject(exif, reason)
+
+
+  ns.parseExifOrientation = (exif) ->
+    if (
+      exif.byteLength < 14 or
+      exif.getUint32(0) != 0x45786966 or
+      exif.getUint16(4) != 0 or
+      exif.getUint16(8) != 0x002A
+    )
+      return null
+    if exif.getUint16(6) == 0x4949
+      little = true
+    else if exif.getUint16(6) == 0x4D4D
+      little = false
+    else
+      return null
+
+    offset = 8 + exif.getUint32(10, little)
+    count = exif.getUint16(offset - 2, little)
+    for i in [0...count]
+      if exif.byteLength < offset + 10
+        return null
+      if exif.getUint16(offset, little) == 0x0112
+        return exif.getUint16(offset + 8, little)
+      offset += 12
+
 
   ns.hasTransparency = (img) ->
     pcsn = 50
