@@ -91,6 +91,7 @@ uploadcare.namespace 'files', (ns) ->
         formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
         formData.append('file', @__file, @fileName)
         formData.append('file_name', @fileName)
+        formData.append('source', @sourceInfo.source)
 
         @__autoAbort($.ajax(
           xhr: =>
@@ -146,6 +147,7 @@ uploadcare.namespace 'files', (ns) ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
         filename: @fileName
+        source: @sourceInfo.source
         size: @fileSize
         content_type: @fileType
         part_size: @settings.multipartPartSize

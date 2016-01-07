@@ -47,6 +47,7 @@ uploadcare.namespace 'files', (ns) ->
         .append(formParam('UPLOADCARE_PUB_KEY', @settings.publicKey))
         .append(formParam('UPLOADCARE_FILE_ID', @fileId))
         .append(formParam('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto'))
+        .append(formParam('UPLOADCARE_SOURCE', @sourceInfo.source))
         .append(@__input)
         .css('display', 'none')
         .appendTo('body')
