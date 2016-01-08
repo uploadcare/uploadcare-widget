@@ -24,20 +24,20 @@ uploadcare.namespace 'utils.image', (ns) ->
       df.always(release)
 
       # start = new Date()
-      img = new Image()
-      img.onerror = ->
-          df.reject('not image')
-      img.onload = ->
+      op = utils.imageLoader(URL.createObjectURL(file))
+      op.always (e) ->
+        URL.revokeObjectURL(e.target.src)
+      op.fail ->
+        df.reject('not image')
+      op.done (e) ->
         # console.log('load: ' + (new Date() - start))
-        URL.revokeObjectURL(img.src)
-        img.onerror = null  # do not fire when set to blank
         df.notify(.10)
 
         ns.getExif(file).always (exif) ->
           df.notify(.2)
           isJPEG = @state() is 'resolved'
 
-          op = ns.shrinkImage(img, settings)
+          op = ns.shrinkImage(e.target, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
           op.fail(df.reject)
@@ -60,9 +60,7 @@ uploadcare.namespace 'utils.image', (ns) ->
                     df.resolve(blob)
                 else
                   df.resolve(blob)
-          img = null  # free reference
-
-      img.src = URL.createObjectURL(file)
+          e = null  # free reference
 
     df.promise()
 
