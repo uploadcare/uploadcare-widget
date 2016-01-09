@@ -315,6 +315,7 @@ html.uploadcare-dialog-opened {
   margin: x(.6);
   .uploadcare-dialog & svg {
     vertical-align: middle;
+    padding: 0 2px;
   }
   .uploadcare-dialog & a {
     color: white;
