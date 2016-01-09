@@ -1,5 +1,6 @@
 {
   utils,
+  utils: {abilities: {URL}},
   ui: {progress},
   templates: {tpl},
   jQuery: $,
@@ -19,6 +20,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @dialogApi.fileColl.onAdd.add(@__setFile)
 
       @widget = null
+      @__state = null
 
     __setFile: (@file) =>
       ifCur = (fn) =>
@@ -26,15 +28,49 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if file == @file
             fn.apply(null, arguments)
 
-      @file.progress ifCur utils.once (info) =>
-        @__setState('unknown', {file: info.incompleteFileInfo})
+      tryToLoadImage = utils.once(@__tryToLoadImage)
 
-      @file.done ifCur (file) =>
-        state = if file.isImage then 'image' else 'regular'
-        @__setState(state, {file})
+      @__setState('unknown', {})
+      @file.progress ifCur (info) =>
+        info = info.incompleteFileInfo
+        label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
+        @element('label').text(label)
 
-      @file.fail ifCur (error, file) =>
-        @__setState('error', {error, file})
+        source = info.sourceInfo
+        if source.source == 'local' and source.file
+          tryToLoadImage(file, source.file)
+
+      @file.done ifCur (info) =>
+        state = if info.isImage then 'image' else 'regular'
+        if state != 'image' or state != @__state
+          @__setState(state, {file: info})
+
+      @file.fail ifCur (error, info) =>
+        @__setState('error', {error, file: info})
+
+    __tryToLoadImage: (file, blob) =>
+      if (
+        file.state() != 'pending' or
+        not blob.size or
+        blob.size >= @settings.multipartMinSize
+      )
+        return
+
+      utils.image.drawFileToCanvas(blob, 1550, 924, '#efefef')
+        .done (canvas, size) =>
+          utils.canvasToBlob canvas, 'image/jpeg', 0.95,
+            (blob) =>
+              canvas.width = canvas.height = 1
+              if file.state() != 'pending' or @file != file
+                return
+
+              src = URL.createObjectURL(blob)
+              @dialogApi.always ->
+                URL.revokeObjectURL(src)
+
+              @__setState('image', {file: false})
+              @element('image').attr('src', src)
+              @initImage(size)
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)
@@ -44,18 +80,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # image
     # regular
     __setState: (state, data) ->
+      @__state = state
       @container.empty().append(tpl("tab-preview-#{state}", data))
 
       if state is 'unknown' and @settings.crop
         @element('done').hide()
-      if state is 'image'
-        @initImage(data.file)
 
-    initImage: (info) ->
+      if state is 'image' and data.file
+        imgInfo = data.file.originalImageInfo
+        @initImage([imgInfo.width, imgInfo.height], data.file.cdnUrlModifiers)
+
+    initImage: (imgSize, cdnModifiers) ->
       img = @element('image')
       done = @element('done')
-      imgSize = [info.originalImageInfo.width,
-                 info.originalImageInfo.height]
 
       imgLoader = utils.imageLoader(img.attr('src'))
         .done =>
@@ -68,7 +105,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         done.removeClass('uploadcare-disabled-el')
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
-        @widget.setSelectionFromModifiers(info.cdnUrlModifiers)
+        if cdnModifiers
+          @widget.setSelectionFromModifiers(cdnModifiers)
 
         done.on 'click', =>
           newFile = @widget.applySelectionToFile(@file)

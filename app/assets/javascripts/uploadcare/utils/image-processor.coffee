@@ -1,16 +1,13 @@
+# = require ./abilities.js
+
 {
   jQuery: $,
   utils,
+  utils: {abilities: {Blob, FileReader, URL}}
 } = uploadcare
 
-uploadcare.namespace 'utils.imageProcessor', (ns) ->
-
+uploadcare.namespace 'utils.image', (ns) ->
   DataView = window.DataView
-  FileReader = window.FileReader?.prototype.readAsArrayBuffer && window.FileReader
-  URL = window.URL or window.webkitURL
-  URL = URL && URL.createObjectURL && URL
-  Blob = utils.abilities.blob && window.Blob
-
   taskRunner = utils.taskRunner(1)
 
   ns.shrinkFile = (file, settings) ->
@@ -27,27 +24,20 @@ uploadcare.namespace 'utils.imageProcessor', (ns) ->
       df.always(release)
 
       # start = new Date()
-      img = new Image()
-      img.onerror = ->
-          df.reject('not image')
-      img.onload = ->
+      op = utils.imageLoader(URL.createObjectURL(file))
+      op.always (e) ->
+        URL.revokeObjectURL(e.target.src)
+      op.fail ->
+        df.reject('not image')
+      op.done (e) ->
         # console.log('load: ' + (new Date() - start))
-        URL.revokeObjectURL(img.src)
-        img.onerror = null  # do not fire when set to blank
         df.notify(.10)
 
-        exif = null
-        op = ns.readJpegChunks(file)
-        op.progress (pos, length, marker, view) ->
-          if not exif and marker == 0xe1
-            if view.byteLength >= 14
-              if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
-                exif = view.buffer
-        op.always ->
+        ns.getExif(file).always (exif) ->
           df.notify(.2)
-          isJPEG = op.state() is 'resolved'
+          isJPEG = @state() is 'resolved'
 
-          op = ns.shrinkImage(img, settings)
+          op = ns.shrinkImage(e.target, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
           op.fail(df.reject)
@@ -64,15 +54,13 @@ uploadcare.namespace 'utils.imageProcessor', (ns) ->
                 df.notify(.9)
                 # console.log('to blob: ' + (new Date() - start))
                 if exif
-                  op = ns.replaceJpegChunk(blob, 0xe1, [exif])
+                  op = ns.replaceJpegChunk(blob, 0xe1, [exif.buffer])
                   op.done(df.resolve)
                   op.fail ->
                     df.resolve(blob)
                 else
                   df.resolve(blob)
-          img = null  # free reference
-
-      img.src = URL.createObjectURL(file)
+          e = null  # free reference
 
     df.promise()
 
@@ -131,6 +119,63 @@ uploadcare.namespace 'utils.imageProcessor', (ns) ->
 
     df.promise()
 
+  ns.drawFileToCanvas = (file, mW, mH, bg) ->
+    # in -> file
+    # out <- canvas
+    df = $.Deferred()
+
+    if not (URL)
+      return df.reject('support')
+
+    op = utils.imageLoader(URL.createObjectURL(file))
+    op.always (e) ->
+      URL.revokeObjectURL(e.target.src)
+    op.fail ->
+      df.reject('not image')
+    op.done (e) ->
+      img = e.target
+
+      ns.getExif(file).always (exif) ->
+        orientation = ns.parseExifOrientation(exif) or 1
+        swap = orientation > 4
+        sSize = if swap then [img.height, img.width] \
+          else [img.width, img.height]
+        [dW, dH] = utils.fitSize(sSize, [mW, mH])
+
+        trns = [
+          [1, 0, 0, 1, 0, 0],
+          [-1, 0, 0, 1, dW, 0],
+          [-1, 0, 0, -1, dW, dH],
+          [1, 0, 0, -1, 0, dH],
+          [0, 1, 1, 0, 0, 0],
+          [0, 1, -1, 0, dW, 0],
+          [0, -1, -1, 0, dW, dH],
+          [0, -1, 1, 0, 0, dH]
+        ][orientation - 1]
+
+        if not trns
+          df.reject('')
+
+        canvas = document.createElement('canvas')
+        canvas.width = dW
+        canvas.height = dH
+        ctx = canvas.getContext('2d')
+        ctx.transform.apply(ctx, trns)
+        if swap
+          [dW, dH] = [dH, dW]
+        if bg
+          ctx.fillStyle = bg
+          ctx.fillRect(0, 0, dW, dH)
+        ctx.drawImage(img, 0, 0, dW, dH)
+        img.src = '//:0'
+
+        df.resolve(canvas, sSize)
+
+    df.promise()
+
+  #
+  # Util functions
+  #
 
   ns.readJpegChunks = (file) ->
     readToView = (file, cb) ->
@@ -214,6 +259,48 @@ uploadcare.namespace 'utils.imageProcessor', (ns) ->
 
     df.promise()
 
+
+  ns.getExif = (file) ->
+    exif = null
+    op = ns.readJpegChunks(file)
+    op.progress (pos, l, marker, view) ->
+      if not exif and marker == 0xe1
+        if view.byteLength >= 14
+          if view.getUint32(0) == 0x45786966 and view.getUint16(4) == 0
+            exif = view
+    return op.then ->
+      return exif
+    , (reason) ->
+      return $.Deferred().reject(exif, reason)
+
+
+  ns.parseExifOrientation = (exif) ->
+    if (
+      not exif or
+      exif.byteLength < 14 or
+      exif.getUint32(0) != 0x45786966 or
+      exif.getUint16(4) != 0 or
+      exif.getUint16(8) != 0x002A
+    )
+      return null
+
+    if exif.getUint16(6) == 0x4949
+      little = true
+    else if exif.getUint16(6) == 0x4D4D
+      little = false
+    else
+      return null
+
+    offset = 8 + exif.getUint32(10, little)
+    count = exif.getUint16(offset - 2, little)
+    for i in [0...count]
+      if exif.byteLength < offset + 10
+        return null
+      if exif.getUint16(offset, little) == 0x0112
+        return exif.getUint16(offset + 8, little)
+      offset += 12
+
+    return null
 
   ns.hasTransparency = (img) ->
     pcsn = 50

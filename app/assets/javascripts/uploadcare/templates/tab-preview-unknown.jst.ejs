@@ -2,10 +2,7 @@
 
   <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.unknown.title') %></div>
 
-  <div class="uploadcare-dialog-label">
-    <%- (file.name || "") %><%-
-      utils.readableFileSize(file.size, '', ', ') %>
-  </div>
+  <div class="uploadcare-dialog-label uploadcare-dialog-preview-label"></div>
 
   <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"
        tabindex="0" role="button"
