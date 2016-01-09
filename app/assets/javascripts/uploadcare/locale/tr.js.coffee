@@ -106,8 +106,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: '%files% dosya seçtiniz, en az %min% dosya olmalıdır.'
             clear: 'Hepsini kaldır'
             done: 'Bitti'
-      footer:
-        text: 'Dosya yükleme, saklama ve işleme servisi'
 
 
 uploadcare.namespace 'locale.pluralize', (ns) ->

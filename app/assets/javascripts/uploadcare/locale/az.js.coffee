@@ -110,8 +110,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: '%files% fayl seçdiniz. Ən azı %min% tələb olunur.'
             clear: 'Hamısını silin'
             done: 'Hazırdır'
-      footer:
-        text: 'Faylları yükləyən, yadda saxlayan və icra edən'
 
 
 uploadcare.namespace 'locale.pluralize', (ns) ->

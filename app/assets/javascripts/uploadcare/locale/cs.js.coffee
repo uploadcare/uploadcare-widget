@@ -120,9 +120,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Bylo vybráno %files% souborů. Musíte vybrat minimálně %min%'
             clear: 'Odstranit vše'
             done: 'Hotovo'
-      footer:
-        text: 'Provozováno pomocí'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

@@ -110,9 +110,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Wybrałeś %files%. Wymagane jest co najmniej %min%.'
             clear: 'Usuń wszystkie'
             done: 'Wykonano'
-      footer:
-        text: 'Pliki przesyła, przechowuje i przetwarza'
-        link: 'Uploadcare.com'
 
 
 # Pluralization rules taken from:

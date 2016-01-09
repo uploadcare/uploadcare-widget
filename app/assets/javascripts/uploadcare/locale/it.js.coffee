@@ -108,8 +108,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Hai selezionato %files%. È richiesto almeno %min%.'
             clear: 'Rimuovi tutto'
             done: 'Fatto'
-      footer:
-        text: 'Caricamento, memorizzazione ed elaborazione file eseguiti da'
 
 
 # Pluralization rules taken from:

@@ -109,8 +109,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Has escogido %files%. Hacen falta al menos %min%.'
             clear: 'Eliminar todo'
             done: 'Hecho'
-      footer:
-        text: 'Subido, almacenado y procesado por'
 
 
 # Pluralization rules taken from:

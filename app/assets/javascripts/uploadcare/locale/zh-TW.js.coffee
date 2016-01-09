@@ -108,8 +108,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: '你所選擇的檔案 %files%. 至少要 %min% .'
             clear: '清空'
             done: '完成'
-      footer:
-        text: '為您提供檔案上傳、存儲和編輯功能。 Copyright ©'
 
 
 # Pluralization rules taken from:

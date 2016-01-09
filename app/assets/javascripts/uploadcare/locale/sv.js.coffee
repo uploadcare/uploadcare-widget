@@ -109,8 +109,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Du har valt %files%. Minst %min% krävs.'
             clear: 'Ta bort alla'
             done: 'Klar'
-      footer:
-        text: 'Laddar upp, lagrar och bearbetar filer genom'
 
 
 # Pluralization rules taken from:

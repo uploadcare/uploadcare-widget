@@ -108,8 +108,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Sie haben %files% Dateien. Es sind mindestens %min% nötig.'
             clear: 'Alle löschen'
             done: 'Fertig'
-      footer:
-        text: 'Hochladen, Speichern und Verarbeiten von Dateien durch'
 
 
 # Pluralization rules taken from:

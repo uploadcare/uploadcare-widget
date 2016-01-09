@@ -96,8 +96,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'בחרת %files%. יש לבחור לפחות %min%.'
             clear: 'הסר הכל'
             done: 'סיום'
-      footer:
-        text: 'העלאה, מיון ועיבוד קבצים על ידי'
 
 
 # Pluralization rules taken from:

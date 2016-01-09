@@ -95,8 +95,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: '選択ファイルが少なすぎます。%files%つ選択中です。少なくとも%min%つ選択してください。'
             clear: '全て削除'
             done: '完了'
-      footer:
-        text: '画像のアップロード、保存および加工の提供：'
 
 
 # Pluralization rules taken from:

@@ -108,8 +108,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             done: 'Terminer'
             tooManyFiles: 'Vous avez choisi trop de fichiers. %max% est le maximum.'
             tooFewFiles: 'Vous avez choisi %fichiers%. %min% est le minimum.'
-      footer:
-        text: 'Envoi, stockage et traitement des fichiers par'
 
 
 # Pluralization rules taken from:
