@@ -49,12 +49,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @__setState('error', {error, file: info})
 
     __tryToLoadImage: (file, blob) =>
-      if not blob.size or blob.size >= @settings.multipartMinSize
+      if (
+        file.state() != 'pending' or
+        not blob.size or
+        blob.size >= @settings.multipartMinSize
+      )
         return
 
-      utils.image.drawFileToCanvas(blob, 1162, 684)
+      utils.image.drawFileToCanvas(blob, 1162, 684, '#efefef')
         .done (canvas, size) =>
-          utils.canvasToBlob canvas, 'image/jpeg', 0.8,
+          utils.canvasToBlob canvas, 'image/jpeg', 0.95,
             (blob) =>
               canvas.width = canvas.height = 1
               if file.state() != 'pending' or @file != file

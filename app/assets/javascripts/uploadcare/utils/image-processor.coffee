@@ -119,7 +119,7 @@ uploadcare.namespace 'utils.image', (ns) ->
 
     df.promise()
 
-  ns.drawFileToCanvas = (file, mW, mH) ->
+  ns.drawFileToCanvas = (file, mW, mH, bg) ->
     # in -> file
     # out <- canvas
     df = $.Deferred()
@@ -163,6 +163,9 @@ uploadcare.namespace 'utils.image', (ns) ->
         ctx.transform.apply(ctx, trns)
         if swap
           [dW, dH] = [dH, dW]
+        if bg
+          ctx.fillStyle = bg
+          ctx.fillRect(0, 0, dW, dH)
         ctx.drawImage(img, 0, 0, dW, dH)
         img.src = '//:0'
 
