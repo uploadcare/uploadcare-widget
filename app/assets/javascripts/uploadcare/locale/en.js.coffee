@@ -116,8 +116,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
             clear: 'Remove all'
             done: 'Done'
       footer:
-        text: 'Uploading, storing and processing files by'
-        link: 'Uploadcare.com'
+        text: 'powered by'
+        link: 'uploadcare'
 
 
 # Pluralization rules taken from:
