@@ -137,9 +137,9 @@ uploadcare.namespace 'utils.image', (ns) ->
 
       ns.getExif(file).always (exif) ->
         orientation = ns.parseExifOrientation(exif) or 1
-        if orientation > 4
-          [mW, mH] = [mH, mW]
-        sSize = [img.width, img.height]
+        swap = orientation > 4
+        sSize = if swap then [img.height, img.width] \
+          else [img.width, img.height]
         [dW, dH] = utils.fitSize(sSize, [mW, mH])
 
         trns = [
@@ -148,16 +148,21 @@ uploadcare.namespace 'utils.image', (ns) ->
           [-1, 0, 0, -1, dW, dH],
           [1, 0, 0, -1, 0, dH],
           [0, 1, 1, 0, 0, 0],
-          [0, 1, -1, 0, dH, 0],
-          [0, -1, -1, 0, dH, dW],
-          [0, -1, 1, 0, 0, dW]
+          [0, 1, -1, 0, dW, 0],
+          [0, -1, -1, 0, dW, dH],
+          [0, -1, 1, 0, 0, dH]
         ][orientation - 1]
 
+        if not trns
+          df.reject('')
+
         canvas = document.createElement('canvas')
-        canvas.width = Math.max(dW, dH)
-        canvas.height = Math.max(dW, dH)
+        canvas.width = dW
+        canvas.height = dH
         ctx = canvas.getContext('2d')
         ctx.transform.apply(ctx, trns)
+        if swap
+          [dW, dH] = [dH, dW]
         ctx.drawImage(img, 0, 0, dW, dH)
         img.src = '//:0'
 
