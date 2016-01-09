@@ -36,6 +36,7 @@ uploadcare.namespace 'settings', (ns) ->
     urlBase: 'https://upload.uploadcare.com'
     socialBase: 'https://social.uploadcare.com'
     # fine tuning
+    imagePreviewMaxSize: 25 * 1024 * 1024
     multipartMinSize: 25 * 1024 * 1024
     multipartPartSize: 5 * 1024 * 1024
     multipartMinLastPartSize: 1024 * 1024

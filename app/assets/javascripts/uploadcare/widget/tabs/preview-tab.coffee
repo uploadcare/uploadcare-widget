@@ -56,21 +56,22 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       )
         return
 
-      utils.image.drawFileToCanvas(blob, 1550, 924, '#efefef')
-        .done (canvas, size) =>
-          utils.canvasToBlob canvas, 'image/jpeg', 0.95,
-            (blob) =>
-              canvas.width = canvas.height = 1
-              if file.state() != 'pending' or @file != file
-                return
+      utils.image.drawFileToCanvas(
+        blob, 1550, 924, '#efefef', @settings.imagePreviewMaxSize
+      ).done (canvas, size) =>
+        utils.canvasToBlob canvas, 'image/jpeg', 0.95,
+          (blob) =>
+            canvas.width = canvas.height = 1
+            if file.state() != 'pending' or @file != file
+              return
 
-              src = URL.createObjectURL(blob)
-              @dialogApi.always ->
-                URL.revokeObjectURL(src)
+            src = URL.createObjectURL(blob)
+            @dialogApi.always ->
+              URL.revokeObjectURL(src)
 
-              @__setState('image', {file: false})
-              @element('image').attr('src', src)
-              @initImage(size)
+            @__setState('image', {file: false})
+            @element('image').attr('src', src)
+            @initImage(size)
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)

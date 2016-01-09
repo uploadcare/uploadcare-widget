@@ -119,7 +119,7 @@ uploadcare.namespace 'utils.image', (ns) ->
 
     df.promise()
 
-  ns.drawFileToCanvas = (file, mW, mH, bg) ->
+  ns.drawFileToCanvas = (file, mW, mH, bg, maxSource) ->
     # in -> file
     # out <- canvas
     df = $.Deferred()
@@ -134,6 +134,11 @@ uploadcare.namespace 'utils.image', (ns) ->
       df.reject('not image')
     op.done (e) ->
       img = e.target
+
+      if maxSource and img.width * img.height > maxSource
+        img.src = '//:0'
+        df.reject('max source')
+        return
 
       ns.getExif(file).always (exif) ->
         orientation = ns.parseExifOrientation(exif) or 1
