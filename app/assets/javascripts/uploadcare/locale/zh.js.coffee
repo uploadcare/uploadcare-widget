@@ -83,8 +83,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooManyFiles: '你选了太多的文件. 最多可选择%max%. 请删除一些。'
             clear: '清空'
             done: '完成'
-      footer:
-        text: '为您提供文件上传、存储和编辑功能。 Copyright ©'
 
 
 # Pluralization rules taken from:

@@ -95,8 +95,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Du har valgt %files% filer. Men du skal vælge mindst %min%.'
             clear: 'Fjern alle'
             done: 'Fortsæt'
-      footer:
-        text: 'Uploader gemmer og behandler filer ved hjælp af'
 
 
 # Pluralization rules taken from:

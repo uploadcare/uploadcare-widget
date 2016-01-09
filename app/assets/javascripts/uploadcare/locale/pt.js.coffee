@@ -93,8 +93,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             question: 'Você quer adicionar todos esses arquivos?'
             clear: 'Excluir todos'
             done: 'OK'
-      footer:
-        text: 'Upload, armazenamento e processamento dos arquivos feito por'
 
 
 # Pluralization rules taken from:

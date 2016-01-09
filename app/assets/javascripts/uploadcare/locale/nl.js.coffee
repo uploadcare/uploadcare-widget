@@ -94,8 +94,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Je hebt de volgende bestanden geselecteerd %files%. Minimaal %min% is verplicht.'
             clear: 'Verwijder alle bestanden'
             done: 'Klaar'
-      footer:
-        text: 'Uploaden, opslaan en verwerken bestanden door'
 
 
 # Pluralization rules taken from:

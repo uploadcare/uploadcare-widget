@@ -109,8 +109,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Has escollit %files%. Com a mínim en calen %min%.'
             clear: 'Eliminar-los tots'
             done: 'Fet'
-      footer:
-        text: 'Els fitxers han estat carregats, gestionats i processats per'
 
 
 # Pluralization rules taken from:

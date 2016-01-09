@@ -311,10 +311,14 @@ html.uploadcare-dialog-opened {
   font-size: $dialog-body-font-size-smaller;
   line-height: 1.4em;
   text-align: center;
-  color: #ddd;
+  color: white;
   margin: x(.6);
+  .uploadcare-dialog & svg {
+    vertical-align: middle;
+    padding: 0 2px;
+  }
   .uploadcare-dialog & a {
-    color: #c2c2c2;
+    color: white;
     text-decoration: none;
     &:hover {
       text-decoration: underline;

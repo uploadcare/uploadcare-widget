@@ -111,8 +111,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Вы выбрали %files%. Нужно не меньше %min%.'
             clear: 'Удалить все'
             done: 'Готово'
-      footer:
-        text: 'Для загрузки, хранения и обработки файлов используется'
 
 
 # Pluralization rules taken from:
