@@ -119,6 +119,55 @@ uploadcare.namespace 'utils.image', (ns) ->
 
     df.promise()
 
+  ns.drawFileToCanvas = (file, mW, mH) ->
+    # in -> file
+    # out <- canvas
+    df = $.Deferred()
+
+    if not (URL)
+      return df.reject('support')
+
+    op = utils.imageLoader(URL.createObjectURL(file))
+    op.always (e) ->
+      URL.revokeObjectURL(e.target.src)
+    op.fail ->
+      df.reject('not image')
+    op.done (e) ->
+      img = e.target
+
+      ns.getExif(file).always (exif) ->
+        orientation = ns.parseExifOrientation(exif) or 1
+        if orientation > 4
+          [mW, mH] = [mH, mW]
+        sSize = [img.width, img.height]
+        [dW, dH] = utils.fitSize(sSize, [mW, mH])
+
+        trns = [
+          [1, 0, 0, 1, 0, 0],
+          [-1, 0, 0, 1, dW, 0],
+          [-1, 0, 0, -1, dW, dH],
+          [1, 0, 0, -1, 0, dH],
+          [0, 1, 1, 0, 0, 0],
+          [0, 1, -1, 0, dH, 0],
+          [0, -1, -1, 0, dH, dW],
+          [0, -1, 1, 0, 0, dW]
+        ][orientation - 1]
+
+        canvas = document.createElement('canvas')
+        canvas.width = Math.max(dW, dH)
+        canvas.height = Math.max(dW, dH)
+        ctx = canvas.getContext('2d')
+        ctx.transform.apply(ctx, trns)
+        ctx.drawImage(img, 0, 0, dW, dH)
+        img.src = '//:0'
+
+        df.resolve(canvas, sSize)
+
+    df.promise()
+
+  #
+  # Util functions
+  #
 
   ns.readJpegChunks = (file) ->
     readToView = (file, cb) ->
@@ -219,12 +268,14 @@ uploadcare.namespace 'utils.image', (ns) ->
 
   ns.parseExifOrientation = (exif) ->
     if (
+      not exif or
       exif.byteLength < 14 or
       exif.getUint32(0) != 0x45786966 or
       exif.getUint16(4) != 0 or
       exif.getUint16(8) != 0x002A
     )
       return null
+
     if exif.getUint16(6) == 0x4949
       little = true
     else if exif.getUint16(6) == 0x4D4D
@@ -241,6 +292,7 @@ uploadcare.namespace 'utils.image', (ns) ->
         return exif.getUint16(offset + 8, little)
       offset += 12
 
+    return null
 
   ns.hasTransparency = (img) ->
     pcsn = 50

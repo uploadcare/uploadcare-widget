@@ -1,11 +1,11 @@
 {
   utils,
+  utils: {abilities: {URL}},
   ui: {progress},
   templates: {tpl},
   jQuery: $,
   crop: {CropWidget},
   locale: {t}
-  utils: {abilities: {URL}}
 } = uploadcare
 
 uploadcare.namespace 'widget.tabs', (ns) ->
@@ -28,20 +28,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if file == @file
             fn.apply(null, arguments)
 
-      tryLoadImage = utils.once (file) =>
-        if not URL
-          return
-        if not file.size or file.size >= @settings.multipartMinSize
-          return
-        src = URL.createObjectURL(file)
-        utils.imageLoader(src)
-          .done (e) =>
-            if @file.state() == 'pending'
-              @__setState('image', {file: false})
-              img = @element('image').attr('src', src)[0]
-              @initImage([img.width, img.height])
-          .always =>
-#             URL.revokeObjectURL(src)
+      tryToLoadImage = utils.once(@__tryToLoadImage)
 
       @__setState('unknown', {})
       @file.progress ifCur (info) =>
@@ -51,7 +38,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
         source = info.sourceInfo
         if source.source == 'local' and source.file
-          tryLoadImage(source.file)
+          tryToLoadImage(file, source.file)
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
@@ -60,6 +47,26 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @file.fail ifCur (error, info) =>
         @__setState('error', {error, file: info})
+
+    __tryToLoadImage: (file, blob) =>
+      if not blob.size or blob.size >= @settings.multipartMinSize
+        return
+
+      utils.image.drawFileToCanvas(blob, 1162, 684)
+        .done (canvas, size) =>
+          utils.canvasToBlob canvas, 'image/jpeg', 0.8,
+            (blob) =>
+              canvas.width = canvas.height = 1
+              if file.state() != 'pending' or @file != file
+                return
+
+              src = URL.createObjectURL(blob)
+              @dialogApi.always ->
+                URL.revokeObjectURL(src)
+
+              @__setState('image', {file: false})
+              @element('image').attr('src', src)
+              @initImage(size)
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)
