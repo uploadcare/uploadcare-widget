@@ -56,7 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       )
         return
 
-      utils.image.drawFileToCanvas(blob, 1162, 684, '#efefef')
+      utils.image.drawFileToCanvas(blob, 1550, 924, '#efefef')
         .done (canvas, size) =>
           utils.canvasToBlob canvas, 'image/jpeg', 0.95,
             (blob) =>
