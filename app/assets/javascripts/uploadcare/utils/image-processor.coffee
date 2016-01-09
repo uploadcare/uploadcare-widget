@@ -134,11 +134,11 @@ uploadcare.namespace 'utils.image', (ns) ->
       df.reject('not image')
     op.done (e) ->
       img = e.target
+      df.always ->
+        img.src = '//:0'
 
       if maxSource and img.width * img.height > maxSource
-        img.src = '//:0'
-        df.reject('max source')
-        return
+        return df.reject('max source')
 
       ns.getExif(file).always (exif) ->
         orientation = ns.parseExifOrientation(exif) or 1
@@ -159,7 +159,7 @@ uploadcare.namespace 'utils.image', (ns) ->
         ][orientation - 1]
 
         if not trns
-          df.reject('')
+          return df.reject('bad image')
 
         canvas = document.createElement('canvas')
         canvas.width = dW
@@ -172,7 +172,6 @@ uploadcare.namespace 'utils.image', (ns) ->
           ctx.fillStyle = bg
           ctx.fillRect(0, 0, dW, dH)
         ctx.drawImage(img, 0, 0, dW, dH)
-        img.src = '//:0'
 
         df.resolve(canvas, sSize)
 
