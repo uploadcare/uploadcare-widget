@@ -3,7 +3,7 @@
 ### 2.6.0, 09.01.2016
 
 * Image crop and preview for local files now works before uploading.
-  This is greatly improves user experience.
+  This greatly improves user experience.
 * Autoperfixer is used. Many of unnecessary prefixed properties are removed.
 * Versioned file names are no longer supported:
   `https://ucarecdn.com/widget/2.5.9/uploadcare/uploadcare-2.5.9.js`
@@ -12,8 +12,8 @@
 * All files (not just uploaded from URLs) now have
   `sourceInfo` property in JavaScript API.
 * Updated Danish locale.
-* Widget will replace `window.uploadcare` with new version
-  even if it is already exists. This solves some compatibility problems.
+* Widget replaces `window.uploadcare` with new version
+  even if it already exists. This solves some compatibility problems.
 * New dialog's footer design.
 
 ### 2.5.9, 07.12.2015
