@@ -140,8 +140,8 @@ def upload_widget(version)
 
   upload_js.call()
   if version =~ /^\d+\.\d+\.\d+$/
-    upload_js.call(version[/^\d+\.\d+/] + '+')
-    upload_js.call(version[/^\d+/] + '+')
+    upload_js.call(version[/^\d+\.\d+/] + '.x')
+    upload_js.call(version[/^\d+/] + '.x')
   end
 
   IMAGES.each do |full, base, type|
