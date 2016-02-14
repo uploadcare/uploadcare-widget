@@ -751,12 +751,27 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   .uploadcare-dialog-camera-message {
     display: inline-block;
   }
+  .uploadcare-dialog-camera-not-https {
+    display: none;
+  }
 }
-.uploadcare-dialog-camera-not-found {
+.uploadcare-dialog-camera-not-found,
+ {
   display: none;
 }
+.uploadcare-dialog-camera-not-https {
+  .uploadcare-dialog-camera-please-allow,
+  .uploadcare-dialog-camera-not-found {
+    display: none;
+  }
+  .uploadcare-dialog-camera-not-https {
+    display: block;
+  }
+}
 .uploadcare-dialog-camera-not-founded {
-  .uploadcare-dialog-camera-please-allow {
+  .uploadcare-dialog-camera-please-allow,
+  .uploadcare-dialog-camera-not-https
+   {
     display: none;
   }
   .uploadcare-dialog-camera-not-found {

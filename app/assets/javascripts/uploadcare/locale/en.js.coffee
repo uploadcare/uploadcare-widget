@@ -74,6 +74,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
           notFound:
             title: 'No camera detected'
             text: 'Looks like you have no camera connected to this device.'
+          notHttps:
+            title: 'Camera does not allowed for not protected connections'
+            text: 'Camera does not allowed for not protected HTTP conections. To use camera you should have protected HTTPS web connection.'
         preview:
           unknownName: 'unknown'
           change: 'Cancel'
