@@ -26,9 +26,15 @@ uploadcare.namespace '', (ns) ->
     initializeWidget(el, ns.widget.MultipleWidget)
 
   ns.Widget = (el) ->
-    initializeWidget(el)
+        initializeWidget(el)
 
   initializeWidget = (input, targetClass) ->
+    elCount = $(input).size() 
+    if elCount == 0
+        throw new Error "No DOM elements found matching selector"
+    else if elCount > 1
+        uploadcare.utils.warn('There are multiple DOM elements matching selector');
+    
     input = $(input).eq(0)
     s = settings.build(input.data())
 
