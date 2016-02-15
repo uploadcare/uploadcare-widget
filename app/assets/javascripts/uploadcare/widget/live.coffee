@@ -26,7 +26,7 @@ uploadcare.namespace '', (ns) ->
     initializeWidget(el, ns.widget.MultipleWidget)
 
   ns.Widget = (el) ->
-    initializeWidget(el)
+        initializeWidget(el)
 
   initializeWidget = (input, targetClass) ->
     input = $(input).eq(0)

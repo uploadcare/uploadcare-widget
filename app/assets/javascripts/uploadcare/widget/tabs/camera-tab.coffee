@@ -56,6 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @container
           .removeClass('uploadcare-dialog-camera-requested')
           .removeClass('uploadcare-dialog-camera-denied')
+          .removeClass('uploadcare-dialog-camera-not-https')
           .addClass('uploadcare-dialog-camera-ready')
         @__stream = stream
         if @URL
@@ -64,8 +65,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @video.prop('src', stream)
         @video[0].play()
       , (error) =>
+        isChrome = !!window.chrome && !!window.chrome.webstore;
+        isHttp = window.location.protocol == 'http:';
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
           @container.addClass('uploadcare-dialog-camera-not-founded')
+        else if isChrome && isHttp
+          @container
+            .addClass('uploadcare-dialog-camera-not-https')
         else
           @container.addClass('uploadcare-dialog-camera-denied')
         @__loaded = false
