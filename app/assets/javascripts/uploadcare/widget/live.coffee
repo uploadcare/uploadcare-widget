@@ -29,7 +29,12 @@ uploadcare.namespace '', (ns) ->
     initializeWidget(el)
 
   initializeWidget = (input, targetClass) ->
-    input = $(input).eq(0)
+    inputArr = $(input)
+    if inputArr.length == 0
+        throw new Error("No DOM elements found matching selector")
+    else if inputArr.length > 1
+        utils.warn("There are multiple DOM elements matching selector")
+    input = inputArr.eq(0)
     s = settings.build(input.data())
 
     Widget = if s.multiple
