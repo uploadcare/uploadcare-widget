@@ -39,10 +39,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
       isHttp = window.location.protocol == 'http:'
+      isLocalhost = window.location.hostname == 'localhost'
       if isHttp
         uploadcare.utils.warn('Camera not allowed for HTTP connections. To get access to camera please use HTTPS connection');
       @URL = window.URL or window.webkitURL
-      return !! @getUserMedia and Uint8Array and !isHttp
+      return !! @getUserMedia and Uint8Array and !(isHttp and !isLocalhost)
 
     __requestCamera: =>
       @__loaded = true
