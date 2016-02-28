@@ -219,14 +219,15 @@ def upload_npm(version)
     cp.call "images/#{base}"
   end
 
-  # Update version number in boser.json
-  `#{submodule} sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' bower.json`
+  # Update version number in package.json
+  `#{submodule} sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' package.json`
   `#{submodule} git add package.json`
 
   # Commit, create a tag, and push
   `#{submodule} git commit -m"New widget release: #{version}"`
   `#{submodule} git tag #{version}`
-#  `#{submodule} git push origin master && git push --tags`
+  `#{submodule} git push origin master && git push --tags`
+  `#{submodule} npm publish`
 end
 
 namespace :js do
