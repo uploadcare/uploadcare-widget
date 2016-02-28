@@ -1,4 +1,6 @@
 .sass-cache
+.idea/
+node_modules/
 log/
 tmp/
 pkg/
