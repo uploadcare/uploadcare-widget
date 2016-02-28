@@ -20,5 +20,8 @@
   },
   "homepage": "https://github.com/uploadcare/uploadcare-widget",
   "devDependencies": {
+  },
+  "dependencies": {
+    "jquery": ">=1.10.2"
   }
 }
