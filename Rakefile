@@ -196,8 +196,7 @@ def upload_npm(version)
   cp.call "README.markdown"
 
   # Update version number in package.json
-  `cd pkg/#{version} && sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' package.json`
-  `cd pkg/#{version} && rm ./package.json-e`
+  `cd pkg/#{version} && npm version #{version}`
   `cd pkg/#{version} && npm publish`
 
 end
