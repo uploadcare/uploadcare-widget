@@ -191,8 +191,9 @@ def upload_npm(version)
     FileUtils.cp "#{name}", "pkg/#{version}/#{name}" 
   end
   
-  # Copy package.json
+  # Copy package.json and 
   cp.call "package.json"
+  cp.call "README.markdown"
   cp.call ".npmignore"
 
   # Update version number in package.json

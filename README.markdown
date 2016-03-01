@@ -48,6 +48,26 @@ Add following code to your document's `<head>`.
 <script src="/bower_components/uploadcare/uploadcare.js" charset="utf-8"></script>
 ```
 
+## Using with npm
+
+Install uploadcare using `npm` command:
+
+```sh
+$ npm install uploadcare-widget
+```
+
+Add following code to your document's `<head>`.
+
+```html
+<script>
+  // Widget settings
+  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+</script>
+<script src="/node_modules/jquery/jquery.js" charset="utf-8"></script>
+<script src="/node_modules/uploadcare-widget/uploadcare.js" charset="utf-8"></script>
+```
+
+
 ## Building Your Own
 
 You need a working Ruby 2.0.0 environment
