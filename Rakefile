@@ -185,6 +185,22 @@ def upload_bower(version)
   `#{submodule} git push origin master && git push --tags`
 end
 
+def upload_npm(version)
+
+  cp = lambda do |name|
+    FileUtils.cp "#{name}", "pkg/#{version}/#{name}" 
+  end
+  
+  # Copy package.json and 
+  cp.call "package.json"
+  cp.call "README.markdown"
+
+  # Update version number in package.json
+  `cd pkg/#{version} && npm version #{version}`
+  `cd pkg/#{version} && npm publish`
+
+end
+
 namespace :js do
   task :application do
     require 'rubygems'
@@ -235,6 +251,10 @@ namespace :js do
 
     task bower: [:application] do
       upload_bower(UploadcareWidget::VERSION)
+    end
+    
+    task npm: [:application] do
+      upload_npm(UploadcareWidget::VERSION)
     end
   end
 

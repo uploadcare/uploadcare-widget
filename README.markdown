@@ -43,10 +43,34 @@ Add following code to your document's `<head>`.
 <script>
   // Widget settings
   UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+  // To use static content from your host   
+  UPLOADCARE_SCRIPT_BASE = '/bower_components/uploadcare/';
 </script>
 <script src="/bower_components/jquery/jquery.js" charset="utf-8"></script>
 <script src="/bower_components/uploadcare/uploadcare.js" charset="utf-8"></script>
 ```
+
+## Using with npm
+
+Install uploadcare using `npm` command:
+
+```sh
+$ npm install uploadcare-widget
+```
+
+Add following code to your document's `<head>`.
+
+```html
+<script>
+  // Widget settings
+  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+  // To use static content from your host   
+  UPLOADCARE_SCRIPT_BASE = '/node_modules/uploadcare-widget/';
+</script>
+<script src="/node_modules/jquery/jquery.js" charset="utf-8"></script>
+<script src="/node_modules/uploadcare-widget/uploadcare.js" charset="utf-8"></script>
+```
+
 
 ## Building Your Own
 
