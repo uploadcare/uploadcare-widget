@@ -25,6 +25,7 @@ namespace 'files', (ns) ->
       @cdnUrlModifiers = null
       @isImage = null
       @imageInfo = null
+      @mimeType = null
       @s3Bucket = null
       @sourceInfo.source ||= @sourceName
 
@@ -83,6 +84,7 @@ namespace 'files', (ns) ->
       @fileSize = data.size
       @isImage = data.is_image
       @imageInfo = data.image_info
+      @mimeType = data.mime_type
       @isStored = data.is_stored
       @s3Bucket = data.s3_bucket
       if data.default_effects
@@ -122,6 +124,7 @@ namespace 'files', (ns) ->
       isStored: @isStored
       isImage: not @s3Bucket and @isImage
       originalImageInfo: @imageInfo
+      mimeType: @mimeType
       originalUrl: if @fileId then urlBase else null
       cdnUrl: if @fileId
           "#{urlBase}#{@cdnUrlModifiers or ''}"
