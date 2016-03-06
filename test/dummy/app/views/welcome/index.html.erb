@@ -25,7 +25,7 @@ Clearable:
 <div id="last-result"></div>
 <ul id="events"></ul>
 <script>
-jQuery(function($) {
+$(function($) {
   var log = function(text) {
     var time = (new Date()).toLocaleTimeString();
     $('<li>').appendTo('#events').text(time + ' ' + text);
