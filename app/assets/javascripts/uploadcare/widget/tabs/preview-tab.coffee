@@ -62,7 +62,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         utils.canvasToBlob canvas, 'image/jpeg', 0.95,
           (blob) =>
             canvas.width = canvas.height = 1
-            if file.state() != 'pending' or @file != file
+            if (
+              file.state() != 'pending' or
+              @dialogApi.state() != 'pending' or
+              @file != file
+            )
               return
 
             src = URL.createObjectURL(blob)
