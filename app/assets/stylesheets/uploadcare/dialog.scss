@@ -742,6 +742,9 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   margin-right: 0;
   right: x(1);
 }
+.uploadcare-dialog-camera-start-record,
+.uploadcare-dialog-camera-stop-record,
+.uploadcare-dialog-camera-cancel-record,
 .uploadcare-dialog-camera-capture,
 .uploadcare-dialog-camera-retry,
 .uploadcare-dialog-camera-mirror {
@@ -771,7 +774,15 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 .uploadcare-dialog-camera-ready {
   .uploadcare-dialog-camera-video,
   .uploadcare-dialog-camera-capture,
-  .uploadcare-dialog-camera-mirror {
+  .uploadcare-dialog-camera-mirror,
+  .uploadcare-dialog-camera-start-record {
+    display: inline-block;
+  }
+}
+.uploadcare-dialog-camera-recording {
+  .uploadcare-dialog-camera-video,
+  .uploadcare-dialog-camera-stop-record,
+  .uploadcare-dialog-camera-cancel-record {
     display: inline-block;
   }
 }

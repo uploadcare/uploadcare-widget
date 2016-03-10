@@ -21,6 +21,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-camera'))
       @container.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
       @container.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
+      @container.find('.uploadcare-dialog-camera-start-record').on('click', @__startRecording)
+      @container.find('.uploadcare-dialog-camera-stop-record').on('click', @__stopRecording)
+      @container.find('.uploadcare-dialog-camera-cancel-record').on('click', @__cancelRecording)
       @container.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
       @container.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
 
@@ -41,6 +44,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
       @URL = window.URL or window.webkitURL
+      @MediaRecorder = window.MediaRecorder
       if not isSecure
         uploadcare.utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.');
       isLocalhost = document.location.hostname == 'localhost'
@@ -49,6 +53,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     __requestCamera: =>
       @__loaded = true
       @getUserMedia.call(navigator,
+        audio: true,
         video:
           optional: [
             {minWidth: 320},
@@ -90,6 +95,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         $.each @__stream.getVideoTracks(), ->
           @stop?()
       @__stream.stop?()
+      @__stream = null
 
     __mirror: =>
       @mirrored = ! @mirrored
@@ -113,3 +119,27 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         blob.name = "camera.jpg"
         @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')
+
+    __startRecording: =>
+      @container
+          .removeClass('uploadcare-dialog-camera-ready')
+          .addClass('uploadcare-dialog-camera-recording')
+
+      @__chunks = []
+      @__recorder = new @MediaRecorder(@__stream)
+      @__recorder.start()
+      @__recorder.ondataavailable = (e) =>
+        @__chunks.push(e.data)
+
+    __stopRecording: =>
+      @container
+          .removeClass('uploadcare-dialog-camera-recording')
+          .addClass('uploadcare-dialog-camera-ready')
+
+      @__recorder.onstop = =>
+        blob = new Blob(@__chunks, {'type': 'video/webm'})
+        blob.name = "record.webm"
+        @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
+        @dialogApi.switchTab('preview')
+        @__chunks = null
+      @__recorder.stop()
