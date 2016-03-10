@@ -2,11 +2,11 @@
 
 ### 2.7.0, 06.03.2016
 
-* Camera tab is disable on not HTTPS sites due to latest browsers rules.
-* The widget constructors raise errors if no element was matched for provided
-  selector and print warning if more than one element is matched.
+* Camera tab is disabled on non HTTPS sites due to the latest browsers' rules.
+* The widget constructors raise errors if no elements ware matched for provided
+  selector and prints warning if more than one element is matched.
 * Built-in jQuery upgraded to 2.2.1.
-* File's mime type is exposed to Javascript info.
+* File's MIME type is exposed to Javascript info.
 * Fixed 404 error in console when dialog is used without crop and preview step.
 
 ### 2.6.0, 09.01.2016
