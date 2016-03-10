@@ -1,2 +1,2 @@
 // = require_self
-// = require uploadcare/widget-full.coffee
+// = require uploadcare/build/uploadcare.full.coffee

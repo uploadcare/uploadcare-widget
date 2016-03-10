@@ -40,11 +40,13 @@ def in_root(file)
 end
 
 def file_list(path)
-  path = in_root path
+  path = in_root(path)
   Dir.glob(File.join(path, "*"))
     .select { |f| File.file?(f) }
     .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
 end
+
+PACKAGES = ['uploadcare', 'uploadcare.full']
 
 IMAGES_TYPES = {
   '.png' => 'image/png',
@@ -76,34 +78,26 @@ def cp_file(src, dest)
   puts "Copied #{widget_path}"
 end
 
-def header_comment(version)
-  <<-eos
+def build_widget(version)
+  header = <<-eos
 /*
  * Uploadcare (#{version})
  * Date: #{Time.now}
  * Rev: #{`git rev-parse --verify HEAD`[0..9]}
  */
   eos
-end
 
-def wrap_namespace(js, version)
-  ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
-end
+  def wrap_namespace(js, version)
+    ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
+  end
 
-def build_widget(version)
-  comment = header_comment(version)
-
-  js = Rails.application.assets['uploadcare/widget-full.coffee'].source
-  js = wrap_namespace(js, version)
-  minified = YUI::JavaScriptCompressor.new.compress(js)
-  write_file("#{version}/uploadcare.full.js", comment + js)
-  write_file("#{version}/uploadcare.full.min.js", comment + minified)
-
-  js = Rails.application.assets['uploadcare/widget.coffee'].source
-  js = wrap_namespace(js, version)
-  minified = YUI::JavaScriptCompressor.new.compress(js)
-  write_file("#{version}/uploadcare.js", comment + js)
-  write_file("#{version}/uploadcare.min.js", comment + minified)
+  PACKAGES.each do |package|
+    js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
+    js = wrap_namespace(js, version)
+    write_file("#{version}/#{package}.js", header + js)
+    minified = YUI::JavaScriptCompressor.new.compress(js)
+    write_file("#{version}/#{package}.min.js", header + minified)
+  end
 
   IMAGES.each do |full, base|
     cp_file full, "#{version}/images/#{base}"
