@@ -144,5 +144,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         blob.name = "record.webm"
         @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')
-        @__chunks = null
+        @__chunks = []
       @__recorder.stop()
+
+    __cancelRecording: =>
+      @container
+          .removeClass('uploadcare-dialog-camera-recording')
+          .addClass('uploadcare-dialog-camera-ready')
+
+      @__recorder.stop()
+      @__chunks = []
