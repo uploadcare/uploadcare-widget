@@ -67,12 +67,15 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .removeClass('uploadcare-dialog-camera-requested')
           .removeClass('uploadcare-dialog-camera-denied')
           .addClass('uploadcare-dialog-camera-ready')
+
         @__stream = stream
         if @URL
           @video.prop('src', @URL.createObjectURL(stream))
         else
           @video.prop('src', stream)
+        @video[0].volume = 0
         @video[0].play()
+
       , (error) =>
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
           @container.addClass('uploadcare-dialog-camera-not-founded')
@@ -91,8 +94,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         return
       if @URL
         @URL.revokeObjectURL(@video.prop('src'))
-      if @__stream.getVideoTracks
-        $.each @__stream.getVideoTracks(), ->
+      if @__stream.getTracks
+        $.each @__stream.getTracks(), ->
           @stop?()
       @__stream.stop?()
       @__stream = null
