@@ -2,6 +2,7 @@
 # = require ./utils.coffee
 # = require ./settings.coffee
 # = require ./locale.coffee
+# = require_directory ./locale
 # = require ./templates.coffee
 # = require ./stylesheets.coffee
 # = require ./ui/crop-widget.coffee

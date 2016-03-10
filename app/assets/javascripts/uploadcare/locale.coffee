@@ -1,4 +1,4 @@
-# = require_directory ./locale
+# = require ./locale/en.js.coffee
 
 {
   utils,

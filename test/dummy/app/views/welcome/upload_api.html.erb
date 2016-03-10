@@ -1,0 +1,38 @@
+<% content_for :javascript_base_lib do %>
+  <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+  <%= javascript_include_tag "uploadcare/build/uploadcare.api.coffee" %>
+<% end %>
+
+
+<script>
+  UPLOADCARE_PUBLIC_KEY = '1c86ca998ba22e75fbc6';
+
+  function done(topic, file) {
+    file.done(function(fileInfo) {
+        $('#' + topic + '-status').html(fileInfo.uuid);
+      });
+    file.progress(function(info) {
+      $('#' + topic + '-status').html('' + (info.progress * 100) + '%');
+    });
+  }
+
+  done('info', uploadcare.fileFrom(
+      'uploaded', '9dd2f080-cc52-442d-aa06-1d9eec7f40d1'));
+
+  done('text', uploadcare.fileFrom(
+       'object', new Blob(['9dd2f080-cc52-442d-aa06-1d9eec7f40d1'])));
+
+  done('url',uploadcare.fileFrom(
+      'url', 'https://ucarecdn.com/9dd2f080-cc52-442d-aa06-1d9eec7f40d1/-/preview/100x100/'));
+</script>
+
+
+<p>
+  Load info: <span id="info-status">Waiting...</span>
+</p>
+<p>
+  Upload small text file: <span id="text-status">Waiting...</span>
+</p>
+<p>
+  Upload file from URL: <span id="url-status">Waiting...</span>
+</p>
