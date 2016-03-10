@@ -6,6 +6,8 @@
 
 
 uploadcare.namespace 'widget.tabs', (ns) ->
+  isSecure = document.location.protocol == 'https:'
+
   class ns.CameraTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
@@ -31,19 +33,18 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if not @__loaded
             @__requestCamera()
         else
-          if @__loaded and document.location.protocol == 'https:'
+          if @__loaded and isSecure
             @__revoke()
 
       @dialogApi.always(@__revoke)
 
     __checkCompatibility: ->
       @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
-      isHttp = window.location.protocol == 'http:'
-      isLocalhost = window.location.hostname == 'localhost'
-      if isHttp
-        uploadcare.utils.warn('Camera not allowed for HTTP connections. To get access to camera please use HTTPS connection');
       @URL = window.URL or window.webkitURL
-      return !! @getUserMedia and Uint8Array and !(isHttp and !isLocalhost)
+      if not isSecure
+        uploadcare.utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.');
+      isLocalhost = document.location.hostname == 'localhost'
+      return !! @getUserMedia and Uint8Array and (isSecure or isLocalhost)
 
     __requestCamera: =>
       @__loaded = true
