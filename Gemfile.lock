@@ -1,3 +1,13 @@
+PATH
+  remote: .
+  specs:
+    uploadcare-widget (2.7.0)
+      autoprefixer-rails
+      coffee-rails
+      ejs
+      sass-rails
+      yui-compressor
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -234,6 +244,7 @@ DEPENDENCIES
   sprockets
   sprockets-rails
   therubyracer
+  uploadcare-widget!
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
