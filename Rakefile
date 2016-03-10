@@ -46,7 +46,7 @@ def file_list(path)
     .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
 end
 
-PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8']
+PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8', 'uploadcare.api']
 
 IMAGES_TYPES = {
   '.png' => 'image/png',
