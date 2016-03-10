@@ -124,11 +124,9 @@ def upload_widget(version)
   end
 
   upload_js = lambda do |force_version=false|
-    [
-      "uploadcare.js", "uploadcare.min.js",
-      "uploadcare.full.js", "uploadcare.full.min.js"
-    ].each do |name|
-      upload.call(name, 'application/javascript; charset=utf-8', force_version)
+    PACKAGES.each do |package|
+      upload.call("#{package}.js", 'application/javascript; charset=utf-8', force_version)
+      upload.call("#{package}.min.js", 'application/javascript; charset=utf-8', force_version)
     end
   end
 
@@ -160,10 +158,10 @@ def upload_bower(version)
   end
 
   # Copy files from release
-  cp.call "uploadcare.js"
-  cp.call "uploadcare.min.js"
-  cp.call "uploadcare.full.js"
-  cp.call "uploadcare.full.min.js"
+  PACKAGES.each do |package|
+    cp.call("#{package}.js")
+    cp.call("#{package}.min.js")
+  end
 
   IMAGES.each do |full, base, type|
     cp.call "images/#{base}"
