@@ -17,6 +17,7 @@ Dummy::Application.routes.draw do
   get "welcome/require"
   get "welcome/dnd"
   get "welcome/system"
+  get "welcome/upload_api"
 
 
   # The priority is based upon order of creation:
