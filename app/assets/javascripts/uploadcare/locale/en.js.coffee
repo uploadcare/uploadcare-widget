@@ -66,6 +66,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
         camera:
           capture: 'Take a photo'
           mirror: 'Mirror'
+          startRecord: 'Record a video'
+          stopRecord: 'Stop'
+          cancelRecord: 'Cancel'
           retry: 'Request permissions again'
           pleaseAllow:
             title: 'Please allow access to your camera'
