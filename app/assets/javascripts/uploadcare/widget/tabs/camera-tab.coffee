@@ -21,11 +21,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-camera'))
       @container.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
       @container.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
-      @container.find('.uploadcare-dialog-camera-start-record').on('click', @__startRecording)
+      startRecord = @container.find('.uploadcare-dialog-camera-start-record').on('click', @__startRecording)
       @container.find('.uploadcare-dialog-camera-stop-record').on('click', @__stopRecording)
       @container.find('.uploadcare-dialog-camera-cancel-record').on('click', @__cancelRecording)
       @container.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
       @container.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
+
+      if not @MediaRecorder or @settings.imagesOnly
+        startRecord.hide()
 
       @video = @container.find('video')
       @video.on 'loadeddata', ->
