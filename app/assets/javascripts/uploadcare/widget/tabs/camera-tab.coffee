@@ -50,6 +50,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       isLocalhost = document.location.hostname == 'localhost'
       return !! @getUserMedia and Uint8Array and (isSecure or isLocalhost)
 
+    __setState: (newState) =>
+      oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
+                   'recording'].join(' uploadcare-dialog-camera-')
+      @container
+          .removeClass(oldStates)
+          .addClass("uploadcare-dialog-camera-#{newState}")
+
     __requestCamera: =>
       @__loaded = true
       @getUserMedia.call(navigator,
@@ -63,10 +70,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             {minWidth: 1920},
           ]
       , (stream) =>
-        @container
-          .removeClass('uploadcare-dialog-camera-requested')
-          .removeClass('uploadcare-dialog-camera-denied')
-          .addClass('uploadcare-dialog-camera-ready')
+        @__setState('ready')
 
         @__stream = stream
         if @URL
@@ -78,18 +82,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       , (error) =>
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
-          @container.addClass('uploadcare-dialog-camera-not-founded')
+          @__setState('not-founded')
         else
-          @container.addClass('uploadcare-dialog-camera-denied')
+          @__setState('denied')
         @__loaded = false
       )
 
     __revoke: =>
+      @__setState('requested')
+
       @__loaded = false
-      @container
-          .removeClass('uploadcare-dialog-camera-denied')
-          .removeClass('uploadcare-dialog-camera-ready')
-          .addClass('uploadcare-dialog-camera-requested')
       if not @__stream
         return
       if @URL
@@ -124,9 +126,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @dialogApi.switchTab('preview')
 
     __startRecording: =>
-      @container
-          .removeClass('uploadcare-dialog-camera-ready')
-          .addClass('uploadcare-dialog-camera-recording')
+      @__setState('recording')
 
       @__chunks = []
       @__recorder = new @MediaRecorder(@__stream)
@@ -135,9 +135,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @__chunks.push(e.data)
 
     __stopRecording: =>
-      @container
-          .removeClass('uploadcare-dialog-camera-recording')
-          .addClass('uploadcare-dialog-camera-ready')
+      @__setState('ready')
 
       @__recorder.onstop = =>
         blob = new Blob(@__chunks, {'type': 'video/webm'})
@@ -148,9 +146,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__recorder.stop()
 
     __cancelRecording: =>
-      @container
-          .removeClass('uploadcare-dialog-camera-recording')
-          .addClass('uploadcare-dialog-camera-ready')
+      @__setState('ready')
 
       @__recorder.stop()
       @__chunks = []
