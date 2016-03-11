@@ -1,6 +1,6 @@
 # This pulls in all your specs from the javascripts directory into Jasmine:
 #
-# = require application
+# = require uploadcare/build/uploadcare.full
 # = require_self
 # = require ./utils
 # = require mock-objects/manager
