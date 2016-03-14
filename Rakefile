@@ -97,6 +97,10 @@ def build_widget(version)
     },
     :mangle => {
       :eval => true,
+      :except => [
+        # in template engine
+        '__p',
+      ],
     },
     # From jQuery config:
     # https://github.com/jquery/jquery/blob/c7431c7793f7605250807f91bee7c9ddcbaeb91b/Gruntfile.js#L184
