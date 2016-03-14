@@ -91,11 +91,31 @@ def build_widget(version)
     ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
   end
 
+  uglifier = Uglifier.new({
+    :output => {
+      :ascii_only => false,
+    },
+    :mangle => {
+      :eval => true,
+      :except => [
+        # in template engine
+        '__p',
+      ],
+    },
+    # From jQuery config:
+    # https://github.com/jquery/jquery/blob/c7431c7793f7605250807f91bee7c9ddcbaeb91b/Gruntfile.js#L184
+    :compress => {
+      :hoist_funs => false,
+      :loops => false,
+      :unused => false,
+    },
+  })
+
   PACKAGES.each do |package|
     js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
     js = wrap_namespace(js, version)
     write_file("#{version}/#{package}.js", header + js)
-    minified = YUI::JavaScriptCompressor.new.compress(js)
+    minified = uglifier.compile(js)
     write_file("#{version}/#{package}.min.js", header + minified)
   end
 

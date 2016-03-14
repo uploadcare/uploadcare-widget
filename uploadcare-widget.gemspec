@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency "autoprefixer-rails"
   s.add_dependency "coffee-rails"
   s.add_dependency "ejs"
-  s.add_dependency "yui-compressor"
+  s.add_dependency "csso-rails"
 end
