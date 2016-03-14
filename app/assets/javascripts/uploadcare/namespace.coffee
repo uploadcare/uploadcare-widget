@@ -1,4 +1,8 @@
-window.uploadcare = {}
+__exports = {}
+if typeof module == "object" and typeof module.exports == "object"
+  module.exports = __exports
+else
+  window.uploadcare = __exports
 
 
 uploadcare.namespace = (path, fn) ->
@@ -15,7 +19,7 @@ uploadcare.expose = (key, value) ->
   parts = key.split('.')
   last = parts.pop()
 
-  target = window.uploadcare
+  target = __exports
   source = uploadcare
 
   for part in parts
