@@ -3,15 +3,14 @@
 ### 2.8.0, 14.03.2016
 
 * Now you can capture video right from the camera tab if browser is capable
-  (for now, Firefox and Google Chrome is).
+  (latest Firefox and Google Chrome at the moment).
 * We've switched from YUI Compressor to UglifyJS and CSSO.
   Minified size is reduced up to 15%, gzipped size up to 8%.
 * CommonJS and Browserify compatibility added.
 * New library builds (in addition to `uploadcare` and `uploadcare.all`):
-    * `uploadcare.api` — without jQuery and UI. Only upload API.
-    * `uploadcare.lang.en` — without any other locales except English.
-    * `uploadcare.ie8` — with jQuery 1.12.1. In further versions,
-      we can remove IE8 & IE9 compatibility from other builds at all.
+    * `uploadcare.api` — without jQuery and UI. Only upload API client.
+    * `uploadcare.lang.en` — stripped localization to reduce size, only English is included.
+    * `uploadcare.ie8` — with jQuery 1.12.1 (IE8 does not work with jQuery 2+).
 
 ### 2.7.0, 06.03.2016
 
