@@ -1,5 +1,18 @@
 # History
 
+### 2.8.0, 14.03.2016
+
+* Now you can capture video right from the car tab if browser is capable
+  (for now, Firefox and Google Chrome is).
+* We've switched from YUI Compressor to UglifyJS and CSSO.
+  Minified size is reduced up to 15%, gzipped size up to 8%.
+* CommonJS and Browserify compatibility added.
+* New library builds (in addition to `uploadcare` and `uploadcare.all`):
+    * `uploadcare.api` — without jQuery and UI. Only upload API.
+    * `uploadcare.lang.en` — without any other locales except English.
+    * `uploadcare.ie8` — with jQuery 1.12.1 and. In further versions,
+      we can remove IE8 & IE9 compatibility from other builds at all.
+
 ### 2.7.0, 06.03.2016
 
 * Camera tab is disabled on non HTTPS sites due to the latest browsers' rules.
