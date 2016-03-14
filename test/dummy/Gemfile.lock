@@ -11,9 +11,9 @@ PATH
     uploadcare-widget (2.7.0)
       autoprefixer-rails
       coffee-rails
+      csso-rails
       ejs
       sass-rails
-      yui-compressor
 
 GEM
   remote: http://rubygems.org/
@@ -60,6 +60,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    csso-rails (0.4.1)
+      execjs (>= 1)
     ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -152,7 +154,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.46)
-    yui-compressor (0.12.0)
+    uglifier (2.7.2)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
 
 PLATFORMS
   ruby
@@ -161,6 +165,7 @@ DEPENDENCIES
   autoprefixer-rails (~> 6.1.2)
   coffee-rails (~> 3.2.2)
   coffee-script-source (~> 1.6.3)
+  csso-rails (~> 0.4.1)
   guard (~> 1.8)
   guard-jasmine
   jasminerice!
@@ -169,8 +174,8 @@ DEPENDENCIES
   rb-fsevent (~> 0.9)
   sass-rails (~> 3.2.6)
   therubyracer
+  uglifier (~> 2.7.2)
   uploadcare-widget!
-  yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
    1.11.2
