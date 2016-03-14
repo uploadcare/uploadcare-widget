@@ -95,6 +95,8 @@ def build_widget(version)
   uglifier = Uglifier.new({
     :output => {
       :ascii_only => false,
+      :comments => :none,
+      :max_line_len => 8 * 1024,
     },
     :mangle => {
       :eval => true,
