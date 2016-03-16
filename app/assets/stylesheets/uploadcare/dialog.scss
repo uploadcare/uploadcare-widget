@@ -767,6 +767,7 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
   }
 }
 .uploadcare-dialog-camera-denied {
+  .uploadcare-dialog-camera-message,
   .uploadcare-dialog-camera-retry {
     display: inline-block;
   }
