@@ -1,5 +1,12 @@
 # History
 
+
+### 2.8.1, 18.03.2016
+
+* Fixed the permissions request screen on the camera tab.
+* Fixed `uploadcare.locales` list.
+* Fixed `uploadcare.start` function in API build.
+
 ### 2.8.0, 14.03.2016
 
 * Now you can capture video right from the camera tab if browser is capable
@@ -48,7 +55,6 @@
   instead of replacing it.
 * Fixed camera revoking in Google Chrome 47.
 * New option `multipleMaxStrict`.
-
 
 ### 2.5.7, 01.12.2015
 
