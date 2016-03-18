@@ -7,8 +7,7 @@
 {expose} = uploadcare
 
 expose('globals', uploadcare.settings.common)
-expose('start')
-expose('initialize')
+expose('start', uploadcare.settings.common)
 expose('fileFrom')
 expose('filesFrom')
 expose('FileGroup')
