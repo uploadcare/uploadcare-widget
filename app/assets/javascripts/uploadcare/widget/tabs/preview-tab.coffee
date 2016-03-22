@@ -37,7 +37,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @element('label').text(label)
 
         source = info.sourceInfo
-        if source.source == 'local' and source.file
+        blob = utils.abilities.Blob
+        if source.file and blob and source.file instanceof blob
           tryToLoadImage(file, source.file)
 
       @file.done ifCur (info) =>
