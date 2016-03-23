@@ -64,7 +64,7 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-    config.vm.provision "install", type: "shell", inline: <<-SHELL
+    config.vm.provision "preinstall", type: "shell", inline: <<-SHELL
         sudo apt-get update
         sudo apt-get install -y software-properties-common
         sudo apt-add-repository -y ppa:brightbox/ruby-ng
@@ -76,15 +76,11 @@ Vagrant.configure(2) do |config|
         sudo apt-get install -y git mercurial
     SHELL
 
-    config.vm.provision "test-install", type: "shell", inline: <<-SHELL
+    config.vm.provision "install", type: "shell", inline: <<-SHELL
         cd /vagrant
         bundle install
         cd /vagrant/test/dummy
         bundle install
-    SHELL
-
-    config.vm.provision "test-start", type: "shell", run: "always", inline: <<-SHELL
-        cd /vagrant/test/dummy
-        rails server
+        bundle update
     SHELL
 end

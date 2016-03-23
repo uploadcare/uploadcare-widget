@@ -78,7 +78,7 @@ Clone the repository.
 
 ### Enviroment
 
-You need a working Ruby 2.3.0 environment with [Bundler](http://bundler.io).
+You need a working Ruby ^2.0.0 environment with [Bundler](http://bundler.io).
 
 #### Vagrant
 
@@ -89,13 +89,27 @@ After open command line, go to this folder and run:
 
     vagrant up
 
-Vagrant will install Ubuntu 14.04 x64 on VM, install all dependencies (like a ruby), install dependencies for project and tests and start the development server.
+Vagrant will install Ubuntu 14.04 x64 on VM, install all dependencies (like a ruby), install dependencies for project and tests (bundle install).
 
-After open http://127.0.0.1:3000/ on your browser.
+After all, run:
+
+    vagrant ssh
+    
+Inside go to folder `/vagrant`.
+
+#### Without Vagrant: install dependencies
+
+Inside folder run
+
+    bundle install
+    
+Inside folder `test/dummy/` run:
+
+    bundle install
+    bundle update
 
 ### Build
 
-* `bundle install` to get build dependencies.
 * `bundle exec rake js:latest:build` to build assets
   to the **pkg/latest** directory (with the “latest” suffix).
 * `bundle exec rake js:release:build` to build assets
@@ -106,11 +120,9 @@ After open http://127.0.0.1:3000/ on your browser.
 
 Go to `test/dummy/`. There is a simple Rails app. Run it:
 
-    bundle install
-    bundle update
     bundle exec rails server
     
-Open http://0.0.0.0:3000/ . Follow any link. 
+Open http://0.0.0.0:3000/ (or http://127.0.0.1:3000 if you use Vagrant). Follow any link. 
 There's going to be a widget or three. Edit code and reload page :-)
 
 
@@ -119,7 +131,7 @@ There's going to be a widget or three. Edit code and reload page :-)
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
 installed under the `test/dummy/` Rails app.
 
-To run tests in your browser go to http://0.0.0.0:3000/jasmine.
+To run tests in your browser go to http://0.0.0.0:3000/jasmine (or http://127.0.0.1:3000/jasmine if you use Vagrant).
 
 For more information see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
