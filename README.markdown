@@ -74,8 +74,26 @@ Add following code to your document's `<head>`.
 
 ## Building Your Own
 
-You need a working Ruby 2.0.0 environment
-with [Bundler](http://bundler.io).
+Clone the repository.
+
+### Enviroment
+
+You need a working Ruby 2.3.0 environment with [Bundler](http://bundler.io).
+
+#### Vagrant
+
+If you don't want to raise the environment on your machine, you can use the [Vagrant](https://www.vagrantup.com/).
+Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/) or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
+
+After open command line, go to this folder and run:
+
+    vagrant up
+
+Vagrant will install Ubuntu 14.04 x64 on VM, install all dependencies (like a ruby), install dependencies for project and tests and start the development server.
+
+After open http://127.0.0.1:3000/ on your browser.
+
+### Build
 
 * `bundle install` to get build dependencies.
 * `bundle exec rake js:latest:build` to build assets
@@ -84,10 +102,9 @@ with [Bundler](http://bundler.io).
   to the **pkg/version** folder (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
 
+### Development
 
-## Development
-
-Clone the repository, and go to `test/dummy/`. There is a simple Rails app. Run it:
+Go to `test/dummy/`. There is a simple Rails app. Run it:
 
     bundle install
     bundle update
@@ -97,7 +114,7 @@ Open http://0.0.0.0:3000/ . Follow any link.
 There's going to be a widget or three. Edit code and reload page :-)
 
 
-## Testing
+### Testing
 
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
 installed under the `test/dummy/` Rails app.
@@ -107,7 +124,7 @@ To run tests in your browser go to http://0.0.0.0:3000/jasmine.
 For more information see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
 
-### guard-jasmine
+#### guard-jasmine
 
 To run tests in a terminal you must first 
 [install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
