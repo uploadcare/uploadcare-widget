@@ -28,7 +28,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if file == @file
             fn.apply(null, arguments)
 
-      tryToLoadImage = utils.once(@__tryToLoadImage)
+      tryToLoadImagePreview = utils.once(@__tryToLoadImagePreview)
+      tryToLoadVideoPreview = utils.once(@__tryToLoadVideoPreview)
 
       @__setState('unknown', {})
       @file.progress ifCur (info) =>
@@ -39,27 +40,35 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         source = info.sourceInfo
         blob = utils.abilities.Blob
         if source.file and blob and source.file instanceof blob
-          tryToLoadImage(file, source.file)
+          tryToLoadImagePreview(file, source.file)
+          .fail () =>
+            tryToLoadVideoPreview(file, source.file)
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
-        if state != 'image' or state != @__state
+        if info.mimeType == 'video/webm'
+          state = 'video'
+        if (state != 'image' and state != 'video') or state != @__state
           @__setState(state, {file: info})
 
       @file.fail ifCur (error, info) =>
         @__setState('error', {error, file: info})
 
-    __tryToLoadImage: (file, blob) =>
+    __tryToLoadImagePreview: (file, blob) =>
+      df = $.Deferred()
+
       if (
         file.state() != 'pending' or
         not blob.size or
         blob.size >= @settings.multipartMinSize
       )
-        return
+        return df.reject('???')
+
 
       utils.image.drawFileToCanvas(
         blob, 1550, 924, '#efefef', @settings.imagePreviewMaxSize
-      ).done (canvas, size) =>
+      )
+      .done (canvas, size) =>
         utils.canvasToBlob canvas, 'image/jpeg', 0.95,
           (blob) =>
             canvas.width = canvas.height = 1
@@ -77,6 +86,24 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             @__setState('image', {file: false})
             @element('image').attr('src', src)
             @initImage(size)
+            df.resolve()
+      .fail () =>
+        return df.reject('fail')
+
+      df.promise()
+
+    __tryToLoadVideoPreview: (file, blob) =>
+      if (
+        file.state() != 'pending' or
+          not blob.size
+      )
+        return
+
+      src = URL.createObjectURL(blob)
+      @dialogApi.always ->
+        URL.revokeObjectURL(src)
+      @__setState('video', {file: false})
+      @element('video').attr('src', src)
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)

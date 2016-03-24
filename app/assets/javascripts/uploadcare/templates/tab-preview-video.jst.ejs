@@ -1,0 +1,32 @@
+<div class="uploadcare-dialog-padding uploadcare-dialog-preview-root">
+  <div class="uploadcare-dialog-title uploadcare-dialog-preview-title">
+    <%- t('dialog.tabs.preview.video.title') %>
+  </div>
+
+  <div class="uploadcare-crop-sizes uploadcare-dialog-preview-crop-sizes">
+    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
+  </div>
+
+  <div class="uploadcare-dialog-preview-video-wrap"><!--
+      1162x684 is 1.5 size of conteiner
+    --><video controls
+      <% if (file) { %>
+        src="<%- file.originalUrl %>"
+        title="<%- (file.name || "") %>"
+        alt="<%- (file.name || "") %>"
+      <% } else { %>
+        src="//:0"
+      <% } %>
+      class="uploadcare-dialog-preview-video"
+    ></video>
+  </div>
+</div>
+
+<div class="uploadcare-panel-footer">
+  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"
+       tabindex="0" role="button"
+          ><%- t('dialog.tabs.preview.video.change') %></div>
+  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"
+       tabindex="0" role="button"
+          ><%- t('dialog.tabs.preview.done') %></div>
+</div>

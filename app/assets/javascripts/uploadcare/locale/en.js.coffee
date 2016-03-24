@@ -96,6 +96,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             title: 'Crop and add this image'
             done: 'Done'
             free: 'free'
+          video:
+            title: 'Add this video?'
+            change: 'Cancel'
           error:
             default:
               title: 'Oops!'
