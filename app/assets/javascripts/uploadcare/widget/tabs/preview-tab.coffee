@@ -41,12 +41,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         blob = utils.abilities.Blob
         if source.file and blob and source.file instanceof blob
           tryToLoadImagePreview(file, source.file)
-          .fail () =>
+          .fail =>
             tryToLoadVideoPreview(file, source.file)
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
-        if info.mimeType == 'video/webm'
+        if info.sourceInfo.source == 'camera'
           state = 'video'
         if (state != 'image' and state != 'video') or state != @__state
           @__setState(state, {file: info})
