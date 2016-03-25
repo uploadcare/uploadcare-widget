@@ -78,11 +78,11 @@ Clone the repository.
 
 ### Enviroment
 
-You need a working Ruby ^2.0.0 environment with [Bundler](http://bundler.io).
+You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
 
 #### Vagrant
 
-If you don't want to raise the environment on your machine, you can use the [Vagrant](https://www.vagrantup.com/).
+If you don't want to raise the environment on your machine, you can use [Vagrant](https://www.vagrantup.com/).
 Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/) or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
 
 After open command line, go to this folder and run:
