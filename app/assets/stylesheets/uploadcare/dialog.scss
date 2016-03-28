@@ -484,7 +484,8 @@ $dialog-button-height: 32px;
 
 $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-footer-height;
 
-.uploadcare-dialog-preview-image-wrap, .uploadcare-dialog-preview-video-wrap {
+.uploadcare-dialog-preview-image-wrap,
+.uploadcare-dialog-preview-video-wrap {
   @include vertical-centered-wrap;
   text-align: center;
   width: 100%;
@@ -496,7 +497,8 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
     height: $dialog-preview-container-height - $dialog-crop-options-height;
   }
 }
-.uploadcare-dialog-preview-image, .uploadcare-dialog-preview-video {
+.uploadcare-dialog-preview-image,
+.uploadcare-dialog-preview-video {
   @include vertical-centered;
   max-width: 100%;
   max-height: 100%;

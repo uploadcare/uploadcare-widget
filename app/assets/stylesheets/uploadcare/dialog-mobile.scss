@@ -80,12 +80,14 @@ $dialog-mobile-min-width: 310px;
 
     // § Preview tabs
 
-    .uploadcare-dialog-preview-image-wrap, .uploadcare-dialog-preview-video-wrap {
+    .uploadcare-dialog-preview-image-wrap,
+    .uploadcare-dialog-preview-video-wrap {
       top: auto;
       height: auto;
       padding-bottom: $dialog-mobile-footer-height;
     }
-    .uploadcare-dialog-preview-image, .uploadcare-dialog-preview-video {
+    .uploadcare-dialog-preview-image,
+    .uploadcare-dialog-preview-video {
       max-height: 450px;
     }
 
