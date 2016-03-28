@@ -45,10 +45,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             tryToLoadVideoPreview(file, source.file)
 
       @file.done ifCur (info) =>
+        if @__state == 'video'
+          return
         state = if info.isImage then 'image' else 'regular'
-        if state != 'image' and info.sourceInfo.source == 'camera'
-          state = 'video'
-        if (state != 'image' and state != 'video') or state != @__state
+        if state != 'image' or state != @__state
           @__setState(state, {file: info})
 
       @file.fail ifCur (error, info) =>
@@ -62,7 +62,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         not blob.size or
         blob.size >= @settings.multipartMinSize
       )
-        return df.reject('???')
+        return df.reject().promise()
 
 
       utils.image.drawFileToCanvas(
@@ -87,15 +87,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             @element('image').attr('src', src)
             @initImage(size)
             df.resolve()
-      .fail () =>
-        return df.reject('fail')
+      .fail(df.reject)
 
       df.promise()
 
     __tryToLoadVideoPreview: (file, blob) =>
       if (
-        file.state() != 'pending' or
-          not blob.size
+        not URL or
+        not blob.size
       )
         return
 
