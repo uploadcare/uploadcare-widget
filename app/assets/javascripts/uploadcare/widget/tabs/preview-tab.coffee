@@ -46,7 +46,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @file.done ifCur (info) =>
         state = if info.isImage then 'image' else 'regular'
-        if info.sourceInfo.source == 'camera'
+        if state != 'image' and info.sourceInfo.source == 'camera'
           state = 'video'
         if (state != 'image' and state != 'video') or state != @__state
           @__setState(state, {file: info})
