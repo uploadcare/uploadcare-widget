@@ -88,25 +88,15 @@ Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [Virtua
 After open command line, go to this folder and run:
 
     vagrant up
-
-Vagrant will install Ubuntu 14.04 x64 on VM, install all dependencies (like a ruby), install dependencies for project and tests (bundle install).
-
-After all, run:
-
     vagrant ssh
-    
-Inside go to folder `/vagrant`.
 
-#### Without Vagrant: install dependencies
+#### Local environment (without Vagrant)
 
 Inside folder run
 
     bundle install
-    
-Inside folder `test/dummy/` run:
-
+    cd ./test/dummy
     bundle install
-    bundle update
 
 ### Build
 
@@ -122,7 +112,7 @@ Go to `test/dummy/`. There is a simple Rails app. Run it:
 
     bundle exec rails server
     
-Open http://0.0.0.0:3000/ (or http://127.0.0.1:3000 if you use Vagrant). Follow any link. 
+Open http://127.0.0.1:3000/. Follow any link. 
 There's going to be a widget or three. Edit code and reload page :-)
 
 
@@ -131,7 +121,7 @@ There's going to be a widget or three. Edit code and reload page :-)
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
 installed under the `test/dummy/` Rails app.
 
-To run tests in your browser go to http://0.0.0.0:3000/jasmine (or http://127.0.0.1:3000/jasmine if you use Vagrant).
+To run tests in your browser go to http://127.0.0.1:3000/jasmine.
 
 For more information see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
