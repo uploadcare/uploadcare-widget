@@ -20,6 +20,5 @@ Vagrant.configure(2) do |config|
         bundle install
         cd /vagrant/test/dummy
         bundle install
-        bundle update
     SHELL
 end
