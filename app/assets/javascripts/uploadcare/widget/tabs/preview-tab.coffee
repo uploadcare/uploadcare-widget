@@ -71,6 +71,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       .done (canvas, size) =>
         utils.canvasToBlob canvas, 'image/jpeg', 0.95,
           (blob) =>
+            df.resolve()
+
             canvas.width = canvas.height = 1
             if (
               file.state() != 'pending' or
@@ -86,23 +88,34 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             @__setState('image', {file: false})
             @element('image').attr('src', src)
             @initImage(size)
-            df.resolve()
       .fail(df.reject)
 
       df.promise()
 
     __tryToLoadVideoPreview: (file, blob) =>
+      df = $.Deferred()
+
       if (
         not URL or
         not blob.size
       )
-        return
+        return df.reject().promise()
 
-      src = URL.createObjectURL(blob)
-      @dialogApi.always ->
-        URL.revokeObjectURL(src)
-      @__setState('video', {file: false})
-      @element('video').attr('src', src)
+      op = utils.videoLoader(URL.createObjectURL(blob))
+      op
+      .always (e) =>
+        URL.revokeObjectURL(e.target.src)
+      .fail(df.reject)
+      .done =>
+        df.resolve()
+        
+        src = URL.createObjectURL(blob)
+        @dialogApi.always ->
+          URL.revokeObjectURL(src)
+        @__setState('video', {file: false})
+        @element('video').attr('src', src)
+
+      df.promise()
 
     element: (name) ->
       @container.find('.uploadcare-dialog-preview-' + name)
