@@ -74,40 +74,59 @@ Add following code to your document's `<head>`.
 
 ## Building Your Own
 
-You need a working Ruby 2.0.0 environment
-with [Bundler](http://bundler.io).
+Clone the repository.
 
-* `bundle install` to get build dependencies.
+### Enviroment
+
+You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
+
+#### Vagrant
+
+If you don't want to raise the environment on your machine, you can use [Vagrant](https://www.vagrantup.com/).
+Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/) or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
+
+After open command line, go to this folder and run:
+
+    vagrant up
+    vagrant ssh
+
+#### Local environment (without Vagrant)
+
+Inside folder run
+
+    bundle install
+    cd ./test/dummy
+    bundle install
+
+### Build
+
 * `bundle exec rake js:latest:build` to build assets
   to the **pkg/latest** directory (with the “latest” suffix).
 * `bundle exec rake js:release:build` to build assets
   to the **pkg/version** folder (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
 
+### Development
 
-## Development
+Go to `test/dummy/`. There is a simple Rails app. Run it:
 
-Clone the repository, and go to `test/dummy/`. There is a simple Rails app. Run it:
-
-    bundle install
-    bundle update
     bundle exec rails server
     
-Open http://0.0.0.0:3000/ . Follow any link. 
+Open http://127.0.0.1:3000/. Follow any link. 
 There's going to be a widget or three. Edit code and reload page :-)
 
 
-## Testing
+### Testing
 
 [Jasminerice](https://github.com/bradphelan/jasminerice) 
 installed under the `test/dummy/` Rails app.
 
-To run tests in your browser go to http://0.0.0.0:3000/jasmine.
+To run tests in your browser go to http://127.0.0.1:3000/jasmine.
 
 For more information see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
 
-### guard-jasmine
+#### guard-jasmine
 
 To run tests in a terminal you must first 
 [install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
