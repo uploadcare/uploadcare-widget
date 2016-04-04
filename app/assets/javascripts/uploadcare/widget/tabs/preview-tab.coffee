@@ -101,18 +101,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       )
         return df.reject().promise()
 
-      op = utils.videoLoader(URL.createObjectURL(blob))
+      src = URL.createObjectURL(blob)
+      op = utils.videoLoader(src)
       op
-      .always (e) =>
-        URL.revokeObjectURL(e.target.src)
-      .fail(df.reject)
+      .fail =>
+        URL.revokeObjectURL(src)
+        df.reject()
       .done =>
         df.resolve()
-        
-        src = URL.createObjectURL(blob)
+
         @dialogApi.always ->
           URL.revokeObjectURL(src)
-        @__setState('video', {file: false})
+
+        @__setState('video')
         @element('video').attr('src', src)
 
       df.promise()

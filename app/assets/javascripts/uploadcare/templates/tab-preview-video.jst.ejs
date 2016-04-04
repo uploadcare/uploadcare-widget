@@ -7,17 +7,8 @@
     <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
   </div>
 
-  <div class="uploadcare-dialog-preview-video-wrap"><!--
-      1162x684 is 1.5 size of conteiner
-    --><video controls
-      <% if (file) { %>
-        src="<%- file.originalUrl %>"
-        title="<%- (file.name || "") %>"
-      <% } else { %>
-        src="//:0"
-      <% } %>
-      class="uploadcare-dialog-preview-video"
-    ></video>
+  <div class="uploadcare-dialog-preview-video-wrap">
+    <video controls class="uploadcare-dialog-preview-video"></video>
   </div>
 </div>
 
