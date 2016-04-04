@@ -1,6 +1,11 @@
 # History
 
 
+### 2.8.2, 04.04.2016
+
+* Preview for video captured from the camera.
+* Fast image preview for files from the camera.
+
 ### 2.8.1, 18.03.2016
 
 * Fixed the permissions request screen on the camera tab.
