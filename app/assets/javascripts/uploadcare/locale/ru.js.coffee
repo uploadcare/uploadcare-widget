@@ -85,6 +85,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
           image:
             title: 'Добавить это изображение?'
             change: 'Отмена'
+          video:
+            title: 'Добавить это видео?'
+            change: 'Отмена'
           crop:
             title: 'Обрезать и добавить это изображение'
             done: 'Готово'

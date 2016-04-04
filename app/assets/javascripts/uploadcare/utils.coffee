@@ -23,6 +23,15 @@ uploadcare.namespace 'utils', (ns) ->
       .on('error', def.reject)
       .attr('src', src)
     def.promise()
+    
+  ns.videoLoader = (src) ->
+    def = $.Deferred()
+    $('<video/>')
+      .on('loadeddata', def.resolve)
+      .on('error', def.reject)
+      .attr('src', src)
+      .load()
+    def.promise()
 
   ns.defer = (fn) ->
     setTimeout(fn, 0)
