@@ -1,9 +1,13 @@
 ##
-## English locale is the default and used as a fallback.
+## Please, do not use this locale as a reference for new translations.
+## It could be outdated or incomplete. Always use the latest English versions:
+## https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/javascripts/uploadcare/locale/en.js.coffee
+##
+## Any fixes are welcome.
 ##
 
 uploadcare.namespace 'locale.translations', (ns) ->
-  ns.en =
+  ns.et =
     uploading: 'Üleslaadimine… Palun oota.'
     loadingInfo: 'Info laadimine...'
     errors:
@@ -40,16 +44,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
           file: 'Failid Kõvakettalt'
           url: 'Veebilink'
           camera: 'Kaamera'
-          facebook: 'Facebook'
-          dropbox: 'Dropbox'
-          gdrive: 'Google Drive'
-          instagram: 'Instagram'
-          vk: 'VK'
-          evernote: 'Evernote'
-          box: 'Box'
-          skydrive: 'OneDrive'
-          flickr: 'Flickr'
-          huddle: 'Huddle'
         file:
           drag: 'Tiri failid siia'
           nodrop: 'Lae failid arvutist'
@@ -121,14 +115,11 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Oled valinud %files%. Vähemalt %min% nõutud.'
             clear: 'Eemalda kõik'
             done: 'Valmis'
-      footer:
-        text: 'powered by'
-        link: 'uploadcare'
 
 
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
-  ns.en = (n) ->
+  ns.et = (n) ->
     return 'one' if n == 1
     'other'
