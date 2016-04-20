@@ -1,6 +1,8 @@
 if typeof isModule == "undefined"
   __exports = {}
   window.uploadcare = __exports
+else
+  __exports = moduleExports;
 
 uploadcare.namespace = (path, fn) ->
   target = uploadcare
