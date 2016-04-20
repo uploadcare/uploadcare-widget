@@ -91,11 +91,11 @@ def build_widget(version)
   eos
 
   def wrap_namespace(js, version)
-    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\njQuery = (typeof global.jQuery !== \"undefined\") ? global.jQuery : require(\"jquery\");\n} else {\nif(typeof global.jQuery === \"undefined\") throw new Error(\"Uploadcare need jQuery\");\nglobal.uploadcare = __exports;\n}\n(function(window, jQuery, __exports){\n#{js}}(global, jQuery, __exports));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
+    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\njQuery = (typeof global.jQuery !== \"undefined\") ? global.jQuery : require(\"jquery\");\n} else {\nif(typeof global.jQuery === \"undefined\") throw new Error(\"Uploadcare need jQuery\");\nglobal.uploadcare = __exports;\n}\n(function(window, jQuery, __exports, isModule){\n#{js}}(global, jQuery, __exports, true));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
   end
 
   def wrap_namespace_with_jquery(js, version)
-    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\n} else {\nglobal.uploadcare = __exports;\n}\n(function(window, __exports){\n#{js}}(global, __exports));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
+    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\n} else {\nglobal.uploadcare = __exports;\n}\n(function(window, __exports, isModule){\n#{js}}(global, __exports, true));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
   end
 
   uglifier = Uglifier.new({

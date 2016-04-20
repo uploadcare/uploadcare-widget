@@ -1,3 +1,7 @@
+if typeof isModule == "undefined"
+  __exports = {}
+  window.uploadcare = __exports
+
 uploadcare.namespace = (path, fn) ->
   target = uploadcare
   if path
