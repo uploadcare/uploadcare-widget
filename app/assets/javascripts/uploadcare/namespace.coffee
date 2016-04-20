@@ -1,10 +1,3 @@
-__exports = {}
-if typeof module == "object" and typeof module.exports == "object"
-  module.exports = __exports
-else
-  window.uploadcare = __exports
-
-
 uploadcare.namespace = (path, fn) ->
   target = uploadcare
   if path

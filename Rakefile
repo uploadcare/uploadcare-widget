@@ -49,6 +49,8 @@ end
 PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8', 'uploadcare.api',
             'uploadcare.lang.en']
 
+PACKAGES_WITH_JQUERY = ['uploadcare.full', 'uploadcare.ie8']
+
 IMAGES_TYPES = {
   '.png' => 'image/png',
   '.gif' => 'image/gif',
@@ -89,7 +91,11 @@ def build_widget(version)
   eos
 
   def wrap_namespace(js, version)
-    ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
+    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\njQuery = (typeof global.jQuery !== \"undefined\") ? global.jQuery : require(\"jquery\");\n} else {\nif(typeof global.jQuery === \"undefined\") throw new Error(\"Uploadcare need jQuery\");\nglobal.uploadcare = __exports;\n}\n(function(window, jQuery, __exports){\n#{js}}(global, jQuery, __exports));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
+  end
+
+  def wrap_namespace_with_jquery(js, version)
+    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar __exports;\n__exports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = __exports;\n} else {\nglobal.uploadcare = __exports;\n}\n(function(window, __exports){\n#{js}}(global, __exports));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
   end
 
   uglifier = Uglifier.new({
@@ -116,7 +122,11 @@ def build_widget(version)
 
   PACKAGES.each do |package|
     js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
-    js = wrap_namespace(js, version)
+    if PACKAGES_WITH_JQUERY.include?(package)
+        js = wrap_namespace_with_jquery(js, version)
+    else
+        js = wrap_namespace(js, version)
+    end
     write_file("#{version}/#{package}.js", header + js)
     minified = uglifier.compile(js)
     write_file("#{version}/#{package}.min.js", header + minified)
