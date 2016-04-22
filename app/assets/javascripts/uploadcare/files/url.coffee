@@ -44,6 +44,10 @@ uploadcare.namespace 'files', (ns) ->
         store: if @settings.doNotStore then '' else 'auto'
         jsonerrors: 1
 
+      if @settings.signature
+        data.signature = @settings.signature
+        data.expire = @settings.expire
+
       utils.defer =>
         if @apiDeferred.state() != 'pending'
           return

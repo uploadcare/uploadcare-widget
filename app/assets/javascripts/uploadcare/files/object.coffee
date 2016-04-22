@@ -93,6 +93,10 @@ uploadcare.namespace 'files', (ns) ->
         formData.append('file', @__file, @fileName)
         formData.append('file_name', @fileName)
         formData.append('source', @sourceInfo.source)
+        
+        if @settings.signature
+          formData.append('signature', @settings.signature)
+          formData.append('expire', @settings.expire)
 
         @__autoAbort($.ajax(
           xhr: =>
@@ -153,6 +157,10 @@ uploadcare.namespace 'files', (ns) ->
         content_type: @fileType
         part_size: @settings.multipartPartSize
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
+
+      if @settings.signature
+        data.signature = @settings.signature
+        data.expire = @settings.expire
 
       @__autoAbort utils.jsonp(
          "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data
