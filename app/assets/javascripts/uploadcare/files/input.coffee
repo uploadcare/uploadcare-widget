@@ -45,8 +45,8 @@ uploadcare.namespace 'files', (ns) ->
           target: iframeId
         })
         .append(formParam('UPLOADCARE_PUB_KEY', @settings.publicKey))
-        .append(formParam('UPLOADCARE_SIGNATURE', @settings.signature))
-        .append(formParam('UPLOADCARE_EXPIRE', @settings.expire))
+        .append(formParam('UPLOADCARE_SIGNATURE', @settings.secureSignature))
+        .append(formParam('UPLOADCARE_EXPIRE', @settings.secureExpire))
         .append(formParam('UPLOADCARE_FILE_ID', @fileId))
         .append(formParam('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto'))
         .append(formParam('UPLOADCARE_SOURCE', @sourceInfo.source))

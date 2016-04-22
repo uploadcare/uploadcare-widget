@@ -38,15 +38,13 @@ uploadcare.namespace 'files', (ns) ->
 
       data =
         pub_key: @settings.publicKey
+        signature: @settings.secureSignature
+        expire: @settings.secureExpire
         source_url: @__url
         filename: @__realFileName or ''
         source: @sourceInfo.source
         store: if @settings.doNotStore then '' else 'auto'
         jsonerrors: 1
-
-      if @settings.signature
-        data.signature = @settings.signature
-        data.expire = @settings.expire
 
       utils.defer =>
         if @apiDeferred.state() != 'pending'
