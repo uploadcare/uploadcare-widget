@@ -10,8 +10,3 @@ expose('jQuery')
 
 expose 'plugin', (fn) ->
   fn(uploadcare)
-
-# back compatibility
-expose 'whenReady', (fn) ->
-  fn()
-

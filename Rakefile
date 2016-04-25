@@ -46,8 +46,8 @@ def file_list(path)
     .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
 end
 
-PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8', 'uploadcare.api',
-            'uploadcare.lang.en']
+PACKAGES = ['uploadcare.api', 'uploadcare.lang.en', 'uploadcare',
+            'uploadcare.full', 'uploadcare.ie8']
 
 IMAGES_TYPES = {
   '.png' => 'image/png',
@@ -90,7 +90,7 @@ def build_widget(version)
 
   def wrap_namespace(js)
     wrapper = Rails.application.assets["uploadcare/build/wrapper.js"].source
-    wrapper.sub('___widget_code___', js)
+    wrapper.sub("___widget_code___") {|_| js }
   end
 
   uglifier = Uglifier.new({
