@@ -45,7 +45,7 @@ uploadcare.namespace 'settings', (ns) ->
     parallelDirectUploads: 10
     passWindowOpen: false
     # maintain settings
-    scriptBase: if SCRIPT_BASE? then SCRIPT_BASE else ''
+    scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
 
   presets =
