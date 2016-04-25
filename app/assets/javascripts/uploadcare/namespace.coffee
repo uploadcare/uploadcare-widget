@@ -1,8 +1,10 @@
-if typeof isModule == "undefined"
-  __exports = {}
-  window.uploadcare = __exports
-else
-  __exports = moduleExports;
+# In the devlopment enviroment this will be window.uploadcare.
+# In the release this will be local var in the scope.
+`uploadcare = {}`
+
+
+uploadcare.__exports = {}
+
 
 uploadcare.namespace = (path, fn) ->
   target = uploadcare
@@ -18,7 +20,7 @@ uploadcare.expose = (key, value) ->
   parts = key.split('.')
   last = parts.pop()
 
-  target = __exports
+  target = uploadcare.__exports
   source = uploadcare
 
   for part in parts

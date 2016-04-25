@@ -7,6 +7,7 @@
 # = require_tree ./
 # = require_tree ./fixtures/data
 
+uploadcare = uploadcare.__exports;
 window.$ = window.jQuery = uploadcare.jQuery
 
 window.UPLOADCARE_PUBLIC_KEY = 'demopublickey'
