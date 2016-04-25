@@ -120,7 +120,13 @@ def build_widget(version)
     },
   })
 
-  PACKAGES.each do |package|
+  if ENV['PACKAGES']
+    packages = ENV['PACKAGES'].split(',')
+  else
+    packages = PACKAGES
+  end
+
+  packages.each do |package|
     js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
     if PACKAGES_WITH_JQUERY.include?(package)
         js = wrap_namespace_with_jquery(js, version)
@@ -128,8 +134,10 @@ def build_widget(version)
         js = wrap_namespace(js, version)
     end
     write_file("#{version}/#{package}.js", header + js)
-    minified = uglifier.compile(js)
-    write_file("#{version}/#{package}.min.js", header + minified)
+    if not ENV['NO_MINIFY']
+      minified = uglifier.compile(js)
+      write_file("#{version}/#{package}.min.js", header + minified)
+    end
   end
 
   IMAGES.each do |full, base|
