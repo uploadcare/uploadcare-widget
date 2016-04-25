@@ -1,14 +1,17 @@
 ;(function(global, factory) {
-  // module.exports can be object or function, if jQuery
-  // is already initialized in the same script.
+  // Not a browser enviroment at all: not Browserify/Webpack.
+  if ( ! global.document) {
+    return;
+  }
+
   if (typeof module === "object" && module.exports) {
-    module.exports = factory(global);
+    module.exports = factory(global, require("jquery"));
   } else {
     global.uploadcare = factory(global);
   }
 
-}(this, function(window, noGlobal) {
-  var uploadcare;
+}(this, function(window, jQuery) {
+  var uploadcare, document = window.document;
 
 ___widget_code___
 
