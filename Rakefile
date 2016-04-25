@@ -49,8 +49,6 @@ end
 PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8', 'uploadcare.api',
             'uploadcare.lang.en']
 
-PACKAGES_WITH_JQUERY = ['uploadcare.full', 'uploadcare.ie8']
-
 IMAGES_TYPES = {
   '.png' => 'image/png',
   '.gif' => 'image/gif',
@@ -90,12 +88,9 @@ def build_widget(version)
  */
   eos
 
-  def wrap_namespace(js, version)
-    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar moduleExports;\nmoduleExports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = moduleExports;\njQuery = (typeof global.jQuery !== \"undefined\") ? global.jQuery : require(\"jquery\");\n} else {\nif(typeof global.jQuery === \"undefined\") throw new Error(\"Uploadcare need jQuery\");\nglobal.uploadcare = moduleExports;\n}\n(function(window, jQuery, moduleExports, isModule){\n#{js}}(global, jQuery, moduleExports, true));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
-  end
-
-  def wrap_namespace_with_jquery(js, version)
-    ";(function(uploadcare, SCRIPT_BASE, global){\nif(typeof global.document === \"undefined\") return;\nvar moduleExports;\nmoduleExports = {};\nif (typeof module === \"object\" && typeof module.exports === \"object\") {\nmodule.exports = moduleExports;\n} else {\nglobal.uploadcare = moduleExports;\n}\n(function(window, moduleExports, isModule){\n#{js}}(global, moduleExports, true));}({}, '//ucarecdn.com/widget/#{version}/uploadcare/', typeof window !== \"undefined\" ? window : this));"
+  def wrap_namespace(js)
+    wrapper = Rails.application.assets["uploadcare/build/wrapper.js"].source
+    wrapper.sub('___widget_code___', js)
   end
 
   uglifier = Uglifier.new({
@@ -120,6 +115,7 @@ def build_widget(version)
     },
   })
 
+
   if ENV['PACKAGES']
     packages = ENV['PACKAGES'].split(',')
   else
@@ -128,11 +124,7 @@ def build_widget(version)
 
   packages.each do |package|
     js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
-    if PACKAGES_WITH_JQUERY.include?(package)
-        js = wrap_namespace_with_jquery(js, version)
-    else
-        js = wrap_namespace(js, version)
-    end
+    js = wrap_namespace(js)
     write_file("#{version}/#{package}.js", header + js)
     if not ENV['NO_MINIFY']
       minified = uglifier.compile(js)
