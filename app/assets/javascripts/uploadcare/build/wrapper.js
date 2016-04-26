@@ -10,7 +10,7 @@
     global.uploadcare = factory(global);
   }
 
-}(this, function(window, jQuery) {
+}(typeof window !== "undefined" ? window : this, function(window, jQuery) {
   var uploadcare, document = window.document;
 
 ___widget_code___
