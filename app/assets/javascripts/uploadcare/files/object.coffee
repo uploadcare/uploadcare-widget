@@ -89,6 +89,8 @@ uploadcare.namespace 'files', (ns) ->
 
         formData = new FormData()
         formData.append('UPLOADCARE_PUB_KEY', @settings.publicKey)
+        formData.append('signature', @settings.secureSignature)
+        formData.append('expire', @settings.secureExpire)
         formData.append('UPLOADCARE_STORE', if @settings.doNotStore then '' else 'auto')
         formData.append('file', @__file, @fileName)
         formData.append('file_name', @fileName)
@@ -147,6 +149,8 @@ uploadcare.namespace 'files', (ns) ->
     multipartStart: ->
       data =
         UPLOADCARE_PUB_KEY: @settings.publicKey
+        signature: @settings.secureSignature
+        expire: @settings.secureExpire
         filename: @fileName
         source: @sourceInfo.source
         size: @fileSize

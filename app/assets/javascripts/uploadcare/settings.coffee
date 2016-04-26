@@ -31,6 +31,8 @@ uploadcare.namespace 'settings', (ns) ->
     # upload settings
     doNotStore: false
     publicKey: null
+    secureSignature: ''
+    secureExpire: ''
     pusherKey: '79ae88bd931ea68464d9'
     cdnBase: 'https://ucarecdn.com'
     urlBase: 'https://upload.uploadcare.com'

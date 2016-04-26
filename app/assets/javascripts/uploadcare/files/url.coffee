@@ -38,6 +38,8 @@ uploadcare.namespace 'files', (ns) ->
 
       data =
         pub_key: @settings.publicKey
+        signature: @settings.secureSignature
+        expire: @settings.secureExpire
         source_url: @__url
         filename: @__realFileName or ''
         source: @sourceInfo.source
