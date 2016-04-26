@@ -7,6 +7,8 @@
 # = require_tree ./
 # = require_tree ./fixtures/data
 
+# FIXME: tests should use uploadcare.__exports like regular dev env.
+
 window.$ = window.jQuery = uploadcare.jQuery
 
 window.UPLOADCARE_PUBLIC_KEY = 'demopublickey'

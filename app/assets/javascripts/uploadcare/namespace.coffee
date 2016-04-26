@@ -1,8 +1,6 @@
-__exports = {}
-if typeof module == "object" and typeof module.exports == "object"
-  module.exports = __exports
-else
-  window.uploadcare = __exports
+# In the devlopment enviroment this will be window.uploadcare.
+# In the release this will be local var in the scope.
+`uploadcare = {__exports: {}}`
 
 
 uploadcare.namespace = (path, fn) ->
@@ -19,7 +17,7 @@ uploadcare.expose = (key, value) ->
   parts = key.split('.')
   last = parts.pop()
 
-  target = __exports
+  target = uploadcare.__exports
   source = uploadcare
 
   for part in parts

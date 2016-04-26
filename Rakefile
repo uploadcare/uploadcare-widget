@@ -46,8 +46,8 @@ def file_list(path)
     .map { |f| [f, File.basename(f), File.basename(f, '.*'), File.extname(f)] }
 end
 
-PACKAGES = ['uploadcare', 'uploadcare.full', 'uploadcare.ie8', 'uploadcare.api',
-            'uploadcare.lang.en']
+PACKAGES = ['uploadcare.api', 'uploadcare.lang.en', 'uploadcare',
+            'uploadcare.full', 'uploadcare.ie8']
 
 IMAGES_TYPES = {
   '.png' => 'image/png',
@@ -88,8 +88,9 @@ def build_widget(version)
  */
   eos
 
-  def wrap_namespace(js, version)
-    ";(function(uploadcare, SCRIPT_BASE){\n#{js}}({}, '//ucarecdn.com/widget/#{version}/uploadcare/'));"
+  def wrap_namespace(js)
+    wrapper = Rails.application.assets["uploadcare/build/wrapper.js"].source
+    wrapper.sub("___widget_code___") {|_| js }
   end
 
   uglifier = Uglifier.new({
@@ -114,12 +115,21 @@ def build_widget(version)
     },
   })
 
-  PACKAGES.each do |package|
+
+  if ENV['PACKAGES']
+    packages = ENV['PACKAGES'].split(',')
+  else
+    packages = PACKAGES
+  end
+
+  packages.each do |package|
     js = Rails.application.assets["uploadcare/build/#{package}.coffee"].source
-    js = wrap_namespace(js, version)
+    js = wrap_namespace(js)
     write_file("#{version}/#{package}.js", header + js)
-    minified = uglifier.compile(js)
-    write_file("#{version}/#{package}.min.js", header + minified)
+    if not ENV['NO_MINIFY']
+      minified = uglifier.compile(js)
+      write_file("#{version}/#{package}.min.js", header + minified)
+    end
   end
 
   IMAGES.each do |full, base|

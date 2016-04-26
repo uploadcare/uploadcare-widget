@@ -12,6 +12,9 @@
     <% else %>
         <%= javascript_include_tag "uploadcare/build/uploadcare.full" %>
     <% end %>
+    <script>
+        uploadcare = uploadcare.__exports;
+    </script>
 
     <script>
     var $ = uploadcare.jQuery;
