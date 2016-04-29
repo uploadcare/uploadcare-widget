@@ -1,7 +1,9 @@
 # = require ./namespace.coffee
 
 uploadcare.version = '<%= UploadcareWidget::VERSION %>'
-uploadcare.jQuery = jQuery
+
+# Use local jQuery if exist, global otherwise
+uploadcare.jQuery = jQuery || window.jQuery
 
 {expose} = uploadcare
 
