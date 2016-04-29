@@ -1,7 +1,7 @@
 // from https://github.com/jaubourg/ajaxHooks/blob/master/src/xdr.js
 
 if ( window.XDomainRequest ) {
-	jQuery.ajaxTransport(function( s ) {
+	uploadcare.jQuery.ajaxTransport(function( s ) {
 		if ( s.crossDomain && s.async ) {
 			if ( s.timeout ) {
 				s.xdrTimeout = s.timeout;
