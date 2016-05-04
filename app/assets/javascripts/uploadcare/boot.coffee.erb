@@ -5,6 +5,9 @@ uploadcare.version = '<%= UploadcareWidget::VERSION %>'
 # Use local jQuery if exist, global otherwise
 uploadcare.jQuery = jQuery || window.jQuery
 
+if typeof uploadcare.jQuery == 'undefined'
+    throw new ReferenceError('jQuery is not defined')
+
 {expose} = uploadcare
 
 expose('version')
