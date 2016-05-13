@@ -1,5 +1,12 @@
 # History
 
+### 2.9.0
+​
+* Added Estonian locale.
+* `UPLOADCARE_SECURE_SIGNATURE` and `UPLOADCARE_SECURE_EXPIRE` settings for
+  [secure uploads](https://uploadcare.com/documentation/upload/#secure-uploads).
+* Further Browserify/Webpack compatibility improvements.
+* Deprecated `uploadcare.whenReady` function.
 
 ### 2.8.2, 04.04.2016
 
