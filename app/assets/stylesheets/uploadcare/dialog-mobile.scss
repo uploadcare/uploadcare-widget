@@ -1,7 +1,9 @@
 $dialog-mobile-footer-height: 50px;
 $dialog-mobile-min-width: 310px;
 
-.uploadcare-if-mobile {display: none}
+.uploadcare-if-mobile {
+  display: none
+}
 
 @media screen and (max-width: $switch-to-mobile-width) {
   .uploadcare-dialog-opened {
@@ -18,8 +20,12 @@ $dialog-mobile-min-width: 310px;
     display: none !important;
   }
 
-  .uploadcare-if-mobile { display: block; }
-  .uploadcare-if-no-mobile { display: none; }
+  .uploadcare-if-mobile {
+    display: block;
+  }
+  .uploadcare-if-no-mobile {
+    display: none;
+  }
 
   .uploadcare-dialog {
     position: absolute;
@@ -52,7 +58,6 @@ $dialog-mobile-min-width: 310px;
 
   .uploadcare-responsive-panel {
 
-
     // § Panels
 
     .uploadcare-dialog-panel {
@@ -66,17 +71,16 @@ $dialog-mobile-min-width: 310px;
         padding-top: 0;
       }
     }
-      .uploadcare-dialog-tabs-panel {
-        height: auto;
-      }
-        .uploadcare-dialog-remote-iframe-wrap {
-          overflow: visible;
-          height: 100%;
-        }
-        .uploadcare-dialog-padding {
-            padding: y(1) 15px;
-        }
-
+    .uploadcare-dialog-tabs-panel {
+      height: auto;
+    }
+    .uploadcare-dialog-remote-iframe-wrap {
+      overflow: visible;
+      height: 100%;
+    }
+    .uploadcare-dialog-padding {
+      padding: y(1) 15px;
+    }
 
     // § Preview tabs
 
@@ -110,7 +114,8 @@ $dialog-mobile-min-width: 310px;
         padding-right: 10px;
       }
       .uploadcare-file-item__preview {
-        width: 140px; height: 140px;
+        width: 140px;
+        height: 140px;
       }
       .uploadcare-file-item__remove {
         right: 10px;
@@ -159,7 +164,6 @@ $dialog-mobile-min-width: 310px;
       height: 30px;
     }
 
-
     // § Camera tab
 
     // enhance selector specificity
@@ -174,12 +178,12 @@ $dialog-mobile-min-width: 310px;
       right: 15px;
     }
 
-
     // § Multiple
 
     .uploadcare-panel-footer {
       position: fixed;
-      left: 0; bottom: 0;
+      left: 0;
+      bottom: 0;
       width: 100%;
       min-width: $dialog-mobile-min-width;
       height: $dialog-mobile-footer-height;
@@ -206,13 +210,13 @@ $dialog-mobile-min-width: 310px;
       }
     }
 
-
     // § Tabs
 
     .uploadcare-dialog-tabs {
       position: fixed;
       // Fixes bug in Chrome with resizing.
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       min-width: $dialog-mobile-min-width;
       height: auto;
@@ -221,29 +225,29 @@ $dialog-mobile-min-width: 310px;
       z-index: 1;
       background: transparent;
     }
-      .uploadcare-dialog-tab {
-        display: none;
-        height: $frame-size;
-        white-space: nowrap;
-        background: #dee0e1;
+    .uploadcare-dialog-tab {
+      display: none;
+      height: $frame-size;
+      white-space: nowrap;
+      background: #dee0e1;
 
-        .uploadcare-dialog-icon,
-        &:before {
-          position: static;
-          margin: 0 6px;
-          vertical-align: middle;
-          opacity: 1;
-        }
-      }
-      .uploadcare-dialog-tab_current {
-        display: block;
-        background: rgba($dialog-body-background-color, 0.95);
-      }
-      .uploadcare-dialog-tab:after {
-        content: attr(title);
-        font-size: 20px;
+      .uploadcare-dialog-icon,
+      &:before {
+        position: static;
+        margin: 0 6px;
         vertical-align: middle;
+        opacity: 1;
       }
+    }
+    .uploadcare-dialog-tab_current {
+      display: block;
+      background: rgba($dialog-body-background-color, 0.95);
+    }
+    .uploadcare-dialog-tab:after {
+      content: attr(title);
+      font-size: 20px;
+      vertical-align: middle;
+    }
 
     .uploadcare-dialog-opened-tabs {
       .uploadcare-dialog-tabs-panel_current,
@@ -255,12 +259,12 @@ $dialog-mobile-min-width: 310px;
         // overlap close icon
         z-index: 3;
       }
-        .uploadcare-dialog-tab {
-          display: block;
-        }
-        .uploadcare-dialog-tab_current {
-          background: $dialog-body-background-color;
-        }
+      .uploadcare-dialog-tab {
+        display: block;
+      }
+      .uploadcare-dialog-tab_current {
+        background: $dialog-body-background-color;
+      }
     }
     .uploadcare-dialog-panel:not(.uploadcare-dialog-opened-tabs) {
       .uploadcare-dialog-tab_current {
@@ -268,7 +272,8 @@ $dialog-mobile-min-width: 310px;
         &:after {
           content: '';
           position: absolute;
-          top: 16px; left: 14px;
+          top: 16px;
+          left: 14px;
           display: block;
           width: 22px;
           height: 18px;

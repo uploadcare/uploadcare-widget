@@ -41,7 +41,6 @@
   background: rgba(48, 48, 48, .70);
 }
 
-
 @media (min-resolution: 144dpi) {
   %tab-icons-image {
     background-image: url("<%= settings.scriptBase %>/images/tab-icons@2x.png");

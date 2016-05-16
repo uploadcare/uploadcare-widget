@@ -47,7 +47,6 @@
   }
 }
 
-
 .uploadcare-widget-status {
   display: none !important;
   width: 1.8em;
@@ -66,14 +65,15 @@
     display: table;
     white-space: normal;
   }
-    .uploadcare-widget-circle-text {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: center;
-      font-size: 60%;
-      line-height: 1;
-    }
+  .uploadcare-widget-circle-text {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 60%;
+    line-height: 1;
+  }
 }
+
 .uploadcare-widget-circle--canvas {
   color: #d0bf26;
   border-color: #e1e5e7;
@@ -83,29 +83,30 @@
   }
 }
 
-
 .uploadcare-widget-text {
   display: none !important;
   margin-right: 1ex;
   white-space: nowrap;
 }
-  .uploadcare-widget-file-name,
-  .uploadcare-widget-file-size {
-    display: inline;
-  }
-  .uploadcare-link,
-  .uploadcare-link:link,
-  .uploadcare-link:visited {
-    cursor: pointer;
-    color: #1a85ad;
-    text-decoration: none;
-    border-bottom: 1px dotted #1a85ad;
-    border-color: initial;
-  }
-  .uploadcare-link:hover {
-    color: #176E8F;
-  }
 
+.uploadcare-widget-file-name,
+.uploadcare-widget-file-size {
+  display: inline;
+}
+
+.uploadcare-link,
+.uploadcare-link:link,
+.uploadcare-link:visited {
+  cursor: pointer;
+  color: #1a85ad;
+  text-decoration: none;
+  border-bottom: 1px dotted #1a85ad;
+  border-color: initial;
+}
+
+.uploadcare-link:hover {
+  color: #176E8F;
+}
 
 .uploadcare-widget-button {
   display: none !important;
@@ -119,17 +120,19 @@
   cursor: default;
   white-space: nowrap;
 }
+
 .uploadcare-widget-button:hover {
   background: #b3b3b3;
 }
+
 .uploadcare-widget-button-open {
   padding: .5em .8em;
   background: #18a5d0;
 }
+
 .uploadcare-widget-button-open:hover {
   background: #0094c0;
 }
-
 
 .uploadcare-widget-dragndrop-area {
   box-sizing: content-box;
