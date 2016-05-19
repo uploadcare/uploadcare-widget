@@ -25,19 +25,19 @@ html.uploadcare-dialog-opened {
 
 .uploadcare-dialog {
   @extend %dialog-overlay-image;
-  font-family: $font-family;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10000;
   width: 100%;
   height: 100%;
-  z-index: 10000;
   overflow: auto;
-
   @include vertical-centered-wrap;
+  font-family: $font-family;
   text-align: center;
 
   * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
@@ -67,10 +67,8 @@ html.uploadcare-dialog-opened {
 
 .uploadcare-dialog-inner-wrap {
   @include vertical-centered;
-  text-align: left;
 
   // We need width 100% and paddings.
-  box-sizing: border-box;
   $paddings: $dialog-close-button-size + y(.5);
   position: relative;
   width: 100%;
@@ -92,7 +90,6 @@ html.uploadcare-dialog-opened {
   color: #fff;
   cursor: pointer;
   position: absolute;
-  text-align: center;
   right: 0;
 }
 
@@ -102,7 +99,6 @@ html.uploadcare-dialog-opened {
   background: $dialog-body-background-color;
   font-weight: normal;
   padding-left: $dialog-tab-width;
-  box-sizing: border-box;
 
   :focus {
     outline: 2px dotted #0094c0;
@@ -118,7 +114,6 @@ html.uploadcare-dialog-opened {
 }
 
 .uploadcare-dialog-tabs {
-  box-sizing: border-box;
   width: $dialog-tab-width;
   height: $dialog-body-height;
   margin-left: -$dialog-tab-width;
@@ -133,7 +128,6 @@ html.uploadcare-dialog-opened {
 
 $frame-size: 50px;
 .uploadcare-dialog-tab {
-  box-sizing: border-box;
   height: 56px;
   position: relative;
   border-bottom: 1px solid $dialog-body-border-color;
@@ -142,8 +136,6 @@ $frame-size: 50px;
   // Geometry
   .uploadcare-dialog-icon,
   &:before {
-    box-sizing: border-box;
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -324,7 +316,6 @@ $frame-size: 50px;
 .uploadcare-dialog-footer {
   font-size: $dialog-body-font-size-smaller;
   line-height: 1.4em;
-  text-align: center;
   color: white;
   margin: x(.6);
   .uploadcare-dialog & svg {
@@ -499,7 +490,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 .uploadcare-dialog-preview-image-wrap,
 .uploadcare-dialog-preview-video-wrap {
   @include vertical-centered-wrap;
-  text-align: center;
   width: 100%;
   height: $dialog-preview-container-height;
 
@@ -537,7 +527,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   .uploadcare-dialog-button-success,
   .uploadcare-dialog-button {
     min-width: x(4);
-    text-align: center;
     margin-right: 0;
   }
   .uploadcare-error {
@@ -546,19 +535,16 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 }
 
 .uploadcare-panel-footer-text {
-  text-align: center;
   color: #85732c;
   font-size: 15px;
   line-height: $dialog-button-height;
 }
 
 .uploadcare-dialog-message-center {
-  text-align: center;
   padding-top: y(5);
 }
 
 .uploadcare-dialog-preview-center {
-  text-align: center;
   padding-top: y(8);
 }
 
@@ -573,7 +559,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
 
 .uploadcare-dialog-error-tab-wrap {
   height: 100%;
-  text-align: center;
   @include vertical-centered-wrap;
   .uploadcare-dialog-title {
     margin-bottom: 12px;
@@ -635,7 +620,6 @@ $dialog-preview-container-height: $dialog-body-height - y(2) - y(2) - $dialog-fo
   height: 100%;
   box-sizing: border-box;
   border: none;
-  text-align: center;
   border-radius: 3px;
   padding-top: 70px;
   .uploadcare-dialog-big-button {
@@ -728,7 +712,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 .uploadcare-dialog-camera-holder {
   @include vertical-centered-wrap;
-  text-align: center;
   height: $dialog-camera-video-height;
 
   .uploadcare-dialog-normal-text {
@@ -764,7 +747,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 .uploadcare-dialog-camera-controls {
   margin-top: ($dialog-footer-height - $dialog-button-height) / 2;
-  text-align: center;
 }
 
 .uploadcare-dialog-camera-mirror {
@@ -976,7 +958,6 @@ $dialog-camera-video-height: $dialog-body-height - y(1) - $dialog-footer-height;
 
 // Elements
 .uploadcare-file-item__preview {
-  text-align: center;
   line-height: 0;
 }
 
