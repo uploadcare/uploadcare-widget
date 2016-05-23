@@ -136,6 +136,7 @@ uploadcare.namespace 'widget', (ns) ->
     destroy: () ->
       @template.content.remove();
       @template.element.data('uploadcareWidget', null)
+      return
 
     api: ->
       if not @__api
