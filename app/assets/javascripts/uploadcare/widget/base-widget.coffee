@@ -132,6 +132,10 @@ uploadcare.namespace 'widget', (ns) ->
         dialogApi = uploadcare.openDialog(@currentObject, tab, @settings)
         @__onDialogOpen.fire(dialogApi)
         return dialogApi.done(@__setObject)
+        
+    destroy: () ->
+      @template.content.remove();
+      @template.element.data('uploadcareWidget', null)
 
     api: ->
       if not @__api
@@ -139,7 +143,8 @@ uploadcare.namespace 'widget', (ns) ->
           'openDialog'
           'reloadInfo'
           'value'
-          'validators'
+          'validators',
+          'destroy'
         ])
         @__api.onChange = utils.publicCallbacks(@__onChange)
         @__api.onUploadComplete = utils.publicCallbacks(@__onUploadComplete)
