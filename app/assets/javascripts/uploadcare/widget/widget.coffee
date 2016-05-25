@@ -16,3 +16,5 @@ uploadcare.namespace 'widget', (ns) ->
         @__setObject(file)
       else
         @__openDialog('preview').addFiles([file])
+
+  ns.Widget._name = 'SingleWidget'

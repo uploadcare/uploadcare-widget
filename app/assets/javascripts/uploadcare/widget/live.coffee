@@ -42,7 +42,7 @@ uploadcare.namespace '', (ns) ->
       else
         ns.widget.Widget
     if targetClass and Widget isnt targetClass
-      throw new Error "This element should be processed using #{targetClass.name}"
+      throw new Error "This element should be processed using #{Widget._name}"
 
     api = input.data(dataAttr)
     if ! api or api.inputElement != input[0]
