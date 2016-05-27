@@ -15,6 +15,7 @@
 expose('globals', uploadcare.settings.common)
 expose('start')
 expose('initialize')
+expose('reset')
 expose('fileFrom')
 expose('filesFrom')
 expose('FileGroup')
