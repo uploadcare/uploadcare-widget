@@ -33,6 +33,9 @@ uploadcare.namespace '', (ns) ->
         # close only topmost dialog
         currentDialogPr?.reject()
 
+  $(window).on 'popstate', () ->
+    ns.closeDialog()
+
   currentDialogPr = null
   openedClass = 'uploadcare-dialog-opened'
 
