@@ -40,3 +40,5 @@ uploadcare.namespace 'widget', (ns) ->
         @__setObject(uploadcare.FileGroup(files, @settings))
       else
         @__openDialog('preview').addFiles(files)
+
+  ns.MultipleWidget._name = 'MultipleWidget'
