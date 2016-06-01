@@ -223,20 +223,21 @@ $dialog-mobile-min-width: 310px;
       float: none;
       margin: 0;
       z-index: 1;
-      background: transparent;
     }
     .uploadcare-dialog-tab {
       display: none;
       height: $frame-size;
       white-space: nowrap;
-      background: #dee0e1;
+      border-bottom: none;
 
       .uploadcare-dialog-icon,
       &:before {
-        position: static;
-        margin: 0 6px;
+        margin: 0;
         vertical-align: middle;
-        opacity: 1;
+        top: 13px;
+        left: 17px;
+        width: 35px;
+        height: 35px;
       }
     }
     .uploadcare-dialog-tab_current {
@@ -245,8 +246,13 @@ $dialog-mobile-min-width: 310px;
     }
     .uploadcare-dialog-tab:after {
       content: attr(title);
-      font-size: 20px;
+      font-size: 17px;
       vertical-align: middle;
+      position: absolute;
+      top: 21px;
+      left: 96px;
+      color: #fff;
+      font-family: $font-family;
     }
 
     .uploadcare-dialog-opened-tabs {

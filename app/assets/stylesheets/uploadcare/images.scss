@@ -1,11 +1,10 @@
 %tab-icons-image {
-  background-image: url("<%= settings.scriptBase %>/images/tab-icons.png");
-  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 %tab-icons-active-image {
-  background-image: url("<%= settings.scriptBase %>/images/tab-icons-active.png");
-  background-size: 50px;
+  filter: brightness(3%);
 }
 
 %arrow-image {
@@ -41,12 +40,3 @@
   background: rgba(48, 48, 48, .70);
 }
 
-@media (min-resolution: 144dpi) {
-  %tab-icons-image {
-    background-image: url("<%= settings.scriptBase %>/images/tab-icons@2x.png");
-  }
-
-  %tab-icons-active-image {
-    background-image: url("<%= settings.scriptBase %>/images/tab-icons-active@2x.png");
-  }
-}
