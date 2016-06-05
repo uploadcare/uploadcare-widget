@@ -37,11 +37,13 @@ uploadcare.namespace 'utils.image', (ns) ->
           df.notify(.2)
           isJPEG = @state() is 'resolved'
 
+          # start = new Date()
           op = ns.shrinkImage(e.target, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
           op.fail(df.reject)
           op.done (canvas) ->
+            # console.log('shrink: ' + (new Date() - start))
             # start = new Date()
             format = 'image/jpeg'
             quality = settings.quality or 0.8
@@ -75,7 +77,6 @@ uploadcare.namespace 'utils.image', (ns) ->
     if img.width * step * img.height * step < settings.size
       return df.reject('not required')
 
-    # start = new Date()
     sW = originalW = img.width
     sH = img.height
     ratio = sW / sH
@@ -85,9 +86,8 @@ uploadcare.namespace 'utils.image', (ns) ->
     maxSquare = 5000000  # ios max canvas square
     maxSize = 4096  # ie max canvas dimensions
 
-    do run = ->
+    run = ->
       if sW <= w
-        # console.log('draw: ' + (new Date() - start))
         df.resolve(img)
         return
 
@@ -117,7 +117,25 @@ uploadcare.namespace 'utils.image', (ns) ->
         df.notify((originalW - sW) / (originalW - w))
         run()
 
+    runNative = ->
+      canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+      cx = canvas.getContext('2d')
+      cx.imageSmoothingQuality = 'high'
+      cx.drawImage(img, 0, 0, w, h)
+      img.src = '//:0'            # for image
+      img.width = img.height = 1  # for canvas
+      df.resolve(canvas)
+
+    cx = document.createElement('canvas').getContext('2d')
+    if 'imageSmoothingQuality' of cx
+      runNative()
+    else
+      run()
+
     df.promise()
+
 
   ns.drawFileToCanvas = (file, mW, mH, bg, maxSource) ->
     # in -> file
@@ -176,6 +194,7 @@ uploadcare.namespace 'utils.image', (ns) ->
         df.resolve(canvas, sSize)
 
     df.promise()
+
 
   #
   # Util functions
