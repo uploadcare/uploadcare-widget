@@ -49,7 +49,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @URL = window.URL or window.webkitURL
       @MediaRecorder = window.MediaRecorder
       if not isSecure
-        uploadcare.utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.');
+        utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.');
       isLocalhost = document.location.hostname == 'localhost'
       return !! @getUserMedia and Uint8Array and (isSecure or isLocalhost)
 
