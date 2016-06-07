@@ -16,7 +16,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
       image: 'Only images allowed'
       createGroup: 'Can’t create file group'
       deleted: 'File was deleted'
-    draghere: 'Drop a file here'
+    draghere: 'drag & drop any files'
     file:
       one: '%1 file'
       other: '%1 files'
@@ -51,7 +51,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           flickr: 'Flickr'
           huddle: 'Huddle'
         file:
-          drag: 'Drop a file here'
+          drag: 'drag & drop any files'
           nodrop: 'Upload files from your computer'
           cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
