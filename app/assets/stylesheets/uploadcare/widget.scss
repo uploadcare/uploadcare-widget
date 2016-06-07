@@ -1,6 +1,7 @@
 @import "images";
 @import "colors";
 @import "mixins";
+@import "common";
 @import "dialog";
 @import "dialog-mobile";
 @import "crop-widget";
@@ -12,158 +13,169 @@
  */
 
 .uploadcare-widget {
-  position: relative;
-  display: inline-block;
-  vertical-align: baseline;
   line-height: 2;
 
+  position: relative;
+
+  display: inline-block;
+
+  vertical-align: baseline;
+
   :focus {
-    outline: 2px dotted #0094c0;
+    outline: 2px dotted $focus-outline-color;
   }
-  :active,
-  .uploadcare-mouse-focused:focus {
+
+  :active {
     outline: none;
   }
-}
 
-.uploadcare-widget-status-ready .uploadcare-widget-button-open,
-.uploadcare-widget-status-started .uploadcare-widget-status,
-.uploadcare-widget-status-started .uploadcare-widget-text,
-.uploadcare-widget-status-started .uploadcare-widget-button-cancel,
-.uploadcare-widget-status-loaded .uploadcare-widget-text,
-.uploadcare-widget-status-error .uploadcare-widget-text,
-.uploadcare-widget-status-error .uploadcare-widget-button-open {
-  // We have to use important to avoid overriding display: none.
-  display: inline-block !important;
-}
-
-.uploadcare-widget-option-clearable {
-  &.uploadcare-widget-status-error .uploadcare-widget-button-open {
+  &-dragndrop-area,
+  &-status,
+  &-text,
+  &-button {
     display: none !important;
   }
-  &.uploadcare-widget-status-loaded .uploadcare-widget-button-remove,
-  &.uploadcare-widget-status-error .uploadcare-widget-button-remove {
+
+  &-file-name,
+  &-file-size {
+    display: inline;
+  }
+
+  &-dragndrop-area {
+    .uploadcare-widget.uploadcare-dragging & {
+      display: block !important;
+    }
+    .uploadcare-dialog-opened & {
+      display: none !important;
+    }
+  }
+
+  &-status-ready &-button-open,
+  &-status-started &-status,
+  &-status-started &-text,
+  &-status-started &-button-cancel,
+  &-status-loaded &-text,
+  &-status-error &-text,
+  &-status-error &-button-open {
+    // We have to use important to avoid overriding display: none.
     display: inline-block !important;
   }
-}
 
-.uploadcare-widget-status {
-  display: none !important;
-  width: 1.8em;
-  height: 1.8em;
-  margin: -1em 0;
-  margin-right: 1ex;
-  // this removes space on the bottom of canvas
-  line-height: 0;
-  vertical-align: middle;
-}
+  &-status-error &-button-open {
+    .uploadcare-widget-option-clearable & {
+      display: none !important;
+    }
+  }
 
-.uploadcare-widget-circle--text {
-  .uploadcare-widget-circle-back {
+  &-status-loaded &-button-remove,
+  &-status-error &-button-remove {
+    .uploadcare-widget-option-clearable & {
+      display: inline-block !important;
+    }
+  }
+
+  &-dragndrop-area {
+    line-height: 2.6;
+
+    position: absolute;
+    top: 50%;
+    left: -1em;
+
+    box-sizing: content-box;
+    min-width: 100%;
+    margin-top: -1.3em;
+    padding: 0 1em;
+
+    text-align: center;
+    white-space: nowrap;
+
+    border: 1px dashed $dragndrop-border-color;
+    border-radius: 100px;
+    background-color: $dragndrop-background-color;
+    color: $dragndrop-text-color;
+
+    .uploadcare-widget.uploadcare-dragging & {
+      border-color: $dragndrop-hover-border-color;
+      background-color: $dragndrop-hover-background-color;
+      color: $dragndrop-hover-text-color;
+    }
+  }
+
+  &-status {
+    // this removes space on the bottom of canvas
+    line-height: 0;
+
+    width: 1.8em;
+    height: 1.8em;
+    margin: -1em 0;
+    margin-right: 1ex;
+
+    vertical-align: middle;
+  }
+
+  &-circle {
+    &--canvas {
+      border-color: $circle-border-color;
+      color: $circle-color;
+
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &-circle-back {
+    display: table;
+
     width: 100%;
     height: 100%;
-    display: table;
+
     white-space: normal;
   }
-  .uploadcare-widget-circle-text {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
+
+  &-circle-text {
     font-size: 60%;
     line-height: 1;
+
+    display: table-cell;
+
+    text-align: center;
+    vertical-align: middle;
   }
-}
 
-.uploadcare-widget-circle--canvas {
-  color: #d0bf26;
-  border-color: #e1e5e7;
-  canvas {
-    width: 100%;
-    height: 100%;
+  &-text {
+    margin-right: 1ex;
+
+    white-space: nowrap;
   }
-}
 
-.uploadcare-widget-text {
-  display: none !important;
-  margin-right: 1ex;
-  white-space: nowrap;
-}
+  &-button {
+    line-height: 1;
 
-.uploadcare-widget-file-name,
-.uploadcare-widget-file-size {
-  display: inline;
-}
+    margin: -1em 0;
+    margin-right: 0.5ex;
+    padding: 0.4em 0.6em;
 
-.uploadcare-link,
-.uploadcare-link:link,
-.uploadcare-link:visited {
-  cursor: pointer;
-  color: #1a85ad;
-  text-decoration: none;
-  border-bottom: 1px dotted #1a85ad;
-  border-color: initial;
-}
+    cursor: default;
+    white-space: nowrap;
 
-.uploadcare-link:hover {
-  color: #176E8F;
-}
+    border-radius: 0.25em;
+    background: $button-background-color;
+    color: $button-color;
 
-.uploadcare-widget-button {
-  display: none !important;
-  color: white;
-  padding: .4em .6em;
-  line-height: 1;
-  margin: -1em 0;
-  margin-right: .5ex;
-  border-radius: .25em;
-  background: #c3c3c3;
-  cursor: default;
-  white-space: nowrap;
-}
+    &:hover {
+      background: $button-hover-background-color;
+    }
 
-.uploadcare-widget-button:hover {
-  background: #b3b3b3;
-}
+    &-open {
+      padding: 0.5em 0.8em;
 
-.uploadcare-widget-button-open {
-  padding: .5em .8em;
-  background: #18a5d0;
-}
+      background: $button-open-background-color;
 
-.uploadcare-widget-button-open:hover {
-  background: #0094c0;
-}
-
-.uploadcare-widget-dragndrop-area {
-  box-sizing: content-box;
-
-  display: none;
-  position: absolute;
-  white-space: nowrap;
-
-  // Verticlly centered
-  top: 50%;
-  margin-top: -1.3em;
-
-  left: -1em;
-  padding: 0 1em;
-  line-height: 2.6;
-  min-width: 100%;
-  text-align: center;
-  background-color: $dragndrop-background-color;
-  color: $dragndrop-text-color;
-  border: 1px dashed $dragndrop-border-color;
-  border-radius: 100px;
-
-  .uploadcare-widget.uploadcare-dragging & {
-    background-color: $dragndrop-hover-background-color;
-    border-color: $dragndrop-hover-border-color;
-    color: $dragndrop-hover-text-color;
-  }
-  .uploadcare-dragging & {
-    display: block;
-  }
-  .uploadcare-dialog-opened & {
-    display: none;
+      &:hover {
+        background: $button-open-hover-background-color;
+      }
+    }
   }
 }
