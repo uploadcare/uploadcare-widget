@@ -1,10 +1,8 @@
-@import "images";
-@import "colors";
-@import "mixins";
+@import "_images";
+@import "_colors";
+@import "_mixins";
 @import "common";
-@import "dialog";
-@import "dialog-mobile";
-@import "crop-widget";
+@import "dialog/index";
 
 /* Widget is inline-block. The right way to set height of inline-block
  * is to set line-height. Therefore important that all elements being

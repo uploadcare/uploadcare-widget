@@ -56,7 +56,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
           button: 'Choose a local file'
-          also: 'You can also choose it from'
+          also: 'or choose from'
         url:
           title: 'Files from the Web'
           line1: 'Grab any file off the web.'

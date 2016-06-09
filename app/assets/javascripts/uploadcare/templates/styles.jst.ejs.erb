@@ -1,11 +1,5 @@
 // = depend_on uploadcare/widget.scss
-// = depend_on uploadcare/dialog.scss
-// = depend_on uploadcare/dialog-mobile.scss
-// = depend_on uploadcare/images.scss
-// = depend_on uploadcare/mixins.scss
-// = depend_on uploadcare/crop-widget.scss
-// = depend_on uploadcare/jCrop.scss
-// = depend_on uploadcare/colors.scss
+// = depend_on uploadcare/dialog/index.scss
 <%=
   raw = Rails.application.assets.find_asset('uploadcare/widget.scss').body
   Csso.optimize(raw)

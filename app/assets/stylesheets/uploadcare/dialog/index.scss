@@ -1,0 +1,33 @@
+@import "buttons";
+@import "close";
+@import "footer";
+@import "panel/index";
+@import "tabs/index";
+
+$desktop-min-width: 750px;
+
+.uploadcare-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 400;
+  font-stretch: normal;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &-opened {
+    overflow: hidden;
+  }
+
+  &-inner-wrap {
+    height: 100%;
+    overflow: auto;
+  }
+}

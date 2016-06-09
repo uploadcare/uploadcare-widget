@@ -1,0 +1,9 @@
+@import "_colors";
+@import "footer";
+
+.uploadcare-dialog-panel {
+  min-width: 300px;
+
+  background-color: $panel-background-color;
+  color: $panel-color;
+}

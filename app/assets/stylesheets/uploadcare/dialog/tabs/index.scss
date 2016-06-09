@@ -1,0 +1,64 @@
+@import "../_icons";
+@import "_colors";
+@import "panel/index";
+
+.uploadcare-dialog-tabs {
+  height: 63px;
+
+  background-image: $menu-icon;
+  background-repeat: no-repeat;
+  background-position: 27px 20px;
+
+  &-panel {
+    text-align: center;
+    display: none;
+
+    &_current {
+      display: block;
+    }
+  }
+}
+
+.uploadcare-dialog-tab {
+  display: none;
+
+  width: 100%;
+  height: 100%;
+
+  &_current {
+    display: block;
+  }
+}
+
+.uploadcare-dialog-opened-tabs {
+  .uploadcare-dialog-tabs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $opened-tabs-background-color;
+    z-index: 1000;
+    overflow: auto;
+  }
+
+  .uploadcare-dialog-tab {
+    display: block;
+
+    background-repeat: no-repeat;
+    background-position: 20px 12px;
+
+    height: 60px;
+
+    &-url {
+      background-image: $url-icon;
+    }
+
+    &::after {
+      content: attr(title);
+      margin-left: 96px;
+      font-size: 17px;
+      color: $opened-tabs-color;
+    }
+  }
+}

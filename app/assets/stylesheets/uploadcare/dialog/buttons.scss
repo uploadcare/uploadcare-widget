@@ -1,0 +1,14 @@
+@import "_colors";
+
+.uploadcare-dialog-big-button {
+  display: inline-block;
+  cursor: pointer;
+  padding: 16px 48px 15px;
+  border-radius: 40px;
+  line-height: 1;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+
+  background-color: $big-button-background-color;
+  color: $big-button-color;
+}
