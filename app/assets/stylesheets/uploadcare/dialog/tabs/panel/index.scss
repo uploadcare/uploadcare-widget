@@ -5,9 +5,20 @@
 .uploadcare-dialog-tabs-panel {
   display: none;
 
+  height: calc(100vh - 63px);
+  min-height: 300px;
+  padding-bottom: 60px;
+
   text-align: center;
 
   &_current {
     display: block;
   }
+}
+
+.uploadcare-dialog-remote-iframe {
+  display: block;
+
+  width: 100%;
+  height: 100%;
 }
