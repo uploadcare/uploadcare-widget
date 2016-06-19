@@ -40,18 +40,60 @@
     background: $opened-tabs-background-color;
     z-index: 1000;
     overflow: auto;
+    padding-top: 63px;
   }
 
   .uploadcare-dialog-tab {
     display: block;
 
     background-repeat: no-repeat;
-    background-position: 20px 12px;
+    background-position: 25px 50%;
+    background-size: 25px 25px;
 
     height: 60px;
 
+    &_hidden {
+      display: none;
+    }
+
+    &-file {
+      background-image: $file-icon;
+    }
+    &-camera {
+      background-image: $camera-icon;
+    }
     &-url {
       background-image: $url-icon;
+    }
+    &-facebook {
+      background-image: $facebook-icon;
+    }
+    &-gdrive {
+      background-image: $gdrive-icon;
+    }
+    &-dropbox {
+      background-image: $dropbox-icon;
+    }
+    &-instagram {
+      background-image: $instagram-icon;
+    }
+    &-evernote {
+      background-image: $evernote-icon;
+    }
+    &-flickr {
+      background-image: $flickr-icon;
+    }
+    &-skydrive {
+      background-image: $skydrive-icon;
+    }
+    &-huddle {
+      background-image: $huddle-icon;
+    }
+    &-vk {
+      background-image: $vk-icon;
+    }
+    &-box {
+      background-image: $box-icon;
     }
 
     &::after {
@@ -59,6 +101,8 @@
       margin-left: 96px;
       font-size: 17px;
       color: $opened-tabs-color;
+      padding-top: 21px;
+      display: block;
     }
   }
 }
