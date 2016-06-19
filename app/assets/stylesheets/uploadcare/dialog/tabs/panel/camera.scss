@@ -1,0 +1,11 @@
+
+.uploadcare-dialog-camera-video {
+  width: 100%;
+}
+.uploadcare-dialog-camera-message {
+  display: none;
+
+  .uploadcare-dialog-camera-requested & {
+    display: block;
+  }
+}
