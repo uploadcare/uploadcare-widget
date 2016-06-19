@@ -2,53 +2,61 @@
 @import "../_colors";
 
 .uploadcare-dialog-tabs-panel-file {
-  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%22138%22%20height%3D%22105%22%20viewBox%3D%220%200%20138%20105%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%3Ctitle%3E611CC121-F857-4582-AAAC-95675B13554C%3C%2Ftitle%3E%3Cdefs%3E%3Cpath%20d%3D%22M55.654.065C53.428.018%2051.587%201.78%2051.54%204l-.91%2042.996c-.047%202.22%201.72%204.06%203.944%204.105l31.227.66c2.226.047%204.068-1.716%204.115-3.936l.7-33.047L76.912.514%2055.654.064z%22%20id%3D%22a%22%2F%3E%3Cmask%20id%3D%22g%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2239.986%22%20height%3D%2251.696%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23a%22%2F%3E%3C%2Fmask%3E%3Cpath%20d%3D%22M80.645%2014.566l9.97.21L76.912.515l-.21%209.947c-.048%202.222%201.72%204.06%203.943%204.106z%22%20id%3D%22b%22%2F%3E%3Cmask%20id%3D%22h%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2213.914%22%20height%3D%2214.263%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23b%22%2F%3E%3C%2Fmask%3E%3Cpath%20d%3D%22M3.28%2044.33C.67%2045.532-.466%2048.62.74%2051.222l23.354%2050.424c1.207%202.603%204.3%203.74%206.91%202.536l36.622-16.89c2.61-1.205%203.748-4.292%202.54-6.896L52.217%2041.64l-24.004-8.81-24.93%2011.5z%22%20id%3D%22c%22%2F%3E%3Cmask%20id%3D%22i%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2270.391%22%20height%3D%2271.834%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23c%22%2F%3E%3C%2Fmask%3E%3Cpath%20d%3D%22M40.525%2047.032l11.69-5.393-24.003-8.81%205.403%2011.666c1.207%202.604%204.3%203.74%206.91%202.536z%22%20id%3D%22d%22%2F%3E%3Cmask%20id%3D%22j%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2224.004%22%20height%3D%2214.683%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23d%22%2F%3E%3C%2Fmask%3E%3Cpath%20d%3D%22M115.28%2061.462c-1.61-.45-3.278.49-3.728%202.095l-8.712%2031.1c-.45%201.605.49%203.27%202.1%203.72l22.587%206.3c1.61.45%203.28-.49%203.73-2.094l6.695-23.904-7.295-12.928-15.376-4.29z%22%20id%3D%22e%22%2F%3E%3Cmask%20id%3D%22k%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2235.224%22%20height%3D%2243.44%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23e%22%2F%3E%3C%2Fmask%3E%3Cpath%20d%3D%22M130.74%2076.668l7.212%202.01-7.295-12.926-2.015%207.194c-.45%201.607.49%203.273%202.1%203.722z%22%20id%3D%22f%22%2F%3E%3Cmask%20id%3D%22l%22%20x%3D%220%22%20y%3D%220%22%20width%3D%229.422%22%20height%3D%2212.927%22%20fill%3D%22%23fff%22%3E%3Cuse%20xlink%3Ahref%3D%22%23f%22%2F%3E%3C%2Fmask%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M111.552%2063.557l-8.712%2031.1c-.45%201.605.49%203.27%202.1%203.72l22.587%206.3c1.61.45%203.28-.49%203.73-2.094l6.695-23.904-7.295-12.928-15.376-4.29c-1.61-.45-3.278.49-3.728%202.095zm7.512%2012.9c-.272%201.015-1.28%201.608-2.253%201.324-.97-.283-1.54-1.336-1.267-2.352.272-1.015%201.28-1.607%202.252-1.324.973.284%201.54%201.337%201.27%202.352zM55.654.065C53.428.018%2051.587%201.78%2051.54%204l-.91%2042.996c-.047%202.22%201.72%204.06%203.944%204.105l31.227.66c2.226.047%204.068-1.716%204.115-3.936l.7-33.047L76.912.514%2055.654.064z%22%20fill%3D%22%23FFF%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23g%29%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23a%22%2F%3E%3Cpath%20d%3D%22M80.645%2014.566l9.97.21L76.912.515l-.21%209.947c-.048%202.222%201.72%204.06%203.943%204.106z%22%20fill%3D%22%23FFF%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23h%29%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23b%22%2F%3E%3Cpath%20d%3D%22M68.827%2024.035l5.122%203.096c.385.235.373.798-.023%201.016l-5.248%202.877c-.397.218-.88-.075-.87-.526l.125-5.974c.01-.45.506-.722.892-.488z%22%20stroke%3D%22%23D9222A%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M79.573%2035.043l-18.07-.38c-1.51-.032-2.71-1.28-2.678-2.79l.193-9.103c.032-1.51%201.283-2.705%202.794-2.673l18.068.38c1.512.033%202.71%201.28%202.68%202.79l-.194%209.103c-.03%201.508-1.282%202.704-2.793%202.673z%22%20stroke%3D%22%23D9222A%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M.74%2051.223l23.354%2050.424c1.207%202.603%204.3%203.74%206.91%202.536l36.622-16.89c2.61-1.205%203.748-4.292%202.54-6.896L52.217%2041.64l-24.004-8.81-24.93%2011.5C.67%2045.532-.47%2048.62.738%2051.222z%22%20fill%3D%22%23FFF%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23i%29%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23c%22%2F%3E%3Cpath%20d%3D%22M40.525%2047.032l11.69-5.393-24.003-8.81%205.403%2011.666c1.207%202.604%204.3%203.74%206.91%202.536z%22%20fill%3D%22%23FFF%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23j%29%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23d%22%2F%3E%3Cpath%20d%3D%22M17.538%2061.72l12.487-5.76M21.35%2069.947l25.288-11.664M25.16%2078.175l25.288-11.663M28.97%2086.402L54.26%2074.74%22%20stroke%3D%22%23157DFB%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23k%29%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23e%22%2F%3E%3Cpath%20d%3D%22M130.74%2076.668l7.212%202.01-7.295-12.926-2.015%207.194c-.45%201.607.49%203.273%202.1%203.722z%22%20fill%3D%22%23FFF%22%2F%3E%3Cuse%20stroke%3D%22%239B9B9B%22%20mask%3D%22url%28%23l%29%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%20xlink%3Ahref%3D%22%23f%22%2F%3E%3Cpath%20d%3D%22M123.04%2086.158l2.682-1.782c.26-.172.607-.07.744.218l3.133%206.617m-18.332-5.35l8.304-5.516c.26-.173.607-.072.744.218l4.362%209.213M119.064%2076.456c-.272%201.016-1.28%201.61-2.253%201.325-.97-.283-1.54-1.336-1.267-2.352.272-1.015%201.28-1.607%202.252-1.324.973.284%201.54%201.337%201.27%202.352z%22%20stroke%3D%22%23F1AA48%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E);
+  padding-top: 150px;
+
+  background-image: $files-image;
   background-repeat: no-repeat;
   background-position: 50% 5px;
   background-size: 138px 106px;
-  padding-top: 150px;
 }
 
 .uploadcare-dialog-file {
-
   &-or {
-    margin: 18px 0 14px;
-    line-height: 1;
     font-size: 13px;
+    line-height: 1;
+
+    margin: 18px 0 14px;
+
     letter-spacing: 2px;
   }
 
   &-sources {
+    display: flex;
+
     width: 240px;
     margin: 0 auto;
-    display: flex;
+
     flex-wrap: wrap;
     justify-content: center;
   }
 
   &-source {
-    text-indent: -9999px;
+    position: relative;
+
     width: 50px;
     height: 50px;
+    margin: 0 7px 14px;
+
+    cursor: pointer;
+    text-indent: -9999px;
+
     border: 1px solid $file-source-border-color;
     border-radius: 50%;
-    margin: 0 7px 14px;
-    position: relative;
-    cursor: pointer;
 
     &::before {
-      content: '';
-
       position: absolute;
       top: 8px;
       left: 9px;
+
       width: 30px;
       height: 30px;
 
-      @include tab-icon;
-      opacity: 0.4;
+      content: "";
 
+      opacity: 0.4;
       border-radius: 50%;
+
+      @include tab-icon;
     }
 
     @each $tab in $tabs {
@@ -57,7 +65,6 @@
       }
     }
   }
-
 }
 
 /* TODO: its hack! remove these blocks form html */

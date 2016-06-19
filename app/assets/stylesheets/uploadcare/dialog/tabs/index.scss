@@ -24,36 +24,45 @@
 .uploadcare-dialog-opened-tabs {
   .uploadcare-dialog-tabs {
     position: absolute;
+    z-index: 1000;
     top: 0;
     left: 0;
+
+    overflow: auto;
+
     width: 100%;
     height: 100%;
-    background: $opened-tabs-background-color;
-    z-index: 1000;
-    overflow: auto;
     padding-top: 63px;
+
+    background: $opened-tabs-background-color;
   }
 
   .uploadcare-dialog-tab {
-    display: block;
     position: relative;
+
+    display: block;
+
+    height: 60px;
 
     background-repeat: no-repeat;
     background-position: 25px 50%;
     background-size: 25px 25px;
 
-    height: 60px;
-
     &::before {
-      content: '';
-      display: block;
       position: absolute;
       top: 13px;
       left: 17px;
+
+      display: block;
+
       width: 35px;
       height: 35px;
-      @include tab-icon;
+
+      content: "";
+
       opacity: 0.71;
+
+      @include tab-icon;
     }
 
     @each $tab in $tabs {
@@ -63,12 +72,16 @@
     }
 
     &::after {
-      content: attr(title);
-      margin-left: 96px;
       font-size: 17px;
-      color: $opened-tabs-color;
-      padding-top: 21px;
+
       display: block;
+
+      margin-left: 96px;
+      padding-top: 21px;
+
+      content: attr(title);
+
+      color: $opened-tabs-color;
     }
 
     &_hidden {
