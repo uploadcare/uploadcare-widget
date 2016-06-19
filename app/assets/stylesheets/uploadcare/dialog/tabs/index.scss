@@ -8,15 +8,6 @@
   background-image: $menu-icon;
   background-repeat: no-repeat;
   background-position: 27px 20px;
-
-  &-panel {
-    text-align: center;
-    display: none;
-
-    &_current {
-      display: block;
-    }
-  }
 }
 
 .uploadcare-dialog-tab {
@@ -45,6 +36,7 @@
 
   .uploadcare-dialog-tab {
     display: block;
+    position: relative;
 
     background-repeat: no-repeat;
     background-position: 25px 50%;
@@ -52,48 +44,22 @@
 
     height: 60px;
 
-    &_hidden {
-      display: none;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 13px;
+      left: 17px;
+      width: 35px;
+      height: 35px;
+      @include tab-icon;
+      opacity: 0.71;
     }
 
-    &-file {
-      background-image: $file-icon;
-    }
-    &-camera {
-      background-image: $camera-icon;
-    }
-    &-url {
-      background-image: $url-icon;
-    }
-    &-facebook {
-      background-image: $facebook-icon;
-    }
-    &-gdrive {
-      background-image: $gdrive-icon;
-    }
-    &-dropbox {
-      background-image: $dropbox-icon;
-    }
-    &-instagram {
-      background-image: $instagram-icon;
-    }
-    &-evernote {
-      background-image: $evernote-icon;
-    }
-    &-flickr {
-      background-image: $flickr-icon;
-    }
-    &-skydrive {
-      background-image: $skydrive-icon;
-    }
-    &-huddle {
-      background-image: $huddle-icon;
-    }
-    &-vk {
-      background-image: $vk-icon;
-    }
-    &-box {
-      background-image: $box-icon;
+    @each $tab in $tabs {
+      &-#{$tab}::before {
+        background-position: get-tab-icon-position("light", $tab);
+      }
     }
 
     &::after {
@@ -103,6 +69,24 @@
       color: $opened-tabs-color;
       padding-top: 21px;
       display: block;
+    }
+
+    &_hidden {
+      display: none;
+    }
+
+    &_current {
+      background-color: $opened-tabs-current-background-color;
+
+      @each $tab in $tabs {
+        &.uploadcare-dialog-tab-#{$tab}::before {
+          background-position: get-tab-icon-position("dark", $tab);
+        }
+      }
+
+      &::after {
+        color: $opened-tabs-current-color;
+      }
     }
   }
 }

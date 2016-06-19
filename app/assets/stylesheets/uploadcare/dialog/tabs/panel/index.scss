@@ -1,1 +1,10 @@
 @import "file";
+
+.uploadcare-dialog-tabs-panel {
+  text-align: center;
+  display: none;
+
+  &_current {
+    display: block;
+  }
+}

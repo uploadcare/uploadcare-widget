@@ -40,56 +40,21 @@
       content: '';
 
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 8px;
+      left: 9px;
+      width: 30px;
+      height: 30px;
 
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-      background-size: 20px 20px;
+      @include tab-icon;
+      opacity: 0.4;
 
       border-radius: 50%;
-
-      -webkit-filter: brightness(75%);
-      filter: brightness(75%);
     }
 
-    &[data-tab=camera]::before {
-      background-image: $camera-icon;
-    }
-    &[data-tab=url]::before {
-      background-image: $url-icon;
-    }
-    &[data-tab=facebook]::before {
-      background-image: $facebook-icon;
-    }
-    &[data-tab=gdrive]::before {
-      background-image: $gdrive-icon;
-    }
-    &[data-tab=instagram]::before {
-      background-image: $instagram-icon;
-    }
-    &[data-tab=dropbox]::before {
-      background-image: $dropbox-icon;
-    }
-    &[data-tab=vk]::before {
-      background-image: $vk-icon;
-    }
-    &[data-tab=evernote]::before {
-      background-image: $evernote-icon;
-    }
-    &[data-tab=box]::before {
-      background-image: $box-icon;
-    }
-    &[data-tab=skydrive]::before {
-      background-image: $skydrive-icon;
-    }
-    &[data-tab=huddle]::before {
-      background-image: $huddle-icon;
-    }
-    &[data-tab=flickr]::before {
-      background-image: $flickr-icon;
+    @each $tab in $tabs {
+      &[data-tab=#{$tab}]::before {
+        background-position: get-tab-icon-position("dark", $tab);
+      }
     }
   }
 
