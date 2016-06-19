@@ -24,6 +24,7 @@ $desktop-min-width: 750px;
 
   &-opened {
     overflow: hidden;
+    width: auto !important;
   }
 
   &-inner-wrap {
