@@ -1,50 +1,14 @@
-@import "../_colors";
+@import "../../_settings";
 
 .uploadcare-dialog-tabs-panel-url {
-  padding-top: 40px;
-
-  .uploadcare-dialog-title {
-    display: none;
-  }
-
-  .uploadcare-dialog-normal-text {
-    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosRegular", "Arial", sans-serif;
-    font-size: 27px;
-    font-weight: 200;
-    font-stretch: normal;
-    line-height: 1.2;
-
-    margin-bottom: 60px;
-
-    color: $normal-text-color;
-  }
+  padding-top: 10px;
+  padding-bottom: 40px;
 
   .uploadcare-dialog-input {
-    font-size: 20px;
-
     display: block;
 
     width: 100%;
-    margin-bottom: 40px;
-    padding: 20px 30px 80px;
-
-    border: none;
-    background-color: $input-background-color;
-    color: $input-color;
-  }
-
-  .uploadcare-dialog-button {
-    font-size: 20px;
-
-    display: inline-block;
-
-    padding: 16px 48px 15px;
-
-    cursor: pointer;
-
-    border: none;
-    border-radius: 40px;
-    background-color: $dialog-big-button-background-color;
-    color: $dialog-big-button-color;
+    margin-bottom: $dialog-gutter-y * 2;
+    padding: $dialog-gutter-y $dialog-gutter-x $dialog-gutter-y * 5;
   }
 }

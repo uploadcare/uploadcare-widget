@@ -1,8 +1,8 @@
-@import "../../_icons";
-@import "../_colors";
+@import "../../_settings";
 
 .uploadcare-dialog-tabs-panel-file {
   padding-top: 150px;
+  padding-bottom: 40px;
 
   background-image: $files-image;
   background-repeat: no-repeat;
@@ -12,7 +12,7 @@
 
 .uploadcare-dialog-file {
   &-or {
-    font-size: 13px;
+    font-size: $dialog-font-small-size;
     line-height: 1;
 
     margin: 18px 0 14px;
@@ -40,7 +40,7 @@
     cursor: pointer;
     text-indent: -9999px;
 
-    border: 1px solid $file-source-border-color;
+    border: 1px solid $tab-file-source-border-color;
     border-radius: 50%;
 
     &::before {

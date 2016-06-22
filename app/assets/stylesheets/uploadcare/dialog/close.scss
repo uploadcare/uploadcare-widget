@@ -1,13 +1,13 @@
-@import "_icons";
+@import "_settings";
 
 .uploadcare-dialog-close {
   position: absolute;
   z-index: 1001;
-  top: 5px;
-  right: 10px;
+  top: 0;
+  right: 0;
 
-  width: 50px;
-  height: 50px;
+  width: $dialog-header-height;
+  height: $dialog-header-height;
 
   cursor: pointer;
   text-indent: -9999px;

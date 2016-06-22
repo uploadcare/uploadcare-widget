@@ -1,13 +1,13 @@
-@import "../_icons";
-@import "_colors";
+@import "../_settings";
 @import "panel/index";
+$tab-icon-top: ($dialog-header-height - $tab-icon-size) / 2;
 
 .uploadcare-dialog-tabs {
-  height: 63px;
+  height: $dialog-header-height;
 
   background-image: $menu-icon;
   background-repeat: no-repeat;
-  background-position: 27px 20px;
+  background-position: $dialog-gutter-x 24.5px;
 }
 
 .uploadcare-dialog-tab {
@@ -20,14 +20,14 @@
 
   &::before {
     position: absolute;
-    top: 12px;
+    top: $tab-icon-top;
     left: 50%;
 
     display: block;
 
-    width: 35px;
-    height: 35px;
-    margin-left: -17.5px;
+    width: $tab-icon-size;
+    height: $tab-icon-size;
+    margin-left: ($tab-icon-size / 2) * -1;
 
     content: "";
 
@@ -52,19 +52,19 @@
 
     width: 100%;
     height: 100%;
-    padding-top: 63px;
+    padding-top: $dialog-header-height;
 
-    background: $opened-tabs-background-color;
+    background: $tabs-opened-background-color;
   }
 
   .uploadcare-dialog-tab {
     display: block;
 
-    height: 60px;
+    height: $dialog-header-height;
 
     &::before {
-      top: 13px;
-      left: 17px;
+      top: $tab-icon-top;
+      left: $dialog-gutter-x * 0.7;
 
       margin-left: 0;
 
@@ -72,16 +72,16 @@
     }
 
     &::after {
-      font-size: 17px;
+      font-size: $dialog-font-base-size;
 
       display: block;
 
-      margin-left: 96px;
-      padding-top: 21px;
+      margin-left: $dialog-gutter-x * 3;
+      padding-top: ($dialog-header-height - $dialog-font-base-size) / 2;
 
       content: attr(title);
 
-      color: $opened-tabs-color;
+      color: $tabs-opened-color;
     }
 
     &_hidden {
@@ -89,10 +89,10 @@
     }
 
     &_current {
-      background-color: $opened-tabs-current-background-color;
+      background-color: $tabs-opened-current-background-color;
 
       &::after {
-        color: $opened-tabs-current-color;
+        color: $tabs-opened-current-color;
       }
     }
   }
@@ -113,9 +113,34 @@
 }
 
 .uploadcare-dialog-tab_current.uploadcare-dialog-tab-file::before {
-  background-position: -35px;
+  background-position: $tab-icon-size * -1;
 
   .uploadcare-dialog-opened-tabs & {
     background-position: get-tab-icon-position("dark", "file");
+  }
+}
+
+.uploadcare-dialog-icon {
+  $icon-size: $tab-icon-size * 0.7;
+
+  position: absolute;
+  top: ($dialog-header-height - $icon-size) / 2;
+  left: 50%;
+
+  width: $icon-size;
+  height: $icon-size;
+  margin-left: $icon-size / 2;
+
+  .uploadcare-dialog-opened-tabs & {
+    left: $dialog-gutter-x;
+
+    margin-left: 0;
+  }
+}
+
+.uploadcare-widget-circle--canvas {
+  canvas {
+    width: 100%;
+    height: 100%;
   }
 }
