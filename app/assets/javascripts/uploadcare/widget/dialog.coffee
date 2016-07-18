@@ -135,6 +135,7 @@ uploadcare.namespace '', (ns) ->
   ns.registerTab('facebook', tabs.RemoteTab)
   ns.registerTab('dropbox', tabs.RemoteTab)
   ns.registerTab('gdrive', tabs.RemoteTab)
+  ns.registerTab('gphotos', tabs.RemoteTab)
   ns.registerTab('instagram', tabs.RemoteTab)
   ns.registerTab('flickr', tabs.RemoteTab)
   ns.registerTab('vk', tabs.RemoteTab)

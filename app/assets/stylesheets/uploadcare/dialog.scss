@@ -261,7 +261,9 @@ html.uploadcare-dialog-opened {
     .uploadcare-dialog-tab-huddle:before {
       background-position: 0 ($frame-size * -13);
     }
-
+    .uploadcare-dialog-tab-gphotos:before {
+      background-position: 0 ($frame-size * -14);
+    }
 
 .uploadcare-dialog-tabs-panel {
   position: relative;
