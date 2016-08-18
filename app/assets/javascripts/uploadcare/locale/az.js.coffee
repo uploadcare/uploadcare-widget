@@ -44,7 +44,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
           file: 'Lokal Fayllar'
           url: 'İxtiyari linklər'
           camera: 'Kamera'
-          gdrive: 'Google Disk'
         file:
           drag: 'Faylı bura atın'
           nodrop: 'Kompüterinizdən faylları yükləyin'
