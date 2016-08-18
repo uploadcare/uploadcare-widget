@@ -22,6 +22,6 @@
   "devDependencies": {
   },
   "dependencies": {
-    "jquery": ">=1.10.2"
+    "jquery": "<3.0.0"
   }
 }
