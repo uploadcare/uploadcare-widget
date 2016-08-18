@@ -52,7 +52,7 @@ uploadcare.namespace 'settings', (ns) ->
 
   presets =
     tabs:
-      all: 'file camera url facebook gdrive dropbox instagram evernote flickr skydrive box vk huddle gphotos'
+      all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive box vk huddle'
       default: defaults.tabs
 
 
