@@ -1,5 +1,15 @@
 # History
 
+### 2.10.0, 19.08.2016
+
+* Fixed the `Widget` constructor error message.
+* Added the `_name` attribute for `MultipleWidget` and `Widget` classes.
+* Added using [`imageSmoothingQuality`](https://html.spec.whatwg.org/multipage/scripting.html#image-smoothing) property 
+  where it's supported (except Chrome due to worst quality) instead of our resampling algorithm.
+* Added the Google Photos tab
+* Update jQuery dependency. We don't support 3.0.0 just yet.
+* Built-in jQuery upgraded to 2.2.4.
+
 ### 2.9.0, 13.05.2016
 
 * Added Estonian locale.

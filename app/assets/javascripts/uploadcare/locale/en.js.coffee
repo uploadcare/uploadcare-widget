@@ -43,6 +43,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           facebook: 'Facebook'
           dropbox: 'Dropbox'
           gdrive: 'Google Drive'
+          gphotos: 'Google Photos'
           instagram: 'Instagram'
           vk: 'VK'
           evernote: 'Evernote'
