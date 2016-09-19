@@ -1,7 +1,7 @@
 @import "../../_settings";
-@import "file";
-@import "camera";
-@import "url";
+@import "file-tab";
+@import "camera-tab";
+@import "url-tab";
 
 $panel-height: calc(100vh - #{$dialog-header-height});
 .uploadcare-dialog-tabs-panel {

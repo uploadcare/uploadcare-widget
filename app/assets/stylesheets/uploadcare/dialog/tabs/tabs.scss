@@ -1,5 +1,5 @@
 @import "../_settings";
-@import "panel/index";
+@import "panel/tabs-panel";
 $tab-icon-top: ($dialog-header-height - $tab-icon-size) / 2;
 
 .uploadcare-dialog-tabs {

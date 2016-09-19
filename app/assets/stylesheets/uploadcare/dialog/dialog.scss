@@ -1,9 +1,9 @@
 @import "_settings";
-@import "buttons";
-@import "close";
-@import "footer";
-@import "panel/index";
-@import "tabs/index";
+@import "dialog-buttons";
+@import "dialog-close";
+@import "dialog-footer";
+@import "panel/dialog-panel";
+@import "tabs/tabs";
 
 .uploadcare-dialog {
   font-family: $font-family-helvetica-neue;
