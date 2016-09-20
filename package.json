@@ -4,10 +4,20 @@
   "description": "Uploadcare widget source",
   "dependencies": {},
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
     "eslint": "^3.5.0",
-    "eslint-config-uploadcare": "^1.0.0"
+    "eslint-config-uploadcare": "^1.0.0",
+    "path": "^0.12.7",
+    "postcss-apply": "^0.4.0",
+    "postcss-calc": "^5.3.1",
+    "postcss-cli": "^2.6.0",
+    "postcss-css-variables": "^0.5.2",
+    "postcss-custom-media": "^5.0.1",
+    "postcss-import": "^8.1.2",
+    "postcss-nested": "^1.0.0"
   },
   "scripts": {
+    "build:css": "postcss -c postcss.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
