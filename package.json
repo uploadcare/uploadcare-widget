@@ -1,0 +1,20 @@
+{
+  "name": "uploadcare-widget",
+  "version": "0.0.0",
+  "description": "Uploadcare widget source",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uploadcare/uploadcare-widget.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uploadcare/uploadcare-widget/issues"
+  },
+  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme"
+}
