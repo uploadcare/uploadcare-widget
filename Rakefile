@@ -217,7 +217,7 @@ def upload_npm(version)
   end
   
   # Copy package.json and 
-  cp.call "package.json"
+  cp.call "publish.package.json", "package.json"
   cp.call "README.markdown"
 
   # Update version number in package.json
