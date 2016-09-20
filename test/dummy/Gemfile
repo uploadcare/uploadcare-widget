@@ -3,12 +3,9 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.22'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.6'
   gem 'coffee-rails', '~> 3.2.2'
   gem 'coffee-script-source', '~> 1.6.3'
-  gem "autoprefixer-rails", "~> 6.1.2"
   gem 'uglifier', '~> 2.7.2'
-  gem 'csso-rails', '~> 0.4.1'
 
   gem 'uploadcare-widget', path: '../..'
 end

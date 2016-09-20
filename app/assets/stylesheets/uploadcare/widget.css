@@ -1,14 +1,15 @@
+/*
 @import "_images";
 @import "_colors";
 @import "_mixins";
 @import "common";
 @import "dialog/dialog";
 
-/* Widget is inline-block. The right way to set height of inline-block
+!* Widget is inline-block. The right way to set height of inline-block
  * is to set line-height. Therefore important that all elements being
  * zero height or depends on line-height. Default widget height is height
  * of the tallest element: 2em;
- */
+ *!
 
 .uploadcare-widget {
   line-height: 2;
@@ -177,3 +178,4 @@
     }
   }
 }
+*/
