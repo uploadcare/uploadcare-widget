@@ -1,3 +1,6 @@
 {
-  "extends": "../stylelint-config-uploadcare"
+  "extends": "../stylelint-config-uploadcare",
+  "rules": {
+    "declaration-no-important": null
+  }
 }
