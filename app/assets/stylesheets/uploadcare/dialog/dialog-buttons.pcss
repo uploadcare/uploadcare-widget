@@ -1,0 +1,35 @@
+@import '_config.pcss';
+
+:root {
+	--button-font-size: var(--dialog-font-medium-size);
+
+	--uploadcare-dialog-button: {
+		font-size: var(--button-font-size);
+
+		display: inline-block;
+
+		min-width: 150px;
+		padding: calc(var(--button-font-size) * .8) var(--dialog-gutter-x);
+
+		cursor: pointer;
+
+		border: none;
+		border-radius: var(--dialog-gutter-x);
+		background-color: var(--dialog-button-background-color);
+		color: var(--dialog-button-color);
+
+		&[disabled] {
+			cursor: default;
+
+			background-color: color(var(--dialog-button-background-color) lightness(50%));
+		}
+	}
+}
+
+.uploadcare-dialog-button {
+	@apply --uploadcare-dialog-button;
+}
+
+.uploadcare-dialog-big-button {
+	@apply --uploadcare-dialog-button;
+}

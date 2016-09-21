@@ -1,0 +1,135 @@
+@import 'dialog/_config.pcss';
+@import 'panel/tabs-panel.pcss';
+
+:root {
+	--tab-icon-top: (var(--dialog-header-height) - var(--tab-icon-size)) / 2;
+}
+
+.uploadcare-dialog-tabs {
+	height: var(--dialog-header-height);
+
+	background-image: var(--menu-icon);
+	background-repeat: no-repeat;
+	background-position: var(--dialog-gutter-x) 24.5px;
+}
+
+.uploadcare-dialog-tab {
+	position: relative;
+
+	display: none;
+
+	width: 100%;
+	height: 100%;
+
+	&:before {
+		position: absolute;
+		top: var(--tab-icon-top);
+		left: 50%;
+
+		display: block;
+
+		width: var(--tab-icon-size);
+		height: var(--tab-icon-size);
+		margin-left: (var(--tab-icon-size) / 2) * -1;
+
+		content: '';
+
+		opacity: .4;
+	}
+
+	&_current {
+		display: block;
+	}
+}
+
+.uploadcare-dialog-opened-tabs {
+	.uploadcare-dialog-tabs {
+		position: absolute;
+		z-index: 1000;
+		top: 0;
+		left: 0;
+
+		overflow: auto;
+
+		width: 100%;
+		height: 100%;
+		padding-top: var(--dialog-header-height);
+
+		background: var(--tabs-opened-background-color);
+	}
+
+	.uploadcare-dialog-tab {
+		display: block;
+
+		height: var(--dialog-header-height);
+
+		&:before {
+			top: var(--tab-icon-top);
+			left: calc(var(--dialog-gutter-x) * .7);
+
+			margin-left: 0;
+
+			opacity: .71;
+		}
+
+		&:after {
+			font-size: var(--dialog-font-base-size);
+
+			display: block;
+
+			margin-left: calc(var(--dialog-gutter-x) * 3);
+			padding-top: calc(calc((var(--dialog-header-height) - var(--dialog-font-base-size)) / 2));
+
+			content: attr(title);
+
+			color: var(--tabs-opened-color);
+		}
+
+		&_hidden {
+			display: none;
+		}
+
+		&_current {
+			background-color: var(--tabs-opened-current-background-color);
+
+			&:after {
+				color: var(--tabs-opened-current-color);
+			}
+		}
+	}
+}
+
+.uploadcare-dialog-opened-tabs {
+}
+
+.uploadcare-dialog-tab_current.uploadcare-dialog-tab-file:before {
+	background-position: calc(var(--tab-icon-size) * -1);
+
+	.uploadcare-dialog-opened-tabs & {
+	}
+}
+
+.uploadcare-dialog-icon {
+	--icon-size: calc(var(--tab-icon-size) * .7);
+
+	position: absolute;
+	top: calc(calc(var(--dialog-header-height) - var(--icon-size)) / 2);
+	left: 50%;
+
+	width: var(--icon-size);
+	height: var(--icon-size);
+	margin-left: var(--icon-size) / 2;
+
+	.uploadcare-dialog-opened-tabs & {
+		left: var(--dialog-gutter-x);
+
+		margin-left: 0;
+	}
+}
+
+.uploadcare-widget-circle--canvas {
+	canvas {
+		width: 100%;
+		height: 100%;
+	}
+}
