@@ -11,6 +11,7 @@
     "postcss-apply": "^0.4.0",
     "postcss-calc": "^5.3.1",
     "postcss-cli": "^2.6.0",
+    "postcss-color-function": "^2.0.1",
     "postcss-css-variables": "^0.5.2",
     "postcss-custom-media": "^5.0.1",
     "postcss-import": "^8.1.2",

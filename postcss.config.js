@@ -12,6 +12,7 @@ module.exports = {
 		'postcss-nested',
 		'postcss-css-variables',
 		'postcss-calc',
+		'postcss-color-function',
 		'autoprefixer',
 	],
 	'postcss-import': {path: stylesheetsPath},
