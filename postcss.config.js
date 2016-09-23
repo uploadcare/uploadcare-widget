@@ -8,12 +8,20 @@ module.exports = {
 	'use': [
 		'postcss-import',
 		'postcss-custom-media',
-		'postcss-apply',
 		'postcss-nested',
 		'postcss-css-variables',
 		'postcss-calc',
 		'postcss-color-function',
 		'autoprefixer',
+		'postcss-reporter',
 	],
-	'postcss-import': {path: stylesheetsPath},
+	'postcss-import': {
+		path: stylesheetsPath,
+		plugins: [
+			require('stylelint'),
+			require('postcss-apply'),
+			require('postcss-prefixer')('uploadcare--', {ignore: [/uploadcare-/]}),
+		],
+	},
+	'postcss-reporter': {clearMessages: true},
 }

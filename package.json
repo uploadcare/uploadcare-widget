@@ -16,6 +16,8 @@
     "postcss-custom-media": "^5.0.1",
     "postcss-import": "^8.1.2",
     "postcss-nested": "^1.0.0",
+    "postcss-prefixer": "^1.0.4",
+    "postcss-reporter": "^1.4.1",
     "stylelint": "^7.3.0"
   },
   "scripts": {
