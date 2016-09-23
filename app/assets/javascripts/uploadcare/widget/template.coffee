@@ -13,7 +13,7 @@ uploadcare.namespace 'widget', (ns) ->
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))
       @element.after(@content)
-      @circle = new progress.Circle(@content.find('.uploadcare-widget-status'))
+      @circle = new progress.Circle(@content.find('.uploadcare--widget__progress'))
       @statusText = @content.find('.uploadcare-widget-text')
       @content.toggleClass('uploadcare-widget-option-clearable',
                            @settings.clearable)
@@ -22,7 +22,7 @@ uploadcare.namespace 'widget', (ns) ->
       $(tpl('widget-button', {name, caption})).appendTo(@content)
 
     setStatus: (status) ->
-      prefix = 'uploadcare-widget-status-'
+      prefix = 'uploadcare--widget_status_'
       @content.removeClass(prefix + @content.attr('data-status'))
       @content.attr('data-status', status)
       @content.addClass(prefix + status)
