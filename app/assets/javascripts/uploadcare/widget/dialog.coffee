@@ -47,15 +47,15 @@ uploadcare.namespace '', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialogPr = ns.openPanel(dialog.find('.uploadcare-dialog-placeholder'),
+    dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
-    dialog.addClass('uploadcare-active')
+    dialog.addClass('uploadcare--dialog_active')
     dialogPr.dialogElement = dialog
 
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
-    dialog.on('click', '.uploadcare-dialog-close', dialogPr.reject)
+    dialog.on('click', '.uploadcare--dialog__close', dialogPr.reject)
     dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
