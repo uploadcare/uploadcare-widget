@@ -61,7 +61,7 @@ uploadcare.namespace '', (ns) ->
       if not $.contains(document.documentElement, e.target)
         return
 
-      showStoppers = '.uploadcare-dialog-panel, a'
+      showStoppers = '.uploadcare--dialog__panel, a'
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
@@ -159,7 +159,7 @@ uploadcare.namespace '', (ns) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
 
-      sel = '.uploadcare-dialog-panel'
+      sel = '.uploadcare--dialog__panel'
       @content = $(tpl('panel'))
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
