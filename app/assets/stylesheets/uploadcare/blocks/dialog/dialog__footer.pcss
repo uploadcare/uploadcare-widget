@@ -1,0 +1,13 @@
+@import '_config.pcss';
+
+.dialog__footer {
+	display: none;
+
+	@media (--desktop) {
+		& {
+			display: block;
+
+			padding: calc((30px - 13px) / 2);
+		}
+	}
+}
