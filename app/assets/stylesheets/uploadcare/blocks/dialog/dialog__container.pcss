@@ -1,0 +1,26 @@
+@import '_config.pcss';
+
+.dialog__container {
+	position: relative;
+
+	width: 100vw;
+	height: 100vh;
+
+	background-color: green;
+
+	@media (--desktop) {
+		& {
+			align-self: center;
+
+			margin: 0 auto;
+
+			width: calc(100vw - 60px);
+			max-width: 960px;
+			height: calc(100vh - 60px);
+			min-height: 500px;
+			max-height: 640px;
+
+			background-color: #fff;
+		}
+	}
+}

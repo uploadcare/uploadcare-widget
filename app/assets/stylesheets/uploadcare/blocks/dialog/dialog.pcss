@@ -1,0 +1,23 @@
+@import '_config.pcss';
+
+.dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: var(--z-index);
+
+	overflow: auto;
+
+	width: 100vw;
+	height: 100vh;
+
+	background-color: red;
+
+	@media (--desktop) {
+		& {
+			display: flex;
+
+			background-color: rgba(48, 48, 48, .7);
+		}
+	}
+}
