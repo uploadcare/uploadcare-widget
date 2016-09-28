@@ -47,7 +47,7 @@ uploadcare.namespace '', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
+    dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__content'),
                             files, tab, settings)
     dialog.addClass('uploadcare--dialog_active')
     dialogPr.dialogElement = dialog
@@ -61,7 +61,7 @@ uploadcare.namespace '', (ns) ->
       if not $.contains(document.documentElement, e.target)
         return
 
-      showStoppers = '.uploadcare--dialog__panel, a'
+      showStoppers = '.uploadcare--dialog__content, a'
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
@@ -159,8 +159,8 @@ uploadcare.namespace '', (ns) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
 
-      sel = '.uploadcare--dialog__panel'
-      @content = $(tpl('panel'))
+      sel = '.uploadcare--dialog__content'
+      @content = $(tpl('dialog__content'))
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
