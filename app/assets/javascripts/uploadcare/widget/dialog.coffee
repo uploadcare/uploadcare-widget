@@ -47,7 +47,7 @@ uploadcare.namespace '', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__content'),
+    dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.addClass('uploadcare--dialog_active')
     dialogPr.dialogElement = dialog
@@ -180,8 +180,8 @@ uploadcare.namespace '', (ns) ->
       @__prepareFooter()
 
       @onTabVisibility = $.Callbacks().add (tab, show) =>
-        @panel.find(".#{tabClass}-#{tab}")
-              .toggleClass("#{tabClass}_hidden", not show)
+        @panel.find(".uploadcare--menu__item_#{tab}")
+              .toggleClass("uploadcare--menu__item_hidden", not show)
 
       if @settings.publicKey
         @__prepareTabs(tab)
@@ -338,10 +338,10 @@ uploadcare.namespace '', (ns) ->
         .insertBefore(@footer)
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
-        .addClass(tabClass)
-        .addClass("#{tabClass}-#{name}")
+        .addClass('uploadcare--menu__item')
+        .addClass("uploadcare--menu__item_#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find(".#{tabClass}s"))
+        .appendTo(@panel.find(".uploadcare--menu"))
         .on 'click', =>
           if name is @currentTab
             @panel.toggleClass('uploadcare-dialog-opened-tabs')
@@ -357,10 +357,10 @@ uploadcare.namespace '', (ns) ->
 
       @panel.removeClass('uploadcare-dialog-opened-tabs')
 
-      @panel.find(".#{tabClass}")
-            .removeClass("#{tabClass}_current")
-            .filter(".#{tabClass}-#{tab}")
-            .addClass("#{tabClass}_current")
+      @panel.find(".uploadcare--menu__item")
+            .removeClass("uploadcare--menu__item_current")
+            .filter(".uploadcare--menu__item_#{tab}")
+            .addClass("uploadcare--menu__item_current")
 
       className = "#{tabClass}s-panel"
       @panel.find(".#{className}")
@@ -379,8 +379,8 @@ uploadcare.namespace '', (ns) ->
         @switchTab(@__firstVisibleTab())
 
     isTabVisible: (tab) =>
-      not @panel.find(".#{tabClass}-#{tab}")\
-            .is(".#{tabClass}_hidden")
+      not @panel.find(".uploadcare--menu__item_#{tab}")\
+            .is(".uploadcare--menu__item_hidden")
 
     __firstVisibleTab: ->
       for tab in @settings.tabs
