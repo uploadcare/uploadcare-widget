@@ -1,0 +1,32 @@
+@import '_config.pcss';
+
+.input {
+	display: block;
+	box-sizing: border-box;
+
+	width: 100%;
+
+	margin: 15px 0;
+	padding: 5px 15px;
+
+	border: none;
+	border-bottom: 1px solid var(--gray-69);
+
+	font-size: 12px;
+
+	text-align: center;
+
+	color: var(--gray-69);
+
+	@media (--desktop) {
+		& {
+			margin: 20px 0;
+
+			font-size: 20px;
+		}
+	}
+
+	&::placeholder {
+		color: var(--gray-155);
+	}
+}

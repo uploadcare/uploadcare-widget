@@ -11,7 +11,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @container.append(tpl('tab-file'))
-      @container.addClass('uploadcare-dialog-padding')
 
       @container.on 'click', '.uploadcare-dialog-file-source', (e) =>
         @dialogApi.switchTab($(e.target).data('tab'))
@@ -27,7 +26,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles(type, data)
           @dialogApi.switchTab('preview')
-        @container.addClass("uploadcare-draganddrop")
+        @container.addClass("uploadcare--panel_draganddrop")
 
     __setupFileButton: ->
       fileButton = @container.find('.uploadcare--panel__action-button')
