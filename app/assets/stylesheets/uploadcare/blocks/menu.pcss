@@ -1,0 +1,97 @@
+@import '_config.pcss';
+
+/* TODO How to show that scrollbar there is */
+
+.menu {
+	width: calc(100% + 20px);  /* Hack for hide scrollbar */
+	height: 100%;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	font-family: var(--font-family);
+	font-size: 17px;
+}
+
+.menu__wrapper {
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;  /* Hack for hide scrollbar */
+
+	background-color: #fff;
+
+	@media (--desktop) {
+		& {
+			width: calc(35px + 40px);
+
+			transition: width .3s;
+		}
+
+		&:hover {
+			width: 200px;
+		}
+	}
+}
+
+.menu__item {
+	position: relative;
+
+	width: 100%;
+	height: 60px;
+
+	background-color: var(--gray-69);
+	color: #fff;
+
+	cursor: pointer;
+
+	&:hover, &:focus {
+		background-color: var(--gray-93);
+		color: #fff;
+	}
+
+	&:before, &:after {
+		display: block;
+
+		position: absolute;
+		top: 50%;
+
+		height: 35px;
+
+		margin-top: calc(35px / 2 * -1);
+	}
+
+	&:before {
+		content: '';
+
+		display: block;
+
+		left: 20px;
+
+		width: 35px;
+
+		background-color: red; /* TODO Change to icon */
+	}
+
+	&:after {
+		content: attr(title);
+
+		left: calc(35px + 20px * 2);
+
+		line-height: 35px;
+		white-space: nowrap;
+	}
+}
+
+.menu__item_current {
+	cursor: default;
+
+	&, &:hover, &:focus {
+		background-color: #fff;
+		color: var(--gray-69);
+	}
+}
+
+.menu__item_hidden {
+	display: none;
+}
