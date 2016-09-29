@@ -333,8 +333,8 @@ uploadcare.namespace '', (ns) ->
         throw new Error("No such tab: #{name}")
 
       tabPanel = $('<div>')
-        .addClass("#{tabClass}s-panel")
-        .addClass("#{tabClass}s-panel-#{name}")
+        .addClass("uploadcare--panel")
+        .addClass("uploadcare--panel_#{name}")
         .insertBefore(@footer)
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
@@ -362,10 +362,10 @@ uploadcare.namespace '', (ns) ->
             .filter(".uploadcare--menu__item_#{tab}")
             .addClass("uploadcare--menu__item_current")
 
-      className = "#{tabClass}s-panel"
+      className = "uploadcare--panel"
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}-#{tab}")
+            .filter(".#{className}_#{tab}")
             .addClass("#{className}_current")
 
       @dfd.notify(tab)
