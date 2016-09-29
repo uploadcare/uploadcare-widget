@@ -3,23 +3,12 @@
 /* TODO How to show that scrollbar there is */
 
 .menu {
-	width: calc(100% + 20px);  /* Hack for hide scrollbar */
-	height: 100%;
-
-	overflow-y: auto;
-	overflow-x: hidden;
-
-	font-family: var(--font-family);
-	font-size: 17px;
-}
-
-.menu__wrapper {
 	width: 100%;
 	height: 100%;
 
 	overflow: hidden;  /* Hack for hide scrollbar */
 
-	background-color: #fff;
+	background-color: var(--gray-69);
 
 	@media (--desktop) {
 		& {
@@ -32,6 +21,17 @@
 			width: 200px;
 		}
 	}
+}
+
+.menu__container {
+	width: calc(100% + 20px);  /* Hack for hide scrollbar */
+	height: 100%;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	font-family: var(--font-family);
+	font-size: 17px;
 }
 
 .menu__item {
