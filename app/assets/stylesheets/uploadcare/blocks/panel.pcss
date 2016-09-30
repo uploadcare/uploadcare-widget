@@ -19,11 +19,11 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	flex: 1 0 auto;
+	flex: 1;
 
 	box-sizing: border-box;
 
-	padding-bottom: 60px;
+	padding: 20px 0;
 }
 
 .panel__text {
@@ -105,6 +105,31 @@
 			margin: 20px 0;
 
 			font-size: 15px;
+		}
+	}
+}
+
+/* TODO Maybe need to create a big button? */
+
+.panel__action-button {
+	padding: 15px 50px;
+
+	font-size: 17px;
+}
+
+.panel__footer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	width: 100%;
+
+	margin: 15px 0;
+
+	@media (--desktop) {
+		& {
+			margin: 20px 0;
 		}
 	}
 }
