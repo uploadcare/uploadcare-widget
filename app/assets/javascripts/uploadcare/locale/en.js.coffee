@@ -65,6 +65,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           input: 'Paste your link here...'
           button: 'Upload'
         camera:
+          title: 'File from web camera'
           capture: 'Take a photo'
           mirror: 'Mirror'
           startRecord: 'Record a video'

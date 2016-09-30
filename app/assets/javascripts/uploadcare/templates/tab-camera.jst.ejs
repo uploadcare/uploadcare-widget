@@ -1,47 +1,48 @@
-<div class="uploadcare-dialog-camera-holder"><!--
-  --><video class="uploadcare-dialog-camera-video uploadcare-dialog-camera--mirrored"></video><!--
-  --><div class="uploadcare-dialog-camera-message">
-    <div class="uploadcare-dialog-error-tab-illustration"></div>
+<div class="uploadcare--panel__title"><%- t('dialog.tabs.camera.title') %></div>
+<div class="uploadcare--camera">
+  <div class="uploadcare--camera__video-container">
+    <video class="uploadcare--camera__video uploadcare--camera__video_mirrored"></video>
+  </div>
 
-    <div class="uploadcare-dialog-title uploadcare-dialog-camera-please-allow">
-      <%- t('dialog.tabs.camera.pleaseAllow.title') %>
-    </div>
-    <div class="uploadcare-dialog-normal-text uploadcare-dialog-camera-please-allow">
-      <%- t('dialog.tabs.camera.pleaseAllow.text') %>
-    </div>
+  <div class="uploadcare--panel__title uploadcare--camera__please-allow">
+    <%- t('dialog.tabs.camera.pleaseAllow.title') %>
+  </div>
+  <div class="uploadcare--panel__text uploadcare--camera__please-allow">
+    <%- t('dialog.tabs.camera.pleaseAllow.text') %>
+  </div>
 
-    <div class="uploadcare-dialog-title uploadcare-dialog-camera-not-found">
-      <%- t('dialog.tabs.camera.notFound.title') %>
-    </div>
-    <div class="uploadcare-dialog-normal-text uploadcare-dialog-camera-not-found">
-      <%- t('dialog.tabs.camera.notFound.text') %>
-    </div>
+  <div class="uploadcare--panel__title uploadcare--camera__not-found">
+    <%- t('dialog.tabs.camera.notFound.title') %>
+  </div>
+  <div class="uploadcare--panel__text uploadcare--camera__not-found">
+    <%- t('dialog.tabs.camera.notFound.text') %>
+  </div>
 
-    <div class="uploadcare-dialog-camera-retry uploadcare-dialog-button"
+  <div class="uploadcare--button uploadcare--camera__retry-button"
+       tabindex="0" role="button">
+    <%- t('dialog.tabs.camera.retry') %>
+  </div>
+
+  <div class="uploadcare--camera__controls uploadcare--panel__footer">
+    <div class="uploadcare--button uploadcare--camera__mirror-button"
          tabindex="0" role="button">
-      <%- t('dialog.tabs.camera.retry') %>
+      <%- t('dialog.tabs.camera.mirror') %>
     </div>
-  </div><!--
---></div>
-<div class="uploadcare-dialog-camera-controls">
-  <div class="uploadcare-dialog-camera-mirror uploadcare-dialog-button"
-       tabindex="0" role="button">
-    <%- t('dialog.tabs.camera.mirror') %>
-  </div>
-  <div class="uploadcare-dialog-camera-capture uploadcare-dialog-button-success"
-       tabindex="0" role="button">
-    <%- t('dialog.tabs.camera.capture') %>
-  </div>
-  <div class="uploadcare-dialog-camera-start-record uploadcare-dialog-button-success"
-       tabindex="0" role="button">
-    <%- t('dialog.tabs.camera.startRecord') %>
-  </div>
-  <div class="uploadcare-dialog-camera-cancel-record uploadcare-dialog-button"
-       tabindex="0" role="button">
-    <%- t('dialog.tabs.camera.cancelRecord') %>
-  </div>
-  <div class="uploadcare-dialog-camera-stop-record uploadcare-dialog-button-success"
-       tabindex="0" role="button">
-    <%- t('dialog.tabs.camera.stopRecord') %>
+    <div class="uploadcare--button uploadcare--button_primary uploadcare--camera__capture-button"
+         tabindex="0" role="button">
+      <%- t('dialog.tabs.camera.capture') %>
+    </div>
+    <div class="uploadcare--button uploadcare--button_primary uploadcare--camera__start-record-button"
+         tabindex="0" role="button">
+      <%- t('dialog.tabs.camera.startRecord') %>
+    </div>
+    <div class="uploadcare--button uploadcare--camera__cancel-record-button"
+         tabindex="0" role="button">
+      <%- t('dialog.tabs.camera.cancelRecord') %>
+    </div>
+    <div class="uploadcare--button uploadcare--button_primary uploadcare--camera__stop-record-button"
+         tabindex="0" role="button">
+      <%- t('dialog.tabs.camera.stopRecord') %>
+    </div>
   </div>
 </div>
