@@ -4,7 +4,7 @@
 	display: inline-block;
 
 	margin: 0;
-	padding: 15px 50px;
+	padding: 5px 20px;
 
 	box-sizing: border-box;
 
@@ -15,7 +15,7 @@
 	color: #fff;
 
 	font-family: var(--font-family);
-	font-size: 17px;
+	font-size: 15px;
 	line-height: 20px;
 	white-space: nowrap;
 
@@ -36,6 +36,28 @@
 	&:disabled {
 		background-color: var(--gray-93);
 		color: var(--gray-155);
+
+		cursor: default;
+	}
+}
+
+.button_primary {
+	background-color: #157dfb;
+	color: #fff;
+
+	&:hover, &:focus {
+		background-color: #3c92fc;
+		color: #fff;
+	}
+
+	&:active {
+		background-color: #62a8fc;
+		color: #fff;
+	}
+
+	&:disabled {
+		background-color: #3c92fc;
+		color: #62a8fc;
 
 		cursor: default;
 	}
