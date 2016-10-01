@@ -35,7 +35,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @file.progress ifCur (info) =>
         info = info.incompleteFileInfo
         label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
-        @element('label').text(label)
+        @container.find('.uploadcare--preview__label').text(label)
 
         source = info.sourceInfo
         blob = utils.abilities.Blob
@@ -86,7 +86,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               URL.revokeObjectURL(src)
 
             @__setState('image', {file: false})
-            @element('image').attr('src', src)
+            @container.find('.uploadcare--preview__image').attr('src', src)
             @initImage(size)
       .fail(df.reject)
 
@@ -114,12 +114,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           URL.revokeObjectURL(src)
 
         @__setState('video')
-        @element('video').attr('src', src)
+        @container.find('.uploadcare--preview__video').attr('src', src)
 
       df.promise()
-
-    element: (name) ->
-      @container.find('.uploadcare-dialog-preview-' + name)
 
     # error
     # unknown
@@ -130,25 +127,25 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.empty().append(tpl("tab-preview-#{state}", data))
 
       if state is 'unknown' and @settings.crop
-        @element('done').hide()
+        @container.find('.uploadcare--preview__done').hide()
 
       if state is 'image' and data.file
         imgInfo = data.file.originalImageInfo
         @initImage([imgInfo.width, imgInfo.height], data.file.cdnUrlModifiers)
 
     initImage: (imgSize, cdnModifiers) ->
-      img = @element('image')
-      done = @element('done')
+      img = @container.find('.uploadcare--preview__image')
+      done = @container.find('.uploadcare--preview__done')
 
       imgLoader = utils.imageLoader(img.attr('src'))
         .done =>
-          @element('root').addClass('uploadcare-dialog-preview--loaded')
+          @container.find('.uploadcare--preview').addClass('uploadcare--preview_loaded')
         .fail =>
           @file = null
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        done.removeClass('uploadcare-disabled-el')
+        done.removeClass('uploadcare--disabled')
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         if cdnModifiers
@@ -160,8 +157,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           true
 
       if @settings.crop
-        @element('title').text(t('dialog.tabs.preview.crop.title'))
-        done.addClass('uploadcare-disabled-el')
+        @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
+        done.addClass('uploadcare--disabled')
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
@@ -174,9 +171,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if @settings.crop.length <= 1
         return
 
-      @element('root').addClass('uploadcare-dialog-preview--with-sizes')
+      @container.find('.uploadcare--preview').addClass('uploadcare--preview_with-sizes')
 
-      control = @element('crop-sizes')
+      control = @container.find('.uploadcare--preview__crop-sizes')
       template = control.children()
       currentClass = 'uploadcare-crop-size--current'
 

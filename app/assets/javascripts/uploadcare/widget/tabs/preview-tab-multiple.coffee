@@ -18,11 +18,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
-      @fileListEl = @container.find('.uploadcare-file-list')
+      @fileListEl = @container.find('.uploadcare--file-list')
       @titleEl = @__find('title')
       @mobileTitleEl = @__find('mobile-title')
       @footerTextEl = @__find('footer-text')
-      @doneBtnEl = @container.find('.uploadcare-dialog-preview-done')
+      @doneBtnEl = @container.find('.uploadcare--preview__done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
@@ -38,8 +38,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @fileListEl.addClass(
         if @settings.imagesOnly
-        then 'uploadcare-file-list_tiles'
-        else 'uploadcare-file-list_table'
+        then 'uploadcare--file-list__tiles'
+        else 'uploadcare--file-list__table'
       )
 
       @__setupSorting()
@@ -68,7 +68,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
       tooFewFiles = files < @settings.multipleMin
 
-      @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
+      @doneBtnEl.toggleClass('uploadcare--disabled', tooManyFiles or tooFewFiles)
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
