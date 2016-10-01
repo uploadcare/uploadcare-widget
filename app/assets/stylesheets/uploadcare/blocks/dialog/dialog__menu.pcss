@@ -1,5 +1,20 @@
 @import '_config.pcss';
 
+.dialog__menu {
+	.menu__item_preview:before {
+		display: none;
+	}
+
+	.dialog__icon {
+		position: absolute;
+		top: 50%;
+		left: 20px;
+
+		margin-top: calc(30px / 2 * -1);
+	}
+}
+
+/* TODO Add mod for dialog__menu, not for dialog_content */
 .dialog__content:not(.dialog_menu_opened) {
 	.dialog__menu {
 		@media (--mobile) {
@@ -17,14 +32,14 @@
 
 				cursor: pointer;
 
-				&:before, &:after {
+				&:before, &:after, .dialog__icon {
 					width: 20px;
 					height: 20px;
 
 					margin-top: calc(20px / 2 * -1);
 				}
 
-				&:before {
+				&:before, .dialog__icon {
 					left: 50%;
 
 					margin-left: calc(20px / 2 * -1);

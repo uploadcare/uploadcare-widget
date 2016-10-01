@@ -15,9 +15,7 @@
 }
 
 .camera__video {
-	display: none;
-
-	max-width: 100%;
+	width: auto;
 	max-height: 100%;
 
 	transition: transform .8s cubic-bezier(.23, 1, .32, 1);
@@ -41,9 +39,9 @@
 	}
 }
 
-.camera_ready, .camera_recording {
-	.camera__video {
-		display: block;
+.camera:not(.camera_ready), .camera:not(.camera_recording) {
+	.camera__video-container {
+		display: none;
 	}
 }
 
