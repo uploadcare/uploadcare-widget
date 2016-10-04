@@ -1,39 +1,5 @@
 @import '_config.pcss';
 
-/* TODO How to show that scrollbar there is */
-
-.menu {
-	width: 100%;
-	height: 100%;
-
-	overflow: hidden;  /* Hack for hide scrollbar */
-
-	background-color: var(--gray-69);
-
-	@media (--desktop) {
-		& {
-			width: calc(30px + 40px);
-
-			transition: width .3s;
-		}
-
-		&:hover {
-			width: 200px;
-		}
-	}
-}
-
-.menu__container {
-	width: calc(100% + 20px);  /* Hack for hide scrollbar */
-	height: 100%;
-
-	overflow-y: auto;
-	overflow-x: hidden;
-
-	font-family: var(--font-family);
-	font-size: 15px;
-}
-
 .menu__item {
 	position: relative;
 
@@ -88,17 +54,4 @@
 		line-height: 30px;
 		white-space: nowrap;
 	}
-}
-
-.menu__item_current {
-	cursor: default;
-
-	&, &:hover, &:focus {
-		background-color: #fff;
-		color: var(--gray-69);
-	}
-}
-
-.menu__item_hidden {
-	display: none;
 }

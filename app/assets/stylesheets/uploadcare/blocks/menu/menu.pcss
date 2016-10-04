@@ -1,0 +1,24 @@
+@import '_config.pcss';
+
+/* TODO How to show that scrollbar there is */
+
+.menu {
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;  /* Hack for hide scrollbar */
+
+	background-color: var(--gray-69);
+
+	@media (--desktop) {
+		& {
+			width: calc(30px + 40px);
+
+			transition: width .3s;
+		}
+
+		&:hover {
+			width: 200px;
+		}
+	}
+}
