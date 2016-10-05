@@ -3,19 +3,22 @@
 .button {
 	display: inline-block;
 
-	margin: 0;
-	padding: 5px 20px;
-
 	box-sizing: border-box;
 
-	border: none;
-	border-radius: 25px;
+	min-width: 100px;
+	height: 40px;
 
-	background: var(--gray-69);
+	margin: 10px;
+	padding: calc((40px - 20px) / 2) 20px;
+
+	border: none;
+	border-radius: 20px;
+
+	background: #454545;
 	color: #fff;
 
 	font-family: var(--font-family);
-	font-size: 15px;
+	font-size: 16px;
 	line-height: 20px;
 	white-space: nowrap;
 
@@ -24,18 +27,18 @@
 	transition: background .3s;
 
 	&:hover, &:focus {
-		background-color: var(--gray-93);
+		background: #282828;
 		color: #fff;
 	}
 
 	&:active {
-		background-color: var(--gray-155);
+		background: #000;
 		color: #fff;
 	}
 
 	&:disabled {
-		background-color: var(--gray-93);
-		color: var(--gray-155);
+		background: #d2d2d2;
+		color: #f3f3f3;
 
 		cursor: default;
 	}
