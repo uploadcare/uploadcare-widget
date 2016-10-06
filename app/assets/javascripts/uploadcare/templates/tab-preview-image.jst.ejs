@@ -1,8 +1,10 @@
-<div class="uploadcare--preview uploadcare-dialog-padding">
-  <div class="uploadcare-dialog-title uploadcare--preview__title uploadcare--panel__title">
+<div class="uploadcare--panel__heading">
+  <div class="uploadcare--panel__title uploadcare--preview__title">
     <%- t('dialog.tabs.preview.image.title') %>
   </div>
+</div>
 
+<div class="uploadcare--panel__content">
   <div class="uploadcare-crop-sizes uploadcare--preview__crop-sizes">
     <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
   </div>
@@ -11,14 +13,14 @@
       1162x684 is 1.5 size of conteiner
       TODO Use picture and srcset for create responsive image
     --><img
-      <% if (file) { %>
-        src="<%- file.originalUrl %>-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
-        title="<%- (file.name || "") %>"
-        alt="<%- (file.name || "") %>"
-      <% } else { %>
-        src="//:0"
-      <% } %>
-      class="uploadcare--preview__image"
+            <% if (file) { %>
+            src="<%- file.originalUrl %>-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
+            title="<%- (file.name || "") %>"
+            alt="<%- (file.name || "") %>"
+            <% } else { %>
+            src="//:0"
+            <% } %>
+            class="uploadcare--preview__image"
     />
   </div>
 </div>

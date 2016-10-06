@@ -1,8 +1,10 @@
-<div class="uploadcare-dialog-padding uploadcare--preview">
-  <div class="uploadcare-dialog-title uploadcare--preview__title">
+<div class="uploadcare--panel__heading">
+  <div class="uploadcare--panel__title uploadcare--preview__title">
     <%- t('dialog.tabs.preview.video.title') %>
   </div>
+</div>
 
+<div class="uploadcare--panel__content">
   <div class="uploadcare-crop-sizes uploadcare--preview__crop-sizes">
     <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
   </div>
@@ -12,11 +14,11 @@
   </div>
 </div>
 
-<div class="uploadcare-panel-footer">
+<div class="uploadcare--panel__footer">
   <div class="uploadcare--button uploadcare--preview__back uploadcare-dialog-button"
        tabindex="0" role="button"
           ><%- t('dialog.tabs.preview.video.change') %></div>
-  <div class="uploadcare--button uploadcare--preview__done uploadcare-dialog-button-success"
+  <div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
        tabindex="0" role="button"
           ><%- t('dialog.tabs.preview.done') %></div>
 </div>

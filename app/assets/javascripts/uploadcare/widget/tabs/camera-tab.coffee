@@ -19,7 +19,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @mirrored = true
 
       @container.append(tpl('tab-camera'))
-      @container.find('.uploadcare--camera').addClass('uploadcare--camera_requested')
+      @container.addClass('uploadcare--camera')
+      @container.addClass('uploadcare--camera_requested')
       @container.find('.uploadcare--camera__capture-button').on('click', @__capture)
       startRecord = @container.find('.uploadcare--camera__start-record-button').on('click', @__startRecording)
       @container.find('.uploadcare--camera__stop-record-button').on('click', @__stopRecording)
@@ -57,7 +58,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
                    'recording'].join(' uploadcare--camera_')
       @container
-          .find('.uploadcare--camera')
           .removeClass(oldStates)
           .addClass("uploadcare--camera_#{newState}")
 

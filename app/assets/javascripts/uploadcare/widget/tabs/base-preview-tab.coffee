@@ -9,6 +9,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @__initTabButtonCircle()
 
+      @container.addClass('uploadcare--preview')
+
       notDisabled = ':not(.uploadcare-disabled-el)'
       @container.on 'click', '.uploadcare--preview__back' + notDisabled, =>
         @dialogApi.fileColl.clear()
