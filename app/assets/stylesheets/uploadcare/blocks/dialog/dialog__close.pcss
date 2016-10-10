@@ -9,8 +9,28 @@
 	width: 60px;
 	height: 60px;
 
-	background-color: red;
+	color: transparent;
 
 	cursor: pointer;
-	text-indent: -9999px;
+
+	&:before {
+		content: '✖';
+
+		display: block;
+
+		position: absolute;
+		top: 20px;
+		left: 20px;
+
+		width: 20px;
+		height: 20px;
+
+		background: inherit;
+		color: #454545;
+
+		font-size: 20px;
+		line-height: 20px;
+
+		text-align: center;
+	}
 }
