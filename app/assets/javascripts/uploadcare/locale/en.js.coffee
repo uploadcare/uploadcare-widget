@@ -52,7 +52,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           flickr: 'Flickr'
           huddle: 'Huddle'
         file:
-          drag: 'drag & drop any files'
+          drag: 'drag & drop<br>any files'
           nodrop: 'Upload files from your computer'
           cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
@@ -74,7 +74,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           retry: 'Request permissions again'
           pleaseAllow:
             title: 'Please allow access to your camera'
-            text: 'You have been prompted to allow camera access from this site. ' +
+            text: 'You have been prompted to allow camera access from this site.<br>' +
                   'In order to take pictures with your camera you must approve this request.'
           notFound:
             title: 'No camera detected'
