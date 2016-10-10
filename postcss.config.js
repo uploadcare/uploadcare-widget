@@ -7,6 +7,8 @@ module.exports = {
 	'local-plugins': true,
 	'use': [
 		'postcss-import',
+		'postcss-each',
+		'postcss-inline-svg',
 		'postcss-custom-media',
 		'postcss-nested',
 		'postcss-css-variables',
@@ -23,5 +25,6 @@ module.exports = {
 			require('postcss-prefixer')('uploadcare--', {ignore: [/uploadcare-/]}),
 		],
 	},
+	'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
 	'postcss-reporter': {clearMessages: true},
 }
