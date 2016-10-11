@@ -1,17 +1,15 @@
 .camera__video-container {
-	box-sizing: border-box;
-
-	flex: 1;
+	flex: 1 1 auto;
 
 	display: none;
 
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	width: 100%;
+
+	position: relative;
 }
 
 .camera_ready, .camera_recording {
 	.camera__video-container {
-		display: flex;
+		display: block;
 	}
 }

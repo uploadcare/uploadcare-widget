@@ -1,8 +1,12 @@
 .camera__video {
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: calc(100% - 50px);
+	position: absolute;
+	top: 50%;
+	left: 50%;
 
-	transition: transform .8s cubic-bezier(.23, 1, .32, 1);
+	max-width: 100%;
+	max-height: 100%;
+
+	transform: translateX(-50%) translateY(-50%);
+
+	transition: transform .6s cubic-bezier(.23, 1, .32, 1);
 }
