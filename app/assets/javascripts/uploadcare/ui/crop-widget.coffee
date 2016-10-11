@@ -11,8 +11,9 @@ uploadcare.namespace 'crop', (ns) ->
 
     constructor: (@element, @originalSize, crop={}) ->
       @__api = $.Jcrop(@element[0],
-        trueSize: @originalSize
-        addClass: 'uploadcare-crop-widget'
+        trueSize: @originalSize,
+        baseClass: 'uploadcare--jcrop',
+        addClass: 'uploadcare--crop-widget'
         createHandles: ['nw','ne','se','sw']
         bgColor: 'transparent'
         bgOpacity: .8

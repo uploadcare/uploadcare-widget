@@ -22,7 +22,13 @@ module.exports = {
 		plugins: [
 			require('stylelint'),
 			require('postcss-apply'),
-			require('postcss-prefixer')('uploadcare--', {ignore: [/uploadcare-/]}),
+			require('postcss-prefixer')('uploadcare--', {
+				ignore: [
+					/uploadcare-|ord-/,
+					'.bottom',
+					'.right',
+				],
+			}),
 		],
 	},
 	'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},

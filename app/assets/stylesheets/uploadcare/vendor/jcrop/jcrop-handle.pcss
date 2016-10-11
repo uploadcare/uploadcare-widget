@@ -1,0 +1,100 @@
+.jcrop-handle {
+	width: 13px;
+	height: 13px;
+
+	background-color: #fff;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);
+
+	border-radius: 50%;
+
+	z-index: 2147483621;
+
+	&:before, &:after {
+		content: '';
+
+		display: block;
+
+		width: 1px;
+		height: 1px;
+
+		position: absolute;
+
+		background: #fff;
+	}
+
+	&:before {
+		width: 3px;
+
+		top: 6px;
+	}
+
+	&:after {
+		height: 3px;
+
+		left: 6px;
+	}
+
+	&.ord-nw {
+		margin-top: -6px;
+		margin-left: -6px;
+
+		top: 0;
+		left: 0;
+
+		&:before {
+			left: 12px;
+		}
+
+		&:after {
+			top: 12px;
+		}
+	}
+
+	&.ord-ne {
+		margin-top: -6px;
+		margin-right: -6px;
+
+		top: 0;
+		right: 0;
+
+		&:before {
+			left: -2px;
+		}
+
+		&:after {
+			top: 12px;
+		}
+	}
+
+	&.ord-se {
+		margin-bottom: -6px;
+		margin-right: -6px;
+
+		bottom: 0;
+		right: 0;
+
+		&:before {
+			left: -2px;
+		}
+
+		&:after {
+			top: -2px;
+		}
+	}
+
+	&.ord-sw {
+		margin-bottom: -6px;
+		margin-left: -6px;
+
+		bottom: 0;
+		left: 0;
+
+		&:before {
+			left: 12px;
+		}
+
+		&:after {
+			top: -2px;
+		}
+	}
+}
