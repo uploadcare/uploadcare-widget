@@ -11,7 +11,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.addClass('uploadcare--preview')
 
-      notDisabled = ':not(.uploadcare-disabled-el)'
+      notDisabled = ':not([aria-disabled=true])'
       @container.on 'click', '.uploadcare--preview__back' + notDisabled, =>
         @dialogApi.fileColl.clear()
       @container.on('click', '.uploadcare--preview__done' + notDisabled, @dialogApi.resolve)

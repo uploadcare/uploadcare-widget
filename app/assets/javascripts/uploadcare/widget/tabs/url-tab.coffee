@@ -23,10 +23,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       input = @container.find('.uploadcare--input')
       input.on 'change keyup input', ->
-        button.prop('disabled', !$.trim(this.value))
+        button.attr('aria-disabled', !$.trim(this.value))
 
       button = @container.find('.uploadcare--button_submit')
-        .prop('disabled', true)
+        .attr('aria-disabled', true)
 
       @container.find('.uploadcare--form').on 'submit', =>
         if url = fixUrl(input.val())

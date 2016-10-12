@@ -145,7 +145,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        done.removeClass('uploadcare--disabled')
+        done.attr('aria-disabled', false)
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         if cdnModifiers
@@ -158,7 +158,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @settings.crop
         @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
-        done.addClass('uploadcare--disabled')
+        done.attr('aria-disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()

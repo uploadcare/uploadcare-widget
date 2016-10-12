@@ -62,25 +62,24 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       tooFewFiles = files < @settings.multipleMin
       hasWrongNumberFiles = tooManyFiles or tooFewFiles
 
-      @doneBtnEl.toggleClass('uploadcare--disabled', hasWrongNumberFiles)
+      @doneBtnEl.attr('aria-disabled', hasWrongNumberFiles)
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
       @container.find('.uploadcare--preview__title').text(title)
 
-      wrongNumberFilesMessage = if tooManyFiles
-        t('dialog.tabs.preview.multiple.tooManyFiles')
-          .replace('%max%', @settings.multipleMax)
-      else if files and tooFewFiles
-        t('dialog.tabs.preview.multiple.tooFewFiles')
-          .replace('%min%', @settings.multipleMin)
-          .replace('%files%', t('file', files))
-      else
-        ''
+      errorContainer = @container.find('.uploadcare--preview__error-container')
+      errorContainer.empty()
 
-      if wrongNumberFilesMessage
-        errorContainer = @container.find('.uploadcare--preview__error-container')
-        errorContainer.empty()
+      if hasWrongNumberFiles
+        wrongNumberFilesMessage = if tooManyFiles
+          t('dialog.tabs.preview.multiple.tooManyFiles')
+            .replace('%max%', @settings.multipleMax)
+        else if files and tooFewFiles
+          t('dialog.tabs.preview.multiple.tooFewFiles')
+            .replace('%min%', @settings.multipleMin)
+            .replace('%files%', t('file', files))
+
         $(tpl('preview__error-message')).appendTo(errorContainer)
           .text(wrongNumberFilesMessage)
 
