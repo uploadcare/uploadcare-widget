@@ -19,9 +19,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
       @fileListEl = @container.find('.uploadcare--file-list')
-      @titleEl = @__find('title')
-      @mobileTitleEl = @__find('mobile-title')
-      @footerTextEl = @__find('footer-text')
       @doneBtnEl = @container.find('.uploadcare--preview__done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
@@ -59,22 +56,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             index(a) - index(b)
       )
 
-    __find: (s, context = @container) ->
-      # dpm — abbreviation of dialog-preview-multiple
-      $('.uploadcare-dpm-' + s, context)
-
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
       tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
       tooFewFiles = files < @settings.multipleMin
+      hasWrongNumberFiles = tooManyFiles or tooFewFiles
 
-      @doneBtnEl.toggleClass('uploadcare--disabled', tooManyFiles or tooFewFiles)
+      @doneBtnEl.toggleClass('uploadcare--disabled', hasWrongNumberFiles)
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
-      @titleEl.text(title)
+      @container.find('.uploadcare--preview__title').text(title)
 
-      footer = if tooManyFiles
+      wrongNumberFilesMessage = if tooManyFiles
         t('dialog.tabs.preview.multiple.tooManyFiles')
           .replace('%max%', @settings.multipleMax)
       else if files and tooFewFiles
@@ -82,15 +76,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .replace('%min%', @settings.multipleMin)
           .replace('%files%', t('file', files))
       else
-        t('dialog.tabs.preview.multiple.question')
+        ''
 
-      @footerTextEl
-        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
-        .text(footer)
-
-      @mobileTitleEl
-        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
-        .text(if tooManyFiles or tooFewFiles then footer else title)
+      if wrongNumberFilesMessage
+        errorContainer = @container.find('.uploadcare--preview__error-container')
+        errorContainer.empty()
+        $(tpl('preview__error-message')).appendTo(errorContainer)
+          .text(wrongNumberFilesMessage)
 
     __updateFileInfo: (fileEl, info) ->
       fileEl.find('.uploadcare-file-item__name')
