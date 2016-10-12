@@ -303,8 +303,7 @@ uploadcare.namespace 'utils.image', (ns) ->
       not exif or
       exif.byteLength < 14 or
       exif.getUint32(0) != 0x45786966 or
-      exif.getUint16(4) != 0 or
-      exif.getUint16(8) != 0x002A
+      exif.getUint16(4) != 0
     )
       return null
 
@@ -313,6 +312,9 @@ uploadcare.namespace 'utils.image', (ns) ->
     else if exif.getUint16(6) == 0x4D4D
       little = false
     else
+      return null
+
+    if exif.getUint16(8, little) != 0x002A
       return null
 
     offset = 8 + exif.getUint32(10, little)
