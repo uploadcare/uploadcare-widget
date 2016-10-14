@@ -18,8 +18,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
       deleted: 'File was deleted'
     draghere: 'drag & drop any files'
     file:
-      one: '%1 file'
-      other: '%1 files'
+      one: 'this %1 file'
+      other: 'these %1 files'
     buttons:
       cancel: 'Cancel'
       remove: 'Remove'
@@ -117,11 +117,11 @@ uploadcare.namespace 'locale.translations', (ns) ->
               title: 'Error'
               text: 'Can’t load image'
           multiple:
-            title: 'You’ve chosen %files%'
+            title: 'Add %files%?'
             question: 'Do you want to add all of these files?'
             tooManyFiles: 'You’ve chosen too many files. %max% is maximum.'
             tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
-            clear: 'Remove all'
+            clear: 'Cancel'
             done: 'Done'
       footer:
         text: 'powered by'
