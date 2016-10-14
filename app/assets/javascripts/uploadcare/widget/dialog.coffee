@@ -34,7 +34,7 @@ uploadcare.namespace '', (ns) ->
         currentDialogPr?.reject()
 
   currentDialogPr = null
-  openedClass = 'uploadcare-dialog-opened'
+  openedClass = 'uploadcare--page_dialog-opened'
 
   ns.isDialogOpened = ->
     currentDialogPr != null

@@ -5,9 +5,17 @@
 
 	@media (--desktop) {
 		& {
+			box-sizing: border-box;
+
 			display: block;
 
-			padding: calc((30px - 13px) / 2);
+			position: absolute;
+			top: calc(100% + 7.5px);
+			left: 0;
+
+			width: 100%;
+
+			padding-left: 70px;
 		}
 	}
 }
