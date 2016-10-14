@@ -1,18 +1,22 @@
-<div class="uploadcare-file-item uploadcare-file-item_uploading">
-  <div class="uploadcare-file-item__preview">
+<div class="uploadcare--file uploadcare--files__item uploadcare--file_uploading">
+  <div class="uploadcare--file__preview">
     <div class="uploadcare-file-icon"></div>
   </div>
-  <div class="uploadcare-file-item__name">
-    <%- t('dialog.tabs.preview.unknownName') %>
+
+  <div class="uploadcare--file__description">
+    <div class="uploadcare--file__name">
+      <%- t('dialog.tabs.preview.unknownName') %>
+    </div>
+    <div class="uploadcare--file__size"></div>
   </div>
+
   <div class="uploadcare-file-item__progressbar">
     <div class="uploadcare-progressbar">
       <div class="uploadcare-progressbar__value"></div>
     </div>
   </div>
-  <div class="uploadcare-file-item__size"></div>
-  <div class="uploadcare-file-item__error"></div>
-  <div class="uploadcare-file-item__remove">
-    <div class="uploadcare-remove"></div>
-  </div>
+
+  <div class="uploadcare--file__error"></div>
+
+  <div class="uploadcare--file__remove"></div>
 </div>

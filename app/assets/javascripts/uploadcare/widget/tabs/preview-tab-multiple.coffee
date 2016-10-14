@@ -18,7 +18,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
-      @fileListEl = @container.find('.uploadcare--file-list')
+      @fileListEl = @container.find('.uploadcare--files')
       @doneBtnEl = @container.find('.uploadcare--preview__done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
@@ -35,8 +35,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @fileListEl.addClass(
         if @settings.imagesOnly
-        then 'uploadcare--file-list__tiles'
-        else 'uploadcare--file-list__table'
+        then 'uploadcare--files_type_tiles'
+        else 'uploadcare--files_type_table'
       )
 
       @__setupSorting()
@@ -49,7 +49,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           info.dragged.css('visibility', 'hidden')
         finish: (info) =>
           info.dragged.css('visibility', 'visible')
-          elements = @container.find('.uploadcare-file-item')
+          elements = @container.find('.uploadcare--file')
           index = (file) =>
             elements.index(@__fileToEl(file))
           @dialogApi.fileColl.sort (a, b) ->
@@ -84,10 +84,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .text(wrongNumberFilesMessage)
 
     __updateFileInfo: (fileEl, info) ->
-      fileEl.find('.uploadcare-file-item__name')
+      fileEl.find('.uploadcare--file__name')
         .text(info.name or t('dialog.tabs.preview.unknownName'))
 
-      fileEl.find('.uploadcare-file-item__size')
+      fileEl.find('.uploadcare--file__size')
         .text(utils.readableFileSize(info.size, '–'))
 
     __fileProgress: (file, progressInfo) =>
@@ -100,8 +100,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __fileDone: (file, info) =>
       fileEl = @__fileToEl(file)
-        .removeClass('uploadcare-file-item_uploading')
-        .addClass('uploadcare-file-item_uploaded')
+        .removeClass('uploadcare--file_uploading')
+        .addClass('uploadcare--file_uploaded')
 
       fileEl.find('.uploadcare-progressbar__value')
         .css('width', '100%')
@@ -112,7 +112,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if @settings.imagesOnly
           then "-/preview/340x340/"
           else "-/scale_crop/110x110/center/"
-        fileEl.find('.uploadcare-file-item__preview')
+        fileEl.find('.uploadcare--file__preview')
           .addClass('uploadcare-zoomable-icon')
           .html(
             $('<img>').attr('src', cdnURL)
@@ -123,9 +123,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __fileFailed: (file, error, info) =>
       @__fileToEl(file)
-        .removeClass('uploadcare-file-item_uploading')
-        .addClass('uploadcare-file-item_error')
-        .find('.uploadcare-file-item__error')
+        .removeClass('uploadcare--file_uploading')
+        .addClass('uploadcare--file_error')
+        .find('.uploadcare--file__error')
           .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
@@ -147,7 +147,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __createFileEl: (file) ->
       fileEl = @__fileTpl.clone()
-        .on 'click', '.uploadcare-remove', =>
+        .on 'click', '.uploadcare--file__remove', =>
           @dialogApi.fileColl.remove(file)
       $(file).data('dpm-el', fileEl)
       fileEl
