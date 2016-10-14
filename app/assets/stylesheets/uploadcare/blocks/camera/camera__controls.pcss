@@ -1,9 +1,7 @@
 @import '_config.pcss';
 
 .camera__controls {
-	@media (--desktop) {
-		& {
-			justify-content: center;
-		}
+	.camera_denied &, .camera_not-founded &, .camera_requested & {
+		display: none;
 	}
 }
