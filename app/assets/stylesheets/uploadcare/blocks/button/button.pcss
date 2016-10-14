@@ -5,41 +5,30 @@
 
 	box-sizing: border-box;
 
-	min-width: 100px;
-	height: 40px;
-
-	margin: 10px;
-	padding: calc((40px - 20px) / 2) 20px;
-
-	border: none;
-	border-radius: 4px;
-
-	background: #454545;
-	color: #fff;
-
-	font-family: var(--font-family);
-	font-size: 16px;
-	line-height: 20px;
 	white-space: nowrap;
 
 	cursor: pointer;
 
+	padding: 10px 20px;
+
+	border: 1px solid transparent;
+	border-radius: 4px;
+
+	background: buttonface;
+	color: buttontext;
+
+	font-family: var(--font-family);
+	font-size: 16px;
+	line-height: 20px;
+
 	transition: background .3s;
 
-	&:hover, &:focus {
-		background: #282828;
-		color: #fff;
-	}
-
 	&:active {
-		background: #000;
-		color: #fff;
+		outline: 0;
 	}
 
 	&[aria-disabled=true] {
-		background: #d2d2d2;
-		color: #f3f3f3;
-
-		cursor: default;
+		cursor: not-allowed;
+		opacity: .65;
 	}
 }
