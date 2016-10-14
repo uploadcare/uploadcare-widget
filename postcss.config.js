@@ -14,6 +14,7 @@ module.exports = {
 		'postcss-css-variables',
 		'postcss-calc',
 		'postcss-color-function',
+		'postcss-flexbugs-fixes',
 		'autoprefixer',
 		'postcss-reporter',
 	],
@@ -24,7 +25,7 @@ module.exports = {
 			require('postcss-apply'),
 			require('postcss-prefixer')('uploadcare--', {
 				ignore: [
-					/uploadcare-|ord-/,
+					/^uploadcare-|^ord-/,
 					'.bottom',
 					'.right',
 				],
@@ -33,4 +34,5 @@ module.exports = {
 	},
 	'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
 	'postcss-reporter': {clearMessages: true},
+	'autoprefixer': {browsers: ['last 2 versions', 'ie >= 10']},
 }
