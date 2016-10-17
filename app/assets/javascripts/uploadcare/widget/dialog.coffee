@@ -344,7 +344,7 @@ uploadcare.namespace '', (ns) ->
         .appendTo(@panel.find(".uploadcare--menu__container"))
         .on 'click', =>
           if name is @currentTab
-            @panel.toggleClass('uploadcare--dialog_menu_opened')
+            @panel.find('.uploadcare--dialog__menu').toggleClass('uploadcare--dialog__menu_opened')
           else
             @switchTab(name)
 
@@ -355,7 +355,7 @@ uploadcare.namespace '', (ns) ->
         return
       @currentTab = tab
 
-      @panel.removeClass('uploadcare--dialog_menu_opened')
+      @panel.find('.uploadcare--dialog__menu').removeClass('uploadcare--dialog__menu_opened')
 
       @panel.find(".uploadcare--menu__item")
             .removeClass("uploadcare--menu__item_current")
