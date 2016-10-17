@@ -54,7 +54,7 @@ uploadcare.namespace 'widget', (ns) ->
       @template.addButton('remove', t('buttons.remove')).on 'click', =>
         @__setObject(null)
 
-      @template.content.on 'click', '.uploadcare-widget-file-name', =>
+      @template.content.on 'click', '.uploadcare--widget__file-name', =>
         @openDialog()
 
       # Enable drag and drop

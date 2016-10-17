@@ -14,8 +14,8 @@ uploadcare.namespace 'widget', (ns) ->
       @content = $(tpl('widget'))
       @element.after(@content)
       @circle = new progress.Circle(@content.find('.uploadcare--widget__progress'))
-      @statusText = @content.find('.uploadcare-widget-text')
-      @content.toggleClass('uploadcare-widget-option-clearable',
+      @statusText = @content.find('.uploadcare--widget__text')
+      @content.toggleClass('uploadcare--widget_option_clearable',
                            @settings.clearable)
 
     addButton: (name, caption='') ->
@@ -54,5 +54,5 @@ uploadcare.namespace 'widget', (ns) ->
 
     setFileInfo: (info) ->
       @statusText.html(tpl('widget-file-name', info))
-        .find('.uploadcare-widget-file-name')
+        .find('.uploadcare--widget__file-name')
         .toggleClass('needsclick', @settings.systemDialog)
