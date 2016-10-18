@@ -15,42 +15,31 @@
 			.menu__item_current {
 				display: block;
 
-				cursor: pointer;
-
-				.dialog__icon {
-					width: 30px;
-					height: 30px;
-
-					margin-top: calc(30px / 2 * -1);
-				}
-
 				.dialog__icon {
 					left: 50%;
 
-					margin-left: calc(30px / 2 * -1);
-				}
-
-				&:before, &:after {
-					width: 30px;
-					height: 30px;
-
-					margin-top: calc(30px / 2 * -1);
+					transform: translateX(-50%) translateY(-50%);
 				}
 
 				&:before {
 					left: 50%;
 
-					margin-left: calc(30px / 2 * -1);
+					transform: translateX(-50%) translateY(-50%);
 				}
 
 				&:after {
 					content: '';
 
-					left: calc(30px / 2);
+					left: 20px;
 
-					margin-left: 0;
+					width: 20px;
+					height: 20px;
 
-					background-color: pink;
+					background-color: transparent;
+					background-repeat: no-repeat;
+					background-position: center center;
+					background-size: cover;
+					background-image: svg-load('icons-hamburger.svg', fill=#454545);
 				}
 			}
 		}
@@ -65,6 +54,6 @@
 		top: 50%;
 		left: 20px;
 
-		margin-top: calc(30px / 2 * -1);
+		transform: translateY(-50%);
 	}
 }
