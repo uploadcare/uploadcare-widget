@@ -6,12 +6,14 @@
 	width: 100%;
 	height: 100%;
 
-	overflow: hidden;  /* Hack for hide scrollbar */
+	overflow: hidden; /* Hack for hide scrollbar */
 
 	background-color: var(--gray-69);
 
 	@media (--desktop) {
 		& {
+			flex-shrink: 0;
+
 			width: calc(30px + 40px);
 
 			transition: width .3s;
