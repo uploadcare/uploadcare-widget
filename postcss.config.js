@@ -2,8 +2,8 @@ const path = require('path')
 const stylesheetsPath = path.join(__dirname, 'app', 'assets', 'stylesheets', 'uploadcare')
 
 module.exports = {
-	'input': path.join(stylesheetsPath, 'widget.pcss'),
-	'output': path.join(stylesheetsPath, 'widget.css'),
+	'input': path.join(stylesheetsPath, 'styles.pcss'),
+	'output': path.join(stylesheetsPath, 'styles.css'),
 	'local-plugins': true,
 	'use': [
 		'postcss-import',
