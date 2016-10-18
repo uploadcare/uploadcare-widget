@@ -111,15 +111,20 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
           then "-/preview/340x340/"
-          else "-/scale_crop/110x110/center/"
+          else "-/scale_crop/40x40/center/"
+        cdnURL_2x = "#{info.cdnUrl}-/quality/lightest/" +
+          if @settings.imagesOnly
+          then "-/preview/340x340/"
+          else "-/scale_crop/80x80/center/"
         fileEl.find('.uploadcare--file__preview')
-          .addClass('uploadcare-zoomable-icon')
           .html(
-            $('<img>').attr('src', cdnURL)
-          ).on 'click', =>
-            uploadcare.openPreviewDialog(file, @settings)
-              .done (newFile) =>
-                @dialogApi.fileColl.replace(file, newFile)
+            $('<img>').attr('src', cdnURL).attr('srcset', cdnURL_2x + ' 2x')
+          )
+
+      fileEl.find('.uploadcare--file__content').on 'click', =>
+          uploadcare.openPreviewDialog(file, @settings)
+            .done (newFile) =>
+              @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
       @__fileToEl(file)
