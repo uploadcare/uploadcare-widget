@@ -4,7 +4,7 @@
 } = uploadcare
 
 fakeButtons = [
-  'div.uploadcare-link',
+  'div.uploadcare--link',
   'div.uploadcare--widget__button',
   'div.uploadcare-dialog-tab',
   'div.uploadcare-dialog-button',

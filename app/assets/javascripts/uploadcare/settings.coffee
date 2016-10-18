@@ -237,7 +237,7 @@ uploadcare.namespace 'settings', (ns) ->
   defaults['_emptyKeyText'] = """<div class="uploadcare-dialog-message-center">
   <div class="uploadcare-dialog-big-title">Hello!</div>
   <div class="uploadcare-dialog-large-text">
-    <div>Your <a class="uploadcare-link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>
+    <div>Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>
     <div>Add this to the &lt;head&gt; tag to start uploading files:</div>
     <div class="uploadcare-pre">&lt;script&gt;
 UPLOADCARE_PUBLIC_KEY = 'your_public_key';
