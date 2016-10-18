@@ -1,5 +1,9 @@
 # History
 
+### 2.10.1
+
+* Fixed the preview orientation for some image.
+
 ### 2.10.0, 19.08.2016
 
 * Fixed the `Widget` constructor error message.

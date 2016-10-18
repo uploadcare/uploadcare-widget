@@ -3,7 +3,8 @@
   jQuery: $,
   utils,
   locale: {t},
-  settings: s
+  settings: s,
+  files: uc_files,
 } = uploadcare
 
 namespace 'files', (ns) ->
@@ -150,7 +151,7 @@ namespace '', (ns) ->
       else if utils.isFileGroup(item)
         for file in item.files()
           files.push(file)
-    return new uploadcare.files.FileGroup(files, settings).api()
+    return new uc_files.FileGroup(files, settings).api()
 
   ns.loadFileGroup = (groupIdOrUrl, settings) ->
     settings = s.build(settings)
@@ -167,7 +168,7 @@ namespace '', (ns) ->
                     id[0], settings.publicKey, reason)
         df.reject()
       .done (data) ->
-        group = new uploadcare.files.SavedFileGroup(data, settings)
+        group = new uc_files.SavedFileGroup(data, settings)
         df.resolve(group.api())
     else
       df.reject()
