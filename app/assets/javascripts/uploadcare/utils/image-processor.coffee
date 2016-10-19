@@ -25,11 +25,11 @@ uploadcare.namespace 'utils.image', (ns) ->
 
       # start = new Date()
       op = utils.imageLoader(URL.createObjectURL(file))
-      op.always (e) ->
-        URL.revokeObjectURL(e.target.src)
+      op.always (img) ->
+        URL.revokeObjectURL(img.src)
       op.fail ->
         df.reject('not image')
-      op.done (e) ->
+      op.done (img) ->
         # console.log('load: ' + (new Date() - start))
         df.notify(.10)
 
@@ -38,7 +38,7 @@ uploadcare.namespace 'utils.image', (ns) ->
           isJPEG = @state() is 'resolved'
 
           # start = new Date()
-          op = ns.shrinkImage(e.target, settings)
+          op = ns.shrinkImage(img, settings)
           op.progress (progress) ->
             df.notify(.2 + progress * .6)
           op.fail(df.reject)
@@ -147,12 +147,11 @@ uploadcare.namespace 'utils.image', (ns) ->
       return df.reject('support')
 
     op = utils.imageLoader(URL.createObjectURL(file))
-    op.always (e) ->
-      URL.revokeObjectURL(e.target.src)
+    op.always (img) ->
+      URL.revokeObjectURL(img.src)
     op.fail ->
       df.reject('not image')
-    op.done (e) ->
-      img = e.target
+    op.done (img) ->
       df.always ->
         img.src = '//:0'
 
