@@ -49,15 +49,6 @@ end
 PACKAGES = ['uploadcare.api', 'uploadcare.lang.en', 'uploadcare',
             'uploadcare.full']
 
-IMAGES_TYPES = {
-  '.png' => 'image/png',
-  '.gif' => 'image/gif',
-  '.jpg' => 'image/jpeg',
-  '.jpeg' => 'image/jpeg'
-}
-IMAGES = file_list('app/assets/images/uploadcare/images')
-  .map { |full, base, without_ext, ext| [full, base, IMAGES_TYPES[ext]] }
-
 def ensure_dir(filename)
   path = File.dirname filename
   FileUtils.mkdir_p(path) unless Dir.exists?(path)
@@ -131,10 +122,6 @@ def build_widget(version)
       write_file("#{version}/#{package}.min.js", header + minified)
     end
   end
-
-  IMAGES.each do |full, base|
-    cp_file full, "#{version}/images/#{base}"
-  end
 end
 
 def upload_widget(version)
@@ -168,10 +155,6 @@ def upload_widget(version)
     upload_js.call(version[/^\d+\.\d+/] + '.x')
     upload_js.call(version[/^\d+/] + '.x')
   end
-
-  IMAGES.each do |full, base, type|
-    upload.call "images/#{base}", type
-  end
 end
 
 def upload_bower(version)
@@ -194,10 +177,6 @@ def upload_bower(version)
   PACKAGES.each do |package|
     cp.call("#{package}.js")
     cp.call("#{package}.min.js")
-  end
-
-  IMAGES.each do |full, base, type|
-    cp.call "images/#{base}"
   end
 
   # Update version number in boser.json
