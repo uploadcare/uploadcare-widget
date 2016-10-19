@@ -1,17 +1,20 @@
 uploadcare.namespace 'utils', (ns) ->
 
   ns.log = () ->
-    window.console?.log?(arguments...)
+    try
+      window.console?.log?(arguments...)
 
   ns.debug = () ->
     if window.console?.debug
-      window.console.debug(arguments...)
+      try
+        window.console.debug(arguments...)
     else
       ns.log("Debug:", arguments...)
 
   ns.warn = () ->
     if window.console?.warn
-      window.console.warn(arguments...)
+      try
+        window.console.warn(arguments...)
     else
       ns.log("Warning:", arguments...)
 
