@@ -47,7 +47,7 @@ def file_list(path)
 end
 
 PACKAGES = ['uploadcare.api', 'uploadcare.lang.en', 'uploadcare',
-            'uploadcare.full', 'uploadcare.ie8']
+            'uploadcare.full']
 
 IMAGES_TYPES = {
   '.png' => 'image/png',
