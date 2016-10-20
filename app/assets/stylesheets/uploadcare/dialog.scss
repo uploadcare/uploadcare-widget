@@ -124,6 +124,7 @@ html.uploadcare-dialog-opened {
   float: left;
   background: $dialog-body-shadow-color;
   border-right: 1px solid $dialog-body-border-color;
+  overflow: hidden;
 
   .uploadcare-panel-hide-tabs & {
     display: none;
