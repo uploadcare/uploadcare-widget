@@ -1,8 +1,10 @@
 # History
 
-### 2.10.1
+### 2.10.1, 20.10.2016
 
-* Fixed the preview orientation for some image.
+* Fixed the preview orientation for some images.
+* Fixed image size on crop tab in IE 11
+* Fixed tabs overflow in Safari
 
 ### 2.10.0, 19.08.2016
 
