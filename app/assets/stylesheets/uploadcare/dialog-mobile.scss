@@ -209,7 +209,7 @@ $dialog-mobile-min-width: 310px;
 
     // § Tabs
 
-    .uploadcare-dialog-tabs {
+    .uploadcare-dialog-tabs-container {
       position: fixed;
       // Fixes bug in Chrome with resizing.
       top: 0; left: 0;
@@ -220,6 +220,14 @@ $dialog-mobile-min-width: 310px;
       margin: 0;
       z-index: 1;
       background: transparent;
+    }
+
+    .uploadcare-dialog-tabs {
+      height: auto;
+      width: auto;
+      padding-right: 0;
+      overflow-y: hidden;
+      overflow-x: hidden;
     }
       .uploadcare-dialog-tab {
         display: none;
@@ -250,7 +258,7 @@ $dialog-mobile-min-width: 310px;
       .uploadcare-panel-footer {
         display: none;
       }
-      .uploadcare-dialog-tabs {
+      .uploadcare-dialog-tabs-container {
         position: absolute;
         // overlap close icon
         z-index: 3;

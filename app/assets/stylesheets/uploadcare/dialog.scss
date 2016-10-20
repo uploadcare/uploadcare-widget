@@ -116,7 +116,7 @@ html.uploadcare-dialog-opened {
   }
 }
 
-.uploadcare-dialog-tabs {
+.uploadcare-dialog-tabs-container {
   box-sizing: border-box;
   width: $dialog-tab-width;
   height: $dialog-body-height;
@@ -129,6 +129,14 @@ html.uploadcare-dialog-opened {
   .uploadcare-panel-hide-tabs & {
     display: none;
   }
+}
+
+.uploadcare-dialog-tabs {
+  height: 100%;
+  width: 100%;
+  padding-right: 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
   $frame-size: 50px;
