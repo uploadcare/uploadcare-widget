@@ -1,6 +1,7 @@
 # = require ./vendor/jquery-xdr.js
 # = require ./utils/abilities.coffee
 # = require ./utils/collection.coffee
+# = require ./utils/image-loader.coffee
 # = require ./utils/warnings.coffee
 # = require ./utils/messages.coffee
 
@@ -15,23 +16,6 @@ uploadcare.namespace 'utils', (ns) ->
     for item in arr when item not in result
       result.push(item)
     result
-
-  ns.imageLoader = (src) ->
-    def = $.Deferred()
-    $(new Image)
-      .on('load', def.resolve)
-      .on('error', def.reject)
-      .attr('src', src)
-    def.promise()
-    
-  ns.videoLoader = (src) ->
-    def = $.Deferred()
-    $('<video/>')
-      .on('loadeddata', def.resolve)
-      .on('error', def.reject)
-      .attr('src', src)
-      .load()
-    def.promise()
 
   ns.defer = (fn) ->
     setTimeout(fn, 0)

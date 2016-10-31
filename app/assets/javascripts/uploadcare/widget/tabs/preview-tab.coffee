@@ -137,7 +137,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       img = @container.find('.uploadcare--preview__image')
       done = @container.find('.uploadcare--preview__done')
 
-      imgLoader = utils.imageLoader(img.attr('src'))
+      imgLoader = utils.imageLoader(img[0])
         .done =>
           @container.find('.uploadcare--preview').addClass('uploadcare--preview_loaded')
         .fail =>
@@ -164,6 +164,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @populateCropSizes()
 
         imgLoader.done ->
+          # Often IE 11 doesn't do reflow after image.onLoad
+          # and actual image remains 28x30 (broken image placeholder).
+          # Looks like defer always fixes it.
           utils.defer(startCrop)
 
 
