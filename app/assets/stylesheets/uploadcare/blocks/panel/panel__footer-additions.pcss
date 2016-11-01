@@ -8,11 +8,17 @@
 
   box-sizing: border-box;
 
-  padding: 20px 0;
+  padding: 0 0 20px;
 
-  @media (--mobile) {
+  @media (--mobile) and (orientation: portrait) {
     & {
       order: -1;
+    }
+  }
+
+  @media (--mobile) and (orientation: landscape) {
+    & {
+      padding: 0 20px;
     }
   }
 
