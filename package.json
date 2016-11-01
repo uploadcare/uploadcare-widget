@@ -4,9 +4,9 @@
   "description": "Uploadcare widget source",
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer": "^6.5.0",
-    "eslint": "^3.7.1",
-    "eslint-config-uploadcare": "^1.0.0",
+    "autoprefixer": "^6.5.1",
+    "eslint": "^3.9.0",
+    "eslint-config-uploadcare": "^1.1.0",
     "path": "^0.12.7",
     "postcss-apply": "^0.4.0",
     "postcss-calc": "^5.3.1",
@@ -17,11 +17,11 @@
     "postcss-each": "^0.9.3",
     "postcss-flexbugs-fixes": "^2.0.0",
     "postcss-import": "^8.1.2",
-    "postcss-inline-svg": "^2.1.2",
+    "postcss-inline-svg": "^2.2.0",
     "postcss-nested": "^1.0.0",
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^1.4.1",
-    "stylelint": "^7.4.2",
+    "stylelint": "^7.5.0",
     "stylelint-config-uploadcare": "^1.0.0"
   },
   "scripts": {
