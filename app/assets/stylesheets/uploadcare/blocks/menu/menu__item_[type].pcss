@@ -1,11 +1,11 @@
 @each $type in file, camera, url, facebook, gdrive, gphotos, dropbox, instagram, evernote, flickr, skydrive, box, vk, huddle {
-	.menu__item_$(type) {
-		&:before {
-			background-image: svg-load('icons-menu-$(type).svg', fill=#f3f3f3);
-		}
+  .menu__item_$(type) {
+    &:before {
+      background-image: svg-load('icons-menu-$(type).svg', fill=#f3f3f3);
+    }
 
-		&.menu__item_current:before {
-			background-image: svg-load('icons-menu-$(type).svg', fill=#454545);
-		}
-	}
+    &.menu__item_current:before {
+      background-image: svg-load('icons-menu-$(type).svg', fill=#454545);
+    }
+  }
 }
