@@ -1,16 +1,28 @@
 @import '_config.pcss';
 
 .panel__footer-additions {
+  flex: 0 1 100%;
+
+  display: flex;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding: 20px 0;
+
   @media (--mobile) {
     & {
-      flex: 0 1 100%;
       order: -1;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      box-sizing: border-box;
     }
+  }
+
+  @media (--desktop) {
+    & {
+      padding: 0 20px;
+    }
+  }
+
+  &:empty {
+    display: none;
   }
 }
