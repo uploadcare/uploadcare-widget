@@ -123,7 +123,6 @@ html.uploadcare-dialog-opened {
   margin-left: -$dialog-tab-width;
   float: left;
   background: $dialog-body-shadow-color;
-  border-right: 1px solid $dialog-body-border-color;
   overflow: hidden;
 
   .uploadcare-panel-hide-tabs & {
@@ -136,7 +135,8 @@ html.uploadcare-dialog-opened {
     box-sizing: border-box;
     height: 56px;
     position: relative;
-    border-bottom: 1px solid $dialog-body-border-color;
+    border: 1px solid $dialog-body-border-color;
+    border-width: 0 1px 1px 0;
     cursor: pointer;
 
     // Geometry
@@ -174,7 +174,6 @@ html.uploadcare-dialog-opened {
     }
   }
     .uploadcare-dialog-tab_current {
-      margin-right: -1px;
       border-right: 1px solid $dialog-body-background-color;
       &,
       &:hover {
