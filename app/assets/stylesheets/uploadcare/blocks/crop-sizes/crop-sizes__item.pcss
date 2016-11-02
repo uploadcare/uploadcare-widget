@@ -1,0 +1,35 @@
+.crop-sizes__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  box-sizing: border-box;
+
+  width: 60px;
+  height: 60px;
+
+  border-bottom: 1px solid transparent;
+  color: #454545;
+
+  cursor: pointer;
+
+  &:hover, &:focus {
+    color: #34a3ff;
+  }
+
+  &:active {
+    color: #3274e7;
+  }
+
+  &:after {
+    content: attr(data-caption);
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
