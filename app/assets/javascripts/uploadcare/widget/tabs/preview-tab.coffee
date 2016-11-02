@@ -124,6 +124,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # regular
     __setState: (state, data) ->
       @__state = state
+      data.crop = @settings.crop
       @container.empty().append(tpl("tab-preview-#{state}", data))
 
       if state is 'unknown' and @settings.crop
@@ -176,9 +177,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.find('.uploadcare--preview').addClass('uploadcare--preview_with-sizes')
 
-      control = @container.find('.uploadcare--preview__crop-sizes')
+      control = @container.find('.uploadcare--crop-sizes')
       template = control.children()
-      currentClass = 'uploadcare-crop-size--current'
+      currentClass = 'uploadcare--crop-sizes__item_current'
 
       $.each @settings.crop, (i, crop) =>
         prefered = crop.preferedSize
@@ -196,12 +197,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               control.find('>*').removeClass(currentClass)
               item.addClass(currentClass)
         if prefered
-          size = utils.fitSize(prefered, [40, 40], true)
+          size = utils.fitSize(prefered, [30, 30], true)
           item.children()
             .css(
               width: Math.max(20, size[0])
               height: Math.max(12, size[1])
             )
+        else
+          item.children().addClass('uploadcare--crop-sizes__icon_free')
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)

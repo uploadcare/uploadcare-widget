@@ -5,10 +5,6 @@
 </div>
 
 <div class="uploadcare--panel__content">
-  <div class="uploadcare-crop-sizes uploadcare--preview__crop-sizes">
-    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
-  </div>
-
   <div class="uploadcare--preview__image-container uploadcare-dialog-preview-image-wrap"><!--
       1162x684 is 1.5 size of conteiner
       TODO Use picture and srcset for create responsive image
@@ -30,6 +26,17 @@
   <div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button"
        tabindex="0" role="button"
           ><%- t('dialog.tabs.preview.image.change') %></div>
+
+  <div class="uploadcare--panel__footer-additions">
+    <% if (crop) { %>
+    <div class="uploadcare--crop-sizes">
+      <div class="uploadcare--crop-sizes__item" data-caption="free">
+        <div class="uploadcare--crop-sizes__icon"></div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
   <div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
        tabindex="0" role="button"
           ><%- t('dialog.tabs.preview.done') %></div>
