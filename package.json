@@ -18,6 +18,7 @@
     "postcss-flexbugs-fixes": "^2.0.0",
     "postcss-import": "^8.1.2",
     "postcss-inline-svg": "^2.2.0",
+    "postcss-input-style": "^0.3.0",
     "postcss-nested": "^1.0.0",
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^1.4.1",

@@ -15,6 +15,7 @@ module.exports = {
     'postcss-calc',
     'postcss-color-function',
     'postcss-flexbugs-fixes',
+    'postcss-input-style',
     'autoprefixer',
     'postcss-reporter',
   ],
