@@ -1,9 +1,5 @@
 # History
 
-### 3.0.0-alpha
-
-* New design. Updated html and css. Use svg instead png.
-
 ### 2.10.1
 
 * Fixed the preview orientation for some image.
