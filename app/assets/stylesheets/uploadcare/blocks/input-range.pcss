@@ -11,7 +11,7 @@ input[type='range'].input-range {
 
     border-radius: 2px;
     border: none;
-    background: #e7e7e7;
+    background: #808080;
 
     cursor: pointer;
   }
@@ -24,19 +24,21 @@ input[type='range'].input-range {
 
     border: none;
     border-radius: 50%;
-    background: #fff;
+    background: #454545;
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .3);
 
     cursor: pointer;
 
     transition: box-shadow .3s, background .3s;
 
-    &:hover, &:focus, &:active {
+    &:hover, &:focus {
+      background-color: #282828;
       box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .5);
     }
 
-    &:focus, &:active {
-      background-color: #f6f6f6;
+    &:active {
+      background-color: #000;
+      box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .5);
     }
   }
 }
