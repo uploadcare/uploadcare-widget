@@ -1,5 +1,20 @@
 .crop-sizes__item_current {
-  border-color: color(#3787ec a(30%));
+  position: relative;
 
-  color: #3787ec;
+  &:before {
+    content: '';
+    display: block;
+
+    position: absolute;
+    top: 100%;
+    left: 50%;
+
+    width: 6px;
+    height: 6px;
+
+    background: #3787ec;
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+  }
 }
