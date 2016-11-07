@@ -34,6 +34,9 @@ module.exports = {
     ],
   },
   'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
-  'postcss-reporter': {clearMessages: true},
+  'postcss-reporter': {
+    clearMessages: true,
+    filter: message => message.type !== 'dependency',
+  },
   'autoprefixer': {browsers: ['last 2 versions', 'ie >= 10']},
 }
