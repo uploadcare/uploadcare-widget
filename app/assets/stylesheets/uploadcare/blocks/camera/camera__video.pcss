@@ -3,18 +3,27 @@
 .camera__video {
   flex: 0 1 auto;
 
+  width: auto;
   max-width: 100%;
+  height: auto;
+  min-height: 100px;
   max-height: 100%;
 
   transition: transform .8s cubic-bezier(.23, 1, .32, 1);
 
-  @media (--mobile) and (orientation: landscape) {
+  @media (max-height: 379px) {
     & {
-      height: calc(100% - 200px);
+      max-height: 120px;
     }
   }
 
-  @media (--desktop) {
+  @media (min-height: 380px) and (max-height: 499px) {
+    & {
+      max-height: 180px;
+    }
+  }
+
+  @media (min-height: 500px) {
     & {
       max-height: 300px;
     }
