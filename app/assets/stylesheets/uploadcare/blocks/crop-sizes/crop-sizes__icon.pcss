@@ -5,4 +5,10 @@
   height: 30px;
 
   border: 1px solid #454545;
+
+  @media (max-width: 400px), (max-width: 600px) and (orientation: landscape) {
+    & {
+      transform: scale(.7);
+    }
+  }
 }

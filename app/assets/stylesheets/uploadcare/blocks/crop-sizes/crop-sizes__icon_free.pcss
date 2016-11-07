@@ -8,4 +8,10 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+
+  @media (max-width: 400px), (max-width: 600px) and (orientation: landscape) {
+    & {
+      transform: scale(.8);
+    }
+  }
 }
