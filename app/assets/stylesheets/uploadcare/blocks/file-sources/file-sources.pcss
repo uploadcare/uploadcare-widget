@@ -1,31 +1,11 @@
 .file-sources {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  position: relative;
-
-  overflow: hidden;
-
-  max-width: 200px;
-  height: 40px;
-
-  border: 1px solid red;
-
-  &:after {
-    content: 'more';
-
-    display: block;
-
-    position: absolute;
-    top: 0;
-    left: 120px;
-    z-index: 2147483609;
-
-    width: 80px;
-    height: 40px;
-
-    font-size: 15px;
-    line-height: 40px;
-
-    background: blue;
+  @media (--desktop) {
+    & {
+      display: none;
+    }
   }
 }

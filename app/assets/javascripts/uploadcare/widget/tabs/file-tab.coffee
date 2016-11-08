@@ -12,8 +12,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @container.append(tpl('tab-file'))
 
-      @container.on 'click', '.uploadcare-dialog-file-source', (e) =>
+      @container.on 'click', '.uploadcare--file-sources__item', (e) =>
         @dialogApi.switchTab($(e.target).data('tab'))
+
+      @container.on 'click', '.uploadcare--file-sources__list', (e) =>
+        @dialogApi.openMenu()
 
       @__setupFileButton()
       @__initDragNDrop()
@@ -42,10 +45,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @dialogApi.switchTab('preview')
 
     __updateTabsList: =>
-      list = @container.find('.uploadcare-dialog-file-sources').empty()
+      list = @container.find('.uploadcare--file-sources__list').empty()
       n = 0
       for tab in @settings.tabs
-        if tab == @name
+        if tab in ['file', 'url', 'camera']
           continue
         if not @dialogApi.isTabVisible(tab)
           continue
@@ -53,14 +56,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         n += 1
         list.append([
           $('<div/>', {
-            class: "uploadcare-dialog-file-source"
+            class: "uploadcare--file-sources__item uploadcare--file-sources__item_" + tab
             'data-tab': tab
             html: t('dialog.tabs.names.' + tab)
           }),
           ' '
         ])
 
-      list.toggleClass('uploadcare-hidden', n == 0)
-      @container
-        .find('.uploadcare-dialog-file-source-or')
-        .toggleClass('uploadcare-hidden', n == 0)
+      @container.find('.uploadcare--file-sources').attr('hidden', n == 0)

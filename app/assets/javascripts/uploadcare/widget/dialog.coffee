@@ -199,6 +199,7 @@ uploadcare.namespace '', (ns) ->
           hideTab: @hideTab
           showTab: @showTab
           isTabVisible: @isTabVisible
+          openMenu: @openMenu
           onTabVisibility: utils.publicCallbacks(@onTabVisibility)
         )
       @promise
@@ -381,6 +382,9 @@ uploadcare.namespace '', (ns) ->
     isTabVisible: (tab) =>
       not @panel.find(".uploadcare--menu__item_#{tab}")\
             .is(".uploadcare--menu__item_hidden")
+
+    openMenu: =>
+      @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--dialog__menu_opened')
 
     __firstVisibleTab: ->
       for tab in @settings.tabs

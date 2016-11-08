@@ -1,0 +1,57 @@
+.file-sources__list {
+  display: flex;
+
+  position: relative;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  max-width: 200px;
+  height: 40px;
+
+  padding: 0 10px;
+
+  border: 1px solid #454545;
+  background: #fff;
+  border-radius: 20px;
+
+  &:empty {
+    display: none;
+  }
+
+  &:before {
+    content: '';
+
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2147483611;
+
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+  }
+
+  &:after {
+    content: 'and more';
+
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 100px;
+    z-index: 2147483611;
+
+    width: 100px;
+    height: 40px;
+
+    font-size: 13px;
+    line-height: 40px;
+
+    background: #fff;
+  }
+}
