@@ -38,5 +38,5 @@ module.exports = {
     clearMessages: true,
     filter: message => message.type !== 'dependency',
   },
-  'autoprefixer': {browsers: ['last 2 versions', 'ie >= 10']},
+  'autoprefixer': {browsers: ['> .4%', 'ie >= 10']},
 }
