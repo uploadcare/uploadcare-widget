@@ -14,13 +14,17 @@
     & {
       flex-shrink: 0;
 
+      z-index: 2147483640;
+
       width: calc(30px + 40px);
 
-      transition: width .3s;
+      transition: width .3s, margin .3s;
+      transition-delay: .4s;
     }
 
     &:hover {
       width: 200px;
+      margin-right: -130px;
     }
   }
 }
