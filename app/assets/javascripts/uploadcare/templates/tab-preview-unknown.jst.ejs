@@ -1,10 +1,20 @@
-<div class="uploadcare-dialog-padding">
+<div class="uploadcare--panel__header">
+  <div class="uploadcare--panel__title uploadcare--preview__title">
+    <%- t('dialog.tabs.preview.unknown.title') %>
+  </div>
+</div>
 
-  <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.unknown.title') %></div>
-
+<div class="uploadcare--panel__content">
   <div class="uploadcare--preview__label uploadcare-dialog-label"></div>
+</div>
+
+<div class="uploadcare--panel__footer uploadcare-panel-footer">
+  <!-- TODO Change Cancel to Remove -->
+  <div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button"
+       tabindex="0" role="button"
+  ><%- t('dialog.tabs.preview.change') %></div>
 
   <div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
        tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.unknown.done') %></div>
+  ><%- t('dialog.tabs.preview.unknown.done') %></div>
 </div>
