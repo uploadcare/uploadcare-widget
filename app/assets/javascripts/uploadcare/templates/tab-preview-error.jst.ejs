@@ -1,18 +1,22 @@
-<div class="uploadcare-dialog-error-tab-wrap uloadcare-dialog-error-tab-<%- error %>"><!--
+<div class="uploadcare--panel__header">
+  <div class="uploadcare--panel__title uploadcare--preview__title">
+    <%-
+    t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
+    %>
+  </div>
+</div>
+
+<div class="uploadcare--panel__content uploadcare-dialog-error-tab-wrap uloadcare-dialog-error-tab-<%- error %>"><!--
   --><div class="uploadcare-dialog-error-tab-wrap2">
 
     <div class="uploadcare-dialog-error-tab-illustration"></div>
 
-    <div class="uploadcare-dialog-title"><%-
-      t('dialog.tabs.preview.error.'+error+'.title') || t('dialog.tabs.preview.error.default.title')
-    %></div>
-
-    <div class="uploadcare-dialog-normal-text"><%- 
+    <div class="uploadcare--panel__text uploadcare-dialog-normal-text"><%-
       t('dialog.tabs.preview.error.'+error+'.text') || t('dialog.tabs.preview.error.default.text') 
     %></div>
 
-    <div class="uploadcare--button uploadcare--preview__back uploadcare-dialog-button-success"
+    <div class="uploadcare--button uploadcare--button_outline-primary uploadcare--preview__back uploadcare-dialog-button-success"
          tabindex="0" role="button"
-            ><%- t('dialog.tabs.preview.error.'+error+'.back') || t('dialog.tabs.preview.error.default.back') %></div>
+    ><%- t('dialog.tabs.preview.error.'+error+'.back') || t('dialog.tabs.preview.error.default.back') %></div>
   </div>
 </div>
