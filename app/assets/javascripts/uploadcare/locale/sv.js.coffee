@@ -45,7 +45,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           url: 'Direkta länkar'
           camera: 'Kamera'
         file:
-          drag: 'Släpp en fil hit'
+          drag: 'Släpp filen här'
           nodrop: 'Ladda upp filer från din dator'
           cloudsTip: 'Cloud storages<br>och sociala nätverk'
           or: 'eller'
