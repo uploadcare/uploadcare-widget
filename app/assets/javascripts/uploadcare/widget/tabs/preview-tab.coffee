@@ -124,6 +124,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # regular
     __setState: (state, data) ->
       @__state = state
+      data = data || {}
+
       data.crop = @settings.crop
       @container.empty().append(tpl("tab-preview-#{state}", data))
 
