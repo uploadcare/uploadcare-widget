@@ -1,18 +1,23 @@
 <div class="uploadcare--panel__content uploadcare-dialog-file-drop-area">
-  <div class="uploadcare--panel__title uploadcare--panel__title_lead uploadcare--panel__text_draganddrop_yes">
-    <%= t('dialog.tabs.file.drag') %>
+  <div class="uploadcare--panel__title">
+    <div class="uploadcare--text uploadcare--text_extra-large uploadcare--panel__text_draganddrop_yes">
+      <%= t('dialog.tabs.file.drag') %>
+    </div>
+    <div class="uploadcare--text uploadcare--text_small uploadcare--text_muted uploadcare--panel__text_draganddrop_yes">
+      <%- t('dialog.tabs.file.or') %>
+    </div>
+
+    <div class="uploadcare--text uploadcare--text_large uploadcare--panel__text_draganddrop_no">
+      <%= t('dialog.tabs.file.nodrop') %>
+    </div>
   </div>
-  <div class="uploadcare--panel__title uploadcare--panel__title_lead uploadcare--panel__text_draganddrop_no">
-    <%- t('dialog.tabs.file.nodrop') %>
-  </div>
-  <div class="uploadcare--panel__or-text uploadcare--panel__text_draganddrop_yes">
-    <%- t('dialog.tabs.file.or') %>
-  </div>
+
   <div class="uploadcare--button uploadcare--button_size_big uploadcare--button_primary uploadcare--panel__action-button needsclick">
     <%- t('dialog.tabs.file.button') %>
   </div>
+
   <div class="uploadcare--file-sources">
-    <div class="uploadcare--panel__or-text uploadcare--file-sources__caption">
+    <div class="uploadcare--text uploadcare--text_small uploadcare--text_muted uploadcare--file-sources__caption">
       <%- t('dialog.tabs.file.also') %>
     </div>
     <div class="uploadcare--file-sources__list"></div>
