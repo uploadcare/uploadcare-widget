@@ -26,7 +26,8 @@ module.exports = {
       require('postcss-apply'),
       require('postcss-prefixer')('uploadcare--', {
         ignore: [
-          /^uploadcare-|^ord-/,
+          /^\.uploadcare-/,
+          /^\.ord-/,
           '.bottom',
           '.right',
         ],
