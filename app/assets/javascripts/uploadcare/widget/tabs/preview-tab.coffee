@@ -128,6 +128,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       data.crop = @settings.crop
       @container.empty().append(tpl("tab-preview-#{state}", data))
+      @container.removeClass (index, classes) ->
+        classes
+          .split(' ')
+          .filter (c) ->
+            !!~ c.indexOf 'uploadcare--preview_status_'
+          .join ' '
 
       if state is 'unknown' and @settings.crop
         @container.find('.uploadcare--preview__done').hide()
@@ -136,13 +142,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         imgInfo = data.file.originalImageInfo
         @initImage([imgInfo.width, imgInfo.height], data.file.cdnUrlModifiers)
 
+      if state is 'error'
+        @container.addClass('uploadcare--preview_status_error-' + data.error)
+
     initImage: (imgSize, cdnModifiers) ->
       img = @container.find('.uploadcare--preview__image')
       done = @container.find('.uploadcare--preview__done')
 
       imgLoader = utils.imageLoader(img[0])
         .done =>
-          @container.find('.uploadcare--preview').addClass('uploadcare--preview_loaded')
+          @container.addClass('uploadcare--preview_status_loaded')
         .fail =>
           @file = null
           @__setState('error', {error: 'loadImage'})
@@ -177,7 +186,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if @settings.crop.length <= 1
         return
 
-      @container.find('.uploadcare--preview').addClass('uploadcare--preview_with-sizes')
+      @container.addClass('uploadcare--preview_status_with-sizes')
 
       control = @container.find('.uploadcare--crop-sizes')
       template = control.children()
