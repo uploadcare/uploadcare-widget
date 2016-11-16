@@ -38,7 +38,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           'empty-pubkey': 'Welcome'
           preview: 'Preview'
           file: 'Local Files'
-          url: 'Arbitrary Links'
+          url: 'Direct Link'
           camera: 'Camera'
           facebook: 'Facebook'
           dropbox: 'Dropbox'
