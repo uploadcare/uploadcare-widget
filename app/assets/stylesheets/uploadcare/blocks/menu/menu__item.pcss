@@ -61,5 +61,14 @@
 
     line-height: 30px;
     white-space: nowrap;
+
+    @media (--desktop) {
+      & {
+        overflow: hidden;
+
+        max-width: 170px;
+        text-overflow: ellipsis;
+      }
+    }
   }
 }
