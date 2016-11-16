@@ -1,9 +1,11 @@
 .file__preview {
   flex-shrink: 0;
 
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  padding: 2px;
+  box-sizing: border-box;
 
   width: 50px;
   height: 50px;
@@ -13,16 +15,23 @@
   border-radius: 50%;
 
   background: #fff;
-  border: 1px solid #ececec;
+  border: 1px solid #5b5b5b;
 
   .file:hover &,
   .file:focus & {
     border-color: #3787ec;
   }
 
-  img {
-    width: 100%;
+  .file_error & {
+    border-color: rgba(255, 0, 0, .6);
+  }
 
-    border-radius: 50%;
+  .file_error:hover &,
+  .file_error:focus & {
+    border-color: red;
+  }
+
+  img {
+    max-height: 100%;
   }
 }
