@@ -399,8 +399,9 @@ uploadcare.namespace '', (ns) ->
       null
 
     __addFakeTab: (name) ->
-      $('<div>')
-        .addClass("#{tabClass} #{tabClass}-#{name}")
-        .addClass('uploadcare-dialog-disabled-tab')
+      $('<div>', {role: 'button', tabindex: "0"})
+        .addClass('uploadcare--menu__item')
+        .addClass("uploadcare--menu__item_#{name}")
+        .attr('aria-disabled', true)
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find(".#{tabClass}s"))
+        .appendTo(@panel.find(".uploadcare--menu__container"))
