@@ -3,7 +3,7 @@
 
   margin: 0;
 
-  max-width: 200px; /* TODO Hack for limit block if content has long string without spaces */
+  max-width: calc(100vw - 250px); /* TODO Hack for limit block if content has long string without spaces */
 
   line-height: 25px;
 
@@ -12,5 +12,10 @@
 
   .file_error & {
     color: rgba(255, 0, 0, .6);
+  }
+
+  .file_uploaded &,
+  .file_error & {
+    max-width: calc(100vw - 250px + 80px);
   }
 }
