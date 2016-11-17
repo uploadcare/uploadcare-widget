@@ -24,11 +24,22 @@
 
       transition: width .3s, margin .3s;
       transition-delay: .4s;
+
+      .menu__item {
+        width: 70px;
+
+        transition: width .3s;
+        transition-delay: .4s;
+      }
     }
 
     &:hover {
       width: 250px;
       margin-right: -180px;
+
+      .menu__item {
+        width: 250px;
+      }
     }
   }
 }
