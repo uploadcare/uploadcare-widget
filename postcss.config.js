@@ -17,6 +17,8 @@ module.exports = {
     'postcss-flexbugs-fixes',
     'postcss-input-style',
     'autoprefixer',
+    'css-mqpacker',
+    'cssnano',
     'postcss-reporter',
   ],
   'postcss-import': {

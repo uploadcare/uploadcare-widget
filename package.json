@@ -5,6 +5,8 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.5.2",
+    "css-mqpacker": "^5.0.1",
+    "cssnano": "^3.8.0",
     "eslint": "^3.9.1",
     "eslint-config-uploadcare": "^1.1.0",
     "path": "^0.12.7",
