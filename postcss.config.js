@@ -1,26 +1,37 @@
 const path = require('path')
+const argv = require('yargs').argv
 const stylesheetsPath = path.join(__dirname, 'app', 'assets', 'stylesheets', 'uploadcare')
+
+const withMinification = (argv.min) || false
+
+let use = [
+  'postcss-import',
+  'postcss-each',
+  'postcss-inline-svg',
+  'postcss-custom-media',
+  'postcss-nested',
+  'postcss-css-variables',
+  'postcss-calc',
+  'postcss-color-function',
+  'postcss-flexbugs-fixes',
+  'postcss-input-style',
+  'autoprefixer',
+]
+
+const minificationUse = [
+  'css-mqpacker',
+  'cssnano',
+]
+
+if (withMinification) {
+  use = [...use, ...minificationUse]
+}
 
 module.exports = {
   'input': path.join(stylesheetsPath, 'styles.pcss'),
   'output': path.join(stylesheetsPath, 'styles.css'),
   'local-plugins': true,
-  'use': [
-    'postcss-import',
-    'postcss-each',
-    'postcss-inline-svg',
-    'postcss-custom-media',
-    'postcss-nested',
-    'postcss-css-variables',
-    'postcss-calc',
-    'postcss-color-function',
-    'postcss-flexbugs-fixes',
-    'postcss-input-style',
-    'autoprefixer',
-    'css-mqpacker',
-    'cssnano',
-    'postcss-reporter',
-  ],
+  'use': [...use, 'postcss-reporter'],
   'postcss-import': {
     path: stylesheetsPath,
     plugins: [
