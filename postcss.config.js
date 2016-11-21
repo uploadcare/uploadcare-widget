@@ -17,21 +17,7 @@ let use = [
   'postcss-input-style',
   'autoprefixer',
 ]
-
-const minificationUse = [
-  'css-mqpacker',
-  'cssnano',
-]
-
-if (withMinification) {
-  use = [...use, ...minificationUse]
-}
-
-module.exports = {
-  'input': path.join(stylesheetsPath, 'styles.pcss'),
-  'output': path.join(stylesheetsPath, 'styles.css'),
-  'local-plugins': true,
-  'use': [...use, 'postcss-reporter'],
+let configUse = {
   'postcss-import': {
     path: stylesheetsPath,
     plugins: [
@@ -48,9 +34,26 @@ module.exports = {
     ],
   },
   'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
+  'autoprefixer': {browsers: ['> .4%', 'ie >= 10']},
+}
+
+const minificationUse = ['cssnano']
+const configMinificationUse = {'cssnano': {zindex: false}}
+
+if (withMinification) {
+  use = [...use, ...minificationUse]
+  configUse = Object.assign({}, configUse, configMinificationUse)
+}
+
+const config = {
+  'input': path.join(stylesheetsPath, 'styles.pcss'),
+  'output': path.join(stylesheetsPath, 'styles.css'),
+  'local-plugins': true,
+  'use': [...use, 'postcss-reporter'],
   'postcss-reporter': {
     clearMessages: true,
     filter: message => message.type !== 'dependency',
   },
-  'autoprefixer': {browsers: ['> .4%', 'ie >= 10']},
 }
+
+module.exports = Object.assign({}, config, configUse)
