@@ -279,7 +279,7 @@ uploadcare.namespace '', (ns) ->
         @switchTab(tab || @__firstVisibleTab())
 
       if @settings.tabs.length == 0
-        @panel.addClass('uploadcare-panel-hide-tabs')
+        @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--dialog__menu_hidden')
 
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare-panel-footer')
