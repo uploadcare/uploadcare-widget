@@ -153,8 +153,6 @@ uploadcare.namespace '', (ns) ->
     new tabCls(tabPanel, tabButton, dialogApi, settings, name)
 
   class Panel
-    tabClass = 'uploadcare-dialog-tab'
-
     constructor: (@settings, placeholder, files, tab) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
@@ -166,7 +164,7 @@ uploadcare.namespace '', (ns) ->
       @placeholder.replaceWith(@content)
 
       if @settings.multiple
-        @panel.addClass('uploadcare-dialog-multiple')
+        @panel.addClass('uploadcare--dialog__content_multiple')
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
