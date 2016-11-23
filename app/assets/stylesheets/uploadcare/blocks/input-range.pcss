@@ -6,12 +6,17 @@ input[type='range'].input-range {
 
   background: transparent;
 
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: 1px;
+  }
+
   &::track {
     height: 4px;
 
     border-radius: 2px;
     border: none;
-    background: #808080;
+    background: #9b9b9b;
 
     cursor: pointer;
   }
@@ -32,12 +37,12 @@ input[type='range'].input-range {
     transition: box-shadow .3s, background .3s;
 
     &:hover, &:focus {
-      background-color: #282828;
+      background-color: #5b5b5b;
       box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .5);
     }
 
     &:active {
-      background-color: #000;
+      background-color: #282828;
       box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .5);
     }
   }

@@ -5,6 +5,8 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.5.2",
+    "css-mqpacker": "^5.0.1",
+    "cssnano": "^3.8.0",
     "eslint": "^3.9.1",
     "eslint-config-uploadcare": "^1.1.0",
     "path": "^0.12.7",
@@ -23,11 +25,13 @@
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^1.4.1",
     "stylelint": "^7.5.0",
-    "stylelint-config-uploadcare": "^1.0.0"
+    "stylelint-config-uploadcare": "^1.0.0",
+    "yargs": "^6.4.0"
   },
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "build:css": "postcss -c postcss.config.js",
+    "build:css:min": "npm run build:css -- --min",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,32 +1,27 @@
-@import '_config.pcss';
-
 .input {
   display: block;
+
   box-sizing: border-box;
+
+  margin: 10px 0;
+  padding: 10px 15px;
 
   width: 100%;
 
-  margin: 15px 0;
-  padding: 5px 15px;
+  font-size: 17.5px;
+  line-height: 25px;
 
-  border: none;
-  border-bottom: 1px solid var(--gray-69);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .15);
+  box-shadow: none;
+  color: #454545;
 
-  font-size: 12px;
-
-  text-align: center;
-
-  color: var(--gray-69);
-
-  @media (--desktop) {
-    & {
-      margin: 20px 0;
-
-      font-size: 20px;
-    }
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: 1px;
   }
 
   &::placeholder {
-    color: var(--gray-155);
+    color: #9b9b9b;
   }
 }

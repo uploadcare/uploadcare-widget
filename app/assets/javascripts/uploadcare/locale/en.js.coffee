@@ -16,7 +16,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
       image: 'Only images allowed'
       createGroup: 'Can’t create file group'
       deleted: 'File was deleted'
-    draghere: 'drag & drop any files'
+    draghere: 'Drop a file here'
     file:
       one: '%1 file'
       other: '%1 files'
@@ -38,7 +38,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           'empty-pubkey': 'Welcome'
           preview: 'Preview'
           file: 'Local Files'
-          url: 'Arbitrary Links'
+          url: 'Direct Link'
           camera: 'Camera'
           facebook: 'Facebook'
           dropbox: 'Dropbox'
@@ -53,7 +53,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           huddle: 'Huddle'
         file:
           drag: 'drag & drop<br>any files'
-          nodrop: 'Upload files from your computer'
+          nodrop: 'Upload files from your&nbsp;computer'
           cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
           button: 'Choose a local file'

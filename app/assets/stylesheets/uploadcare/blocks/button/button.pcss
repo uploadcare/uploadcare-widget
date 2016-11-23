@@ -1,6 +1,6 @@
-@import '_config.pcss';
-
 .button {
+  flex-shrink: 0;
+
   display: inline-block;
 
   box-sizing: border-box;
@@ -9,7 +9,9 @@
 
   cursor: default;
 
-  padding: 8px 12px;
+  padding: 10px 15px;
+
+  min-width: 100px;
 
   border: 1px solid transparent;
   border-radius: 4px;
@@ -17,15 +19,11 @@
   background: buttonface;
   color: buttontext;
 
-  font-family: var(--font-family);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 20px;
+  text-align: center;
 
   transition: background .3s;
-
-  &:active {
-    outline: 0;
-  }
 
   &[disabled],
   &[aria-disabled=true] {
@@ -33,11 +31,17 @@
     opacity: .65;
   }
 
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: 1px;
+  }
+
   @media (--desktop) {
     & {
       padding: 10px 20px;
 
-      font-size: 16px;
+      font-size: 17.5px;
+      line-height: 25px;
     }
   }
 }

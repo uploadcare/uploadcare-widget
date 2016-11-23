@@ -234,13 +234,11 @@ uploadcare.namespace 'settings', (ns) ->
 
   uploadcare.tabsCss = new ns.CssCollector
 
-  defaults['_emptyKeyText'] = """<div class="uploadcare-dialog-message-center">
-  <div class="uploadcare-dialog-big-title">Hello!</div>
-  <div class="uploadcare-dialog-large-text">
-    <div>Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>
-    <div>Add this to the &lt;head&gt; tag to start uploading files:</div>
-    <div class="uploadcare-pre">&lt;script&gt;
+  defaults['_emptyKeyText'] = """<div class="uploadcare--panel__content">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--panel__title">Hello!</div>
+  <div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>
+  <div class="uploadcare--text">Add this to the &lt;head&gt; tag to start uploading files:</div>
+  <div class="uploadcare--text uploadcare--text_pre">&lt;script&gt;
 UPLOADCARE_PUBLIC_KEY = 'your_public_key';
 &lt;/script&gt;</div>
-  </div>
 </div>"""

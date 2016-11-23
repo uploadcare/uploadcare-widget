@@ -6,12 +6,11 @@
 fakeButtons = [
   'div.uploadcare--link',
   'div.uploadcare--widget__button',
-  'div.uploadcare-dialog-tab',
-  'div.uploadcare-dialog-button',
-  'div.uploadcare-dialog-button-success',
+  'div.uploadcare--menu__item',
+  'div.uploadcare--button',
 ].join(', ')
 
-mouseFocusedClass = 'uploadcare-mouse-focused'
+mouseFocusedClass = 'uploadcare--mouse-focused'
 
 $(document.documentElement)
   .on 'mousedown', fakeButtons, (e) ->

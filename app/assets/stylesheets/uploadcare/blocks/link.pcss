@@ -3,13 +3,24 @@
   &:link,
   &:visited {
     cursor: pointer;
-    color: #1a85ad;
-    text-decoration: none;
-    border-bottom: 1px dotted #1a85ad;
-    border-color: initial;
+
+    color: #157cfc;
+
+    text-decoration: underline;
   }
 
-  &:hover {
-    color: #176e8f;
+  &:hover, &:focus {
+    color: #2a90ff;
+
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: 1px;
+  }
+
+  &:active {
+    color: #176dea;
   }
 }

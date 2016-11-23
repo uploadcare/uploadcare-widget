@@ -1,11 +1,27 @@
 .file__name {
   overflow: hidden;
 
-  max-width: 200px; /* TODO Hack for limit block if content has long string without spaces */
+  margin: 0;
 
-  font-size: 16px;
-  line-height: 20px;
+  max-width: calc(100vw - 250px); /* TODO Hack for limit block if content has long string without spaces */
+
+  line-height: 25px;
 
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  .file_error & {
+    color: rgba(255, 0, 0, .6);
+  }
+
+  .file_uploaded &,
+  .file_error & {
+    max-width: calc(100vw - 250px + 80px);
+  }
+
+  @media (--desktop) {
+    & {
+      max-width: 350px !important;
+    }
+  }
 }

@@ -1,8 +1,6 @@
-<div class="uploadcare--panel__header">
-  <div class="uploadcare--panel__title"><%- t('dialog.tabs.camera.title') %></div>
-</div>
-
 <div class="uploadcare--panel__content">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--panel__title"><%- t('dialog.tabs.camera.title') %></div>
+
   <div class="uploadcare--camera__video-container">
     <video class="uploadcare--camera__video uploadcare--camera__video_mirrored"></video>
 
@@ -31,21 +29,21 @@
     </div>
   </div>
 
-  <div class="uploadcare--panel__title uploadcare--camera__please-allow-text">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--camera__please-allow-text">
     <%- t('dialog.tabs.camera.pleaseAllow.title') %>
   </div>
-  <div class="uploadcare--panel__text uploadcare--camera__please-allow-text">
+  <div class="uploadcare--text uploadcare--camera__please-allow-text">
     <%= t('dialog.tabs.camera.pleaseAllow.text') %>
   </div>
 
-  <div class="uploadcare--panel__title uploadcare--camera__not-found-text">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--camera__not-found-text">
     <%- t('dialog.tabs.camera.notFound.title') %>
   </div>
-  <div class="uploadcare--panel__text uploadcare--camera__not-found-text">
+  <div class="uploadcare--text uploadcare--camera__not-found-text">
     <%- t('dialog.tabs.camera.notFound.text') %>
   </div>
 
-  <div class="uploadcare--button uploadcare--button_secondary uploadcare--camera__retry-button"
+  <div class="uploadcare--button uploadcare--button_outline-primary uploadcare--camera__retry-button"
        tabindex="0" role="button">
     <%- t('dialog.tabs.camera.retry') %>
   </div>

@@ -24,12 +24,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @dialogApi.onTabVisibility(@__updateTabsList)
 
     __initDragNDrop: ->
-      dropArea = @container.find('.uploadcare-dialog-file-drop-area')
+      dropArea = @container.find('.uploadcare--draganddrop')
       if utils.abilities.fileDragAndDrop
         dragdrop.receiveDrop dropArea, (type, data) =>
           @dialogApi.addFiles(type, data)
           @dialogApi.switchTab('preview')
-        @container.addClass("uploadcare--panel_draganddrop")
+        dropArea.addClass("uploadcare--draganddrop_supported")
 
     __setupFileButton: ->
       fileButton = @container.find('.uploadcare--panel__action-button')

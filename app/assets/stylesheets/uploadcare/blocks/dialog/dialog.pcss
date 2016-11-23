@@ -1,10 +1,8 @@
-@import '_config.pcss';
-
 .dialog {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--z-index);
+  z-index: 2147483647;
 
   overflow: hidden;
 
@@ -12,6 +10,12 @@
   height: 100%;
 
   background: #fff;
+  color: #454545;
+
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
 
   opacity: 0;
 

@@ -18,7 +18,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           visible: name == @name
 
     remoteUrl: ->
-      "#{@settings.socialBase}/window/#{@name}?" + $.param(
+      "#{@settings.socialBase}/window3/#{@name}?" + $.param(
         lang: @settings.locale
         public_key: @settings.publicKey
         widget_version: uploadcare.version
@@ -56,6 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
+      @container.addClass('uploadcare--panel_remote')
       iframe = @iframe[0].contentWindow
 
       utils.registerMessage 'file-selected', iframe, (message) =>

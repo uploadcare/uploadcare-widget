@@ -1,21 +1,14 @@
-@import '_config.pcss';
-
 .dialog__footer {
-  display: none;
+  padding-top: 15px;
 
-  @media (--desktop) {
-    & {
-      box-sizing: border-box;
+  background: #ececec;
 
-      display: block;
+  .dialog:not(.dialog_multiple) &,
+  .panel_preview.panel_current ~ & {
+    display: none;
+  }
 
-      position: absolute;
-      top: calc(100% + 7.5px);
-      left: 0;
-
-      width: 100%;
-
-      padding-left: 70px;
-    }
+  .panel_remote.panel_current ~ & {
+    margin-top: 0;
   }
 }

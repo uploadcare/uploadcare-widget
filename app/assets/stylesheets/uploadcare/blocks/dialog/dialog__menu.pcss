@@ -1,5 +1,3 @@
-@import '_config.pcss';
-
 .dialog__menu {
   &:not(.dialog__menu_opened) {
     @media (--mobile) {
@@ -42,9 +40,7 @@
           background-image: svg-load('icons-hamburger.svg', fill=#454545);
         }
 
-        &.menu__item_file,
-        &.menu__item_url,
-        &.menu__item_camera {
+        &.menu__item_file {
           &:before {
             display: none;
           }
