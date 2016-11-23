@@ -52,6 +52,9 @@ uploadcare.namespace '', (ns) ->
     dialog.addClass('uploadcare--dialog_active')
     dialogPr.dialogElement = dialog
 
+    if settings.multiple
+      dialog.addClass('uploadcare--dialog_multiple')
+
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
@@ -157,14 +160,11 @@ uploadcare.namespace '', (ns) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
 
-      sel = '.uploadcare--dialog__content'
-      @content = $(tpl('dialog__content'))
+      sel = '.uploadcare--dialog__panel'
+      @content = $(tpl('dialog__panel'))
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
-
-      if @settings.multiple
-        @panel.addClass('uploadcare--dialog__content_multiple')
 
       # files collection
       @files = new utils.CollectionOfPromises(files)
@@ -280,11 +280,11 @@ uploadcare.namespace '', (ns) ->
         @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--dialog__menu_hidden')
 
     __prepareFooter: ->
-      @footer = @panel.find('.uploadcare-panel-footer')
-      notDisabled = ':not(.uploadcare-disabled-el)'
-      @footer.on 'click', '.uploadcare-dialog-button' + notDisabled, =>
+      @footer = @panel.find('.uploadcare--dialog__footer')
+      notDisabled = ':not([aria-disabled=true])'
+      @footer.on 'click', '.uploadcare--dialog__show-files' + notDisabled, =>
         @switchTab('preview')
-      @footer.on('click', '.uploadcare-dialog-button-success' + notDisabled, @__resolve)
+      @footer.on('click', '.uploadcare--dialog__done' + notDisabled, @__resolve)
 
       @__updateFooter()
       @files.onAdd.add(@__updateFooter)
@@ -295,11 +295,11 @@ uploadcare.namespace '', (ns) ->
         tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
         tooFewFiles = files < @settings.multipleMin
 
-        @footer.find('.uploadcare-dialog-button-success')
-          .toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
+        @footer.find('.uploadcare--dialog__done')
+          .attr('aria-disabled', tooManyFiles or tooFewFiles)
 
-        @footer.find('.uploadcare-dialog-button')
-          .toggleClass('uploadcare-disabled-el', files is 0)
+        @footer.find('.uploadcare--dialog__show-files')
+          .attr('aria-disabled', files is 0)
 
         footer = if tooManyFiles
           t('dialog.tabs.preview.multiple.tooManyFiles')
@@ -310,12 +310,12 @@ uploadcare.namespace '', (ns) ->
         else
           t('dialog.tabs.preview.multiple.title')
 
-        @footer.find('.uploadcare-panel-footer-text')
-          .toggleClass('uploadcare-error', tooManyFiles)
+        @footer.find('.uploadcare--dialog__message')
+          .toggleClass('uploadcare--error', tooManyFiles)
           .text(footer.replace('%files%', t('file', files)))
 
-        @footer.find('.uploadcare-panel-footer-counter')
-          .toggleClass('uploadcare-error', tooManyFiles)
+        @footer.find('.uploadcare--dialog__file-counter')
+          .toggleClass('uploadcare--error', tooManyFiles)
           .text(if files then "(#{files})" else "")
 
     __closePanel: =>
