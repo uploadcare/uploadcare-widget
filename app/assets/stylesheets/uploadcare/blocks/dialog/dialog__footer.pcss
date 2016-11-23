@@ -3,7 +3,12 @@
 
   background: #ececec;
 
-  .dialog:not(.dialog_multiple) & {
+  .dialog:not(.dialog_multiple) &,
+  .panel_preview.panel_current ~ & {
     display: none;
+  }
+
+  .panel_remote.panel_current ~ & {
+    margin-top: 0;
   }
 }

@@ -56,6 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
+      @container.addClass('uploadcare--panel_remote')
       iframe = @iframe[0].contentWindow
 
       utils.registerMessage 'file-selected', iframe, (message) =>
