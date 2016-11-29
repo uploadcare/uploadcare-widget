@@ -1,5 +1,12 @@
 # History
 
+### 2.10.2, 29.11.2016
+
+* Fixed critical image loading bug in Firefox 50
+* Instagram icon is updated
+* Fixed tabs visual style
+* Fixed Swedish locale
+
 ### 2.10.1, 20.10.2016
 
 * Fixed the preview orientation for some images.
