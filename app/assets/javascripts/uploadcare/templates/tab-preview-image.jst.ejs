@@ -8,15 +8,10 @@
   </div>
 
   <div class="uploadcare-dialog-preview-image-wrap"><!--
-      1162x684 is 1.5 size of conteiner
     --><img
-      <% if (file) { %>
-        src="<%- file.originalUrl %>-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
-        title="<%- (file.name || "") %>"
-        alt="<%- (file.name || "") %>"
-      <% } else { %>
-        src="//:0"
-      <% } %>
+        src="<%- src %>"
+        title="<%- (name || "") %>"
+        alt="<%- (name || "") %>"
       class="uploadcare-dialog-preview-image"
     />
   </div>

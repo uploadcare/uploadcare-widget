@@ -47,9 +47,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @file.done ifCur (info) =>
         if @__state == 'video'
           return
-        state = if info.isImage then 'image' else 'regular'
-        if state != 'image' or state != @__state
-          @__setState(state, {file: info})
+
+        if info.isImage
+          # avoid subsequent image states
+          if @__state != 'image'
+            src = info.originalUrl
+            # 1162x684 is 1.5 size of conteiner
+            src += "-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
+            imgInfo = info.originalImageInfo
+            @__setState('image', {src, name: info.name})
+            @initImage([imgInfo.width, imgInfo.height], info.cdnUrlModifiers)
+        else
+          # , but update if other
+          @__setState('regular', {file: info})
 
       @file.fail ifCur (error, info) =>
         @__setState('error', {error, file: info})
@@ -85,9 +95,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             @dialogApi.always ->
               URL.revokeObjectURL(src)
 
-            @__setState('image', {file: false})
-            @element('image').attr('src', src)
-            @initImage(size)
+            if @__state != 'image'
+              @__setState('image', {src, name: ""})
+              @initImage(size)
       .fail(df.reject)
 
       df.promise()
@@ -131,10 +141,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if state is 'unknown' and @settings.crop
         @element('done').hide()
-
-      if state is 'image' and data.file
-        imgInfo = data.file.originalImageInfo
-        @initImage([imgInfo.width, imgInfo.height], data.file.cdnUrlModifiers)
 
     initImage: (imgSize, cdnModifiers) ->
       img = @element('image')
