@@ -50,10 +50,6 @@ const config = {
   'output': path.join(stylesheetsPath, 'styles.css'),
   'local-plugins': true,
   'use': [...use, 'postcss-reporter'],
-  'postcss-reporter': {
-    clearMessages: true,
-    filter: message => message.type !== 'dependency',
-  },
 }
 
 module.exports = Object.assign({}, config, configUse)
