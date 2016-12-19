@@ -2,6 +2,12 @@
   "name": "uploadcare-widget",
   "version": "0.0.0",
   "description": "Uploadcare widget source",
+  "scripts": {
+    "lint:css": "stylelint app/**/*.pcss",
+    "build:css": "postcss -c postcss.config.js",
+    "build:css:min": "npm run build:css -- --min",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.5.4",
@@ -27,12 +33,6 @@
     "stylelint": "^7.6.0",
     "stylelint-config-uploadcare": "^1.0.0",
     "yargs": "^6.5.0"
-  },
-  "scripts": {
-    "lint:css": "stylelint app/**/*.pcss",
-    "build:css": "postcss -c postcss.config.js",
-    "build:css:min": "npm run build:css -- --min",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
