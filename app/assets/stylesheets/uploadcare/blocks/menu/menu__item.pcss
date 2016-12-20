@@ -1,8 +1,10 @@
 .menu__item {
-  position: relative;
+  flex-shrink: 0;
 
   width: 100vw;
   height: 60px;
+
+  position: relative;
 
   background-color: #454545;
   color: #fff;
@@ -47,7 +49,7 @@
 
     display: block;
 
-    left: 20px;
+    left: 15px;
 
     width: 30px;
 
@@ -60,7 +62,7 @@
   &:after {
     content: attr(title);
 
-    left: calc(30px + 20px * 2);
+    left: 60px;
 
     line-height: 30px;
     white-space: nowrap;
