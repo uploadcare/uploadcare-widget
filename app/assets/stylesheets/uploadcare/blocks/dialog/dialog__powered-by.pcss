@@ -1,19 +1,13 @@
 .dialog__powered-by {
-  display: none;
+  box-sizing: border-box;
 
-  @media (--desktop) {
+  padding: 7.5px 0;
+
+  height: 30px;
+
+  @media (--mobile) {
     & {
-      box-sizing: border-box;
-
-      display: block;
-
-      position: absolute;
-      top: calc(100% + 7.5px);
-      left: 0;
-
-      width: 100%;
-
-      padding-left: 70px;
+      display: none;
     }
   }
 }

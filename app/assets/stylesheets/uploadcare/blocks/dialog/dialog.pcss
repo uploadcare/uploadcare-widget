@@ -1,8 +1,15 @@
 .dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
   position: fixed;
   top: 0;
   left: 0;
   z-index: 2147483647;
+
+  box-sizing: border-box;
 
   overflow: hidden;
 
@@ -23,9 +30,6 @@
 
   @media (--desktop) {
     & {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
 
       overflow-y: auto;
@@ -34,14 +38,15 @@
     }
   }
 
-  @media (--desktop) and (max-height: 540px) {
+  @media (--desktop) and (max-height: 559px) {
     & {
-      justify-content: flex-start;
+      padding-top: 30px;
+    }
+  }
 
-      box-sizing: border-box;
-
-      padding-top: 15px;
-      padding-bottom: 15px;
+  @media (--desktop) and (min-height: 560px) {
+    & {
+      justify-content: center;
     }
   }
 }
