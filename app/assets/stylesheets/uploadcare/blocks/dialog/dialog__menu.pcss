@@ -3,21 +3,19 @@
   position: relative;
   z-index: 48;
 
+  .menu__item_preview:before {
+    display: none;
+  }
+
+  .dialog__icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+
+    transform: translateY(-50%);
+  }
+
   @media (--mobile) {
-    & {
-      .menu__item_preview:before {
-        display: none;
-      }
-
-      .dialog__icon {
-        position: absolute;
-        top: 50%;
-        left: 15px;
-
-        transform: translateY(-50%);
-      }
-    }
-
     &:not(.dialog__menu_opened) {
       .menu__item:not(.menu__item_current) {
         display: none;
@@ -65,10 +63,17 @@
   }
 
   @media (--desktop) {
+    & {
+      z-index: 1000;
+      transition: width .3s .4s, margin .3s .4s;
+    }
+
+    .menu__item {
+      transition: background .3s, color .3s, width .3s .4s;
+    }
+
     &, & .menu__item {
       width: 60px;
-
-      transition: width .3s .4s, margin .3s .4s;
     }
 
     &:hover, &.dialog__menu_opened {

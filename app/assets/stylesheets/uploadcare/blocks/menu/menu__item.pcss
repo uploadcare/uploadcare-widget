@@ -11,7 +11,7 @@
 
   cursor: pointer;
 
-  transition: background .3s;
+  transition: background .3s, color .3s;
 
   &:hover, &:focus {
     background-color: #5b5b5b;
@@ -19,8 +19,8 @@
   }
 
   &:focus {
-    outline: color(#157cfc a(50%)) 2px solid;
-    outline-offset: -2px;
+    outline: none;
+    box-shadow: inset 0 0 0 2px color(#157cfc a(50%));
   }
 
   &:active {
