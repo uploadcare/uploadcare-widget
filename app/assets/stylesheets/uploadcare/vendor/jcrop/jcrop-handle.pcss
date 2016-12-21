@@ -1,100 +1,71 @@
+:root {
+  --jcrop-handle-size: 40px;
+  --jcrop-handle-visible-size: 20px;
+  --jcrop-handle-shift: calc(var(--jcrop-handle-size) / 2 * -1);
+}
+
+@media (--desktop) {
+  :root {
+    --jcrop-handle-size: 15px;
+    --jcrop-handle-visible-size: 15px;
+  }
+}
+
 .jcrop-handle {
-  width: 13px;
-  height: 13px;
+  box-sizing: border-box;
 
-  background-color: #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);
+  padding: calc((var(--jcrop-handle-size) - var(--jcrop-handle-visible-size)) / 2);
 
-  border-radius: 50%;
+  width: var(--jcrop-handle-size);
+  height: var(--jcrop-handle-size);
+
+  background: transparent;
 
   z-index: 2147483621;
 
-  &:before, &:after {
+  &:before {
     content: '';
 
     display: block;
 
-    width: 1px;
-    height: 1px;
-
-    position: absolute;
+    width: var(--jcrop-handle-visible-size);
+    height: var(--jcrop-handle-visible-size);
 
     background: #fff;
-  }
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);
 
-  &:before {
-    width: 3px;
-
-    top: 6px;
-  }
-
-  &:after {
-    height: 3px;
-
-    left: 6px;
+    border-radius: 50%;
   }
 
   &.ord-nw {
-    margin-top: -6px;
-    margin-left: -6px;
+    margin-top: var(--jcrop-handle-shift);
+    margin-left: var(--jcrop-handle-shift);
 
     top: 0;
     left: 0;
-
-    &:before {
-      left: 12px;
-    }
-
-    &:after {
-      top: 12px;
-    }
   }
 
   &.ord-ne {
-    margin-top: -6px;
-    margin-right: -6px;
+    margin-top: var(--jcrop-handle-shift);
+    margin-right: var(--jcrop-handle-shift);
 
     top: 0;
     right: 0;
-
-    &:before {
-      left: -2px;
-    }
-
-    &:after {
-      top: 12px;
-    }
   }
 
   &.ord-se {
-    margin-bottom: -6px;
-    margin-right: -6px;
+    margin-bottom: var(--jcrop-handle-shift);
+    margin-right: var(--jcrop-handle-shift);
 
     bottom: 0;
     right: 0;
-
-    &:before {
-      left: -2px;
-    }
-
-    &:after {
-      top: -2px;
-    }
   }
 
   &.ord-sw {
-    margin-bottom: -6px;
-    margin-left: -6px;
+    margin-bottom: var(--jcrop-handle-shift);
+    margin-left: var(--jcrop-handle-shift);
 
     bottom: 0;
     left: 0;
-
-    &:before {
-      left: 12px;
-    }
-
-    &:after {
-      top: -2px;
-    }
   }
 }
