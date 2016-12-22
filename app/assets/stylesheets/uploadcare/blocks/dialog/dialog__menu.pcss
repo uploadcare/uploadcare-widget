@@ -1,18 +1,10 @@
 .dialog__menu {
   flex-shrink: 0;
   position: relative;
-  z-index: 48;
+  z-index: 40;
 
   .menu__item_preview:before {
     display: none;
-  }
-
-  .dialog__icon {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-
-    transform: translateY(-50%);
   }
 
   @media (--mobile) {
@@ -22,21 +14,13 @@
       }
 
       .menu__item_current {
-        .dialog__icon {
-          left: 50%;
-
-          transform: translateX(-50%) translateY(-50%);
-        }
-
-        &:before {
-          left: 50%;
-
-          transform: translateX(-50%) translateY(-50%);
-        }
+        justify-content: center;
 
         &:after {
           content: '';
 
+          position: absolute;
+          top: 20px;
           left: 20px;
 
           width: 20px;
@@ -58,7 +42,8 @@
     }
 
     &.dialog__menu_opened {
-      z-index: 50;
+      top: 60px;
+      border-top: 1px solid color(#454545 a(50%));
     }
   }
 

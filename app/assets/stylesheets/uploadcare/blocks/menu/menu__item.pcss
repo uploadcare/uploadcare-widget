@@ -1,10 +1,14 @@
 .menu__item {
   flex-shrink: 0;
 
+  display: flex;
+  align-items: center;
+
   width: 100vw;
   height: 60px;
 
   position: relative;
+  overflow: hidden;
 
   background-color: #454545;
   color: #fff;
@@ -34,22 +38,14 @@
   }
 
   &:before, &:after {
-    display: block;
-
-    position: absolute;
-    top: 50%;
+    content: '';
+    flex-shrink: 0;
 
     height: 30px;
-
-    transform: translateY(-50%);
   }
 
   &:before {
-    content: '';
-
-    display: block;
-
-    left: 15px;
+    margin: 15px;
 
     width: 30px;
 
@@ -62,8 +58,7 @@
   &:after {
     content: attr(title);
 
-    left: 60px;
-
+    font-size: 17.5px;
     line-height: 30px;
     white-space: nowrap;
 
