@@ -14,7 +14,6 @@ let use = [
   'postcss-calc',
   'postcss-color-function',
   'postcss-flexbugs-fixes',
-  'postcss-input-style',
   'autoprefixer',
 ]
 let configUse = {
