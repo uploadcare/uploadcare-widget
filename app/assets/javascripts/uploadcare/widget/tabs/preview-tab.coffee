@@ -53,7 +53,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if @__state != 'image'
             src = info.originalUrl
             # 1162x684 is 1.5 size of conteiner
-            src += "-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
+            src += "-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/"
             imgInfo = info.originalImageInfo
             @__setState('image', {src, name: info.name})
             @initImage([imgInfo.width, imgInfo.height], info.cdnUrlModifiers)
@@ -76,7 +76,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
 
       utils.image.drawFileToCanvas(
-        blob, 1550, 924, '#efefef', @settings.imagePreviewMaxSize
+        blob, 1550, 924, '#ffffff', @settings.imagePreviewMaxSize
       )
       .done (canvas, size) =>
         utils.canvasToBlob canvas, 'image/jpeg', 0.95,
