@@ -10,10 +10,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer": "^6.5.4",
+    "autoprefixer": "^6.6.0",
     "css-mqpacker": "^5.0.1",
     "cssnano": "^3.9.1",
-    "eslint": "^3.12.1",
+    "eslint": "^3.12.2",
     "eslint-config-uploadcare": "^1.1.0",
     "path": "^0.12.7",
     "postcss-apply": "^0.4.0",
@@ -29,7 +29,7 @@
     "postcss-nested": "^1.0.0",
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^3.0.0",
-    "stylelint": "^7.6.0",
+    "stylelint": "^7.7.0",
     "stylelint-config-uploadcare": "^1.0.0",
     "yargs": "^6.5.0"
   },
