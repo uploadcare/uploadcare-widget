@@ -33,7 +33,6 @@ let configUse = {
     ],
   },
   'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
-  'autoprefixer': {browsers: ['> .4%', 'ie >= 10']},
 }
 
 const minificationUse = ['cssnano']

@@ -33,6 +33,10 @@
     "stylelint-config-uploadcare": "^1.0.0",
     "yargs": "^6.5.0"
   },
+  "browserslist": [
+    "> .4%",
+    "ie >= 10"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uploadcare/uploadcare-widget.git"
