@@ -15,7 +15,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.on 'click', '.uploadcare--file-sources__item', (e) =>
         @dialogApi.switchTab($(e.target).data('tab'))
 
-      @container.on 'click', '.uploadcare--file-sources__list', (e) =>
+      @container.on 'click', '.uploadcare--file-sources__items', (e) =>
         @dialogApi.openMenu()
 
       @__setupFileButton()
@@ -45,7 +45,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @dialogApi.switchTab('preview')
 
     __updateTabsList: =>
-      list = @container.find('.uploadcare--file-sources__list').empty()
+      list = @container.find('.uploadcare--file-sources__items').empty()
       n = 0
       for tab in @settings.tabs
         if tab in ['file', 'url', 'camera']
