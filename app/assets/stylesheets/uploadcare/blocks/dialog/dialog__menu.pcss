@@ -9,6 +9,8 @@
 
   @media (--mobile) {
     &:not(.dialog__menu_opened) {
+      height: 60px;
+
       .menu__item:not(.menu__item_current) {
         display: none;
       }
@@ -49,6 +51,8 @@
 
   @media (--desktop) {
     & {
+      height: auto;
+
       z-index: 1000;
       transition: width .3s .4s, margin .3s .4s;
     }
