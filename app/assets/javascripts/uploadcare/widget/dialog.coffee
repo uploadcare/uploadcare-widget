@@ -340,7 +340,7 @@ uploadcare.namespace '', (ns) ->
         .addClass('uploadcare--menu__item')
         .addClass("uploadcare--menu__item_#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find(".uploadcare--menu__container"))
+        .appendTo(@panel.find(".uploadcare--menu__items"))
         .on 'click', =>
           if name is @currentTab
             @panel.find('.uploadcare--dialog__menu').toggleClass('uploadcare--dialog__menu_opened')
@@ -402,4 +402,4 @@ uploadcare.namespace '', (ns) ->
         .addClass("uploadcare--menu__item_#{name}")
         .attr('aria-disabled', true)
         .attr('title', t("dialog.tabs.names.#{name}"))
-        .appendTo(@panel.find(".uploadcare--menu__container"))
+        .appendTo(@panel.find(".uploadcare--menu__items"))
