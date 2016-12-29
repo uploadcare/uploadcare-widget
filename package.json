@@ -29,7 +29,7 @@
     "postcss-nested": "^1.0.0",
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^3.0.0",
-    "stylelint": "^7.7.0",
+    "stylelint": "^7.6.0",
     "stylelint-config-uploadcare": "^1.0.0",
     "yargs": "^6.5.0"
   },
