@@ -11,7 +11,7 @@
 uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTab extends ns.BasePreviewTab
 
-    constructor: ->
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       super
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
@@ -132,7 +132,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # unknown
     # image
     # regular
-    __setState: (state, data) ->
+    __setState: (state, data) =>
       @__state = state
       data = data || {}
 
@@ -151,7 +151,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if state is 'error'
         @container.addClass('uploadcare--preview_status_error-' + data.error)
 
-    initImage: (imgSize, cdnModifiers) ->
+    initImage: (imgSize, cdnModifiers) =>
       img = @container.find('.uploadcare--preview__image')
       done = @container.find('.uploadcare--preview__done')
 
@@ -188,7 +188,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           utils.defer(startCrop)
 
 
-    populateCropSizes: ->
+    populateCropSizes: =>
       if @settings.crop.length <= 1
         return
 
