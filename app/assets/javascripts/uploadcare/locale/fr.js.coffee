@@ -8,7 +8,7 @@
 
 uploadcare.namespace 'locale.translations', (ns) ->
   ns.fr =
-    uploading: 'Envoi en cours... Merci de patientier.'
+    uploading: 'Envoi en cours... Merci de patienter.'
     loadingInfo: 'Chargement des informations...'
     errors:
       default: 'Erreur'
@@ -73,7 +73,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           back: 'Retour'
           done: 'Ajouter'
           unknown:
-            title: 'Envoi en cours... Merci de patientier pour prévisualiser.'
+            title: 'Envoi en cours... Merci de patienter pour prévisualiser.'
             done: 'Passer la prévisualisation et accepter'
           regular:
             title: 'Ajouter ce fichier ?'
