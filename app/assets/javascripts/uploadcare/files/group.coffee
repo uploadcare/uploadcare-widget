@@ -115,6 +115,8 @@ namespace 'files', (ns) ->
         @__fileInfosDf.done (infos...) =>
           utils.jsonp "#{@settings.urlBase}/group/", 'POST',
             pub_key: @settings.publicKey
+            signature: @settings.secureSignature
+            expire: @settings.secureExpire
             files: for info in infos
               "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
           .fail (reason) =>
