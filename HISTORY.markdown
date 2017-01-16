@@ -1,5 +1,11 @@
 # History
 
+### 2.10.3, 16.01.2017
+
+* Fixed `/group/` request for cases when signed uploads are enabled
+* Fixed sending message in iframe
+* Fixed French locale
+
 ### 2.10.2, 29.11.2016
 
 * Fixed critical image loading bug in Firefox 50
