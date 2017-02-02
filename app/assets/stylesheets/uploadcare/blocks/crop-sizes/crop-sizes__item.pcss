@@ -23,6 +23,11 @@
     color: #282828;
   }
 
+  &[aria-disabled=true] {
+    cursor: not-allowed;
+    opacity: .65;
+  }
+
   &:after {
     content: attr(data-caption);
 
