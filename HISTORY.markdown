@@ -1,8 +1,23 @@
 # History
 
-### 2.10.1
+### 2.10.3, 16.01.2017
 
-* Fixed the preview orientation for some image.
+* Fixed `/group/` request for cases when signed uploads are enabled
+* Fixed sending message in iframe
+* Fixed French locale
+
+### 2.10.2, 29.11.2016
+
+* Fixed critical image loading bug in Firefox 50
+* Instagram icon is updated
+* Fixed tabs visual style
+* Fixed Swedish locale
+
+### 2.10.1, 20.10.2016
+
+* Fixed the preview orientation for some images.
+* Fixed image size on crop tab in IE 11
+* Fixed tabs overflow in Safari
 
 ### 2.10.0, 19.08.2016
 

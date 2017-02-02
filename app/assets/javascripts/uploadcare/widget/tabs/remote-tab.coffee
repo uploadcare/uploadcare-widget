@@ -27,7 +27,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       )
 
     __sendMessage: (messageObj) ->
-      @iframe?[0].contentWindow.postMessage(JSON.stringify(messageObj), '*')
+      @iframe?[0].contentWindow?.postMessage(JSON.stringify(messageObj), '*')
 
     __createIframe: =>
       if @iframe
