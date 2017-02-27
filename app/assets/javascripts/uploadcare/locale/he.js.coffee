@@ -39,10 +39,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
       showFiles: 'הצג קבצים'
       tabs:
         names:
-          facebook: 'פייסבוק'
-          dropbox: 'דרופבוקס'
-          gdrive: 'כונן גוגל'
-          instagram: 'אינסטגרם'
           url: 'לינק מהאינטרנט'
         file:
           drag: 'שחרר כאן קובץ'

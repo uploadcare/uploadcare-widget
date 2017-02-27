@@ -41,7 +41,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
         names:
           preview: 'Vis'
           file: 'Computer'
-          gdrive: 'Google Drev'
           url: 'Direkte link'
         file:
           drag: 'Drop en fil her'
