@@ -99,5 +99,5 @@ uploadcare.namespace 'locale.translations', (ns) ->
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
   ns.pt = (n) ->
-    return 'one' if n == 1
-    'other'
+    return 'um' if n == 1
+    'outros'
