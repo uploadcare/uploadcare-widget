@@ -1,15 +1,3 @@
-@each $type in file, camera, url, facebook, gdrive, gphotos, dropbox, instagram, evernote, flickr, skydrive, box, vk, huddle {
-  .menu__item_$(type) {
-    &:before {
-      background-image: svg-load('icons-menu-$(type).svg', fill=#ececec);
-    }
-
-    &.menu__item_current:before {
-      background-image: svg-load('icons-menu-$(type).svg', fill=#353535);
-    }
-  }
-}
-
 .menu__item_empty-pubkey {
   &:before {
     left: 22.5px;

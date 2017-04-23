@@ -47,6 +47,7 @@ uploadcare.namespace '', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
+    dialog.append($(tpl('icons')))
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.addClass('uploadcare--dialog_active')
@@ -336,10 +337,16 @@ uploadcare.namespace '', (ns) ->
         .addClass("uploadcare--panel_#{name}")
         .insertBefore(@footer)
 
+      tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-#{name}'/></svg>")
+        .attr('role', 'presentation')
+        .addClass('uploadcare--icon')
+        .addClass('uploadcare--menu__icon')
+
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass('uploadcare--menu__item')
         .addClass("uploadcare--menu__item_#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
+        .append(tabIcon)
         .appendTo(@panel.find(".uploadcare--menu__items"))
         .on 'click', =>
           if name is @currentTab

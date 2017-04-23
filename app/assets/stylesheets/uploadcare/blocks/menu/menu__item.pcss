@@ -10,16 +10,16 @@
   position: relative;
   overflow: hidden;
 
-  background-color: #353535;
-  color: #fff;
+  background-color: #efefef;
+  color: #666462;
 
   cursor: pointer;
 
   transition: background .3s, color .3s;
 
   &:hover, &:focus {
-    background-color: #5b5b5b;
-    color: #fff;
+    background-color: #efefef;
+    color: #157cfc;
   }
 
   &:focus {
@@ -28,8 +28,8 @@
   }
 
   &:active {
-    background-color: #282828;
-    color: #fff;
+    background-color: #fff;
+    color: #157cfc;
   }
 
   &[aria-disabled=true] {
@@ -37,24 +37,13 @@
     opacity: .65;
   }
 
-  &:before, &:after {
+  &:after {
     content: '';
     flex-shrink: 0;
 
     display: flex;
 
     height: 30px;
-  }
-
-  &:before {
-    margin: 15px;
-
-    width: 30px;
-
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
   }
 
   &:after {

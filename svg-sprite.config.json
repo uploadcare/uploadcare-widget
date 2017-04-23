@@ -1,0 +1,17 @@
+{
+  "dest": "./app/assets/javascripts/uploadcare/templates",
+  "log": "info",
+  "shape": {
+    "id": {
+      "generator": "uploadcare--%s"
+    }
+  },
+  "mode": {
+    "symbol": {
+      "inline": true,
+      "css": false,
+      "dest": "",
+      "sprite": "icons.jst.ejs"
+    }
+  }
+}
