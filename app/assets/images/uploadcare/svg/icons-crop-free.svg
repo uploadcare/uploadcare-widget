@@ -1,7 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32" height="32" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>Free Crop icon</title>
-  <path
-      d="M10,10 L10,22 L22,22 L22,10 L10,10 Z M23,9 L23,23 L9,23 L9,9 L23,9 Z M6,6 L12,6 L12,7 L7,7 L7,12 L6,12 L6,6 Z M26,26 L20,26 L20,25 L25,25 L25,20 L26,20 L26,26 Z"
-  />
+<svg role="presentation" width="32" height="32" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10,10 L10,22 L22,22 L22,10 L10,10 Z M23,9 L23,23 L9,23 L9,9 L23,9 Z M6,6 L12,6 L12,7 L7,7 L7,12 L6,12 L6,6 Z M26,26 L20,26 L20,25 L25,25 L25,20 L26,20 L26,26 Z"/>
 </svg>
