@@ -6,7 +6,6 @@ const withMinification = (argv.min) || false
 
 let use = [
   'postcss-import',
-  'postcss-each',
   'postcss-inline-svg',
   'postcss-custom-media',
   'postcss-nested',
