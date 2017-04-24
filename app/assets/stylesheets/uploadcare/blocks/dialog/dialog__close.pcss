@@ -1,21 +1,34 @@
 .dialog__close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   position: absolute;
   top: 0;
   right: 0;
   z-index: 49;
 
-  box-sizing: border-box;
-
   width: 60px;
   height: 60px;
 
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 30px;
-  background-image: svg-load('icon-close.svg', fill=#d7d7d7);
+  color: #d7d7d7;
 
-  cursor: pointer;
+  transition: color .3s;
+
+  cursor: default;
+
+  &:hover, &:focus {
+    color: #157cfc;
+  }
+
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: -2px;
+  }
+
+  &:active {
+    color: #0969ee;
+  }
 
   .dragging & {
     display: none;

@@ -59,7 +59,14 @@ uploadcare.namespace '', (ns) ->
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
-    dialog.on('click', '.uploadcare--dialog__close', dialogPr.reject)
+    closeIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-close'/></svg>")
+      .attr('role', 'presentation')
+      .addClass('uploadcare--icon')
+
+    dialog.find('.uploadcare--dialog__close')
+      .append(closeIcon)
+      .on('click', dialogPr.reject)
+
     dialog.on 'dblclick', (e) ->
       # handler can be called after element detached (close button)
       if not $.contains(document.documentElement, e.target)
