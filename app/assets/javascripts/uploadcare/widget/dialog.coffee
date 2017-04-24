@@ -337,10 +337,13 @@ uploadcare.namespace '', (ns) ->
         .addClass("uploadcare--panel_#{name}")
         .insertBefore(@footer)
 
-      tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-#{name}'/></svg>")
-        .attr('role', 'presentation')
-        .addClass('uploadcare--icon')
-        .addClass('uploadcare--menu__icon')
+      if name == 'preview'
+        tabIcon = $('<div class="uploadcare--dialog__icon">')
+      else
+        tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-#{name}'/></svg>")
+          .attr('role', 'presentation')
+          .addClass('uploadcare--icon')
+          .addClass('uploadcare--menu__icon')
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass('uploadcare--menu__item')
