@@ -340,7 +340,7 @@ uploadcare.namespace '', (ns) ->
       if name == 'preview'
         tabIcon = $('<div class="uploadcare--dialog__icon">')
       else
-        tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-#{name}'/></svg>")
+        tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
           .attr('role', 'presentation')
           .addClass('uploadcare--icon')
           .addClass('uploadcare--menu__icon')

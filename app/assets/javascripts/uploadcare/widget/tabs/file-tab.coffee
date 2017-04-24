@@ -56,7 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if n > 5
         list.addClass('uploadcare--file-sources__items_many')
 
-      allIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-more'/></svg>")
+      allIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-more'/></svg>")
         .attr('role', 'presentation')
         .addClass('uploadcare--icon')
         .addClass('uploadcare--file-source__icon')
@@ -75,7 +75,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.find('.uploadcare--file-sources').attr('hidden', n == 0)
 
     __tabButton: (name) ->
-      tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icons-menu-#{name}'/></svg>")
+      tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
         .attr('role', 'presentation')
         .addClass('uploadcare--icon')
         .addClass('uploadcare--file-source__icon')

@@ -4,7 +4,7 @@
   "description": "Uploadcare widget source",
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
-    "build:svg": "svg-sprite --config svg-sprite.config.json app/assets/images/uploadcare/svg/icons-menu-*.svg",
+    "build:svg": "svg-sprite --config svg-sprite.config.json app/assets/images/uploadcare/svg/icon-*.svg",
     "build:css": "postcss -c postcss.config.js",
     "build:css:min": "npm run build:css -- --min",
     "test": "echo \"Error: no test specified\" && exit 1"
