@@ -26,6 +26,13 @@
     <div class="uploadcare--text uploadcare--text_small uploadcare--text_muted uploadcare--file-sources__caption">
       <%- t('dialog.tabs.file.also') %>
     </div>
-    <div class="uploadcare--file-sources__items"></div>
+    <div class="uploadcare--file-sources__items">
+      <div role="button" tabindex="0"
+           class="uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item">
+          <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+              <use xlink:href="#uploadcare--icon-more"></use>
+          </svg>
+      </div>
+    </div>
   </div>
 </div>

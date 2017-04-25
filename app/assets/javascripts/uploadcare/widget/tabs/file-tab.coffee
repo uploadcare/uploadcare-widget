@@ -38,7 +38,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @dialogApi.switchTab('preview')
 
     __initTabsList: =>
-      list = @container.find('.uploadcare--file-sources__items').empty()
+      list = @container.find('.uploadcare--file-sources__items')
+      list.remove('.uploadcare--file-sources__item:not(.uploadcare--file-source_all)')
+
       n = 0
       for tab in @settings.tabs
         if tab in ['file', 'url', 'camera']
@@ -53,25 +55,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
         list.append([@__tabButton(tab), ' '])
 
-      if n > 5
-        list.addClass('uploadcare--file-sources__items_many')
-
-      allIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-more'/></svg>")
-        .attr('role', 'presentation')
-        .addClass('uploadcare--icon')
-        .addClass('uploadcare--file-source__icon')
-
-      allButton = $('<div>', {role: 'button', tabindex: "0"})
-        .addClass('uploadcare--file-source')
-        .addClass("uploadcare--file-source_all")
-        .addClass('uploadcare--file-sources__item')
-        .attr('title', 'Open menu')
-        .append(allIcon)
+      allButton = list.find('.uploadcare--file-source_all')
         .on 'click', =>
           @dialogApi.openMenu()
 
-      list.append([allButton, ' '])
-
+      if n > 5
+        list.addClass('uploadcare--file-sources__items_many')
       @container.find('.uploadcare--file-sources').attr('hidden', n == 0)
 
     __tabButton: (name) ->
