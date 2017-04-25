@@ -18,17 +18,17 @@
 
   &:hover, &:focus {
     background-color: #efefef;
-    color: #157cfc;
+    color: var(--color-primary);
   }
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 2px color(#157cfc a(50%));
+    box-shadow: inset 0 0 0 2px color(var(--color-primary) a(50%));
   }
 
   &:active {
     background-color: #fff;
-    color: #157cfc;
+    color: var(--color-primary);
   }
 
   &[aria-disabled=true] {
