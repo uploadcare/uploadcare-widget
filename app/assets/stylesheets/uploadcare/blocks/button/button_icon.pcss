@@ -1,0 +1,25 @@
+.button_icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  background: transparent;
+  color: #d7d7d7;
+
+  min-width: auto;
+  width: 60px;
+  height: 60px;
+
+  &:hover, &:focus {
+    color: #157cfc;
+  }
+
+  &:focus {
+    outline: color(#157cfc a(50%)) 2px solid;
+    outline-offset: 1px;
+  }
+
+  &:active {
+    color: #0969ee;
+  }
+}

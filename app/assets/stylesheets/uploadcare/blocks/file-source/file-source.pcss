@@ -1,40 +1,6 @@
 .file-source {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-sizing: border-box;
+  margin: 10px;
 
   background: #efefef;
   color: #353535;
-
-  margin: 10px;
-
-  width: 60px;
-  height: 60px;
-
-  border-radius: 6px;
-
-  transition: background .3s;
-
-  &:hover, &:focus {
-    background: #efefef;
-    color: #157cfc;
-  }
-
-  &:focus {
-    outline: color(#157cfc a(50%)) 2px solid;
-    outline-offset: 1px;
-  }
-
-  &:active {
-    background: #d7d7d7;
-    color: #176dea;
-  }
-
-  &[disabled],
-  &[aria-disabled=true] {
-    cursor: not-allowed;
-    opacity: .65;
-  }
 }
