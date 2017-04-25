@@ -4,16 +4,15 @@
   display: flex;
   align-items: center;
 
-  width: 100vw;
+  width: var(--menu-width);
   height: 60px;
 
-  position: relative;
   overflow: hidden;
 
   background-color: #efefef;
   color: #666462;
 
-  cursor: pointer;
+  cursor: default;
 
   transition: background .3s, color .3s;
 
@@ -36,30 +35,25 @@
     cursor: not-allowed;
     opacity: .65;
   }
+}
 
-  &:after {
-    content: '';
-    flex-shrink: 0;
+.menu__item:after {
+  content: attr(title);
 
-    display: flex;
+  flex-shrink: 0;
 
-    height: 30px;
-  }
+  display: flex;
 
-  &:after {
-    content: attr(title);
+  height: 30px;
 
-    font-size: 17.5px;
-    line-height: 30px;
-    white-space: nowrap;
+  font-size: 17.5px;
+  line-height: 30px;
+  white-space: nowrap;
 
-    @media (--desktop) {
-      & {
-        overflow: hidden;
+  @media (--desktop) {
+    overflow: hidden;
 
-        max-width: 170px;
-        text-overflow: ellipsis;
-      }
-    }
+    max-width: 170px;
+    text-overflow: ellipsis;
   }
 }

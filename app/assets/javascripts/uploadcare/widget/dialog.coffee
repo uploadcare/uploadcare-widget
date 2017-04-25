@@ -169,6 +169,10 @@ uploadcare.namespace '', (ns) ->
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
 
+      @panel.find('.uploadcare--menu__toggle')
+        .on 'click', =>
+          @panel.find('.uploadcare--menu').toggleClass('uploadcare--menu_opened')
+
       # files collection
       @files = new utils.CollectionOfPromises(files)
       @files.onRemove.add =>
@@ -355,9 +359,9 @@ uploadcare.namespace '', (ns) ->
         .appendTo(@panel.find(".uploadcare--menu__items"))
         .on 'click', =>
           if name is @currentTab
-            @panel.find('.uploadcare--dialog__menu').toggleClass('uploadcare--dialog__menu_opened')
+            @panel.find('.uploadcare--dialog__menu').removeClass('uploadcare--menu_opened')
           else
-            @switchTab(name)
+              @switchTab(name)
 
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
@@ -366,7 +370,9 @@ uploadcare.namespace '', (ns) ->
         return
       @currentTab = tab
 
-      @panel.find('.uploadcare--dialog__menu').removeClass('uploadcare--dialog__menu_opened')
+      @panel.find('.uploadcare--dialog__menu')
+        .removeClass('uploadcare--menu_opened')
+        .attr('data-current', tab)
 
       @panel.find(".uploadcare--menu__item")
             .removeClass("uploadcare--menu__item_current")
@@ -394,7 +400,7 @@ uploadcare.namespace '', (ns) ->
             .is(".uploadcare--menu__item_hidden")
 
     openMenu: =>
-      @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--dialog__menu_opened')
+      @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--menu_opened')
 
     __firstVisibleTab: ->
       for tab in @settings.tabs
