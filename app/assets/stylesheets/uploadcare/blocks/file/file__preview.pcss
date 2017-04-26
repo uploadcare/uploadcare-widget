@@ -15,20 +15,25 @@
   border-radius: 50%;
 
   background: #fff;
-  border: 1px solid var(--color-base-light);
+  color: var(--fill-main-color);
+  border: 1px solid;
 
   .file:hover &,
   .file:focus & {
-    border-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .file:active & {
+    color: var(--color-primary-dark);
   }
 
   .file_error & {
-    border-color: rgba(255, 0, 0, .6);
+    color: rgba(255, 0, 0, .6);
   }
 
   .file_error:hover &,
   .file_error:focus & {
-    border-color: red;
+    color: red;
   }
 
   img {

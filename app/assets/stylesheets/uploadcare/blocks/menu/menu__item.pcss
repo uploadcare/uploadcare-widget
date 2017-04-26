@@ -9,26 +9,25 @@
 
   overflow: hidden;
 
-  background-color: #efefef;
-  color: #666462;
+  background-color: var(--back-main-color);
+  color: var(--color-base-light);
 
   cursor: default;
 
   transition: background .3s, color .3s;
 
   &:hover, &:focus {
-    background-color: #efefef;
     color: var(--color-primary);
   }
 
   &:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 2px color(var(--color-primary) a(50%));
+    outline: color(var(--color-primary) a(50%)) 2px solid;
+    outline-offset: -2px;
   }
 
   &:active {
     background-color: #fff;
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
   }
 
   &[aria-disabled=true] {

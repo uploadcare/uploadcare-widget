@@ -16,10 +16,10 @@
   line-height: 25px;
 
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: 0;
-  box-shadow: none;
   color: var(--color-base);
+  border: 1px solid var(--color-base-lightest);
+  border-radius: 2px;
+  box-shadow: none;
 
   &:focus {
     outline: color(var(--color-primary) a(50%)) 2px solid;
@@ -27,6 +27,6 @@
   }
 
   &::placeholder {
-    color: #9b9b9b;
+    color: var(--color-base-lightest);
   }
 }
