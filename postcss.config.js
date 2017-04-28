@@ -20,7 +20,6 @@ let configUse = {
     path: stylesheetsPath,
     plugins: [
       require('stylelint'),
-      require('postcss-apply'),
       require('postcss-prefixer')('uploadcare--', {
         ignore: [
           /^\.uploadcare-/,
