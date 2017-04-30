@@ -1,6 +1,11 @@
 .button_overlay-secondary {
-  background: color(var(--color-base) a(50%));
-  color: #fff;
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    background: color(var(--color-base) a(50%));
+    color: #fff;
+  }
 
   &:hover, &:focus {
     background: color(var(--color-base-light) a(50%));

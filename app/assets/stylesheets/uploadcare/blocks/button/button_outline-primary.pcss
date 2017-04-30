@@ -1,7 +1,13 @@
 .button_outline-primary {
   background: #fff;
-  color: var(--color-primary);
   border-color: currentColor;
+
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    color: var(--color-primary);
+  }
 
   &:hover, &:focus {
     color: var(--color-primary-light);

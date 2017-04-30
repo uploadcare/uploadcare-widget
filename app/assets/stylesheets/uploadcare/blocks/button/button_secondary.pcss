@@ -1,6 +1,11 @@
 .button_secondary {
-  background: var(--color-base);
-  color: #fff;
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    background: var(--color-base);
+    color: #fff;
+  }
 
   &:hover, &:focus {
     background: var(--color-base-light);

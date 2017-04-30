@@ -1,6 +1,11 @@
 .button_primary {
-  background: var(--color-primary);
-  color: #fff;
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    background: var(--color-primary);
+    color: #fff;
+  }
 
   &:hover, &:focus {
     background: var(--color-primary-light);

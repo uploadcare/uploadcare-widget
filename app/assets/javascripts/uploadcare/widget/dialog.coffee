@@ -288,7 +288,7 @@ uploadcare.namespace '', (ns) ->
 
     __prepareFooter: ->
       @footer = @panel.find('.uploadcare--dialog__footer')
-      notDisabled = ':not([aria-disabled=true])'
+      notDisabled = ':not(:disabled)'
       @footer.on 'click', '.uploadcare--dialog__show-files' + notDisabled, =>
         @switchTab('preview')
       @footer.on('click', '.uploadcare--dialog__done' + notDisabled, @__resolve)
@@ -303,10 +303,10 @@ uploadcare.namespace '', (ns) ->
         tooFewFiles = files < @settings.multipleMin
 
         @footer.find('.uploadcare--dialog__done')
-          .attr('aria-disabled', tooManyFiles or tooFewFiles)
+          .attr('disabled', tooManyFiles or tooFewFiles)
 
         @footer.find('.uploadcare--dialog__show-files')
-          .attr('aria-disabled', files is 0)
+          .attr('disabled', files is 0)
 
         footer = if tooManyFiles
           t('dialog.tabs.preview.multiple.tooManyFiles')

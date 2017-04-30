@@ -1,7 +1,13 @@
 .button_outline-secondary {
   background: #fff;
-  color: var(--color-base);
   border-color: currentColor;
+
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    color: var(--color-base);
+  }
 
   &:hover, &:focus {
     color: var(--color-base-light);

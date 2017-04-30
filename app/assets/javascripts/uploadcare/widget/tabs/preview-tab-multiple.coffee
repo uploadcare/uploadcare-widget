@@ -62,7 +62,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       tooFewFiles = files < @settings.multipleMin
       hasWrongNumberFiles = tooManyFiles or tooFewFiles
 
-      @doneBtnEl.attr('aria-disabled', hasWrongNumberFiles)
+      @doneBtnEl.attr('disabled', hasWrongNumberFiles)
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))

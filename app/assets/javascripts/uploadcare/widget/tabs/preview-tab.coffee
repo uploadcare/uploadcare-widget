@@ -163,8 +163,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        @container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', false)
-        done.attr('aria-disabled', false)
+        @container.find('.uploadcare--crop-sizes__item').attr('disabled', false)
+        done.attr('disabled', false)
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         if cdnModifiers
@@ -177,11 +177,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @settings.crop
         @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
-        done.attr('aria-disabled', true)
+        done.attr('disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
-        @container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', true)
+        @container.find('.uploadcare--crop-sizes__item').attr('disabled', true)
 
         imgLoader.done ->
           # Often IE 11 doesn't do reflow after image.onLoad

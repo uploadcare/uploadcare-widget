@@ -3,14 +3,19 @@
   justify-content: center;
   align-items: center;
 
-  background: transparent;
-  color: var(--fill-main-color);
-
   padding: 0;
 
   min-width: auto;
   width: 60px;
   height: 60px;
+
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    background: transparent;
+    color: var(--fill-main-color);
+  }
 
   &:hover, &:focus {
     color: var(--color-primary);
