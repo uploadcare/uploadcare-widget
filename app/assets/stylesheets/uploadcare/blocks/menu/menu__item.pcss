@@ -9,25 +9,30 @@
 
   overflow: hidden;
 
-  background-color: var(--back-main-color);
-  color: var(--color-base-light);
-
   cursor: default;
 
   transition: background .3s, color .3s;
+
+  &,
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
+    background-color: var(--back-main-color);
+    color: var(--color-base-light);
+  }
 
   &:hover, &:focus {
     color: var(--color-primary);
   }
 
-  &:focus {
-    outline: none; /* outline-offset doesn't work in IE & Edge */
-    box-shadow: inset 0 0 0 2px var(--focus-color);
-  }
-
   &:active {
     background-color: #fff;
     color: var(--color-primary-dark);
+  }
+
+  &:focus {
+    outline: none; /* outline-offset doesn't work in IE & Edge */
+    box-shadow: inset 0 0 0 2px var(--focus-color);
   }
 
   &[aria-disabled=true] {

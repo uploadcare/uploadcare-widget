@@ -420,7 +420,7 @@ uploadcare.namespace '', (ns) ->
         .addClass('uploadcare--icon')
         .addClass('uploadcare--menu__icon')
 
-      $('<div>', {role: 'button', tabindex: "0"})
+      $('<div>')
         .addClass('uploadcare--menu__item')
         .addClass("uploadcare--menu__item_#{name}")
         .attr('aria-disabled', true)
