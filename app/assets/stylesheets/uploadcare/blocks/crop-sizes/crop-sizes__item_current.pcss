@@ -1,24 +1,9 @@
 .crop-sizes__item_current {
-  position: relative;
-
   &:hover, &:focus, &:active {
     color: var(--color-base);
   }
+}
 
-  &:before {
-    content: '';
-    display: block;
-
-    position: absolute;
-    top: 100%;
-    left: 50%;
-
-    width: 6px;
-    height: 6px;
-
-    background: var(--color-primary);
-    border-radius: 50%;
-
-    transform: translateX(-50%);
-  }
+.crop-sizes__item_current:before {
+  background: var(--color-primary);
 }
