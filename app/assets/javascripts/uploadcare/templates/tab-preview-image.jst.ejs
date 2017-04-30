@@ -19,21 +19,21 @@
 
 <div class="uploadcare--footer uploadcare--panel__footer">
   <!-- TODO Change Cancel to Remove -->
-  <div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.image.change') %></div>
+  <button class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button">
+      <%- t('dialog.tabs.preview.image.change') %>
+  </button>
 
   <div class="uploadcare--footer__additions">
     <% if (crop) { %>
     <div class="uploadcare--crop-sizes">
-      <div class="uploadcare--crop-sizes__item" data-caption="free" role="button">
+      <button class="uploadcare--button uploadcare--crop-sizes__item" data-caption="free">
         <div class="uploadcare--crop-sizes__icon"></div>
-      </div>
+      </button>
     </div>
     <% } %>
   </div>
 
-  <div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.done') %></div>
+  <button class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success">
+      <%- t('dialog.tabs.preview.done') %>
+  </button>
 </div>

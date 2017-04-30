@@ -31,6 +31,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Choose an image'
           other: 'Choose images'
     dialog:
+      close: 'Close'
+      openMenu: 'Open menu'
       done: 'Done'
       showFiles: 'Show files'
       tabs:

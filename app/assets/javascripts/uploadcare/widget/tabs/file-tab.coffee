@@ -69,7 +69,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         .addClass('uploadcare--icon')
         .addClass('uploadcare--file-source__icon')
 
-      tabButton = $('<div>', {role: 'button', tabindex: "0"})
+      tabButton = $('<button>')
         .addClass('uploadcare--button')
         .addClass('uploadcare--button_icon')
         .addClass('uploadcare--file-source')
