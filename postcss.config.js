@@ -6,7 +6,6 @@ const withMinification = (argv.min) || false
 
 let use = [
   'postcss-import',
-  'postcss-inline-svg',
   'postcss-custom-media',
   'postcss-nested',
   'postcss-css-variables',
@@ -30,7 +29,6 @@ let configUse = {
       }),
     ],
   },
-  'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
 }
 
 const minificationUse = ['cssnano']
