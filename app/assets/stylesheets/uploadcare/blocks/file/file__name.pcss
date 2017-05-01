@@ -10,8 +10,19 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 
+  transition: color .3s;
+
+  .file__content:hover &,
+  .file__content:focus & {
+    color: var(--color-primary);
+  }
+
+  .file__content:active & {
+    color: var(--color-primary-dark);
+  }
+
   .file_error & {
-    color: color(var(--error-color) a(50%));
+    color: color(var(--error-color) a(50%)) !important;
   }
 
   .file_uploaded &,

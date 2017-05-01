@@ -18,17 +18,19 @@
   color: var(--fill-main-color);
   border: 1px solid;
 
-  .file:hover &,
-  .file:focus & {
+  transition: color .3s;
+
+  .file__content:hover &,
+  .file__content:focus & {
     color: var(--color-primary);
   }
 
-  .file:active & {
+  .file__content:active & {
     color: var(--color-primary-dark);
   }
 
   .file_error & {
-    color: var(--error-color);
+    color: var(--error-color) !important;
   }
 
   img {
