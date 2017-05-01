@@ -125,6 +125,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
             clear: 'Cancel'
             done: 'Done'
+            file:
+              preview: 'Preview %file%'
+              remove: 'Remove %file%'
       footer:
         text: 'powered by'
         link: 'uploadcare'

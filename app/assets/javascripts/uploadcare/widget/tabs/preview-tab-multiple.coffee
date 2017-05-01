@@ -84,8 +84,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .text(wrongNumberFilesMessage)
 
     __updateFileInfo: (fileEl, info) ->
+      filename = info.name or t('dialog.tabs.preview.unknownName')
+
       fileEl.find('.uploadcare--file__name')
-        .text(info.name or t('dialog.tabs.preview.unknownName'))
+        .text(filename)
+
+      fileEl.find('.uploadcare--file__content')
+        .attr('title', t('dialog.tabs.preview.multiple.file.preview').replace('%file%', filename))
+
+      fileEl.find('.uploadcare--file__remove')
+        .attr('title', t('dialog.tabs.preview.multiple.file.remove').replace('%file%', filename))
 
       fileEl.find('.uploadcare--file__size')
         .text(utils.readableFileSize(info.size, '–'))
