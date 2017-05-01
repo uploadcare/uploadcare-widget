@@ -1,3 +1,15 @@
 .file_error {
-  color: red;
+  &,
+  .file__content {
+    color: var(--error-color) !important;
+  }
+
+  .file__name {
+    color: color(var(--error-color) a(50%)) !important;
+  }
+
+  .file__size,
+  .file__progressbar {
+    display: none;
+  }
 }

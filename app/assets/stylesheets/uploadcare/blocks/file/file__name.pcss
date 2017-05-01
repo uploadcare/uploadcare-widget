@@ -2,8 +2,7 @@
   overflow: hidden;
 
   margin: 0;
-
-  max-width: calc(100vw - 290px); /* TODO Hack for limit block if content has long string without spaces */
+  max-width: var(--file-name-width); /* TODO Hack for limit block if content has long string without spaces */
 
   line-height: 25px;
 
@@ -11,28 +10,4 @@
   text-overflow: ellipsis;
 
   transition: color .3s;
-
-  .file__content:hover &,
-  .file__content:focus & {
-    color: var(--color-primary);
-  }
-
-  .file__content:active & {
-    color: var(--color-primary-dark);
-  }
-
-  .file_error & {
-    color: color(var(--error-color) a(50%)) !important;
-  }
-
-  .file_uploaded &,
-  .file_error & {
-    max-width: calc(100vw - 290px + 80px);
-  }
-
-  @media (--desktop) {
-    & {
-      max-width: 350px !important;
-    }
-  }
 }

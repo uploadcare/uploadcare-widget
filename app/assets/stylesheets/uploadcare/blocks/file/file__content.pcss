@@ -3,6 +3,15 @@
 
   display: flex;
 
+  &:hover,
+  &:focus {
+    color: var(--color-primary);
+  }
+
+  &:active {
+    color: var(--color-primary-dark);
+  }
+
   &:focus {
     outline: var(--focus-outline);
     outline-offset: 2px;
