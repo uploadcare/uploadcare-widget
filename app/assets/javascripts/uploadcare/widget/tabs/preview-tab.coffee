@@ -219,7 +219,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               height: Math.max(12, size[1])
             )
         else
-          item.children().addClass('uploadcare--crop-sizes__icon_free')
+          icon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>")
+            .attr('role', 'presentation')
+            .addClass('uploadcare--icon')
+          item.children()
+            .append(icon)
+            .addClass('uploadcare--crop-sizes__icon_free')
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)
