@@ -4,10 +4,8 @@
 } = uploadcare
 
 fakeButtons = [
-  '.uploadcare--link',
-  '.uploadcare--widget__button',
   '.uploadcare--menu__item',
-  '.uploadcare--button',
+  '.uploadcare--file__content',
 ].join(', ')
 
 mouseFocusedClass = 'uploadcare--mouse-focused'
