@@ -1,19 +1,12 @@
 .crop-sizes__item {
   flex: 0 1 auto;
 
-  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-end;
 
-  margin: 0;
-  padding: 0;
-  width: 60px;
   height: 65px;
 
-  background: transparent;
-
-  cursor: default;
+  border-color: transparent;
 
   &,
   &:disabled:hover,
@@ -24,10 +17,6 @@
 
   &:hover, &:focus {
     color: var(--color-primary);
-  }
-
-  &:active {
-    color: var(--color-primary-dark);
   }
 }
 
@@ -41,9 +30,7 @@
   text-transform: uppercase;
 
   @media (max-width: 400px), (max-width: 600px) and (orientation: landscape) {
-    & {
-      font-size: 12px;
-    }
+    font-size: 12px;
   }
 }
 
