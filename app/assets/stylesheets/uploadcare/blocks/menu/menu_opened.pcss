@@ -2,13 +2,13 @@
   .menu:not(.menu_opened) {
     position: relative;
 
-    height: 60px;
+    height: var(--menu-item-size);
 
     .menu__item_current:not(.menu__item_file) .menu__icon {
       position: absolute;
       top: 0;
       left: 50%;
-      transform: translateX(-50%) scale(.8);
+      transform: translateX(-50%);
 
       margin-left: 0;
     }
