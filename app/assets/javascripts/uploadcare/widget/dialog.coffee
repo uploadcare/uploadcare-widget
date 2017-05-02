@@ -344,7 +344,7 @@ uploadcare.namespace '', (ns) ->
         .insertBefore(@footer)
 
       if name == 'preview'
-        tabIcon = $('<div class="uploadcare--dialog__icon">')
+        tabIcon = $('<div class="uploadcare--menu__icon uploadcare--dialog__icon">')
       else
         tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
           .attr('role', 'presentation')
