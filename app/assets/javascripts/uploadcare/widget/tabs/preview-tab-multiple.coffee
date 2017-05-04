@@ -124,10 +124,18 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if @settings.imagesOnly
           then "-/preview/88x88/"
           else "-/preview/88x88/"
-        fileEl.find('.uploadcare--file__preview')
-          .html(
-            $('<img>').attr('src', cdnURL).attr('srcset', cdnURL_2x + ' 2x')
-          )
+        filePreview = $('<img>')
+          .attr('src', cdnURL)
+          .attr('srcset', cdnURL_2x + ' 2x')
+          .addClass('uploadcare--file__icon')
+      else
+        filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>")
+          .attr('role', 'presentation')
+          .addClass('uploadcare--icon')
+          .addClass('uploadcare--file__icon')
+
+      fileEl.find('.uploadcare--file__preview')
+        .html(filePreview)
 
       fileEl.find('.uploadcare--file__content').on 'click', =>
           uploadcare.openPreviewDialog(file, @settings)
