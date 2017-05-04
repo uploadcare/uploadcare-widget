@@ -3,15 +3,19 @@
 
   display: flex;
 
-  margin-left: 5px;
-
   &:hover,
   &:focus {
-    color: var(--color-primary);
+    &,
+    .file__preview {
+      color: var(--color-primary);
+    }
   }
 
   &:active {
-    color: var(--color-primary-dark);
+    &,
+    .file__preview {
+      color: var(--color-primary-dark);
+    }
   }
 
   &:focus {
