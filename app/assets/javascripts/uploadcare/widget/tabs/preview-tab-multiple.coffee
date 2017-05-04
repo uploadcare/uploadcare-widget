@@ -143,11 +143,20 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
-      @__fileToEl(file)
+      fileEl = @__fileToEl(file)
         .removeClass('uploadcare--file_uploading')
         .addClass('uploadcare--file_error')
-        .find('.uploadcare--file__error')
-          .text(t("errors.#{error}"))
+
+      fileEl.find('.uploadcare--file__error')
+        .text(t("errors.#{error}"))
+
+      filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>")
+        .attr('role', 'presentation')
+        .addClass('uploadcare--icon')
+        .addClass('uploadcare--file__icon')
+
+      fileEl.find('.uploadcare--file__preview')
+        .html(filePreview)
 
     __fileAdded: (file) =>
       fileEl = @__createFileEl(file)
