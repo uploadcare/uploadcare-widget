@@ -118,12 +118,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if info.isImage
         cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/340x340/"
-          else "-/scale_crop/40x40/center/"
+          then "-/preview/44x44/"
+          else "-/preview/44x44/"
         cdnURL_2x = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/340x340/"
-          else "-/scale_crop/80x80/center/"
+          then "-/preview/88x88/"
+          else "-/preview/88x88/"
         fileEl.find('.uploadcare--file__preview')
           .html(
             $('<img>').attr('src', cdnURL).attr('srcset', cdnURL_2x + ' 2x')
