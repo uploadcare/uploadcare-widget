@@ -4,6 +4,10 @@
 
     height: var(--menu-item-size);
 
+    .menu__icon_toggle_back {
+      display: none;
+    }
+
     .menu__item_current:not(.menu__item_file) .menu__icon {
       position: absolute;
       top: 0;
@@ -18,6 +22,14 @@
     height: 100vh;
 
     .menu__toggle {
+      justify-content: flex-start;
+
+      width: 100%;
+
+      background: var(--menu-back-color);
+    }
+
+    .menu__icon_toggle_menu {
       display: none;
     }
   }

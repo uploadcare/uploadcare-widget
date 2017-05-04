@@ -2,8 +2,13 @@
   <div class="uploadcare--menu uploadcare--dialog__menu">
     <button title="<%- t('dialog.openMenu') %>"
             class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--menu__toggle">
-      <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+      <svg role="presentation" width="32" height="32"
+           class="uploadcare--icon uploadcare--menu__icon uploadcare--menu__icon_toggle_menu">
         <use xlink:href="#uploadcare--icon-menu"></use>
+      </svg>
+      <svg role="presentation" width="32" height="32"
+           class="uploadcare--icon uploadcare--menu__icon uploadcare--menu__icon_toggle_back">
+        <use xlink:href="#uploadcare--icon-back"></use>
       </svg>
     </button>
     <div class="uploadcare--menu__items"></div>
