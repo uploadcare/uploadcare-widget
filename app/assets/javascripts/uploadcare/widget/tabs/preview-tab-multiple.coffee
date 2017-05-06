@@ -118,12 +118,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if info.isImage
         cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/44x44/"
-          else "-/preview/44x44/"
+          then "-/preview/54x54/"
+          else "-/preview/54x54/"
         cdnURL_2x = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/88x88/"
-          else "-/preview/88x88/"
+          then "-/preview/108x108/"
+          else "-/preview/108x108/"
         filePreview = $('<img>')
           .attr('src', cdnURL)
           .attr('srcset', cdnURL_2x + ' 2x')
