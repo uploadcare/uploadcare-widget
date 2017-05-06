@@ -1,19 +1,13 @@
 .widget__button_type_open {
-  display: none;
-
   background: var(--color-primary);
   color: #fff;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: var(--color-primary-light);
   }
 
   &:active {
     background: var(--color-primary-dark);
-  }
-
-  .widget_status_error:not(.widget_option_clearable) &,
-  .widget_status_ready & {
-    display: inline-block;
   }
 }
