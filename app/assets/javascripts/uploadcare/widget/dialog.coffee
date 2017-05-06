@@ -51,6 +51,8 @@ uploadcare.namespace '', (ns) ->
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.addClass('uploadcare--dialog_active')
+    if settings.tabs.length == 0
+      dialog.addClass('uploadcare--dialog_menu-hidden')
     dialogPr.dialogElement = dialog
 
     if settings.multiple
