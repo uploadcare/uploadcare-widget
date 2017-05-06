@@ -5,7 +5,10 @@
   &,
   &:disabled:hover,
   &:disabled:focus,
-  &:disabled:active {
+  &:disabled:active,
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
     color: var(--fill-main-color);
   }
 

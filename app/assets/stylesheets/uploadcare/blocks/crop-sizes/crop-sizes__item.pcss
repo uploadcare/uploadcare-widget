@@ -1,17 +1,20 @@
 .crop-sizes__item {
   flex: 0 1 auto;
 
+  display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: center;
 
+  padding: 0;
   height: 65px;
 
   border-color: transparent;
 
   &,
-  &:disabled:hover,
-  &:disabled:focus,
-  &:disabled:active {
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
     color: var(--color-base);
   }
 

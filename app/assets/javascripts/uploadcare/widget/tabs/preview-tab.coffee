@@ -163,7 +163,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        @container.find('.uploadcare--crop-sizes__item').attr('disabled', false)
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', false)
+          .attr('tabindex', 0)
         done.attr('disabled', false)
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
@@ -181,7 +183,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
-        @container.find('.uploadcare--crop-sizes__item').attr('disabled', true)
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', true)
+          .attr('tabindex', -1)
 
         imgLoader.done ->
           # Often IE 11 doesn't do reflow after image.onLoad
@@ -206,6 +210,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         item = template.clone().appendTo(control)
           .attr('data-caption', caption)
           .on 'click', (e) =>
+            if $(e.currentTarget).attr('aria-disabled') is 'true'
+              return
             if not $(e.currentTarget).hasClass(currentClass) and @settings.crop.length > 1 and @widget
               @widget.setCrop(crop)
               control.find('>*').removeClass(currentClass)

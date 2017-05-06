@@ -34,7 +34,10 @@
   &,
   &:disabled:hover,
   &:disabled:focus,
-  &:disabled:active {
+  &:disabled:active,
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
     color: var(--color-primary);
   }
 
@@ -46,7 +49,8 @@
     color: var(--color-primary-dark);
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled=true] {
     cursor: not-allowed;
     opacity: .65;
   }

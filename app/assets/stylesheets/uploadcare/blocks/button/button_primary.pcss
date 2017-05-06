@@ -2,7 +2,10 @@
   &,
   &:disabled:hover,
   &:disabled:focus,
-  &:disabled:active {
+  &:disabled:active,
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
     border-color: var(--color-primary);
     background: var(--color-primary);
     color: #fff;
