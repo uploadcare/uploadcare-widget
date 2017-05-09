@@ -1,14 +1,26 @@
 .button_primary {
-  background: #157cfc;
-  color: #fff;
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active,
+  &[aria-disabled=true]:hover,
+  &[aria-disabled=true]:focus,
+  &[aria-disabled=true]:active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #fff;
+  }
 
-  &:hover, &:focus {
-    background: #2a90ff;
+  &:hover,
+  &:focus {
+    border-color: var(--color-primary-light);
+    background: var(--color-primary-light);
     color: #fff;
   }
 
   &:active {
-    background: #176dea;
+    border-color: var(--color-primary-dark);
+    background: var(--color-primary-dark);
     color: #fff;
   }
 }

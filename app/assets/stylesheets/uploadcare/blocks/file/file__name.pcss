@@ -2,26 +2,12 @@
   overflow: hidden;
 
   margin: 0;
-
-  max-width: calc(100vw - 290px); /* TODO Hack for limit block if content has long string without spaces */
+  max-width: var(--file-name-width); /* TODO Hack for limit block if content has long string without spaces */
 
   line-height: 25px;
 
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  .file_error & {
-    color: rgba(255, 0, 0, .6);
-  }
-
-  .file_uploaded &,
-  .file_error & {
-    max-width: calc(100vw - 290px + 80px);
-  }
-
-  @media (--desktop) {
-    & {
-      max-width: 350px !important;
-    }
-  }
+  transition: color .3s;
 }

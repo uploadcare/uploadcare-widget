@@ -1,22 +1,33 @@
 <div class="uploadcare--dialog__panel">
   <div class="uploadcare--menu uploadcare--dialog__menu">
+    <button title="<%- t('dialog.openMenu') %>"
+            class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--menu__toggle">
+      <svg role="presentation" width="32" height="32"
+           class="uploadcare--icon uploadcare--menu__toggle-icon uploadcare--menu__toggle-icon_menu">
+        <use xlink:href="#uploadcare--icon-menu"></use>
+      </svg>
+      <svg role="presentation" width="32" height="32"
+           class="uploadcare--icon uploadcare--menu__toggle-icon uploadcare--menu__toggle-icon_back">
+        <use xlink:href="#uploadcare--icon-back"></use>
+      </svg>
+    </button>
     <div class="uploadcare--menu__items"></div>
   </div>
 
   <div class="uploadcare--dialog__content">
 
     <div class="uploadcare--footer uploadcare--dialog__footer">
-      <div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--dialog__show-files"
-           tabindex="0" role="button">
-        <%- t('dialog.showFiles') %> <div class="uploadcare--dialog__file-counter"></div>
-      </div>
-
       <div class="uploadcare--footer__additions">
         <div class="uploadcare--dialog__message"></div>
       </div>
 
-      <div class="uploadcare--button uploadcare--button_primary uploadcare--dialog__done"
-           tabindex="0" role="button"><%- t('dialog.done') %></div>
+      <button class="uploadcare--button uploadcare--dialog__show-files">
+        <%- t('dialog.showFiles') %> <div class="uploadcare--dialog__file-counter"></div>
+      </button>
+
+      <button class="uploadcare--button uploadcare--button_primary uploadcare--dialog__done">
+          <%- t('dialog.done') %>
+      </button>
     </div>
   </div>
 </div>

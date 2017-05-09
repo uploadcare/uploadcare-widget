@@ -7,31 +7,17 @@
 
   box-sizing: border-box;
 
-  width: 50px;
-  height: 50px;
+  padding: 2px;
+  width: var(--base-size);
+  height: var(--base-size);
 
   overflow: hidden;
 
-  border-radius: 50%;
+  border: 1px solid;
+  border-radius: 2px;
 
-  background: #fff;
-  border: 1px solid #5b5b5b;
+  background: transparent;
+  color: var(--back-main-color);
 
-  .file:hover &,
-  .file:focus & {
-    border-color: #2a90ff;
-  }
-
-  .file_error & {
-    border-color: rgba(255, 0, 0, .6);
-  }
-
-  .file_error:hover &,
-  .file_error:focus & {
-    border-color: red;
-  }
-
-  img {
-    height: 100%;
-  }
+  transition: color .3s, border .3s;
 }

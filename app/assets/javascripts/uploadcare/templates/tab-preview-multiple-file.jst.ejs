@@ -1,8 +1,6 @@
 <div class="uploadcare--file uploadcare--files__item uploadcare--file_uploading">
-  <div class="uploadcare--file__content">
-    <div class="uploadcare--file__preview">
-      <div class="uploadcare-file-icon"></div>
-    </div>
+  <div tabindex="0" class="uploadcare--file__content">
+    <div class="uploadcare--file__preview"></div>
 
     <div class="uploadcare--file__description">
       <div class="uploadcare--file__name">
@@ -19,5 +17,9 @@
     </div>
   </div>
 
-  <div class="uploadcare--file__remove"></div>
+  <button class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--file__remove">
+    <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+      <use xlink:href="#uploadcare--icon-remove"></use>
+    </svg>
+  </button>
 </div>

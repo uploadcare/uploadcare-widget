@@ -1,0 +1,12 @@
+.widget:not(.widget_option_clearable) {
+  &.widget_status_error .widget__button_type_remove,
+  &.widget_status_loaded .widget__button_type_remove {
+    display: none;
+  }
+}
+
+.widget_option_clearable {
+  &.widget_status_error .widget__button_type_open {
+    display: none;
+  }
+}

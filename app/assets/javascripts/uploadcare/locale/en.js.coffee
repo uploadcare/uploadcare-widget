@@ -31,6 +31,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Choose an image'
           other: 'Choose images'
     dialog:
+      close: 'Close'
+      openMenu: 'Open menu'
       done: 'Done'
       showFiles: 'Show files'
       tabs:
@@ -123,6 +125,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
             clear: 'Cancel'
             done: 'Done'
+            file:
+              preview: 'Preview %file%'
+              remove: 'Remove %file%'
       footer:
         text: 'powered by'
         link: 'uploadcare'

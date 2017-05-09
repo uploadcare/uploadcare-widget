@@ -1,5 +1,5 @@
 .widget__dragndrop-area {
-  display: none;
+  display: block;
 
   line-height: 2.6;
 
@@ -15,12 +15,8 @@
   text-align: center;
   white-space: nowrap;
 
-  border: 1px dashed #157cfc;
+  border: 1px dashed var(--color-primary);
   border-radius: 100px;
   background-color: #ececec;
-  color: #157cfc;
-
-  .dragging & {
-    display: block;
-  }
+  color: var(--color-primary);
 }

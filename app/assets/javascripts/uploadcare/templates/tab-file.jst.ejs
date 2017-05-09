@@ -18,14 +18,20 @@
     </div>
   </div>
 
-  <div class="uploadcare--button uploadcare--button_size_big uploadcare--button_primary uploadcare--panel__action-button needsclick  uploadcare--dragging__hide">
+  <button class="uploadcare--button uploadcare--button_size_big uploadcare--button_primary uploadcare--panel__action-button needsclick  uploadcare--dragging__hide">
     <%- t('dialog.tabs.file.button') %>
-  </div>
+  </button>
 
   <div class="uploadcare--file-sources uploadcare--dragging__hide">
     <div class="uploadcare--text uploadcare--text_small uploadcare--text_muted uploadcare--file-sources__caption">
       <%- t('dialog.tabs.file.also') %>
     </div>
-    <div class="uploadcare--file-sources__items"></div>
+    <div class="uploadcare--file-sources__items">
+      <button class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item">
+          <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+              <use xlink:href="#uploadcare--icon-more"></use>
+          </svg>
+      </button>
+    </div>
   </div>
 </div>

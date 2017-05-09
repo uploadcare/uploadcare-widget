@@ -163,8 +163,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        @container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', false)
-        done.attr('aria-disabled', false)
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', false)
+          .attr('tabindex', 0)
+        done.attr('disabled', false)
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         if cdnModifiers
@@ -177,11 +179,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @settings.crop
         @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
-        done.attr('aria-disabled', true)
+        done.attr('disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
-        @container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', true)
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', true)
+          .attr('tabindex', -1)
 
         imgLoader.done ->
           # Often IE 11 doesn't do reflow after image.onLoad
@@ -206,6 +210,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         item = template.clone().appendTo(control)
           .attr('data-caption', caption)
           .on 'click', (e) =>
+            if $(e.currentTarget).attr('aria-disabled') is 'true'
+              return
             if not $(e.currentTarget).hasClass(currentClass) and @settings.crop.length > 1 and @widget
               @widget.setCrop(crop)
               control.find('>*').removeClass(currentClass)
@@ -219,7 +225,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               height: Math.max(12, size[1])
             )
         else
-          item.children().addClass('uploadcare--crop-sizes__icon_free')
+          icon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>")
+            .attr('role', 'presentation')
+            .addClass('uploadcare--icon')
+          item.children()
+            .append(icon)
+            .addClass('uploadcare--crop-sizes__icon_free')
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)

@@ -1,21 +1,13 @@
 .widget__button_type_open {
-  display: none;
-
-  padding: .5em .8em;
-
-  background: #157cfc;
+  background: var(--color-primary);
   color: #fff;
 
-  &:hover, &:focus {
-    background: #2a90ff;
+  &:hover,
+  &:focus {
+    background: var(--color-primary-light);
   }
 
   &:active {
-    background: #176dea;
-  }
-
-  .widget_status_error:not(.widget_option_clearable) &,
-  .widget_status_ready & {
-    display: inline-block;
+    background: var(--color-primary-dark);
   }
 }

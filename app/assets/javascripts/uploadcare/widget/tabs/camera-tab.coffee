@@ -21,12 +21,12 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-camera'))
       @container.addClass('uploadcare--camera')
       @container.addClass('uploadcare--camera_requested')
-      @container.find('.uploadcare--camera__capture-button').on('click', @__capture)
-      startRecord = @container.find('.uploadcare--camera__start-record-button').on('click', @__startRecording)
-      @container.find('.uploadcare--camera__stop-record-button').on('click', @__stopRecording)
-      @container.find('.uploadcare--camera__cancel-record-button').on('click', @__cancelRecording)
-      @container.find('.uploadcare--camera__mirror-button').on('click', @__mirror)
-      @container.find('.uploadcare--camera__retry-button').on('click', @__requestCamera)
+      @container.find('.uploadcare--camera__button-capture').on('click', @__capture)
+      startRecord = @container.find('.uploadcare--camera__button-start-record').on('click', @__startRecording)
+      @container.find('.uploadcare--camera__button-stop-record').on('click', @__stopRecording)
+      @container.find('.uploadcare--camera__button-cancel-record').on('click', @__cancelRecording)
+      @container.find('.uploadcare--camera__button-mirror').on('click', @__mirror)
+      @container.find('.uploadcare--camera__button-retry').on('click', @__requestCamera)
 
       if not @MediaRecorder or @settings.imagesOnly
         startRecord.hide()

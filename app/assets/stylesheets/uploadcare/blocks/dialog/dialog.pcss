@@ -17,7 +17,7 @@
   height: 100%;
 
   background: #fff;
-  color: #454545;
+  color: var(--color-base);
 
   font-family: var(--font-family);
   font-weight: normal;
@@ -29,24 +29,18 @@
   transition: opacity .33s cubic-bezier(.05, .7, .25, 1);
 
   @media (--desktop) {
-    & {
-      align-items: center;
+    align-items: center;
 
-      overflow-y: auto;
+    overflow-y: auto;
 
-      background: rgba(0, 0, 0, .5);
-    }
+    background: rgba(0, 0, 0, .5);
   }
 
   @media (--desktop) and (max-height: 559px) {
-    & {
-      padding-top: 30px;
-    }
+    padding-top: 30px;
   }
 
   @media (--desktop) and (min-height: 560px) {
-    & {
-      justify-content: center;
-    }
+    justify-content: center;
   }
 }

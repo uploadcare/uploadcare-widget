@@ -62,7 +62,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       tooFewFiles = files < @settings.multipleMin
       hasWrongNumberFiles = tooManyFiles or tooFewFiles
 
-      @doneBtnEl.attr('aria-disabled', hasWrongNumberFiles)
+      @doneBtnEl.attr('disabled', hasWrongNumberFiles)
 
       title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
@@ -84,8 +84,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .text(wrongNumberFilesMessage)
 
     __updateFileInfo: (fileEl, info) ->
+      filename = info.name or t('dialog.tabs.preview.unknownName')
+
       fileEl.find('.uploadcare--file__name')
-        .text(info.name or t('dialog.tabs.preview.unknownName'))
+        .text(filename)
+
+      fileEl.find('.uploadcare--file__content')
+        .attr('title', t('dialog.tabs.preview.multiple.file.preview').replace('%file%', filename))
+
+      fileEl.find('.uploadcare--file__remove')
+        .attr('title', t('dialog.tabs.preview.multiple.file.remove').replace('%file%', filename))
 
       fileEl.find('.uploadcare--file__size')
         .text(utils.readableFileSize(info.size, '–'))
@@ -110,16 +118,24 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if info.isImage
         cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/340x340/"
-          else "-/scale_crop/40x40/center/"
+          then "-/preview/54x54/"
+          else "-/preview/54x54/"
         cdnURL_2x = "#{info.cdnUrl}-/quality/lightest/" +
           if @settings.imagesOnly
-          then "-/preview/340x340/"
-          else "-/scale_crop/80x80/center/"
-        fileEl.find('.uploadcare--file__preview')
-          .html(
-            $('<img>').attr('src', cdnURL).attr('srcset', cdnURL_2x + ' 2x')
-          )
+          then "-/preview/108x108/"
+          else "-/preview/108x108/"
+        filePreview = $('<img>')
+          .attr('src', cdnURL)
+          .attr('srcset', cdnURL_2x + ' 2x')
+          .addClass('uploadcare--file__icon')
+      else
+        filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>")
+          .attr('role', 'presentation')
+          .addClass('uploadcare--icon')
+          .addClass('uploadcare--file__icon')
+
+      fileEl.find('.uploadcare--file__preview')
+        .html(filePreview)
 
       fileEl.find('.uploadcare--file__content').on 'click', =>
           uploadcare.openPreviewDialog(file, @settings)
@@ -127,11 +143,20 @@ uploadcare.namespace 'widget.tabs', (ns) ->
               @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
-      @__fileToEl(file)
+      fileEl = @__fileToEl(file)
         .removeClass('uploadcare--file_uploading')
         .addClass('uploadcare--file_error')
-        .find('.uploadcare--file__error')
-          .text(t("errors.#{error}"))
+
+      fileEl.find('.uploadcare--file__error')
+        .text(t("errors.#{error}"))
+
+      filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>")
+        .attr('role', 'presentation')
+        .addClass('uploadcare--icon')
+        .addClass('uploadcare--file__icon')
+
+      fileEl.find('.uploadcare--file__preview')
+        .html(filePreview)
 
     __fileAdded: (file) =>
       fileEl = @__createFileEl(file)

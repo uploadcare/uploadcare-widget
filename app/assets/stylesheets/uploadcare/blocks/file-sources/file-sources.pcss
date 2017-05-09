@@ -5,9 +5,9 @@
   flex-direction: column;
   align-items: center;
 
-  @media (--desktop) {
-    & {
-      display: none;
-    }
+  width: 100%;
+
+  @media (--desktop), (--mobile) and (orientation: landscape) {
+    display: none;
   }
 }

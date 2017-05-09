@@ -25,7 +25,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       input.on 'change keyup input', ->
         button.attr('disabled', !$.trim(this.value))
 
-      button = @container.find('.uploadcare--button_submit')
+      button = @container.find('.uploadcare--button[type=submit]')
         .attr('disabled', true)
 
       @container.find('.uploadcare--form').on 'submit', =>

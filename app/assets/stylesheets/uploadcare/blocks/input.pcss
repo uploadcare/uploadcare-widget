@@ -16,17 +16,17 @@
   line-height: 25px;
 
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: 0;
+  color: var(--color-base);
+  border: 1px solid var(--color-gray);
+  border-radius: 2px;
   box-shadow: none;
-  color: #454545;
 
   &:focus {
-    outline: color(#157cfc a(50%)) 2px solid;
+    outline: var(--focus-outline);
     outline-offset: 1px;
   }
 
   &::placeholder {
-    color: #9b9b9b;
+    color: var(--color-gray);
   }
 }

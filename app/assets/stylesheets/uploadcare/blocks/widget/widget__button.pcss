@@ -1,31 +1,43 @@
 .widget__button {
+  all: initial;
+
   display: inline-block;
 
-  line-height: 1;
+  margin: -.1em 0;
+  padding: .1em .8em;
 
-  margin: -1em 0;
-  margin-right: .5ex;
-  padding: .4em .6em;
-
-  cursor: default;
-  white-space: nowrap;
-
+  box-shadow: none;
+  border: none;
   border-radius: 4px;
-  background: #c3c3c3;
+
   color: #fff;
 
-  &[disabled],
-  &[aria-disabled=true] {
-    cursor: not-allowed;
-    opacity: .65;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  white-space: nowrap;
+
+  cursor: default;
+
+  &,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
+    background: #c3c3c3;
   }
 
   &:hover, &:focus {
     background: #b3b3b3;
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .65;
+  }
+
   &:focus {
-    outline: color(#157cfc a(50%)) 2px solid;
+    outline: var(--focus-outline);
     outline-offset: 1px;
   }
 }

@@ -1,0 +1,38 @@
+@media (--mobile) {
+  .menu:not(.menu_opened) {
+    position: relative;
+
+    height: var(--menu-item-size);
+
+    .menu__toggle-icon_back {
+      display: none;
+    }
+
+    .menu__item_current:not(.menu__item_file) .menu__icon {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+
+      margin-left: 0;
+    }
+  }
+
+  .menu.menu_opened {
+    height: 100vh;
+
+    .menu__toggle {
+      justify-content: flex-start;
+
+      width: 100%;
+
+      text-align: left;
+
+      background: var(--menu-back-color);
+    }
+
+    .menu__toggle-icon_menu {
+      display: none;
+    }
+  }
+}

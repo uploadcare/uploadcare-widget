@@ -11,14 +11,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.addClass('uploadcare--preview')
 
-      notDisabled = ':not([aria-disabled=true])'
+      notDisabled = ':not(:disabled)'
       @container.on 'click', '.uploadcare--preview__back' + notDisabled, =>
         @dialogApi.fileColl.clear()
       @container.on('click', '.uploadcare--preview__done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
-      circleEl = $('<div class="uploadcare--dialog__icon">')
-        .appendTo(@tabButton)
+      circleEl = @tabButton.find('.uploadcare--dialog__icon')
 
       circleDf = $.Deferred()
 

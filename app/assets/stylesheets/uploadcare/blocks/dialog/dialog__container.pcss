@@ -8,18 +8,20 @@
   background: #fff;
 
   @media (--mobile) {
-    & {
-      flex: 1 0 100%;
-    }
+    flex: 1 0 100%;
   }
 
   @media (--desktop) {
-    & {
-      width: calc(100% - 60px);
-      max-width: 900px;
-      height: calc(100% - 60px);
-      min-height: 500px;
-      max-height: 660px;
-    }
+    width: calc(100% - 60px);
+    max-width: 900px;
+    height: calc(100% - 60px);
+    min-height: 500px;
+    max-height: 660px;
+
+    border-radius: 6px;
+  }
+
+  @media (--large) {
+    max-width: 1000px;
   }
 }

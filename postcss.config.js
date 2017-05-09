@@ -6,8 +6,6 @@ const withMinification = (argv.min) || false
 
 let use = [
   'postcss-import',
-  'postcss-each',
-  'postcss-inline-svg',
   'postcss-custom-media',
   'postcss-nested',
   'postcss-css-variables',
@@ -21,7 +19,6 @@ let configUse = {
     path: stylesheetsPath,
     plugins: [
       require('stylelint'),
-      require('postcss-apply'),
       require('postcss-prefixer')('uploadcare--', {
         ignore: [
           /^\.uploadcare-/,
@@ -32,7 +29,6 @@ let configUse = {
       }),
     ],
   },
-  'postcss-inline-svg': {path: path.join(__dirname, 'app', 'assets', 'images', 'uploadcare', 'svg')},
 }
 
 const minificationUse = ['cssnano']

@@ -4,22 +4,7 @@
   right: 0;
   z-index: 49;
 
-  box-sizing: border-box;
-
-  width: 60px;
-  height: 60px;
-
-  padding-top: calc((60px - 20px) / 2);
-
-  font-size: 20px;
-  line-height: 20px;
-  text-align: center;
-
-  color: #454545;
-
-  cursor: pointer;
-
-  .dragging & {
-    display: none;
+  &:focus {
+    outline-offset: -2px;
   }
 }

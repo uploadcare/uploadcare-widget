@@ -12,16 +12,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @container.append(tpl('tab-file'))
 
-      @container.on 'click', '.uploadcare--file-sources__item', (e) =>
-        @dialogApi.switchTab($(e.target).data('tab'))
-
-      @container.on 'click', '.uploadcare--file-sources__items', (e) =>
-        @dialogApi.openMenu()
-
       @__setupFileButton()
       @__initDragNDrop()
-      @__updateTabsList()
-      @dialogApi.onTabVisibility(@__updateTabsList)
+      @__initTabsList()
 
     __initDragNDrop: ->
       dropArea = @container.find('.uploadcare--draganddrop')
@@ -44,8 +37,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @dialogApi.addFiles('input', [input])
           @dialogApi.switchTab('preview')
 
-    __updateTabsList: =>
-      list = @container.find('.uploadcare--file-sources__items').empty()
+    __initTabsList: =>
+      list = @container.find('.uploadcare--file-sources__items')
+      list.remove('.uploadcare--file-sources__item:not(.uploadcare--file-source_all)')
+
       n = 0
       for tab in @settings.tabs
         if tab in ['file', 'url', 'camera']
@@ -54,13 +49,34 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           continue
 
         n += 1
-        list.append([
-          $('<div/>', {
-            class: "uploadcare--file-sources__item uploadcare--file-sources__item_" + tab
-            'data-tab': tab
-            html: t('dialog.tabs.names.' + tab)
-          }),
-          ' '
-        ])
 
+        if n > 5
+          continue
+
+        list.append([@__tabButton(tab), ' '])
+
+      allButton = list.find('.uploadcare--file-source_all')
+        .on 'click', =>
+          @dialogApi.openMenu()
+
+      if n > 5
+        list.addClass('uploadcare--file-sources__items_many')
       @container.find('.uploadcare--file-sources').attr('hidden', n == 0)
+
+    __tabButton: (name) ->
+      tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
+        .attr('role', 'presentation')
+        .addClass('uploadcare--icon')
+        .addClass('uploadcare--file-source__icon')
+
+      tabButton = $('<button>')
+        .addClass('uploadcare--button')
+        .addClass('uploadcare--button_icon')
+        .addClass('uploadcare--file-source')
+        .addClass("uploadcare--file-source_#{name}")
+        .addClass('uploadcare--file-sources__item')
+        .attr('title', t("dialog.tabs.names.#{name}"))
+        .attr('data-tab', name)
+        .append(tabIcon)
+        .on 'click', =>
+          @dialogApi.switchTab(name)
