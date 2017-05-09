@@ -1,18 +1,28 @@
 .footer {
-  box-sizing: border-box;
-
   flex: 0 0 auto;
 
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+
+  box-sizing: border-box;
 
   width: 100%;
 
   margin-top: 10px;
   padding: 10px 20px 20px;
+
+  .button:nth-of-type(1) {
+    order: 0;
+  }
+
+  .footer__additions {
+    order: 1;
+  }
+
+  .button:nth-of-type(2) {
+    order: 2;
+  }
 
   @media (--mobile) {
     .button {
@@ -20,12 +30,16 @@
     }
   }
 
-  @media (--mobile) and (orientation: landscape) {
-    flex-wrap: nowrap;
-  }
+  @media (--mobile) and (orientation: portrait) {
+    display: block;
 
-  @media (--desktop) {
-    flex-wrap: nowrap;
+    .button:nth-of-type(1) {
+      float: left;
+    }
+
+    .button:nth-of-type(2) {
+      float: right;
+    }
   }
 
   &:empty {

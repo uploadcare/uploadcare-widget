@@ -18,11 +18,6 @@
 </div>
 
 <div class="uploadcare--footer uploadcare--panel__footer">
-  <!-- TODO Change Cancel to Remove -->
-  <button class="uploadcare--button uploadcare--preview__back uploadcare-dialog-button">
-      <%- t('dialog.tabs.preview.image.change') %>
-  </button>
-
   <div class="uploadcare--footer__additions">
     <% if (crop) { %>
     <div class="uploadcare--crop-sizes">
@@ -33,6 +28,11 @@
     </div>
     <% } %>
   </div>
+
+  <!-- TODO Change Cancel to Remove -->
+  <button class="uploadcare--button uploadcare--preview__back uploadcare-dialog-button">
+      <%- t('dialog.tabs.preview.image.change') %>
+  </button>
 
   <button class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success">
       <%- t('dialog.tabs.preview.done') %>
