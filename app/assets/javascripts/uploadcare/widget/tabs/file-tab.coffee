@@ -66,8 +66,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     __tabButton: (name) ->
       tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
         .attr('role', 'presentation')
-        .addClass('uploadcare--icon')
-        .addClass('uploadcare--file-source__icon')
+        .attr('class', 'uploadcare--icon uploadcare--file-source__icon')
 
       tabButton = $('<button>')
         .addClass('uploadcare--button')

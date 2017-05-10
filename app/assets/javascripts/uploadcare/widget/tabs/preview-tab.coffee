@@ -227,7 +227,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         else
           icon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>")
             .attr('role', 'presentation')
-            .addClass('uploadcare--icon')
+            .attr('class', 'uploadcare--icon')
           item.children()
             .append(icon)
             .addClass('uploadcare--crop-sizes__icon_free')

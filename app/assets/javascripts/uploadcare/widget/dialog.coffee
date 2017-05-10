@@ -350,8 +350,7 @@ uploadcare.namespace '', (ns) ->
       else
         tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
           .attr('role', 'presentation')
-          .addClass('uploadcare--icon')
-          .addClass('uploadcare--menu__icon')
+          .attr('class', 'uploadcare--icon uploadcare--menu__icon')
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass('uploadcare--menu__item')
@@ -419,8 +418,7 @@ uploadcare.namespace '', (ns) ->
     __addFakeTab: (name) ->
       tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
         .attr('role', 'presentation')
-        .addClass('uploadcare--icon')
-        .addClass('uploadcare--menu__icon')
+        .attr('class', 'uploadcare--icon uploadcare--menu__icon')
 
       $('<div>')
         .addClass('uploadcare--menu__item')

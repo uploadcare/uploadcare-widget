@@ -131,8 +131,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       else
         filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>")
           .attr('role', 'presentation')
-          .addClass('uploadcare--icon')
-          .addClass('uploadcare--file__icon')
+          .attr('class', 'uploadcare--icon uploadcare--file__icon')
 
       fileEl.find('.uploadcare--file__preview')
         .html(filePreview)
@@ -152,8 +151,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>")
         .attr('role', 'presentation')
-        .addClass('uploadcare--icon')
-        .addClass('uploadcare--file__icon')
+        .attr('class', 'uploadcare--icon uploadcare--file__icon')
 
       fileEl.find('.uploadcare--file__preview')
         .html(filePreview)
