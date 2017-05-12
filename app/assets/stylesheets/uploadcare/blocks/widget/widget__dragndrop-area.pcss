@@ -16,3 +16,15 @@
   background: #ececec;
   color: #999;
 }
+
+.widget__dragndrop-area {
+  display: none;
+
+  .dragging & {
+    display: block;
+  }
+
+  .widget.dragging & {
+    color: var(--color-primary);
+  }
+}
