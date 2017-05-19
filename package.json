@@ -8,11 +8,13 @@
     "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/stylesheets/uploadcare/styles.css",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build": "npm run build:svg && npm run build:css:min",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve:latest": "browser-sync start --ss ./pkg/latest -f ./pkg/latest --port 3219"
   },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.0.1",
+    "browser-sync": "^2.18.11",
     "cross-env": "^4.0.0",
     "cssnano": "^3.9.1",
     "eslint": "^3.19.0",
