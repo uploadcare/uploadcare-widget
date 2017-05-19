@@ -25,7 +25,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         dropArea.addClass("uploadcare--draganddrop_supported")
 
     __setupFileButton: ->
-      fileButton = @container.find('.uploadcare--panel__action-button')
+      fileButton = @container.find('.uploadcare--tab__action-button')
       if utils.abilities.sendFileAPI
         fileButton.on 'click', =>
           utils.fileSelectDialog @container, @settings, (input) =>

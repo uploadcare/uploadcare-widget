@@ -341,8 +341,8 @@ uploadcare.namespace '', (ns) ->
         throw new Error("No such tab: #{name}")
 
       tabPanel = $('<div>')
-        .addClass("uploadcare--panel")
-        .addClass("uploadcare--panel_#{name}")
+        .addClass("uploadcare--tab")
+        .addClass("uploadcare--tab_#{name}")
         .insertBefore(@footer)
 
       if name == 'preview'
@@ -380,7 +380,7 @@ uploadcare.namespace '', (ns) ->
             .filter(".uploadcare--menu__item_#{tab}")
             .addClass("uploadcare--menu__item_current")
 
-      className = "uploadcare--panel"
+      className = "uploadcare--tab"
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
             .filter(".#{className}_#{tab}")

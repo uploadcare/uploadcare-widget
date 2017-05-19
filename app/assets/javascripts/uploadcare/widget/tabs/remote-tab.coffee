@@ -40,7 +40,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           frameborder: 0
           allowTransparency: "true"
         )
-        .addClass('uploadcare--panel__iframe')
+        .addClass('uploadcare--tab__iframe')
         .appendTo(@container)
         .on 'load', =>
           @iframe.css('opacity', '1')
@@ -56,7 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
-      @container.addClass('uploadcare--panel_remote')
+      @container.addClass('uploadcare--tab_remote')
       iframe = @iframe[0].contentWindow
 
       utils.registerMessage 'file-selected', iframe, (message) =>
