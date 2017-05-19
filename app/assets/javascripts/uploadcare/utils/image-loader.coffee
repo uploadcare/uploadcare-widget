@@ -37,5 +37,6 @@ uploadcare.namespace 'utils', (ns) ->
       .on('loadeddata', def.resolve)
       .on('error', def.reject)
       .attr('src', src)
+      .get(0)
       .load()
     def.promise()
