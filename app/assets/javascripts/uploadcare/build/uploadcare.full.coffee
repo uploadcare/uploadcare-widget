@@ -1,4 +1,4 @@
-# = require ../vendor/jquery.2.2.4.min.js
+# = require ../vendor/jquery.3.2.1.min.js
 # = require ./_widget.coffee
 # = require_directory ../locale
 
