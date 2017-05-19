@@ -56,9 +56,6 @@ uploadcare.namespace '', (ns) ->
       dialog.addClass('uploadcare--dialog_menu-hidden')
     dialogPr.dialogElement = dialog
 
-    if settings.multiple
-      dialog.addClass('uploadcare--dialog_multiple')
-
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
 
@@ -171,6 +168,9 @@ uploadcare.namespace '', (ns) ->
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
+
+      if @settings.multiple
+        @panel.addClass('uploadcare--panel_multiple')
 
       @panel.find('.uploadcare--menu__toggle')
         .on 'click', =>
