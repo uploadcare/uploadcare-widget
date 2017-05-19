@@ -17,7 +17,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.on('click', '.uploadcare--preview__done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
-      circleEl = @tabButton.find('.uploadcare--dialog__icon')
+      circleEl = @tabButton.find('.uploadcare--panel__icon')
 
       circleDf = $.Deferred()
 

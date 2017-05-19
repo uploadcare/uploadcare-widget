@@ -1,5 +1,5 @@
-<div class="uploadcare--dialog__panel">
-  <div class="uploadcare--menu uploadcare--dialog__menu">
+<div class="uploadcare--panel">
+  <div class="uploadcare--menu uploadcare--panel__menu">
     <button title="<%- t('dialog.openMenu') %>"
             class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--menu__toggle">
       <svg role="presentation" width="32" height="32"
@@ -14,18 +14,18 @@
     <div class="uploadcare--menu__items"></div>
   </div>
 
-  <div class="uploadcare--dialog__content">
+  <div class="uploadcare--panel__content">
 
-    <div class="uploadcare--footer uploadcare--dialog__footer">
+    <div class="uploadcare--footer uploadcare--panel__footer">
       <div class="uploadcare--footer__additions">
-        <div class="uploadcare--dialog__message"></div>
+        <div class="uploadcare--panel__message"></div>
       </div>
 
-      <button class="uploadcare--button uploadcare--dialog__show-files">
-        <%- t('dialog.showFiles') %> <div class="uploadcare--dialog__file-counter"></div>
+      <button class="uploadcare--button uploadcare--panel__show-files">
+        <%- t('dialog.showFiles') %> <div class="uploadcare--panel__file-counter"></div>
       </button>
 
-      <button class="uploadcare--button uploadcare--button_primary uploadcare--dialog__done">
+      <button class="uploadcare--button uploadcare--button_primary uploadcare--panel__done">
           <%- t('dialog.done') %>
       </button>
     </div>

@@ -50,6 +50,7 @@ uploadcare.namespace '', (ns) ->
     dialog.append($(tpl('icons')))
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
+    dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
     dialog.addClass('uploadcare--dialog_active')
     if settings.tabs.length == 0
       dialog.addClass('uploadcare--dialog_menu-hidden')
@@ -69,7 +70,7 @@ uploadcare.namespace '', (ns) ->
       if not $.contains(document.documentElement, e.target)
         return
 
-      showStoppers = '.uploadcare--dialog__content, a'
+      showStoppers = '.uploadcare--panel__content, a'
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
@@ -165,7 +166,7 @@ uploadcare.namespace '', (ns) ->
       @dfd = $.Deferred()
       @dfd.always(@__closePanel)
 
-      sel = '.uploadcare--dialog__panel'
+      sel = '.uploadcare--panel'
       @content = $(tpl('dialog__panel'))
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
@@ -286,14 +287,14 @@ uploadcare.namespace '', (ns) ->
         @switchTab(tab || @__firstVisibleTab())
 
       if @settings.tabs.length == 0
-        @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--dialog__menu_hidden')
+        @panel.find('.uploadcare--panel__menu').addClass('uploadcare--panel__menu_hidden')
 
     __prepareFooter: ->
-      @footer = @panel.find('.uploadcare--dialog__footer')
+      @footer = @panel.find('.uploadcare--panel__footer')
       notDisabled = ':not(:disabled)'
-      @footer.on 'click', '.uploadcare--dialog__show-files' + notDisabled, =>
+      @footer.on 'click', '.uploadcare--panel__show-files' + notDisabled, =>
         @switchTab('preview')
-      @footer.on('click', '.uploadcare--dialog__done' + notDisabled, @__resolve)
+      @footer.on('click', '.uploadcare--panel__done' + notDisabled, @__resolve)
 
       @__updateFooter()
       @files.onAdd.add(@__updateFooter)
@@ -304,10 +305,10 @@ uploadcare.namespace '', (ns) ->
         tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
         tooFewFiles = files < @settings.multipleMin
 
-        @footer.find('.uploadcare--dialog__done')
+        @footer.find('.uploadcare--panel__done')
           .attr('disabled', tooManyFiles or tooFewFiles)
 
-        @footer.find('.uploadcare--dialog__show-files')
+        @footer.find('.uploadcare--panel__show-files')
           .attr('disabled', files is 0)
 
         footer = if tooManyFiles
@@ -319,11 +320,11 @@ uploadcare.namespace '', (ns) ->
         else
           t('dialog.tabs.preview.multiple.title')
 
-        @footer.find('.uploadcare--dialog__message')
+        @footer.find('.uploadcare--panel__message')
           .toggleClass('uploadcare--error', tooManyFiles)
           .text(footer.replace('%files%', t('file', files)))
 
-        @footer.find('.uploadcare--dialog__file-counter')
+        @footer.find('.uploadcare--panel__file-counter')
           .toggleClass('uploadcare--error', tooManyFiles)
           .text(if files then "(#{files})" else "")
 
@@ -346,7 +347,7 @@ uploadcare.namespace '', (ns) ->
         .insertBefore(@footer)
 
       if name == 'preview'
-        tabIcon = $('<div class="uploadcare--menu__icon uploadcare--dialog__icon">')
+        tabIcon = $('<div class="uploadcare--menu__icon uploadcare--panel__icon">')
       else
         tabIcon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-#{name}'/></svg>")
           .attr('role', 'presentation')
@@ -360,7 +361,7 @@ uploadcare.namespace '', (ns) ->
         .appendTo(@panel.find(".uploadcare--menu__items"))
         .on 'click', =>
           if name is @currentTab
-            @panel.find('.uploadcare--dialog__menu').removeClass('uploadcare--menu_opened')
+            @panel.find('.uploadcare--panel__menu').removeClass('uploadcare--menu_opened')
           else
               @switchTab(name)
 
@@ -371,7 +372,7 @@ uploadcare.namespace '', (ns) ->
         return
       @currentTab = tab
 
-      @panel.find('.uploadcare--dialog__menu')
+      @panel.find('.uploadcare--panel__menu')
         .removeClass('uploadcare--menu_opened')
         .attr('data-current', tab)
 
@@ -401,7 +402,7 @@ uploadcare.namespace '', (ns) ->
             .is(".uploadcare--menu__item_hidden")
 
     openMenu: =>
-      @panel.find('.uploadcare--dialog__menu').addClass('uploadcare--menu_opened')
+      @panel.find('.uploadcare--panel__menu').addClass('uploadcare--menu_opened')
 
     __firstVisibleTab: ->
       for tab in @settings.tabs
