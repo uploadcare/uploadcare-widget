@@ -1,22 +1,30 @@
 .widget__dragndrop-area {
-  display: block;
-
-  line-height: 2.6;
-
   position: absolute;
-  top: 50%;
-  left: -1em;
+  top: calc(calc(var(--widget-padding-v) * -1) - 1px);
+  left: 0;
 
-  box-sizing: content-box;
   min-width: 100%;
-  margin-top: -1.3em;
-  padding: 0 1em;
+  min-height: 100%;
+  margin: 0;
+  padding: calc(var(--widget-padding-v) * 2) var(--widget-padding-h);
 
   text-align: center;
   white-space: nowrap;
 
-  border: 1px dashed var(--color-primary);
-  border-radius: 100px;
-  background-color: #ececec;
-  color: var(--color-primary);
+  border: 1px dashed;
+  border-radius: 4px;
+  background: #ececec;
+  color: #999;
+}
+
+.widget__dragndrop-area {
+  display: none;
+
+  .dragging & {
+    display: block;
+  }
+
+  .widget.dragging & {
+    color: var(--color-primary);
+  }
 }

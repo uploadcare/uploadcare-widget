@@ -13,7 +13,14 @@ uploadcare.namespace 'widget', (ns) ->
     constructor: (@settings, @element)->
       @content = $(tpl('widget'))
       @element.after(@content)
-      @circle = new progress.Circle(@content.find('.uploadcare--widget__progress'))
+      @circle = new progress.Circle(
+        @content
+          .find('.uploadcare--widget__progress')
+          .removeClass('uploadcare--widget__progress')
+      )
+      @content
+        .find('.uploadcare--progress')
+        .addClass('uploadcare--widget__progress')
       @statusText = @content.find('.uploadcare--widget__text')
       @content.toggleClass('uploadcare--widget_option_clearable',
                            @settings.clearable)
