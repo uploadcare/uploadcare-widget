@@ -146,7 +146,7 @@ for more information.
 ## Browser Support 
 
 <div>
-  <table style="display: inline-table;width: auto;max-width: 50%;">
+  <table style="display: inline-table;width: auto;max-width: calc(50% - .5em);">
     <thead>
       <tr>
         <th>Desktop</th>
@@ -169,8 +169,7 @@ for more information.
         <td>IE: 10+</td>
       </tr>
     </tbody>
-  </table>
-  <table style="display: inline-table;width: auto;max-width: 50%;margin-left: 1em">
+  </table><table style="display: inline-table;width: auto;max-width: calc(50% - .5em);margin-left: 1em">
     <thead>
       <tr>
         <th>Mobile</th>
