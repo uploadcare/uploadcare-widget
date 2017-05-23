@@ -50,7 +50,7 @@ uploadcare.namespace '', (ns) ->
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
-    dialog.addClass('uploadcare--dialog_active')
+    dialog.addClass('uploadcare--dialog_status_active')
     if settings.tabs.length == 0
       dialog.addClass('uploadcare--dialog_menu-hidden')
     dialogPr.dialogElement = dialog
@@ -89,13 +89,13 @@ uploadcare.namespace '', (ns) ->
       tabs: ''
     })
     dialog = uploadcare.openDialog(file, 'preview', settings)
-    oldDialogPr.dialogElement.addClass('uploadcare--dialog_inactive')
+    oldDialogPr.dialogElement.addClass('uploadcare--dialog_status_inactive')
 
     dialog.always ->
       currentDialogPr = oldDialogPr
       # still opened
       $('html, body').addClass(openedClass)
-      oldDialogPr.dialogElement.removeClass('uploadcare--dialog_inactive')
+      oldDialogPr.dialogElement.removeClass('uploadcare--dialog_status_inactive')
     dialog.onTabVisibility (tab, shown) =>
       if tab == 'preview' and not shown
         dialog.reject()
