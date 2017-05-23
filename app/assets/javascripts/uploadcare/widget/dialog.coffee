@@ -47,7 +47,6 @@ uploadcare.namespace '', (ns) ->
     ns.closeDialog()
 
     dialog = $(tpl('dialog')).appendTo('body')
-    dialog.append($(tpl('icons')))
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
@@ -168,6 +167,8 @@ uploadcare.namespace '', (ns) ->
       @panel = @content.find(sel).add(@content.filter(sel))
       @placeholder = $(placeholder)
       @placeholder.replaceWith(@content)
+
+      @panel.append($(tpl('icons')))
 
       if @settings.multiple
         @panel.addClass('uploadcare--panel_multiple')
