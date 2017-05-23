@@ -108,8 +108,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __fileDone: (file, info) =>
       fileEl = @__fileToEl(file)
-        .removeClass('uploadcare--file_uploading')
-        .addClass('uploadcare--file_uploaded')
+        .removeClass('uploadcare--file_status_uploading')
+        .addClass('uploadcare--file_status_uploaded')
 
       fileEl.find('.uploadcare--progressbar__value')
         .css('width', '100%')
@@ -143,8 +143,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __fileFailed: (file, error, info) =>
       fileEl = @__fileToEl(file)
-        .removeClass('uploadcare--file_uploading')
-        .addClass('uploadcare--file_error')
+        .removeClass('uploadcare--file_status_uploading')
+        .addClass('uploadcare--file_status_error')
 
       fileEl.find('.uploadcare--file__error')
         .text(t("errors.#{error}"))
