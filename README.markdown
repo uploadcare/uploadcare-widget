@@ -101,73 +101,67 @@ after they get selected by a user, not on form submission.
 That way users can fill out the rest of your form while an
 upload is in progress. This can be a real time saver.
 
-## Building Your Own
+### Usage with React
 
-Clone the repository.
+```javascript
+import React, {Component} from 'react'
+import uploadcare from 'uploadcare-widget'
 
-### Enviroment
+class Uploader extends Component {
 
-You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
+  componentDidMount() {
+    uploadcare.start({publicKey: 'YOUR_PUBLIC_KEY'})
+  }
 
-#### Vagrant
+  render() {
+    return (
+      <div>
+        <input type='text' role='uploadcare-uploader'/>
+      </div>
+    )
+  }
+}
 
-If you don't want to raise the environment on your machine, you can use [Vagrant](https://www.vagrantup.com/).
-Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/) or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
+export default Uploader
+```
 
-After open command line, go to this folder and run:
+See [full demo](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 
-    vagrant up
-    vagrant ssh
+### Usage with Angular
 
-#### Local environment (without Vagrant)
+We have Angular 1 directive for Uploadcare Widget.
+See [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare).
 
-Inside folder run
+For Angular 2 maybe [this demo](https://plnkr.co/edit/6caWQ6cct4L3715LehxZ?p=preview) can be useful.
 
-    bundle install
-    cd ./test/dummy
-    bundle install
+## Configuration
 
-### Build
+The widget is highly customizable through widget options.
+All configuration options and ways to set options
+described in [documentation](https://uploadcare.com/documentation/widget/#configuration).
 
-* `bundle exec rake js:latest:build` to build assets
-  to the **pkg/latest** directory (with the “latest” suffix).
-* `bundle exec rake js:release:build` to build assets
-  to the **pkg/version** folder (with the current version suffix).
-  The version is specified in `lib/uploadcare-widget/version.rb`.
+## JavaScript API
 
-### Development
+You might not want to use all the features that
+[our widget](https://uploadcare.com/documentation/widget/) exhibits.
+Or, perhaps, you might want to redesign the user experience
+without having to reinvent the wheel.
+Maybe, you're in pursuit of building a UI on top of the widget.
+For all of those use cases, we provide a
+[JavaScript API](https://uploadcare.com/documentation/javascript_api/).
+Feel free to control the default widget with it,
+or make use of its standalone components that
+can be combined with your own solutions.
 
-Go to `test/dummy/`. There is a simple Rails app. Run it:
+## Localization
 
-    bundle exec rails server
-    
-Open http://127.0.0.1:3000/. Follow any link. 
-There's going to be a widget or three. Edit code and reload page :-)
+It’s possible that your locale is not available in the widget yet.
+If that’s the case, contributing your locale might be a good idea.
+This can be done by forking the [main repository](https://github.com/uploadcare/uploadcare-widget)
+and adding a localization file
+[here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
 
+## Development
 
-### Testing
-
-[Jasminerice](https://github.com/bradphelan/jasminerice) 
-installed under the `test/dummy/` Rails app.
-
-To run tests in your browser go to http://127.0.0.1:3000/jasmine.
-
-For more information see 
-[jasminerice docs](https://github.com/bradphelan/jasminerice).
-
-#### guard-jasmine
-
-To run tests in a terminal you must first 
-[install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
-
-Then you have two options:
-
-  - run `bundle exec guard start`
-  - run `bundle exec guard-jasmine`
-
-The first one is for continuous tests execution,
-the second one runs tests just once.
-Both should be executed from the `test/dummy/` directory.
-
-See [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
-for more information.
+Guide how to development Uploadcare Widget
+at [DEVELOPMENT.md](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
