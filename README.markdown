@@ -1,76 +1,105 @@
-This is the [Uploadcare](https://uploadcare.com/) widget source.
+# uploadcare-widget
 
-[![Build Status](https://travis-ci.org/uploadcare/uploadcare-widget.png?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
+This is the [Uploadcare](https://uploadcare.com/) Widget source.
 
-## Embedding
+[![Build Status](https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
 
-Add following code to your document's `<head>`.
+* [Documentation about Uploadcare Widget](https://uploadcare.com/documentation/widget/)
+* [Documentation about JavaScript API of Uploadcare Widget](https://uploadcare.com/documentation/javascript_api/)
+* Tutorials
+  * [Visual tweaks](https://uploadcare.com/cookbook/widget_visual/)
+  * [File validation](https://uploadcare.com/cookbook/validation/)
+  * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
+  * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
+  * [Libraries, plugins and integrations](https://uploadcare.com/documentation/libs/)
+
+## Types of bundles
+
+There are few types of js bundles
+
+* `uploadcare.full.js` — full bundle with built-in jQuery,
+* `uploadcare.js` — bundle without built-in jQuery,
+* `uploadcare.api.js` — bundle without UI of widget and built-in jQuery,
+  just [JavaScript API](https://uploadcare.com/documentation/javascript_api/),
+* `uploadcare.ie8.js` — full bundle with built-in jQuery 1.x for support IE 8 (only for widget version 2.x and below),
+* `uploadcare.lang.en.js` — bundle without built-in jQuery and only with `en` locale.
+
+All bundle have minified version, just add `.min` before `.js`, for example, `uploadcare.min.js`.
+
+Default exported bundle for npm and other packages managers is `uploadcare.full.min.js`.
+
+## Install
+
+You’re free to choose from the install methods listed below.
+
+### CDN
+
+Embed our client library via `<script>` tag in the `<head>`
+section of each page where you’d like to make use of Uploadcare Widget.
+Just use this CDN link to use the widget version with built-in jQuery,
+
+```html
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
+```
+
+Or, if you’re already using jQuery on your page, consider loading
+the light version of our widget without built-in jQuery,
+
+```html
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js" charset="utf-8"></script>
+```
+
+### NPM
+
+```bash
+npm install uploadcare-widget
+```
+
+```javascript
+import uploadcare from 'uploadcare-widget'
+```
+
+### Other install methods
+
+The official Uploadcare Widget [documentation](https://uploadcare.com/documentation/widget/#install)
+has more install methods.
+
+## Usage
+
+Once you’re done with the install, there are
+two simple steps to take to actually use the widget.
+
+**Set your [public key](https://uploadcare.com/documentation/widget/#option-public-key)**.
+This can also sit in the `<head>` section,
 
 ```html
 <script>
-  // Widget settings
-  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
+  UPLOADCARE_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 </script>
-<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare.full.min.js" charset="utf-8"></script>
 ```
 
-Where `x.y.z` is widget version (2.0.6 for example).
-Here is also version without builtin jQuery:
+Your secret key is not required for the widget
+(it’s quite careless for your page to include any
+secret keys anyway.)
+
+**Insert widget element** into your form,
 
 ```html
-<script>
-  // Widget settings
-  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" charset="utf-8"></script>
-<script src="https://ucarecdn.com/widget/x.y.z/uploadcare/uploadcare.min.js" charset="utf-8"></script>
+<input type="hidden" role="uploadcare-uploader" name="my_file" />
 ```
 
-The official [Widget documentation](https://uploadcare.com/documentation/widget/)
-has more information on using the widget itself.
+By default, the library looks for inputs with the specified
+`role` attribute and places widgets there.
+Once a file is uploaded, this `<input>` gets a
+CDN link with a file UUID. Your server then
+receives this link instead of file content.
 
-## Using with Bower
-
-Install uploadcare using `bower` command:
-
-```sh
-$ bower install uploadcare
-```
-
-Add following code to your document's `<head>`.
-
-```html
-<script>
-  // Widget settings
-  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
-  // To use static content from your host   
-  UPLOADCARE_SCRIPT_BASE = '/bower_components/uploadcare/';
-</script>
-<script src="/bower_components/jquery/jquery.js" charset="utf-8"></script>
-<script src="/bower_components/uploadcare/uploadcare.js" charset="utf-8"></script>
-```
-
-## Using with npm
-
-Install uploadcare using `npm` command:
-
-```sh
-$ npm install uploadcare-widget
-```
-
-Add following code to your document's `<head>`.
-
-```html
-<script>
-  // Widget settings
-  UPLOADCARE_PUBLIC_KEY = 'your_public_key';
-  // To use static content from your host   
-  UPLOADCARE_SCRIPT_BASE = '/node_modules/uploadcare-widget/';
-</script>
-<script src="/node_modules/jquery/jquery.js" charset="utf-8"></script>
-<script src="/node_modules/uploadcare-widget/uploadcare.js" charset="utf-8"></script>
-```
-
+We suggest placing the widget somewhere at the top of your form.
+Unlike regular inputs, our widget starts uploading files **immediately**
+after they get selected by a user, not on form submission.
+That way users can fill out the rest of your form while an
+upload is in progress. This can be a real time saver.
 
 ## Building Your Own
 
