@@ -2,4 +2,15 @@
   flex-shrink: 0;
 
   margin: calc((var(--menu-item-size) - var(--icon-size)) / 2);
+
+  @media (--mobile) {
+    .menu:not(.menu_opened) .menu__item_current:not(.menu__item_file) & {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+
+      margin-left: 0;
+    }
+  }
 }
