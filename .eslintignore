@@ -2,3 +2,4 @@ pkg/*
 test/*
 submodules/*
 app/*
+!.stylelintrc.js

@@ -30,7 +30,8 @@
     "postcss-nested": "^2.0.2",
     "postcss-prefixer": "^1.0.4",
     "postcss-reporter": "^3.0.0",
-    "stylelint": "^7.6.0",
+    "stylelint": "^7.10.1",
+    "stylelint-config-standard": "^16.0.0",
     "stylelint-config-uploadcare": "^1.0.0",
     "svg-sprite": "^1.3.6"
   },
