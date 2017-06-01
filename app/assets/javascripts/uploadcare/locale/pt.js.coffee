@@ -54,6 +54,19 @@ uploadcare.namespace 'locale.translations', (ns) ->
           line2: 'Apenas informe o link.'
           input: 'Cole seu link aqui...'
           button: 'Upload'
+        camera:
+          capture: 'Tirar uma foto'
+          mirror: 'Espelhar'
+          startRecord: 'Gravar um vídeo'
+          stopRecord: 'Parar'
+          cancelRecord: 'Cancelar'
+          retry: 'Requisitar permissão novamente'
+          pleaseAllow:
+              title: 'Por favor permita o acesso a sua câmera',
+              text: 'Você foi solicitado a permitir o acesso à câmera a partir deste site. ' + 'Para tirar fotos com sua câmera, você deve aprovar este pedido.'
+          notFoud: 
+              title: 'Câmera não detectada'
+              text: 'Parece que você não tem uma câmera conectada a este dispositivo'
         preview: 
           unknownName: 'desconhecido'
           change: 'Cancelar'
