@@ -4,8 +4,8 @@ This is the [Uploadcare](https://uploadcare.com/) Widget source.
 
 [![Build Status](https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
 
-* [Documentation about Uploadcare Widget](https://uploadcare.com/documentation/widget/)
-* [Documentation about JavaScript API of Uploadcare Widget](https://uploadcare.com/documentation/javascript_api/)
+* [Docs, Uploadcare Widget](https://uploadcare.com/documentation/widget/)
+* [Docs, Uploadcare Widget JavaScript API](https://uploadcare.com/documentation/javascript_api/)
 * Tutorials
   * [Visual tweaks](https://uploadcare.com/cookbook/widget_visual/)
   * [File validation](https://uploadcare.com/cookbook/validation/)
@@ -15,18 +15,18 @@ This is the [Uploadcare](https://uploadcare.com/) Widget source.
 
 ## Types of bundles
 
-There are few types of js bundles
+There's a few types of js bundles
 
-* `uploadcare.full.js` — full bundle with built-in jQuery,
-* `uploadcare.js` — bundle without built-in jQuery,
-* `uploadcare.api.js` — bundle without UI of widget and built-in jQuery,
-  just [JavaScript API](https://uploadcare.com/documentation/javascript_api/),
-* `uploadcare.ie8.js` — full bundle with built-in jQuery 1.x for support IE 8 (only for widget version 2.x and below),
-* `uploadcare.lang.en.js` — bundle without built-in jQuery and only with `en` locale.
+* `uploadcare.full.js` — a full bundle with built-in jQuery,
+* `uploadcare.js` — a bundle without built-in jQuery,
+* `uploadcare.api.js` — a bundle without UI of widget and built-in jQuery,
+  [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only,
+* `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support (widget v. 2.x and below),
+* `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
 
-All bundle have minified version, just add `.min` before `.js`, for example, `uploadcare.min.js`.
+Each bundle has its minified version. Just add `.min` before `.js`, e.g. `uploadcare.min.js`.
 
-Default exported bundle for npm and other packages managers is `uploadcare.full.min.js`.
+By default, `uploadcare.full.min.js` is exported for npm and other package managers.
 
 ## Install
 
@@ -129,16 +129,16 @@ See [full demo](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 
 ### Usage with Angular
 
-We have Angular 1 directive for Uploadcare Widget.
+We have the Angular 1 directive for Uploadcare Widget.
 See [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare).
 
-For Angular 2 maybe [this demo](https://plnkr.co/edit/6caWQ6cct4L3715LehxZ?p=preview) can be useful.
+For Angular 2, [this demo](https://plnkr.co/edit/6caWQ6cct4L3715LehxZ?p=preview) might be useful.
 
 ## Configuration
 
 The widget is highly customizable through widget options.
-All configuration options and ways to set options
-described in [documentation](https://uploadcare.com/documentation/widget/#configuration).
+All configuration options together with ways to set them are
+described in [our docs](https://uploadcare.com/documentation/widget/#configuration).
 
 ## JavaScript API
 
