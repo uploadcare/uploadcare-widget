@@ -12,15 +12,22 @@ Uploadcare Widget is HTML5 file uploader.
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
 The widget is highly customizable to fit your needs.
 It supports multiple file uploads, manual crop, social networks and cloud storage integrations.
+Part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget) ecosystem.
 
-* [Docs, Uploadcare Widget](https://uploadcare.com/documentation/widget/)
-* [Docs, Uploadcare Widget JavaScript API](https://uploadcare.com/documentation/javascript_api/)
+## Docs
+
+See the documentation at [uploadcare.com/documentation/widget/](https://uploadcare.com/documentation/widget/)
+for more information about using Uploadcare Widget.
+
+### Quicklinks
+
+* [JavaScript API](https://uploadcare.com/documentation/javascript_api/)
+* [Libraries, plugins and integrations](https://uploadcare.com/documentation/libs/)
 * Tutorials
   * [Visual tweaks](https://uploadcare.com/cookbook/widget_visual/)
   * [File validation](https://uploadcare.com/cookbook/validation/)
   * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
   * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
-  * [Libraries, plugins and integrations](https://uploadcare.com/documentation/libs/)
 
 ## Browser Support
 
