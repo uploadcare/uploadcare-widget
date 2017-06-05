@@ -1,6 +1,12 @@
-# <img width="40" height="40" src="https://ucarecdn.com/c009511a-6501-433a-92ec-54d7c28a20bb/" title="Uploadcare logo"> Uploadcare Widget
+# Uploadcare Widget
 
 [![Build Status](https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
+
+<a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
+    <img align="right" width="80" height="80"
+         src="https://ucarecdn.com/c009511a-6501-433a-92ec-54d7c28a20bb/"
+         title="Uploadcare logo">
+</a>
 
 Uploadcare Widget is HTML5 file uploader.
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
