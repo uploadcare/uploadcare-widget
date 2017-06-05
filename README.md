@@ -105,7 +105,7 @@ the light version of our widget without built-in jQuery,
 ### NPM
 
 ```bash
-npm install uploadcare-widget
+npm install uploadcare-widget --save
 ```
 
 ```javascript
