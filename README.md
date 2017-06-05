@@ -3,8 +3,8 @@
 [![Build Status](https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
-    <img align="right" width="80" height="80"
-         src="https://ucarecdn.com/c009511a-6501-433a-92ec-54d7c28a20bb/"
+    <img align="right" width="169" height="40"
+         src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
          title="Uploadcare logo">
 </a>
 
