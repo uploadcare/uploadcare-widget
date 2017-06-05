@@ -12,6 +12,7 @@ Uploadcare Widget is HTML5 file uploader.
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
 The widget is highly customizable to fit your needs.
 It supports multiple file uploads, manual crop, social networks and cloud storage integrations.
+
 Part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget) ecosystem.
 
 ## Docs
@@ -29,41 +30,6 @@ for more information about using Uploadcare Widget.
   * [File validation](https://uploadcare.com/cookbook/validation/)
   * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
   * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
-
-## Browser Support
-
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>Desktop</th>
-        <th>Mobile</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Chrome: 37+</td>
-        <td>Android Browser: 4.4+</td>
-      </tr>
-      <tr>
-        <td>Firefox: 32+</td>
-        <td>Opera Mobile: 8+</td>
-      </tr>
-      <tr>
-        <td>Safari: 8+</td>
-        <td>iOS Safari: 8+</td>
-      </tr>
-      <tr>
-        <td>Edge: 12+</td>
-        <td>IE Mobile: 11+</td>
-      </tr>
-      <tr>
-        <td>IE: 10+</td>
-        <td>Opera Mini: Last</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 
 ## Types of bundles
 
@@ -212,6 +178,41 @@ If that’s the case, contributing your locale might be a good idea.
 This can be done by forking the [main repository](https://github.com/uploadcare/uploadcare-widget)
 and adding a localization file
 [here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
+
+## Browser Support
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Desktop</th>
+        <th>Mobile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Chrome: 37+</td>
+        <td>Android Browser: 4.4+</td>
+      </tr>
+      <tr>
+        <td>Firefox: 32+</td>
+        <td>Opera Mobile: 8+</td>
+      </tr>
+      <tr>
+        <td>Safari: 8+</td>
+        <td>iOS Safari: 8+</td>
+      </tr>
+      <tr>
+        <td>Edge: 12+</td>
+        <td>IE Mobile: 11+</td>
+      </tr>
+      <tr>
+        <td>IE: 10+</td>
+        <td>Opera Mini: Last</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Development
 
