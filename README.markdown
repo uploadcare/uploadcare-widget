@@ -142,3 +142,38 @@ Both should be executed from the `test/dummy/` directory.
 
 See [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
 for more information.
+
+## Browser Support 
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Desktop</th>
+        <th>Mobile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Chrome: 37+</td>
+        <td>Android Browser: 4.4+</td>
+      </tr>
+      <tr>
+        <td>Firefox: 32+</td>
+        <td>Opera Mobile: 8+</td>
+      </tr>
+      <tr>
+        <td>Safari: 8+</td>
+        <td>iOS Safari: 8+</td>
+      </tr>
+      <tr>
+        <td>Edge: 12+</td>
+        <td>IE Mobile: 11+</td>
+      </tr>
+      <tr>
+        <td>IE: 10+</td>
+        <td>Opera Mini: Last</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
