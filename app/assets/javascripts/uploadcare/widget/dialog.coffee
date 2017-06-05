@@ -422,6 +422,9 @@ uploadcare.namespace '', (ns) ->
         .attr('role', 'presentation')
         .attr('class', 'uploadcare--icon uploadcare--menu__icon')
 
+      if name is 'empty-pubkey'
+        tabIcon.addClass('uploadcare--panel__icon')
+
       $('<div>')
         .addClass('uploadcare--menu__item')
         .addClass("uploadcare--menu__item_#{name}")
