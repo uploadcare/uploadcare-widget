@@ -1,8 +1,15 @@
-# uploadcare-widget
+# Uploadcare Widget
 
-This is the [Uploadcare](https://uploadcare.com/) Widget source.
+<img align="right" width="80" height="80"
+     src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/uploadcare-logo.svg#svgView(viewBox(0,0,40,40))"
+     title="Uploadcare logo">
 
 [![Build Status](https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master)](https://travis-ci.org/uploadcare/uploadcare-widget)
+
+Uploadcare Widget is HTML5 file uploader.
+It’s provided as a typical Javascript library and can be easily embedded in your site.
+The widget is highly customizable to fit your needs.
+It supports multiple file uploads, manual crop, social networks and cloud storage integrations.
 
 * [Docs, Uploadcare Widget](https://uploadcare.com/documentation/widget/)
 * [Docs, Uploadcare Widget JavaScript API](https://uploadcare.com/documentation/javascript_api/)
