@@ -22,6 +22,7 @@ for more information about using Uploadcare Widget.
 ### Quicklinks
 
 * [JavaScript API](https://uploadcare.com/documentation/javascript_api/)
+* [Configure your widget](https://uploadcare.com/widget/configure/)
 * [Libraries, plugins and integrations](https://uploadcare.com/documentation/libs/)
 * Tutorials
   * [Visual tweaks](https://uploadcare.com/cookbook/widget_visual/)
