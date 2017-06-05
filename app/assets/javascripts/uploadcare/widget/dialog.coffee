@@ -89,13 +89,15 @@ uploadcare.namespace '', (ns) ->
       tabs: ''
     })
     dialog = uploadcare.openDialog(file, 'preview', settings)
-    oldDialogPr.dialogElement.addClass('uploadcare--dialog_status_inactive')
+    if oldDialogPr?
+      oldDialogPr.dialogElement.addClass('uploadcare--dialog_status_inactive')
 
     dialog.always ->
       currentDialogPr = oldDialogPr
       # still opened
       $('html, body').addClass(openedClass)
-      oldDialogPr.dialogElement.removeClass('uploadcare--dialog_status_inactive')
+      if oldDialogPr?
+        oldDialogPr.dialogElement.removeClass('uploadcare--dialog_status_inactive')
     dialog.onTabVisibility (tab, shown) =>
       if tab == 'preview' and not shown
         dialog.reject()
