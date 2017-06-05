@@ -323,6 +323,7 @@ uploadcare.namespace '', (ns) ->
 
         @footer.find('.uploadcare--panel__message')
           .toggleClass('uploadcare--error', tooManyFiles)
+          .toggleClass('uploadcare--panel__message_hidden', files == 0)
           .text(footer.replace('%files%', t('file', files)))
 
         @footer.find('.uploadcare--panel__file-counter')

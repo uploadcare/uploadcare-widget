@@ -64,7 +64,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @doneBtnEl.attr('disabled', hasWrongNumberFiles)
 
-      title = t('dialog.tabs.preview.multiple.title')
+      title = t('dialog.tabs.preview.multiple.question')
         .replace('%files%', t('file', files))
       @container.find('.uploadcare--preview__title').text(title)
 
