@@ -191,7 +191,7 @@ uploadcare.namespace '', (ns) ->
       @__prepareFooter()
 
       @onTabVisibility = $.Callbacks().add (tab, show) =>
-        @panel.find(".uploadcare--menu__item_#{tab}")
+        @panel.find(".uploadcare--menu__item_tab_#{tab}")
               .toggleClass("uploadcare--menu__item_hidden", not show)
 
       if @settings.publicKey
@@ -347,7 +347,7 @@ uploadcare.namespace '', (ns) ->
 
       tabPanel = $('<div>')
         .addClass("uploadcare--tab")
-        .addClass("uploadcare--tab_#{name}")
+        .addClass("uploadcare--tab_name_#{name}")
         .insertBefore(@footer)
 
       if name == 'preview'
@@ -359,7 +359,7 @@ uploadcare.namespace '', (ns) ->
 
       tabButton = $('<div>', {role: 'button', tabindex: "0"})
         .addClass('uploadcare--menu__item')
-        .addClass("uploadcare--menu__item_#{name}")
+        .addClass("uploadcare--menu__item_tab_#{name}")
         .attr('title', t("dialog.tabs.names.#{name}"))
         .append(tabIcon)
         .appendTo(@panel.find(".uploadcare--menu__items"))
@@ -382,13 +382,13 @@ uploadcare.namespace '', (ns) ->
 
       @panel.find(".uploadcare--menu__item")
             .removeClass("uploadcare--menu__item_current")
-            .filter(".uploadcare--menu__item_#{tab}")
+            .filter(".uploadcare--menu__item_tab_#{tab}")
             .addClass("uploadcare--menu__item_current")
 
       className = "uploadcare--tab"
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
-            .filter(".#{className}_#{tab}")
+            .filter(".#{className}_name_#{tab}")
             .addClass("#{className}_current")
 
       @dfd.notify(tab)
@@ -402,7 +402,7 @@ uploadcare.namespace '', (ns) ->
         @switchTab(@__firstVisibleTab())
 
     isTabVisible: (tab) =>
-      not @panel.find(".uploadcare--menu__item_#{tab}")\
+      not @panel.find(".uploadcare--menu__item_tab_#{tab}")\
             .is(".uploadcare--menu__item_hidden")
 
     openMenu: =>
@@ -430,7 +430,7 @@ uploadcare.namespace '', (ns) ->
 
       $('<div>')
         .addClass('uploadcare--menu__item')
-        .addClass("uploadcare--menu__item_#{name}")
+        .addClass("uploadcare--menu__item_tab_#{name}")
         .attr('aria-disabled', true)
         .attr('title', t("dialog.tabs.names.#{name}"))
         .append(tabIcon)
