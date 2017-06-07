@@ -56,10 +56,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __setState: (newState) =>
       oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
-                   'recording'].join(' uploadcare--camera_')
+                   'recording'].join(' uploadcare--camera_status_')
       @container
           .removeClass(oldStates)
-          .addClass("uploadcare--camera_#{newState}")
+          .addClass("uploadcare--camera_status_#{newState}")
 
     __requestCamera: =>
       @__loaded = true
