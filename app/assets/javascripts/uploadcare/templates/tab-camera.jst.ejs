@@ -24,18 +24,22 @@
     </button>
   </div>
 
-  <div class="uploadcare--text uploadcare--text_large uploadcare--camera__text-please-allow">
-    <%- t('dialog.tabs.camera.pleaseAllow.title') %>
-  </div>
-  <div class="uploadcare--text uploadcare--camera__text-please-allow">
-    <%= t('dialog.tabs.camera.pleaseAllow.text') %>
+  <div class="uploadcare--camera__please-allow">
+    <div class="uploadcare--text uploadcare--text_large">
+        <%- t('dialog.tabs.camera.pleaseAllow.title') %>
+    </div>
+    <div class="uploadcare--text">
+        <%= t('dialog.tabs.camera.pleaseAllow.text') %>
+    </div>
   </div>
 
-  <div class="uploadcare--text uploadcare--text_large uploadcare--camera__text-not-found">
-    <%- t('dialog.tabs.camera.notFound.title') %>
-  </div>
-  <div class="uploadcare--text uploadcare--camera__text-not-found">
-    <%- t('dialog.tabs.camera.notFound.text') %>
+  <div class="uploadcare--camera__not-found">
+    <div class="uploadcare--text uploadcare--text_large">
+        <%- t('dialog.tabs.camera.notFound.title') %>
+    </div>
+    <div class="uploadcare--text">
+        <%- t('dialog.tabs.camera.notFound.text') %>
+    </div>
   </div>
 
   <button type="button" class="uploadcare--button uploadcare--camera__button uploadcare--camera__button_type_retry">
