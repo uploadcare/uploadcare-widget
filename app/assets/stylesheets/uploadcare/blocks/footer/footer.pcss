@@ -1,5 +1,5 @@
 .footer {
-  flex: 0 0 auto;
+  flex-shrink: 0;
 
   display: flex;
   justify-content: space-between;
@@ -12,34 +12,8 @@
   margin-top: 10px;
   padding: 5px 20px 15px;
 
-  & > .button:nth-of-type(1) {
-    order: 0;
-  }
-
-  .footer__additions {
-    order: 1;
-  }
-
-  & > .button:nth-of-type(2) {
-    order: 2;
-  }
-
-  @media (--mobile) {
-    & > .button {
-      max-width: calc(50% - 20px);
-    }
-  }
-
   @media (--mobile) and (orientation: portrait) {
     display: block;
-
-    & > .button:nth-of-type(1) {
-      float: left;
-    }
-
-    & > .button:nth-of-type(2) {
-      float: right;
-    }
   }
 
   &:empty {
