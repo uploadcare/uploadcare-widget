@@ -16,7 +16,7 @@ uploadcare.namespace 'files', (ns) ->
     __startUpload: ->
       df = $.Deferred()
       targetUrl = "#{@settings.urlBase}/iframe/"
-      iframeId = "uploadcare-iframe-#{@fileId}"
+      iframeId = "uploadcare--iframe-#{@fileId}"
 
       @__iframe = $('<iframe>')
         .attr({
