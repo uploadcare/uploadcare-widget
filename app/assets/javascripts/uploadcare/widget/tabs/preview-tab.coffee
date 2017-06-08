@@ -179,6 +179,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @settings.crop
         @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
+        @container.find('.uploadcare--tab__content').addClass('uploadcare--preview__crop-content')
         done.attr('disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 
