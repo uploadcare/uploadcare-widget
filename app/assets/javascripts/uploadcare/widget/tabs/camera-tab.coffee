@@ -20,7 +20,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.append(tpl('tab-camera'))
       @container.addClass('uploadcare--camera')
-      @container.addClass('uploadcare--camera_requested')
+      @container.addClass('uploadcare--camera_status_requested')
       @container.find('.uploadcare--camera__button_type_capture').on('click', @__capture)
       startRecord = @container.find('.uploadcare--camera__button_type_start-record').on('click', @__startRecording)
       @container.find('.uploadcare--camera__button_type_stop-record').on('click', @__stopRecording)
