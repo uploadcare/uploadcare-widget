@@ -1,11 +1,14 @@
 .widget__progress {
+  --size: calc(1.3em + (2 * var(--widget-padding-v)));
+
   display: inline-block;
 
-  width: 2em;
-  height: 2em;
-  margin: 0;
-  margin-right: .2em;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--widget-padding-v) * -1) var(--widget-margin-right) 0 0;
   padding: 0;
+
   line-height: 0;
+
   vertical-align: middle;
 }
