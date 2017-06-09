@@ -44,7 +44,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           'empty-pubkey': 'Приветствие'
           file: 'Локальные файлы'
           vk: 'ВКонтакте'
-          url: 'Произвольная ссылка'
+          url: 'Ссылка'
           camera: 'Камера'
         file:
           drag: 'Перетащите файл сюда'
@@ -109,11 +109,14 @@ uploadcare.namespace 'locale.translations', (ns) ->
               text: 'Изображение не удалось загрузить'
           multiple:
             title: 'Вы выбрали %files%'
-            question: 'Вы хотите добавить все эти файлы?'
+            question: 'Добавить все эти файлы?'
             tooManyFiles: 'Вы выбрали слишком много файлов. %max% максимум.'
             tooFewFiles: 'Вы выбрали %files%. Нужно не меньше %min%.'
             clear: 'Удалить все'
-            done: 'Готово'
+            done: 'Добавить'
+            file:
+              preview: 'Предпросмотр %file%'
+              remove: 'Удалить %file%'
 
 
 # Pluralization rules taken from:
