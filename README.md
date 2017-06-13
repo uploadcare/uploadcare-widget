@@ -8,17 +8,16 @@
          title="Uploadcare logo">
 </a>
 
-Uploadcare Widget is HTML5 file uploader.
+Uploadcare Widget is an HTML5 file uploader
+which itself is a part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
+ecosystem.
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
 The widget is highly customizable to fit your needs.
-It supports multiple file uploads, manual crop, social networks and cloud storage integrations.
-
-Part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget) ecosystem.
+It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
 ## Docs
 
-See the documentation at [uploadcare.com/documentation/widget/](https://uploadcare.com/documentation/widget/)
-for more information about using Uploadcare Widget.
+See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/documentation/widget/).
 
 ### Quicklinks
 
@@ -33,11 +32,11 @@ for more information about using Uploadcare Widget.
 
 ## Types of bundles
 
-There's a few types of js bundles
+There's a few types of js bundles:
 
 * `uploadcare.full.js` — a full bundle with built-in jQuery,
 * `uploadcare.js` — a bundle without built-in jQuery,
-* `uploadcare.api.js` — a bundle without UI of widget and built-in jQuery,
+* `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery,
   [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only,
 * `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support (widget v. 2.x and below),
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
@@ -216,5 +215,5 @@ and adding a localization file
 
 ## Development
 
-Guide how to development Uploadcare Widget
-at [DEVELOPMENT.md](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
+Check out the Uploadcare Widget development guide
+[here](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).

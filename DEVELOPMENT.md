@@ -1,4 +1,4 @@
-# Development Uploadcare Widget
+# Uploadcare Widget development guide
 
 Clone the repository.
 
@@ -29,7 +29,7 @@ Inside folder run
 * `bundle exec rake js:latest:build` to build assets
   to the **pkg/latest** directory (with the “latest” suffix).
 * `bundle exec rake js:release:build` to build assets
-  to the **pkg/version** folder (with the current version suffix).
+  to the **pkg/version** directory (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
 
 ### Development
@@ -39,7 +39,7 @@ Go to `test/dummy/`. There is a simple Rails app. Run it:
     bundle exec rails server
     
 Open http://127.0.0.1:3000/. Follow any link. 
-There's going to be a widget or three. Edit code and reload page :-)
+There's going to be a widget or three. Edit code and reload the page :-)
 
 
 ### Testing
@@ -49,7 +49,7 @@ installed under the `test/dummy/` Rails app.
 
 To run tests in your browser go to http://127.0.0.1:3000/jasmine.
 
-For more information see 
+For more information, see 
 [jasminerice docs](https://github.com/bradphelan/jasminerice).
 
 #### guard-jasmine
@@ -57,7 +57,7 @@ For more information see
 To run tests in a terminal you must first 
 [install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
 
-Then you have two options:
+Then, there are two options:
 
   - run `bundle exec guard start`
   - run `bundle exec guard-jasmine`
