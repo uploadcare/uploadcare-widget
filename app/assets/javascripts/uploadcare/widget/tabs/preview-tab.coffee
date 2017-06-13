@@ -35,7 +35,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @file.progress ifCur (info) =>
         info = info.incompleteFileInfo
         label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
-        @container.find('.uploadcare--preview__label').text(label)
+        @container.find('.uploadcare--preview__file-name').text(label)
 
         source = info.sourceInfo
         blob = utils.abilities.Blob
