@@ -68,7 +68,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         .replace('%files%', t('file', files))
       @container.find('.uploadcare--preview__title').text(title)
 
-      errorContainer = @container.find('.uploadcare--preview__error-container')
+      errorContainer = @container.find('.uploadcare--preview__message')
       errorContainer.empty()
 
       if hasWrongNumberFiles
@@ -80,7 +80,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             .replace('%min%', @settings.multipleMin)
             .replace('%files%', t('file', files))
 
-        $(tpl('preview__error-message')).appendTo(errorContainer)
+        errorContainer
+          .addClass('uploadcare--error')
           .text(wrongNumberFilesMessage)
 
     __updateFileInfo: (fileEl, info) ->

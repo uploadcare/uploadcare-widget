@@ -324,8 +324,8 @@ uploadcare.namespace '', (ns) ->
           t('dialog.tabs.preview.multiple.title')
 
         @footer.find('.uploadcare--panel__message')
-          .toggleClass('uploadcare--error', tooManyFiles or tooFewFiles)
           .toggleClass('uploadcare--panel__message_hidden', files == 0)
+          .toggleClass('uploadcare--error', tooManyFiles or tooFewFiles)
           .text(footer.replace('%files%', t('file', files)))
 
         @footer.find('.uploadcare--panel__file-counter')
