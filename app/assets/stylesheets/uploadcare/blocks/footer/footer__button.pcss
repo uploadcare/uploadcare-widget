@@ -1,0 +1,26 @@
+.footer__button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  &:nth-of-type(1) {
+    order: 0;
+  }
+
+  &:nth-of-type(2) {
+    order: 2;
+  }
+
+  @media (--mobile) {
+    max-width: calc(50% - 20px);
+  }
+
+  @media (--mobile) and (orientation: portrait) {
+    &:nth-of-type(1) {
+      float: left;
+    }
+
+    &:nth-of-type(2) {
+      float: right;
+    }
+  }
+}

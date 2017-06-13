@@ -6,6 +6,7 @@
 fakeButtons = [
   '.uploadcare--menu__item',
   '.uploadcare--file__content',
+  '.uploadcare--crop-sizes__item',
 ].join(', ')
 
 mouseFocusedClass = 'uploadcare--mouse-focused'

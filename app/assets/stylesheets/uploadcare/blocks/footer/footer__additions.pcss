@@ -1,5 +1,6 @@
 .footer__additions {
-  flex: 0 1 100%;
+  flex-basis: 100%;
+  order: 1;
 
   display: flex;
   justify-content: center;
@@ -7,7 +8,9 @@
 
   box-sizing: border-box;
 
-  padding: 0 0 20px;
+  padding: 0 0 15px;
+
+  text-align: center;
 
   @media (--mobile) and (orientation: landscape) {
     padding: 0 20px;
@@ -22,6 +25,8 @@
   }
 
   &:empty {
-    display: none;
+    visibility: hidden;
+
+    padding: 0;
   }
 }

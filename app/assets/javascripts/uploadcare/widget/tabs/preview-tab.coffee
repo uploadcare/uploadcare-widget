@@ -35,7 +35,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @file.progress ifCur (info) =>
         info = info.incompleteFileInfo
         label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
-        @container.find('.uploadcare--preview__label').text(label)
+        @container.find('.uploadcare--preview__file-name').text(label)
 
         source = info.sourceInfo
         blob = utils.abilities.Blob
@@ -179,6 +179,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @settings.crop
         @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
+        @container.find('.uploadcare--preview__content').addClass('uploadcare--preview__content_crop')
         done.attr('disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 

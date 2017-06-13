@@ -119,12 +119,12 @@ uploadcare.namespace 'locale.translations', (ns) ->
               title: 'Error'
               text: 'Can’t load image'
           multiple:
-            title: 'Add %files%?'
-            question: 'Do you want to add all of these files?'
+            title: 'You’ve chosen %files%.'
+            question: 'Add %files%?'
             tooManyFiles: 'You’ve chosen too many files. %max% is maximum.'
             tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
-            clear: 'Cancel'
-            done: 'Done'
+            clear: 'Remove all'
+            done: 'Add'
             file:
               preview: 'Preview %file%'
               remove: 'Remove %file%'

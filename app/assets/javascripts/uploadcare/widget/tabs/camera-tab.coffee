@@ -20,13 +20,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @container.append(tpl('tab-camera'))
       @container.addClass('uploadcare--camera')
-      @container.addClass('uploadcare--camera_requested')
-      @container.find('.uploadcare--camera__button-capture').on('click', @__capture)
-      startRecord = @container.find('.uploadcare--camera__button-start-record').on('click', @__startRecording)
-      @container.find('.uploadcare--camera__button-stop-record').on('click', @__stopRecording)
-      @container.find('.uploadcare--camera__button-cancel-record').on('click', @__cancelRecording)
-      @container.find('.uploadcare--camera__button-mirror').on('click', @__mirror)
-      @container.find('.uploadcare--camera__button-retry').on('click', @__requestCamera)
+      @container.addClass('uploadcare--camera_status_requested')
+      @container.find('.uploadcare--camera__button_type_capture').on('click', @__capture)
+      startRecord = @container.find('.uploadcare--camera__button_type_start-record').on('click', @__startRecording)
+      @container.find('.uploadcare--camera__button_type_stop-record').on('click', @__stopRecording)
+      @container.find('.uploadcare--camera__button_type_cancel-record').on('click', @__cancelRecording)
+      @container.find('.uploadcare--camera__button_type_mirror').on('click', @__mirror)
+      @container.find('.uploadcare--camera__button_type_retry').on('click', @__requestCamera)
 
       if not @MediaRecorder or @settings.imagesOnly
         startRecord.hide()
@@ -56,10 +56,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __setState: (newState) =>
       oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
-                   'recording'].join(' uploadcare--camera_')
+                   'recording'].join(' uploadcare--camera_status_')
       @container
           .removeClass(oldStates)
-          .addClass("uploadcare--camera_#{newState}")
+          .addClass("uploadcare--camera_status_#{newState}")
 
     __requestCamera: =>
       @__loaded = true

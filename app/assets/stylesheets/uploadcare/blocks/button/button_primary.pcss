@@ -1,15 +1,7 @@
 .button_primary {
-  &,
-  &:disabled:hover,
-  &:disabled:focus,
-  &:disabled:active,
-  &[aria-disabled=true]:hover,
-  &[aria-disabled=true]:focus,
-  &[aria-disabled=true]:active {
-    border-color: var(--color-primary);
-    background: var(--color-primary);
-    color: #fff;
-  }
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
 
   &:hover,
   &:focus {
@@ -22,5 +14,12 @@
     border-color: var(--color-primary-dark);
     background: var(--color-primary-dark);
     color: #fff;
+  }
+
+  &:disabled,
+  &[aria-disabled=true] {
+    border-color: var(--disable-color) !important;
+    background: var(--disable-color) !important;
+    color: #fff !important;
   }
 }
