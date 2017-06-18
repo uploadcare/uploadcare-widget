@@ -3,7 +3,27 @@
 
   min-width: 0;
 
-  padding: 0 10px;
+  padding-right: 20px;
 
   text-align: left;
+
+  &:hover,
+  &:focus {
+    &,
+    & .file__preview {
+      color: var(--color-primary);
+    }
+  }
+
+  &:active {
+    &,
+    & .file__preview {
+      color: var(--color-primary-dark);
+    }
+  }
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+  }
 }

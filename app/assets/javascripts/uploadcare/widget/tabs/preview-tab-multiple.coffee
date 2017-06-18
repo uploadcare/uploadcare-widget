@@ -90,7 +90,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       fileEl.find('.uploadcare--file__name')
         .text(filename)
 
-      fileEl.find('.uploadcare--file__content')
+      fileEl.find('.uploadcare--file__description')
         .attr('title', t('dialog.tabs.preview.multiple.file.preview').replace('%file%', filename))
 
       fileEl.find('.uploadcare--file__remove')
@@ -137,7 +137,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       fileEl.find('.uploadcare--file__preview')
         .html(filePreview)
 
-      fileEl.find('.uploadcare--file__content').on 'click', =>
+      fileEl.find('.uploadcare--file__description').on 'click', =>
           uploadcare.openPreviewDialog(file, @settings)
             .done (newFile) =>
               @dialogApi.fileColl.replace(file, newFile)

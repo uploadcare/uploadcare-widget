@@ -5,7 +5,7 @@
 
 fakeButtons = [
   '.uploadcare--menu__item',
-  '.uploadcare--file__content',
+  '.uploadcare--file__description',
   '.uploadcare--crop-sizes__item',
 ].join(', ')
 
