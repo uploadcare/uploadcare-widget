@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadcare-widget (3.0.0.pre.alpha.beta.8)
+    uploadcare-widget (3.0.0.pre.alpha.beta.9)
       coffee-rails
       ejs
 
