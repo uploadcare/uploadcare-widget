@@ -1,5 +1,10 @@
 # History
 
+### 2.10.4, 22.06.2017
+
+* Added camera translations to Portuguese (pt) locale
+* Fixed JS for jQuery 3 compatibility. Now we support jQuery 3.x.
+
 ### 2.10.3, 16.01.2017
 
 * Fixed `/group/` request for cases when signed uploads are enabled
