@@ -836,7 +836,7 @@
           .addClass('ord-'+ord);
 
         if (Touch.support) {
-          jq.bind('touchstart.jcrop', Touch.createDragger(ord));
+          jq.on('touchstart.jcrop', Touch.createDragger(ord));
         }
 
         $sel.append(jq);
@@ -984,13 +984,13 @@
           animating = false;
           enableHandles();
         }
-      } 
+      }
       //}}}
       function done() //{{{
       {
         animMode(false);
         refresh();
-      } 
+      }
       //}}}
       // Insert draggable elements {{{
       // Insert border divs for outline
@@ -1004,7 +1004,7 @@
       //}}}
 
       // This is a hack for iOS5 to support drag/move touch functionality
-      $(document).bind('touchstart.jcrop-ios',function(e) {
+      $(document).on('touchstart.jcrop-ios',function(e) {
         if ($(e.currentTarget).hasClass('jcrop-tracker')) e.stopPropagation();
       });
 
@@ -1015,7 +1015,7 @@
       });
 
       if (Touch.support) {
-        $track.bind('touchstart.jcrop', Touch.createDragger('move'));
+        $track.on('touchstart.jcrop', Touch.createDragger('move'));
       }
 
       $img_holder.append($track);
@@ -1042,7 +1042,7 @@
         done: done
       };
     }());
-    
+
     //}}}
     // Tracker Module {{{
     var Tracker = (function () {
@@ -1057,29 +1057,29 @@
         });
         if (Touch.support) {
           $(document)
-            .bind('touchmove.jcrop', trackTouchMove)
-            .bind('touchend.jcrop', trackTouchEnd);
+            .on('touchmove.jcrop', trackTouchMove)
+            .on('touchend.jcrop', trackTouchEnd);
         }
         if (trackDoc) {
           $(document)
-            .bind('mousemove.jcrop',trackMove)
-            .bind('mouseup.jcrop',trackUp);
+            .on('mousemove.jcrop',trackMove)
+            .on('mouseup.jcrop',trackUp);
         }
-      } 
+      }
       //}}}
       function toBack() //{{{
       {
         $trk.css({
           zIndex: 290
         });
-        $(document).unbind('.jcrop');
-      } 
+        $(document).off('.jcrop');
+      }
       //}}}
       function trackMove(e) //{{{
       {
         onMove(mouseAbs(e));
         return false;
-      } 
+      }
       //}}}
       function trackUp(e) //{{{
       {
@@ -1434,21 +1434,21 @@
 
     function completeCheck(){
       if (img.complete) {
-        $img.unbind('.jcloader');
+        $img.off('.jcloader');
         if ($.isFunction(success)) success.call(img);
       }
       else window.setTimeout(completeCheck,50);
     }
 
     $img
-      .bind('load.jcloader',completeCheck)
-      .bind('error.jcloader',function(e){
-        $img.unbind('.jcloader');
+      .on('load.jcloader',completeCheck)
+      .on('error.jcloader',function(e){
+        $img.off('.jcloader');
         if ($.isFunction(error)) error.call(img);
       });
 
     if (img.complete && $.isFunction(success)){
-      $img.unbind('.jcloader');
+      $img.off('.jcloader');
       success.call(img);
     }
   };
