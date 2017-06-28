@@ -6,19 +6,18 @@
 uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.BasePreviewTab
 
-    PREFIX = '.uploadcare-dialog-preview-'
-
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @__initTabButtonCircle()
 
-      notDisabled = ':not(.uploadcare-disabled-el)'
-      @container.on 'click', PREFIX + 'back' + notDisabled, =>
+      @container.addClass('uploadcare--preview')
+
+      notDisabled = ':not(:disabled)'
+      @container.on 'click', '.uploadcare--preview__back' + notDisabled, =>
         @dialogApi.fileColl.clear()
-      @container.on('click', PREFIX + 'done' + notDisabled, @dialogApi.resolve)
+      @container.on('click', '.uploadcare--preview__done' + notDisabled, @dialogApi.resolve)
 
     __initTabButtonCircle: ->
-      circleEl = $('<div class="uploadcare-dialog-icon">')
-        .appendTo(@tabButton)
+      circleEl = @tabButton.find('.uploadcare--panel__icon')
 
       circleDf = $.Deferred()
 

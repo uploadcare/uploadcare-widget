@@ -1,20 +1,20 @@
-<div class="uploadcare-dialog-padding">
-  <div class="uploadcare-dialog-title"><%- t('dialog.tabs.preview.regular.title') %></div>
-
-  <div class="uploadcare-dialog-label">
-    <%- (file.name || t('dialog.tabs.preview.unknownName')) %><%-
-      utils.readableFileSize(file.size, '', ', ') %>
-  </div>
-
-  <div class="uploadcare-dialog-section uploadcare-dialog-normal-text">
-    <%- t('dialog.tabs.preview.regular.line1') %><br/>
-    <%- t('dialog.tabs.preview.regular.line2') %>
-  </div>
-
-  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.done') %></div>
-  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.change') %></div>
+<div class="uploadcare--tab__header">
+  <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"><%- t('dialog.tabs.preview.regular.title') %></div>
 </div>
+
+<div class="uploadcare--tab__content uploadcare--preview__content">
+  <div class="uploadcare--text uploadcare--preview__file-name">
+    <%- (file.name || t('dialog.tabs.preview.unknownName')) %><%-
+    utils.readableFileSize(file.size, '', ', ') %>
+  </div>
+</div>
+
+<div class="uploadcare--footer uploadcare--tab__footer">
+  <button type="button" class="uploadcare--button uploadcare--footer__button uploadcare--preview__back">
+      <%- t('dialog.tabs.preview.change') %>
+  </button>
+  <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done">
+      <%- t('dialog.tabs.preview.done') %>
+  </button>
+</div>
+

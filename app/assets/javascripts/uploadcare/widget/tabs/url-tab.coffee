@@ -20,18 +20,17 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       @container.append(tpl('tab-url'))
-      @container.addClass('uploadcare-dialog-padding')
 
-      input = @container.find('.uploadcare-dialog-input')
+      input = @container.find('.uploadcare--input')
       input.on 'change keyup input', ->
-        button.prop('disabled', !$.trim(this.value))
+        button.attr('disabled', !$.trim(this.value))
 
-      button = @container.find('.uploadcare-dialog-url-submit')
-        .prop('disabled', true)
+      button = @container.find('.uploadcare--button[type=submit]')
+        .attr('disabled', true)
 
-      @container.find('.uploadcare-dialog-url-form').on 'submit', =>
+      @container.find('.uploadcare--form').on 'submit', =>
         if url = fixUrl(input.val())
           @dialogApi.addFiles('url', [[url, {source: 'url-tab'}]])
-          input.val('')
+          input.val('').trigger('change')
 
         false

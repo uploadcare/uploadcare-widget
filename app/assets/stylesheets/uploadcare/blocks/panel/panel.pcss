@@ -1,0 +1,21 @@
+.panel {
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  width: 100%;
+  height: 500px;
+
+  border: 1px solid var(--fill-main-color);
+  border-radius: 6px;
+
+  @media (--desktop) {
+    flex-direction: row;
+  }
+}

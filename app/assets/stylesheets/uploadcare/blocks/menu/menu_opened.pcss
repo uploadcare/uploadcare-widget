@@ -1,0 +1,26 @@
+.menu_opened {
+  @media (--mobile) {
+    position: absolute;
+    z-index: 1000;
+
+    height: 100%;
+
+    .menu__toggle {
+      justify-content: flex-start;
+
+      width: 100%;
+
+      text-align: left;
+
+      background: var(--menu-back-color);
+    }
+
+    .menu__toggle-icon_menu {
+      display: none;
+    }
+
+    .menu__items {
+      height: calc(100% - var(--menu-item-size));
+    }
+  }
+}

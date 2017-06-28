@@ -984,13 +984,13 @@
           animating = false;
           enableHandles();
         }
-      }
+      } 
       //}}}
       function done() //{{{
       {
         animMode(false);
         refresh();
-      }
+      } 
       //}}}
       // Insert draggable elements {{{
       // Insert border divs for outline
@@ -1042,7 +1042,7 @@
         done: done
       };
     }());
-
+    
     //}}}
     // Tracker Module {{{
     var Tracker = (function () {
@@ -1065,7 +1065,7 @@
             .on('mousemove.jcrop',trackMove)
             .on('mouseup.jcrop',trackUp);
         }
-      }
+      } 
       //}}}
       function toBack() //{{{
       {
@@ -1073,13 +1073,13 @@
           zIndex: 290
         });
         $(document).off('.jcrop');
-      }
+      } 
       //}}}
       function trackMove(e) //{{{
       {
         onMove(mouseAbs(e));
         return false;
-      }
+      } 
       //}}}
       function trackUp(e) //{{{
       {

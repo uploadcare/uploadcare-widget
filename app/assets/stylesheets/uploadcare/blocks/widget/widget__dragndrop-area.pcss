@@ -1,0 +1,39 @@
+.widget__dragndrop-area {
+  --border-width: 1.5px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  box-sizing: border-box;
+
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: calc(var(--widget-padding-v) - var(--border-width)) var(--widget-padding-h);
+
+  font: inherit;
+  line-height: inherit;
+
+  text-align: center;
+  white-space: nowrap;
+
+  border: var(--border-width) dashed;
+  border-radius: 6px;
+  background: var(--draganddrop-back-color);
+  color: var(--draganddrop-color);
+
+  transition: color .3s;
+}
+
+.widget__dragndrop-area {
+  display: none;
+
+  .dragging & {
+    display: block;
+  }
+
+  .widget.dragging & {
+    color: var(--widget-primary-color);
+  }
+}

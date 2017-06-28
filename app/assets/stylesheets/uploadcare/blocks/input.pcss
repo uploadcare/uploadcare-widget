@@ -1,0 +1,32 @@
+.input {
+  appearance: none;
+
+  flex-shrink: 0;
+
+  display: block;
+
+  box-sizing: border-box;
+
+  margin: 5px 0 15px;
+  padding: 10px 15px;
+
+  width: 100%;
+
+  font-size: 17.5px;
+  line-height: 25px;
+
+  background: #fff;
+  color: var(--color-base);
+  border: 1px solid var(--color-gray);
+  border-radius: 2px;
+  box-shadow: none;
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 1px;
+  }
+
+  &::placeholder {
+    color: var(--color-gray);
+  }
+}

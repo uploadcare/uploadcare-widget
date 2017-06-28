@@ -4,14 +4,12 @@
 } = uploadcare
 
 fakeButtons = [
-  'div.uploadcare-link',
-  'div.uploadcare-widget-button',
-  'div.uploadcare-dialog-tab',
-  'div.uploadcare-dialog-button',
-  'div.uploadcare-dialog-button-success',
+  '.uploadcare--menu__item',
+  '.uploadcare--file__description',
+  '.uploadcare--crop-sizes__item',
 ].join(', ')
 
-mouseFocusedClass = 'uploadcare-mouse-focused'
+mouseFocusedClass = 'uploadcare--mouse-focused'
 
 $(document.documentElement)
   .on 'mousedown', fakeButtons, (e) ->

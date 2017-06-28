@@ -1,22 +1,20 @@
-<div class="uploadcare-dialog-padding uploadcare-dialog-preview-root">
-  <div class="uploadcare-dialog-title uploadcare-dialog-preview-title">
+<div class="uploadcare--tab__header">
+  <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title">
     <%- t('dialog.tabs.preview.video.title') %>
-  </div>
-
-  <div class="uploadcare-crop-sizes uploadcare-dialog-preview-crop-sizes">
-    <div class="uploadcare-crop-size" data-caption="free"><div></div></div>
-  </div>
-
-  <div class="uploadcare-dialog-preview-video-wrap">
-    <video controls class="uploadcare-dialog-preview-video"></video>
   </div>
 </div>
 
-<div class="uploadcare-panel-footer">
-  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.video.change') %></div>
-  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.done') %></div>
+<div class="uploadcare--tab__content uploadcare--preview__content">
+  <div class="uploadcare--media">
+    <video controls class="uploadcare--media__video uploadcare--preview__video"></video>
+  </div>
+</div>
+
+<div class="uploadcare--footer uploadcare--tab__footer">
+  <button type="button" class="uploadcare--button uploadcare--footer__button uploadcare--preview__back">
+      <%- t('dialog.tabs.preview.video.change') %>
+  </button>
+  <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done">
+      <%- t('dialog.tabs.preview.done') %>
+  </button>
 </div>

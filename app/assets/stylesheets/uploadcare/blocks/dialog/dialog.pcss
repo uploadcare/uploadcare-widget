@@ -1,0 +1,46 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+  color: var(--color-base);
+
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+
+  opacity: 0;
+
+  transition: opacity .33s cubic-bezier(.05, .7, .25, 1);
+
+  @media (--desktop) {
+    align-items: center;
+
+    overflow-y: auto;
+
+    background: rgba(0, 0, 0, .5);
+  }
+
+  @media (--desktop) and (max-height: 559px) {
+    padding-top: 30px;
+  }
+
+  @media (--desktop) and (min-height: 560px) {
+    justify-content: center;
+  }
+}

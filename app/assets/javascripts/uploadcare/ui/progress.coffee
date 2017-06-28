@@ -51,7 +51,7 @@ uploadcare.namespace 'ui.progress', (ns) ->
     constructor: (el) ->
       @element = $(el)
       @element.data('uploadcare-progress-renderer', this)
-      @element.addClass('uploadcare-widget-circle')
+      @element.addClass('uploadcare--progress')
 
     update: ->
 
@@ -59,9 +59,9 @@ uploadcare.namespace 'ui.progress', (ns) ->
   class ns.TextRenderer extends ns.BaseRenderer
     constructor: ->
       super
-      @element.addClass('uploadcare-widget-circle--text')
-      @element.html(tpl('circle-text'))
-      @text = @element.find('.uploadcare-widget-circle-text')
+      @element.addClass('uploadcare--progress_type_text')
+      @element.html(tpl('progress__text'))
+      @text = @element.find('.uploadcare--progress__text')
 
     setValue: (val) ->
       val = Math.round(val * 100)
@@ -73,9 +73,9 @@ uploadcare.namespace 'ui.progress', (ns) ->
     constructor: ->
       super
 
-      @canvasEl = $('<canvas>').get(0)
+      @canvasEl = $('<canvas>').addClass('uploadcare--progress__canvas').get(0)
 
-      @element.addClass('uploadcare-widget-circle--canvas')
+      @element.addClass('uploadcare--progress_type_canvas')
       @element.html(@canvasEl)
 
       @setValue(0, true)

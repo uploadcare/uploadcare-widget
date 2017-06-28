@@ -31,6 +31,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Choose an image'
           other: 'Choose images'
     dialog:
+      close: 'Close'
+      openMenu: 'Open menu'
       done: 'Done'
       showFiles: 'Show files'
       tabs:
@@ -38,7 +40,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           'empty-pubkey': 'Welcome'
           preview: 'Preview'
           file: 'Local Files'
-          url: 'Arbitrary Links'
+          url: 'Direct Link'
           camera: 'Camera'
           facebook: 'Facebook'
           dropbox: 'Dropbox'
@@ -52,12 +54,12 @@ uploadcare.namespace 'locale.translations', (ns) ->
           flickr: 'Flickr'
           huddle: 'Huddle'
         file:
-          drag: 'Drop a file here'
-          nodrop: 'Upload files from your computer'
+          drag: 'drag & drop<br>any files'
+          nodrop: 'Upload files from your&nbsp;computer'
           cloudsTip: 'Cloud storages<br>and social networks'
           or: 'or'
           button: 'Choose a local file'
-          also: 'You can also choose it from'
+          also: 'or choose from'
         url:
           title: 'Files from the Web'
           line1: 'Grab any file off the web.'
@@ -65,6 +67,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           input: 'Paste your link here...'
           button: 'Upload'
         camera:
+          title: 'File from web camera'
           capture: 'Take a photo'
           mirror: 'Mirror'
           startRecord: 'Record a video'
@@ -73,7 +76,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           retry: 'Request permissions again'
           pleaseAllow:
             title: 'Please allow access to your camera'
-            text: 'You have been prompted to allow camera access from this site. ' +
+            text: 'You have been prompted to allow camera access from this site.<br>' +
                   'In order to take pictures with your camera you must approve this request.'
           notFound:
             title: 'No camera detected'
@@ -116,12 +119,15 @@ uploadcare.namespace 'locale.translations', (ns) ->
               title: 'Error'
               text: 'Can’t load image'
           multiple:
-            title: 'You’ve chosen %files%'
-            question: 'Do you want to add all of these files?'
+            title: 'You’ve chosen %files%.'
+            question: 'Add %files%?'
             tooManyFiles: 'You’ve chosen too many files. %max% is maximum.'
             tooFewFiles: 'You’ve chosen %files%. At least %min% required.'
             clear: 'Remove all'
-            done: 'Done'
+            done: 'Add'
+            file:
+              preview: 'Preview %file%'
+              remove: 'Remove %file%'
       footer:
         text: 'powered by'
         link: 'uploadcare'

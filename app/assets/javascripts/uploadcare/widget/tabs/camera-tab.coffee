@@ -19,18 +19,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @mirrored = true
 
       @container.append(tpl('tab-camera'))
-      @container.addClass('uploadcare-dialog-padding uploadcare-dialog-camera-requested')
-      @container.find('.uploadcare-dialog-camera-capture').on('click', @__capture)
-      startRecord = @container.find('.uploadcare-dialog-camera-start-record').on('click', @__startRecording)
-      @container.find('.uploadcare-dialog-camera-stop-record').on('click', @__stopRecording)
-      @container.find('.uploadcare-dialog-camera-cancel-record').on('click', @__cancelRecording)
-      @container.find('.uploadcare-dialog-camera-mirror').on('click', @__mirror)
-      @container.find('.uploadcare-dialog-camera-retry').on('click', @__requestCamera)
+      @container.addClass('uploadcare--camera')
+      @container.addClass('uploadcare--camera_status_requested')
+      @container.find('.uploadcare--camera__button_type_capture').on('click', @__capture)
+      startRecord = @container.find('.uploadcare--camera__button_type_start-record').on('click', @__startRecording)
+      @container.find('.uploadcare--camera__button_type_stop-record').on('click', @__stopRecording)
+      @container.find('.uploadcare--camera__button_type_cancel-record').on('click', @__cancelRecording)
+      @container.find('.uploadcare--camera__button_type_mirror').on('click', @__mirror)
+      @container.find('.uploadcare--camera__button_type_retry').on('click', @__requestCamera)
 
       if not @MediaRecorder or @settings.imagesOnly
         startRecord.hide()
 
-      @video = @container.find('video')
+      @video = @container.find('.uploadcare--camera__video')
       @video.on 'loadeddata', ->
         @play()
 
@@ -55,10 +56,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __setState: (newState) =>
       oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
-                   'recording'].join(' uploadcare-dialog-camera-')
+                   'recording'].join(' uploadcare--camera_status_')
       @container
           .removeClass(oldStates)
-          .addClass("uploadcare-dialog-camera-#{newState}")
+          .addClass("uploadcare--camera_status_#{newState}")
 
     __requestCamera: =>
       @__loaded = true
@@ -107,7 +108,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __mirror: =>
       @mirrored = ! @mirrored
-      @video.toggleClass('uploadcare-dialog-camera--mirrored', @mirrored)
+      @video.toggleClass('uploadcare--camera__video_mirrored', @mirrored)
 
     __capture: =>
       video = @video[0]

@@ -11,7 +11,7 @@
 uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTab extends ns.BasePreviewTab
 
-    constructor: ->
+    constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
       super
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
@@ -35,7 +35,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @file.progress ifCur (info) =>
         info = info.incompleteFileInfo
         label = (info.name || "") + utils.readableFileSize(info.size, '', ', ')
-        @element('label').text(label)
+        @container.find('.uploadcare--preview__file-name').text(label)
 
         source = info.sourceInfo
         blob = utils.abilities.Blob
@@ -53,9 +53,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           if @__state != 'image'
             src = info.originalUrl
             # 1162x684 is 1.5 size of conteiner
-            src += "-/preview/1162x693/-/setfill/efefef/-/format/jpeg/-/progressive/yes/"
+            src += "-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/"
             imgInfo = info.originalImageInfo
-            @__setState('image', {src, name: info.name})
+            @__setState('image', {src, name: info.name, info})
             @initImage([imgInfo.width, imgInfo.height], info.cdnUrlModifiers)
         else
           # , but update if other
@@ -76,7 +76,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
 
       utils.image.drawFileToCanvas(
-        blob, 1550, 924, '#efefef', @settings.imagePreviewMaxSize
+        blob, 1550, 924, '#ffffff', @settings.imagePreviewMaxSize
       )
       .done (canvas, size) =>
         utils.canvasToBlob canvas, 'image/jpeg', 0.95,
@@ -124,37 +124,49 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           URL.revokeObjectURL(src)
 
         @__setState('video')
-        @element('video').attr('src', src)
+        @container.find('.uploadcare--preview__video').attr('src', src)
 
       df.promise()
-
-    element: (name) ->
-      @container.find('.uploadcare-dialog-preview-' + name)
 
     # error
     # unknown
     # image
     # regular
-    __setState: (state, data) ->
+    __setState: (state, data) =>
       @__state = state
+      data = data || {}
+
+      data.crop = @settings.crop
       @container.empty().append(tpl("tab-preview-#{state}", data))
+      @container.removeClass (index, classes) ->
+        classes
+          .split(' ')
+          .filter (c) ->
+            !!~ c.indexOf 'uploadcare--preview_status_'
+          .join ' '
 
       if state is 'unknown' and @settings.crop
-        @element('done').hide()
+        @container.find('.uploadcare--preview__done').hide()
 
-    initImage: (imgSize, cdnModifiers) ->
-      img = @element('image')
-      done = @element('done')
+      if state is 'error'
+        @container.addClass('uploadcare--preview_status_error-' + data.error)
+
+    initImage: (imgSize, cdnModifiers) =>
+      img = @container.find('.uploadcare--preview__image')
+      done = @container.find('.uploadcare--preview__done')
 
       imgLoader = utils.imageLoader(img[0])
         .done =>
-          @element('root').addClass('uploadcare-dialog-preview--loaded')
+          @container.addClass('uploadcare--preview_status_loaded')
         .fail =>
           @file = null
           @__setState('error', {error: 'loadImage'})
 
       startCrop = =>
-        done.removeClass('uploadcare-disabled-el')
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', false)
+          .attr('tabindex', 0)
+        done.attr('disabled', false)
 
         @widget = new CropWidget(img, imgSize, @settings.crop[0])
         if cdnModifiers
@@ -166,11 +178,15 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           true
 
       if @settings.crop
-        @element('title').text(t('dialog.tabs.preview.crop.title'))
-        done.addClass('uploadcare-disabled-el')
+        @container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
+        @container.find('.uploadcare--preview__content').addClass('uploadcare--preview__content_crop')
+        done.attr('disabled', true)
         done.text(t('dialog.tabs.preview.crop.done'))
 
         @populateCropSizes()
+        @container.find('.uploadcare--crop-sizes__item')
+          .attr('aria-disabled', true)
+          .attr('tabindex', -1)
 
         imgLoader.done ->
           # Often IE 11 doesn't do reflow after image.onLoad
@@ -179,15 +195,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           utils.defer(startCrop)
 
 
-    populateCropSizes: ->
-      if @settings.crop.length <= 1
-        return
-
-      @element('root').addClass('uploadcare-dialog-preview--with-sizes')
-
-      control = @element('crop-sizes')
+    populateCropSizes: =>
+      control = @container.find('.uploadcare--crop-sizes')
       template = control.children()
-      currentClass = 'uploadcare-crop-size--current'
+      currentClass = 'uploadcare--crop-sizes__item_current'
 
       $.each @settings.crop, (i, crop) =>
         prefered = crop.preferedSize
@@ -200,17 +211,27 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         item = template.clone().appendTo(control)
           .attr('data-caption', caption)
           .on 'click', (e) =>
-            if @widget
+            if $(e.currentTarget).attr('aria-disabled') is 'true'
+              return
+            if not $(e.currentTarget).hasClass(currentClass) and @settings.crop.length > 1 and @widget
               @widget.setCrop(crop)
               control.find('>*').removeClass(currentClass)
               item.addClass(currentClass)
+            return
         if prefered
-          size = utils.fitSize(prefered, [40, 40], true)
+          size = utils.fitSize(prefered, [30, 30], true)
           item.children()
             .css(
               width: Math.max(20, size[0])
               height: Math.max(12, size[1])
             )
+        else
+          icon = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>")
+            .attr('role', 'presentation')
+            .attr('class', 'uploadcare--icon')
+          item.children()
+            .append(icon)
+            .addClass('uploadcare--crop-sizes__icon_free')
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)

@@ -1,0 +1,47 @@
+.widget__button {
+  all: initial;
+
+  display: inline-block;
+
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: var(--widget-padding-v) var(--widget-padding-h);
+
+  box-shadow: none;
+  border: none;
+  border-radius: 6px;
+
+  background: var(--widget-button-color);
+  color: #fff;
+
+  font: inherit;
+  line-height: inherit;
+
+  text-align: center;
+  white-space: nowrap;
+
+  cursor: default;
+
+  transition: background .3s;
+
+  &:hover,
+  &:focus {
+    background: var(--widget-button-color-hover);
+  }
+
+  &:active {
+    background: var(--widget-button-color-active);
+  }
+
+  &:disabled {
+    background: var(--widget-button-color) !important;
+    color: #fff !important;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: var(--widget-focus-outline);
+    outline-offset: 1px;
+  }
+}

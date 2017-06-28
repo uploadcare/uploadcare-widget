@@ -1,0 +1,62 @@
+.button {
+  all: initial;
+
+  flex-shrink: 0;
+
+  display: inline-block;
+
+  box-sizing: border-box;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  overflow: hidden;
+
+  cursor: default;
+
+  padding: 10px;
+
+  min-width: 100px;
+
+  box-shadow: none;
+  border: 1px solid;
+  border-radius: 6px;
+
+  background: transparent;
+  color: var(--color-primary);
+
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+
+  transition: background .3s, color .3s, border .3s;
+
+  &:hover,
+  &:focus {
+    color: var(--color-primary-light);
+  }
+
+  &:active {
+    color: var(--color-primary-dark);
+  }
+
+  &:disabled,
+  &[aria-disabled=true] {
+    color: var(--disable-color) !important;
+
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 1px;
+  }
+
+  @media (--desktop) {
+    padding: 10px 20px;
+
+    font-size: 17.5px;
+    line-height: 25px;
+  }
+}

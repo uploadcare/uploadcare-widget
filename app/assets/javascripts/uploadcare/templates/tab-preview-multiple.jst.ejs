@@ -1,16 +1,19 @@
-<div class="uploadcare-dialog-padding">
-  <div class="uploadcare-dialog-title uploadcare-if-no-mobile uploadcare-dpm-title"></div>
-  <div class="uploadcare-dialog-title uploadcare-if-mobile uploadcare-dpm-mobile-title"></div>
-
-  <div class="uploadcare-file-list"></div>
+<div class="uploadcare--tab__header">
+  <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"></div>
 </div>
 
-<div class="uploadcare-panel-footer">
-  <div class="uploadcare-dialog-button uploadcare-dialog-preview-back"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.multiple.clear') %></div>
-  <div class="uploadcare-dialog-button-success uploadcare-dialog-preview-done"
-       tabindex="0" role="button"
-          ><%- t('dialog.tabs.preview.multiple.done') %></div>
-  <div class="uploadcare-panel-footer-text uploadcare-dpm-footer-text"></div>
+<div class="uploadcare--tab__content uploadcare--preview__content">
+  <div class="uploadcare--files"></div>
+</div>
+
+<div class="uploadcare--footer uploadcare--tab__footer">
+  <div class="uploadcare--footer__additions uploadcare--preview__message"></div>
+
+  <button type="button" class="uploadcare--button uploadcare--footer__button uploadcare--preview__back">
+      <%- t('dialog.tabs.preview.multiple.clear') %>
+  </button>
+
+  <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done">
+      <%- t('dialog.tabs.preview.multiple.done') %>
+  </button>
 </div>

@@ -1,0 +1,45 @@
+.crop-sizes__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 0;
+  height: 65px;
+
+  border-color: transparent;
+  color: var(--color-base);
+
+  &:hover,
+  &:focus {
+    color: var(--color-primary);
+  }
+}
+
+.crop-sizes__item::after {
+  content: attr(data-caption);
+
+  display: block;
+
+  font-size: 14px;
+  line-height: 25px;
+  text-transform: uppercase;
+
+  @media (max-width: 400px), (max-width: 600px) and (orientation: landscape) {
+    font-size: 12px;
+  }
+}
+
+.crop-sizes__item::before {
+  content: '';
+  display: block;
+
+  order: 1;
+
+  margin: 1px 0;
+  width: 6px;
+  height: 6px;
+
+  background: transparent;
+  border-radius: 50%;
+}

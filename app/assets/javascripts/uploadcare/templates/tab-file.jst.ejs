@@ -1,22 +1,37 @@
-<div class="uploadcare-dialog-file-drop-area">
-  <div class="uploadcare-dialog-file-title uploadcare-if-draganddrop">
-    <%- t('dialog.tabs.file.drag') %>
+<div class="uploadcare--tab__content uploadcare--draganddrop">
+  <div class="uploadcare--text uploadcare--text_size_extra-large uploadcare--dragging__show">
+    <%= t('draghere') %>
   </div>
-  <div class="uploadcare-dialog-file-title uploadcare-if-no-draganddrop">
-    <%- t('dialog.tabs.file.nodrop') %>
+
+  <div class="uploadcare--draganddrop__title uploadcare--dragging__hide">
+    <div class="uploadcare--draganddrop__supported">
+      <div class="uploadcare--text uploadcare--text_size_extra-large">
+        <%= t('dialog.tabs.file.drag') %>
+      </div>
+      <div class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted">
+        <%- t('dialog.tabs.file.or') %>
+      </div>
+    </div>
+
+    <div class="uploadcare--text uploadcare--text_size_large uploadcare--draganddrop__not-supported">
+      <%= t('dialog.tabs.file.nodrop') %>
+    </div>
   </div>
-  <div class="uploadcare-dialog-file-or uploadcare-if-draganddrop">
-    <%- t('dialog.tabs.file.or') %>
-  </div>
-  <div class="uploadcare-clouds-tip uploadcare-if-mobile">
-    <%= t('dialog.tabs.file.cloudsTip') %>
-  </div>
-  <div class="uploadcare-dialog-big-button needsclick">
+
+  <button type="button" class="uploadcare--button uploadcare--button_size_big uploadcare--button_primary uploadcare--tab__action-button needsclick  uploadcare--dragging__hide">
     <%- t('dialog.tabs.file.button') %>
-  </div>
-  <div class="uploadcare-dialog-file-or uploadcare-dialog-file-source-or">
-    <%- t('dialog.tabs.file.also') %>
-  </div>
-  <div class="uploadcare-dialog-file-sources">
+  </button>
+
+  <div class="uploadcare--file-sources uploadcare--dragging__hide">
+    <div class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted uploadcare--file-sources__caption">
+      <%- t('dialog.tabs.file.also') %>
+    </div>
+    <div class="uploadcare--file-sources__items">
+      <button type="button" class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item">
+          <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+              <use xlink:href="#uploadcare--icon-more"></use>
+          </svg>
+      </button>
+    </div>
   </div>
 </div>

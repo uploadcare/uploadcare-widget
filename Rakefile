@@ -47,16 +47,7 @@ def file_list(path)
 end
 
 PACKAGES = ['uploadcare.api', 'uploadcare.lang.en', 'uploadcare',
-            'uploadcare.full', 'uploadcare.ie8']
-
-IMAGES_TYPES = {
-  '.png' => 'image/png',
-  '.gif' => 'image/gif',
-  '.jpg' => 'image/jpeg',
-  '.jpeg' => 'image/jpeg'
-}
-IMAGES = file_list('app/assets/images/uploadcare/images')
-  .map { |full, base, without_ext, ext| [full, base, IMAGES_TYPES[ext]] }
+            'uploadcare.full']
 
 def ensure_dir(filename)
   path = File.dirname filename
@@ -131,10 +122,6 @@ def build_widget(version)
       write_file("#{version}/#{package}.min.js", header + minified)
     end
   end
-
-  IMAGES.each do |full, base|
-    cp_file full, "#{version}/images/#{base}"
-  end
 end
 
 def upload_widget(version)
@@ -168,10 +155,6 @@ def upload_widget(version)
     upload_js.call(version[/^\d+\.\d+/] + '.x')
     upload_js.call(version[/^\d+/] + '.x')
   end
-
-  IMAGES.each do |full, base, type|
-    upload.call "images/#{base}", type
-  end
 end
 
 def upload_bower(version)
@@ -196,10 +179,6 @@ def upload_bower(version)
     cp.call("#{package}.min.js")
   end
 
-  IMAGES.each do |full, base, type|
-    cp.call "images/#{base}"
-  end
-
   # Update version number in boser.json
   `#{submodule} sed -i -e 's/^  "version": "[^"]*"/  "version": "#{version}"/g' bower.json`
   `#{submodule} git add bower.json`
@@ -217,8 +196,8 @@ def upload_npm(version)
   end
   
   # Copy package.json and 
-  cp.call "package.json"
-  cp.call "README.markdown"
+  cp.call "publish.package.json", "package.json"
+  cp.call "README.md"
 
   # Update version number in package.json
   `cd pkg/#{version} && npm version #{version}`

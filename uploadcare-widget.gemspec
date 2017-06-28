@@ -15,13 +15,10 @@ Gem::Specification.new do |s|
   s.summary     = "Widget for uploadcare service"
   s.description = "Widget for uploadcare service."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
 
   s.test_files = FileList["test/**/*"].exclude('test/dummy/vendor/bundle/**/*').exclude('test/dummy/tmp/**/*')
 
-  s.add_dependency "sass-rails"
-  s.add_dependency "autoprefixer-rails"
   s.add_dependency "coffee-rails"
   s.add_dependency "ejs"
-  s.add_dependency "csso-rails"
 end

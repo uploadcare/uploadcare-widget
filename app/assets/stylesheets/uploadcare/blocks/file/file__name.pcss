@@ -1,0 +1,13 @@
+.file__name {
+  overflow: hidden;
+
+  margin: 0;
+  max-width: var(--file-name-width); /* TODO Hack for limit block if content has long string without spaces */
+
+  line-height: 25px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  transition: color .3s;
+}

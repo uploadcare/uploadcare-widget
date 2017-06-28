@@ -55,7 +55,7 @@ uploadcare.namespace '', (ns) ->
 
   cleanup = (input) ->
     input.off('.uploadcare').each ->
-      widgetElement = $(this).next('.uploadcare-widget')
+      widgetElement = $(this).next('.uploadcare--widget')
       widget = widgetElement.data(dataAttr)
       if widget and widget.inputElement == this
         widgetElement.remove()

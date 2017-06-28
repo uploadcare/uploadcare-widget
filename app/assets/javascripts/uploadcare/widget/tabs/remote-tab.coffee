@@ -10,8 +10,6 @@
 uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.RemoteTab
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
-      @container.addClass('uploadcare-dialog-remote-iframe-wrap')
-
       @dialogApi.progress (name) =>
         if name == @name
           @__createIframe()
@@ -20,7 +18,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           visible: name == @name
 
     remoteUrl: ->
-      "#{@settings.socialBase}/window/#{@name}?" + $.param(
+      "#{@settings.socialBase}/window3/#{@name}?" + $.param(
         lang: @settings.locale
         public_key: @settings.publicKey
         widget_version: uploadcare.version
@@ -42,7 +40,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           frameborder: 0
           allowTransparency: "true"
         )
-        .addClass('uploadcare-dialog-remote-iframe')
+        .addClass('uploadcare--tab__iframe')
         .appendTo(@container)
         .on 'load', =>
           @iframe.css('opacity', '1')
@@ -58,6 +56,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             )
           return
 
+      @container.addClass('uploadcare--tab_remote')
       iframe = @iframe[0].contentWindow
 
       utils.registerMessage 'file-selected', iframe, (message) =>

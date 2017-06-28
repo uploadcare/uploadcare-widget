@@ -1,5 +1,23 @@
 # History
 
+### 3.0.0, 28.06.2017
+
+* Replace all `uploadcare-` classes with `uploadcare--`
+* Changed all HTML markup, used classical BEM methodology
+* Update all styles, used flexbox
+* All styles now divided into blocks, see `app/stylesheets/uploadcare/blocks` folder
+* Broken IE < 10 support
+* Full update design of widget and dialog
+* Update README, development guide moved to `DEVELOPMENT.md`
+* Used `postcss` post processing of styles instead SASS
+* Add args for PreviewTab constructor and change few methods to public
+* Remove all `png` images
+* Used SVG sprite for icons, all icons now SVG inline
+* All buttons, exclude `widget__button` and crop buttons used `button` tag instead `div`
+* Add focus for all buttons and make them tabbable
+* Update English (en) locale, added new captions
+* Migration guide from v2 to v3 [here](https://uploadcare.com/migration/widget_v3/)
+
 ### 2.10.4, 22.06.2017
 
 * Added camera translations to Portuguese (pt) locale
