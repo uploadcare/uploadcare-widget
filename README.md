@@ -198,8 +198,8 @@ and adding a localization file
         <td>Opera Mobile: 8+</td>
       </tr>
       <tr>
-        <td>Safari: 8+</td>
-        <td>iOS Safari: 8+</td>
+        <td>Safari: 9+</td>
+        <td>iOS Safari: 9+</td>
       </tr>
       <tr>
         <td>Edge: 12+</td>
