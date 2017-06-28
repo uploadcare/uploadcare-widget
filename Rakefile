@@ -197,7 +197,7 @@ def upload_npm(version)
   
   # Copy package.json and 
   cp.call "publish.package.json", "package.json"
-  cp.call "README.markdown"
+  cp.call "README.md"
 
   # Update version number in package.json
   `cd pkg/#{version} && npm version #{version}`
