@@ -29,6 +29,7 @@ See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/d
   * [File validation](https://uploadcare.com/cookbook/validation/)
   * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
   * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
+* [Migration guide from v2 to v3](https://uploadcare.com/migration/widget_v3/)
 
 ## Types of bundles
 
