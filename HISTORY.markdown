@@ -2,26 +2,30 @@
 
 ### 3.0.0, 28.06.2017
 
-* Replace all `uploadcare-` classes with `uploadcare--`
-* Changed all HTML markup, used classical BEM methodology
-* Update all styles, used flexbox
-* All styles now divided into blocks, see `app/stylesheets/uploadcare/blocks` folder
-* Broken IE < 10 support
-* Full update design of widget and dialog
-* Update README, development guide moved to `DEVELOPMENT.md`
-* Used `postcss` post processing of styles instead SASS
-* Add args for PreviewTab constructor and change few methods to public
-* Remove all `png` images
+* All classes now have the `uploadcare--` prefix instead `uploadcare-`
+* Changed all HTML markup,
+  used the [classical BEM](https://en.bem.info/methodology/quick-start/) methodology
+* Updated all styles, used flexbox for layout
+* Used PostCSS post processing of styles instead Sass
+* All styles now divided into blocks, see the [`app/assets/stylesheets/uploadcare/blocks`][blocks] folder
+* Drop IE < 10 support
+* New design of the widget and the dialog
+* Updated README, development guide moved to `DEVELOPMENT.md`
+* Added args for PreviewTab constructor and change few methods to public
+* Removed all `png` images
 * Used SVG sprite for icons, all icons now SVG inline
-* All buttons, exclude `widget__button` and crop buttons used `button` tag instead `div`
-* Add focus for all buttons and make them tabbable
-* Update English (en) locale, added new captions
-* Migration guide from v2 to v3 [here](https://uploadcare.com/migration/widget_v3/)
+* All buttons except `menu__item` and `crop-sizes__item` elements,
+  use `button` tag instead `div`
+* Added focus for all buttons and they are tabbable now
+* Updated English (en) locale, added new captions
+* Migration guide from v2 to v3 [here](https://uploadcare.com/documentation/widget/migration_v2_v3/)
+
+[blocks]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/stylesheets/uploadcare/blocks
 
 ### 2.10.4, 22.06.2017
 
 * Added camera translations to Portuguese (pt) locale
-* Fixed JS for jQuery 3 compatibility. Now we support jQuery 3.x.
+* Fixed JS for jQuery 3 compatibility. Now we support jQuery 3.x
 
 ### 2.10.3, 16.01.2017
 
