@@ -1,7 +1,7 @@
 # Uploadcare Widget [![Build Status][travis-img]][travis]
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
-    <img align="right" width="169" height="40"
+    <img align="right" width="150"
          src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
          title="Uploadcare logo">
 </a>
