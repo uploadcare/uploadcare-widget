@@ -9,7 +9,7 @@
     "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/stylesheets/uploadcare/styles.css",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build": "npm run build:svg && npm run build:css:min",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Soon there will be tests 🖖\" && exit 0",
     "serve:latest": "browser-sync start --ss ./pkg/latest -f ./pkg/latest --port 3219"
   },
   "dependencies": {},
