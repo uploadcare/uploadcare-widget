@@ -15,6 +15,13 @@ It’s provided as a typical JavaScript library and can be easily embedded in yo
 The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
+<img src="https://ucarecdn.com/dfb7fc44-ff37-4936-bb1e-e94667c8e3ee/-/format/jpeg/-/resize/x300/-/format/auto/"
+     srcset="https://ucarecdn.com/dfb7fc44-ff37-4936-bb1e-e94667c8e3ee/-/format/jpeg/-/resize/x600/-/quality/lighter/-/format/auto/ 2x"
+     height="300" alt="Widget v3 on desktop">
+<img src="https://ucarecdn.com/90964191-dfa2-4a22-8118-8a9e460fff9b/-/format/jpeg/-/resize/x300/-/format/auto/"
+     srcset="https://ucarecdn.com/90964191-dfa2-4a22-8118-8a9e460fff9b/-/format/jpeg/-/resize/x600/-/quality/lighter/-/format/auto/ 2x"
+     height="300" alt="Widget v3 on mobile">
+
 ## Docs
 
 See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/documentation/widget/).
