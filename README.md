@@ -11,6 +11,7 @@
 Uploadcare Widget is an HTML5 file uploader
 which itself is a part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
 ecosystem.
+
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
 The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
