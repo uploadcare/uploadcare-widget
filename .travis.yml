@@ -1,3 +1,13 @@
+sudo: false
 language: node_js
 node_js:
   - "7"
+cache: bundler
+before_install:
+  - rvm install 2.0.0
+install:
+  - npm install
+  - bundle install
+before_script:
+  - npm run build
+  - bundle exec rake js:latest:build
