@@ -15,6 +15,11 @@ It’s provided as a typical JavaScript library and can be easily embedded in yo
 The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
+<a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
+  <img src="https://ucarecdn.com/dfb7fc44-ff37-4936-bb1e-e94667c8e3ee/-/format/auto/-/resize/x600/-/stretch/fill/-/setfill/191919/-/resize/2192x760/-/crop/1776x760/416,0/-/overlay/90964191-dfa2-4a22-8118-8a9e460fff9b/338x600/1200,80/-/quality/lighter/-/format/auto/"
+       height="380" alt="Widget v3 sreenshots on tablet and mobile">
+</a>
+
 ## Docs
 
 See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/documentation/widget/).
@@ -29,7 +34,7 @@ See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/d
   * [File validation](https://uploadcare.com/cookbook/validation/)
   * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
   * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
-* [Migration guide from v2 to v3](https://uploadcare.com/migration/widget_v3/)
+* [Migration guide from v2 to v3](https://uploadcare.com/documentation/widget/migration_v2_v3/)
 
 ## Types of bundles
 
