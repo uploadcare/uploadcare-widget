@@ -1,15 +1,7 @@
-const jsdom = require('mocha-jsdom')
 const assert = require('assert')
+const uploadcare = require('../pkg/latest/uploadcare')
 
-describe('uploadcare full', function() {
-  let uploadcare
-
-  jsdom()
-
-  before(() => {
-    uploadcare = require('../pkg/latest/uploadcare.full')
-  })
-
+describe('uploadcare', function() {
   it('has version', () => {
     assert.equal(typeof uploadcare.version, 'string')
   })
