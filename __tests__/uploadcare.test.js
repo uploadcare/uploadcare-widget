@@ -1,11 +1,15 @@
 /* eslint max-nested-callbacks: ["error", 3] */
 const assert = require('assert')
+const jsdom = require('jsdom-global')
+
+const cleanup = jsdom()
+
 const uploadcare = require('../pkg/latest/uploadcare')
 
 window.UPLOADCARE_PUBLIC_KEY = 'demopublickey'
 
 const bodyHasElement = (selector) => {
-  const $el = document.body.querySelector(selector)
+  const $el = document.querySelector(selector)
 
   assert.equal($el !== null, true)
 }
@@ -16,7 +20,7 @@ describe('uploadcare', function() {
   })
 
   describe('widget', () => {
-    it('create widget', () => {
+    it('created by initialize', () => {
       document.body.innerHTML = '<input role="uploadcare-uploader" type="hidden">'
 
       uploadcare.initialize()
@@ -24,10 +28,18 @@ describe('uploadcare', function() {
       bodyHasElement('.uploadcare--widget')
     })
 
-    it('click on widget create dialog', () => {
-      const $widget = document.body.querySelector('.uploadcare--widget__button_type_open')
+    after(() => {
+      cleanup()
+    })
+  })
 
-      $widget.click()
+  describe('API', () => {
+    before(() => {
+      jsdom()
+    })
+
+    it('openDialog create dialog', () => {
+      uploadcare.openDialog()
 
       bodyHasElement('.uploadcare--dialog')
     })
