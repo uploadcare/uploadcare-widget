@@ -189,6 +189,15 @@ and adding a localization file
 
 ## Browser Support
 
+Our widget should work perfectly in a couple of the latest versions
+of major desktop browsers: Internet Explorer, Edge, Firefox, Google Chrome,
+Safari, and Opera. It is most likely to run well in older versions
+of major browser too, except for Internet Explorer < 10.
+
+If you need to support of old browsers and IE8 too, you might use [v2 of widget][v2ie8].
+
+[v2ie8]: https://uploadcare.com/documentation/widget/v2/#ie8
+
 <div>
   <table>
     <thead>
