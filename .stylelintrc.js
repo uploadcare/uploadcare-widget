@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  extends: 'stylelint-config-standard',
+  extends: 'stylelint-config-uploadcare',
   rules: {
     'declaration-empty-line-before': ['always', {
       except: [
