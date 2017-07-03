@@ -35,7 +35,7 @@ uploadcare.namespace 'utils.image', (ns) ->
 
         ns.getExif(file).always (exif) ->
           df.notify(.2)
-          isJPEG = @state() is 'resolved'
+          isJPEG = op.state() is 'resolved'
 
           # start = new Date()
           op = ns.shrinkImage(img, settings)
