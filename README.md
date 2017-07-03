@@ -1,9 +1,9 @@
 # Uploadcare Widget [![Build Status][travis-img]][travis]
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
-    <img align="right" width="150"
-         src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
-         title="Uploadcare logo">
+  <img align="right" width="150"
+       src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
+       title="Uploadcare logo">
 </a>
 
 [travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
@@ -18,10 +18,12 @@ It’s provided as a typical JavaScript library and can be easily embedded in yo
 The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
-<a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
-  <img src="https://ucarecdn.com/dfb7fc44-ff37-4936-bb1e-e94667c8e3ee/-/format/auto/-/resize/x600/-/stretch/fill/-/setfill/191919/-/resize/2192x760/-/crop/1776x760/416,0/-/overlay/90964191-dfa2-4a22-8118-8a9e460fff9b/338x600/1200,80/-/quality/lighter/-/format/auto/"
-       width="888" alt="Widget v3 sreenshots on tablet and mobile">
-</a>
+<p align="center">
+  <a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
+    <img src="https://ucarecdn.com/af42408f-70c1-4530-a2ec-15444be80b85/uploadcare-widget-in-action.gif"
+         width="600" alt="Uploadcare Widget in action">
+  </a>
+</p>
 
 ## Docs
 
