@@ -1,5 +1,16 @@
 # History
 
+### 3.0.1, 03.07.2017
+
+* Fixed the `Cannot read property 'tabs' of undefined` error, issue [#388][issue-388]
+* Fixed the `jQuery.Deferred exception: this.state is not a function` error, issue [#387][issue-387]
+* Removed `dialog_menu-hidden`, added `panel_menu-hidden` instead;
+  now, if the panel doesn't have tabs, the `panel_menu-hidden` class is added to the panel
+* Updated README: added screenshots and description about browser support
+
+[issue-388]: https://github.com/uploadcare/uploadcare-widget/issues/388
+[issue-387]: https://github.com/uploadcare/uploadcare-widget/issues/387
+
 ### 3.0.0, 28.06.2017
 
 * All classes now have the `uploadcare--` prefix instead `uploadcare-`
