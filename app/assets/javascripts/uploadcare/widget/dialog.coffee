@@ -51,8 +51,6 @@ uploadcare.namespace '', (ns) ->
                             files, tab, settings)
     dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
     dialog.addClass('uploadcare--dialog_status_active')
-    if settings.tabs.length == 0
-      dialog.addClass('uploadcare--dialog_menu-hidden')
     dialogPr.dialogElement = dialog
 
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
@@ -290,6 +288,7 @@ uploadcare.namespace '', (ns) ->
         @switchTab(tab || @__firstVisibleTab())
 
       if @settings.tabs.length == 0
+        @panel.addClass('uploadcare--panel_menu-hidden')
         @panel.find('.uploadcare--panel__menu').addClass('uploadcare--panel__menu_hidden')
 
     __prepareFooter: ->
