@@ -5,16 +5,15 @@ module.exports = (ctx) => ({
   plugins: {
     'postcss-import': {
       path: stylesheetsPath,
-      plugins: [
-        require('stylelint'),
-        require('postcss-prefixer')('uploadcare--', {
-          ignore: [
-            /^\.uploadcare-/,
-            /^\.ord-/,
-            '.bottom',
-            '.right',
-          ],
-        }),
+      plugins: [require('stylelint')],
+    },
+    'postcss-prefixer': {
+      prefix: 'uploadcare--',
+      ignore: [
+        /^\.uploadcare-/,
+        /^\.ord-/,
+        '.bottom',
+        '.right',
       ],
     },
     'postcss-custom-media': {},
