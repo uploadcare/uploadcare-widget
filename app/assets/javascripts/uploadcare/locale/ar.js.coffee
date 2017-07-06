@@ -1,4 +1,4 @@
-﻿##
+##
 ## Please, do not use this locale as a reference for new translations.
 ## It could be outdated or incomplete. Always use the latest English versions:
 ## https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/javascripts/uploadcare/locale/en.js.coffee
@@ -8,25 +8,21 @@
 
 uploadcare.namespace 'locale.translations', (ns) ->
   ns.ar =
-    uploading: 'الرجاء الإنتظار.... يتم الرفع'
-    loadingInfo: '...تحميل المعلومات'
+    uploading: 'جاري الرفع... الرجاء الانتظار'
+    loadingInfo: 'جار تحميل المعلومات ...'
     errors:
       default: 'خطأ'
       baddata: 'قيمة غير صحيحة'
-      size: 'ملف كبير جدا'
-      upload: 'لا يمكن تحميل'
-      user: ' إلغاء التحميل'
-      info: 'لا يمكن تحميل معلومات'
-      image: 'مسموح بالصور فقط' 
+      size: 'ملف كبير جداً'
+      upload: 'يتعذر الرفع'
+      user: 'تم إلغاء الرفع'
+      info: 'يتعذر تحميل المعلومات'
+      image: 'يسمح بالصور فقط'
       createGroup: 'لا يمكن إنشاء مجموعة ملفات'
-      deleted: 'تم حذف ملف'
-    draghere: 'إفلت الملف هنا'
+      deleted: 'تم حذف الملف'
+    draghere: 'أسقط ملف هنا'
     file:
-      zero: '%1 ملفات'
       one: '%1 ملف'
-      two: '%1 ملفات'
-      few: '%1 ملفات'
-      many: '%1 ملفات'
       other: '%1 ملفات'
     buttons:
       cancel: 'إلغاء'
@@ -39,79 +35,106 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'اختر صورة'
           other: 'اختر صور'
     dialog:
-      done: 'منجز'
-      showFiles: 'إظهار الملفات'
+      close: 'أغلق'
+      openMenu: 'افتح القائمة'
+      done: 'موافق'
+      showFiles: 'اظهار الملفات'
       tabs:
         names:
+          'empty-pubkey': 'مرحبا!'
           preview: 'معاينة'
-          file: 'الملفات المحلية'
-          url: 'روابط التعسفية'
+          file: 'ملفات محلية'
+          url: 'رابط مباشر'
           camera: 'كاميرا'
+          facebook: 'فيس بوك'
+          dropbox: 'دروب بوكس'
+          gdrive: 'جوجل دريف'
+          gphotos: 'صور غوغل'
+          instagram: 'إينستجرام'
+          vk: 'في كي'
+          evernote: 'إيفرنوت'
+          box: 'بوكس'
+          skydrive: 'ون درايف'
+          flickr: 'فليكر'
+          huddle: 'هادل'
         file:
-          drag: 'إفلات الملف هنا'
-          nodrop: 'تحميل الملفات من جهاز الكمبيوتر الخاص بك'
-          cloudsTip: 'المخازن السحابية<br>والخدمات الاجتماعية'
+          drag: 'سحب وإفلات<br>أي ملف'
+          nodrop: 'رفع ملفات من&nbsp;الحاسوب'
+          cloudsTip: 'مخازن على السحابة<br>والشبكات الاجتماعية'
           or: 'أو'
           button: 'اختر ملف محلي'
-          also: 'يمكنك أيضا اختيار من'
+          also: 'أو اختر من'
         url:
-          title: 'الملفات من الويب'
-          line1: 'اختر على أي ملف من الويب'
-          line2: 'قم بتقديم الارتباط'
-          input: 'الصق الرابط الخاص بك هنا ...'
-          button: 'تحميل'
+          title: 'ملفات من شبكة الإنترنت'
+          line1: 'التقاط أي ملف من على شبكة الإنترنت'
+          line2: 'فقط قم بتوفير الرابط'
+          input: 'الصق الرابط هنا...'
+          button: 'رفع'
         camera:
-          capture: 'إلتقط صورة'
-          mirror: 'مرآة'
-          retry: 'إعادة طلب الأذونات'
+          title: 'ملف من كاميرا الويب'
+          capture: 'التقاط صورة'
+          mirror: 'عكس الصورة'
+          startRecord: 'سجل فيديو'
+          stopRecord: 'توقف'
+          cancelRecord: 'إلغاء'
+          retry: 'طلب الإذن مرة أخرى'
           pleaseAllow:
-            title: 'الرجاء السماح بتشغيل كميرتك '
-            text: 'لقد تم السماح للكاميرا بالوصول لهذا الموقع. ' +
-                  'لكي تلتقط الصور بكاميرتك، يجب السماح لهذا الطلب '
+            title: 'يرجى السماح بالوصول إلى الكاميرا'
+            text: 'تمت مطالبتك بالسماح بالدخول إلى الكاميرا من هذا الموقع<br>' +
+                  'من أجل التقاط الصور من الكاميرا يجب عليك الموافقة على هذا الطلب'
           notFound:
-            title: 'لم يتم العثور على كاميرا '
-            text: 'يبدو أنه لا يوجد كاميرا موصولة بهذا الجهاز'
+            title: 'لم يتم اكتشاف أي كاميرا'
+            text: 'يبدو أنه ليس لديك كاميرا متصلة بهذا الجهاز'
         preview:
           unknownName: 'غير معروف'
           change: 'إلغاء'
-          back: 'العودة'
+          back: 'الرجوع'
           done: 'إضافة'
           unknown:
-            title: 'جاري التحميل .. الرجاء الانتظار للمعاينة.'
-            done: 'تخطي المعاينة، واقبل'
+            title: 'جار الرفع ... يرجى الانتظار للحصول على معاينة'
+            done: 'تخطي المعاينة والقبول'
           regular:
             title: 'إضافة هذا الملف؟'
-            line1: 'أنت على وشك إضافة الملف أعلاه.'
-            line2: 'يرجى تأكيد.'
+            line1: 'أنت على وشك إضافة الملف أعلاه'
+            line2: 'يرجى التأكيد'
           image:
-            title: 'إضافة هذه الصورة؟'
+            title: 'إضافة هذة الصورة'
             change: 'إلغاء'
           crop:
             title: 'قص وإضافة هذه الصورة'
-            done: 'تم'
-            free: 'حرر'
+            done: 'موافق'
+            free: 'حر'
+          video:
+            title: 'إضافة هذا الفيديو'
+            change: 'إلغاء'
           error:
             default:
-              title: 'عفوا!'
-              text: 'حدث خطأ أثناء تحميل.'
-              back: 'يرجى المحاولة مرة أخرى'
+              title: 'عفوا آسف'
+              text: 'حدث خطأ أثناء الرفع'
+              back: 'حاول مرة اخرى'
             image:
-              title: 'فقط ملفات الصور مقبولة.'
-              text: 'يرجى المحاولة مرة أخرى مع ملف آخر.'
-              back: 'اختيار صورة'
+              title: 'يتم قبول ملفات الصور فقط'
+              text: 'الرجاء إعادة المحاولة باستخدام ملف آخر'
+              back: 'اختر صورة'
             size:
-              title: 'الملف الذي حددته يتجاوز الحد.'
-              text: 'يرجى المحاولة مرة أخرى مع ملف آخر.'
+              title: 'الملف الذي حددتة يتجاوز الحد المسموح بة'
+              text: 'الرجاء إعادة المحاولة باستخدام ملف آخر'
             loadImage:
               title: 'خطأ'
-              text: 'لا يمكن تحميل صورة'
+              text: 'لا يمكن تحميل الصورة'
           multiple:
-            title: 'لقد أخترت %files%'
-            question: 'هل ترغب في إضافة كل من هذه الملفات?'
-            tooManyFiles: 'لقد اخترت العديد من الملفات. %max% is الحد الأقصى.'
-            tooFewFiles: 'لقد أخترت %files%. على الأقل %min% مطلوب.'
-            clear: 'إزالة جميع'
-            done: 'تم'
+            title: 'لقد اخترت %files%'
+            question: 'إضافة %files%?'
+            tooManyFiles: 'لقد اخترت عددا كبيرا جدا من الملفات %max% هو الحد الأقصى'
+            tooFewFiles: 'لقد اخترت %files%. على الأقل %min% مطلوب'
+            clear: 'حذف الكل'
+            done: 'إضافة'
+            file:
+              preview: 'معاينة %file%'
+              remove: 'حذف %file%'
+      footer:
+        text: 'مدعوم بواسطة'
+        link: 'ابلود كير'
 
 
 # Pluralization rules taken from:
