@@ -10,7 +10,7 @@
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build": "npm run build:svg && npm run build:css:min",
     "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "serve:latest": "browser-sync start --ss ./pkg/latest -f ./pkg/latest --port 3219"
+    "serve:latest": "node ./scripts/serve.js"
   },
   "dependencies": {},
   "devDependencies": {
@@ -20,6 +20,7 @@
     "cssnano": "^3.9.1",
     "eslint": "^4.1.1",
     "eslint-config-uploadcare": "^1.1.0",
+    "ngrok": "^2.2.14",
     "path": "^0.12.7",
     "postcss-calc": "^6.0.0",
     "postcss-cli": "^4.1.0",
