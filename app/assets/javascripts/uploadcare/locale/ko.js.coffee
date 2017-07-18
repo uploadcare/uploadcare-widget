@@ -1,9 +1,13 @@
 ##
-## Korean language locale is the default and used as a fallback.
+## Please, do not use this locale as a reference for new translations.
+## It could be outdated or incomplete. Always use the latest English versions:
+## https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/javascripts/uploadcare/locale/en.js.coffee
+##
+## Any fixes are welcome.
 ##
 
 uploadcare.namespace 'locale.translations', (ns) ->
-  ns.en =
+  ns.ko =
     uploading: '업로드중 기다려주세요'
     loadingInfo: '정보 로드중...'
     errors:
@@ -47,12 +51,10 @@ uploadcare.namespace 'locale.translations', (ns) ->
           gdrive: '구글 드라이브'
           gphotos: '구글 포토'
           instagram: '인스타그램'
-          vk: '브이케이'
           evernote: '에버노트'
           box: '박스'
           skydrive: '스카이드라이브'
           flickr: '플리커'
-          huddle: '허들'
         file:
           drag: '모든 파일을<br>드래그 & 드롭'
           nodrop: '파일 업로드'
@@ -136,6 +138,6 @@ uploadcare.namespace 'locale.translations', (ns) ->
 # Pluralization rules taken from:
 # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 uploadcare.namespace 'locale.pluralize', (ns) ->
-  ns.en = (n) ->
+  ns.ko = (n) ->
     return 'one' if n == 1
     'other'
