@@ -74,6 +74,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         .addClass('uploadcare--file-source')
         .addClass("uploadcare--file-source_#{name}")
         .addClass('uploadcare--file-sources__item')
+        .attr('type', 'button')
         .attr('title', t("dialog.tabs.names.#{name}"))
         .attr('data-tab', name)
         .append(tabIcon)
