@@ -58,6 +58,16 @@ By default, `uploadcare.min.js` is exported for npm and other package managers.
 
 You’re free to choose from the install methods listed below.
 
+### NPM
+
+```bash
+npm install uploadcare-widget --save
+```
+
+```javascript
+import uploadcare from 'uploadcare-widget'
+```
+
 ### CDN
 
 Embed our client library via `<script>` tag in the `<head>`
@@ -74,16 +84,6 @@ the light version of our widget without built-in jQuery,
 ```html
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js" charset="utf-8"></script>
-```
-
-### NPM
-
-```bash
-npm install uploadcare-widget --save
-```
-
-```javascript
-import uploadcare from 'uploadcare-widget'
 ```
 
 ### Other install methods
