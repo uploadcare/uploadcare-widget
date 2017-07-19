@@ -13,6 +13,19 @@
     "type": "git",
     "url": "https://github.com/uploadcare/uploadcare-widget.git"
   },
+  "keywords": [
+    "uploadcare",
+    "widget",
+    "uploader",
+    "filepicker",
+    "dialog",
+    "upload",
+    "store",
+    "file",
+    "files",
+    "image",
+    "images"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
