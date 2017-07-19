@@ -129,29 +129,7 @@ upload is in progress. This can be a real time saver.
 
 ### Usage with React
 
-```javascript
-import React, {Component} from 'react'
-import uploadcare from 'uploadcare-widget'
-
-class Uploader extends Component {
-
-  componentDidMount() {
-    uploadcare.start({publicKey: 'YOUR_PUBLIC_KEY'})
-  }
-
-  render() {
-    return (
-      <div>
-        <input type='text' role='uploadcare-uploader'/>
-      </div>
-    )
-  }
-}
-
-export default Uploader
-```
-
-See [full demo](https://github.com/uploadcare/uploadcare-widget-react-demo/).
+See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 
 ### Usage with Angular
 
