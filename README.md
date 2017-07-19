@@ -19,8 +19,8 @@ The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
 <a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
-  <img src="https://ucarecdn.com/dfb7fc44-ff37-4936-bb1e-e94667c8e3ee/-/format/auto/-/resize/x600/-/stretch/fill/-/setfill/191919/-/resize/2192x760/-/crop/1776x760/416,0/-/overlay/90964191-dfa2-4a22-8118-8a9e460fff9b/338x600/1200,80/-/quality/lighter/-/format/auto/"
-       width="888" alt="Widget v3 sreenshots on tablet and mobile">
+  <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
+       width="888" alt="Widget in action">
 </a>
 
 ## Docs
@@ -52,11 +52,21 @@ There's a few types of js bundles:
 
 Each bundle has its minified version. Just add `.min` before `.js`, e.g. `uploadcare.min.js`.
 
-By default, `uploadcare.full.min.js` is exported for npm and other package managers.
+By default, `uploadcare.min.js` is exported for npm and other package managers.
 
 ## Install
 
 You’re free to choose from the install methods listed below.
+
+### NPM
+
+```bash
+npm install uploadcare-widget --save
+```
+
+```javascript
+import uploadcare from 'uploadcare-widget'
+```
 
 ### CDN
 
@@ -74,16 +84,6 @@ the light version of our widget without built-in jQuery,
 ```html
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js" charset="utf-8"></script>
-```
-
-### NPM
-
-```bash
-npm install uploadcare-widget --save
-```
-
-```javascript
-import uploadcare from 'uploadcare-widget'
 ```
 
 ### Other install methods
@@ -129,29 +129,7 @@ upload is in progress. This can be a real time saver.
 
 ### Usage with React
 
-```javascript
-import React, {Component} from 'react'
-import uploadcare from 'uploadcare-widget'
-
-class Uploader extends Component {
-
-  componentDidMount() {
-    uploadcare.start({publicKey: 'YOUR_PUBLIC_KEY'})
-  }
-
-  render() {
-    return (
-      <div>
-        <input type='text' role='uploadcare-uploader'/>
-      </div>
-    )
-  }
-}
-
-export default Uploader
-```
-
-See [full demo](https://github.com/uploadcare/uploadcare-widget-react-demo/).
+See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 
 ### Usage with Angular
 
