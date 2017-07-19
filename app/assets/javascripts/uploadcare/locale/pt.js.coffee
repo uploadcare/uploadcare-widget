@@ -20,7 +20,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
       image: 'Apenas imagens são permitidas'
       createGroup: 'Não foi possível criar o grupo de arquivos'
       deleted: 'O arquivo foi excluído'
-    draghere: 'Arraste um arquivo para cá'
+    draghere: 'Arraste um arquivo aqui'
     file: 
       one: '%1 arquivo'
       other: '%1 arquivos'
@@ -32,7 +32,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Escolha um arquivo'
           other: 'Escolha arquivos'
         images:
-          one: 'Escolha um imagem'
+          one: 'Escolha uma imagem'
           other: 'Escolha imagens'
     dialog:
       done: 'OK'
@@ -43,7 +43,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           file: 'Computador'
           url: 'Link da web'
         file: 
-          drag: 'Arraste um arquivo para cá'
+          drag: 'Arraste um arquivo aqui'
           nodrop: 'Faça upload de arquivos do seu computador'
           or: 'ou'
           button: 'Escolha um arquivo do computador'
@@ -73,8 +73,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           back: 'Voltar'
           done: 'Adicionar'
           unknown: 
-            title: 'Fazendo upload... Aguarde o preview.'
-            done: 'Pular preview e aceitar'
+            title: 'Fazendo upload... Aguarde a visualização.'
+            done: 'Pular visualização e aceitar'
           regular: 
             title: 'Adicionar esse arquivo?'
             line1: 'Você está prestes a adicionar o arquivo acima.'
