@@ -1,5 +1,22 @@
 # History
 
+### 3.1.0, 19.07.2017
+
+* Added Korean locale.
+* Update Arabic locale.
+* Added the attribute `type=button` for the `file-source` buttons.
+* Fixed problems with scrolling and footer's buttons on the iframe tabs (like an Instagram) in Safari for iOS.
+* Fixed background styles for the dialog and panel.
+* Added font styles for the panel.
+* Fixed adding the `uploadcare--page` class to the body when used the `openPanel` method.
+* Fixed width of the opened mobile menu in UC Browser.
+* Fixed placement of elements in the footer in multiple mode in old browsers like an IE 10.
+* Fixed readme:
+    * fixed name of default bundle,
+    * move npm install before CDN,
+    * remove React code,
+    * change the image with widget's screenshots to gif with the widget in action.
+
 ### 3.0.1, 03.07.2017
 
 * Fixed the `Cannot read property 'tabs' of undefined` error, issue [#388][issue-388]
