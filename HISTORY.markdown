@@ -1,5 +1,10 @@
 # History
 
+### 3.1.1, 24.07.2017
+
+* Fixed Portuguese (`pt`) locale.
+* Fixed closing of the dialog when double-clicking on the tabs menu.
+
 ### 3.1.0, 19.07.2017
 
 * Added Korean locale.
