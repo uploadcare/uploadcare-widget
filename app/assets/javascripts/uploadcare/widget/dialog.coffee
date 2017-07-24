@@ -64,7 +64,7 @@ uploadcare.namespace '', (ns) ->
       if not $.contains(document.documentElement, e.target)
         return
 
-      showStoppers = '.uploadcare--panel__content, a'
+      showStoppers = '.uploadcare--dialog__panel, .uploadcare--dialog__powered-by'
       if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
         return
 
