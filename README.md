@@ -1,4 +1,4 @@
-# Uploadcare Widget [![Build Status][travis-img]][travis]
+# Uploadcare Widget [![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
     <img align="right" width="150"
@@ -8,6 +8,8 @@
 
 [travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
 [travis]: https://travis-ci.org/uploadcare/uploadcare-widget
+[stack-img]: http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
+[stack]: https://stackshare.io/uploadcare/stacks/
 
 Uploadcare Widget is an HTML5 file uploader
 which itself is a part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
