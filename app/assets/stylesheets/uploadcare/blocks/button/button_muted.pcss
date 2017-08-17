@@ -1,10 +1,16 @@
 .button_muted {
+  border-color: transparent !important;
   color: var(--fill-main-color);
-  border-color: transparent;
+
   border-radius: 0;
 
   &:hover,
   &:focus {
     color: var(--color-primary);
+  }
+
+  &:disabled,
+  &[aria-disabled=true] {
+    border-color: transparent !important;
   }
 }
