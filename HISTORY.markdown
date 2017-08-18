@@ -1,5 +1,18 @@
 # History
 
+### 3.1.2, 18.08.2017
+
+* Fixed styles to avoid inheriting global styles from `button` or `div[role=button]` for classes:
+  * `uploadcare--button`
+  * `uploadcare--button_muted`
+  * `uploadcare--button_overlay`
+  * `uploadcare--button_primary`
+  * `uploadcare--button_primary`
+  * `uploadcare--crop-sizes__item`
+  * `uploadcare--widget__button`
+  * `uploadcare--widget__button_type_open`
+* Updated README: added StackShare badge.
+
 ### 3.1.1, 24.07.2017
 
 * Fixed Portuguese (`pt`) locale.
@@ -16,7 +29,7 @@
 * Fixed adding the `uploadcare--page` class to the body when used the `openPanel` method.
 * Fixed width of the opened mobile menu in UC Browser.
 * Fixed placement of elements in the footer in multiple mode in old browsers like an IE 10.
-* Fixed readme:
+* Fixed README:
     * fixed name of default bundle,
     * moved npm install before CDN,
     * removed React code,
