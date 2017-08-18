@@ -7,12 +7,26 @@
   padding: 0;
   height: 65px;
 
+  background: transparent;
   border-color: transparent;
   color: var(--color-base);
 
   &:hover,
   &:focus {
+    background: transparent;
+    border-color: transparent;
     color: var(--color-primary);
+  }
+
+  &:active {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-primary-dark);
+  }
+
+  &:disabled,
+  &[aria-disabled=true] {
+    border-color: transparent !important;
   }
 }
 
