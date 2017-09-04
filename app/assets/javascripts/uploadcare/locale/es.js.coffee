@@ -45,7 +45,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           url: 'Enlaces arbitrarios'
           camera: 'Cámara'
         file:
-          drag: 'Arrastra una archivo aquí'
+          drag: 'Arrastra un archivo aquí'
           nodrop: 'Sube fotos desde tu ordenador'
           cloudsTip: 'Almacenamiento en la nube<br>y redes sociales'
           or: 'o'
