@@ -6,6 +6,8 @@
   if users pick a lot of files, issue [#409][issue-409].
 * Fixed typo in Spanish (`es`) locale.
 
+[issue-409]: https://github.com/uploadcare/uploadcare-widget/issues/409
+
 ### 3.1.2, 18.08.2017
 
 * Fixed styles to avoid inheriting global styles from `button` or `div[role=button]` for classes:
