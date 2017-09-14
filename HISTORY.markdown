@@ -1,5 +1,11 @@
 # History
 
+### 3.1.3, 14.09.2017
+
+* Fixed the disappearance of the footer on the preview tab in IE and Firefox,
+  if users pick a lot of files, issue [#409][issue-409].
+* Fixed typo in Spanish (`es`) locale.
+
 ### 3.1.2, 18.08.2017
 
 * Fixed styles to avoid inheriting global styles from `button` or `div[role=button]` for classes:
