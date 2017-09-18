@@ -117,17 +117,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
-          if @settings.imagesOnly
-          then "-/preview/54x54/"
-          else "-/preview/54x54/"
-        cdnURL_2x = "#{info.cdnUrl}-/quality/lightest/" +
-          if @settings.imagesOnly
-          then "-/preview/108x108/"
-          else "-/preview/108x108/"
+        cdnURL = "#{info.cdnUrl}-/quality/lightest/-/preview/108x108/"
         filePreview = $('<img>')
           .attr('src', cdnURL)
-          .attr('srcset', cdnURL_2x + ' 2x')
           .addClass('uploadcare--file__icon')
       else
         filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>")
