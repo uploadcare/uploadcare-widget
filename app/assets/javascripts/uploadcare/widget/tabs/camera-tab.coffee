@@ -76,8 +76,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @__setState('ready')
 
         @__stream = stream
-        if @URL
-          @video.prop('src', @URL.createObjectURL(stream))
+        if 'srcObject' of @video[0]
+          @video.prop('srcObject', stream)
+        else if @URL
+          @__streamObject = @URL.createObjectURL(stream)
+          @video.prop('src', @__streamObject)
         else
           @video.prop('src', stream)
         @video[0].volume = 0
@@ -97,8 +100,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__loaded = false
       if not @__stream
         return
-      if @URL
-        @URL.revokeObjectURL(@video.prop('src'))
+      if @__streamObject
+        @URL.revokeObjectURL(@__streamObject)
       if @__stream.getTracks
         $.each @__stream.getTracks(), ->
           @stop?()
