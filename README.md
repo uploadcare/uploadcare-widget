@@ -19,7 +19,7 @@ It supports multi-file uploads, manual crop, integrations with social networks a
 
 [travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
 [travis]: https://travis-ci.org/uploadcare/uploadcare-widget
-[stack-img]: http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
+[stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [stack]: https://stackshare.io/uploadcare/stacks/
 
 <a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
