@@ -113,7 +113,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if @__stream.getTracks
         $.each @__stream.getTracks(), ->
           @stop?()
-      @__stream.stop?()
+      else
+        @__stream.stop?()
       @__stream = null
 
     __mirror: =>
