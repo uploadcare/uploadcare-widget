@@ -46,7 +46,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @dialogApi.always(@__revoke)
 
     __checkCompatibility: ->
-      @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
+      if navigator.mediaDevices and navigator.mediaDevices.getUserMedia
+        @getUserMedia = (constraints, successCallback, errorCallback) ->
+          navigator.mediaDevices.getUserMedia(constraints)
+            .then(successCallback)
+            .catch(errorCallback)
+      else
+        @getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia
       @URL = window.URL or window.webkitURL
       @MediaRecorder = window.MediaRecorder
       if not isSecure
@@ -77,12 +83,16 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @__setState('ready')
 
         @__stream = stream
-        if @URL
-          @video.prop('src', @URL.createObjectURL(stream))
+        if 'srcObject' of @video[0]
+          @video.prop('srcObject', stream)
+          @video.on('loadedmetadata', () => @video[0].play())
         else
-          @video.prop('src', stream)
-        @video[0].volume = 0
-        @video[0].play()
+          if @URL
+            @__streamObject = @URL.createObjectURL(stream)
+            @video.prop('src', @__streamObject)
+          else
+            @video.prop('src', stream)
+          @video[0].play()
 
       , (error) =>
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
@@ -98,12 +108,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__loaded = false
       if not @__stream
         return
-      if @URL
-        @URL.revokeObjectURL(@video.prop('src'))
+      if @__streamObject
+        @URL.revokeObjectURL(@__streamObject)
       if @__stream.getTracks
         $.each @__stream.getTracks(), ->
           @stop?()
-      @__stream.stop?()
+      else
+        @__stream.stop?()
       @__stream = null
 
     __mirror: =>
