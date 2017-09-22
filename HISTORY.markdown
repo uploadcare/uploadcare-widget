@@ -1,5 +1,29 @@
 # History
 
+### 3.1.4, 22.09.2017
+
+* Fixed the error of the stream from a webcam in Safari 11.
+  Now the camera tab with taking photos works in Safari 11.
+
+* Updated function for start the stream from a webcam:
+  added using the `navigator.mediaDevices.getUserMedia` method
+  if a browser supports these.
+
+* Updated the video element, which used for the stream:
+  use the `muted` attribute in HTML template instead of
+  setting up the `volume` property in JS.
+
+* Fixed stop video stream: if a browser supports the `getTracks` method,
+  call the `stop` only for tracks, not for the stream,
+  because MediaStream.stop deprecated.
+
+* Fixed preview images in the list of files in `multiple` mode:
+  using just one double-sized version of an image in `src` instead of
+  using `srcset` attribute. Now there are high-quality images in browsers
+  that don’t support the `srcset` attribute.
+
+* Fixed README: fixed protocol of image URL for the badge of StackShare.
+
 ### 3.1.3, 14.09.2017
 
 * Fixed the disappearance of the footer on the preview tab in IE and Firefox,
