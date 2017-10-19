@@ -13,6 +13,5 @@ module.exports = {
         'inside-single-line-block',
       ],
     }],
-    'number-leading-zero': 'never',
   },
 }
