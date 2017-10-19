@@ -1,5 +1,10 @@
 # History
 
+### Unreleased
+
+* In bundled styles removed the `-webkit` prefix for `transition`
+  and added the prefix for Edge for `::placeholder` of `.uploadcare--input`.
+
 ### 3.1.4, 22.09.2017
 
 * Fixed the error of the stream from a webcam in Safari 11.
