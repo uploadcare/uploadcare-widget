@@ -1,0 +1,12 @@
+.uploadcare--panel__powered-by {
+  background: var(--color-base);
+  color: color(#fff a(50%));
+
+  @media (--desktop) {
+    display: none;
+  }
+
+  .tab:not(:nth-child(2)).tab_current ~ & {
+    display: none;
+  }
+}
