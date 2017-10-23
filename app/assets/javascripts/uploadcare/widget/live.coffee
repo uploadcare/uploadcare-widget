@@ -66,6 +66,7 @@ uploadcare.namespace '', (ns) ->
     if isolated
       return
     if s.live
+      utils.log('UPLOADCARE_LIVE is true, so, every new `[role=uploadcare-uploader]` element appearing on a page (at any time) gets initialized as a widget in about ~100 ms. This can cause your tools to blink. Set this option to false or add id for html element to avoid blinking. See https://uploadcare.com/documentation/widget/#initialization for more details.')
       setInterval(ns.initialize, 100)
     # should be after settings.common(s) call
     ns.initialize()
