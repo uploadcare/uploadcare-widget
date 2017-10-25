@@ -66,6 +66,7 @@ uploadcare.namespace '', (ns) ->
     if isolated
       return
     if s.live
+      utils.log('UPLOADCARE_LIVE is true: every new `[role=uploadcare-uploader]` element on a page gets initialized as a widget every ~100 ms. This can cause your devtools blinking. Set this option to false or add an id for your html element to avoid such behavior. See https://uploadcare.com/documentation/widget/#initialization for details.')
       setInterval(ns.initialize, 100)
     # should be after settings.common(s) call
     ns.initialize()
