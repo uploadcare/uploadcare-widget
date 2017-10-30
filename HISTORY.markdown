@@ -1,9 +1,26 @@
 # History
 
-### Unreleased
+### 3.2.0, 30.10.2017
 
-* In bundled styles removed the `-webkit` prefix for `transition`
-  and added the prefix for Edge for `::placeholder` of `.uploadcare--input`.
+* Added the `.uploadcare--panel__powered_by` block inside `.uploadcare--panel__content`.
+* Fixed the blinking problem with `UPLOADCARE_LIVE=true`,
+  see [#277][issue-277], [#281][issue-281], [#366][issue-366], [#384][issue-384], [#411][issue-411].
+* Fixed the bug with menu in iOS 11, see [#417][issue-417].
+* Update value of the `--color-base` variable in [the config][styles-config] of styles.
+* Updated bundled styles:
+  * removed the `-webkit` prefix for `transition`,
+  * added the prefix for Edge for `::placeholder` of `.uploadcare--input`.
+* Updated README:
+  * changed logo of Uploadcare,
+  * added shield with the current version of npm package.
+
+[issue-277]: https://github.com/uploadcare/uploadcare-widget/issues/277
+[issue-281]: https://github.com/uploadcare/uploadcare-widget/issues/281
+[issue-366]: https://github.com/uploadcare/uploadcare-widget/issues/366
+[issue-384]: https://github.com/uploadcare/uploadcare-widget/issues/384
+[issue-411]: https://github.com/uploadcare/uploadcare-widget/issues/411
+[issue-417]: https://github.com/uploadcare/uploadcare-widget/issues/417
+[styles-config]: https://github.com/uploadcare/uploadcare-widget/blob/master/app/assets/stylesheets/uploadcare/_config.pcss
 
 ### 3.1.4, 22.09.2017
 
