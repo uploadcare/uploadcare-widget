@@ -1,22 +1,24 @@
 # Uploadcare Widget
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
-    <img align="right" width="150"
-         src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
-         title="Uploadcare logo">
+    <img align="right" width="64" height="64"
+         src="https://ucarecdn.com/2f4864b7-ed0e-4411-965b-8148623aa680/uploadcare-logo-mark.svg"
+         alt="">
 </a>
 
 Uploadcare Widget is an HTML5 file uploader
 which itself is a part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
 ecosystem.
 
+[![NPM version][npm-img]][npm-link] [![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
+
 It’s provided as a typical JavaScript library and can be easily embedded in your site.
 
 The widget is highly customizable to fit your needs.
 It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
 
-[![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
-
+[npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
+[npm-link]: https://www.npmjs.org/package/uploadcare-widget
 [travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
 [travis]: https://travis-ci.org/uploadcare/uploadcare-widget
 [stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
