@@ -253,7 +253,7 @@ uploadcare.namespace '', (ns) ->
           return
 
         info = fileInfo.originalImageInfo
-        size = uploadcare.utils.fitSize(
+        size = utils.fitSize(
           @settings.crop[0].preferedSize,
           [info.width, info.height],
           true
