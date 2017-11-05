@@ -236,27 +236,29 @@ uploadcare.namespace '', (ns) ->
         if not crop.preferedSize
           return
 
-      files.onAnyDone (file, fileInfo) =>
-        # .cdnUrlModifiers came from already cropped files
-        # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
-        if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
-          return
+      files.onAnyDone (file) =>
+        newFile = file.then (fileInfo) =>
+          # .cdnUrlModifiers came from already cropped files
+          # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
+          if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
+            return
 
-        info = fileInfo.originalImageInfo
-        size = utils.fitSize(
-          @settings.crop[0].preferedSize,
-          [info.width, info.height],
-          true
-        )
+          info = fileInfo.originalImageInfo
+          size = utils.fitSize(
+            @settings.crop[0].preferedSize,
+            [info.width, info.height],
+            true
+          )
 
-        newFile = utils.applyCropSelectionToFile(
-          file, @settings.crop[0], [info.width, info.height], {
-            width: size[0]
-            height: size[1]
-            left: Math.round((info.width - size[0]) / 2)
-            top: Math.round((info.height - size[1]) / 2)
-          }
-        )
+          utils.applyCropCoordsToInfo(
+            fileInfo, @settings.crop[0], [info.width, info.height], {
+              width: size[0]
+              height: size[1]
+              left: Math.round((info.width - size[0]) / 2)
+              top: Math.round((info.height - size[1]) / 2)
+            }
+          )
+
         files.replace(file, newFile)
 
     __resolve: =>
