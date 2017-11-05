@@ -89,6 +89,7 @@ uploadcare.namespace 'crop', (ns) ->
       height: Math.round(Math.min(@originalSize[1], coords.y2)) - top
 
     applySelectionToFile: (file) ->
-      utils.applyCropSelectionToFile(
-        file, @crop, @originalSize, @getSelection()
-      )
+      file.then (info) =>
+        utils.applyCropCoordsToInfo(
+          info, @crop, @originalSize, @getSelection()
+        )
