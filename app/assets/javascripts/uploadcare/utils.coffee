@@ -155,6 +155,7 @@ uploadcare.namespace 'utils', (ns) ->
       modifiers += "-/preview/"
 
     file.then (info) =>
+      info = $.extend({}, info)
       info.cdnUrlModifiers = modifiers
       info.cdnUrl = "#{info.originalUrl}#{modifiers or ''}"
       info.crop = coords
