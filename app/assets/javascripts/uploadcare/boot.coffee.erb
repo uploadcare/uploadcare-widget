@@ -1,17 +1,19 @@
 # = require ./namespace.coffee
 
-uploadcare.version = '<%= UploadcareWidget::VERSION %>'
+# Save reference for further use
+uc = uploadcare
+uc.version = '<%= UploadcareWidget::VERSION %>'
 
 # Use local jQuery if exist, global otherwise
-uploadcare.jQuery = jQuery || window.jQuery
+uc.jQuery = jQuery || window.jQuery
 
-if typeof uploadcare.jQuery == 'undefined'
+if typeof uc.jQuery == 'undefined'
     throw new ReferenceError('jQuery is not defined')
 
-{expose} = uploadcare
+{expose} = uc
 
 expose('version')
 expose('jQuery')
 
 expose 'plugin', (fn) ->
-  fn(uploadcare)
+  fn(uc)
