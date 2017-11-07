@@ -139,7 +139,7 @@ uploadcare.namespace 'utils', (utils) ->
         handler(@anyProgressList)
       )
 
-    then: ->
+    autoThen: ->
       if @_thenArgs
         throw new Error("CollectionOfPromises.then() could be used only once")
       @_thenArgs = arguments

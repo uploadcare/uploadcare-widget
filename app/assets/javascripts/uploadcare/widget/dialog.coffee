@@ -236,7 +236,7 @@ uploadcare.namespace '', (ns) ->
         if not crop.preferedSize
           return
 
-      files.then (fileInfo) =>
+      files.autoThen (fileInfo) =>
         # .cdnUrlModifiers came from already cropped files
         # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
         if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
