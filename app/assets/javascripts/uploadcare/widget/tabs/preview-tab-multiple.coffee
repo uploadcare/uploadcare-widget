@@ -7,6 +7,7 @@
   jQuery: $,
   locale: {t}
 } = uploadcare
+uc = uploadcare
 
 uploadcare.namespace 'widget.tabs', (ns) ->
 
@@ -130,7 +131,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         .html(filePreview)
 
       fileEl.find('.uploadcare--file__description').on 'click', =>
-          uploadcare.openPreviewDialog(file, @settings)
+          uc.openPreviewDialog(file, @settings)
             .done (newFile) =>
               @dialogApi.fileColl.replace(file, newFile)
 
