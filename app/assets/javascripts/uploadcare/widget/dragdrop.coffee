@@ -50,28 +50,26 @@ uploadcare.namespace 'dragdrop', (ns) ->
       )
 
     ns.watchDragging = (el, receiver) ->
-      delayedEnter = false
-      active = false
+      lastActive = false
+      counter = 0
 
-      changeState = (newActive) ->
-        if active != newActive
-          $(el).toggleClass('uploadcare-dragging', active = newActive)
+      changeState = (active) ->
+        if lastActive != active
+          $(el).toggleClass('uploadcare-dragging', lastActive = active)
 
       $(receiver || el).on(
         dragenter: ->
-          delayedEnter = utils.defer ->
-            delayedEnter = false
-            changeState(on)
+          counter += 1
+          changeState(on)
 
         dragleave: ->
-          if not delayedEnter
+          counter -= 1
+          if counter == 0
             changeState(off)
 
         'drop mouseenter': ->
-          if delayedEnter
-            clearTimeout(delayedEnter)
-          utils.defer ->
-            changeState(off)
+          counter = 0
+          changeState(off)
       )
 
     ns.watchDragging('body', document)
