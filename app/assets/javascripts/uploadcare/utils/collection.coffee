@@ -79,6 +79,7 @@ uploadcare.namespace 'utils', (utils) ->
       @anyDoneList = $.Callbacks()
       @anyFailList = $.Callbacks()
       @anyProgressList = $.Callbacks()
+      @_thenArgs = null
 
       @anyProgressList.add (item, firstArgument) ->
         $(item).data('lastProgress', firstArgument)
@@ -112,6 +113,9 @@ uploadcare.namespace 'utils', (utils) ->
       if not (item and item.then)
         return
 
+      if @_thenArgs
+        item = item.then(@_thenArgs...)
+
       super
 
       @__watchItem(item)
@@ -134,3 +138,10 @@ uploadcare.namespace 'utils', (utils) ->
         handler(@anyFailList),
         handler(@anyProgressList)
       )
+
+    autoThen: ->
+      if @_thenArgs
+        throw new Error("CollectionOfPromises.then() could be used only once")
+      @_thenArgs = arguments
+      for item, i in @__items
+        @__replace(item, item.then(@_thenArgs...), i)

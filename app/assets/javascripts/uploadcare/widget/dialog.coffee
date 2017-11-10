@@ -246,11 +246,11 @@ uploadcare.namespace '', (ns) ->
         if not crop.preferedSize
           return
 
-      files.onAnyDone (file, fileInfo) =>
+      files.autoThen (fileInfo) =>
         # .cdnUrlModifiers came from already cropped files
         # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
         if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
-          return
+          return fileInfo
 
         info = fileInfo.originalImageInfo
         size = utils.fitSize(
@@ -259,15 +259,14 @@ uploadcare.namespace '', (ns) ->
           true
         )
 
-        newFile = utils.applyCropSelectionToFile(
-          file, @settings.crop[0], [info.width, info.height], {
+        utils.applyCropCoordsToInfo(
+          fileInfo, @settings.crop[0], [info.width, info.height], {
             width: size[0]
             height: size[1]
             left: Math.round((info.width - size[0]) / 2)
             top: Math.round((info.height - size[1]) / 2)
           }
         )
-        files.replace(file, newFile)
 
     __resolve: =>
       @dfd.resolve(@files.get())
