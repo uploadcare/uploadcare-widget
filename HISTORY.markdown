@@ -1,5 +1,13 @@
 # History
 
+### 3.2.1, 13.11.2017
+
+* Fixed autocrop: now if multiple is turned on and the crop is specified,
+  crop auto applies to a last uploaded file.
+* Fixed the problem with drag&drop when the class `.uploadcare--dragging`
+  was not removed from the body when dragging was finished.
+
+
 ### 3.2.0, 30.10.2017
 
 * Added the `.uploadcare--panel__powered_by` block inside `.uploadcare--panel__content`.
