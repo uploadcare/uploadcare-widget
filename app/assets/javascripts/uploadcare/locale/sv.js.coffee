@@ -32,8 +32,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Välj fil'
           other: 'Välj filer'
         images:
-          one: 'Välj en fil'
-          other: 'Välj filer'
+          one: 'Välj en bild'
+          other: 'Välj bilder'
     dialog:
       done: 'Klar'
       showFiles: 'Visa filer'
@@ -47,14 +47,14 @@ uploadcare.namespace 'locale.translations', (ns) ->
         file:
           drag: 'Släpp filen här'
           nodrop: 'Ladda upp filer från din dator'
-          cloudsTip: 'Cloud storages<br>och sociala nätverk'
+          cloudsTip: 'Molnlagring<br>och sociala nätverk'
           or: 'eller'
           button: 'Välj en lokal fil'
           also: 'Du kan också välja den från'
         url:
           title: 'Filer från webben'
-          line1: 'Välj en fil från en web adress.'
-          line2: 'Agge bara länken til filen.'
+          line1: 'Välj en fil från en webbadress.'
+          line2: 'Ange bara länken till filen.'
           input: 'Klistra in din länk här...'
           button: 'Ladda upp'
         camera:
