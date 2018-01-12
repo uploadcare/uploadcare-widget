@@ -209,6 +209,7 @@ uploadcare.namespace 'files', (ns) ->
             xhr: =>
               # Naked XHR for progress tracking
               xhr = $.ajaxSettings.xhr()
+              xhr.responseType = 'text'
               if xhr.upload
                 xhr.upload.addEventListener 'progress', (e) =>
                   updateProgress(partNo, e.loaded)
