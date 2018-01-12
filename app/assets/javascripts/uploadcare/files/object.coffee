@@ -224,7 +224,7 @@ uploadcare.namespace 'files', (ns) ->
               attempts += 1
               if attempts > @settings.multipartMaxAttempts
                 if @settings.debugUploads
-                  utils.info("Part ##{partNo} and file upload is failed.", uuid)
+                  utils.log("Part ##{partNo} and file upload is failed.", uuid)
                 df.reject()
               else
                 if @settings.debugUploads
