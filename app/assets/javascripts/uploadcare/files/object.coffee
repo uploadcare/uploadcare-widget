@@ -209,6 +209,7 @@ uploadcare.namespace 'files', (ns) ->
             xhr: =>
               # Naked XHR for progress tracking
               xhr = $.ajaxSettings.xhr()
+              xhr.responseType = 'text'
               if xhr.upload
                 xhr.upload.addEventListener 'progress', (e) =>
                   updateProgress(partNo, e.loaded)
@@ -224,7 +225,7 @@ uploadcare.namespace 'files', (ns) ->
               attempts += 1
               if attempts > @settings.multipartMaxAttempts
                 if @settings.debugUploads
-                  utils.info("Part ##{partNo} and file upload is failed.", uuid)
+                  utils.log("Part ##{partNo} and file upload is failed.", uuid)
                 df.reject()
               else
                 if @settings.debugUploads
