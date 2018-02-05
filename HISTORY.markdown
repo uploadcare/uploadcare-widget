@@ -1,5 +1,11 @@
 # History
 
+### 3.2.2, 05.02.2018
+
+* Fixed Swedish (`sv`) locale.
+* Fixed XHR requests: added responseType to XHR requests
+  to prevent Firefox from parsing responses as XML.
+
 ### 3.2.1, 13.11.2017
 
 * Fixed autocrop: now if multiple is turned on and the crop is specified,
