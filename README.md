@@ -171,6 +171,9 @@ This can be done by forking the [main repository](https://github.com/uploadcare/
 and adding a localization file
 [here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
 
+Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`](https://uploadcare.com/docs/uploads/widget/locales/)
+property to use your locale immediately.
+
 ## Browser Support
 
 Our widget should work perfectly in a couple of the latest versions
