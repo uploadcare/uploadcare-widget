@@ -142,7 +142,7 @@ See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 We have the Angular 1 directive for Uploadcare Widget.
 See [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare).
 
-For Angular 2, [this demo](https://plnkr.co/edit/6caWQ6cct4L3715LehxZ?p=preview) might be useful.
+For Angular 2+, see [ngx-uploadcare-widget](https://github.com/uploadcare/ngx-uploadcare-widget).
 
 ## Configuration
 
