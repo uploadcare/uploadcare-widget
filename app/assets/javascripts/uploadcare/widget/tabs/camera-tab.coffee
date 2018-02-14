@@ -92,7 +92,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           else
             @video.prop('src', stream)
           @video[0].play()
-        @video[0].volume = 0
 
       , (error) =>
         if error == "NO_DEVICES_FOUND" or error.name == 'DevicesNotFoundError'
