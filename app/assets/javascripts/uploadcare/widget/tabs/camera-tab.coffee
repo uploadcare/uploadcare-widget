@@ -15,6 +15,22 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @dialogApi.hideTab(@name)
         return
 
+      if @__checkCapture()
+        @container.append(tpl('tab-camera-capture'))
+        @container.addClass('uploadcare--camera-capture')
+        handleFiles = (input) =>
+          @dialogApi.addFiles('object', input.files)
+          @dialogApi.switchTab('preview')
+        fileButton = @container.find('.uploadcare--camera-capture__photo')
+        fileButton.on 'click', =>
+          utils.fileSelectDialog @container, {inputAcceptTypes: 'image/*'}, handleFiles, {capture: 'camera'}
+        fileButton = @container.find('.uploadcare--camera-capture__video')
+        fileButton.on 'click', =>
+          utils.fileSelectDialog @container, {inputAcceptTypes: 'video/*'}, handleFiles, {capture: 'camera'}
+      else
+        @__initCamera()
+
+    __initCamera: ->
       @__loaded = false
       @mirrored = true
 
@@ -58,6 +74,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.');
       isLocalhost = document.location.hostname == 'localhost'
       return !! @getUserMedia and Uint8Array and (isSecure or isLocalhost)
+
+    __checkCapture: () ->
+      input = document.createElement('input')
+      input.setAttribute('capture', true)
+      return !! input.capture
 
     __setState: (newState) =>
       oldStates = ['', 'ready', 'requested', 'denied', 'not-founded',
