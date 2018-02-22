@@ -35,15 +35,28 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Sélectionner une image',
           other: 'Sélectionner des images'
     dialog:
+      close: 'Fermer'
+      openMenu: 'Ouvrir le menu'
       done: 'Terminer'
       showFiles: 'Voir les fichiers'
       tabs:
         names:
+          'empty-pubkey': 'Bienvenue'
           preview: 'Avant-première'
           file: 'Fichier en local'
           url: 'Une adresse web'
-          'empty-pubkey': 'Bienvenue'
-          camera: 'Appareil photo'
+          camera: 'Caméra'
+          facebook: 'Facebook'
+          dropbox: 'Dropbox'
+          gdrive: 'Google Drive'
+          gphotos: 'Google Photos'
+          instagram: 'Instagram'
+          vk: 'VK'
+          evernote: 'Evernote'
+          box: 'Box'
+          skydrive: 'OneDrive'
+          flickr: 'Flickr'
+          huddle: 'Huddle'
         file:
           drag: 'Glissez-déposez un fichier ici'
           nodrop: 'Envoyez des fichiers depuis votre ordinateur'
@@ -58,12 +71,16 @@ uploadcare.namespace 'locale.translations', (ns) ->
           input: 'Collez le lien ici...'
           button: 'Envoi'
         camera:
+          title: 'Fichier depuis la caméra'
           capture: 'Prendre une photo'
           mirror: 'Miroir'
+          startRecord: 'Enregistrer une vidéo'
+          stopRecord: 'Arrêter'
+          cancelRecord: 'Annuler'
           retry: 'Envoyer une nouvelle demande de permission'
           pleaseAllow:
             title: 'Autorisez l\'accès à votre appareil photo'
-            text: 'Vous avez été invité à autoriser l\'accès à votre appareil photo. Pour prendre des photos avec votre appareil photo vous devez approuver cette demande.'
+            text: 'Vous avez été invité à autoriser l\'accès à votre appareil photo. Pour prendre des photos avec votre caméra vous devez approuver cette demande.'
           notFound:
             title: 'Aucun appareil photo détecté'
             text: 'Il semblerait que vous n\'ayez pas d\'appareil photo connecté à cet appareil.'
@@ -86,6 +103,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             title: 'Recadrer et ajouter cette image'
             done: 'Terminer'
             free: 'libre'
+          video:
+            title: 'Ajouter cette vidéo ?'
+            change: 'Annuler'
           error:
             default:
               title: 'Oups!'
@@ -104,10 +124,13 @@ uploadcare.namespace 'locale.translations', (ns) ->
           multiple:
             title: 'Vous avez choisi %files%'
             question: 'Voulez vous ajouter tous ces fichiers ?'
-            clear: 'Tout retirer'
-            done: 'Terminer'
             tooManyFiles: 'Vous avez choisi trop de fichiers. %max% est le maximum.'
             tooFewFiles: 'Vous avez choisi %fichiers%. %min% est le minimum.'
+            clear: 'Tout retirer'
+            done: 'Terminer'
+            file:
+              preview: 'Prévisualiser %file%'
+              remove: 'Supprimer %file%'
 
 
 # Pluralization rules taken from:
