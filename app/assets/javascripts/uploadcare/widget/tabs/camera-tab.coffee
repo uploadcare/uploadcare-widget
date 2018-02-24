@@ -11,10 +11,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.CameraTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
-      if not @__checkCompatibility()
-        @dialogApi.hideTab(@name)
-        return
-
       if @__checkCapture()
         @container.append(tpl('tab-camera-capture'))
         @container.addClass('uploadcare--camera')
@@ -28,6 +24,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         fileButton.on 'click', =>
           utils.fileSelectDialog @container, {inputAcceptTypes: 'video/*'}, handleFiles, {capture: 'camera'}
       else
+        if not @__checkCompatibility()
+          @dialogApi.hideTab(@name)
+          return
         @__initCamera()
 
     __initCamera: ->
