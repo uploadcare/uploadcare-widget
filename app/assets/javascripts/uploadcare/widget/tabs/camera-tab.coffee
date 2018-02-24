@@ -17,14 +17,14 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       if @__checkCapture()
         @container.append(tpl('tab-camera-capture'))
-        @container.addClass('uploadcare--camera-capture')
+        @container.addClass('uploadcare--camera')
         handleFiles = (input) =>
           @dialogApi.addFiles('object', input.files)
           @dialogApi.switchTab('preview')
-        fileButton = @container.find('.uploadcare--camera-capture__photo')
+        fileButton = @container.find('.uploadcare--camera__button_type_photo')
         fileButton.on 'click', =>
           utils.fileSelectDialog @container, {inputAcceptTypes: 'image/*'}, handleFiles, {capture: 'camera'}
-        fileButton = @container.find('.uploadcare--camera-capture__video')
+        fileButton = @container.find('.uploadcare--camera__button_type_video')
         fileButton.on 'click', =>
           utils.fileSelectDialog @container, {inputAcceptTypes: 'video/*'}, handleFiles, {capture: 'camera'}
       else
