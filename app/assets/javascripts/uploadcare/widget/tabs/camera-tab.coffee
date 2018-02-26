@@ -15,7 +15,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         @container.append(tpl('tab-camera-capture'))
         @container.addClass('uploadcare--camera')
         @container.find('.uploadcare--camera__button_type_photo').on('click', @__captureInput('image/*'))
-        @container.find('.uploadcare--camera__button_type_video').on('click', @__captureInput('video/*'))
+        video = @container.find('.uploadcare--camera__button_type_video').on('click', @__captureInput('video/*'))
+        if @settings.imagesOnly
+          video.hide()
       else
         if not @__checkCompatibility()
           @dialogApi.hideTab(@name)
