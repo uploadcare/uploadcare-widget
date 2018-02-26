@@ -38,13 +38,6 @@ Vagrant.configure(2) do |config|
         sudo gem install rake -v 11.0.1
     SHELL
 
-    config.vm.provision "install", type: "shell", inline: <<-SHELL
-        cd /vagrant
-        bundle install
-        cd /vagrant/test/dummy
-        bundle install
-    SHELL
-
     config.vm.provision "change_ssh_dir", type: "shell", inline: <<-SHELL
         echo "cd /vagrant" >> /home/vagrant/.bashrc
     SHELL
