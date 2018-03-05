@@ -1,5 +1,14 @@
 # History
 
+### 3.2.3, 05.03.2018
+
+* Fixed French (`fr`) locale.
+* Fixed camera tab: now,
+  if device and browser support the `capture` attribute
+  for the `input[type=file]` element,
+  instead of the video stream,
+  we show only the buttons that give direct access to the camera.
+
 ### 3.2.2, 05.02.2018
 
 * Fixed Swedish (`sv`) locale.
