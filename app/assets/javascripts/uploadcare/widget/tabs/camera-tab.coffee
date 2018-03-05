@@ -79,7 +79,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __checkCapture: () ->
       input = document.createElement('input')
-      input.setAttribute('capture', true)
+      input.setAttribute('capture', 'camera')
       return !! input.capture
 
     __setState: (newState) =>
