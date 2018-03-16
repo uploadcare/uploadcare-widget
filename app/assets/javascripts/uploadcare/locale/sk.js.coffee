@@ -131,11 +131,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
             clear: 'Odstrániť všetky'
             done: 'Pridať'
             file:
-              preview: 'Nahliadnuť %file%'
+              preview: 'Nahliadnuť na %file%'
               remove: 'Odstrániť %file%'
-      footer:
-        text: 'sprevádzkuje'
-        link: 'uploadcare'
 
 
 # Pluralization rules taken from:
