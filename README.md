@@ -71,7 +71,7 @@ npm install uploadcare-widget --save
 ```
 
 ```javascript
-import uploadcare from 'uploadcare-widget'
+import * as uploadcare from 'uploadcare-widget'
 ```
 
 ### CDN
