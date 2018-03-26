@@ -6,18 +6,21 @@
          alt="">
 </a>
 
-Uploadcare Widget is an HTML5 file uploader
-which itself is a part of [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
+Uploadcare Widget is an HTML5 file uploader, a part of the
+[Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
 ecosystem that fully covers your file handling.
 
-Uploads affect your business performance. The widget ensures all of your uploads are fast and hit their target.
+Uploads affect your business performance. The widget ensures all of your uploads
+are fast and hit their target.
 
 [![NPM version][npm-img]][npm-link] [![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
 
-It’s provided as a typical JavaScript library and can be easily embedded in your site.
+It’s provided as a typical JavaScript library and can be easily embedded in your
+site.
 
-The widget is highly customizable to fit your needs.
-It supports multi-file uploads, manual crop, integrations with social networks and cloud storage providers.
+The widget is highly customizable to fit your needs. It supports multi-file
+uploads, manual crop, and integrates with social media and cloud storage
+providers.
 
 [npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
 [npm-link]: https://www.npmjs.org/package/uploadcare-widget
@@ -26,39 +29,42 @@ It supports multi-file uploads, manual crop, integrations with social networks a
 [stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [stack]: https://stackshare.io/uploadcare/stacks/
 
-<a href="https://uploadcare.com/widget/configure/" title="Play with Widget">
+<a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
        width="888" alt="Widget in action">
 </a>
 
 ## Docs
 
-See the complete docs on using Uploadcare Widget [here](https://uploadcare.com/documentation/widget/).
+See the complete widget docs [here](https://uploadcare.com/docs/uploads/widget/).
 
-### Quicklinks
+### Quick references
 
-* [JavaScript API](https://uploadcare.com/documentation/javascript_api/)
-* [Configure your widget](https://uploadcare.com/widget/configure/)
-* [Libraries, plugins and integrations](https://uploadcare.com/documentation/libs/)
+* [JavaScript API](https://uploadcare.com/docs/api_reference/javascript/)
+* [Live widget config](https://uploadcare.com/widget/configure/)
+* [In-browser image editing](https://uploadcare.com/features/effects_tab/)
+* [Libraries, plugins and integrations](https://uploadcare.com/docs/libs/)
 * Tutorials
-  * [Visual tweaks](https://uploadcare.com/cookbook/widget_visual/)
-  * [File validation](https://uploadcare.com/cookbook/validation/)
-  * [Widget customization](https://uploadcare.com/tutorials/widget_customization/)
-  * [Advanced topics](https://uploadcare.com/cookbook/advanced/)
-* [Migration guide from v2 to v3](https://uploadcare.com/documentation/widget/migration_v2_v3/)
+  * [Visual tweaks](https://uploadcare.com/docs/uploads/widget/visual_tweaks/)
+  * [File validation](https://uploadcare.com/docs/uploads/widget/validation/)
+  * [Widget customization](https://uploadcare.com/docs/uploads/widget/styling/)
+  * [Advanced topics](https://uploadcare.com/docs/guides/advanced/)
+* [Migration guide from v2 to v3](https://uploadcare.com/docs/uploads/widget/migration_v2_v3/)
 
 ## Types of bundles
 
-There's a few types of js bundles:
+There are a few types of JS bundles:
 
-* `uploadcare.full.js` — a full bundle with built-in jQuery,
-* `uploadcare.js` — a bundle without built-in jQuery,
-* `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery,
-  [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only,
-* `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support (widget v. 2.x and below),
+* `uploadcare.full.js` — a full bundle with built-in jQuery.
+* `uploadcare.js` — a bundle without built-in jQuery.
+* `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
+  [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only.
+* `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support
+  (widget v. 2.x and below).
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
 
-Each bundle has its minified version. Just add `.min` before `.js`, e.g. `uploadcare.min.js`.
+Each bundle has its minified version. Just add `.min` before `.js`,
+e.g. `uploadcare.min.js`.
 
 By default, `uploadcare.min.js` is exported for npm and other package managers.
 
@@ -78,16 +84,16 @@ import uploadcare from 'uploadcare-widget'
 
 ### CDN
 
-Embed our client library via `<script>` tag in the `<head>`
-section of each page where you’d like to make use of Uploadcare Widget.
-Just use this CDN link to use the widget version with built-in jQuery,
+Embed our client library via the `<script>` tag in the `<head>`
+section of each page where you’d like to use Uploadcare Widget.
+Here is the CDN link to the current widget version with built-in jQuery,
 
 ```html
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
 ```
 
 Or, if you’re already using jQuery on your page, consider loading
-the light version of our widget without built-in jQuery,
+the light version of the widget: without built-in jQuery,
 
 ```html
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
@@ -96,15 +102,15 @@ the light version of our widget without built-in jQuery,
 
 ### Other install methods
 
-The official Uploadcare Widget [documentation](https://uploadcare.com/documentation/widget/#install)
-has more install methods.
+Check out the widget [docs](https://uploadcare.com/docs/uploads/widget/install/)
+for more install methods.
 
 ## Usage
 
 Once you’re done with the install, there are
-two simple steps to take to actually use the widget.
+two simple steps to take to use the widget.
 
-**Set your [public key](https://uploadcare.com/documentation/widget/#option-public-key)**.
+**Set your [public key](https://uploadcare.com/docs/uploads/widget/config/#option-public-key)**.
 This can also sit in the `<head>` section,
 
 ```html
@@ -113,9 +119,8 @@ This can also sit in the `<head>` section,
 </script>
 ```
 
-Your secret key is not required for the widget
-(it’s quite careless for your page to include any
-secret keys anyway.)
+Your secret key is not required for the widget; (it’s quite careless for your
+page to include any secret keys anyway.
 
 **Insert widget element** into your form,
 
@@ -127,7 +132,7 @@ By default, the library looks for inputs with the specified
 `role` attribute and places widgets there.
 Once a file is uploaded, this `<input>` gets a
 CDN link with a file UUID. Your server then
-receives this link instead of file content.
+receives this link, not file content.
 
 We suggest placing the widget somewhere at the top of your form.
 Unlike regular inputs, our widget starts uploading files **immediately**
@@ -141,29 +146,31 @@ See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
 
 ### Usage with Angular
 
-We have the Angular 1 directive for Uploadcare Widget.
-See [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare).
+Check out our
+[Angular 2+ wrapper](https://www.npmjs.com/package/ngx-uploadcare-widget) for
+Uploadcare Widget.
 
-For Angular 2, [this demo](https://plnkr.co/edit/6caWQ6cct4L3715LehxZ?p=preview) might be useful.
+[angular-uploadcare](https://github.com/uploadcare/angular-uploadcare) can be
+used with Angular 1.
 
 ## Configuration
 
-The widget is highly customizable through widget options.
-All configuration options together with ways to set them are
-described in [our docs](https://uploadcare.com/documentation/widget/#configuration).
+The widget is highly customizable with widget options. Check out the existing
+options and ways to set them in UC
+[docs](https://uploadcare.com/docs/uploads/widget/config/).
 
 ## JavaScript API
 
 You might not want to use all the features that
-[our widget](https://uploadcare.com/documentation/widget/) exhibits.
+[our widget](https://uploadcare.com/docs/uploads/widget/) exhibits.
 Or, perhaps, you might want to redesign the user experience
 without having to reinvent the wheel.
 Maybe, you're in pursuit of building a UI on top of the widget.
 For all of those use cases, we provide a
-[JavaScript API](https://uploadcare.com/documentation/javascript_api/).
+[JavaScript API](https://uploadcare.com/docs/api_reference/javascript/).
 Feel free to control the default widget with it,
 or make use of its standalone components that
-can be combined with your own solutions.
+can be combined with your solutions.
 
 ## Localization
 
@@ -175,14 +182,15 @@ and adding a localization file
 
 ## Browser Support
 
-Our widget should work perfectly in a couple of the latest versions
+The widget should work perfectly in a couple of the latest versions
 of major desktop browsers: Internet Explorer, Edge, Firefox, Google Chrome,
 Safari, and Opera. It is most likely to run well in older versions
 of major browser too, except for Internet Explorer < 10.
 
-If you need to support of old browsers and IE8 too, you might use [v2 of widget][v2ie8].
+If you need the support for older browsers including IE8, consider using
+[the widget version 2.x][v2ie8] instead.
 
-[v2ie8]: https://uploadcare.com/documentation/widget/v2/#ie8
+[v2ie8]: https://uploadcare.com/documentation/widget/v2/
 
 <div>
   <table>
@@ -219,5 +227,5 @@ If you need to support of old browsers and IE8 too, you might use [v2 of widget]
 
 ## Development
 
-Check out the Uploadcare Widget development guide
-[here](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
+Check out the Uploadcare Widget
+[development guide](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
