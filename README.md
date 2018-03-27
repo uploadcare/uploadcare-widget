@@ -10,8 +10,8 @@ Uploadcare Widget is an HTML5 file uploader, a part of the
 [Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
 ecosystem that fully covers your file handling.
 
-Uploads affect your business performance. The widget ensures all of your uploads
-are fast and hit their target.
+Uploads affect your web or mobile app performance. The widget ensures all of your
+uploads are fast and hit their target.
 
 [![NPM version][npm-img]][npm-link] [![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
 
