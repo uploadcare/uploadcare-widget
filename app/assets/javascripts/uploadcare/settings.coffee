@@ -28,6 +28,8 @@ uploadcare.namespace 'settings', (ns) ->
     tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive'
     preferredTypes: ''
     inputAcceptTypes: ''  # '' means default, null means "disable accept"
+    # effects tab
+    effects: ''
     # upload settings
     doNotStore: false
     publicKey: null
