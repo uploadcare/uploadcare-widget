@@ -28,6 +28,8 @@ uploadcare.namespace 'settings', (ns) ->
     tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive'
     preferredTypes: ''
     inputAcceptTypes: ''  # '' means default, null means "disable accept"
+    # effects tab
+    effects: ''
     # upload settings
     doNotStore: false
     publicKey: null
@@ -195,6 +197,7 @@ uploadcare.namespace 'settings', (ns) ->
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       if value isnt undefined
         values[key] = value
+    console.log(values)
     values
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
