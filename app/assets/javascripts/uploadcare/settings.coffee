@@ -197,7 +197,6 @@ uploadcare.namespace 'settings', (ns) ->
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       if value isnt undefined
         values[key] = value
-    console.log(values)
     values
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
