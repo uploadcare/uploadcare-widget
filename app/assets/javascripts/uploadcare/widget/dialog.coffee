@@ -237,7 +237,7 @@ uploadcare.namespace '', (ns) ->
         @__resolve()
 
     __autoCrop: (files) ->
-      if not @settings.crop or not @settings.multiple
+      if not @settings.crop
         return
 
       for crop in @settings.crop
