@@ -11,7 +11,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
     uploading: 'Laddar... Var god vänta.'
     loadingInfo: 'Laddar info...'
     errors:
-      default: 'Error'
+      default: 'Fel'
       baddata: 'Felaktigt värde'
       size: 'Filen är för stor'
       upload: 'Kan inte ladda upp'
@@ -66,8 +66,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
             text: 'Du har uppmanats att tillåta att denna webbplats får tillgång till din kamera.' +
                   'För att ta bilder med din kamera måste du godkänna denna begäran.'
           notFound:
-            title: 'Ingen kamera funnen'
-            text: 'Det varkar som att du inte har något kamera ansluten till denna enheten.'
+            title: 'Ingen kamera hittades'
+            text: 'Det verkar som att du inte har någon kamera ansluten till denna enheten.'
         preview:
           unknownName: 'okänd'
           change: 'Avbryt'
@@ -86,7 +86,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           crop:
             title: 'Beskär och lägg till denna bild'
             done: 'Klar'
-            free: 'free'
+            free: 'fri'
           error:
             default:
               title: 'Oops!'
@@ -100,7 +100,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
               title: 'Filen du har valt är för stor.'
               text: 'Vänligen försök igen med en annan fil.'
             loadImage:
-              title: 'Error'
+              title: 'Fel'
               text: 'Kan inte ladda bild'
           multiple:
             title: 'Du har valt %files%'
