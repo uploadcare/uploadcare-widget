@@ -59,17 +59,6 @@ uploadcare.namespace '', (ns) ->
     dialog.find('.uploadcare--dialog__close')
       .on('click', dialogPr.reject)
 
-    dialog.on 'dblclick', (e) ->
-      # handler can be called after element detached (close button)
-      if not $.contains(document.documentElement, e.target)
-        return
-
-      showStoppers = '.uploadcare--dialog__panel, .uploadcare--dialog__powered-by'
-      if $(e.target).is(showStoppers) or $(e.target).parents(showStoppers).length
-        return
-
-      dialogPr.reject()
-
     return currentDialogPr = dialogPr.always ->
       $('html, body').removeClass(openedClass)
       currentDialogPr = null
