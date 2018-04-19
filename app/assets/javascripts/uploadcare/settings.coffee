@@ -201,7 +201,7 @@ uploadcare.namespace 'settings', (ns) ->
 
     if settings.validators
       settings.validators = settings.validators.slice()
-    
+
     settings
 
 
