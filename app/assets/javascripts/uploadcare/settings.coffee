@@ -111,8 +111,8 @@ uploadcare.namespace 'settings', (ns) ->
     settings
 
   transformOptions = (settings, transforms) ->
-    for key, {from, to} of transforms when settings[key]?
-      settings[key] = to if settings[key] == from
+    for key, transform of transforms when settings[key]?
+      settings[key] = transform.to if settings[key] == transform.from
     settings
 
   constrainOptions = (settings, constraints) ->
