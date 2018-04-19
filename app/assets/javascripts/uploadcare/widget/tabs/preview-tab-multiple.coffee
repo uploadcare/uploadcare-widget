@@ -66,7 +66,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
-      tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+      tooManyFiles = files > @settings.multipleMax
       tooFewFiles = files < @settings.multipleMin
 
       @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
