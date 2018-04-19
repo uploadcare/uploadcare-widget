@@ -20,7 +20,7 @@ uploadcare.namespace 'settings', (ns) ->
     imagesOnly: false
     clearable: false
     multiple: false
-    multipleMax: 0
+    multipleMax: 1000
     multipleMin: 1
     multipleMaxStrict: false
     imageShrink: false
@@ -52,7 +52,7 @@ uploadcare.namespace 'settings', (ns) ->
 
   constraints = 
     multipleMax:
-      min: 0
+      min: 1
       max: 1000
 
   presets =
