@@ -223,7 +223,7 @@ uploadcare.namespace '', (ns) ->
         @files.clear()
 
       for file in files
-        if @settings.multipleMaxStrict and @settings.multipleMax != 0
+        if @settings.multipleMaxStrict
           if @files.length() >= @settings.multipleMax
             file.cancel()
             continue
@@ -303,7 +303,7 @@ uploadcare.namespace '', (ns) ->
 
     __updateFooter: =>
         files = @files.length()
-        tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+        tooManyFiles = files > @settings.multipleMax
         tooFewFiles = files < @settings.multipleMin
 
         @footer.find('.uploadcare--panel__done')
