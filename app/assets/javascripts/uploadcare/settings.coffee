@@ -50,6 +50,11 @@ uploadcare.namespace 'settings', (ns) ->
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
 
+  constraints = 
+    multipleMax:
+      min: 0
+      max: 1000
+
   presets =
     tabs:
       all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive box vk huddle'
@@ -98,6 +103,11 @@ uploadcare.namespace 'settings', (ns) ->
   intOptions = (settings, keys) ->
     for key in keys when settings[key]?
       settings[key] = parseInt(settings[key])
+    settings
+
+  constrainOptions = (settings, constraints) ->
+    for key, {min, max} of constraints when settings[key]?
+      settings[key] = Math.min(Math.max(settings[key], min), max);
     settings
 
   parseCrop = (val) ->
@@ -159,6 +169,7 @@ uploadcare.namespace 'settings', (ns) ->
       'multipartMaxAttempts'
       'parallelDirectUploads'
     ])
+    constrainOptions(settings, constraints)
 
     if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop)
