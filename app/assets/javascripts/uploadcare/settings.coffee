@@ -50,6 +50,11 @@ uploadcare.namespace 'settings', (ns) ->
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
 
+  transforms = 
+    multipleMax:
+      from: 0
+      to: 1000
+
   constraints = 
     multipleMax:
       min: 1
@@ -103,6 +108,11 @@ uploadcare.namespace 'settings', (ns) ->
   intOptions = (settings, keys) ->
     for key in keys when settings[key]?
       settings[key] = parseInt(settings[key])
+    settings
+
+  transformOptions = (settings, transforms) ->
+    for key, {from, to} of transforms when settings[key]?
+      settings[key] = to if settings[key] == from
     settings
 
   constrainOptions = (settings, constraints) ->
@@ -169,6 +179,7 @@ uploadcare.namespace 'settings', (ns) ->
       'multipartMaxAttempts'
       'parallelDirectUploads'
     ])
+    transformOptions(settings, transforms)
     constrainOptions(settings, constraints)
 
     if settings.crop != false and not $.isArray(settings.crop)
@@ -190,7 +201,7 @@ uploadcare.namespace 'settings', (ns) ->
 
     if settings.validators
       settings.validators = settings.validators.slice()
-
+    
     settings
 
 
