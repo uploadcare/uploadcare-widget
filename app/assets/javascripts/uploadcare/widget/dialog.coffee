@@ -146,6 +146,9 @@ uploadcare.namespace '', (ns) ->
   ns.registerTab 'empty-pubkey', (tabPanel, _1, _2, settings) ->
     tabPanel.append(settings._emptyKeyText)
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
+    if not settings.previewStep and dialogApi.fileColl.length() == 0
+      return
+
     tabCls = if settings.multiple
         tabs.PreviewTabMultiple
       else
