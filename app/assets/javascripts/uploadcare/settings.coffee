@@ -1,7 +1,8 @@
 {
   expose
   utils,
-  jQuery: $
+  jQuery: $,
+  version
 } = uploadcare
 
 uploadcare.namespace 'settings', (ns) ->
@@ -49,6 +50,7 @@ uploadcare.namespace 'settings', (ns) ->
     # maintain settings
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
+    integration: ''
 
   presets =
     tabs:
@@ -98,6 +100,13 @@ uploadcare.namespace 'settings', (ns) ->
   intOptions = (settings, keys) ->
     for key in keys when settings[key]?
       settings[key] = parseInt(settings[key])
+    settings
+
+  integrationToUserAgent = (settings) ->
+    settings['_userAgent'] =
+      "UploadcareWidget/#{version}/#{settings['publicKey']} (Javascript#{
+        if settings['integration'] then "; #{settings['integration']}" else ''
+      })"
     settings
 
   parseCrop = (val) ->
@@ -158,7 +167,8 @@ uploadcare.namespace 'settings', (ns) ->
       'multipartConcurrency'
       'multipartMaxAttempts'
       'parallelDirectUploads'
-    ])
+    ]
+    integrationToUserAgent(settings))
 
     if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop)
