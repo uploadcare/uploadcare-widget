@@ -55,6 +55,16 @@ uploadcare.namespace 'settings', (ns) ->
       all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive box vk huddle'
       default: defaults.tabs
 
+  # settings from data attributes of script tag
+  script = document.currentScript || do ->
+    scripts = document.getElementsByTagName("script")
+    scripts[scripts.length - 1]
+  scriptSettings = {}
+  for key of defaults
+    value = $(script).data(key)
+    if value isnt undefined
+      scriptSettings[key] = value
+  defaults = $.extend(defaults, scriptSettings)
 
   str2arr = (value) ->
     if not $.isArray(value)
@@ -190,12 +200,12 @@ uploadcare.namespace 'settings', (ns) ->
 
   # global variables only
   ns.globals = ->
-    values = {}
+    scriptSettings = {}
     for key of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       if value isnt undefined
-        values[key] = value
-    values
+        scriptSettings[key] = value
+    scriptSettings
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
