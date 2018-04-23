@@ -104,7 +104,7 @@ uploadcare.namespace 'settings', (ns) ->
 
   integrationToUserAgent = (settings) ->
     settings['_userAgent'] =
-      "UploadcareWidget/#{version}/#{settings['publicKey']} (Javascript#{
+      "UploadcareWidget/#{version}/#{settings['publicKey']} (JavaScript#{
         if settings['integration'] then "; #{settings['integration']}" else ''
       })"
     settings
