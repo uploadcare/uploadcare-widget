@@ -113,12 +113,14 @@ namespace 'files', (ns) ->
       df = $.Deferred()
       if @__fileColl.length()
         @__fileInfosDf.done (infos...) =>
-          utils.jsonp "#{@settings.urlBase}/group/", 'POST',
-            pub_key: @settings.publicKey
-            signature: @settings.secureSignature
-            expire: @settings.secureExpire
-            files: for info in infos
-              "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
+          utils.jsonp("#{@settings.urlBase}/group/", 'POST', {
+              pub_key: @settings.publicKey
+              signature: @settings.secureSignature
+              expire: @settings.secureExpire
+              files: for info in infos
+                "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
+            },
+            headers: {'X-UC-User-Agent': @settings._userAgent})
           .fail (reason) =>
             if @settings.debugUploads
               utils.log("Can't create group.", @settings.publicKey, reason)
@@ -160,10 +162,12 @@ namespace '', (ns) ->
     df = $.Deferred()
     id = utils.groupIdRegex.exec(groupIdOrUrl)
     if id
-      utils.jsonp "#{settings.urlBase}/group/info/",
-        jsonerrors: 1
-        pub_key: settings.publicKey
-        group_id: id[0]
+      utils.jsonp("#{settings.urlBase}/group/info/", 'GET', {
+          jsonerrors: 1
+          pub_key: settings.publicKey
+          group_id: id[0]
+        },
+        headers: {'X-UC-User-Agent': @settings._userAgent})
       .fail (reason) =>
         if settings.debugUploads
           utils.log("Can't load group info. Probably removed.",
