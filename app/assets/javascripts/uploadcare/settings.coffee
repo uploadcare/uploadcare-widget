@@ -20,7 +20,7 @@ uploadcare.namespace 'settings', (ns) ->
     imagesOnly: false
     clearable: false
     multiple: false
-    multipleMax: 0
+    multipleMax: 1000
     multipleMin: 1
     multipleMaxStrict: false
     imageShrink: false
@@ -49,6 +49,16 @@ uploadcare.namespace 'settings', (ns) ->
     # maintain settings
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
+
+  transforms = 
+    multipleMax:
+      from: 0
+      to: 1000
+
+  constraints = 
+    multipleMax:
+      min: 1
+      max: 1000
 
   presets =
     tabs:
@@ -98,6 +108,16 @@ uploadcare.namespace 'settings', (ns) ->
   intOptions = (settings, keys) ->
     for key in keys when settings[key]?
       settings[key] = parseInt(settings[key])
+    settings
+
+  transformOptions = (settings, transforms) ->
+    for key, transform of transforms when settings[key]?
+      settings[key] = transform.to if settings[key] == transform.from
+    settings
+
+  constrainOptions = (settings, constraints) ->
+    for key, {min, max} of constraints when settings[key]?
+      settings[key] = Math.min(Math.max(settings[key], min), max);
     settings
 
   parseCrop = (val) ->
@@ -159,6 +179,8 @@ uploadcare.namespace 'settings', (ns) ->
       'multipartMaxAttempts'
       'parallelDirectUploads'
     ])
+    transformOptions(settings, transforms)
+    constrainOptions(settings, constraints)
 
     if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop)
