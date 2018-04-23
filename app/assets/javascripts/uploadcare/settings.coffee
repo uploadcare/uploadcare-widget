@@ -1,7 +1,8 @@
 {
   expose
   utils,
-  jQuery: $
+  jQuery: $,
+  version
 } = uploadcare
 
 uploadcare.namespace 'settings', (ns) ->
@@ -49,13 +50,14 @@ uploadcare.namespace 'settings', (ns) ->
     # maintain settings
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
+    integration: ''
 
-  transforms = 
+  transforms =
     multipleMax:
       from: 0
       to: 1000
 
-  constraints = 
+  constraints =
     multipleMax:
       min: 1
       max: 1000
@@ -130,6 +132,13 @@ uploadcare.namespace 'settings', (ns) ->
       settings[key] = Math.min(Math.max(settings[key], min), max);
     settings
 
+  integrationToUserAgent = (settings) ->
+    settings['_userAgent'] =
+      "UploadcareWidget/#{version}/#{settings['publicKey']} (Javascript#{
+        if settings['integration'] then "; #{settings['integration']}" else ''
+      })"
+    settings
+
   parseCrop = (val) ->
     reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
     ratio = reRatio.exec($.trim(val.toLowerCase())) or []
@@ -191,6 +200,7 @@ uploadcare.namespace 'settings', (ns) ->
     ])
     transformOptions(settings, transforms)
     constrainOptions(settings, constraints)
+    integrationToUserAgent(settings)
 
     if settings.crop != false and not $.isArray(settings.crop)
       if /^(disabled?|false|null)$/i.test(settings.crop)
@@ -222,12 +232,12 @@ uploadcare.namespace 'settings', (ns) ->
 
   # global variables only
   ns.globals = ->
-    scriptSettings = {}
+    values = {}
     for key of defaults
       value = window["UPLOADCARE_#{utils.upperCase(key)}"]
       if value isnt undefined
-        scriptSettings[key] = value
-    scriptSettings
+        values[key] = value
+    values
 
   # Defaults + global variables + global overrides (once from uploadcare.start)
   # Not publicly-accessible
