@@ -50,7 +50,7 @@ uploadcare.namespace 'files', (ns) ->
         if @apiDeferred.state() != 'pending'
           return
 
-        utils.jsonp("#{@settings.urlBase}/from_url/", data)
+        utils.jsonp("#{@settings.urlBase}/from_url/", 'GET', data, {headers: {'X-UC-User-Agent': @settings._userAgent}})
           .fail (reason) =>
             if @settings.debugUploads
               utils.debug("Can't start upload from URL.", reason, data)
@@ -143,7 +143,7 @@ uploadcare.namespace 'files', (ns) ->
       @interval = null
 
     __updateStatus: ->
-      utils.jsonp(@poolUrl, {@token})
+      utils.jsonp(@poolUrl, 'GET', {@token}, {headers: {'X-UC-User-Agent': @settings._userAgent}})
         .fail (reason) =>
           $(this).trigger('error')
         .done (data) =>
