@@ -67,16 +67,13 @@ uploadcare.namespace 'settings', (ns) ->
       all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive box vk huddle'
       default: defaults.tabs
 
-  # settings from data attributes of script tag
+  # integration setting from data attributes of script tag
   script = document.currentScript || do ->
-    scripts = document.getElementsByTagName("script")
+    scripts = document.getElementsByTagName('script')
     scripts[scripts.length - 1]
-  scriptSettings = {}
-  for key of defaults
-    value = $(script).data(key)
-    if value isnt undefined
-      scriptSettings[key] = value
-  defaults = $.extend(defaults, scriptSettings)
+  integration = $(script).data('integration')
+  if integration isnt undefined
+    defaults = $.extend(defaults, {integration})
 
   str2arr = (value) ->
     if not $.isArray(value)
