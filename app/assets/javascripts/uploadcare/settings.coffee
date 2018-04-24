@@ -38,7 +38,7 @@ uploadcare.namespace 'settings', (ns) ->
     urlBase: 'https://upload.uploadcare.com'
     socialBase: 'https://social.uploadcare.com'
     previewBase: null
-    previewUrlBuilder: null
+    resolvePreviewUrl: null
     # fine tuning
     imagePreviewMaxSize: 25 * 1024 * 1024
     multipartMinSize: 25 * 1024 * 1024
@@ -204,15 +204,15 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.validators
       settings.validators = settings.validators.slice()
     
-    if settings.previewBase and not settings.previewUrlBuilder
-      settings.previewUrlBuilder = (url, info) => 
+    if settings.previewBase and not settings.resolvePreviewUrl
+      settings.resolvePreviewUrl = (url, info) => 
         useGetParam = /\?$/.test(settings.previewBase)
         location = if useGetParam then "url=#{encodeURIComponent(url)}" else "/#{url}"
         utils.normalizeUrl(settings.previewBase) + location
     
-    if settings.previewUrlBuilder
-      if typeof settings.previewUrlBuilder is 'string'
-        settings.previewUrlBuilder = eval(settings.previewUrlBuilder)
+    if settings.resolvePreviewUrl
+      if typeof settings.resolvePreviewUrl is 'string'
+        settings.resolvePreviewUrl = eval(settings.resolvePreviewUrl)
 
     settings
 
