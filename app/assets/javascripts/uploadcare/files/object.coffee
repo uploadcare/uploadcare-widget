@@ -108,10 +108,7 @@ uploadcare.namespace 'files', (ns) ->
           crossDomain: true
           type: 'POST'
           url: "#{@settings.urlBase}/base/?jsonerrors=1"
-          headers: {
-            'X-PINGOTHER': 'pingpong'
-            'X-UC-User-Agent': @settings._userAgent
-          }
+          headers: {'X-UC-User-Agent': @settings._userAgent}
           contentType: false # For correct boundary string
           processData: false
           data: formData
@@ -162,10 +159,14 @@ uploadcare.namespace 'files', (ns) ->
         UPLOADCARE_STORE: if @settings.doNotStore then '' else 'auto'
 
       @__autoAbort utils.jsonp(
-         "#{@settings.urlBase}/multipart/start/?jsonerrors=1", 'POST', data, {headers: {'X-UC-User-Agent': @settings._userAgent}}
-        ).fail (reason) =>
-          if @settings.debugUploads
-            utils.log("Can't start multipart upload.", reason, data)
+         "#{@settings.urlBase}/multipart/start/?jsonerrors=1",
+         'POST',
+         data,
+         {headers: {'X-UC-User-Agent': @settings._userAgent}}
+        )
+          .fail (reason) =>
+            if @settings.debugUploads
+              utils.log("Can't start multipart upload.", reason, data)
 
     uploadParts: (parts, uuid) ->
       progress = []
@@ -253,8 +254,12 @@ uploadcare.namespace 'files', (ns) ->
         uuid: uuid
 
       @__autoAbort utils.jsonp(
-          "#{@settings.urlBase}/multipart/complete/?jsonerrors=1", "POST", data, {headers: {'X-UC-User-Agent': @settings._userAgent}}
-        ).fail (reason) =>
-          if @settings.debugUploads
-            utils.log("Can't complete multipart upload.",
-                      uuid, @settings.publicKey, reason)
+          "#{@settings.urlBase}/multipart/complete/?jsonerrors=1",
+          "POST",
+          data,
+          {headers: {'X-UC-User-Agent': @settings._userAgent}}
+        )
+          .fail (reason) =>
+            if @settings.debugUploads
+              utils.log("Can't complete multipart upload.",
+                        uuid, @settings.publicKey, reason)
