@@ -120,8 +120,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if info.isImage
         cdnURL = "#{info.cdnUrl}-/quality/lightest/-/preview/108x108/"
 
-        if @settings.resolvePreviewUrl 
-          cdnURL = @settings.resolvePreviewUrl(cdnURL, info)
+        if @settings.overridePreviewUrl 
+          cdnURL = @settings.overridePreviewUrl(cdnURL, info)
           
         filePreview = $('<img>')
           .attr('src', cdnURL)

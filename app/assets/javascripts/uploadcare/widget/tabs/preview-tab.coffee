@@ -55,8 +55,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             # 1162x684 is 1.5 size of conteiner
             src += "-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/"
 
-            if @settings.resolvePreviewUrl
-               src = @settings.resolvePreviewUrl(src, info)
+            if @settings.overridePreviewUrl
+               src = @settings.overridePreviewUrl(src, info)
 
             imgInfo = info.originalImageInfo
             @__setState('image', {src, name: info.name, info})
