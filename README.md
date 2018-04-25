@@ -53,7 +53,7 @@ There are a few types of JS bundles:
 * `uploadcare.full.js` — a full bundle with built-in jQuery.
 * `uploadcare.js` — a bundle without built-in jQuery.
 * `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
-  [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only.
+  [JavaScript API][widget-docs-js-api] only.
 * `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support
   (widget v. 2.x and below).
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
@@ -175,7 +175,7 @@ This can be done by forking the [main repository](https://github.com/uploadcare/
 and adding a localization file
 [here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
 
-Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][widget-docs-locales]
+Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][widget-docs-options-locale-translations]
 property to use your locale immediately.
 
 ## Browser Support
@@ -243,6 +243,7 @@ Check out the Uploadcare Widget
 [widget-docs-migration-v2-v3]: https://uploadcare.com/docs/uploads/widget/migration_v2_v3/
 [widget-docs-install]: https://uploadcare.com/docs/uploads/widget/install/
 [widget-docs-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/#option-public-key
+[widget-docs-options-locale-translations]: https://uploadcare.com/docs/uploads/widget/config/#option-locale-translations
 [widget-docs-config]: https://uploadcare.com/docs/uploads/widget/config/
 [widget-docs-locales]: https://uploadcare.com/docs/uploads/widget/locales/
 [widget-docs-v2]: https://uploadcare.com/documentation/widget/v2/
