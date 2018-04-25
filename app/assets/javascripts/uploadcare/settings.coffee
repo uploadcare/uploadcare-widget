@@ -37,7 +37,7 @@ uploadcare.namespace 'settings', (ns) ->
     cdnBase: 'https://ucarecdn.com'
     urlBase: 'https://upload.uploadcare.com'
     socialBase: 'https://social.uploadcare.com'
-    previewUrlProvider: null
+    previewBase: null
     overridePreviewUrl: null
     # fine tuning
     imagePreviewMaxSize: 25 * 1024 * 1024
@@ -204,11 +204,11 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.validators
       settings.validators = settings.validators.slice()
     
-    if settings.previewUrlProvider and not settings.overridePreviewUrl
+    if settings.previewBase and not settings.overridePreviewUrl
       settings.overridePreviewUrl = (url, info) => 
-        useGetParam = /\?$/.test(settings.previewUrlProvider)
+        useGetParam = /\?$/.test(settings.previewBase)
         location = if useGetParam then "url=#{encodeURIComponent(url)}" else "/#{url}"
-        utils.normalizeUrl(settings.previewUrlProvider) + location
+        utils.normalizeUrl(settings.previewBase) + location
     
     if settings.overridePreviewUrl
       if typeof settings.overridePreviewUrl is 'string'
