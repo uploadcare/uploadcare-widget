@@ -1,5 +1,20 @@
 # History
 
+### 3.3.0, 25.04.2018
+
+* Added new locales: Romain (`ro`), Slovak (`sk`), Serbian (`sr`).
+* Updated locales: Swedish (`sv`), Polish (`pl`).
+* Added default limit of 1000 files for `multipleMax`.
+* Fixed preview: now the widget doesn't create a preview image if `previewStep` is off.
+* Added the new option `integration` for set up info about framework and plugin
+  through which the widget is installed.
+* Updated requests to Uploadcare Upload API, added the `X-UC-User-Agent` header
+  with info about version of the widget, public key, framework, and plugin.
+* Updated README:
+  * added link to the new angular wrapper,
+  * update links to docs,
+  * added info about how to use own custom locale immediately
+
 ### 3.2.3, 05.03.2018
 
 * Fixed French (`fr`) locale.
