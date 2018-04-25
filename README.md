@@ -13,7 +13,9 @@ ecosystem that fully covers your file handling.
 Uploads affect your web or mobile app performance. The widget ensures all of your
 uploads are fast and hit their target.
 
-[![NPM version][npm-img]][npm-link] [![Build Status][travis-img]][travis] [![Uploadcare stack on StackShare][stack-img]][stack]
+[![NPM version][badge-npm-img]][badge-npm-url]
+[![Build Status][badge-travis-img]][badge-travis-url]
+[![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
 
 It’s provided as a typical JavaScript library and can be easily embedded in your
 site.
@@ -22,13 +24,6 @@ The widget is highly customizable to fit your needs. It supports multi-file
 uploads, manual crop, and integrates with social media and cloud storage
 providers.
 
-[npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
-[npm-link]: https://www.npmjs.org/package/uploadcare-widget
-[travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
-[travis]: https://travis-ci.org/uploadcare/uploadcare-widget
-[stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
-[stack]: https://stackshare.io/uploadcare/stacks/
-
 <a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
        width="888" alt="Widget in action">
@@ -36,20 +31,20 @@ providers.
 
 ## Docs
 
-See the complete widget docs [here](https://uploadcare.com/docs/uploads/widget/).
+See the complete widget docs [here][widget-docs].
 
 ### Quick references
 
-* [JavaScript API](https://uploadcare.com/docs/api_reference/javascript/)
-* [Live widget config](https://uploadcare.com/widget/configure/)
-* [In-browser image editing](https://uploadcare.com/features/effects_tab/)
-* [Libraries, plugins and integrations](https://uploadcare.com/docs/libs/)
+* [JavaScript API][widget-docs-js-api]
+* [Live widget config][widget-configurator]
+* [In-browser image editing][uc-features-effects-tab]
+* [Libraries, plugins and integrations][docs-libs]
 * Tutorials
-  * [Visual tweaks](https://uploadcare.com/docs/uploads/widget/visual_tweaks/)
-  * [File validation](https://uploadcare.com/docs/uploads/widget/validation/)
-  * [Widget customization](https://uploadcare.com/docs/uploads/widget/styling/)
-  * [Advanced topics](https://uploadcare.com/docs/guides/advanced/)
-* [Migration guide from v2 to v3](https://uploadcare.com/docs/uploads/widget/migration_v2_v3/)
+  * [Visual tweaks][widget-docs-visual-tweaks]
+  * [File validation][widget-docs-validation]
+  * [Widget customization][widget-docs-styling]
+  * [Advanced topics][guides-advanced]
+* [Migration guide from v2 to v3][widget-docs-migration-v2-v3]
 
 ## Types of bundles
 
@@ -58,7 +53,7 @@ There are a few types of JS bundles:
 * `uploadcare.full.js` — a full bundle with built-in jQuery.
 * `uploadcare.js` — a bundle without built-in jQuery.
 * `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
-  [JavaScript API](https://uploadcare.com/documentation/javascript_api/) only.
+  [JavaScript API][widget-docs-js-api] only.
 * `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support
   (widget v. 2.x and below).
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
@@ -102,7 +97,7 @@ the light version of the widget: without built-in jQuery,
 
 ### Other install methods
 
-Check out the widget [docs](https://uploadcare.com/docs/uploads/widget/install/)
+Check out the widget [docs][widget-docs-install]
 for more install methods.
 
 ## Usage
@@ -110,7 +105,7 @@ for more install methods.
 Once you’re done with the install, there are
 two simple steps to take to use the widget.
 
-**Set your [public key](https://uploadcare.com/docs/uploads/widget/config/#option-public-key)**.
+**Set your [public key][widget-docs-options-public-key]**.
 This can also sit in the `<head>` section,
 
 ```html
@@ -157,17 +152,17 @@ used with Angular 1.
 
 The widget is highly customizable with widget options. Check out the existing
 options and ways to set them in UC
-[docs](https://uploadcare.com/docs/uploads/widget/config/).
+[docs][widget-docs-config].
 
 ## JavaScript API
 
 You might not want to use all the features that
-[our widget](https://uploadcare.com/docs/uploads/widget/) exhibits.
+[our widget][widget-docs] exhibits.
 Or, perhaps, you might want to redesign the user experience
 without having to reinvent the wheel.
 Maybe, you're in pursuit of building a UI on top of the widget.
 For all of those use cases, we provide a
-[JavaScript API](https://uploadcare.com/docs/api_reference/javascript/).
+[JavaScript API][widget-docs-js-api].
 Feel free to control the default widget with it,
 or make use of its standalone components that
 can be combined with your solutions.
@@ -180,6 +175,9 @@ This can be done by forking the [main repository](https://github.com/uploadcare/
 and adding a localization file
 [here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
 
+Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][widget-docs-options-locale-translations]
+property to use your locale immediately.
+
 ## Browser Support
 
 The widget should work perfectly in a couple of the latest versions
@@ -188,9 +186,7 @@ Safari, and Opera. It is most likely to run well in older versions
 of major browser too, except for Internet Explorer < 10.
 
 If you need the support for older browsers including IE8, consider using
-[the widget version 2.x][v2ie8] instead.
-
-[v2ie8]: https://uploadcare.com/documentation/widget/v2/
+[the widget version 2.x][widget-docs-v2] instead.
 
 <div>
   <table>
@@ -229,3 +225,26 @@ If you need the support for older browsers including IE8, consider using
 
 Check out the Uploadcare Widget
 [development guide](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
+
+[badge-npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
+[badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget
+[badge-travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
+[badge-travis-url]: https://travis-ci.org/uploadcare/uploadcare-widget
+[badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
+[badge-stack-url]: https://stackshare.io/uploadcare/stacks/
+[uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/
+[widget-configurator]: https://uploadcare.com/widget/configure/
+[docs-libs]: https://uploadcare.com/docs/libs/
+[widget-docs]: https://uploadcare.com/docs/uploads/widget/
+[widget-docs-js-api]: https://uploadcare.com/docs/api_reference/javascript/
+[widget-docs-visual-tweaks]: https://uploadcare.com/docs/uploads/widget/visual_tweaks/
+[widget-docs-validation]: https://uploadcare.com/docs/uploads/widget/validation/
+[widget-docs-styling]: https://uploadcare.com/docs/uploads/widget/styling/
+[widget-docs-migration-v2-v3]: https://uploadcare.com/docs/uploads/widget/migration_v2_v3/
+[widget-docs-install]: https://uploadcare.com/docs/uploads/widget/install/
+[widget-docs-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/#option-public-key
+[widget-docs-options-locale-translations]: https://uploadcare.com/docs/uploads/widget/config/#option-locale-translations
+[widget-docs-config]: https://uploadcare.com/docs/uploads/widget/config/
+[widget-docs-locales]: https://uploadcare.com/docs/uploads/widget/locales/
+[widget-docs-v2]: https://uploadcare.com/documentation/widget/v2/
+[guides-advanced]: https://uploadcare.com/docs/guides/advanced/
