@@ -210,10 +210,6 @@ uploadcare.namespace 'settings', (ns) ->
         location = if useGetParam then "url=#{encodeURIComponent(url)}" else "/#{url}"
         utils.normalizeUrl(settings.previewBase) + location
     
-    if settings.overridePreviewUrl
-      if typeof settings.overridePreviewUrl is 'string'
-        settings.overridePreviewUrl = eval(settings.overridePreviewUrl)
-
     settings
 
 
