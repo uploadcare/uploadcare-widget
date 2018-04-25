@@ -73,6 +73,12 @@ uploadcare.namespace '', (ns) ->
       setInterval(ns.initialize, 100)
     # should be after settings.common(s) call
     ns.initialize()
+    
+  ns.reset = (container = ':root') ->
+    $(selector).each () ->
+      widget = $(this).data(dataAttr)
+      if(widget)
+        widget.destroy()
 
   $ ->
     if not window["UPLOADCARE_MANUAL_START"]

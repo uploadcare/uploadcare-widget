@@ -50,8 +50,12 @@
 <p>Group incorrect:<br>
   <input type="text" data-public-key="1c86ca998ba22e75fbc6" role="uploadcare-uploader" name="GroupIncorrect"
          value="cd334b26-c641-4393-bcce-b5041546430d~" data-images-only="" data-multiple="true"/>
-  <button>Clear</button>
+  <button>Clear</button></p>
 
+
+<input type="text" size="30" id="test-memory">
+<br>
+<button id="test-memory-run">Run memory test!</button>
 
 <script>
   UPLOADCARE_CLEARABLE = true;
@@ -74,4 +78,24 @@
       }
     });
   });
+
+  var memoryTestInterval = null;
+
+  $('#test-memory-run').on('click', function() {
+    if (memoryTestInterval) {
+      clearInterval(memoryTestInterval);
+      memoryTestInterval = null;
+      $(this).text('Run memory test!');
+      return;
+    }
+
+    memoryTestInterval = setInterval(function() {
+      var N = 100;
+      for (var i = 0; i < N; i++) {
+        uploadcare.Widget('#test-memory').destroy();
+      }
+    }, 500);
+    $(this).text('Stop memory test');
+  });
+
 </script>
