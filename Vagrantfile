@@ -36,6 +36,8 @@ Vagrant.configure(2) do |config|
         sudo apt-get install -y ruby2.3 ruby2.3-dev
         sudo gem install bundler
         sudo gem install rake -v 11.0.1
+        curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+        sudo apt-get install -y nodejs
     SHELL
 
     config.vm.provision "change_ssh_dir", type: "shell", inline: <<-SHELL
