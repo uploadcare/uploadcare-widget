@@ -66,11 +66,17 @@ namespace 'files', (ns) ->
             timeout += 50
 
     __updateInfo: =>
-      utils.jsonp "#{@settings.urlBase}/info/",
+      utils.jsonp(
+        "#{@settings.urlBase}/info/",
+        'GET',
+        {
           jsonerrors: 1
           file_id: @fileId
           pub_key: @settings.publicKey
           wait_is_ready: +@onInfoReady.fired()
+        },
+        headers: {'X-UC-User-Agent': @settings._userAgent}
+      )
         .fail (reason) =>
           if @settings.debugUploads
             utils.log("Can't load file info. Probably removed.",

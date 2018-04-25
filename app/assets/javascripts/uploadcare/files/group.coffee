@@ -113,17 +113,23 @@ namespace 'files', (ns) ->
       df = $.Deferred()
       if @__fileColl.length()
         @__fileInfosDf.done (infos...) =>
-          utils.jsonp "#{@settings.urlBase}/group/", 'POST',
-            pub_key: @settings.publicKey
-            signature: @settings.secureSignature
-            expire: @settings.secureExpire
-            files: for info in infos
-              "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
-          .fail (reason) =>
-            if @settings.debugUploads
-              utils.log("Can't create group.", @settings.publicKey, reason)
-            df.reject()
-          .done(df.resolve)
+          utils.jsonp(
+            "#{@settings.urlBase}/group/",
+            'POST',
+            {
+              pub_key: @settings.publicKey
+              signature: @settings.secureSignature
+              expire: @settings.secureExpire
+              files: for info in infos
+                "/#{info.uuid}/#{info.cdnUrlModifiers or ''}"
+            },
+            headers: {'X-UC-User-Agent': @settings._userAgent}
+          )
+            .fail (reason) =>
+              if @settings.debugUploads
+                utils.log("Can't create group.", @settings.publicKey, reason)
+              df.reject()
+            .done(df.resolve)
       else
         df.reject()
       return df.promise()
@@ -160,18 +166,24 @@ namespace '', (ns) ->
     df = $.Deferred()
     id = utils.groupIdRegex.exec(groupIdOrUrl)
     if id
-      utils.jsonp "#{settings.urlBase}/group/info/",
-        jsonerrors: 1
-        pub_key: settings.publicKey
-        group_id: id[0]
-      .fail (reason) =>
-        if settings.debugUploads
-          utils.log("Can't load group info. Probably removed.",
-                    id[0], settings.publicKey, reason)
-        df.reject()
-      .done (data) ->
-        group = new uc_files.SavedFileGroup(data, settings)
-        df.resolve(group.api())
+      utils.jsonp(
+        "#{settings.urlBase}/group/info/",
+        'GET',
+        {
+          jsonerrors: 1
+          pub_key: settings.publicKey
+          group_id: id[0]
+        },
+        headers: {'X-UC-User-Agent': @settings._userAgent}
+      )
+        .fail (reason) =>
+          if settings.debugUploads
+            utils.log("Can't load group info. Probably removed.",
+                      id[0], settings.publicKey, reason)
+          df.reject()
+        .done (data) ->
+          group = new uc_files.SavedFileGroup(data, settings)
+          df.resolve(group.api())
     else
       df.reject()
     df.promise()
