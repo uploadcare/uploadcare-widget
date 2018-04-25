@@ -9,7 +9,7 @@
 uploadcare.namespace 'locale.translations', (ns) ->
   ns.pl =
     uploading: 'Przesyłanie... Proszę czekać.'
-    loadingInfo: 'Loading info...'
+    loadingInfo: 'Ładowanie...'
     errors:
       default: 'Błąd'
       baddata: 'Niepoprawna wartość'
@@ -36,6 +36,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Wybierz obraz'
           other: 'Wybierz obrazy'
     dialog:
+      close: 'Zamknij'
+      openMenu: 'Otwórz menu'
       done: 'Wykonano'
       showFiles: 'Pokaż pliki'
       tabs:
@@ -59,8 +61,12 @@ uploadcare.namespace 'locale.translations', (ns) ->
           input: 'Wklej link...'
           button: 'Prześlij'
         camera:
+          title: 'Plik z kamery internetowej'
           capture: 'Zrób zdjęcie'
-          mirror: 'Lustro'
+          mirror: 'Odbicie lustrzane'
+          startRecord: 'Nagraj film'
+          stopRecord: 'Zakończ'
+          cancelRecord: 'Anuluj'
           retry: 'Poproś ponownie o dostęp'
           pleaseAllow:
             title: 'Prośba o udostępnienie aparatu'
@@ -88,6 +94,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             title: 'Przytnij i dodaj ten obraz'
             done: 'Wykonano'
             free: 'wolny'
+          video:
+            title: 'Dodać ten film?'
+            change: 'Anuluj'
           error:
             default:
               title: 'Oops!'
@@ -110,6 +119,10 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Wybrałeś %files%. Wymagane jest co najmniej %min%.'
             clear: 'Usuń wszystkie'
             done: 'Wykonano'
+            file:
+              preview: 'Zobacz %file%'
+              remove: 'Usuń %file%'
+
 
 
 # Pluralization rules taken from:

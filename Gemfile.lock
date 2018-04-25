@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadcare-widget (3.2.2)
+    uploadcare-widget (3.2.3)
       coffee-rails
       ejs
 
@@ -237,4 +237,4 @@ DEPENDENCIES
   uploadcare-widget!
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
