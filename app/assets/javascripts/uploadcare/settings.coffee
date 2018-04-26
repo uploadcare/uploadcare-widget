@@ -210,10 +210,10 @@ uploadcare.namespace 'settings', (ns) ->
         justAppend = /\=$/.test(settings.previewProxy)
         useAmpersand = /[^\&\?]$/.test(settings.previewProxy)
 
-        path = if justAppend then encodedUrl else
+        queryToAppend = if justAppend then encodedUrl else
           if useAmpersand then "&url=#{encodedUrl}" else "url=#{encodedUrl}"
 
-        utils.normalizeUrl(settings.previewProxy) + path
+        utils.normalizeUrl(settings.previewProxy) + queryToAppend
     
     settings
 
