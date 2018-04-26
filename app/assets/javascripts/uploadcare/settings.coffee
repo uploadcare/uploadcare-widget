@@ -219,7 +219,8 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.validators
       settings.validators = settings.validators.slice()
     
-    settings.previewUrlCallback = defaultPreviewUrlCallback
+    if settings.previewProxy and not settings.previewUrlCallback
+      settings.previewUrlCallback = defaultPreviewUrlCallback
     
     settings
 
