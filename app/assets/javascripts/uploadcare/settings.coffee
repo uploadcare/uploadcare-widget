@@ -209,11 +209,14 @@ uploadcare.namespace 'settings', (ns) ->
         encodedUrl = encodeURIComponent(url)
         justAppend = /\=$/.test(settings.previewProxy)
         useAmpersand = /[^\&\?]$/.test(settings.previewProxy)
+        addQuestionSign = not /\?/.test(settings.previewProxy)
 
-        queryToAppend = if justAppend then encodedUrl else
+        queryPart = if justAppend then encodedUrl else
           if useAmpersand then "&url=#{encodedUrl}" else "url=#{encodedUrl}"
 
-        utils.normalizeUrl(settings.previewProxy) + queryToAppend
+        queryPart = '?' + queryPart if addQuestionSign
+
+        utils.normalizeUrl(settings.previewProxy) + queryPart
     
     settings
 
