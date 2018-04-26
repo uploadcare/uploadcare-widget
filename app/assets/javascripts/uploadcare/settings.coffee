@@ -205,11 +205,11 @@ uploadcare.namespace 'settings', (ns) ->
       settings.validators = settings.validators.slice()
     
     if settings.previewProxy and not settings.previewUrlCallback
-      settings.previewUrlCallback = (url, info) =>
+      settings.previewUrlCallback = (url, info) ->
         encodedUrl = encodeURIComponent(url)
-        justAppend = /\=$/.test(settings.previewProxy)
-        useAmpersand = /[^\&\?]$/.test(settings.previewProxy)
-        addQuestionSign = not /\?/.test(settings.previewProxy)
+        justAppend = /\=$/.test(@previewProxy)
+        useAmpersand = /[^\&\?]$/.test(@previewProxy)
+        addQuestionSign = not /\?/.test(@previewProxy)
 
         queryPart = if justAppend then encodedUrl else
           if useAmpersand then "&url=#{encodedUrl}" else "url=#{encodedUrl}"
