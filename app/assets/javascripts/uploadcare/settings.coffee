@@ -207,11 +207,11 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.previewProxy and not settings.previewUrlCallback
       settings.previewUrlCallback = (url, info) =>
         encodedUrl = encodeURIComponent(url)
-        raw = /\=$/.test(settings.previewProxy)
-        namedNoAmp = /[\&\?]$/.test(settings.previewProxy)
+        justAppend = /\=$/.test(settings.previewProxy)
+        useAmpersand = /[^\&\?]$/.test(settings.previewProxy)
 
-        path = if raw then encodedUrl else
-          if namedNoAmp then "url=#{encodedUrl}" else "&url=#{encodedUrl}"
+        path = if justAppend then encodedUrl else
+          if useAmpersand then "&url=#{encodedUrl}" else "url=#{encodedUrl}"
 
         utils.normalizeUrl(settings.previewProxy) + path
     
