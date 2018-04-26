@@ -149,6 +149,21 @@ uploadcare.namespace 'settings', (ns) ->
     quality: shrink[3] / 100 if shrink[3]
     size: size
 
+  defaultPreviewUrlCallback = (url, info) ->
+    return url if not @previewProxy
+    
+    encodedUrl = encodeURIComponent(url)
+
+    justAppend = /\=$/.test(@previewProxy)
+    useAmpersand = /[^\&\?\=]$/.test(@previewProxy)
+    addQuestionSign = not /\?/.test(@previewProxy)
+
+    queryPart = if justAppend then encodedUrl else "url=#{encodedUrl}"
+    queryPart = '&'.concat(queryPart) if useAmpersand
+    queryPart = '?'.concat(queryPart) if addQuestionSign
+
+    utils.normalizeUrl(@previewProxy) + queryPart
+
   normalize = (settings) ->
     arrayOptions(settings, [
       'tabs'
@@ -204,19 +219,7 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.validators
       settings.validators = settings.validators.slice()
     
-    if settings.previewProxy and not settings.previewUrlCallback
-      settings.previewUrlCallback = (url, info) ->
-        encodedUrl = encodeURIComponent(url)
-
-        justAppend = /\=$/.test(@previewProxy)
-        useAmpersand = /[^\&\?\=]$/.test(@previewProxy)
-        addQuestionSign = not /\?/.test(@previewProxy)
-
-        queryPart = if justAppend then encodedUrl else "url=#{encodedUrl}"
-        queryPart = '&'.concat(queryPart) if useAmpersand
-        queryPart = '?'.concat(queryPart) if addQuestionSign
-
-        utils.normalizeUrl(@previewProxy) + queryPart
+    settings.previewUrlCallback = defaultPreviewUrlCallback
     
     settings
 
