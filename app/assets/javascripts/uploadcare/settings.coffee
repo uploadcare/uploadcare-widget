@@ -216,7 +216,7 @@ uploadcare.namespace 'settings', (ns) ->
         queryPart = '&'.concat(queryPart) if useAmpersand
         queryPart = '?'.concat(queryPart) if addQuestionSign
 
-        utils.normalizeUrl(settings.previewProxy) + queryPart
+        utils.normalizeUrl(@previewProxy) + queryPart
     
     settings
 
