@@ -64,7 +64,7 @@ You’re free to choose from the install methods listed below.
 ### NPM
 
 ```bash
-npm install uploadcare-widget --save
+npm install uploadcare-widget@2 --save
 ```
 
 ```javascript
@@ -161,15 +161,14 @@ Check out the Uploadcare Widget
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
 [widget-configurator]: https://uploadcare.com/widget/configure/2.x/
 [docs-libs]: https://uploadcare.com/docs/libs/
-[widget-docs]: https://uploadcare.com/docs/uploads/widget/
-[widget-docs-js-api]: https://uploadcare.com/docs/api_reference/javascript/
-[widget-docs-visual-tweaks]: https://uploadcare.com/docs/uploads/widget/visual_tweaks/
-[widget-docs-validation]: https://uploadcare.com/docs/uploads/widget/validation/
-[widget-docs-styling]: https://uploadcare.com/docs/uploads/widget/styling/
+[widget-docs]: https://uploadcare.com/documentation/widget/v2/
+[widget-docs-js-api]: https://uploadcare.com/documentation/javascript_api/v2/
+[widget-docs-visual-tweaks]: https://uploadcare.com/cookbook/widget_visual/v2/
+[widget-docs-validation]: https://uploadcare.com/cookbook/validation/v2/
+[widget-docs-styling]: https://uploadcare.com/documentation/widget/v2/#styling
 [widget-docs-migration-v2-v3]: https://uploadcare.com/docs/uploads/widget/migration_v2_v3/
-[widget-docs-install]: https://uploadcare.com/docs/uploads/widget/install/
-[widget-docs-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/#option-public-key
-[widget-docs-config]: https://uploadcare.com/docs/uploads/widget/config/
-[widget-docs-locales]: https://uploadcare.com/docs/uploads/widget/locales/
+[widget-docs-install]: https://uploadcare.com/documentation/widget/v2/#install
+[widget-docs-options-public-key]: https://uploadcare.com/documentation/widget/v2/#option-public-key
+[widget-docs-config]: https://uploadcare.com/documentation/widget/v2/#configuration
 [widget-docs-v2]: https://uploadcare.com/documentation/widget/v2/
-[guides-advanced]: https://uploadcare.com/docs/guides/advanced/
+[guides-advanced]: https://uploadcare.com/cookbook/advanced/v2/
