@@ -146,6 +146,9 @@ uploadcare.namespace '', (ns) ->
   ns.registerTab 'empty-pubkey', (tabPanel, _1, _2, settings) ->
     tabPanel.append(settings._emptyKeyText)
   ns.registerTab 'preview', (tabPanel, tabButton, dialogApi, settings, name) ->
+    if not settings.previewStep and dialogApi.fileColl.length() == 0
+      return
+
     tabCls = if settings.multiple
         tabs.PreviewTabMultiple
       else
@@ -213,7 +216,7 @@ uploadcare.namespace '', (ns) ->
         @files.clear()
 
       for file in files
-        if @settings.multipleMaxStrict and @settings.multipleMax != 0
+        if @settings.multipleMaxStrict
           if @files.length() >= @settings.multipleMax
             file.cancel()
             continue
@@ -236,28 +239,27 @@ uploadcare.namespace '', (ns) ->
         if not crop.preferedSize
           return
 
-      files.onAnyDone (file, fileInfo) =>
+      files.autoThen (fileInfo) =>
         # .cdnUrlModifiers came from already cropped files
         # .crop came from autocrop even if autocrop do not set cdnUrlModifiers
         if not fileInfo.isImage or fileInfo.cdnUrlModifiers or fileInfo.crop
-          return
+          return fileInfo
 
         info = fileInfo.originalImageInfo
-        size = uploadcare.utils.fitSize(
+        size = utils.fitSize(
           @settings.crop[0].preferedSize,
           [info.width, info.height],
           true
         )
 
-        newFile = utils.applyCropSelectionToFile(
-          file, @settings.crop[0], [info.width, info.height], {
+        utils.applyCropCoordsToInfo(
+          fileInfo, @settings.crop[0], [info.width, info.height], {
             width: size[0]
             height: size[1]
             left: Math.round((info.width - size[0]) / 2)
             top: Math.round((info.height - size[1]) / 2)
           }
         )
-        files.replace(file, newFile)
 
     __resolve: =>
       @dfd.resolve(@files.get())
@@ -293,7 +295,7 @@ uploadcare.namespace '', (ns) ->
 
     __updateFooter: =>
         files = @files.length()
-        tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
+        tooManyFiles = files > @settings.multipleMax
         tooFewFiles = files < @settings.multipleMin
 
         @footer.find('.uploadcare-dialog-button-success')

@@ -137,7 +137,8 @@ uploadcare.namespace 'utils', (ns) ->
     else
       objSize.slice()
 
-  ns.applyCropSelectionToFile = (file, crop, size, coords) ->
+
+  ns.applyCropCoordsToInfo = (info, crop, size, coords) ->
     {width: w, height: h} = coords
     prefered = crop.preferedSize
     modifiers = ''
@@ -154,11 +155,11 @@ uploadcare.namespace 'utils', (ns) ->
     else if not wholeImage
       modifiers += "-/preview/"
 
-    file.then (info) =>
-      info.cdnUrlModifiers = modifiers
-      info.cdnUrl = "#{info.originalUrl}#{modifiers or ''}"
-      info.crop = coords
-      info
+    info = $.extend({}, info)
+    info.cdnUrlModifiers = modifiers
+    info.cdnUrl = "#{info.originalUrl}#{modifiers or ''}"
+    info.crop = coords
+    info
 
 
   ns.fileInput = (container, settings, fn) ->
@@ -264,11 +265,8 @@ uploadcare.namespace 'utils', (ns) ->
     crossDomain: true
     cache: false
 
-  ns.jsonp = (url, type, data) ->
-    if $.isPlainObject(type)
-      data = type
-      type = 'GET'
-    $.ajax($.extend({url, type, data}, ns.ajaxDefaults)).then (data) ->
+  ns.jsonp = (url, type, data, settings = {}) ->
+    $.ajax($.extend({url, type, data}, settings, ns.ajaxDefaults)).then (data) ->
       if data.error
         text = data.error.content or data.error
         $.Deferred().reject(text)
