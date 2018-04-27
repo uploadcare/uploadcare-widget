@@ -9,7 +9,11 @@ uploadcare.namespace '', (ns) ->
   selector = '[role~="uploadcare-uploader"]'
 
   ns.initialize = (container = ':root') ->
-    initialize($(container).find(selector))
+    res = []
+    for el in $(container)
+      widgets = initialize(el.querySelectorAll(selector))
+      res = res.concat(widgets)
+    res
 
   initialize = (targets) ->
     for target in targets
