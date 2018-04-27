@@ -38,6 +38,8 @@ uploadcare.namespace 'settings', (ns) ->
     cdnBase: 'https://ucarecdn.com'
     urlBase: 'https://upload.uploadcare.com'
     socialBase: 'https://social.uploadcare.com'
+    previewProxy: null
+    previewUrlCallback: null
     # fine tuning
     imagePreviewMaxSize: 25 * 1024 * 1024
     multipartMinSize: 25 * 1024 * 1024
@@ -163,6 +165,21 @@ uploadcare.namespace 'settings', (ns) ->
     quality: shrink[3] / 100 if shrink[3]
     size: size
 
+  defaultPreviewUrlCallback = (url, info) ->
+    if not @previewProxy
+      return url
+
+    addQuery = not /\?/.test(@previewProxy)
+    addName = addQuery or not /\=$/.test(@previewProxy)
+    addAmpersand = not addQuery and not /[\&\?\=]$/.test(@previewProxy)
+
+    queryPart = encodeURIComponent(url)
+    if addName then queryPart = 'url=' + queryPart
+    if addAmpersand then queryPart = '&' + queryPart
+    if addQuery then queryPart = '?' + queryPart
+
+    return @previewProxy + queryPart
+
   normalize = (settings) ->
     arrayOptions(settings, [
       'tabs'
@@ -218,7 +235,10 @@ uploadcare.namespace 'settings', (ns) ->
 
     if settings.validators
       settings.validators = settings.validators.slice()
-
+    
+    if settings.previewProxy and not settings.previewUrlCallback
+      settings.previewUrlCallback = defaultPreviewUrlCallback
+    
     settings
 
 
