@@ -12,7 +12,8 @@ ecosystem that fully covers your file handling.
 
 ---
 
-**Note: we have a new major version of the widget. [Here’s how][widget-docs-migration-v2-v3] you migrate from v2 to v3.**
+**Note: there currently is a new major version of the widget.**
+**[Here’s how][widget-docs-migration-v2-v3] you migrate from v2 to v3.**
 
 ---
 
