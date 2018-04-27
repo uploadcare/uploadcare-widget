@@ -163,10 +163,6 @@ $dialog-mobile-min-width: 310px;
     // § Camera tab
 
     // enhance selector specificity
-    .uploadcare-dialog-opened-tabs
-    .uploadcare-dialog-tab.uploadcare-dialog-tab-camera {
-      display: none;
-    }
     .uploadcare-dialog-camera-holder {
       height: auto;
     }
