@@ -210,7 +210,7 @@ uploadcare.namespace 'utils', (ns) ->
           left: e.pageX - left - width + 10
           top: e.pageY - top - 10
 
-  ns.fileSelectDialog = (container, settings, fn) ->
+  ns.fileSelectDialog = (container, settings, fn, attributes = {}) ->
     accept = settings.inputAcceptTypes
     if accept is ''
       accept = if settings.imagesOnly
@@ -224,6 +224,7 @@ uploadcare.namespace 'utils', (ns) ->
         '<input type="file">'
     )
       .attr('accept', accept)
+      .attr(attributes)
       .css(
         position: 'fixed'
         bottom: 0
