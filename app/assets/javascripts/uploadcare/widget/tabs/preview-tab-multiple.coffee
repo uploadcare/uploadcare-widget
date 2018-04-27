@@ -19,8 +19,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))
 
-      @fileListEl = @container.find('.uploadcare--files')
-      @doneBtnEl = @container.find('.uploadcare--preview__done')
+      @fileListEl = @container.find('.uploadcare-file-list')
+      @titleEl = @__find('title')
+      @mobileTitleEl = @__find('mobile-title')
+      @footerTextEl = @__find('footer-text')
+      @doneBtnEl = @container.find('.uploadcare-dialog-preview-done')
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__fileAdded(file)
@@ -36,8 +39,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @fileListEl.addClass(
         if @settings.imagesOnly
-        then 'uploadcare--files_type_tiles'
-        else 'uploadcare--files_type_table'
+        then 'uploadcare-file-list_tiles'
+        else 'uploadcare-file-list_table'
       )
 
       @__setupSorting()
@@ -50,105 +53,90 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           info.dragged.css('visibility', 'hidden')
         finish: (info) =>
           info.dragged.css('visibility', 'visible')
-          elements = @container.find('.uploadcare--file')
+          elements = @container.find('.uploadcare-file-item')
           index = (file) =>
             elements.index(@__fileToEl(file))
           @dialogApi.fileColl.sort (a, b) ->
             index(a) - index(b)
       )
 
+    __find: (s, context = @container) ->
+      # dpm — abbreviation of dialog-preview-multiple
+      $('.uploadcare-dpm-' + s, context)
+
     __updateContainerView: =>
       files = @dialogApi.fileColl.length()
       tooManyFiles = @settings.multipleMax != 0 and files > @settings.multipleMax
       tooFewFiles = files < @settings.multipleMin
-      hasWrongNumberFiles = tooManyFiles or tooFewFiles
 
-      @doneBtnEl.attr('disabled', hasWrongNumberFiles)
+      @doneBtnEl.toggleClass('uploadcare-disabled-el', tooManyFiles or tooFewFiles)
 
-      title = t('dialog.tabs.preview.multiple.question')
+      title = t('dialog.tabs.preview.multiple.title')
         .replace('%files%', t('file', files))
-      @container.find('.uploadcare--preview__title').text(title)
+      @titleEl.text(title)
 
-      errorContainer = @container.find('.uploadcare--preview__message')
-      errorContainer.empty()
+      footer = if tooManyFiles
+        t('dialog.tabs.preview.multiple.tooManyFiles')
+          .replace('%max%', @settings.multipleMax)
+      else if files and tooFewFiles
+        t('dialog.tabs.preview.multiple.tooFewFiles')
+          .replace('%min%', @settings.multipleMin)
+          .replace('%files%', t('file', files))
+      else
+        t('dialog.tabs.preview.multiple.question')
 
-      if hasWrongNumberFiles
-        wrongNumberFilesMessage = if tooManyFiles
-          t('dialog.tabs.preview.multiple.tooManyFiles')
-            .replace('%max%', @settings.multipleMax)
-        else if files and tooFewFiles
-          t('dialog.tabs.preview.multiple.tooFewFiles')
-            .replace('%min%', @settings.multipleMin)
-            .replace('%files%', t('file', files))
+      @footerTextEl
+        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
+        .text(footer)
 
-        errorContainer
-          .addClass('uploadcare--error')
-          .text(wrongNumberFilesMessage)
+      @mobileTitleEl
+        .toggleClass('uploadcare-error', tooManyFiles or tooFewFiles)
+        .text(if tooManyFiles or tooFewFiles then footer else title)
 
     __updateFileInfo: (fileEl, info) ->
-      filename = info.name or t('dialog.tabs.preview.unknownName')
+      fileEl.find('.uploadcare-file-item__name')
+        .text(info.name or t('dialog.tabs.preview.unknownName'))
 
-      fileEl.find('.uploadcare--file__name')
-        .text(filename)
-
-      fileEl.find('.uploadcare--file__description')
-        .attr('title', t('dialog.tabs.preview.multiple.file.preview').replace('%file%', filename))
-
-      fileEl.find('.uploadcare--file__remove')
-        .attr('title', t('dialog.tabs.preview.multiple.file.remove').replace('%file%', filename))
-
-      fileEl.find('.uploadcare--file__size')
+      fileEl.find('.uploadcare-file-item__size')
         .text(utils.readableFileSize(info.size, '–'))
 
     __fileProgress: (file, progressInfo) =>
       fileEl = @__fileToEl(file)
 
-      fileEl.find('.uploadcare--progressbar__value')
+      fileEl.find('.uploadcare-progressbar__value')
         .css('width', Math.round(progressInfo.progress * 100) + '%')
 
       @__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
 
     __fileDone: (file, info) =>
       fileEl = @__fileToEl(file)
-        .removeClass('uploadcare--file_status_uploading')
-        .addClass('uploadcare--file_status_uploaded')
+        .removeClass('uploadcare-file-item_uploading')
+        .addClass('uploadcare-file-item_uploaded')
 
-      fileEl.find('.uploadcare--progressbar__value')
+      fileEl.find('.uploadcare-progressbar__value')
         .css('width', '100%')
       @__updateFileInfo(fileEl, info)
 
       if info.isImage
-        cdnURL = "#{info.cdnUrl}-/quality/lightest/-/preview/108x108/"
-        filePreview = $('<img>')
-          .attr('src', cdnURL)
-          .addClass('uploadcare--file__icon')
-      else
-        filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>")
-          .attr('role', 'presentation')
-          .attr('class', 'uploadcare--icon uploadcare--file__icon')
-
-      fileEl.find('.uploadcare--file__preview')
-        .html(filePreview)
-
-      fileEl.find('.uploadcare--file__description').on 'click', =>
-          uc.openPreviewDialog(file, @settings)
-            .done (newFile) =>
-              @dialogApi.fileColl.replace(file, newFile)
+        cdnURL = "#{info.cdnUrl}-/quality/lightest/" +
+          if @settings.imagesOnly
+          then "-/preview/340x340/"
+          else "-/scale_crop/110x110/center/"
+        fileEl.find('.uploadcare-file-item__preview')
+          .addClass('uploadcare-zoomable-icon')
+          .html(
+            $('<img>').attr('src', cdnURL)
+          ).on 'click', =>
+            uploadcare.openPreviewDialog(file, @settings)
+              .done (newFile) =>
+                @dialogApi.fileColl.replace(file, newFile)
 
     __fileFailed: (file, error, info) =>
-      fileEl = @__fileToEl(file)
-        .removeClass('uploadcare--file_status_uploading')
-        .addClass('uploadcare--file_status_error')
-
-      fileEl.find('.uploadcare--file__error')
-        .text(t("errors.#{error}"))
-
-      filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>")
-        .attr('role', 'presentation')
-        .attr('class', 'uploadcare--icon uploadcare--file__icon')
-
-      fileEl.find('.uploadcare--file__preview')
-        .html(filePreview)
+      @__fileToEl(file)
+        .removeClass('uploadcare-file-item_uploading')
+        .addClass('uploadcare-file-item_error')
+        .find('.uploadcare-file-item__error')
+          .text(t("errors.#{error}"))
 
     __fileAdded: (file) =>
       fileEl = @__createFileEl(file)
@@ -169,7 +157,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
     __createFileEl: (file) ->
       fileEl = @__fileTpl.clone()
-        .on 'click', '.uploadcare--file__remove', =>
+        .on 'click', '.uploadcare-remove', =>
           @dialogApi.fileColl.remove(file)
       $(file).data('dpm-el', fileEl)
       fileEl
