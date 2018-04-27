@@ -1,5 +1,45 @@
 # History
 
+### 2.11.0, 27.04.2018
+
+* Added default limit of 1000 files for `multipleMax`.
+* Fixed preview: now the widget doesn't create a preview image if `previewStep` is off.
+* Added the new option `integration` for set up info about framework and plugin
+  through which the widget is installed.
+* Updated requests to Uploadcare Upload API, added the `X-UC-User-Agent` header
+  with info about version of the widget, public key, framework, and plugin.
+* Fixed camera tab: now,
+  if device and browser support the `capture` attribute
+  for the `input[type=file]` element,
+  instead of the video stream,
+  we show only the buttons that give direct access to the camera.
+* Fixed XHR requests: added responseType to XHR requests
+  to prevent Firefox from parsing responses as XML.
+* Fixed autocrop: now if multiple is turned on and the crop is specified,
+  crop auto applies to a last uploaded file.
+* Fixed the problem with drag&drop when the class `.uploadcare-dragging`
+  was not removed from the body when dragging was finished.
+* Fixed the blinking problem with `UPLOADCARE_LIVE=true`,
+  see [#277][issue-277], [#281][issue-281], [#366][issue-366], [#384][issue-384], [#411][issue-411].
+* Fixed the error of the stream from a webcam in Safari 11.
+  Now the camera tab with taking photos works in Safari 11.
+* Updated function for start the stream from a webcam:
+  added using the `navigator.mediaDevices.getUserMedia` method
+  if a browser supports these.
+* Updated the video element, which used for the stream:
+  use the `muted` attribute in HTML template instead of
+  setting up the `volume` property in JS.
+* Fixed stop video stream: if a browser supports the `getTracks` method,
+  call the `stop` only for tracks, not for the stream,
+  because MediaStream.stop deprecated.
+
+[issue-277]: https://github.com/uploadcare/uploadcare-widget/issues/277
+[issue-281]: https://github.com/uploadcare/uploadcare-widget/issues/281
+[issue-366]: https://github.com/uploadcare/uploadcare-widget/issues/366
+[issue-384]: https://github.com/uploadcare/uploadcare-widget/issues/384
+[issue-411]: https://github.com/uploadcare/uploadcare-widget/issues/411
+[issue-417]: https://github.com/uploadcare/uploadcare-widget/issues/417
+
 ### 2.10.4, 22.06.2017
 
 * Added camera translations to Portuguese (pt) locale
