@@ -128,7 +128,26 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           URL.revokeObjectURL(src)
 
         @__setState('video')
-        @container.find('.uploadcare--preview__video').attr('src', src)
+        videoTag = @container.find('.uploadcare--preview__video')
+
+        # hack to enable seeking due to bug in MediaRecorder API
+        # https://bugs.chromium.org/p/chromium/issues/detail?id=569840
+        seekingRestored = false
+
+        videoTag.on('loadeddata', () ->
+          el = videoTag.get(0)
+          el.currentTime = 360000 # 100 hours
+        )
+        videoTag.on('ended', () ->
+          if seekingRestored then return
+
+          el = videoTag.get(0)
+          el.currentTime = 0
+          seekingRestored = true
+        )
+        # end of hack
+
+        videoTag.attr('src', src)
 
       df.promise()
 
