@@ -220,7 +220,6 @@ uploadcare.namespace 'files', (ns) ->
                 , false
               xhr
             url: parts[partNo]
-            headers: {'X-UC-User-Agent': @settings._userAgent}
             crossDomain: true
             type: 'PUT'
             processData: false
