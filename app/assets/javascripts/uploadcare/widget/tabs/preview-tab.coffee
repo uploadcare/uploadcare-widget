@@ -146,6 +146,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
         videoTag.attr('src', src)
 
+        # hack to load first-frame poster on ios safari
+        videoTag.get(0).load()
+
       df.promise()
 
     # error
