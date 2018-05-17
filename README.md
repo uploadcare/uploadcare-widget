@@ -224,6 +224,20 @@ If you need the support for older browsers including IE8, consider using
 
 Check out the Uploadcare Widget [development guide][github-widget-development].
 
+## Security issues
+
+If you think you ran into something in Uploadcare libraries which might have
+security implications, please hit us up at [bugbounty@uploadcare.com][uc-email-bounty]
+or Hackerone.
+
+We'll contact you personally in a short time to fix an issue through co-op and
+prior to any public disclosure.
+
+## Feedback
+
+Issues and PRs are welcome. You can provide your feedback or drop us a support
+request at [hello@uploadcare.com][uc-email-hello].
+
 [badge-npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
 [badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget
 [badge-travis-img]: https://api.travis-ci.org/uploadcare/uploadcare-widget.svg?branch=master
@@ -233,6 +247,8 @@ Check out the Uploadcare Widget [development guide][github-widget-development].
 [github-widget]: https://github.com/uploadcare/uploadcare-widget
 [github-widget-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
 [github-widget-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
+[uc-email-bounty]: mailto:bugbounty@uploadcare.com
+[uc-email-hello]: mailto:hello@uploadcare.com
 [uc-home]: https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-widget-configurator]: https://uploadcare.com/widget/configure/?utm_source=github&utm_campaign=uploadcare-widget
