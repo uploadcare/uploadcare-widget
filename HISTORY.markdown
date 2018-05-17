@@ -1,5 +1,28 @@
 # History
 
+### Unreleased
+
+* Added new configuration options,
+  [`previewProxy`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy)
+  and [`previewUrlCallback`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback),
+  read more about it [here](https://uploadcare.com/docs/uploads/widget/secure_urls/).
+* Fixed not working button to delete file in the file list in multiple mode in Edge.
+* Fixed display wrong image when multi files are dropped on single uploads, [issue #443][issue-443].
+* Fixed video seeking in Chrome, [#460][pr-460].
+* Fixed multipart uploading parts, do not send extra headers.
+* Fixed video preview in iOS Safari, see [#463][pr-463].
+* Fixed the `this.settings is undefined` error with the `loadFileGroup` function.
+* Updated README:
+  * added Security and Feedback sections,
+  * added links to the widget v2,
+  * added table of contents.
+* Added the `AUTHORS.txt` file.
+* Update the description of the package.
+
+[issue-443]: https://github.com/uploadcare/uploadcare-widget/issues/443
+[pr-460]: https://github.com/uploadcare/uploadcare-widget/pull/460
+[pr-463]: https://github.com/uploadcare/uploadcare-widget/pull/463
+
 ### 3.3.0, 25.04.2018
 
 * Added new locales: Romain (`ro`), Slovak (`sk`), Serbian (`sr`).
