@@ -12,19 +12,19 @@ You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundle
 
 ### Vagrant
 
-If you don't want to raise the environment on your machine,
+If you don't want to set up the environment to your machine,
 you can use [Vagrant](https://www.vagrantup.com/).
 Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/)
 or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
 
-After open command line, go to this folder and run:
+After opening your terminal, go to this directory and run:
 
 ```bash
 vagrant up
 vagrant ssh
 ```
 
-Inside vagrant run
+In Vagrant run:
 
 ```bash
 bundle install
@@ -44,9 +44,9 @@ bundle install
 
 ## Build
 
-* `bundle exec rake js:latest:build` to build assets
+* run `bundle exec rake js:latest:build` to build assets
   to the **pkg/latest** directory (with the “latest” suffix).
-* `bundle exec rake js:release:build` to build assets
+* run `bundle exec rake js:release:build` to build assets
   to the **pkg/version** directory (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
 
@@ -63,7 +63,7 @@ There's going to be a widget or three. Edit code and reload the page :-)
 
 ## Testing
 
-[Jasminerice](https://github.com/bradphelan/jasminerice) 
+Use [Jasminerice](https://github.com/bradphelan/jasminerice)
 installed under the `test/dummy/` Rails app.
 
 To run tests in your browser go to http://127.0.0.1:3000/jasmine.

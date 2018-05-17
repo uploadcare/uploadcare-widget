@@ -24,7 +24,7 @@ The widget is highly customizable to fit your needs. It supports multi-file
 uploads, manual crop, and integrates with social media and cloud storage
 providers.
 
-Using the older `2.x` version? Check out at the [v2 tag][github-widget-v2].
+Using the older `2.x` version? Check out the stuff under the [v2 tag][github-widget-v2].
 
 <a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
@@ -58,7 +58,7 @@ Using the older `2.x` version? Check out at the [v2 tag][github-widget-v2].
 ## Docs
 
 See the complete widget docs [here][uc-docs-widget].
-If you're looking for the widget v2 docs, check [here][uc-docs-widget-v2].
+If you're looking for the widget v2 docs, check out [here][uc-docs-widget-v2].
 
 ### Quick references
 
