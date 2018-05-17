@@ -24,6 +24,8 @@ The widget is highly customizable to fit your needs. It supports multi-file
 uploads, manual crop, and integrates with social media and cloud storage
 providers.
 
+Using the older `2.x` version? Check out at the [v2 tag][github-widget-v2].
+
 <a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
        width="888" alt="Widget in action">
@@ -54,6 +56,7 @@ providers.
 ## Docs
 
 See the complete widget docs [here][uc-docs-widget].
+If you're looking for the widget v2 docs, check [here][uc-docs-widget-v2].
 
 ### Quick references
 
@@ -207,7 +210,7 @@ Safari, and Opera. It is most likely to run well in older versions
 of major browser too, except for Internet Explorer < 10.
 
 If you need the support for older browsers including IE8, consider using
-[the widget version 2.x][uc-docs-widget-v2] instead.
+[the widget v2][github-widget-v2] instead.
 
 <div>
   <table>
@@ -266,6 +269,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-travis-url]: https://travis-ci.org/uploadcare/uploadcare-widget
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
+[github-widget-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
 [github-widget]: https://github.com/uploadcare/uploadcare-widget
 [github-widget-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
 [github-widget-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
@@ -275,6 +279,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-widget-configurator]: https://uploadcare.com/widget/configure/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-libs]: https://uploadcare.com/docs/libs/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-v2]: https://uploadcare.com/documentation/widget/v2/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget]: https://uploadcare.com/docs/uploads/widget/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-js-api]: https://uploadcare.com/docs/api_reference/javascript/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-visual-tweaks]: https://uploadcare.com/docs/uploads/widget/visual_tweaks/?utm_source=github&utm_campaign=uploadcare-widget
