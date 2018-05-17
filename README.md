@@ -31,6 +31,8 @@ Using the older `2.x` version? Check out at the [v2 tag][github-widget-v2].
        width="888" alt="Widget in action">
 </a>
 
+---
+
 <!-- toc -->
 
 * [Docs](#docs)
@@ -79,8 +81,6 @@ There are a few types of JS bundles:
 * `uploadcare.js` — a bundle without built-in jQuery.
 * `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
   [JavaScript API][uc-docs-widget-js-api] only.
-* `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support
-  (widget v. 2.x and below).
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
 
 Each bundle has its minified version. Just add `.min` before `.js`,
