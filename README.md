@@ -29,6 +29,28 @@ providers.
        width="888" alt="Widget in action">
 </a>
 
+<!-- toc -->
+
+* [Docs](#docs)
+  * [Quick references](#quick-references)
+* [Types of bundles](#types-of-bundles)
+* [Install](#install)
+  * [NPM](#npm)
+  * [CDN](#cdn)
+  * [Other install methods](#other-install-methods)
+* [Usage](#usage)
+  * [Usage with React](#usage-with-react)
+  * [Usage with Angular](#usage-with-angular)
+* [Configuration](#configuration)
+* [JavaScript API](#javascript-api)
+* [Localization](#localization)
+* [Browser Support](#browser-support)
+* [Development](#development)
+* [Security issues](#security-issues)
+* [Feedback](#feedback)
+
+<!-- tocstop -->
+
 ## Docs
 
 See the complete widget docs [here][uc-docs-widget].
