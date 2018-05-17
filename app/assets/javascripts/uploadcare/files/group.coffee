@@ -174,7 +174,7 @@ namespace '', (ns) ->
           pub_key: settings.publicKey
           group_id: id[0]
         },
-        headers: {'X-UC-User-Agent': @settings._userAgent}
+        headers: {'X-UC-User-Agent': settings._userAgent}
       )
         .fail (reason) =>
           if settings.debugUploads
