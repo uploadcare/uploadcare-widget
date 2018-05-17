@@ -7,7 +7,7 @@
 </a>
 
 Uploadcare Widget is an HTML5 file uploader, a part of the
-[Uploadcare](https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget)
+[Uploadcare][uc-home]
 ecosystem that fully covers your file handling.
 
 Uploads affect your web or mobile app performance. The widget ensures all of your
@@ -31,20 +31,20 @@ providers.
 
 ## Docs
 
-See the complete widget docs [here][widget-docs].
+See the complete widget docs [here][uc-docs-widget].
 
 ### Quick references
 
-* [JavaScript API][widget-docs-js-api]
-* [Live widget config][widget-configurator]
+* [JavaScript API][uc-docs-widget-js-api]
+* [Live widget config][uc-widget-configurator]
 * [In-browser image editing][uc-features-effects-tab]
-* [Libraries, plugins and integrations][docs-libs]
+* [Libraries, plugins and integrations][uc-docs-libs]
 * Tutorials
-  * [Visual tweaks][widget-docs-visual-tweaks]
-  * [File validation][widget-docs-validation]
-  * [Widget customization][widget-docs-styling]
-  * [Advanced topics][guides-advanced]
-* [Migration guide from v2 to v3][widget-docs-migration-v2-v3]
+  * [Visual tweaks][uc-docs-widget-visual-tweaks]
+  * [File validation][uc-docs-widget-validation]
+  * [Widget customization][uc-docs-widget-styling]
+  * [Advanced topics][uc-guides-advanced]
+* [Migration guide from v2 to v3][uc-docs-widget-migration-v2-v3]
 
 ## Types of bundles
 
@@ -53,7 +53,7 @@ There are a few types of JS bundles:
 * `uploadcare.full.js` — a full bundle with built-in jQuery.
 * `uploadcare.js` — a bundle without built-in jQuery.
 * `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
-  [JavaScript API][widget-docs-js-api] only.
+  [JavaScript API][uc-docs-widget-js-api] only.
 * `uploadcare.ie8.js` — a full bundle with built-in jQuery 1.x for IE 8 support
   (widget v. 2.x and below).
 * `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
@@ -97,7 +97,7 @@ the light version of the widget: without built-in jQuery,
 
 ### Other install methods
 
-Check out the widget [docs][widget-docs-install]
+Check out the widget [docs][uc-docs-widget-install]
 for more install methods.
 
 ## Usage
@@ -105,7 +105,7 @@ for more install methods.
 Once you’re done with the install, there are
 two simple steps to take to use the widget.
 
-**Set your [public key][widget-docs-options-public-key]**.
+**Set your [public key][uc-docs-widget-options-public-key]**.
 This can also sit in the `<head>` section,
 
 ```html
@@ -152,17 +152,17 @@ used with Angular 1.
 
 The widget is highly customizable with widget options. Check out the existing
 options and ways to set them in UC
-[docs][widget-docs-config].
+[docs][uc-docs-widget-config].
 
 ## JavaScript API
 
 You might not want to use all the features that
-[our widget][widget-docs] exhibits.
+[our widget][uc-docs-widget] exhibits.
 Or, perhaps, you might want to redesign the user experience
 without having to reinvent the wheel.
 Maybe, you're in pursuit of building a UI on top of the widget.
 For all of those use cases, we provide a
-[JavaScript API][widget-docs-js-api].
+[JavaScript API][uc-docs-widget-js-api].
 Feel free to control the default widget with it,
 or make use of its standalone components that
 can be combined with your solutions.
@@ -171,11 +171,10 @@ can be combined with your solutions.
 
 It’s possible that your locale is not available in the widget yet.
 If that’s the case, contributing your locale might be a good idea.
-This can be done by forking the [main repository](https://github.com/uploadcare/uploadcare-widget)
-and adding a localization file
-[here](https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale).
+This can be done by forking the [main repository][github-widget]
+and adding a localization file [here][github-widget-locales].
 
-Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][widget-docs-options-locale-translations]
+Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][uc-docs-widget-options-locale-translations]
 property to use your locale immediately.
 
 ## Browser Support
@@ -186,7 +185,7 @@ Safari, and Opera. It is most likely to run well in older versions
 of major browser too, except for Internet Explorer < 10.
 
 If you need the support for older browsers including IE8, consider using
-[the widget version 2.x][widget-docs-v2] instead.
+[the widget version 2.x][uc-docs-widget-v2] instead.
 
 <div>
   <table>
@@ -223,8 +222,7 @@ If you need the support for older browsers including IE8, consider using
 
 ## Development
 
-Check out the Uploadcare Widget
-[development guide](https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md).
+Check out the Uploadcare Widget [development guide][github-widget-development].
 
 [badge-npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
 [badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget
@@ -232,19 +230,23 @@ Check out the Uploadcare Widget
 [badge-travis-url]: https://travis-ci.org/uploadcare/uploadcare-widget
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
-[uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/
-[widget-configurator]: https://uploadcare.com/widget/configure/
-[docs-libs]: https://uploadcare.com/docs/libs/
-[widget-docs]: https://uploadcare.com/docs/uploads/widget/
-[widget-docs-js-api]: https://uploadcare.com/docs/api_reference/javascript/
-[widget-docs-visual-tweaks]: https://uploadcare.com/docs/uploads/widget/visual_tweaks/
-[widget-docs-validation]: https://uploadcare.com/docs/uploads/widget/validation/
-[widget-docs-styling]: https://uploadcare.com/docs/uploads/widget/styling/
-[widget-docs-migration-v2-v3]: https://uploadcare.com/docs/uploads/widget/migration_v2_v3/
-[widget-docs-install]: https://uploadcare.com/docs/uploads/widget/install/
-[widget-docs-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/#option-public-key
-[widget-docs-options-locale-translations]: https://uploadcare.com/docs/uploads/widget/config/#option-locale-translations
-[widget-docs-config]: https://uploadcare.com/docs/uploads/widget/config/
-[widget-docs-locales]: https://uploadcare.com/docs/uploads/widget/locales/
-[widget-docs-v2]: https://uploadcare.com/documentation/widget/v2/
-[guides-advanced]: https://uploadcare.com/docs/guides/advanced/
+[github-widget]: https://github.com/uploadcare/uploadcare-widget
+[github-widget-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
+[github-widget-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
+[uc-home]: https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-widget-configurator]: https://uploadcare.com/widget/configure/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-libs]: https://uploadcare.com/docs/libs/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget]: https://uploadcare.com/docs/uploads/widget/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-js-api]: https://uploadcare.com/docs/api_reference/javascript/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-visual-tweaks]: https://uploadcare.com/docs/uploads/widget/visual_tweaks/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-validation]: https://uploadcare.com/docs/uploads/widget/validation/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-styling]: https://uploadcare.com/docs/uploads/widget/styling/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-migration-v2-v3]: https://uploadcare.com/docs/uploads/widget/migration_v2_v3/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-install]: https://uploadcare.com/docs/uploads/widget/install/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget#option-public-key
+[uc-docs-widget-options-locale-translations]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget#option-locale-translations
+[uc-docs-widget-config]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-locales]: https://uploadcare.com/docs/uploads/widget/locales/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-docs-widget-v2]: https://uploadcare.com/documentation/widget/v2/?utm_source=github&utm_campaign=uploadcare-widget
+[uc-guides-advanced]: https://uploadcare.com/docs/guides/advanced/?utm_source=github&utm_campaign=uploadcare-widget
