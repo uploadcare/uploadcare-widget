@@ -1,7 +1,7 @@
 {
   "name": "uploadcare-widget",
   "version": "0.0.0",
-  "description": "Uploadcare widget source",
+  "description": "Source of Uploadcare Widget",
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
