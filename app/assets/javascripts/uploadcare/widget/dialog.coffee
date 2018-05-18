@@ -214,6 +214,7 @@ uploadcare.namespace '', (ns) ->
 
       if not @settings.multiple
         @files.clear()
+        files = [files[0]]
 
       for file in files
         if @settings.multipleMaxStrict

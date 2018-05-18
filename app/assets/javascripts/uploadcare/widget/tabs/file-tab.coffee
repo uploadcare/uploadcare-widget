@@ -24,7 +24,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     __initDragNDrop: ->
       dropArea = @container.find('.uploadcare-dialog-file-drop-area')
       if utils.abilities.fileDragAndDrop
-        dragdrop.receiveDrop dropArea, (type, data) =>
+        dragdrop.receiveDrop dropArea, (type, files) =>
           files = if @settings.multiple then data else [data[0]]
           @dialogApi.addFiles(type, files)
           @dialogApi.switchTab('preview')
