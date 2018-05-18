@@ -2,26 +2,44 @@
 
 ### Unreleased
 
-* Added new configuration options,
-  [`previewProxy`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy)
-  and [`previewUrlCallback`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback),
-  read more about it [here](https://uploadcare.com/docs/uploads/widget/secure_urls/).
-* Fixed not working button to delete file in the file list in multiple mode in Edge.
-* Fixed display wrong image when multi files are dropped on single uploads, [issue #443][issue-443].
-* Fixed video seeking in Chrome, [#460][pr-460].
-* Fixed multipart uploading parts, do not send extra headers.
-* Fixed video preview in iOS Safari, see [#463][pr-463].
-* Fixed the `this.settings is undefined` error with the `loadFileGroup` function.
-* Updated README:
-  * added Security and Feedback sections,
-  * added links to the widget v2,
-  * added table of contents.
-* Added the `AUTHORS.txt` file.
-* Update the description of the package.
+The new version comes with the [Secure URLs][uc-widget-secure-urls] support and
+a good number of bug fixes. We strongly advise updating, especially if you are
+currently running on 3.3.0.
 
-[issue-443]: https://github.com/uploadcare/uploadcare-widget/issues/443
-[pr-460]: https://github.com/uploadcare/uploadcare-widget/pull/460
-[pr-463]: https://github.com/uploadcare/uploadcare-widget/pull/463
+Added:
+
+* New configuration options:
+  [`previewProxy`][uc-widget-option-previewproxy]
+  and [`previewUrlCallback`][uc-widget-option-previewcallback]. Check out our
+  [docs][uc-widget-secure-urls] for more info.
+* The `AUTHORS.txt` file to the repo to give credit to those contributing to
+  the project. Yoo-hoo, thanks folks 💛
+
+Changed:
+
+* Updated README:
+  * New sections: “Security issues” and “Feedback.”
+  * References to the widget v2.
+  * Table of contents.
+* Updated the package description.
+
+Fixed:
+
+* A not-working button that removes an entry from the file list in a multi-file
+  mode in Edge.
+* Displaying a wrong image when a set of files gets dragged and dropped onto
+  a widget in a single-file mode, [issue #443][github-issue-443].
+* Video seeking in Chrome, [#460][github-pr-460].
+* Multipart uploading: no extra headers are now sent.
+* Previewing videos in Safari on iOS, see [#463][github-pr-463].
+* The `this.settings is undefined` error when using the `loadFileGroup` function.
+
+[uc-widget-option-previewproxy]: https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy
+[uc-widget-option-previewcallback]: https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback
+[uc-widget-secure-urls]: https://uploadcare.com/docs/uploads/widget/secure_urls/
+[github-issue-443]: https://github.com/uploadcare/uploadcare-widget/issues/443
+[github-pr-460]: https://github.com/uploadcare/uploadcare-widget/pull/460
+[github-pr-463]: https://github.com/uploadcare/uploadcare-widget/pull/463
 
 ### 3.3.0, 25.04.2018
 
