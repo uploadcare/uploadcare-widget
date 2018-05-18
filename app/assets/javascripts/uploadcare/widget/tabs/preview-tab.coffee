@@ -258,3 +258,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)
+
+    onExit: () =>
+      video = @container.find('.uploadcare--preview__video').get(0)
+      video?.pause()

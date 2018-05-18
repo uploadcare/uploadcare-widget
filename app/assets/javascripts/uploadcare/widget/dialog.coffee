@@ -376,6 +376,8 @@ uploadcare.namespace '', (ns) ->
     switchTab: (tab) =>
       if not tab
         return
+
+      @tabs[@currentTab]?.onExit?()
       @currentTab = tab
 
       @panel.find('.uploadcare--panel__menu')
