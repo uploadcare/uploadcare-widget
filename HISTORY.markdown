@@ -2,11 +2,7 @@
 
 ### Unreleased
 
-The new version comes with the [Secure URLs][uc-widget-secure-urls] support and
-a good number of bug fixes. We strongly advise updating, especially if you are
-currently running on 3.3.0.
-
-Added:
+#### Added
 
 * New configuration options:
   [`previewProxy`][uc-widget-option-previewproxy]
@@ -15,7 +11,7 @@ Added:
 * The `AUTHORS.txt` file to the repo to give credit to those contributing to
   the project. Yoo-hoo, thanks folks 💛
 
-Changed:
+#### Changed
 
 * Updated README:
   * New sections: “Security issues” and “Feedback.”
@@ -23,7 +19,7 @@ Changed:
   * Table of contents.
 * Updated the package description.
 
-Fixed:
+#### Fixed
 
 * A not-working button that removes an entry from the file list in a multi-file
   mode in Edge.
