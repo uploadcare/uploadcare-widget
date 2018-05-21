@@ -195,6 +195,8 @@ uploadcare.namespace '', (ns) ->
         @panel.find(".uploadcare--menu__item_tab_#{tab}")
               .toggleClass("uploadcare--menu__item_hidden", not show)
 
+      document.addEventListener('visibilitychange', @__onBrowserTabVisibilityChange)      
+
       if @settings.publicKey
         @__prepareTabs(tab)
       else
@@ -239,6 +241,15 @@ uploadcare.namespace '', (ns) ->
           @switchTab('preview')
       else
         @__resolve()
+
+    __onBrowserTabVisibilityChange: (e) =>
+      visible = e.target.visibilityState == 'visible'
+      tabInstance = @tabs[@currentTab]
+
+      if visible
+        tabInstance?.onShow?()
+      else 
+        tabInstance?.onHide?()
 
     __autoCrop: (files) ->
       if not @settings.crop or not @settings.multiple
@@ -335,6 +346,7 @@ uploadcare.namespace '', (ns) ->
           .text(if files then "(#{files})" else "")
 
     __closePanel: =>
+      document.removeEventListener('visibilitychange', @__onBrowserTabVisibilityChange)
       @panel.replaceWith(@placeholder)
       @content.remove()
 
@@ -376,6 +388,8 @@ uploadcare.namespace '', (ns) ->
     switchTab: (tab) =>
       if not tab
         return
+
+      @tabs[@currentTab]?.onHide?()      
       @currentTab = tab
 
       @panel.find('.uploadcare--panel__menu')
@@ -392,6 +406,8 @@ uploadcare.namespace '', (ns) ->
             .removeClass("#{className}_current")
             .filter(".#{className}_name_#{tab}")
             .addClass("#{className}_current")
+
+      @tabs[@currentTab]?.onShow?()
 
       @dfd.notify(tab)
 
