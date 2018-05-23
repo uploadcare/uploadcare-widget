@@ -1,6 +1,6 @@
 # History
 
-### Unreleased
+### 2.11.1, 23.05.2018
 
 #### Added
 

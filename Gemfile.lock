@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadcare-widget (2.11.0)
+    uploadcare-widget (2.11.1)
       autoprefixer-rails
       coffee-rails
       csso-rails
