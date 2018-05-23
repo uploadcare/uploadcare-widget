@@ -1,0 +1,42 @@
+# This list of authors is based on the git history of this repo.
+
+Aleksandr Grenishin <nd0ut.me@gmail.com>
+Alexander Karpinsky <homm86@gmail.com>
+Alexander Shtuchkin <ashtuchkin@gmail.com>
+Anton Belousov <anton.n.belousov@gmail.com>
+BIGWOO <BIGWOO@users.noreply.github.com>
+Bart Claeys <github.com@barclaey.com>
+Cassio Santos <sss.cassio@gmail.com>
+Cyprian Gracz <cyprian.gracz@micro-jumbo.eu>
+David Avsajanishvili <david@davidavs.com>
+Dimitry Solovyov <dimituri@gmail.com>
+Dmitry Mukhin <dm@uploadcare.com>
+Eddie Gatenby <eddie@edudoc.ie>
+Huseyin Beberoglu <hberberoglu@gmail.com>
+Jalil Wahdatehagh <j.wahdatehagh@gmail.com>
+Jérôme Lipowicz <jerome@yayel.com>
+LF Bittencourt <github@lfbittencourt.com>
+Lars Kappert <lars@webpro.nl>
+Matt Rohrer <matt@prognostikos.com>
+Nikolay Zherdev <nickzherdev@gmail.com>
+ReadmeCritic <frankensteinbot@gmail.com>
+Roman Pominov <meshokmuki@gmail.com>
+Shane O'Grady <shane.ogrady@gmail.com>
+Sławek Ehlert <slafs@op.pl>
+Tlapi <jan@potentus.com>
+Torbjørn Kvåle <torbjokv@users.noreply.github.com>
+Trevor Fitzgerald <fitztrev@gmail.com>
+Valentin Golev <me@va1en0k.net>
+Yago González <yagogonzalezg@gmail.com>
+Zarema Khalilova <zarema.khalilova@gmail.com>
+acmeudg <u1921104@campus.udg.edu>
+amosmos <amos@boaideas.com>
+bkristensen <bk.brian@gmail.com>
+djiao <djiao@indiana.edu>
+fiatux <fiatux@fiatux.com>
+holgerkilumets <holgerkilumets@gmail.com>
+homm <homm86@gmail.com>
+jjabn <jja@betternow.org>
+rremi <alex@whitescape.com>
+supermomonga <hi@supermomonga.com>
+zero13cool <zero13cool@yandex.ru>
