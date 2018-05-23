@@ -1,6 +1,6 @@
 # History
 
-### Unreleased
+### 3.4.0, 23.05.2018
 
 #### Added
 
