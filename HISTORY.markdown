@@ -1,5 +1,33 @@
 # History
 
+### Unreleased
+
+#### Added
+
+* The `AUTHORS.txt` file to the repo to give credit to those contributing to
+  the project. Yoo-hoo, thanks folks 💛
+
+#### Changed
+
+* Updated README:
+  * New sections: “Security issues” and “Feedback.”
+  * References to the widget v3.
+  * Table of contents.
+* Updated the package description.
+
+#### Fixed
+
+* Displaying a wrong image when a set of files gets dragged and dropped onto
+  a widget in a single-file mode, [issue #443][github-issue-443].
+* Video seeking in Chrome, [#460][github-pr-460].
+* Multipart uploading: no extra headers are now sent.
+* Previewing videos in Safari on iOS, see [#463][github-pr-463].
+* The `this.settings is undefined` error when using the `loadFileGroup` function.
+
+[github-issue-443]: https://github.com/uploadcare/uploadcare-widget/issues/443
+[github-pr-460]: https://github.com/uploadcare/uploadcare-widget/pull/460
+[github-pr-463]: https://github.com/uploadcare/uploadcare-widget/pull/463
+
 ### 2.11.0, 27.04.2018
 
 * Added default limit of 1000 files for `multipleMax`.
