@@ -2,49 +2,68 @@
 
 Clone the repository.
 
-### Enviroment
+```bash
+git clone https://github.com/uploadcare/uploadcare-widget
+```
+
+## Environment
 
 You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
 
-#### Vagrant
+### Vagrant
 
-If you don't want to raise the environment on your machine, you can use [Vagrant](https://www.vagrantup.com/).
-Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/) or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
+If you don't want to set up the environment to your machine,
+you can use [Vagrant](https://www.vagrantup.com/).
+Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/)
+or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
 
-After open command line, go to this folder and run:
+After opening your terminal, go to this directory and run:
 
-    vagrant up
-    vagrant ssh
+```bash
+vagrant up
+vagrant ssh
+```
 
-#### Local environment (without Vagrant)
+In Vagrant run:
+
+```bash
+bundle install
+cd ./test/dummy
+bundle install
+```
+
+### Local environment (without Vagrant)
 
 Inside folder run
 
-    bundle install
-    cd ./test/dummy
-    bundle install
+```bash
+bundle install
+cd ./test/dummy
+bundle install
+```
 
-### Build
+## Build
 
-* `bundle exec rake js:latest:build` to build assets
+* run `bundle exec rake js:latest:build` to build assets
   to the **pkg/latest** directory (with the “latest” suffix).
-* `bundle exec rake js:release:build` to build assets
+* run `bundle exec rake js:release:build` to build assets
   to the **pkg/version** directory (with the current version suffix).
   The version is specified in `lib/uploadcare-widget/version.rb`.
 
-### Development
+## Development
 
 Go to `test/dummy/`. There is a simple Rails app. Run it:
 
-    bundle exec rails server
+```bash
+bundle exec rails server
+```
 
 Open http://127.0.0.1:3000/. Follow any link.
 There's going to be a widget or three. Edit code and reload the page :-)
 
+## Testing
 
-### Testing
-
-[Jasminerice](https://github.com/bradphelan/jasminerice)
+Use [Jasminerice](https://github.com/bradphelan/jasminerice)
 installed under the `test/dummy/` Rails app.
 
 To run tests in your browser go to http://127.0.0.1:3000/jasmine.

@@ -13,6 +13,7 @@ ecosystem that fully covers your file handling.
 
 **Note: there currently is a new major version of the widget.**
 **Check out the stuff under the [master branch][github-branch-master].**
+
 **[Here’s how][uc-docs-widget-migration-v2-v3] you migrate from v2 to v3.**
 
 ---
