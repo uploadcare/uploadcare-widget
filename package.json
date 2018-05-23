@@ -1,7 +1,7 @@
 {
   "name": "uploadcare-widget",
   "version": "0.0.1",
-  "description": "uploadcare-widget",
+  "description": "Uploadcare Widget. An ultimate file uploader.",
   "main": "uploadcare.min.js",
   "directories": {
     "test": "test"
