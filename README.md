@@ -24,7 +24,7 @@ The widget is highly customizable to fit your needs. It supports multi-file
 uploads, manual crop, and integrates with social media and cloud storage
 providers.
 
-Using the older `2.x` version? Check out the stuff under the [v2 tag][github-widget-v2].
+Using the older `2.x` version? Check out the stuff under the [v2 tag][github-branch-v2].
 
 <a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
@@ -196,8 +196,8 @@ can be combined with your solutions.
 
 It’s possible that your locale is not available in the widget yet.
 If that’s the case, contributing your locale might be a good idea.
-This can be done by forking the [main repository][github-widget]
-and adding a localization file [here][github-widget-locales].
+This can be done by forking the [main repository][github-home]
+and adding a localization file [here][github-files-locales].
 
 Until that you can use [`UPLOADCARE_LOCALE_TRANSLATIONS`][uc-docs-widget-options-locale-translations]
 property to use your locale immediately.
@@ -210,7 +210,7 @@ Safari, and Opera. It is most likely to run well in older versions
 of major browser too, except for Internet Explorer < 10.
 
 If you need the support for older browsers including IE8, consider using
-[the widget v2][github-widget-v2] instead.
+[the widget v2][github-branch-v2] instead.
 
 <div>
   <table>
@@ -247,7 +247,7 @@ If you need the support for older browsers including IE8, consider using
 
 ## Development
 
-Check out the Uploadcare Widget [development guide][github-widget-development].
+Check out the Uploadcare Widget [development guide][github-files-development].
 
 ## Security issues
 
@@ -269,10 +269,10 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-travis-url]: https://travis-ci.org/uploadcare/uploadcare-widget
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
-[github-widget-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
-[github-widget]: https://github.com/uploadcare/uploadcare-widget
-[github-widget-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
-[github-widget-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
+[github-branch-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
+[github-home]: https://github.com/uploadcare/uploadcare-widget
+[github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
+[github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
 [uc-home]: https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget
