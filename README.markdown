@@ -32,6 +32,26 @@ The widget is highly customizable to fit your needs. It supports multi-file
 uploads, manual crop, and integrates with social media and cloud storage
 providers.
 
+---
+
+<!-- toc -->
+
+* [Docs](#docs)
+  * [Quick references](#quick-references)
+* [Types of bundles](#types-of-bundles)
+* [Install](#install)
+  * [NPM](#npm)
+  * [CDN](#cdn)
+  * [Other install methods](#other-install-methods)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [JavaScript API](#javascript-api)
+* [Development](#development)
+* [Security issues](#security-issues)
+* [Feedback](#feedback)
+
+<!-- tocstop -->
+
 ## Docs
 
 See the complete widget docs [here][uc-docs-widget].
