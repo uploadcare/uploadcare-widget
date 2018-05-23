@@ -124,7 +124,26 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           URL.revokeObjectURL(src)
 
         @__setState('video')
-        @element('video').attr('src', src)
+        videoTag = @element('video')
+
+        # hack to enable seeking due to bug in MediaRecorder API
+        # https://bugs.chromium.org/p/chromium/issues/detail?id=569840
+        videoTag.on('loadeddata', () ->
+          el = videoTag.get(0)
+          el.currentTime = 360000 # 100 hours
+          videoTag.off('loadeddata')
+        )
+        videoTag.on('ended', () ->
+          el = videoTag.get(0)
+          el.currentTime = 0
+          videoTag.off('ended')
+        )
+        # end of hack
+
+        videoTag.attr('src', src)
+
+        # hack to load first-frame poster on ios safari
+        videoTag.get(0).load()
 
       df.promise()
 
