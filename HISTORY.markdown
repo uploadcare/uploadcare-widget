@@ -1,13 +1,27 @@
-# History
+# Changelog
 
-### 2.11.1, 23.05.2018
+All notable changes to this project will be documented in this file.
 
-#### Added
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Changed
+
+* Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
+  for the changelog at the `HISTORY.markdown` file.
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.1...v2
+
+## [2.11.1] - 2018-05-23
+
+### Added
 
 * The `AUTHORS.txt` file to the repo to give credit to those contributing to
   the project. Yoo-hoo, thanks folks 💛
 
-#### Changed
+### Changed
 
 * Updated README:
   * New sections: “Security issues” and “Feedback.”
@@ -15,7 +29,7 @@
   * Table of contents.
 * Updated the package description.
 
-#### Fixed
+### Fixed
 
 * Displaying a wrong image when a set of files gets dragged and dropped onto
   a widget in a single-file mode, [issue #443][github-issue-443].
@@ -24,11 +38,12 @@
 * Previewing videos in Safari on iOS, see [#463][github-pr-463].
 * The `this.settings is undefined` error when using the `loadFileGroup` function.
 
+[2.11.1]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.0...v2.11.1
 [github-issue-443]: https://github.com/uploadcare/uploadcare-widget/issues/443
 [github-pr-460]: https://github.com/uploadcare/uploadcare-widget/pull/460
 [github-pr-463]: https://github.com/uploadcare/uploadcare-widget/pull/463
 
-### 2.11.0, 27.04.2018
+## 2.11.0 - 2018-04-27
 
 * Added default limit of 1000 files for `multipleMax`.
 * Fixed preview: now the widget doesn't create a preview image if `previewStep` is off.
@@ -68,31 +83,31 @@
 [issue-411]: https://github.com/uploadcare/uploadcare-widget/issues/411
 [issue-417]: https://github.com/uploadcare/uploadcare-widget/issues/417
 
-### 2.10.4, 22.06.2017
+## 2.10.4 - 2017-06-22
 
 * Added camera translations to Portuguese (pt) locale
 * Fixed JS for jQuery 3 compatibility. Now we support jQuery 3.x.
 
-### 2.10.3, 16.01.2017
+## 2.10.3 - 2017-01-16
 
 * Fixed `/group/` request for cases when signed uploads are enabled
 * Fixed sending message in iframe
 * Fixed French locale
 
-### 2.10.2, 29.11.2016
+## 2.10.2 - 2016-11-29
 
 * Fixed critical image loading bug in Firefox 50
 * Instagram icon is updated
 * Fixed tabs visual style
 * Fixed Swedish locale
 
-### 2.10.1, 20.10.2016
+## 2.10.1 - 2016-10-20
 
 * Fixed the preview orientation for some images.
 * Fixed image size on crop tab in IE 11
 * Fixed tabs overflow in Safari
 
-### 2.10.0, 19.08.2016
+## 2.10.0 - 2016-08-19
 
 * Fixed the `Widget` constructor error message.
 * Added the `_name` attribute for `MultipleWidget` and `Widget` classes.
@@ -102,7 +117,7 @@
 * Update jQuery dependency. We don't support 3.0.0 just yet.
 * Built-in jQuery upgraded to 2.2.4.
 
-### 2.9.0, 13.05.2016
+## 2.9.0 - 2016-05-13
 
 * Added Estonian locale.
 * `UPLOADCARE_SECURE_SIGNATURE` and `UPLOADCARE_SECURE_EXPIRE` settings
@@ -110,18 +125,18 @@
 * Further Browserify/Webpack compatibility improvements.
 * Removed deprecated `uploadcare.whenReady` function.
 
-### 2.8.2, 04.04.2016
+## 2.8.2 - 2016-04-04
 
 * Preview for video captured from the camera.
 * Fast image preview for files from the camera.
 
-### 2.8.1, 18.03.2016
+## 2.8.1 - 2016-03-18
 
 * Fixed the permissions request screen on the camera tab.
 * Fixed `uploadcare.locales` list.
 * Fixed `uploadcare.start` function in API build.
 
-### 2.8.0, 14.03.2016
+## 2.8.0 - 2016-03-14
 
 * Now you can capture video right from the camera tab if browser is capable
   (latest Firefox and Google Chrome at the moment).
@@ -133,7 +148,7 @@
     * `uploadcare.lang.en` — stripped localization to reduce size, only English is included.
     * `uploadcare.ie8` — with jQuery 1.12.1 (IE8 does not work with jQuery 2+).
 
-### 2.7.0, 06.03.2016
+## 2.7.0 - 2016-03-06
 
 * Camera tab is disabled on non HTTPS sites due to the latest browsers' rules.
 * The widget constructors raise errors if no elements ware matched for provided
@@ -142,7 +157,7 @@
 * File's MIME type is exposed to Javascript info.
 * Fixed 404 error in console when dialog is used without crop and preview step.
 
-### 2.6.0, 09.01.2016
+## 2.6.0 - 2016-01-09
 
 * Image crop and preview for local files now works before uploading.
   This greatly improves user experience.
@@ -158,19 +173,19 @@
   even if it already exists. This solves some compatibility problems.
 * New dialog's footer design.
 
-### 2.5.9, 07.12.2015
+## 2.5.9 - 2015-12-07
 
 * Fixed "cannot read property 'getVideoTracks' of undefined" error
   in case when camera is blocked.
 
-### 2.5.8, 02.12.2015
+## 2.5.8 - 2015-12-02
 
 * Droped files are appended to widget's list of uploaded files
   instead of replacing it.
 * Fixed camera revoking in Google Chrome 47.
 * New option `multipleMaxStrict`.
 
-### 2.5.7, 01.12.2015
+## 2.5.7 - 2015-12-01
 
 * Crop presets are moved to the top of crop dialog on mobile layout.
 * It was impossible to clear widget with both `multiple` and `clearable`
@@ -178,7 +193,7 @@
 * Settings like `cdnBase`, `urlBase`, `socialBase` and `scriptBase`
   now can be relative.
 
-### 2.5.6, 25.11.2015
+## 2.5.6 - 2015-11-25
 
 * New option `UPLOADCARE_PASS_WINDOW_OPEN` to work with Cordova InAppBrowser.
 * Added Czech locale.
@@ -186,54 +201,54 @@
 * Updated Spanish locale.
 * Updated Polish locale.
 
-### 2.5.5, 22.09.2015
+## 2.5.5 - 2015-09-22
 
 * Fixed the dialog disappearing in some cases in the mobile layout.
 
-### 2.5.4, 22.09.2015
+## 2.5.4 - 2015-09-22
 
 * Show remove button on uploading error when widget is clearable.
 * Optimize parallel uploading of big amount of files at once.
 * Accept `data-crop="true"` as free.
 
-### 2.5.3, 22.09.2015
+## 2.5.3 - 2015-09-22
 
 * New Swedish locale.
 * File info pooling optimization. 
 * Multipart uploading tuning via settings.
 
-### 2.5.2, 13.09.2015
+## 2.5.2 - 2015-09-13
 
 * File uploading logging via `debugUploads` settings.
 
-### 2.5.1, 01.09.2015
+## 2.5.1 - 2015-09-01
 
 * The choose file button occasionally was not clickable on iOS 8.
 
-### 2.5.0, 24.08.2015
+## 2.5.0 - 2015-08-24
 
 * HTTPS is default protocol for CDN.
 
-### 2.4.4, 20.08.2015
+## 2.4.4 - 2015-08-20
 
 * Fixed `onDialogOpen` event which did not fire when files were dropped. 
 * Optimized info loading for files uploaded from URLs.
 * Internal `uploadcare.namespace` function accepts namespace name without
   `uploadcare` prefix. I.e. `uploadcare.files.utils` becomes `files.utils`.
 
-### 2.4.3, 19.08.2015
+## 2.4.3 - 2015-08-19
 
 * Fixed uploading from url for large files.
 
-### 2.4.2, 17.08.2015
+## 2.4.2 - 2015-08-17
 
 * Fixes in English, Russian and German locales.
 
-### 2.4.1, 08.08.2015
+## 2.4.1 - 2015-08-08
 
 * `uploadcare.start()` is fixed and accepts global settings again.
 
-### 2.4.0, 23.07.2015
+## 2.4.0 - 2015-07-23
 
 * Built-in jQuery upgraded to 2.1.4. This automatically means that
   widget version with built-in jQuery will no longer work in IE8.
@@ -241,42 +256,42 @@
 * Uploadcare doesn't expose and doesn't use global `window.JST` object anymore.
   This enhances widget isolation on the page.
 
-### 2.3.5, 11.07.2015
+## 2.3.5 - 2015-07-11
 
 * Prevent infinity loop when multiupload dialog is used with crop with 
   some ratio and uploaded image is already has this ratio.
 * Correct reading of EXIF data from some corrupeted JPEGs. 
 
-### 2.3.4, 29.06.2015
+## 2.3.4 - 2015-06-29
 
 * New crop visual style.
 * Updated Spanish locale.
 * Updated Catalan locale.
 
-### 2.3.3, 23.06.2015
+## 2.3.3 - 2015-06-23
 
 * New Azerbaijan locale.
 * New Catalan locale. Incomplete.
 * Updated Taiwan locale.
 * Updated Turkish locale.
 
-### 2.3.2, 15.06.2015
+## 2.3.2 - 2015-06-15
 
 * jQuery updated to 1.11.3.
 * Fixed version with builtin jQuery.
 
-### 2.3.1, 08.06.2015
+## 2.3.1 - 2015-06-08
 
 * Camera are revoked when user switches on another tab if page runs over HTTPS.
 
-### 2.3.0, 05.06.2015
+## 2.3.0 - 2015-06-05
 
 * Clicking to image in dialog led to opening of two crop dialogs in some cases.
 * Dialog api change: undocumented `fileColl.onAnyDone`, `fileColl.onAnyFail`
   and `onAnyProgress` become a functions with guarantee of callback execution
   for each object in `fileColl`.
 
-### 2.2.0, 03.06.2015
+## 2.2.0 - 2015-06-03
 
 * New preview page for multiple images (when flag imagesOnly is set).
 * Crop now works with multiple files (even when flag imagesOnly is not set).
@@ -293,17 +308,17 @@
 * Custom events `#{status}.uploadcare` are fired on widget instead of form.
   (works with built-in jQuery only).
 
-### 2.1.6, 28.05.2015
+## 2.1.6 - 2015-05-28
 
 * Fixed "also choose file from" list on mobile layout.
 
-### 2.1.5, 26.05.2015
+## 2.1.5 - 2015-05-26
 
 * Fixed live initialization (when a new widget is added to the page
   after loading). Broken since 2.1.0.
 * Restored compatibility with IE8. Broken since 2.1.0.
 
-### 2.1.4, 18.05.2015
+## 2.1.4 - 2015-05-18
 
 * Traditional Chinese locale (zhTW).
 * Hidden tabs (camera, for example) excluded from list of sources on first
@@ -312,20 +327,20 @@
 * New callback in dialog api: `onTabVisibility`. Triggered when some tab is
   showed or hidden.
 
-### 2.1.3, 15.05.2015
+## 2.1.3 - 2015-05-15
 
 * Fixed compatibility with jQuery-ui (internal `sortable` plugin renamed
   to `uploadcareSortble`).
 
-### 2.1.2, 27.04.2015
+## 2.1.2 - 2015-04-27
 
 * Fixed welcome text when public key is not set.
 
-### 2.1.1, 21.04.2015
+## 2.1.1 - 2015-04-21
 
 * Fixed error messages in console in jQuery build.
 
-### 2.1.0, 10.04.2015
+## 2.1.0 - 2015-04-10
 
 * Keyboard navigation.
 * Widgets are initialized immediately after page loading, not after 100ms. 
@@ -339,40 +354,40 @@
 * Reduced the number of relatively slow `settings.build`
   and `settings.normalize` calls.
 
-### 2.0.6, 28.03.2015
+## 2.0.6 - 2015-03-28
 
 * Fix exception when multiple files are uploaded simalteniously with 
   `image-shrink` option and uploading is cancelled.
 
-### 2.0.5, 25.03.2015
+## 2.0.5 - 2015-03-25
 
 * Added compatibility with [FastClick](https://github.com/ftlabs/fastclick).
 * Warnings from `image-shrink` option are suppressed.
 
-### 2.0.4, 12.03.2015
+## 2.0.4 - 2015-03-12
 
 * Fixed error if validation is failed.
 * Fixed error in case of large file with imagesOnly settings
   and files larger than 100 MB in old browsers. 
 
-### 2.0.3, 10.03.2015
+## 2.0.3 - 2015-03-10
 
 * Transparent images are automatically shrinked to PNG.
 * Considering `cdnUrlModifiers` when group is loaded.
 
-### 2.0.2, 25.02.2015
+## 2.0.2 - 2015-02-25
 
 * Fixed uploading of large files.
 
-### 2.0.1, 24.02.2015
+## 2.0.1 - 2015-02-24
 
 * Restored compatibility with IE 8-9 and other old browsers.
 
-### 2.0.0, 20.02.2015
+## 2.0.0 - 2015-02-20
 
 **Compatibility breaking changes in this release.**
 
-#### New features and fixes
+### New features and fixes
 
 * Resize images on client before uploading (`image-shrink` option).
 * Autostore option was removed (but not autostore itself).
@@ -393,7 +408,7 @@
 * Fix group `cdnUrl` property when group creation is failed.
 * Multi-upload widget does not break when `null` value assigned to it.
  
-#### Breaking changes
+### Breaking changes
 
 * `path-value` is on by default. Widget will always return file URL,
   not only when crop is used.
@@ -411,23 +426,23 @@
   argument of `progress` callback.
 
 
-### 1.5.5, 28.01.2015
+## 1.5.5 - 2015-01-28
 
 * Fixed creation of group with modifiers.
 
-### 1.5.4, 19.01.2015
+## 1.5.4 - 2015-01-19
 
 * Fixed assiging array of files as value to multiple widget.
 * Fixed filename and progress indication for piped file objects
   in multiple dialog.
 * Fixed progress drawing when progress element size is 0.
 
-### 1.5.3, 30.12.2014
+## 1.5.3 - 2014-12-30
 
 * Fixed the error preventing any file uploading in old versions of
   Google Chrome. Bug was instroduced in 1.5.0.
 
-### 1.5.2, 26.12.2014
+## 1.5.2 - 2014-12-26
 
 * New Arabic locale.
 * New file source Huddle (huddle.com).
@@ -435,7 +450,7 @@
 * New `uploadcare.closeDialog()` method close current active dialog
   (usefull for single-page applications).
 
-### 1.5.1, 12.12.2014
+## 1.5.1 - 2014-12-12
 
 * Built-in jQuery updated to 1.11.1
 * Validators for `openDialog()`, `openPanel()` and `filesFrom`
@@ -447,45 +462,45 @@
 * Fixed English locale for camera dialog
 * Fixed some typos in the norwegian locale
 
-### 1.5.0, 06.12.2014
+## 1.5.0 - 2014-12-06
 
 * Camera tab
 * Progress circle color can be changed through CSS
 * Version without built-in jQuery
 
-### 1.4.6, 24.11.2014
+## 1.4.6 - 2014-11-24
 
 * Added Norwegian locale
 * Improved iOS scrolling performance in some cases
 * Dropbox added to default tabs list (no additional setup is required anymore)
 * All default tabs rearranged according to their usage
 
-### 1.4.5, 07.11.2014
+## 1.4.5 - 2014-11-07
 
 * Restored IE8 compatibility.
 
-### 1.4.4, 31.10.2014
+## 1.4.4 - 2014-10-31
 
 * Fix conflict with host pages Pusher. Built-in pusher
   isn't exposed to global namesapse anymore. 
 
-### 1.4.3, 16.10.2014
+## 1.4.3 - 2014-10-16
 
 * Japanese localization.
 * French localization updated.
 * Use progressive jpeg for preview and crop.
 
-### 1.4.2, 31.08.2014
+## 1.4.2 - 2014-08-31
 
 * Fixed ui freeze in IE 10+ after file choosing.
 
-### 1.4.1, 21.08.2014
+## 1.4.1 - 2014-08-21
 
 * Fixed crop to fixed size when whole image is selected
 * Fixed progress indication for files smaller than 1kb
 * Added `accept="image/*"` input attribute for images only widgets
 
-### 1.4.0, 30.07.2014
+## 1.4.0 - 2014-07-30
 
 * German localization.
 * Retina icons for all social networks.
@@ -494,66 +509,66 @@
 * `utils` and `t` are no more exposed to file info.
 * Fix French and Portuguese locales. 
 
-### 1.3.1, 20.06.2014
+## 1.3.1 - 2014-06-20
 
 * Fixed preview size for wide images in non-webkit browsers.
 
-### 1.3.0, 19.06.2014
+## 1.3.0 - 2014-06-19
 
 * Multiple cropping presets can be added divided by comma. User can choose any.
 
-### 1.2.3, 05.06.2014
+## 1.2.3 - 2014-06-05
 
 * Fixed free crop problem introduced in previous version.
 
-### 1.2.2, 04.06.2014
+## 1.2.2 - 2014-06-04
 
 * Further crop fixes
 
-### 1.2.1, 02.06.2014
+## 1.2.1 - 2014-06-02
 
 * Fixed croping for `minimum` settings and othr rare cases.
 * Fixed uploading in IE9- when jQuery not used on page.
 
-### 1.2.0, 22.05.2014
+## 1.2.0 - 2014-05-22
 
 * Added Flickr as a source.
 * Added Danish locale.
 * Fixed French localization.
 
-### 1.1.0, 08.05.2014
+## 1.1.0 - 2014-05-08
 
 * Added Dutch locale.
 * `system-dialog` widget settings.
 * Restored compatibility with some old browsers versions.
 
-### 1.0.1, 28.03.2014
+## 1.0.1 - 2014-03-28
 
 * Fixed uploading from url.
 
-### 1.0.0, 21.03.2014
+## 1.0.0 - 2014-03-21
 
 * Mobile version.
 * Undocumented `fileFrom('event')` method was removed.
 * Page scrolling disabled when dialog is opened.
 * Increased active size of crop corners.
 
-### 0.18.3, 05.03.2014
+## 0.18.3 - 2014-03-05
 
 * New widget settings `preferred-types`.
 * Fixed tabs order when 'all' or 'default' shortcuts used.
 * Fixed transparent images crop.
 
-### 0.18.2, 25.02.2014
+## 0.18.2 - 2014-02-25
 
 * Clear look for close icon.
 
-### 0.18.1, 19.02.2014
+## 0.18.1 - 2014-02-19
 
 * Added Turkish locale.
 * Fixed crop on pages with old bootstrap.
 
-### 0.18.0, 10.02.2014
+## 0.18.0 - 2014-02-10
 
 * Widget now is one button "Choose a file".
   Progress circle appears only on uploading.
@@ -568,31 +583,31 @@
 * Fixed impossible to set null value to widget.
 * Removed deprecated `preview()` and `previewUrl` fields of `fileInfo` object.
 
-### 0.17.2, 24.01.2014
+## 0.17.2 - 2014-01-24
 
 * better compatibility with host page markup
 
-### 0.17.1, 13.01.2014
+## 0.17.1 - 2014-01-13
 
 * Large files uploads in parallel by small pieces with automatic recovering
   in case of network errors.
 * Requests aborts after user cancels upload.
 * Slightly reduced cpu usage during large files uploading.
 
-### 0.17.0, 25.12.2013
+## 0.17.0 - 2013-12-25
 
 * We now support large files uploads. Merry Christmas.
 
-### 0.16.2, 16.12.2013
+## 0.16.2 - 2013-12-16
 
 * Removing file from multiupload preview step no longer closes whole dialog.
   Bug introduced in 0.16.0.
 
-### 0.16.1, 13.12.2013
+## 0.16.1 - 2013-12-13
 
 * Widget.onChange now fires immediately after user chooses file.
 
-### 0.16.0, 02.12.2013
+## 0.16.0 - 2013-12-02
 
 * `uploadcare.openPanel()` method added. It allows open panel with tabs
   embedded in page (no modal mode).
@@ -605,101 +620,101 @@
 * `uploadcare-dragging` class now appear on elements used as target for
   `receiveDrop` and `uploadDrop`
 
-### 0.15.5, 25.11.2013
+## 0.15.5 - 2013-11-25
 
 * Skydrive tab added.
 
-### 0.15.4, 18.11.2013
+## 0.15.4 - 2013-11-18
 
 * Box.com tab added.
 
-### 0.15.3, 05.11.2013
+## 0.15.3 - 2013-11-05
 
 * Fixed bug, do not allow set value while page loading.
 
-### 0.15.2, 30.10.2013
+## 0.15.2 - 2013-10-30
 
 * Widget's width can be easily changed in css.
 * Css is now prepended to head, this allows overriding css rules without
   `important` keyword.
 
-### 0.15.1, 17.10.2013
+## 0.15.1 - 2013-10-17
 
 * Tiny replacement of jQuery UI sotrable plugin used. This saves about 12kb
   of gziped widget size for multiupload documents.
 
-### 0.15.0, 16.10.2013
+## 0.15.0 - 2013-10-16
 
 * New settings `clearable` allows user to remove uploaded file from widget.
   It is turned off by default.
 * Widget does not cleared if user cancels dialog.
 
-### 0.14.2, 15.10.2013
+## 0.14.2 - 2013-10-15
 
 * Portuguese localization added.
 * Minimum and maximum limits for number of files in MultipleWidget added.
 
-### 0.14.1, 14.10.2013
+## 0.14.1 - 2013-10-14
 
 * Chinese localization updated.
 
-### 0.14.0, 11.10.2013
+## 0.14.0 - 2013-10-11
 
 * French localization was added.
 * Custom file's validators can be used to restrict user's choice.
 * Undocumented method `fileInfo.dimensions()` was removed.
 * Undocumented callback `Dialog.uploadDone` was removed.
 
-### 0.13.5, 09.10.2013
+## 0.13.5 - 2013-10-09
 
 * `uploadcare.filesFrom` function exposed in api.
 
-### 0.13.4, 05.10.2013
+## 0.13.4 - 2013-10-05
 
 * Fixed loading from url and social sources. Bug introduced in 0.13.3.
 
-### 0.13.3, 03.10.2013
+## 0.13.3 - 2013-10-03
 
 * Opening speed is significantly impoved for widget with hundreds of files
 * Restored compatibility with IE8 and some Firefox versions
 
-### 0.13.2, 30.09.2013
+## 0.13.2 - 2013-09-30
 
 * Translations fixes
 
-### 0.13.1, 26.09.2013
+## 0.13.1 - 2013-09-26
 
 * widget size reduced from 341 to 293 kb (from 104 to 93 kb gziped)
 
-### 0.13.0, 26.09.2013
+## 0.13.0 - 2013-09-26
 
 * Widget no longer accepts urls in `value` HTML-attribute or `value()` method.
   You should use `widget.value(uploadcare.fileFrom('url', 'http://url/'))`.
 * Widget now can be used with any custom domain.
 
-### 0.12.5, 23.09.2013
+## 0.12.5 - 2013-09-23
 
 * switch to preview tab right after selecting files
 * prevent to request not ready images in multiupload preview
 
-### 0.12.4, 16.09.2013
+## 0.12.4 - 2013-09-16
 
 * `uploadcare.tabsCss` api fixed
 
-### 0.12.3, 13.09.2013
+## 0.12.3 - 2013-09-13
 
 * restrictions on the number of files in multiupload group removed
 
-### 0.12.2, 12.09.2013
+## 0.12.2 - 2013-09-12
 
 * fixed bug introduced in 0.12.0 related to loading info about already uploaded files
 
-### 0.12.1, 12.09.2013
+## 0.12.1 - 2013-09-12
 
 * crop options "upscale" and "minimum" also applicable to ratio
 * built-in jQuery (version 1.8.3) now available in `uploadcare.jQuery`
 
-### 0.12.0, 28.08.2013
+## 0.12.0 - 2013-08-28
 
 * new property `originalImageInfo` of `fileInfo` object
 * now you can use `fileInfo.cdnUrl` with all operations right after uploading
@@ -707,11 +722,11 @@
 * new option for crop — "minimum". Doesn't allows user to select area less
   then you specified
 
-### 0.11.2, 13.08.2013
+## 0.11.2 - 2013-08-13
 
 * add Chinese (Simplified) locale
 
-### 0.11.1, 06.08.2013
+## 0.11.1 - 2013-08-06
 
 * [drag and drop api](https://uploadcare.com/documentation/javascript_api/#drag-and-drop)
 * [source tabs styling](https://uploadcare.com/documentation/javascript_api/#sources-style)
@@ -719,7 +734,7 @@
 * fixed bug when can't upload new file from uploadcare cdn url
 * better compatibility with host page markup
 
-### 0.10.1, 11.07.2013
+## 0.10.1 - 2013-07-11
 
 * evernote is supported as a source of files
 * if images_only is used, video thumbnails are loaded from the instagram
