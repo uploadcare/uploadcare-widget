@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
 
+* Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
+  for the changelog at the `HISTORY.markdown` file.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.1...v2
 
