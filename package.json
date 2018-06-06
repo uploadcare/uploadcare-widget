@@ -1,7 +1,8 @@
 {
   "name": "uploadcare-widget",
-  "version": "0.0.0",
-  "description": "Source of Uploadcare Widget",
+  "version": "3.4.0",
+  "description": "Uploadcare Widget. An ultimate file uploader.",
+  "main": "dist/uploadcare.js",
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
@@ -49,5 +50,18 @@
   "bugs": {
     "url": "https://github.com/uploadcare/uploadcare-widget/issues"
   },
-  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme"
+  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme",
+  "keywords": [
+    "uploadcare",
+    "widget",
+    "uploader",
+    "filepicker",
+    "dialog",
+    "upload",
+    "store",
+    "file",
+    "files",
+    "image",
+    "images"
+  ]
 }
