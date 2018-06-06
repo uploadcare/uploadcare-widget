@@ -11,17 +11,23 @@
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build": "npm run build:svg && npm run build:css:min",
     "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "serve:latest": "node ./scripts/serve.js"
+    "serve:latest": "node ./scripts/serve.js",
+    "start": "parcel ./demo/index.html"
   },
-  "dependencies": {},
+  "dependencies": {
+    "hyperapp": "^1.2.6"
+  },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.18.13",
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
     "eslint": "^4.9.0",
     "eslint-config-uploadcare": "^1.1.0",
     "ngrok": "^2.2.23",
+    "parcel-bundler": "^1.8.1",
     "path": "^0.12.7",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
