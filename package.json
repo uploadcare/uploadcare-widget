@@ -4,14 +4,10 @@
   "description": "Uploadcare Widget. An ultimate file uploader.",
   "main": "dist/uploadcare.js",
   "scripts": {
-    "lint:css": "stylelint app/**/*.pcss",
+    "lint:css": "stylelint src/**/*.pcss",
     "lint:js": "eslint .",
-    "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json app/assets/images/uploadcare/svg/icon-*.svg",
-    "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/stylesheets/uploadcare/styles.css -c ./scripts/postcss.config.js",
-    "build:css:min": "cross-env NODE_ENV=production npm run build:css",
-    "build": "npm run build:svg && npm run build:css:min",
+    "lint": "npm run lint:js && npm run lint:css",
     "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "serve:latest": "node ./scripts/serve.js",
     "start": "parcel ./demo/index.html"
   },
   "dependencies": {
