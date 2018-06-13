@@ -1,4 +1,5 @@
 import {h, app} from 'hyperapp'
+import '_config.pcss'
 
 const view = () => (
   <div>
