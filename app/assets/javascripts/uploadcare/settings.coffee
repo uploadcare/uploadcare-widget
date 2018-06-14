@@ -49,6 +49,9 @@ uploadcare.namespace 'settings', (ns) ->
     multipartMaxAttempts: 3
     parallelDirectUploads: 10
     passWindowOpen: false
+    # camera recording
+    audioBitsPerSecond : 128000
+    videoBitsPerSecond : 2500000
     # maintain settings
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
@@ -235,10 +238,10 @@ uploadcare.namespace 'settings', (ns) ->
 
     if settings.validators
       settings.validators = settings.validators.slice()
-    
+
     if settings.previewProxy and not settings.previewUrlCallback
       settings.previewUrlCallback = defaultPreviewUrlCallback
-    
+
     settings
 
 
