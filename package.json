@@ -8,16 +8,21 @@
     "lint:js": "eslint .",
     "lint": "npm run lint:js && npm run lint:css",
     "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "start": "parcel ./demo/index.html"
+    "start": "parcel ./demo/index.html",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "classnames": "^2.2.6",
     "hyperapp": "^1.2.6"
   },
   "devDependencies": {
+    "@zmoki/storybook-hyperapp": "^1.0.0",
     "autoprefixer": "^7.1.5",
+    "babel-core": "^6.26.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "babel-runtime": "^6.26.0",
     "browser-sync": "^2.18.13",
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
