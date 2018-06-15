@@ -1,5 +1,4 @@
 import {h, app} from 'hyperapp'
-import '_config.pcss'
 import {Input} from './components/Input/Input'
 
 const view = () => (
