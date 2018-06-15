@@ -14,7 +14,7 @@
     "start": "parcel ./demo/index.html",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "rollup -c rollup.config.js"
+    "build": "flow && rollup -c rollup.config.js"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -27,11 +27,15 @@
     "@babel/preset-flow": "^7.0.0-beta.51",
     "@zmoki/storybook-hyperapp": "^1.0.0",
     "autoprefixer": "^8.6.2",
+    "babel-eslint": "^8.2.3",
     "browser-sync": "^2.18.13",
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
     "eslint": "^4.9.0",
     "eslint-config-uploadcare": "^1.1.0",
+    "eslint-plugin-flowtype": "^2.49.3",
+    "eslint-plugin-react": "^7.9.1",
+    "flow-bin": "^0.74.0",
     "ngrok": "^2.2.23",
     "parcel-bundler": "^1.8.1",
     "path": "^0.12.7",
