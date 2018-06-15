@@ -166,8 +166,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('recording')
 
       @__recorderOptions = {
-        audioBitsPerSecond : @settings.audioBitsPerSecond,
-        videoBitsPerSecond : @settings.videoBitsPerSecond,
+        audioBitsPerSecond: @settings.audioBitsPerSecond,
+        videoBitsPerSecond: @settings.videoBitsPerSecond,
       }
       @__chunks = []
       @__recorder = new @MediaRecorder(@__stream, @__recorderOptions)
