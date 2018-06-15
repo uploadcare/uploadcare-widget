@@ -1,3 +1,6 @@
+/* @flow */
+/* @jsx h */
+
 import {h, app} from 'hyperapp'
 import {Input} from './components/Input/Input'
 
@@ -8,7 +11,7 @@ const view = () => (
   </div>
 )
 
-const init = (targetElement = document.body) => {
+const init = (targetElement: HTMLElement = document.body) => {
   const $widgetInputs = targetElement.querySelectorAll('.uploadcare-uploader')
 
   Array.from($widgetInputs)
