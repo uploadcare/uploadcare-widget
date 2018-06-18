@@ -11,3 +11,4 @@ icons.jst.ejs
 .cache
 dist
 .vscode
+storybook-static
