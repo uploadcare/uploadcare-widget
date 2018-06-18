@@ -9,7 +9,7 @@ import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
 import {plugin as analyze} from 'rollup-plugin-analyzer'
 
 const onAnalysis = ({bundleSize}) => {
-  const limitBytes = 300e3
+  const limitBytes = 250e3
 
   if (bundleSize < limitBytes) return
   console.log(`ATTENTION: Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`)
