@@ -11,19 +11,26 @@ const view = () => (
   </div>
 )
 
-const init = (targetElement: HTMLElement = document.body) => {
+const init = (targetElement: HTMLElement | null = document.body) => {
+  if (!targetElement) {
+    return
+  }
+
   const $widgetInputs = targetElement.querySelectorAll('.uploadcare-uploader')
 
-  Array.from($widgetInputs)
-    .forEach($widgetInput => {
-      const $wrapper = document.createElement('div')
+  Array.from($widgetInputs).forEach($widgetInput => {
+    const $wrapper = document.createElement('div')
+    const parentNode = $widgetInput.parentNode
 
-      $wrapper.classList.add('uploadcare-uploader--widget')
+    if (!parentNode) {
+      return
+    }
 
-      $widgetInput.parentNode.insertBefore($wrapper, $widgetInput)
+    $wrapper.classList.add('uploadcare-uploader--widget')
+    parentNode.insertBefore($wrapper, $widgetInput)
 
-      app({}, {}, view, $wrapper)
-    })
+    app({}, {}, view, $wrapper)
+  })
 }
 
 export default {uploader: {init}}
