@@ -4,4 +4,4 @@ import {Input} from './Input'
 
 storiesOf('Components/Input', module)
   .add('default', () => <Input />)
-  .add('type=file', () => <Input type='file' />)
+  .add('type=file', () => <Input className={'example'} type='file' />)

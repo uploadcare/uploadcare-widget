@@ -1,11 +1,11 @@
 [ignore]
-.*/dist/.*
-.*/scripts/.*
 .*/app/.*
 .*/demo/.*
-.*/log/.*
-.*/test/.*
+.*/dist/.*
 .*/node_modules/.*
+.*/pkg/.*
+.*/scripts/.*
+.*/submodules/.*
 
 [include]
 

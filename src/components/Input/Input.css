@@ -1,3 +1,7 @@
+@import "../../config.css";
+@import "../../config.css";
+@import "../../config.css";
+
 .input {
   appearance: none;
 
@@ -17,7 +21,7 @@
 
   background: #fff;
   color: var(--color-base);
-  border: 1px solid var(--color-gray);
+  border: 1px solid var(--simple-var);
   border-radius: 2px;
   box-shadow: none;
 

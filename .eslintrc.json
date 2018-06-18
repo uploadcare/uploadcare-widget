@@ -15,6 +15,10 @@
   "extends": [
     "uploadcare",
     "plugin:react/recommended",
-    "eslint-plugin-flowtype"
-  ]
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": ["flowtype", "react"],
+  "rules": {
+    "react/no-unknown-property": [2, { "ignore": ["class"] }]
+  }
 }
