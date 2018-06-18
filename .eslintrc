@@ -6,5 +6,9 @@
       "jsx": true
     }
   },
-  "extends": "uploadcare"
+  "parser": "babel-eslint",
+  "extends": ["uploadcare", "plugin:flowtype/recommended"],
+  "plugins": [
+    "flowtype"
+  ]
 }

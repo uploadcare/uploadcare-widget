@@ -1,6 +1,13 @@
+/* @flow */
+/* @jsx h */
 import {h} from 'hyperapp'
-import styles from './Input.pcss'
+import cn from 'classnames'
+import styles from './Input.css'
 
-export const Input = () => (
-  <input class={styles.input} />
+type Props = {
+  className?: string,
+}
+
+export const Input = ({className}: Props) => (
+  <input class={cn(styles.input, className)} />
 )
