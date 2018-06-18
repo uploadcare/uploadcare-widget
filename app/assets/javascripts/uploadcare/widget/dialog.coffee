@@ -374,7 +374,7 @@ uploadcare.namespace '', (ns) ->
       @tabs[name] = new TabCls(tabPanel, tabButton, @publicPromise(), @settings, name)
 
     switchTab: (tab) =>
-      if not tab
+      if not tab or @currentTab == tab
         return
       @currentTab = tab
 
