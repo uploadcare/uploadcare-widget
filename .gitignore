@@ -10,3 +10,4 @@ icons.jst.ejs
 *.log
 .cache
 dist
+.vscode
