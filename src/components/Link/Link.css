@@ -1,0 +1,27 @@
+.link {
+  &,
+  &:link,
+  &:visited {
+    cursor: pointer;
+
+    color: var(--color-primary);
+
+    text-decoration: underline;
+  }
+
+  &:hover,
+  &:focus {
+    color: var(--color-primary-light);
+
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 1px;
+  }
+
+  &:active {
+    color: var(--color-primary-dark);
+  }
+}

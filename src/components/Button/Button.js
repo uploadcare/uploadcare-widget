@@ -6,18 +6,20 @@ import styles from './Button.css'
 
 type Props = {
   className?: string,
-  icon?: string,
+  withIcon?: string,
   isMuted?: boolean,
   isOverlay?: boolean,
   isPrimary?: boolean,
   size?: string,
+  title?: string,
   children?: string,
 }
 
-export const Button = ({className, icon, isMuted, isOverlay, isPrimary, size}: Props, children) => (
+export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: Props, children) => (
   <button
     class={cn(
       styles.button,
+      withIcon && styles.button_icon,
       isMuted && styles.button_muted,
       isOverlay && styles.button_overlay,
       isPrimary && styles.button_primary,
@@ -25,5 +27,6 @@ export const Button = ({className, icon, isMuted, isOverlay, isPrimary, size}: P
       size && size === 'small' && styles.button_size_small,
       className
     )}
-    type='button'>{icon}{children}</button>
+    type='button'
+    title={title}>{children}</button>
 )
