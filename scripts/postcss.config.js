@@ -1,5 +1,6 @@
 module.exports = (ctx) => ({
   plugins: {
+    'postcss-import': {path: ['src']},
     'postcss-custom-media': {
       extensions: {
         '--large': '(min-width: 1210px)',
@@ -10,6 +11,7 @@ module.exports = (ctx) => ({
     },
     'postcss-nested': {},
     'postcss-css-variables': {
+      appendVariables: true,
       variables: {
         'font-family':
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Ubuntu", "Cantarell", ' +

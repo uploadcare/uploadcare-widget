@@ -1,0 +1,16 @@
+{
+  "dist/uploadcare-widget.esm.js": {
+    "bundled": 14351,
+    "minified": 6716,
+    "gzipped": 2868,
+    "treeshaked": {
+      "rollup": {
+        "code": 2700,
+        "import_statements": 0
+      },
+      "webpack": {
+        "code": 3795
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
   for the changelog at the `HISTORY.markdown` file.
+* Dropbox icon was updated.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.4.0...HEAD
 
@@ -308,7 +309,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fixed the `Widget` constructor error message.
 * Added the `_name` attribute for `MultipleWidget` and `Widget` classes.
-* Added using [`imageSmoothingQuality`](https://html.spec.whatwg.org/multipage/scripting.html#image-smoothing) property 
+* Added using [`imageSmoothingQuality`](https://html.spec.whatwg.org/multipage/scripting.html#image-smoothing) property
   where it's supported (except Chrome due to worst quality) instead of our resampling algorithm.
 * Added the Google Photos tab
 * Update jQuery dependency. We don't support 3.0.0 just yet.
@@ -411,7 +412,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 2.5.3 - 2015-09-22
 
 * New Swedish locale.
-* File info pooling optimization. 
+* File info pooling optimization.
 * Multipart uploading tuning via settings.
 
 ## 2.5.2 - 2015-09-13
@@ -428,7 +429,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2.4.4 - 2015-08-20
 
-* Fixed `onDialogOpen` event which did not fire when files were dropped. 
+* Fixed `onDialogOpen` event which did not fire when files were dropped.
 * Optimized info loading for files uploaded from URLs.
 * Internal `uploadcare.namespace` function accepts namespace name without
   `uploadcare` prefix. I.e. `uploadcare.files.utils` becomes `files.utils`.
@@ -455,9 +456,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2.3.5 - 2015-07-11
 
-* Prevent infinity loop when multiupload dialog is used with crop with 
+* Prevent infinity loop when multiupload dialog is used with crop with
   some ratio and uploaded image is already has this ratio.
-* Correct reading of EXIF data from some corrupeted JPEGs. 
+* Correct reading of EXIF data from some corrupeted JPEGs.
 
 ## 2.3.4 - 2015-06-29
 
@@ -540,11 +541,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 2.1.0 - 2015-04-10
 
 * Keyboard navigation.
-* Widgets are initialized immediately after page loading, not after 100ms. 
+* Widgets are initialized immediately after page loading, not after 100ms.
 * Role attributes inside the widget were aligned with ARIA.
   The `uploadcare-uploader` role is still used for widget identification.
 * Multiple panels's footer is now maintained by panel itself, not by tabs.
-  As a result the footer will appear on custom tabs too.  
+  As a result the footer will appear on custom tabs too.
 * New `showTab` and `hideTab` methods for dialog api.
 * `uploadcare.globals()` now includes settings from `uploadcare.start()`.
 * Removed `white-space: nowrap` around the widget.
@@ -553,7 +554,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2.0.6 - 2015-03-28
 
-* Fix exception when multiple files are uploaded simalteniously with 
+* Fix exception when multiple files are uploaded simalteniously with
   `image-shrink` option and uploading is cancelled.
 
 ## 2.0.5 - 2015-03-25
@@ -565,7 +566,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fixed error if validation is failed.
 * Fixed error in case of large file with imagesOnly settings
-  and files larger than 100 MB in old browsers. 
+  and files larger than 100 MB in old browsers.
 
 ## 2.0.3 - 2015-03-10
 
@@ -604,7 +605,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Custom tabs constructors now receive tab name as last argument.
 * Fix group `cdnUrl` property when group creation is failed.
 * Multi-upload widget does not break when `null` value assigned to it.
- 
+
 ### Breaking changes
 
 * `path-value` is on by default. Widget will always return file URL,
@@ -679,7 +680,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.4.4 - 2014-10-31
 
 * Fix conflict with host pages Pusher. Built-in pusher
-  isn't exposed to global namesapse anymore. 
+  isn't exposed to global namesapse anymore.
 
 ## 1.4.3 - 2014-10-16
 
@@ -704,7 +705,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Updated "local files" tab for mobile devices.
 * Widget works on local pages (without web server).
 * `utils` and `t` are no more exposed to file info.
-* Fix French and Portuguese locales. 
+* Fix French and Portuguese locales.
 
 ## 1.3.1 - 2014-06-20
 
