@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import license from 'rollup-plugin-license'
 import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
@@ -5,6 +6,16 @@ import commonjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-replace'
 import postcss from 'rollup-plugin-postcss'
 import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
+import {plugin as analyze} from 'rollup-plugin-analyzer'
+
+const onAnalysis = ({bundleSize}) => {
+  const limitBytes = 250e3
+
+  if (bundleSize < limitBytes) return
+  console.log(`ATTENTION: Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`)
+
+  return process.exit(1)
+}
 
 const getPlugins = () =>
   [
@@ -28,6 +39,7 @@ const getPlugins = () =>
     `,
     }),
     sizeSnapshot(),
+    analyze({onAnalysis}),
   ].filter(plugin => !!plugin)
 
 export default [
