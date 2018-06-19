@@ -1,0 +1,117 @@
+/*
+  No styles:
+  * camera
+  * camera__controls
+  * camera__button_type_cancel
+  * camera__button_type_capture
+  * camera__button_type_retry
+  * camera__button_type_start
+  * camera__button_type_stop
+  * camera__not
+  * camera__allow
+ */
+
+/* stylelint-disable */
+.camera {}
+.camera__controls {}
+.camera__button_type_cancel {}
+.camera__button_type_capture {}
+.camera__button_type_retry {}
+.camera__button_type_start {}
+.camera__button_type_stop {}
+.camera__not {}
+.camera__allow {}
+/* stylelint-enable */
+
+.camera__button {
+  margin: 5px 10px;
+}
+
+.camera__button_type_mirror {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+
+  margin: 0;
+
+  transform: translateX(-50%);
+}
+
+.camera__video {
+  transition: transform .8s cubic-bezier(.23, 1, .32, 1);
+}
+
+.camera__video_mirrored {
+  transform: scale(-1, 1);
+}
+
+.camera__container {
+  flex-grow: 0;
+
+  position: relative;
+
+  margin-bottom: 10px;
+}
+
+.camera_status_denied {
+  .camera__button_type_cancel,
+  .camera__button_type_capture,
+  .camera__button_type_mirror,
+  .camera__button_type_start,
+  .camera__button_type_stop,
+  .camera__controls,
+  .camera__not,
+  .camera__allow,
+  .camera__container {
+    display: none;
+  }
+}
+
+.camera_status_noted {
+  .camera__button_type_cancel,
+  .camera__button_type_capture,
+  .camera__button_type_mirror,
+  .camera__button_type_retry,
+  .camera__button_type_start,
+  .camera__button_type_stop,
+  .camera__controls,
+  .camera__allow,
+  .camera__container {
+    display: none;
+  }
+}
+
+.camera_status_ready {
+  .camera__button_type_cancel,
+  .camera__button_type_retry,
+  .camera__button_type_stop,
+  .camera__not,
+  .camera__allow {
+    display: none;
+  }
+}
+
+.camera_status_recording {
+  .camera__button_type_capture,
+  .camera__button_type_mirror,
+  .camera__button_type_retry,
+  .camera__button_type_start,
+  .camera__not,
+  .camera__allow {
+    display: none;
+  }
+}
+
+.camera_status_requested {
+  .camera__button_type_cancel,
+  .camera__button_type_capture,
+  .camera__button_type_mirror,
+  .camera__button_type_retry,
+  .camera__button_type_start,
+  .camera__button_type_stop,
+  .camera__controls,
+  .camera__not,
+  .camera__container {
+    display: none;
+  }
+}

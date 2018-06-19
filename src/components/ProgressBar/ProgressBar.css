@@ -1,0 +1,16 @@
+.progressbar {
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--back-main-color);
+  border-radius: 6px;
+}
+
+.progressbar__value {
+  width: 0;
+  height: 100%;
+
+  background: var(--color-bright);
+}

@@ -1,0 +1,33 @@
+/*
+  No styles:
+  * progress
+ */
+
+.progress__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.progress__container {
+  width: 100%;
+  height: 100%;
+  display: table;
+  white-space: normal;
+}
+
+.progress__text {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 60%;
+  line-height: 1;
+}
+
+.progress_type_canvas {
+  padding: 2px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  color: var(--color-bright);
+  border-color: var(--back-main-color);
+}

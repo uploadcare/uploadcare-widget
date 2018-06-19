@@ -1,4 +1,5 @@
 import {h, app} from 'hyperapp'
+import './config.css'
 import {Input} from './components/Input/Input'
 
 const view = () => (
