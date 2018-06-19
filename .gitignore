@@ -12,3 +12,4 @@ icons.jst.ejs
 dist
 .vscode
 storybook-static
+.DS_Store
