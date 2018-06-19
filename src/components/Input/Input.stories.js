@@ -1,5 +1,6 @@
-import {storiesOf} from '@zmoki/storybook-hyperapp'
+/* @jsx h */
 import {h} from 'hyperapp'
+import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Input} from './Input'
 
 storiesOf('Components/Input', module)

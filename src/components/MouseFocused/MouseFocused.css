@@ -1,0 +1,5 @@
+.mouse-focused {
+  &:focus {
+    outline: none;
+  }
+}

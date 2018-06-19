@@ -1,0 +1,20 @@
+/*
+  No styles:
+  * preview
+  * preview__back
+  * preview__done
+  * preview__file-name
+  * preview__image
+  * preview__message
+  * preview__title
+  * preview__video
+  * preview_status_[type]
+ */
+
+.preview__content {
+  overflow: hidden;
+}
+
+.preview__content_crop {
+  padding: 10px 20px;
+}

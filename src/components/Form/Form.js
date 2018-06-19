@@ -2,14 +2,14 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import st from './Form.css'
+import styles from './Form.css'
 
 type Props = {
   className?: string,
 }
 
 export const Form = ({className}: Props, children) => (
-  <form className={cn(st.form, className)}>
+  <form className={cn(styles.form, className)}>
     {children}
   </form>
 )

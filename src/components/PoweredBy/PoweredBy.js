@@ -2,7 +2,7 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import st from './PoweredBy.css'
+import styles from './PoweredBy.css'
 import {translate} from '../../helpers'
 
 import {Link} from '../Link/Link'
@@ -14,13 +14,13 @@ type Props = {
 }
 
 export const PoweredBy = ({className, version}: Props) => (
-  <div class={cn(st.poweredBy, className)}>
+  <div class={cn(styles.poweredBy, className)}>
     {translate('dialog.footer.text')}
     <Link
-      className={st.poweredBy__link}
+      className={styles.poweredBy__link}
       href={`'https://uploadcare.com/?utm_campaign=widget&utm_source=copyright&utm_medium=desktop&utm_content='${version}`}
       target='_blank'>
-      <Icon className={st.poweredBy__logo}>1</Icon>
+      <Icon className={styles.poweredBy__logo}>1</Icon>
       {translate('dialog.footer.link')}
     </Link>
   </div>

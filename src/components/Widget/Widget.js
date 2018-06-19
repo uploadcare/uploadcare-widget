@@ -2,15 +2,14 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import styles from './Error.css'
+import styles from './Widget.css'
 
 type Props = {
   className?: string,
 }
 
-export const Error = ({className}: Props, children) => (
-  <div className={cn(styles.error, className)}>
+export const Widget = ({className}: Props, children) => (
+  <div className={cn(styles.widget, className)}>
     {children}
   </div>
 )
-

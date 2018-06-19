@@ -2,7 +2,7 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import st from './Link.css'
+import styles from './Link.css'
 
 type Props = {
   className?: string,
@@ -12,7 +12,7 @@ type Props = {
 
 export const Link = ({className, href, target}: Props, children) => (
   <a
-    className={cn(st.link, className)}
+    className={cn(styles.link, className)}
     href={href}
     target={target}>{children}</a>
 )

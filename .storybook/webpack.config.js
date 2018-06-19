@@ -15,7 +15,7 @@ module.exports = (storybookBaseConfig, configType) => {
       rules: [
         ...storybookConfig.module.rules,
         {
-          test: /\.pcss$/,
+          test: /\.css$/,
           exclude: /node_modules/,
           use: [
             {

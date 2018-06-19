@@ -2,7 +2,7 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import st from './Menu.css'
+import styles from './Menu.css'
 
 import {Button} from '../Button/Button'
 import {Icon} from '../Icon/Icon'
@@ -14,19 +14,19 @@ type Props = {
 }
 
 export const Menu = ({className}: Props, children) => (
-  <div class={cn(st.menu, className)}>
+  <div class={cn(styles.menu, className)}>
     <Button
-      className={st.menu__toggle}
+      className={styles.menu__toggle}
       withIcon
       isMuted>
       <Icon></Icon>
     </Button>
     <Button
-      className={st.menu__toggle}
+      className={styles.menu__toggle}
       withIcon>
       <Icon></Icon>
     </Button>
-    <div class={st.menu__items}>{children}</div>
+    <div class={styles.menu__items}>{children}</div>
   </div>
 )
 

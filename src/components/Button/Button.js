@@ -4,7 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Button.css'
 
-type Props = {
+export type ButtonProps = {
   className?: string,
   withIcon?: string,
   isMuted?: boolean,
@@ -15,7 +15,7 @@ type Props = {
   children?: string,
 }
 
-export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: Props, children) => (
+export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: ButtonProps, children) => (
   <button
     class={cn(
       styles.button,

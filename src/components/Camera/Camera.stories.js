@@ -1,3 +1,4 @@
+/* @jsx h */
 import {h} from 'hyperapp'
 import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Camera} from './Camera'

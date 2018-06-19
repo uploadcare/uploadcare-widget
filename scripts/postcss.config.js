@@ -1,5 +1,6 @@
 module.exports = (ctx) => ({
   plugins: {
+    'postcss-import': {},
     'postcss-custom-media': {
       extensions: {
         '--large': '(min-width: 1210px)',
