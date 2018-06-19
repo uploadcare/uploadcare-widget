@@ -2,3 +2,4 @@ app
 dist
 submodules
 flow-typed
+storybook-static
