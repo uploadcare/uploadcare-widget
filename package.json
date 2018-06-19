@@ -2,7 +2,9 @@
   "name": "uploadcare-widget",
   "version": "3.4.0",
   "description": "Uploadcare Widget. An ultimate file uploader.",
-  "main": "dist/uploadcare.js",
+  "main": "dist/uploadcare.cjs.js",
+  "module": "dist/uploadcare.esm.js",
+  "browser": "dist/uploadcare.umd.js",
   "config": {
     "classPrefix": "uploadcare--"
   },

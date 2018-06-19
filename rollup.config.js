@@ -48,8 +48,17 @@ export default [
     plugins: getPlugins(),
     output: [
       {
-        file: 'dist/uploadcare-widget.esm.js',
+        file: 'dist/uploadcare.esm.js',
         format: 'es',
+      },
+      {
+        file: 'dist/uploadcare.cjs.js',
+        format: 'cjs',
+      },
+      {
+        file: 'dist/uploadcare.umd.js',
+        name: 'uploadcare',
+        format: 'umd',
       },
     ],
   },

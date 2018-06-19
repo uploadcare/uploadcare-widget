@@ -1,5 +1,5 @@
 {
-  "dist/uploadcare-widget.esm.js": {
+  "dist/uploadcare.esm.js": {
     "bundled": 11329,
     "minified": 4749,
     "gzipped": 2135,
@@ -12,5 +12,15 @@
         "code": 1814
       }
     }
+  },
+  "dist/uploadcare.cjs.js": {
+    "bundled": 11346,
+    "minified": 4762,
+    "gzipped": 2139
+  },
+  "dist/uploadcare.umd.js": {
+    "bundled": 12248,
+    "minified": 4826,
+    "gzipped": 2151
   }
 }
