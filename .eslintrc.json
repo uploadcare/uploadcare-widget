@@ -12,9 +12,9 @@
       "pragma": "h"
     }
   },
-  "extends": [
-    "uploadcare",
-    "plugin:react/recommended",
-    "eslint-plugin-flowtype"
-  ]
+  "extends": ["uploadcare", "plugin:react/recommended", "plugin:flowtype/recommended"],
+  "plugins": ["flowtype"],
+  "rules": {
+    "react/no-unknown-property": [2, {"ignore": ["class"]}]
+  }
 }
