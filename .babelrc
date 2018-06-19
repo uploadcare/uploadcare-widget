@@ -1,5 +1,5 @@
 {
-  "presets": ["env", "flow"],
+  "presets": ["env"],
   "plugins": [
     [
       "transform-react-jsx",
