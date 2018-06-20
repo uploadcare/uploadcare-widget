@@ -1,4 +1,5 @@
 const translations = {
+  hello: 'Hello!',
   uploading: 'Uploading... Please wait.',
   loadingInfo: 'Loading info...',
   file: {

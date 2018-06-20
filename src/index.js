@@ -3,6 +3,7 @@
 
 import {h, app} from 'hyperapp'
 import {Input} from './components/Input/Input'
+import {LocalizedDemo} from './components/LocalizedDemo/LocalizedDemo'
 import {i18n, hyperi18n} from './i18n'
 import {ru} from './i18n/locales'
 
@@ -15,6 +16,7 @@ const view = () => (
   <div>
     Uploadcare Widget will be here.
     <Input type='search' />
+    <LocalizedDemo />
   </div>
 )
 
