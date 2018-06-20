@@ -3,8 +3,8 @@ const translations = {
   uploading: 'Uploading... Please wait.',
   loadingInfo: 'Loading info...',
   file: {
-    one: '%1 file',
-    other: '%1 files',
+    one: '${1} file',
+    other: '${1} files',
   },
 }
 
