@@ -56,8 +56,8 @@ describe('i18n', () => {
     const spec = {
       name: 'test2',
       translations: {
-        named: 'named ${foo} and ${bar}',
-        numbered: 'numbered ${1} and ${2}',
+        named: 'named ${foo} and ${bar} and ${foo}${bar}',
+        numbered: 'numbered ${1} and ${2} and ${1}${2}',
         plural: {
           one: 'plural one named ${1}',
           other: 'plural other named ${other}',
@@ -74,9 +74,9 @@ describe('i18n', () => {
         foo: 'foo',
         bar: 'bar',
       })
-    ).toBe('named foo and bar')
+    ).toBe('named foo and bar and foobar')
 
-    expect(i18n.t('numbered', 'foo', 'bar')).toBe('numbered foo and bar')
+    expect(i18n.t('numbered', 'foo', 'bar')).toBe('numbered foo and bar and foobar')
 
     expect(i18n.p('plural', 1, 'foo')).toBe('plural one named foo')
     expect(i18n.p('plural', 10, {other: 'foo'})).toBe('plural other named foo')
