@@ -1,3 +1,4 @@
 declare module "hyperapp" {
-  declare module.exports: any;
+  declare export h: any;
+  declare export app: any;
 }

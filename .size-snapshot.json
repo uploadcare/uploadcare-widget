@@ -19,8 +19,8 @@
     "gzipped": 3659
   },
   "dist/uploadcare.umd.js": {
-    "bundled": 20580,
-    "minified": 7957,
-    "gzipped": 3492
+    "bundled": 22192,
+    "minified": 8261,
+    "gzipped": 3599
   }
 }
