@@ -129,7 +129,7 @@ describe('i18n', () => {
   })
 
   it('should provide namespaces functionality', () => {
-    i18n.addNamespace({
+    i18n.addLocaleNamespace({
       name: 'EffectsTab',
       locale: 'en',
       translations: {

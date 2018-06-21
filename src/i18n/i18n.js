@@ -246,9 +246,9 @@ export const createInstance = () => {
   /**
    *
    *
-   * @param {string} namespace
+   * @param {NamespaceSpec} namespace
    */
-  function addNamespace(namespace: NamespaceSpec): void {
+  function addLocaleNamespace(namespace: NamespaceSpec): void {
     const {locale, name, translations} = namespace
 
     if (!namespacesMap[locale]) {
@@ -319,7 +319,7 @@ export const createInstance = () => {
     updateLocale,
     onChange,
 
-    addNamespace,
+    addLocaleNamespace,
 
     translate,
     t: translate,
