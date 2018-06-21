@@ -4,4 +4,4 @@ import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Tab} from './Tab'
 
 storiesOf('Components/Tab', module)
-  .add('default', () => <Tab />)
+  .add('default', () => <Tab>Tab</Tab>)

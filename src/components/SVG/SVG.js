@@ -4,12 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './SVG.css'
 
-type Props = {
-  width: number,
-  height: number,
-  viewBox?: string,
-  className?: string,
-}
+import type {Props} from './flow-typed'
 
 export const SVG = ({width, height, viewBox, className}: Props, children) =>
   <svg

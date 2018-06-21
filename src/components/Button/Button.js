@@ -3,19 +3,11 @@
 import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Button.css'
+import {Icon} from '../SVG/components/Icon/Icon'
 
-export type ButtonProps = {
-  className?: string,
-  withIcon?: string,
-  isMuted?: boolean,
-  isOverlay?: boolean,
-  isPrimary?: boolean,
-  size?: string,
-  title?: string,
-  children?: string,
-}
+import type {Props} from './flow-typed'
 
-export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: ButtonProps, children) => (
+export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: Props, children) => (
   <button
     class={cn(
       styles.button,
@@ -28,5 +20,9 @@ export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size
       className
     )}
     type='button'
-    title={title}>{children}</button>
+    title={title}>{
+      withIcon
+        ? (<Icon name={withIcon} />)
+        : children
+    }</button>
 )

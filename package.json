@@ -39,6 +39,7 @@
     "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-react": "^7.9.1",
     "flow-bin": "^0.74.0",
+    "flow-typed": "^2.4.0",
     "ngrok": "^2.2.23",
     "parcel-bundler": "^1.8.1",
     "path": "^0.12.7",

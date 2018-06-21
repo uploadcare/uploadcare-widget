@@ -1,0 +1,32 @@
+.footer__additions {
+  flex-grow: 1;
+  order: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  padding: 0 0 15px;
+
+  text-align: center;
+
+  @media (--mobile) and (orientation: landscape) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 500px) and (orientation: landscape) {
+    display: none;
+  }
+
+  @media (--desktop) {
+    padding: 0 20px;
+  }
+
+  &:empty {
+    visibility: hidden;
+
+    padding: 0;
+  }
+}

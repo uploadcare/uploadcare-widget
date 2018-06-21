@@ -1,4 +1,4 @@
-.poweredBy {
+.powered-by {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -14,14 +14,14 @@
   text-align: center;
 }
 
-.poweredBy__link {
+.powered-by__link {
   display: inline-flex;
 
   color: inherit !important;
   text-decoration: none !important;
 }
 
-.poweredBy__logo {
+.powered-by__logo {
   display: inline-flex;
   width: 20px;
   height: 15px;

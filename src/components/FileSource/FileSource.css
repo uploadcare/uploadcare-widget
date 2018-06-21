@@ -1,0 +1,15 @@
+.file-source {
+  margin: 10px;
+
+  border-color: var(--back-main-color);
+  background: var(--back-main-color);
+  color: var(--text-main-color);
+}
+
+.file-source_all {
+  order: 1;
+
+  border-color: currentColor;
+  background: transparent;
+  color: var(--color-primary);
+}

@@ -4,4 +4,4 @@ import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Page} from './Page'
 
 storiesOf('Components/Page', module)
-  .add('default', () => <Page>Menu</Page>)
+  .add('default', () => <Page>Page</Page>)

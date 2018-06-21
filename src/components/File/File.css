@@ -1,0 +1,161 @@
+/*
+  No styles:
+  * file__error
+  * file__remove
+ */
+
+:root {
+  --file-name-width: calc(100vw - 200px);
+
+  @media (--desktop) {
+    --file-name-width: 350px;
+  }
+}
+
+.file {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  padding: 5px 0 5px 20px;
+
+  color: var(--color-base);
+
+  cursor: default;
+
+  &:hover {
+    background: color(var(--color-primary) a(10%));
+  }
+}
+
+.file__description {
+  flex-grow: 1;
+
+  min-width: 0;
+
+  padding-right: 20px;
+
+  text-align: left;
+
+  &:hover,
+  &:focus {
+    &,
+    & .file__preview {
+      color: var(--color-primary);
+    }
+  }
+
+  &:active {
+    &,
+    & .file__preview {
+      color: var(--color-primary-dark);
+    }
+  }
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+  }
+}
+
+.file__icon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.file__name {
+  overflow: hidden;
+
+  margin: 0;
+  max-width: var(--file-name-width); /* TODO Hack for limit block if content has long string without spaces */
+
+  line-height: 25px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  transition: color .3s;
+}
+
+.file__preview {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  float: left;
+
+  box-sizing: border-box;
+
+  margin-right: 10px;
+  padding: 2px;
+  width: var(--base-size);
+  height: var(--base-size);
+
+  overflow: hidden;
+
+  border: 1px solid;
+  border-radius: 6px;
+
+  background: transparent;
+  color: var(--back-main-color);
+
+  transition: border .3s;
+}
+
+.file__progressbar {
+  flex-shrink: 0;
+  align-self: center;
+
+  margin: 0 10px;
+
+  width: 60px;
+  height: 10px;
+}
+
+.file__size {
+  font-size: 12.5px;
+
+  color: var(--color-gray);
+}
+
+.file_status_error {
+  &,
+  .file__description,
+  .file__preview {
+    color: var(--error-color) !important;
+  }
+
+  .file__name {
+    color: color(var(--error-color) a(50%)) !important;
+  }
+
+  .file__size,
+  .file__progressbar {
+    display: none;
+  }
+}
+
+.file_status_uploaded .file__progressbar {
+  display: none;
+}
+
+.file_status_uploading {
+  &,
+  .file__description {
+    color: var(--color-base) !important;
+  }
+
+  .file__name {
+    max-width: calc(var(--file-name-width) - 80px);
+  }
+
+  .file__preview {
+    background: var(--color-bright);
+    color: var(--color-bright) !important;
+  }
+}

@@ -4,13 +4,10 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Form.css'
 
-type Props = {
-  className?: string,
-}
+import type {Props} from './flow-typed'
 
 export const Form = ({className}: Props, children) => (
   <form className={cn(styles.form, className)}>
     {children}
   </form>
 )
-

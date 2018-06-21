@@ -4,12 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Text.css'
 
-type Props = {
-  className?: string,
-  isMuted?: boolean,
-  isPre?: boolean,
-  size?: string,
-}
+import type {Props} from './flow-typed'
 
 export const Text = ({className, isMuted, isPre, size}: Props, children) => (
   <div className={cn(
@@ -19,7 +14,7 @@ export const Text = ({className, isMuted, isPre, size}: Props, children) => (
     size && size === 'small' && styles.text_size_small,
     size && size === 'medium' && styles.text_size_medium,
     size && size === 'large' && styles.text_size_large,
-    size && size === 'extra' && styles.text_size_extra,
+    size && size === 'extra' && styles['text_size_extra-large'],
     className
   )}>
     {children}

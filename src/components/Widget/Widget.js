@@ -4,9 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Widget.css'
 
-type Props = {
-  className?: string,
-}
+import type {Props} from './flow-typed'
 
 export const Widget = ({className}: Props, children) => (
   <div className={cn(styles.widget, className)}>

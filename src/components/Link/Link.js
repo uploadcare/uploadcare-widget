@@ -4,11 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Link.css'
 
-type Props = {
-  className?: string,
-  href: string,
-  target?: string,
-}
+import type {Props} from './flow-typed'
 
 export const Link = ({className, href, target}: Props, children) => (
   <a
@@ -16,4 +12,3 @@ export const Link = ({className, href, target}: Props, children) => (
     href={href}
     target={target}>{children}</a>
 )
-

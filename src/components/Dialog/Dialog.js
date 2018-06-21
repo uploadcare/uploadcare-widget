@@ -4,12 +4,10 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Dialog.css'
 
-type Props = {
-  className?: string,
-}
+import type {Props} from './flow-typed'
 
-export const Dialog = ({className}: Props) => (
+export const Dialog = ({className}: Props, children) => (
   <div class={cn(styles.dialog, className)}>
+    {children}
   </div>
 )
-

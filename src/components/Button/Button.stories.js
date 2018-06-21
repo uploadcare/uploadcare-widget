@@ -5,7 +5,9 @@ import {Button} from './Button'
 
 storiesOf('Components/Button', module)
   .add('default', () => <Button>Default button</Button>)
-  .add('icon', () => <Button icon='icon'>Button with icon</Button>)
+  .add('icon', () => (
+    <Button withIcon='back' />
+  ))
   .add('muted', () => <Button isMuted>Muted button</Button>)
   .add('overlay', () => <Button isOverlay>Overlay button</Button>)
   .add('primary', () => <Button isPrimary>Primary button</Button>)
