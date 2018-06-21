@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+
 import {createInstance} from './i18n'
 import ruLocale from './locales/ru'
 
@@ -124,5 +126,25 @@ describe('i18n', () => {
     i18n.setLocale('en')
 
     expect(listener.calls.count()).toEqual(3)
+  })
+
+  it('should provide namespaces functionality', () => {
+    i18n.addNamespace({
+      name: 'EffectsTab',
+      locale: 'en',
+      translations: {
+        tree: {
+          welcome: 'Hi! This is brand new Effects Tab!',
+          effects: {
+            one: 'effect',
+            other: 'effects',
+          },
+        },
+      },
+    })
+
+    expect(i18n.t('EffectsTab#tree.welcome')).toBe('Hi! This is brand new Effects Tab!')
+    expect(i18n.p('EffectsTab#tree.effects', 1)).toBe('effect')
+    expect(i18n.p('EffectsTab#tree.effects', 10)).toBe('effects')
   })
 })

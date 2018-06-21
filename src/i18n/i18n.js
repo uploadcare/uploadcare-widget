@@ -2,10 +2,21 @@
 /* eslint-disable id-length, max-statements */
 
 import enLocale from './locales/en'
-import type {LocaleSpec, Locale, LocalesMap, Translations, NamedParams, ChangeListener} from './flow-typed'
+import type {
+  LocaleSpec,
+  Locale,
+  LocalesMap,
+  Translations,
+  NamedParams,
+  NamespaceSpec,
+  ChangeListener,
+  NamespacesMap,
+} from './flow-typed'
 
 export const createInstance = () => {
   const changeListeners: Array<ChangeListener> = []
+
+  const namespacesMap: NamespacesMap = {}
   const localesMap: LocalesMap = {}
   let localeName: string = enLocale.name
 
@@ -15,15 +26,22 @@ export const createInstance = () => {
    * Get translation by it's path
    * Supports named and numbered templating
    *
-   * @param {string} path path to the translation
+   * @param {string} inputPath path to the translation
    * @param {...Array<string> | ...Array<NamedParams>} args template arguments
    * @returns {(string | void)} translated string
    */
-  function translate(path: string, ...args: Array<string> | Array<NamedParams>): string | void {
-    const locale = getCurrentLocale()
+  function translate(inputPath: string, ...args: Array<string> | Array<NamedParams>): string | void {
+    const {namespace, path} = parseNamespace(inputPath)
+    let translations
 
-    const {translations} = locale
-    let value = getIn(path, translations)
+    if (namespace) {
+      translations = namespacesMap[localeName][namespace].translations
+    }
+    else {
+      translations = localesMap[localeName].translations
+    }
+
+    const value = getIn(path, translations)
 
     if (typeof value !== 'string') {
       return error(`expected translation to be a string. Got: ${typeof value}`, value)
@@ -68,13 +86,23 @@ export const createInstance = () => {
   /**
    * Pluralize translation
    *
-   * @param {string} path path to the pluralization object
+   * @param {string} inputPath path to the pluralization object
    * @param {number} num number of items
    * @returns {string} pluralized string
    */
-  function pluralize(path: string, num: number, ...args: Array<string> | Array<NamedParams>): string | void {
-    const locale = getCurrentLocale()
-    const value = getIn(path, locale.translations)
+  function pluralize(inputPath: string, num: number, ...args: Array<string> | Array<NamedParams>): string | void {
+    const {namespace, path} = parseNamespace(inputPath)
+    const locale = localesMap[localeName]
+    let translations
+
+    if (namespace) {
+      translations = namespacesMap[localeName][namespace].translations
+    }
+    else {
+      translations = locale.translations
+    }
+
+    const value = getIn(path, translations)
 
     if (typeof value !== 'object') {
       return error(`expected translation to be an object. Got: ${typeof value}`, value)
@@ -153,6 +181,29 @@ export const createInstance = () => {
   }
 
   /**
+   * Parse namespace from path string
+   *
+   * @param {string} path
+   * @returns {(string | void)}
+   */
+  function parseNamespace(path: string): {namespace: string | void, path: string} {
+    const re = /(^.*?)\#/
+    const matches = path.match(re)
+
+    if (!matches) {
+      return {
+        namespace: undefined,
+        path,
+      }
+    }
+
+    return {
+      namespace: matches[1],
+      path: path.replace(matches[0], ''),
+    }
+  }
+
+  /**
    * Set current locale
    *
    * @param {string} name locale name
@@ -190,6 +241,25 @@ export const createInstance = () => {
       translations,
       pluralize,
     }
+  }
+
+  /**
+   *
+   *
+   * @param {string} namespace
+   */
+  function addNamespace(namespace: NamespaceSpec): void {
+    const {locale, name, translations} = namespace
+
+    if (!namespacesMap[locale]) {
+      namespacesMap[locale] = {}
+    }
+
+    if (namespacesMap[locale][name]) {
+      return error(`can't overwrite namespace "${name}"`)
+    }
+
+    namespacesMap[locale][name] = {translations}
   }
 
   /**
@@ -248,6 +318,8 @@ export const createInstance = () => {
     getLocales,
     updateLocale,
     onChange,
+
+    addNamespace,
 
     translate,
     t: translate,

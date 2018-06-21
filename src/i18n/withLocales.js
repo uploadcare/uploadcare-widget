@@ -13,7 +13,7 @@ const i18nActions = {setLocale: (locale: string) => ({locale})}
  * @export
  * @param {typeof hyperapp.app} app
  */
-export function withLocales(app: typeof hyperapp) {
+export function withLocales(app: typeof hyperapp.app) {
   return (state: any, actions: any, view: any, container: any) => {
     const appActions = app(
       {
