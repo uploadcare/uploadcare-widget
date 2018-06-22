@@ -11,6 +11,10 @@
   * camera__please-allow
  */
 
+/* stylelint-disable */
+.camera {}
+/* stylelint-enable */
+
 .camera__button {
   margin: 5px 10px;
 }
