@@ -25,7 +25,7 @@ const getPlugins = () =>
       classnames: path.join(__dirname, 'src/modules/classNames.js'),
     }),
     replace({'process.env.NODE_ENV': process.env.NODE_ENV}),
-    resolve({jsnext: true}),
+    resolve({browser: true}),
     postcss({
       modules: true,
       plugins: [],
