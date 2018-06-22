@@ -19,7 +19,6 @@
     "build": "flow && rollup -c rollup.config.js"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
     "hyperapp": "^1.2.6"
   },
   "devDependencies": {
