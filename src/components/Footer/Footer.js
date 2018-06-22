@@ -6,7 +6,7 @@ import styles from './Footer.css'
 
 import type {Props} from './flow-typed'
 
-export const Footer = ({className}: Props, children) => (
+export const Footer = ({className}: Props, children: Children) => (
   <div class={cn(styles.footer, className)}>
     {children}
   </div>

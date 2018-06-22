@@ -6,7 +6,7 @@ import styles from './SVG.css'
 
 import type {Props} from './flow-typed'
 
-export const SVG = ({width, height, viewBox, className}: Props, children) =>
+export const SVG = ({width, height, viewBox, className}: Props, children: Children) =>
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width={width}

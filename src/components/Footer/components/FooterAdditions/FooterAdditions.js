@@ -6,7 +6,7 @@ import styles from './FooterAdditions.css'
 
 import type {Props} from './flow-typed'
 
-export const FooterAdditions = ({className}: Props, children) => (
+export const FooterAdditions = ({className}: Props, children: Children) => (
   <div class={cn(styles.footer__additions, className)}>
     {children}
   </div>

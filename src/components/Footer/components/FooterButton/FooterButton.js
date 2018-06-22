@@ -7,5 +7,5 @@ import {Button} from '../../../Button/Button'
 
 import type {Props} from './flow-typed'
 
-export const FooterButton = (props: Props, children) =>
+export const FooterButton = (props: Props, children: Children) =>
   <Button className={cn(styles.footer__button, props.className)} {...props}>{children}</Button>

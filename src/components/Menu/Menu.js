@@ -9,7 +9,7 @@ import {Icon} from '../SVG/components/Icon/Icon'
 
 import type {Props} from './flow-typed'
 
-export const Menu = ({className}: Props, children) => (
+export const Menu = ({className}: Props, children: Children) => (
   <div class={cn(styles.menu, className)}>
     <Button
       className={styles.menu__toggle}

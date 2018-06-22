@@ -6,7 +6,7 @@ import styles from './Files.css'
 
 import type {Props} from './flow-typed'
 
-export const Files = ({className}: Props, children) => (
+export const Files = ({className}: Props, children: Children) => (
   <div className={cn(styles.files, className)}>
     {children}
   </div>

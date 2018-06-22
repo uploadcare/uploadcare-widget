@@ -6,7 +6,7 @@ import styles from './Panel.css'
 
 import type {Props} from './flow-typed'
 
-export const Panel = ({className}: Props, children) => (
+export const Panel = ({className}: Props, children: Children) => (
   <div class={cn(styles.panel, className)}>
     {children}
   </div>

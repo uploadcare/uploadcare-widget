@@ -6,7 +6,7 @@ import styles from './CropSizes.css'
 
 import type {Props} from './flow-typed'
 
-export const CropSizes = ({className}: Props, children) => (
+export const CropSizes = ({className}: Props, children: Children) => (
   <div class={cn(styles['crop-sizes'], className)}>
     {children}
   </div>

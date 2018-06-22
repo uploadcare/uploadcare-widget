@@ -3,7 +3,9 @@
 import {h} from 'hyperapp'
 import styles from './MouseFocused.css'
 
-export const MouseFocused = (children) => (
+import type {Props} from './flow-typed'
+
+export const MouseFocused = ({}: Props, children: Children) => (
   <div class={styles['mouse-focused']}>
     {children}
   </div>

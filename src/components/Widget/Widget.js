@@ -6,7 +6,7 @@ import styles from './Widget.css'
 
 import type {Props} from './flow-typed'
 
-export const Widget = ({className}: Props, children) => (
+export const Widget = ({className}: Props, children: Children) => (
   <div className={cn(styles.widget, className)}>
     {children}
   </div>

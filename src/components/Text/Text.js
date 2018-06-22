@@ -6,7 +6,7 @@ import styles from './Text.css'
 
 import type {Props} from './flow-typed'
 
-export const Text = ({className, isMuted, isPre, size}: Props, children) => (
+export const Text = ({className, isMuted, isPre, size}: Props, children: Children) => (
   <div className={cn(
     styles.text,
     isMuted && styles.text_muted,

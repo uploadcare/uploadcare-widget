@@ -6,7 +6,7 @@ import styles from './Camera.css'
 
 import type {Props} from './flow-typed'
 
-export const Camera = ({className}: Props, children) => (
+export const Camera = ({className}: Props, children: Children) => (
   <div className={cn(styles.camera, className)}>
     {children}
   </div>

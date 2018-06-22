@@ -7,7 +7,15 @@ import {Icon} from '../SVG/components/Icon/Icon'
 
 import type {Props} from './flow-typed'
 
-export const Button = ({className, withIcon, isMuted, isOverlay, isPrimary, size, title}: Props, children) => (
+export const Button = ({
+  className,
+  withIcon,
+  isMuted,
+  isOverlay,
+  isPrimary,
+  size,
+  title,
+}: Props, children: Children) => (
   <button
     class={cn(
       styles.button,
