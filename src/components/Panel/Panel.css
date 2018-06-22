@@ -36,6 +36,10 @@
   }
 }
 
+/* stylelint-disable */
+.panel__menu {}
+/* stylelint-enable */
+
 .panel__content {
   flex-grow: 1;
 
@@ -65,9 +69,19 @@
   display: none;
 }
 
+/* stylelint-disable */
+.panel__message {}
+/* stylelint-enable */
+
 .panel__message_hidden {
   color: var(--disable-color);
 }
+
+/* stylelint-disable */
+.panel__show-files {}
+
+.panel__done {}
+/* stylelint-enable */
 
 .panel__powered-by {
   background: var(--color-base);

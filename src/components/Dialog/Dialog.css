@@ -1,6 +1,7 @@
 /*
   No styles:
   * dialog_status_inactive
+  * dialog__placeholder
  */
 
 .dialog {
@@ -88,6 +89,10 @@
     max-width: 1050px;
   }
 }
+
+/* stylelint-disable */
+.dialog__placeholder {}
+/* stylelint-enable */
 
 .dialog__panel {
   height: 100%;
