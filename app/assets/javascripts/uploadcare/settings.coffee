@@ -50,8 +50,8 @@ uploadcare.namespace 'settings', (ns) ->
     parallelDirectUploads: 10
     passWindowOpen: false
     # camera recording
-    audioBitsPerSecond: 128000
-    videoBitsPerSecond: 2500000
+    audioBitsPerSecond: null
+    videoBitsPerSecond: null
     # maintain settings
     scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
     debugUploads: false
