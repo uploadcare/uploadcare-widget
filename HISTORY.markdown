@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* `recorderOptions` for `MediaRecorder` to have a possibility to set audioBitsPerSeconds and videoBitsPerSeconds in settings
+
 ### Changed
 
 * Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
