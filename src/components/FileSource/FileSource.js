@@ -4,10 +4,16 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './FileSource.css'
 
+import {Button} from '../Button/Button'
+
 import type {Props} from './flow-typed'
 
-export const FileSource = ({className}: Props, children: Children) => (
-  <div className={cn(styles['file-source'], className)}>
-    {children}
-  </div>
+export const FileSource = ({className}: Props) => (
+  <Button
+    className={cn(
+      styles['file-source'],
+      styles['file-source_all'],
+      className,
+    )}
+    withIcon='more' />
 )

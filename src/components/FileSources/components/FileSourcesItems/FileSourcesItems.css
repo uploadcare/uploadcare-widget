@@ -1,0 +1,15 @@
+.file-sources__items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  max-width: calc(100px * 3);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.file-sources__items:not(.file-sources__items_many) .file-source__all {
+  display: none;
+}

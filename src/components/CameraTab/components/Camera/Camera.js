@@ -4,10 +4,10 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './Camera.css'
 
-import {translate} from '../../helpers'
+import {translate} from '../../../../helpers/index'
 
-import {Button} from '../Button/Button'
-import {Text} from '../Text/Text'
+import {Button} from '../../../Button/Button'
+import {Text} from '../../../Text/Text'
 
 import type {Props} from './flow-typed'
 

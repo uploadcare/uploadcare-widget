@@ -15,20 +15,6 @@
   text-align: center;
 }
 
-.tab__content {
-  flex-grow: 1;
-  flex-shrink: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  overflow-y: auto;
-
-  padding: 0 20px;
-}
-
 .tab__header {
   flex-shrink: 0;
 
@@ -51,11 +37,6 @@
   height: 100%;
   border: 0;
   opacity: 0;
-}
-
-.tab__title {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .tab:not(.tab_current) {
