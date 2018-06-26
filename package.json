@@ -16,7 +16,7 @@
     "start": "parcel ./demo/index.html",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "flow && rollup -c rollup.config.js"
+    "build": "flow check && rollup -c rollup.config.js"
   },
   "dependencies": {
     "classnames": "github:nd0ut/classnames#true-es-modules",
