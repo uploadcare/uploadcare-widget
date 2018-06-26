@@ -12,3 +12,10 @@ export const Link = ({className, href, target}: Props, children: Children) => (
     href={href}
     target={target}>{children}</a>
 )
+
+export const LinkDiv = ({className}: {className?: string}, children: Children) => (
+  <div
+    className={cn(styles.link, className)}
+    tabIndex='0'
+    role='link'>{children}</div>
+)
