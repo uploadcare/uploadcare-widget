@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* New configuration options: [`audioBitsPerSecond`][uc-widget-option-audiobitsperseconds] and [`videoBitsPerSecond`][uc-widget-option-videobitsperseconds]. They allow you to adjust the quality of video recording on the camera tab.
+* New configuration options: [`audioBitsPerSecond`][uc-widget-option-audiobitspersecond] and [`videoBitsPerSecond`][uc-widget-option-videobitspersecond]. They allow you to adjust the quality of video recording on the camera tab.
 
 ### Changed
 
