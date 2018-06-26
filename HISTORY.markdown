@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* `recorderOptions` for `MediaRecorder` to have a possibility to set audioBitsPerSeconds and videoBitsPerSeconds in settings
+* New configuration options: [`audioBitsPerSecond`][uc-widget-option-audiobitsperseconds] and [`videoBitsPerSecond`][uc-widget-option-videobitsperseconds]. They allow you to adjust the quality of video recording on the camera tab.
 
 ### Changed
 
@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Dropbox icon was updated.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.4.0...HEAD
+[uc-widget-option-audiobitsperseconds]: https://uploadcare.com/docs/uploads/widget/config/#option-audio-bits-per-seconds
+[uc-widget-option-audiobitsperseconds]: https://uploadcare.com/docs/uploads/widget/config/#option-video-bits-per-seconds
 
 ## [3.4.0] - 2018-05-23
 
