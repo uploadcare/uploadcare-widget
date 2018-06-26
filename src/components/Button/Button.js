@@ -34,3 +34,21 @@ export const Button = ({
         : children
     }</button>
 )
+
+export const ButtonDiv = (props: {
+  className?: string,
+  withIcon?: boolean,
+  caption?: string,
+}, children: Children) => (
+  <div
+    role='button'
+    tab-index='0'
+    className={cn(
+      styles.button,
+      props.withIcon && styles.button_icon,
+      props.className,
+    )}
+    data-caption={props.caption}>
+    {children}
+  </div>
+)

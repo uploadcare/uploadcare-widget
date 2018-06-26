@@ -4,10 +4,17 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './CropSizes.css'
 
-import type {Props} from './flow-typed'
+import {CropSizeItem} from './components/CropSizeItem/CropSizeItem'
 
-export const CropSizes = ({className}: Props, children: Children) => (
+import type {Props, CropSizeItemProps} from './flow-typed'
+
+export const CropSizes = ({className, items}: Props) => (
   <div class={cn(styles['crop-sizes'], className)}>
-    {children}
+    {items.map(({caption, withIcon}: CropSizeItemProps) => (
+      <CropSizeItem
+        key={caption}
+        caption={caption}
+        withIcon={withIcon}/>
+    ))}
   </div>
 )
