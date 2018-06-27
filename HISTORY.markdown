@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* New configuration options: [`audioBitsPerSecond`][uc-widget-option-audiobitspersecond] and [`videoBitsPerSecond`][uc-widget-option-videobitspersecond]. They allow you to adjust the quality of video recording on the camera tab.
+
 ### Changed
 
 * Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
@@ -14,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Dropbox icon was updated.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.4.0...HEAD
+[uc-widget-option-audiobitspersecond]: https://uploadcare.com/docs/uploads/widget/config/#option-audio-bits-per-second
+[uc-widget-option-audiobitspersecond]: https://uploadcare.com/docs/uploads/widget/config/#option-video-bits-per-second
 
 ## [3.4.0] - 2018-05-23
 

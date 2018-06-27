@@ -166,7 +166,19 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('recording')
 
       @__chunks = []
-      @__recorder = new @MediaRecorder(@__stream)
+      __recorderOptions = {}
+
+      if @settings.audioBitsPerSecond != null
+        __recorderOptions.audioBitsPerSecond = @settings.audioBitsPerSecond
+
+      if @settings.videoBitsPerSecond != null
+        __recorderOptions.videoBitsPerSecond = @settings.videoBitsPerSecond
+
+      if Object.keys(__recorderOptions).length != 0
+        @__recorder = new @MediaRecorder(@__stream, __recorderOptions)
+      else
+        @__recorder = new @MediaRecorder(@__stream)
+
       @__recorder.start()
       @__recorder.ondataavailable = (e) =>
         @__chunks.push(e.data)
