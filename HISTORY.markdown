@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [3.5.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.4.0...v3.5.0
 [uc-widget-option-audiobitspersecond]: https://uploadcare.com/docs/uploads/widget/config/#option-audio-bits-per-second
-[uc-widget-option-audiobitspersecond]: https://uploadcare.com/docs/uploads/widget/config/#option-video-bits-per-second
+[uc-widget-option-videobitspersecond]: https://uploadcare.com/docs/uploads/widget/config/#option-video-bits-per-second
 [github-pr-481]: https://github.com/uploadcare/uploadcare-widget/pull/481
 
 ## [3.4.0] - 2018-05-23
