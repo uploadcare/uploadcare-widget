@@ -1,6 +1,10 @@
 Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/trusty64"
 
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+    end
+
     config.vm.network "forwarded_port", guest: 3000, host: 6000
 
     if Vagrant::Util::Platform.windows? then
@@ -30,7 +34,7 @@ Vagrant.configure(2) do |config|
 
     config.vm.provision "preinstall", type: "shell", inline: <<-SHELL
         sudo apt-get update
-        sudo apt-get install -y software-properties-common git mercurial build-essential zlib1g-dev
+        sudo apt-get install -y ntp software-properties-common git mercurial build-essential zlib1g-dev
         sudo apt-add-repository -y ppa:brightbox/ruby-ng
         sudo apt-get update
         sudo apt-get install -y ruby2.3 ruby2.3-dev
