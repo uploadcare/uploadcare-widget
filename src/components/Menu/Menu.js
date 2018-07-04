@@ -6,7 +6,6 @@ import styles from './Menu.css'
 
 import {MenuItem} from './components/MenuItem/MenuItem'
 import {Button} from '../Button/Button'
-import {Icon} from '../SVG/components/Icon/Icon'
 
 import type {Props} from './flow-typed'
 import type {Props as MenuItemProps} from './components/MenuItem/flow-typed'
@@ -16,14 +15,10 @@ export const Menu = ({className, menuItems}: Props) => (
     <Button
       className={styles.menu__toggle}
       withIcon='menu'
-      isMuted>
-      <Icon />
-    </Button>
+      isMuted />
     <Button
       className={styles.menu__toggle}
-      withIcon='back'>
-      <Icon />
-    </Button>
+      withIcon='back' />
     <div class={styles.menu__items}>
       {menuItems.map(
         ({className, title, iconName, isHidden, isCurrent}: MenuItemProps) => (
