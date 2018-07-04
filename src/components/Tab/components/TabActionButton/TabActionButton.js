@@ -4,10 +4,12 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './TabActionButton.css'
 
-import type {Props} from './flow-typed'
 import {Button} from '../../../Button/Button'
 
-export const TabActionButton = ({className}: Props, children: Children) => (
+import type {Props} from './flow-typed'
+import type {Children} from 'hyperapp'
+
+export const TabActionButton = ({className}: Props, children: Array<Children>) => (
   <Button
     className={cn(
       styles['tab__action-button'],

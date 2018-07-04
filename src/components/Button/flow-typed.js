@@ -7,5 +7,4 @@ export type Props = {
   isPrimary?: boolean,
   size?: string,
   title?: string,
-  children?: string,
 }

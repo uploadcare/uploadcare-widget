@@ -30,9 +30,7 @@ export const Panel = ({className, menuItems, filesCount}: Props) => (
           {translate('dialog.done')}
         </FooterButton>
       </Footer>
-      <PoweredBy
-        className={styles['panel__powered-by']}
-        version='4.0.0' />
+      <PoweredBy className={styles['panel__powered-by']} />
     </div>
   </div>
 )

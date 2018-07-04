@@ -8,8 +8,8 @@ import type {Props} from './flow-typed'
 /* eslint-disable max-len */
 export const IconUploadcare = ({className}: Props) => (
   <SVG
-    width='32'
-    height='32'
+    width={32}
+    height={32}
     className={className}>
     <path
       fill='#ffd800'
