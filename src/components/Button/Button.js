@@ -17,6 +17,7 @@ export const Button = (props: Props, children: Array<Children>) => {
     isPrimary,
     size,
     title,
+    type = 'button',
   } = props
 
   return (
@@ -31,7 +32,7 @@ export const Button = (props: Props, children: Array<Children>) => {
         size && size === 'small' && styles.button_size_small,
         className
       )}
-      type='button'
+      type={type}
       title={title}>{
         withIcon
           ? (<Icon name={withIcon} />)

@@ -7,4 +7,5 @@ export type Props = {
   isPrimary?: boolean,
   size?: string,
   title?: string,
+  type?: 'button' | 'submit',
 }

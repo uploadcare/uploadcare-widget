@@ -3,5 +3,5 @@ export type Props = {
   className?: string,
   isMuted?: boolean,
   isPre?: boolean,
-  size?: string,
+  size?: 'small' | 'large' | 'medium' | 'extra',
 }
