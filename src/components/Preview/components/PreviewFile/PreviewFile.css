@@ -1,9 +1,7 @@
 /*
   No styles:
-  * preview
-  * preview_status_[type]
+  * preview__image
  */
-
 /* stylelint-disable */
-.preview {}
+.preview__file-name {}
 /* stylelint-enable */

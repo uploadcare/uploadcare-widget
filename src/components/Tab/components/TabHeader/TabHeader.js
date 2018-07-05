@@ -2,13 +2,13 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import cn from 'classnames'
-import styles from './Preview.css'
+import styles from './TabHeader.css'
 
 import type {Props} from './flow-typed'
 import type {Children} from 'hyperapp'
 
-export const Preview = ({className}: Props, children: Array<Children>) => (
-  <div className={cn(styles.preview, className)}>
+export const TabHeader = ({className}: Props, children: Array<Children>) => (
+  <div className={cn(styles.tab__header, className)}>
     {children}
   </div>
 )

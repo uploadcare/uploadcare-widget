@@ -1,9 +1,8 @@
 /*
   No styles:
-  * preview
-  * preview_status_[type]
+  * preview__message
  */
 
 /* stylelint-disable */
-.preview {}
+.preview__message {}
 /* stylelint-enable */

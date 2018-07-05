@@ -1,9 +1,7 @@
 /*
   No styles:
-  * preview
-  * preview_status_[type]
+  * tab__footer
  */
-
 /* stylelint-disable */
-.preview {}
+.tab__footer {}
 /* stylelint-enable */

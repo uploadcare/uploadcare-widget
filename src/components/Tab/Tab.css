@@ -15,22 +15,6 @@
   text-align: center;
 }
 
-.tab__header {
-  flex-shrink: 0;
-
-  padding: 0 20px;
-
-  overflow: hidden;
-
-  @media (--desktop) {
-    display: flex;
-    align-items: center;
-
-    padding-right: var(--base-size);
-    height: var(--base-size);
-  }
-}
-
 .tab__iframe {
   flex-grow: 1;
   width: 100%;
