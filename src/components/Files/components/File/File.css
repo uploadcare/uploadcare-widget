@@ -31,6 +31,12 @@
   }
 }
 
+/* stylelint-disable */
+.file__error {}
+
+.file__remove {}
+/* stylelint-enable */
+
 .file__description {
   flex-grow: 1;
 
