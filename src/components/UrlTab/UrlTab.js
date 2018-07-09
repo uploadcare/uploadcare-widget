@@ -6,6 +6,7 @@ import {translate} from '../../helpers'
 
 import {TabContent} from '../Tab/components/TabContent/TabContent'
 import {TabTitle} from '../Tab/components/TabTitle/TabTitle'
+import {Text} from '../Text/Text'
 import {TabActionButton} from '../Tab/components/TabActionButton/TabActionButton'
 import {Form} from '../Form/Form'
 import {Input} from '../Input/Input'

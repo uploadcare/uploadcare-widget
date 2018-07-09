@@ -4,4 +4,13 @@ import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Panel} from './Panel'
 
 storiesOf('Components/Panel', module)
-  .add('default', () => <Panel>Panel</Panel>)
+  .add('default', () => (
+    <Panel
+      menuItems={[
+        {
+          title: 'Local files',
+          iconName: 'file',
+        },
+      ]}
+      filesCount={10} />
+  ))

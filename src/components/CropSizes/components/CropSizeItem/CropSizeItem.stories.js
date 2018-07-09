@@ -4,6 +4,12 @@ import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {CropSizeItem} from './CropSizeItem'
 
 storiesOf('Components/CropSizes/CropSizeItem', module)
+  .add('free current', () => (
+    <CropSizeItem
+      isCurrent
+      caption='free'
+      withIcon='crop-free' />
+  ))
   .add('free', () => (
     <CropSizeItem
       caption='free'

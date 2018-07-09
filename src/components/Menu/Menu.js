@@ -10,7 +10,7 @@ import {Button} from '../Button/Button'
 import type {Props} from './flow-typed'
 import type {Props as MenuItemProps} from './components/MenuItem/flow-typed'
 
-export const Menu = ({className, menuItems}: Props) => (
+export const Menu = ({className, items}: Props) => (
   <div class={cn(styles.menu, className)}>
     <Button
       className={styles.menu__toggle}
@@ -20,7 +20,7 @@ export const Menu = ({className, menuItems}: Props) => (
       className={styles.menu__toggle}
       withIcon='back' />
     <div class={styles.menu__items}>
-      {menuItems.map(
+      {items.map(
         ({className, title, iconName, isHidden, isCurrent}: MenuItemProps) => (
           <MenuItem
             key={iconName}

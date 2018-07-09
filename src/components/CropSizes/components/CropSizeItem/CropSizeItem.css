@@ -11,6 +11,10 @@
   border-color: transparent;
   color: var(--color-base);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &:hover,
   &:focus {
     background: transparent;

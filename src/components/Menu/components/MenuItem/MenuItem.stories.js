@@ -3,7 +3,7 @@ import {h} from 'hyperapp'
 import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {MenuItem} from './MenuItem'
 
-storiesOf('Components/MenuItem', module)
+storiesOf('Components/Menu/MenuItem', module)
   .add('default', () => (
     <MenuItem
       title='Local files'

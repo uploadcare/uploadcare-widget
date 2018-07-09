@@ -13,7 +13,7 @@ export const SVG = ({width, height, viewBox, className}: Props, children: Array<
     width={width}
     height={height}
     viewBox={viewBox ? viewBox : `0 0 ${width} ${height}`}
-    className={cn(styles.svg, className)}
+    class={cn(styles.svg, className)}
     role='presentation'>
     {children}
   </svg>
