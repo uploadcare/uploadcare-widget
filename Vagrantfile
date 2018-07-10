@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
       v.memory = 1024
     end
 
-    config.vm.network "forwarded_port", guest: 3000, host: 6000
+    config.vm.network "forwarded_port", guest: 3000, host: 3030
 
     if Vagrant::Util::Platform.windows? then
         config.vm.provision :shell, :inline => "echo 'Windows! Home dir: #{Dir.home}'"

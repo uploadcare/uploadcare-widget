@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.1...HEAD
+
+## [3.5.1] - 2018-07-10
+
 ### Fixed
 
 * Now use the correct Facebook logo, consistent
   with the Facebook [brand guidelines][facebook-brand-guidelines].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.0...HEAD
+[3.5.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.0...v3.5.1
 [facebook-brand-guidelines]: https://en.facebookbrand.com/assets/f-logo
 
 ## [3.5.0] - 2018-06-28
