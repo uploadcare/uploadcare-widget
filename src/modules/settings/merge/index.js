@@ -1,0 +1,1 @@
+export {mergeSettings} from './mergeSettings'

@@ -15,6 +15,11 @@
   "extends": ["uploadcare", "plugin:react/recommended", "plugin:flowtype/recommended"],
   "plugins": ["flowtype"],
   "rules": {
-    "react/no-unknown-property": [2, {"ignore": ["class"]}]
+    "react/no-unknown-property": [2, {"ignore": ["class"]}],
+    "no-inline-comments": 0,
+    "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}],
+    "id-length": ["error", {"exceptions": ["x", "y", "e", "i", "j", "a", "b"]}],
+    "arrow-body-style": 0,
+    "max-params": ["error", 4]
   }
 }

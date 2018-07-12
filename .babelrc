@@ -13,6 +13,9 @@
     ]
   ],
   "plugins": [
+    ["module-resolver", {
+      "root": ["./src"]
+    }],
     ["@babel/plugin-transform-react-jsx", {
       "pragma": "h"
     }]
