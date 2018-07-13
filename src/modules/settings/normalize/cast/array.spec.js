@@ -2,11 +2,11 @@ import {array} from './array'
 
 describe('array', () => {
   it('should convert string to array', () => {
-    expect(array('one,two,three')).toEqual(['one', 'two', 'three'])
+    expect(array('one two three')).toEqual(['one', 'two', 'three'])
   })
 
   it('should trim the result', () => {
-    expect(array('one, two,   three')).toEqual(['one', 'two', 'three'])
+    expect(array('  one    two     three')).toEqual(['one', 'two', 'three'])
   })
 
   it('should return null if non-string passed', () => {

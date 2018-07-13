@@ -31,7 +31,7 @@ export type Settings = {
   multipleMax: ?number,
   multipleMin: ?number,
   multipleMaxStrict: ?boolean,
-  imageShrink: false | ImageShrinkSettings,
+  imageShrink: ?ImageShrinkSettings,
   pathValue: ?boolean,
   tabs: ?string,
   preferredTypes: ?string,

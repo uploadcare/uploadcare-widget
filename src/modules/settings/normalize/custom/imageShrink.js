@@ -1,14 +1,14 @@
 /* @flow */
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
-import type {ImageShrinkSettings} from '../../flow-typed/Settings'
+import type {Settings} from '../../flow-typed/Settings'
 
-export const imageShrink: ValueTransformer<false | ImageShrinkSettings> = (value: any) => {
+export const imageShrink: ValueTransformer<$PropertyType<Settings, 'imageShrink'>> = (value: any) => {
   const reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
   const shrink = reShrink.exec(value.trim().toLowerCase()) || []
 
   if (!shrink.length) {
-    return false
+    return null
   }
 
   const size = shrink[1] * shrink[2]
@@ -21,7 +21,7 @@ export const imageShrink: ValueTransformer<false | ImageShrinkSettings> = (value
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
 
-    return false
+    return null
   }
 
   return {

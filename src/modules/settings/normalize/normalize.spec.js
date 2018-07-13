@@ -27,7 +27,7 @@ describe('normalize', () => {
   })
 
   it('should apply prepare reducers in LR order', () => {
-    const schema = {prepare: {evilKey: [cast.int, value => `${value}, two,three`, cast.array]}}
+    const schema = {prepare: {evilKey: [cast.int, value => `${value} two three`, cast.array]}}
     const settings = {evilKey: '666'}
     const result = normalize(settings, schema)
 

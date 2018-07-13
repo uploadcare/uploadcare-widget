@@ -1,11 +1,11 @@
 /* @flow */
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
-import type {CropSettings} from '../../flow-typed/Settings'
+import type {Settings} from '../../flow-typed/Settings'
 
 import {boolean} from '../cast'
 
-export const crop: ValueTransformer<Array<CropSettings> | false> = (value: any) => {
+export const crop: ValueTransformer<$PropertyType<Settings, 'crop'>> = (value: any) => {
   if (Array.isArray(value) || value === false) {
     return value
   }

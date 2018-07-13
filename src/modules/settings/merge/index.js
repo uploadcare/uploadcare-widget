@@ -1,1 +1,1 @@
-export {mergeSettings} from './mergeSettings'
+export {merge} from './merge'

@@ -22,7 +22,7 @@ export const schema: Schema = {
     multipleMax: [cast.int, custom.map(0, 1000), custom.constrain(1, 1000)],
     multipleMin: [cast.int],
     multipleMaxStrict: [cast.boolean],
-    imageShrink: [custom.imageShrink],
+    imageShrink: [cast.string, custom.imageShrink],
     tabs: [cast.string, custom.map('all', allTabs), custom.map('default', defaults.tabs), cast.array],
     preferredTypes: [cast.array],
     inputAcceptTypes: [cast.array],

@@ -41,6 +41,8 @@ const init = (targetElement: HTMLElement | null = document.body) => {
 
     const settings = buildSettings($widgetInput)
 
+    console.log(settings)
+
     withLocales(app)(state, actions, view, $wrapper)
   })
 }

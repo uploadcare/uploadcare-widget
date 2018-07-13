@@ -5,6 +5,10 @@ import {unique} from '../../../../util/unique'
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
 export const array: ValueTransformer<?Array<string>> = (value: any) => {
+  if (Array.isArray(value)) {
+    return value
+  }
+
   if (typeof value !== 'string') {
     console.warn('Not a string')
 
@@ -15,7 +19,11 @@ export const array: ValueTransformer<?Array<string>> = (value: any) => {
     return null
   }
 
-  const arr = value.split(',').map(el => el.trim())
+  const arr = value
+    .trim()
+    .replace(/\s\s+/g, ' ')
+    .split(' ')
+    .map(el => el.trim())
 
   return unique(arr)
 }
