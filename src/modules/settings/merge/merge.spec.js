@@ -7,15 +7,14 @@ describe('merge', () => {
       previewStep: true,
       tabs: 'one, two, three',
     }
-    const attributes = {locale: 'en'}
-    const options = {previewStep: false}
+    const locals = {locale: 'en'}
 
-    const result = merge(globals, attributes, options)
+    const result = merge(globals, locals)
 
     expect(result).toEqual(
       jasmine.objectContaining({
         locale: 'en',
-        previewStep: false,
+        previewStep: true,
         tabs: 'one, two, three',
       })
     )
@@ -28,23 +27,18 @@ describe('merge', () => {
       doNotStore: true,
     }
 
-    const attributes = {
+    const locals = {
       locale: 'en',
       doNotStore: undefined,
     }
 
-    const options = {
-      previewStep: false,
-      doNotStore: null,
-    }
-
-    const result = merge(globals, attributes, options)
+    const result = merge(globals, locals)
 
     expect(result).toEqual(
       jasmine.objectContaining({
         locale: 'en',
-        previewStep: false,
-        doNotStore: null,
+        previewStep: '',
+        doNotStore: undefined,
       })
     )
   })

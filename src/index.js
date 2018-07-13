@@ -3,6 +3,7 @@
 
 import {h, app} from 'hyperapp'
 import {Input} from './components/Input/Input'
+import {build as buildSettings} from './modules/settings'
 
 const view = () => (
   <div>
@@ -28,6 +29,8 @@ const init = (targetElement: HTMLElement | null = document.body) => {
 
     $wrapper.classList.add('uploadcare-uploader--widget')
     parentNode.insertBefore($wrapper, $widgetInput)
+
+    const settings = buildSettings($widgetInput)
 
     app({}, {}, view, $wrapper)
   })
