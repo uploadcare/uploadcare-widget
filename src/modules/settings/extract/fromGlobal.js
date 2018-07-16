@@ -1,6 +1,6 @@
 /* @flow */
 import {defaults} from '../defaults'
-import {camel2upper} from '../../../helpers/case'
+import {camel2upper} from 'helpers/case'
 import type {UserSettings} from '../flow-typed/UserSettings'
 
 /**

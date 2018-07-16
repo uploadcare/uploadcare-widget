@@ -1,26 +1,26 @@
 {
   "dist/uploadcare.esm.js": {
-    "bundled": 31941,
-    "minified": 13897,
-    "gzipped": 5681,
+    "bundled": 31848,
+    "minified": 13837,
+    "gzipped": 5653,
     "treeshaked": {
       "rollup": {
-        "code": 3462,
+        "code": 3414,
         "import_statements": 0
       },
       "webpack": {
-        "code": 6180
+        "code": 6132
       }
     }
   },
   "dist/uploadcare.cjs.js": {
-    "bundled": 31958,
-    "minified": 13910,
-    "gzipped": 5690
+    "bundled": 31865,
+    "minified": 13850,
+    "gzipped": 5661
   },
   "dist/uploadcare.iife.js": {
-    "bundled": 34141,
-    "minified": 12658,
-    "gzipped": 5374
+    "bundled": 34042,
+    "minified": 12597,
+    "gzipped": 5347
   }
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {unique} from '../../../../util/unique'
+import {unique} from 'util/unique'
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
