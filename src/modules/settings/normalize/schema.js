@@ -49,8 +49,8 @@ export const schema: Schema = {
     integration: [cast.string],
   },
   lazy: {
-    previewStep: lazy.previewStep,
-    systemDialog: lazy.systemDialog,
-    previewUrlCallback: lazy.previewUrlCallback,
+    previewStep: [lazy.previewStep],
+    systemDialog: [lazy.systemDialog],
+    previewUrlCallback: [lazy.previewUrlCallback],
   },
 }

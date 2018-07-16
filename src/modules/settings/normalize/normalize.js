@@ -5,7 +5,7 @@ import {schema as defaultSchema} from './schema'
 import type {UserSettings} from '../flow-typed/UserSettings'
 import type {Settings} from '../flow-typed/Settings.js'
 import type {ValueTransformer} from './flow-typed/ValueTransformer'
-import type {Schema, PrepareTransforms, LazyTransforms} from './flow-typed/Schema'
+import type {Schema, Transformations} from './flow-typed/Schema'
 
 /**
  * Normalize user passed settings
@@ -28,21 +28,21 @@ export function normalize(userSettings: UserSettings, schema?: Schema = defaultS
 /**
  * Create reducer that applies transforms to the whole settings object
  *
- * @param {(PrepareTransforms | LazyTransforms)} transformsMap Settings keys and it's reducers
+ * @param {Transformations} transformations Settings keys and it's reducers
  * @param {boolean} stopOnFalsy Do not call next reducer if value is null or undefined
  * @returns {(acc: T, key: string) => $ObjMap<T, () => any>} Settings object reducer
  */
 function reduceSettings<T: {}>(
-  transformsMap: PrepareTransforms | LazyTransforms,
+  transformations: Transformations,
   stopOnFalsy: boolean
 ): (acc: T, key: string) => $ObjMap<T, () => any> {
   return (acc: T, key: string) => {
-    if (!transformsMap || !transformsMap[key]) {
+    if (!transformations || !transformations[key]) {
       return acc
     }
 
-    const transforms = Array.isArray(transformsMap[key]) ? transformsMap[key] : [transformsMap[key]]
-    const value = reduceValue(key, acc, transforms, stopOnFalsy)
+    const valueTransformations = transformations[key]
+    const value = reduceValue(key, acc, valueTransformations, stopOnFalsy)
 
     acc[key] = value
 
@@ -62,10 +62,10 @@ function reduceSettings<T: {}>(
 function reduceValue(
   key: string,
   settings: $Shape<Settings>,
-  transforms: Array<ValueTransformer<any>>,
+  transformations: Array<ValueTransformer<any>>,
   stopOnFalsy: boolean
 ): any {
-  return transforms.reduce((result: any, fn: ValueTransformer<any>) => {
+  return transformations.reduce((result: any, fn: ValueTransformer<any>) => {
     if (stopOnFalsy && (typeof result === 'undefined' || result === null)) {
       return result
     }
