@@ -6,6 +6,7 @@ import type {UserSettings} from '../flow-typed/UserSettings'
 import type {Settings} from '../flow-typed/Settings.js'
 import type {ValueTransformer} from './flow-typed/ValueTransformer'
 import type {Schema, Transformations} from './flow-typed/Schema'
+import type {ComposingOptions} from './flow-typed/ComposingOptions'
 
 /**
  * Normalize user passed settings
@@ -19,8 +20,20 @@ export function normalize(userSettings: UserSettings, schema?: Schema = defaultS
   const shallowCopy = {...userSettings}
   const keys = Object.keys(shallowCopy)
 
-  keys.reduce(reduceSettings < UserSettings > (schema.prepare, true), shallowCopy)
-  keys.reduce(reduceSettings < Settings > (schema.lazy, false), shallowCopy)
+  keys.reduce(
+    reduceSettings < UserSettings > (schema.stage0, {
+      stopOnEmpty: true,
+      passSettings: false,
+    }),
+    shallowCopy
+  )
+  keys.reduce(
+    reduceSettings < Settings > (schema.stage1, {
+      stopOnEmpty: false,
+      passSettings: true,
+    }),
+    shallowCopy
+  )
 
   return shallowCopy
 }
@@ -29,12 +42,12 @@ export function normalize(userSettings: UserSettings, schema?: Schema = defaultS
  * Create reducer that applies transforms to the whole settings object
  *
  * @param {Transformations} transformations Settings keys and it's reducers
- * @param {boolean} stopOnFalsy Do not call next reducer if value is null or undefined
+ * @param {ComposingOptions} options Composing options
  * @returns {(acc: T, key: string) => $ObjMap<T, () => any>} Settings object reducer
  */
 function reduceSettings<T: {}>(
   transformations: Transformations,
-  stopOnFalsy: boolean
+  options: ComposingOptions
 ): (acc: T, key: string) => $ObjMap<T, () => any> {
   return (acc: T, key: string) => {
     if (!transformations || !transformations[key]) {
@@ -42,7 +55,7 @@ function reduceSettings<T: {}>(
     }
 
     const valueTransformations = transformations[key]
-    const value = reduceValue(key, acc, valueTransformations, stopOnFalsy)
+    const value = reduceValue(key, acc, valueTransformations, options)
 
     acc[key] = value
 
@@ -56,20 +69,20 @@ function reduceSettings<T: {}>(
  * @param {string} key Key of settings property
  * @param {$Shape<Settings>} settings Settings object
  * @param {Array<ValueTransformer<any>>} transforms Array of transformers
- * @param {boolean} stopOnFalsy Do not call next reducer if value is null or undefined
+ * @param {ComposingOptions} options Composing options
  * @returns {*} A value returned by last reducer
  */
 function reduceValue(
   key: string,
   settings: $Shape<Settings>,
   transformations: Array<ValueTransformer<any>>,
-  stopOnFalsy: boolean
+  options: ComposingOptions
 ): any {
-  return transformations.reduce((result: any, fn: ValueTransformer<any>) => {
-    if (stopOnFalsy && (typeof result === 'undefined' || result === null)) {
+  return transformations.reduce((result: any, fn: ValueTransformer<any, any>) => {
+    if (options.stopOnEmpty && (typeof result === 'undefined' || result === null)) {
       return result
     }
 
-    return fn(result, settings)
+    return fn(result, options.passSettings ? settings : undefined)
   }, settings[key])
 }

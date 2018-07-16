@@ -6,6 +6,9 @@ describe('normalize', () => {
     const settings = {
       previewStep: 'true',
       crop: 'false',
+      pusherKey: null,
+      publicKey: 'demopublickey',
+      tabs: 'one two',
     }
     const result = normalize(settings)
 
@@ -13,6 +16,9 @@ describe('normalize', () => {
       jasmine.objectContaining({
         previewStep: true,
         crop: false,
+        pusherKey: null,
+        publicKey: 'demopublickey',
+        tabs: ['one', 'two'],
       })
     )
   })
@@ -26,17 +32,20 @@ describe('normalize', () => {
     expect(result).toEqual(settings)
   })
 
-  it('should apply prepare reducers in LR order', () => {
-    const schema = {prepare: {evilKey: [cast.int, value => `${value} two three`, cast.array]}}
+  it('should apply reducers in LR order', () => {
+    const schema = {
+      stage0: {evilKey: [cast.int, value => `${value} two three`, cast.array]},
+      stage1: {evilKey: [cast.array, value => value.join(' ')]},
+    }
     const settings = {evilKey: '666'}
     const result = normalize(settings, schema)
 
-    expect(result).toEqual(jasmine.objectContaining({evilKey: ['666', 'two', 'three']}))
+    expect(result).toEqual(jasmine.objectContaining({evilKey: '666 two three'}))
   })
 
-  it('should not call a prepare reducer if value is undefined or null', () => {
+  it('should stop stage0 composing if value is undefined or null', () => {
     const transformer = jest.fn()
-    const schema = {prepare: {foo: [cast.string, () => null, transformer]}}
+    const schema = {stage0: {foo: [cast.string, () => null, transformer]}}
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
@@ -44,9 +53,9 @@ describe('normalize', () => {
     expect(transformer.mock.calls.length).toBe(0)
   })
 
-  it('should apply a lazy reducer if value is undefined or null', () => {
+  it('should not stap stage1 composing if value is undefined or null', () => {
     const transformer = jest.fn().mockReturnValueOnce('bar')
-    const schema = {lazy: {foo: [cast.string, () => null, transformer]}}
+    const schema = {stage1: {foo: [cast.string, () => null, transformer]}}
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
@@ -54,10 +63,10 @@ describe('normalize', () => {
     expect(transformer.mock.calls.length).toBe(1)
   })
 
-  it('should apply lazy reducers after prepare ones', () => {
+  it('should apply stage1 reducers after stage0 ones', () => {
     const schema = {
-      prepare: {foo: [() => 'baz']},
-      lazy: {bar: (value, settings) => settings.foo},
+      stage0: {foo: [() => 'baz']},
+      stage1: {bar: [(value, settings) => settings.foo]},
     }
     const settings = {
       foo: 'bar',

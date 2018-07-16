@@ -5,6 +5,6 @@ import type {ValueTransformer} from './ValueTransformer'
 export type Transformations = {[key: string]: Array<ValueTransformer<any>>}
 
 export type Schema = {
-  prepare: Transformations,
-  lazy: Transformations,
+  stage0: Transformations,
+  stage1: Transformations,
 }

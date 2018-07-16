@@ -9,7 +9,16 @@ import * as lazy from './lazy'
 import {defaults, allTabs} from '../defaults'
 
 export const schema: Schema = {
-  prepare: {
+  /*
+   * The first stage of settings transformation
+   * Reducers are composed from left to right
+   * If value is null or undefined, then composing stops
+   * This stage should be used for initial transformations
+   * i.e. type casting, value mapping, constraints, formatting
+   * Reducers could not depend on other fields,
+   * because they may not be normalized at the current time
+   */
+  stage0: {
     live: [cast.boolean],
     manualStart: [cast.boolean],
     locale: [cast.string],
@@ -25,7 +34,7 @@ export const schema: Schema = {
     imageShrink: [cast.string, custom.imageShrink],
     tabs: [cast.string, custom.map('all', allTabs), custom.map('default', defaults.tabs), cast.array],
     preferredTypes: [cast.array],
-    inputAcceptTypes: [cast.array],
+    inputAcceptTypes: [cast.string],
     doNotStore: [cast.boolean],
     publicKey: [cast.string],
     secureSignature: [cast.string],
@@ -48,7 +57,13 @@ export const schema: Schema = {
     debugUploads: [cast.boolean],
     integration: [cast.string],
   },
-  lazy: {
+  /*
+   * The second stage of settings transformation
+   * Composing never stops
+   * This stage should be used to make transformations
+   * depending on other fields or some external providers
+   */
+  stage1: {
     previewStep: [lazy.previewStep],
     systemDialog: [lazy.systemDialog],
     previewUrlCallback: [lazy.previewUrlCallback],
