@@ -17,6 +17,7 @@ export const schema: Schema = {
    * This stage should be used for initial transformations
    * i.e. type casting, value mapping, constraints, formatting
    * Reducers can't depend on other fields and should be pure function of value
+   * Each settings option should be there, otherwise it will be stripped
    */
   stage0: {
     live: [cast.boolean],

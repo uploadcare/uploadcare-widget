@@ -2,6 +2,7 @@
 
 import {schema as defaultSchema} from './schema'
 import {SettingsError} from 'errors/SettingsError'
+import {filterByKeys} from 'util/filterByKeys'
 
 import type {UserSettings} from '../flow-typed/UserSettings'
 import type {Settings} from '../flow-typed/Settings.js'
@@ -18,7 +19,7 @@ import type {ComposingOptions} from './flow-typed/ComposingOptions'
  * @returns {Settings} Transformed output settings
  */
 export function normalize(userSettings: UserSettings, schema?: Schema = defaultSchema): Settings {
-  const shallowCopy = {...userSettings}
+  const shallowCopy = filterByKeys(Object.keys(schema.stage0), userSettings)
   const keys = Object.keys(shallowCopy)
 
   keys.reduce(
@@ -29,7 +30,7 @@ export function normalize(userSettings: UserSettings, schema?: Schema = defaultS
     shallowCopy
   )
   keys.reduce(
-    reduceSettings < Settings > (schema.stage1, {
+    reduceSettings < Settings > (schema.stage1 || {}, {
       stopOnEmpty: false,
       passSettings: true,
     }),

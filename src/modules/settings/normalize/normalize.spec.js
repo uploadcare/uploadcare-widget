@@ -12,23 +12,22 @@ describe('normalize', () => {
     }
     const result = normalize(settings)
 
-    expect(result).toEqual(
-      jasmine.objectContaining({
-        previewStep: true,
-        crop: false,
-        pusherKey: null,
-        publicKey: 'demopublickey',
-        tabs: ['one', 'two'],
-      })
-    )
+    expect(result).toEqual({
+      previewStep: true,
+      crop: false,
+      pusherKey: null,
+      publicKey: 'demopublickey',
+      tabs: ['one', 'two'],
+    })
   })
 
   it('should make a shallow copy of settings object', () => {
-    const schema = {}
+    const schema = {stage0: {foo: [val => val]}}
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
-    expect(result == settings).toBe(false)
+    // eslint-disable-next-line eqeqeq
+    expect(result).not.toBe(settings)
     expect(result).toEqual(settings)
   })
 
@@ -40,7 +39,7 @@ describe('normalize', () => {
     const settings = {evilKey: '666'}
     const result = normalize(settings, schema)
 
-    expect(result).toEqual(jasmine.objectContaining({evilKey: '666 two three'}))
+    expect(result).toEqual({evilKey: '666 two three'})
   })
 
   it('should stop stage0 composing if value is undefined or null', () => {
@@ -49,23 +48,29 @@ describe('normalize', () => {
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
-    expect(result).toEqual(jasmine.objectContaining({foo: null}))
+    expect(result).toEqual({foo: null})
     expect(transformer.mock.calls.length).toBe(0)
   })
 
   it('should not stap stage1 composing if value is undefined or null', () => {
     const transformer = jest.fn().mockReturnValueOnce('bar')
-    const schema = {stage1: {foo: [cast.string, () => null, transformer]}}
+    const schema = {
+      stage0: {foo: [val => val]},
+      stage1: {foo: [cast.string, () => null, transformer]},
+    }
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
-    expect(result).toEqual(jasmine.objectContaining({foo: 'bar'}))
+    expect(result).toEqual({foo: 'bar'})
     expect(transformer.mock.calls.length).toBe(1)
   })
 
   it('should apply stage1 reducers after stage0 ones', () => {
     const schema = {
-      stage0: {foo: [() => 'baz']},
+      stage0: {
+        foo: [() => 'baz'],
+        bar: [val => val],
+      },
       stage1: {bar: [(value, settings) => settings.foo]},
     }
     const settings = {
@@ -74,11 +79,23 @@ describe('normalize', () => {
     }
     const result = normalize(settings, schema)
 
-    expect(result).toEqual(
-      jasmine.objectContaining({
-        foo: 'baz',
-        bar: 'baz',
-      })
-    )
+    expect(result).toEqual({
+      foo: 'baz',
+      bar: 'baz',
+    })
+  })
+
+  it('should strip off unsupported options', () => {
+    const settings = {
+      previewStep: 'true',
+      crop: 'false',
+      unsupportedOption: 'test',
+    }
+    const result = normalize(settings)
+
+    expect(result).toEqual({
+      previewStep: true,
+      crop: false,
+    })
   })
 })
