@@ -15,6 +15,7 @@
   "extends": ["uploadcare", "plugin:react/recommended", "plugin:flowtype/recommended"],
   "plugins": ["flowtype"],
   "rules": {
-    "react/no-unknown-property": [2, {"ignore": ["class"]}]
+    "react/no-unknown-property": 0,
+    "react/display-name": 0
   }
 }
