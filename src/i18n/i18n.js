@@ -128,15 +128,6 @@ export const createInstance = () => {
   }
 
   /**
-   * Get current locale object
-   *
-   * @returns {Locale}
-   */
-  function getCurrentLocale(): Locale {
-    return localesMap[localeName]
-  }
-
-  /**
    * Get object property by it's path
    *
    * @param {string} path

@@ -6,7 +6,7 @@ export const url: ValueTransformer<?string> = (value: string) => {
   let protocol = document.location.protocol
 
   if (protocol !== 'http:') {
-    protocol == 'https:'
+    protocol = 'https:'
   }
 
   return value.replace(/^\/\//, protocol + '//').replace(/\/+$/, '')

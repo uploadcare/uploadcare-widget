@@ -36,7 +36,7 @@
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
     "eslint": "^4.9.0",
-    "eslint-config-uploadcare": "^1.1.0",
+    "eslint-config-uploadcare": "^1.2.1",
     "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-react": "^7.9.1",
     "flow-bin": "^0.74.0",
