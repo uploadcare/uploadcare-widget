@@ -1,4 +1,7 @@
+/* eslint-disable max-nested-callbacks */
+
 import {int} from './int'
+import {SettingsError} from 'errors/SettingsError'
 
 describe('int', () => {
   it('should convert string and numbers value to int', () => {
@@ -7,8 +10,8 @@ describe('int', () => {
     expect(int(123.123)).toBe(123)
   })
 
-  it('should return null if wrong input received', () => {
-    expect(int('test')).toBe(null)
-    expect(int({})).toBe(null)
+  it('should throw error if wrong input received', () => {
+    expect(() => int('test')).toThrowError(SettingsError)
+    expect(() => int({})).toThrowError(SettingsError)
   })
 })

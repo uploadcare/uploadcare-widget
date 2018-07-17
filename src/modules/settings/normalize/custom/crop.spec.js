@@ -1,4 +1,7 @@
+/* eslint-disable max-nested-callbacks */
+
 import {crop} from './crop'
+import {SettingsError} from 'errors/SettingsError'
 
 /*
 "disabled", crop is disabled. Can’t be combined with other presets.
@@ -89,5 +92,11 @@ describe('crop', () => {
         preferedSize: [300, 200],
       },
     ])
+  })
+
+  it('should throw error if wrong format is passed', () => {
+    expect(() => crop('test')).toThrowError(SettingsError)
+    expect(() => crop('free, test')).toThrowError(SettingsError)
+    expect(() => crop('2x2 upscale, free, 2q2')).toThrowError(SettingsError)
   })
 })

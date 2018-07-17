@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Demo, Uploadcare Widget</title>
+  <meta charset="UTF-8">
+  <title>Demo, Uploadcare Widget</title>
 </head>
+
 <body>
-<input type="url" class="uploadcare-uploader" data-crop="4:4" data-multipart-min-size="test">
-<hr>
-<script src="../dist/uploadcare.iife.js"></script>
-<script>
-  uploadcare.uploader.init()
-</script>
+  <input type="url" class="uploadcare-uploader" data-crop="2:2 upscale, free" data-multipart-min-size="111" data-public-key='demopublickey' data-tabs='' data-image-shrink="2x2 100%">
+  <hr>
+  <script src="../dist/uploadcare.iife.js"></script>
+  <script>
+    uploadcare.uploader.init()
+  </script>
 </body>
+
 </html>

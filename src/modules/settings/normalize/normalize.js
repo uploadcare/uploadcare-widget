@@ -100,8 +100,15 @@ function reduceValue(
  */
 function handleError(key: string, value: any, error: Error) {
   if (error instanceof SettingsError) {
+    const valueIsString = typeof value === 'string'
+
     /* eslint-disable no-console */
-    console.error(`Failed to process option "${key}" with error "${error.message}"`)
+    console.error(
+      `Failed to process option "${key}" with error "${error.message}". Got value: ${
+        valueIsString ? `"${value}"` : ''
+      }`,
+      valueIsString ? '' : value
+    )
     /* eslint-disable no-console */
 
     return error.returnValue

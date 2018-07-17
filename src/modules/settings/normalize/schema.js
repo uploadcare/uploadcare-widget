@@ -36,7 +36,7 @@ export const schema: Schema = {
     preferredTypes: [cast.array],
     inputAcceptTypes: [cast.string],
     doNotStore: [cast.boolean],
-    publicKey: [cast.string],
+    publicKey: [cast.string, custom.publicKey],
     secureSignature: [cast.string],
     secureExpire: [cast.string],
     pusherKey: [cast.string],
@@ -61,15 +61,13 @@ export const schema: Schema = {
    * The second stage of settings transformation
    * Composing never stops
    * Settings object is passed as second parameter
-   * This stage should be used in following cases:
-   *  - transformations depending on other fields or some external providers
-   *  - side-effects like custom warnings
+   * This stage should be used to maketransformations
+   * depending on other fields or some external providers
    */
   stage1: {
     previewStep: [lazy.previewStep],
     systemDialog: [lazy.systemDialog],
     previewUrlCallback: [lazy.previewUrlCallback],
-    publicKey: [lazy.publicKey],
     integration: [lazy.integration],
   },
 }

@@ -1,11 +1,16 @@
 /* @flow */
 
 import {unique} from 'util/unique'
+import {boolean} from './boolean'
 import {SettingsError} from 'errors/SettingsError'
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
 export const array: ValueTransformer<?Array<string>> = (value: any) => {
+  if (!boolean(value)) {
+    return null
+  }
+
   if (Array.isArray(value)) {
     return value
   }
@@ -15,7 +20,7 @@ export const array: ValueTransformer<?Array<string>> = (value: any) => {
   }
 
   if (!value.length) {
-    return null
+    return []
   }
 
   const arr = value

@@ -1,12 +1,13 @@
 /* @flow */
 
+import {boolean} from '../cast'
+import {SettingsError} from 'errors/SettingsError'
+
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 import type {Settings} from '../../flow-typed/Settings'
 
-import {boolean} from '../cast'
-
 export const crop: ValueTransformer<$PropertyType<Settings, 'crop'>> = (value: any) => {
-  if (Array.isArray(value) || value === false) {
+  if (Array.isArray(value)) {
     return value
   }
 
@@ -14,11 +15,14 @@ export const crop: ValueTransformer<$PropertyType<Settings, 'crop'>> = (value: a
     return false
   }
 
-  let cropStr = value.toString()
-
-  return cropStr.split(',').map(crop => {
+  return value.split(',').map((crop: string) => {
+    const normalized = crop.trim().toLowerCase()
     const reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
-    const ratio = reRatio.exec(crop.trim().toLowerCase()) || []
+    const ratio = reRatio.exec(normalized) || []
+
+    if (!ratio.length && !['free', ''].includes(normalized)) {
+      throw new SettingsError('Wrong format', 'free')
+    }
 
     return {
       downscale: ratio[2] === 'x',

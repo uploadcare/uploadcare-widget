@@ -1,4 +1,7 @@
+/* eslint-disable max-nested-callbacks */
+
 import {array} from './array'
+import {SettingsError} from 'errors/SettingsError'
 
 describe('array', () => {
   it('should convert string to array', () => {
@@ -9,13 +12,13 @@ describe('array', () => {
     expect(array('  one    two     three')).toEqual(['one', 'two', 'three'])
   })
 
-  it('should return null if non-array passed', () => {
-    expect(array(123)).toBe(null)
-    expect(array({})).toBe(null)
+  it('should throw error if non-array passed', () => {
+    expect(() => array(123)).toThrowError(SettingsError)
+    expect(() => array({})).toThrowError(SettingsError)
   })
 
-  it('should return null if empty string passed', () => {
-    expect(array('')).toEqual(null)
+  it('should return empty array if empty string passed', () => {
+    expect(array('')).toEqual([])
   })
 
   it('should return arrays untouched', () => {

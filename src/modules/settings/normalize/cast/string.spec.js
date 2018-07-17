@@ -1,4 +1,7 @@
+/* eslint-disable max-nested-callbacks */
+
 import {string} from './string'
+import {SettingsError} from 'errors/SettingsError'
 
 describe('string', () => {
   it('should accept only strings', () => {
@@ -6,8 +9,8 @@ describe('string', () => {
     expect(string('')).toBe('')
   })
 
-  it('should return null if non-string passed', () => {
-    expect(string(123)).toBe(null)
-    expect(string({})).toBe(null)
+  it('should throw error if non-string passed', () => {
+    expect(() => string(123)).toThrowError(SettingsError)
+    expect(() => string({})).toThrowError(SettingsError)
   })
 })
