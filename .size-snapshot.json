@@ -1,8 +1,8 @@
 {
   "dist/uploadcare.esm.js": {
-    "bundled": 34189,
-    "minified": 14936,
-    "gzipped": 6086,
+    "bundled": 34157,
+    "minified": 14920,
+    "gzipped": 6084,
     "treeshaked": {
       "rollup": {
         "code": 3414,
@@ -14,13 +14,13 @@
     }
   },
   "dist/uploadcare.cjs.js": {
-    "bundled": 34206,
-    "minified": 14949,
-    "gzipped": 6095
+    "bundled": 34174,
+    "minified": 14933,
+    "gzipped": 6093
   },
   "dist/uploadcare.iife.js": {
-    "bundled": 36533,
-    "minified": 13453,
-    "gzipped": 5741
+    "bundled": 36499,
+    "minified": 13437,
+    "gzipped": 5737
   }
 }
