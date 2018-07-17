@@ -1,6 +1,7 @@
 /* @flow */
 
 import {schema as defaultSchema} from './schema'
+import {SettingsError} from 'errors/SettingsError'
 
 import type {UserSettings} from '../flow-typed/UserSettings'
 import type {Settings} from '../flow-typed/Settings.js'
@@ -83,6 +84,28 @@ function reduceValue(
       return result
     }
 
-    return fn(result, options.passSettings ? settings : undefined)
+    try {
+      return fn(result, options.passSettings ? settings : undefined)
+    }
+    catch (error) {
+      return handleError(key, result, error)
+    }
   }, settings[key])
+}
+
+/**
+ *
+ *
+ * @param {Error} error
+ */
+function handleError(key: string, value: any, error: Error) {
+  if (error instanceof SettingsError) {
+    /* eslint-disable no-console */
+    console.error(`Failed to process option "${key}" with error "${error.message}"`)
+    /* eslint-disable no-console */
+
+    return error.returnValue
+  }
+
+  throw error
 }

@@ -18,5 +18,6 @@
 module.name_mapper='^modules/\(.*\)$' -> '<PROJECT_ROOT>/src/modules/\1'
 module.name_mapper='^helpers/\(.*\)$' -> '<PROJECT_ROOT>/src/helpers/\1'
 module.name_mapper='^util/\(.*\)$' -> '<PROJECT_ROOT>/src/util/\1'
+module.name_mapper='^errors/\(.*\)$' -> '<PROJECT_ROOT>/src/errors/\1'
 
 [strict]
