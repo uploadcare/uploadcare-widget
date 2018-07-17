@@ -62,7 +62,7 @@ export const schema: Schema = {
    * The second stage of settings transformation
    * Composing never stops
    * Settings object is passed as second parameter
-   * This stage should be used to maketransformations
+   * This stage should be used to make transformations
    * depending on other fields or some external providers
    */
   stage1: {
