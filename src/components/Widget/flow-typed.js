@@ -6,6 +6,7 @@ export type File = {
 
 export type Props = {
   status: 'ready' | 'started' | 'loaded' | 'error',
+  clearable: boolean,
   progressValue?: number,
   file?: File,
   errorMessage?: string,
