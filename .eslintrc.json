@@ -12,9 +12,6 @@
     "es6": true,
     "node": true
   },
-  "globals": {
-    "jsdom": true
-  },
   "settings": {
     "react": {
       "pragma": "h"
@@ -33,6 +30,9 @@
       "env": {
         "jest": true,
         "jasmine": true
+      },
+      "globals": {
+        "jsdom": true
       }
     }
   ]
