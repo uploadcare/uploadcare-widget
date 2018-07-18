@@ -32,14 +32,11 @@ describe('normalize', () => {
   })
 
   it('should apply reducers in LR order', () => {
-    const schema = {
-      stage0: {evilKey: [cast.int, value => `${value} two three`, cast.array]},
-      stage1: {evilKey: [cast.array, value => value.join(' ')]},
-    }
+    const schema = {stage0: {evilKey: [cast.int, value => `${value} two three`, cast.array]}}
     const settings = {evilKey: '666'}
     const result = normalize(settings, schema)
 
-    expect(result).toEqual({evilKey: '666 two three'})
+    expect(result).toEqual({evilKey: ['666', 'two', 'three']})
   })
 
   it('should stop stage0 composing if value is undefined or null', () => {

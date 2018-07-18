@@ -12,16 +12,13 @@ describe('array', () => {
     expect(array('  one    two     three')).toEqual(['one', 'two', 'three'])
   })
 
-  it('should throw error if non-array passed', () => {
+  it('should throw error if non-string passed', () => {
     expect(() => array(123)).toThrowError(SettingsError)
     expect(() => array({})).toThrowError(SettingsError)
+    expect(() => array([])).toThrowError(SettingsError)
   })
 
   it('should return empty array if empty string passed', () => {
     expect(array('')).toEqual([])
-  })
-
-  it('should return arrays untouched', () => {
-    expect(array(['one', 'two', 'three'])).toEqual(['one', 'two', 'three'])
   })
 })
