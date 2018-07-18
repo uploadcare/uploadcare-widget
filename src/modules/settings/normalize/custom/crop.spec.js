@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {crop} from './crop'
 import {SettingsError} from 'errors/SettingsError'
 

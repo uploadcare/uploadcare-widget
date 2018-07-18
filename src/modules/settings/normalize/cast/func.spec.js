@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {func} from './func'
 import {SettingsError} from 'errors/SettingsError'
 

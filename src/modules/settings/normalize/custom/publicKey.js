@@ -13,9 +13,8 @@ UPLOADCARE_PUBLIC_KEY = 'your_public_key';
 
 export const publicKey: ValueTransformer<?string, ?string> = (value: ?string) => {
   if (!value) {
-    /* eslint-disable no-console */
+    // eslint-disable-next-line no-console
     console.warn(text.trim())
-    /* eslint-enable no-console */
   }
 
   return value

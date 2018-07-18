@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {array} from './array'
 import {SettingsError} from 'errors/SettingsError'
 

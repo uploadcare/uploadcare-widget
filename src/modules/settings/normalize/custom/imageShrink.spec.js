@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {imageShrink} from './imageShrink'
 import {SettingsError} from 'errors/SettingsError'
 

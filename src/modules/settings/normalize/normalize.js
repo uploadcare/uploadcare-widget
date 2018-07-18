@@ -107,14 +107,13 @@ function reduceValue<R: any>(
  */
 function handleError(key: string, value: mixed, error: Error) {
   if (error instanceof SettingsError) {
-    /* eslint-disable no-console */
+    // eslint-disable-next-line no-console
     console.error(
       `Failed to process option "${key}" with error "${error.message}". Got value: ${
         typeof value === 'string' ? `"${value}"` : ''
       }`,
       typeof value === 'string' ? '' : value
     )
-    /* eslint-enable no-console */
 
     return error.returnValue
   }

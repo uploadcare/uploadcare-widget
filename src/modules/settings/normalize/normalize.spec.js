@@ -26,7 +26,6 @@ describe('normalize', () => {
     const settings = {foo: 'bar'}
     const result = normalize(settings, schema)
 
-    // eslint-disable-next-line eqeqeq
     expect(result).not.toBe(settings)
     expect(result).toEqual(settings)
   })
