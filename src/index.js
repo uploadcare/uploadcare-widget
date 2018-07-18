@@ -41,9 +41,6 @@ const init = (targetElement: HTMLElement | null = document.body) => {
 
     const settings = buildSettings($widgetInput)
 
-    // eslint-disable-next-line
-    console.log(settings)
-
     withLocales(app)(state, actions, view, $wrapper)
   })
 }
