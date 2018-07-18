@@ -2,7 +2,7 @@
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
-export const integration: ValueTransformer<string> = (value: string) => {
+export const integration: ValueTransformer<string, string> = (value: string) => {
   if (value) {
     return value
   }

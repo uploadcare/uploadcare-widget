@@ -2,7 +2,7 @@
 
 import type {ValueTransformer} from './ValueTransformer'
 
-export type Transformations = {[key: string]: Array<ValueTransformer<any>>}
+export type Transformations = {[key: string]: Array<ValueTransformer<mixed, mixed>>}
 
 export type Schema = {
   stage0: Transformations,

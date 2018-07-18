@@ -4,7 +4,7 @@ import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 import type {PreviewUrlCallback, Settings} from '../../flow-typed/Settings'
 import {defaultPreviewUrlCallback} from './defaultPreviewUrlCallback'
 
-export const previewUrlCallback: ValueTransformer<?PreviewUrlCallback, Settings> = (
+export const previewUrlCallback: ValueTransformer<?PreviewUrlCallback, ?PreviewUrlCallback, Settings> = (
   value: ?PreviewUrlCallback,
   settings: Settings
 ) => {

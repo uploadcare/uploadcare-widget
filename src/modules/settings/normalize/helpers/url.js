@@ -2,7 +2,7 @@
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
-export const url: ValueTransformer<?string> = (value: string) => {
+export const url: ValueTransformer<string, string> = (value: string) => {
   let protocol = document.location.protocol
 
   if (protocol !== 'http:') {

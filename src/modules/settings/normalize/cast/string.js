@@ -5,7 +5,7 @@ import {SettingsError} from 'errors/SettingsError'
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
-export const string: ValueTransformer<?string> = (value: any) => {
+export const string: ValueTransformer<mixed, ?string> = (value: mixed) => {
   if (!boolean(value)) {
     return null
   }

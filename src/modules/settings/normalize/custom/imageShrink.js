@@ -5,7 +5,7 @@ import {SettingsError} from 'errors/SettingsError'
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 import type {Settings} from '../../flow-typed/Settings'
 
-export const imageShrink: ValueTransformer<$PropertyType<Settings, 'imageShrink'>> = (value: any) => {
+export const imageShrink: ValueTransformer<string, $PropertyType<Settings, 'imageShrink'>> = (value: string) => {
   const reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
   const shrink = reShrink.exec(value.trim().toLowerCase())
 

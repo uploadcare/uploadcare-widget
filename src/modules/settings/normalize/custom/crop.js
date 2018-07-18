@@ -6,13 +6,13 @@ import {SettingsError} from 'errors/SettingsError'
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 import type {Settings} from '../../flow-typed/Settings'
 
-export const crop: ValueTransformer<$PropertyType<Settings, 'crop'>> = (value: any) => {
-  if (Array.isArray(value)) {
-    return value
-  }
-
+export const crop: ValueTransformer<mixed, $PropertyType<Settings, 'crop'>> = (value: mixed) => {
   if (!boolean(value)) {
     return false
+  }
+
+  if (typeof value !== 'string') {
+    throw new SettingsError('Not a string', null)
   }
 
   return value.split(',').map((crop: string) => {

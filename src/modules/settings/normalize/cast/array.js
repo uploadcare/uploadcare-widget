@@ -6,13 +6,9 @@ import {SettingsError} from 'errors/SettingsError'
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
-export const array: ValueTransformer<?Array<string>> = (value: any) => {
+export const array: ValueTransformer<mixed, ?Array<string>> = (value: mixed) => {
   if (!boolean(value)) {
     return null
-  }
-
-  if (Array.isArray(value)) {
-    return value
   }
 
   if (typeof value !== 'string') {

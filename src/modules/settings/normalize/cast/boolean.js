@@ -2,7 +2,7 @@
 
 import type {ValueTransformer} from '../flow-typed/ValueTransformer'
 
-export const boolean: ValueTransformer<boolean> = (value: any) => {
+export const boolean: ValueTransformer<mixed, boolean> = (value: mixed) => {
   if (typeof value === 'string') {
     const str = value.trim().toLowerCase()
 

@@ -43,14 +43,15 @@ export function normalize(userSettings: UserSettings, schema?: Schema = defaultS
 /**
  * Create reducer that applies transforms to the whole settings object
  *
+ * @template T
  * @param {Transformations} transformations Settings keys and it's reducers
  * @param {ComposingOptions} options Composing options
- * @returns {(acc: T, key: string) => $ObjMap<T, () => any>} Settings object reducer
+ * @returns {(acc: T, key: string) => $ObjMap<T, ValueTransformer<mixed, any>>} Settings reducer
  */
 function reduceSettings<T: {}>(
   transformations: Transformations,
   options: ComposingOptions
-): (acc: T, key: string) => $ObjMap<T, () => any> {
+): (acc: T, key: string) => $ObjMap<T, ValueTransformer<mixed, any>> {
   return (acc: T, key: string) => {
     if (!transformations || !transformations[key]) {
       return acc
@@ -68,19 +69,20 @@ function reduceSettings<T: {}>(
 /**
  * Apply a set of transformers (reducers) to a value of settings property
  *
+ * @template R
  * @param {string} key Key of settings property
  * @param {$Shape<Settings>} settings Settings object
- * @param {Array<ValueTransformer<any>>} transforms Array of transformers
+ * @param {Array<ValueTransformer<mixed, R>>} transforms Array of transformers
  * @param {ComposingOptions} options Composing options
- * @returns {*} A value returned by last reducer
+ * @returns {R} A value returned by last reducer
  */
-function reduceValue(
+function reduceValue<R: any>(
   key: string,
   settings: $Shape<Settings>,
-  transformations: Array<ValueTransformer<any>>,
+  transformations: Array<ValueTransformer<mixed, R>>,
   options: ComposingOptions
-): any {
-  return transformations.reduce((result: any, fn: ValueTransformer<any, any>) => {
+): R {
+  return transformations.reduce((result: R, fn: ValueTransformer<mixed, R>) => {
     if (options.stopOnEmpty && (typeof result === 'undefined' || result === null)) {
       return result
     }
@@ -95,22 +97,24 @@ function reduceValue(
 }
 
 /**
+ * Handle error while processing option
+ * Prints warning to the user's console
  *
- *
+ * @param {string} key
+ * @param {mixed} value
  * @param {Error} error
+ * @returns
  */
-function handleError(key: string, value: any, error: Error) {
+function handleError(key: string, value: mixed, error: Error) {
   if (error instanceof SettingsError) {
-    const valueIsString = typeof value === 'string'
-
     /* eslint-disable no-console */
     console.error(
       `Failed to process option "${key}" with error "${error.message}". Got value: ${
-        valueIsString ? `"${value}"` : ''
+        typeof value === 'string' ? `"${value}"` : ''
       }`,
-      valueIsString ? '' : value
+      typeof value === 'string' ? '' : value
     )
-    /* eslint-disable no-console */
+    /* eslint-enable no-console */
 
     return error.returnValue
   }

@@ -4,7 +4,7 @@ export type CropSettings = {|
   downscale: boolean,
   upscale: boolean,
   notLess: boolean,
-  preferedSize: [number, number],
+  preferedSize: ?[number, number],
 |}
 
 export type ImageShrinkSettings = {|
