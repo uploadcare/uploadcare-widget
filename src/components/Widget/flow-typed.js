@@ -1,4 +1,12 @@
 /* @flow */
+export type File = {
+  name: string,
+  size: string,
+}
+
 export type Props = {
-  className?: string,
+  status: 'ready' | 'started' | 'loaded' | 'error',
+  progressValue?: number,
+  file?: File,
+  errorMessage?: string,
 }

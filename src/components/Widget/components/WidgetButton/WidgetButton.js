@@ -6,14 +6,14 @@ import styles from './WidgetButton.css'
 
 import type {Props} from './flow-typed'
 
-export const WidgetButton = ({className, name, caption}: Props) => (
+export const WidgetButton = ({className, type}: Props, children) => (
   <button
     type='button'
     class={cn(
       styles.widget__button,
-      styles[`widget__button_type_${name}`],
+      styles[`widget__button_type_${type}`],
       className,
     )}>
-    {caption}
+    {children}
   </button>
 )
