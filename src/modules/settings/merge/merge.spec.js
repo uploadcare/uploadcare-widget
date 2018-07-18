@@ -11,13 +11,11 @@ describe('merge', () => {
 
     const result = merge(globals, locals)
 
-    expect(result).toEqual(
-      jasmine.objectContaining({
-        locale: 'en',
-        previewStep: true,
-        tabs: 'one, two, three',
-      })
-    )
+    expect(result).toEqual({
+      locale: 'en',
+      previewStep: true,
+      tabs: 'one, two, three',
+    })
   })
 
   it('should correctly override falsy values', () => {
@@ -34,12 +32,10 @@ describe('merge', () => {
 
     const result = merge(globals, locals)
 
-    expect(result).toEqual(
-      jasmine.objectContaining({
-        locale: 'en',
-        previewStep: '',
-        doNotStore: undefined,
-      })
-    )
+    expect(result).toEqual({
+      locale: 'en',
+      previewStep: '',
+      doNotStore: undefined,
+    })
   })
 })

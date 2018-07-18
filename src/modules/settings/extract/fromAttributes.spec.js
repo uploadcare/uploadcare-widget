@@ -11,14 +11,12 @@ describe('fromAttributes', () => {
 
     const locals = fromAttributes(element)
 
-    expect(locals).toEqual(
-      jasmine.objectContaining({
-        locale: 'ru',
-        tabs: 'one,two',
-        crop: '',
-        previewStep: 'true',
-      })
-    )
+    expect(locals).toEqual({
+      locale: 'ru',
+      tabs: 'one,two',
+      crop: '',
+      previewStep: 'true',
+    })
   })
 
   it('should ignore unsupported settings', () => {
@@ -29,8 +27,6 @@ describe('fromAttributes', () => {
 
     const locals = fromAttributes(element)
 
-    expect(locals).toEqual(
-      jasmine.objectContaining({locale: 'ru'})
-    )
+    expect(locals).toEqual({locale: 'ru'})
   })
 })

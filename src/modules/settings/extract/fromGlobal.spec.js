@@ -18,13 +18,11 @@ describe('fromGlobal', () => {
 
     const globals = fromGlobal()
 
-    expect(globals).toEqual(
-      jasmine.objectContaining({
-        locale: 'ru',
-        tabs: 'one,two',
-        previewStep: true,
-      })
-    )
+    expect(globals).toEqual({
+      locale: 'ru',
+      tabs: 'one,two',
+      previewStep: true,
+    })
   })
 
   it('should ignore unsupported settings', () => {
@@ -33,8 +31,6 @@ describe('fromGlobal', () => {
 
     const globals = fromGlobal()
 
-    expect(globals).toEqual(
-      jasmine.objectContaining({locale: 'ru'})
-    )
+    expect(globals).toEqual({locale: 'ru'})
   })
 })
