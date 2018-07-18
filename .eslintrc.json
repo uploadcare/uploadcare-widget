@@ -31,7 +31,6 @@
     {
       "files": ["*.spec.js"],
       "env": {
-        "node": true,
         "jest": true,
         "jasmine": true
       }
