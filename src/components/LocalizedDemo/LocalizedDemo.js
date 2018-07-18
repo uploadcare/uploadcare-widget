@@ -12,8 +12,10 @@ export const LocalizedDemo = () => {
 
   return (
     <div>
-      <div class={cn(styles.hello)} onclick={toggle}>
-      Click me! - {t('hello')}
+      <div
+        class={cn(styles.hello)}
+        onclick={toggle}>
+        Click me! - {t('hello')}
       </div>
     </div>
   )

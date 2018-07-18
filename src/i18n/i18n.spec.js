@@ -36,6 +36,7 @@ describe('i18n', () => {
     i18n.setLocale('ru')
 
     i18n.updateLocale('ru', locale => {
+      // eslint-disable-next-line no-param-reassign
       locale.translations.loading = 'Загружаю ваши фотографии'
 
       return locale

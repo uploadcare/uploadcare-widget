@@ -3,6 +3,7 @@
 
 import {h, app} from 'hyperapp'
 import {Input} from './components/Input/Input'
+import {build as buildSettings} from './modules/settings'
 import {LocalizedDemo} from './components/LocalizedDemo/LocalizedDemo'
 import {i18n, withLocales} from './i18n'
 import {ru} from './i18n/locales'
@@ -37,6 +38,8 @@ const init = (targetElement: HTMLElement | null = document.body) => {
 
     $wrapper.classList.add('uploadcare-uploader--widget')
     parentNode.insertBefore($wrapper, $widgetInput)
+
+    const settings = buildSettings($widgetInput)
 
     withLocales(app)(state, actions, view, $wrapper)
   })
