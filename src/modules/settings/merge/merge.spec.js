@@ -2,6 +2,12 @@ import {merge} from './merge'
 
 describe('merge', () => {
   it('should merge settings in right order', () => {
+    const defaults = {
+      locale: 'en',
+      previewStep: false,
+      crop: 'free',
+    }
+
     const globals = {
       locale: 'ru',
       previewStep: true,
@@ -9,33 +15,45 @@ describe('merge', () => {
     }
     const locals = {locale: 'en'}
 
-    const result = merge(globals, locals)
+    const result = merge(defaults, globals, locals)
 
     expect(result).toEqual({
       locale: 'en',
       previewStep: true,
       tabs: 'one, two, three',
+      crop: 'free',
     })
   })
 
-  it('should correctly override falsy values', () => {
+  it.only('should correctly override falsy values', () => {
+    const defaults = {
+      multipartMinSize: 1,
+      previewStep: true,
+      crop: 'free',
+      multiple: false,
+    }
+
     const globals = {
-      locale: 'ru',
-      previewStep: '',
-      doNotStore: true,
+      multipartMinSize: 0,
+      previewStep: false,
+      crop: undefined,
     }
 
     const locals = {
       locale: 'en',
       doNotStore: undefined,
+      multiple: null,
     }
 
-    const result = merge(globals, locals)
+    const result = merge(defaults, globals, locals)
 
     expect(result).toEqual({
-      locale: 'en',
-      previewStep: '',
       doNotStore: undefined,
+      multipartMinSize: 0,
+      previewStep: false,
+      crop: undefined,
+      multiple: null,
+      locale: 'en',
     })
   })
 })

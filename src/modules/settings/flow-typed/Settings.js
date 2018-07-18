@@ -19,8 +19,6 @@ export type Settings = {
   live: ?boolean,
   manualStart: ?boolean,
   locale: ?string,
-  localePluralize: ?string,
-  localeTranslations: ?string,
   // widget & dialog settings
   systemDialog: ?boolean,
   crop: false | Array<CropSettings>,
@@ -32,7 +30,6 @@ export type Settings = {
   multipleMin: ?number,
   multipleMaxStrict: ?boolean,
   imageShrink: ?ImageShrinkSettings,
-  pathValue: ?boolean,
   tabs: ?string,
   preferredTypes: ?string,
   inputAcceptTypes: ?string,

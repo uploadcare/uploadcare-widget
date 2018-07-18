@@ -5,8 +5,6 @@ export type UserSettings = {
   live: any,
   manualStart: any,
   locale: any,
-  localePluralize: any,
-  localeTranslations: any,
   // widget & dialog settings
   systemDialog: any,
   crop: any,
@@ -18,7 +16,6 @@ export type UserSettings = {
   multipleMin: any,
   multipleMaxStrict: any,
   imageShrink: any,
-  pathValue: any,
   tabs: any,
   preferredTypes: any,
   inputAcceptTypes: any,

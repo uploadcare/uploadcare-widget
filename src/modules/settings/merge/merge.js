@@ -2,10 +2,10 @@
 import type {UserSettings} from '../flow-typed/UserSettings'
 
 /**
- * Merge global variables, local attributes and settings object
- * into single settings object
+ * Merge defaults, globals and local settings into single settings object
  *
  * @export
+ * @param {UserSettings} defaults
  * @param {UserSettings} globals
  * @param {UserSettings} locals
  * @returns {UserSettings}

@@ -9,9 +9,7 @@ export const defaults: UserSettings = {
   // developer hooks
   live: true,
   manualStart: false,
-  locale: null,
-  localePluralize: null,
-  localeTranslations: null,
+  locale: 'en',
   // widget & dialog settings
   systemDialog: false,
   crop: false,
@@ -23,7 +21,6 @@ export const defaults: UserSettings = {
   multipleMin: 1,
   multipleMaxStrict: false,
   imageShrink: false,
-  pathValue: true,
   tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive',
   preferredTypes: null,
   inputAcceptTypes: null, // '' means default, null means "disable accept"
