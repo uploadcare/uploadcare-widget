@@ -11,7 +11,7 @@ import {defaults, allTabs} from '../defaults'
 
 export const schema: Schema = {
   /*
-   * The first stage of settings transformation
+   * The first stage of settings normalization
    * Reducers are composed from left to right
    * If value is null or undefined, then composing stops
    * This stage should be used for initial transformations
@@ -59,7 +59,7 @@ export const schema: Schema = {
     integration: [cast.string],
   },
   /*
-   * The second stage of settings transformation
+   * The second stage of settings normalization
    * Composing never stops
    * Settings object is passed as second parameter
    * This stage should be used to make transformations
