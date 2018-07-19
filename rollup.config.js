@@ -54,9 +54,9 @@ export default [
         format: 'cjs',
       },
       {
-        file: 'dist/uploadcare.umd.js',
+        file: 'dist/uploadcare.iife.js',
         name: 'uploadcare',
-        format: 'umd',
+        format: 'iife',
       },
     ],
   },

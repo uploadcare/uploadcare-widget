@@ -7,6 +7,11 @@
       "jsx": true
     }
   },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
   "settings": {
     "react": {
       "pragma": "h"
@@ -17,5 +22,18 @@
   "rules": {
     "react/no-unknown-property": 0,
     "react/display-name": 0
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "env": {
+        "jest": true,
+        "jasmine": true
+      },
+      "globals": {
+        "jsdom": true
+      }
+    }
+  ]
 }

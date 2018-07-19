@@ -36,12 +36,13 @@ describe('i18n', () => {
     i18n.setLocale('ru')
 
     i18n.updateLocale('ru', locale => {
-      locale.translations.loading = 'Чет грузится'
+      // eslint-disable-next-line no-param-reassign
+      locale.translations.loading = 'Загружаю ваши фотографии'
 
       return locale
     })
 
-    expect(i18n.t('loading')).toBe('Чет грузится')
+    expect(i18n.t('loading')).toBe('Загружаю ваши фотографии')
   })
 
   it('should be able to change current locale', () => {
