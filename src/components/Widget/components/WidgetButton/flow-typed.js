@@ -1,6 +1,5 @@
 /* @flow */
 export type Props = {
   className?: string,
-  name: string,
-  caption: string,
+  type: string,
 }
