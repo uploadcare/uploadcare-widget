@@ -7,7 +7,7 @@ import styles from './Text.css'
 import type {Props} from './flow-typed'
 import type {Children} from 'hyperapp'
 
-export const Text = ({className, isMuted, isPre, size}: Props, children: Array<Children>) => (
+export const Text = ({className, isMuted = false, isPre = false, size}: Props, children: Array<Children>) => (
   <div className={cn(
     styles.text,
     isMuted && styles.text_muted,

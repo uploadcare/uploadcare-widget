@@ -8,7 +8,7 @@ import {Icon} from '../../../SVG/components/Icon/Icon'
 
 import type {Props} from './flow-typed'
 
-export const MenuItem = ({className, title, iconName, isHidden, isCurrent}: Props) => (
+export const MenuItem = ({className, title, iconName, isHidden = false, isCurrent = false}: Props) => (
   <div
     role='button'
     tabIndex='0'

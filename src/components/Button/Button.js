@@ -9,7 +9,7 @@ import type {Props} from './flow-typed'
 import type {Children} from 'hyperapp'
 
 export const Button = (
-  {className, withIcon, isMuted, isOverlay, isPrimary, size, title, type = 'button'}: Props,
+  {className, withIcon, isMuted = false, isOverlay = false, isPrimary = false, size, title, type = 'button'}: Props,
   children: Array<Children>
 ) => (
   <button

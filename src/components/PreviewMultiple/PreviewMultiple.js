@@ -17,13 +17,13 @@ import {translate} from '../../helpers'
 export const PreviewMultiple = ({}: Props) => (
   <div>
     <TabHeader>
-      <PreviewTitle></PreviewTitle>
+      <PreviewTitle />
     </TabHeader>
     <TabContent>
-      <Files></Files>
+      <Files />
     </TabContent>
     <TabFooter>
-      <PreviewMessage></PreviewMessage>
+      <PreviewMessage />
       <PreviewBackButton>
         {translate('dialog.tabs.preview.multiple.clear')}
       </PreviewBackButton>

@@ -21,7 +21,7 @@ import {FileSourcesItem} from '../FileSources/components/FileSourcesItem/FileSou
 
 import type {Props} from './flow-typed'
 
-export const FileTab = ({className, isDragAndDropSupported}: Props) => (
+export const FileTab = ({className, isDragAndDropSupported = false}: Props) => (
   <TabContent className={className}>
     <DragAndDrop>
       <Dragging>

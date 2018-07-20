@@ -20,7 +20,7 @@ const Item = ({caption, withIcon}: Props) => (
   </div>
 )
 
-export const CropSizeItem = ({className, isCurrent, caption, withIcon}: Props) => (
+export const CropSizeItem = ({className, isCurrent = false, caption, withIcon}: Props) => (
   <ButtonDiv
     withIcon
     className={cn(
