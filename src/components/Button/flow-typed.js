@@ -1,6 +1,7 @@
 /* @flow */
 export type Props = {
   className?: string,
+  isFake?: boolean,
   withIcon?: string,
   isMuted?: boolean,
   isOverlay?: boolean,
@@ -8,4 +9,5 @@ export type Props = {
   size?: string,
   title?: string,
   type?: 'button' | 'submit',
+  caption?: string,
 }

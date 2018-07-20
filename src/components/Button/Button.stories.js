@@ -13,6 +13,4 @@ storiesOf('Components/Button', module)
   .add('primary', () => <Button isPrimary>Primary button</Button>)
   .add('size big', () => <Button size='big'>Big button</Button>)
   .add('size small', () => <Button size='small'>Small button</Button>)
-
-storiesOf('Components/ButtonDiv', module)
-  .add('default', () => <ButtonDiv>Default button</ButtonDiv>)
+  .add('fake button', () => <Button isFake>Fake button</Button>)

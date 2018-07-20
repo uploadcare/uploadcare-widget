@@ -8,12 +8,24 @@ import {Icon} from '../SVG/components/Icon/Icon'
 import type {Props} from './flow-typed'
 import type {Children} from 'hyperapp'
 
+/* eslint-disable max-len*/
 export const Button = (
-  {className, withIcon, isMuted = false, isOverlay = false, isPrimary = false, size, title, type = 'button'}: Props,
+  {className, isFake = false, withIcon, isMuted = false, isOverlay = false, isPrimary = false, size, title, type = 'button', caption}: Props,
   children: Array<Children>
-) => (
-  <button
-    class={cn(
+) => (isFake
+  ? <div
+    role='button'
+    tabIndex='0'
+    className={cn(
+      styles.button,
+      withIcon && styles.button_icon,
+      className,
+    )}
+    data-caption={caption}>
+    {children}
+  </div>
+  : <button
+    className={cn(
       styles.button,
       withIcon && styles.button_icon,
       isMuted && styles.button_muted,
@@ -26,25 +38,7 @@ export const Button = (
     type={type}
     title={title}>{
       withIcon
-        ? (<Icon name={withIcon} />)
+        ? (<Icon name={withIcon}/>)
         : children
     }</button>
-)
-
-export const ButtonDiv = (props: {
-  className?: string,
-  withIcon?: boolean,
-  caption?: string,
-}, children: Array<Children>) => (
-  <div
-    role='button'
-    tabIndex='0'
-    className={cn(
-      styles.button,
-      props.withIcon && styles.button_icon,
-      props.className,
-    )}
-    data-caption={props.caption}>
-    {children}
-  </div>
 )
