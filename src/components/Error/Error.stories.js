@@ -4,4 +4,4 @@ import {storiesOf} from '@zmoki/storybook-hyperapp'
 import {Error} from './Error'
 
 storiesOf('Components/Error', module)
-  .add('default', () => <Error>Default button</Error>)
+  .add('default', () => <Error>Default error</Error>)
