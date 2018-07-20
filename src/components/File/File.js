@@ -4,8 +4,8 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './File.css'
 
-import {ProgressBar} from '../../../ProgressBar/ProgressBar'
-import {Button} from '../../../Button/Button'
+import {ProgressBar} from '../ProgressBar/ProgressBar'
+import {Button} from '../Button/Button'
 
 import type {Props} from './flow-typed'
 
