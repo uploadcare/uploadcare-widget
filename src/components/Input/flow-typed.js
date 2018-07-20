@@ -1,6 +1,6 @@
 /* @flow */
 export type Props = {
   className?: string,
-  type?: string,
+  type?: 'text' | 'search' | 'url',
   placeholder?: string,
 }

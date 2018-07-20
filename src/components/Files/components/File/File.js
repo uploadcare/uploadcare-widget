@@ -10,7 +10,7 @@ import {Button} from '../../../Button/Button'
 import type {Props} from './flow-typed'
 
 export const File = (
-  {className, status, fileName, fileSize, hasError = false}: Props
+  {className, status, fileName, fileSize, hasError}: Props
 ) => (
   <div class={cn(styles.file, status && styles[`file_status_${status}`], className)}>
     <div class={styles.file__description}>

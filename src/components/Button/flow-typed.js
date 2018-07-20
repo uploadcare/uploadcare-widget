@@ -2,11 +2,11 @@
 export type Props = {
   className?: string,
   isFake?: boolean,
-  withIcon?: string,
+  withIcon?: string | boolean,
   isMuted?: boolean,
   isOverlay?: boolean,
   isPrimary?: boolean,
-  size?: string,
+  size?: 'big' | 'small',
   title?: string,
   type?: 'button' | 'submit',
   caption?: string,

@@ -1,7 +1,7 @@
 /* @jsx h */
 import {h} from 'hyperapp'
 import {storiesOf} from '@zmoki/storybook-hyperapp'
-import {Button, ButtonDiv} from './Button'
+import {Button} from './Button'
 
 storiesOf('Components/Button', module)
   .add('default', () => <Button>Default button</Button>)

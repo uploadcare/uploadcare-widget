@@ -4,7 +4,7 @@ import {h} from 'hyperapp'
 import cn from 'classnames'
 import styles from './CropSizeItem.css'
 
-import {ButtonDiv} from '../../../Button/Button'
+import {Button} from '../../../Button/Button'
 import {Icon} from '../../../SVG/components/Icon/Icon'
 
 import type {Props} from './flow-typed'
@@ -21,7 +21,8 @@ const Item = ({caption, withIcon}: Props) => (
 )
 
 export const CropSizeItem = ({className, isCurrent = false, caption, withIcon}: Props) => (
-  <ButtonDiv
+  <Button
+    isFake
     withIcon
     className={cn(
       styles['crop-sizes__item'],
@@ -39,5 +40,5 @@ export const CropSizeItem = ({className, isCurrent = false, caption, withIcon}: 
             withIcon={withIcon} />
         </MouseFocused>
       )}
-  </ButtonDiv>
+  </Button>
 )
