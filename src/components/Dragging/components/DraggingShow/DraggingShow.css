@@ -1,7 +1,0 @@
-.dragging__show {
-  display: none;
-
-  .dragging & {
-    display: block;
-  }
-}

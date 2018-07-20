@@ -1,5 +1,0 @@
-.dragging__hide {
-  .dragging & {
-    display: none;
-  }
-}
