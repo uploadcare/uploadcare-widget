@@ -7,6 +7,11 @@
       "jsx": true
     }
   },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
   "settings": {
     "react": {
       "pragma": "h"
@@ -15,6 +20,20 @@
   "extends": ["uploadcare", "plugin:react/recommended", "plugin:flowtype/recommended"],
   "plugins": ["flowtype"],
   "rules": {
-    "react/no-unknown-property": [2, {"ignore": ["class"]}]
-  }
+    "react/no-unknown-property": 0,
+    "react/display-name": 0
+  },
+
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "env": {
+        "jest": true,
+        "jasmine": true
+      },
+      "globals": {
+        "jsdom": true
+      }
+    }
+  ]
 }

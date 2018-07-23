@@ -13,8 +13,28 @@
     ]
   ],
   "plugins": [
+    ["module-resolver", {
+      "root": ["./src"]
+    }],
     ["@babel/plugin-transform-react-jsx", {
       "pragma": "h"
     }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-flow",
+        [
+          "@babel/preset-env",
+          {
+            "useBuiltIns": false,
+            "modules": "commonjs",
+            "targets": {
+              "esmodules": true
+            }
+          }
+        ]
+      ]
+    }
+  }
 }
