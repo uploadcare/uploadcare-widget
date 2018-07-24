@@ -3,6 +3,7 @@
 module.exports = {
   extends: 'stylelint-config-uploadcare',
   rules: {
+    'block-no-empty': 'off',
     'declaration-empty-line-before': ['always', {
       except: [
         'first-nested',

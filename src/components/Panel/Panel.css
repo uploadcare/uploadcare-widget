@@ -1,0 +1,143 @@
+/*
+  No styles:
+  * panel__done
+  * panel__menu
+  * panel__message
+  * panel__show-files
+ */
+
+.panel {
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  width: 100%;
+  height: 500px;
+
+  border: 1px solid var(--fill-main-color);
+  border-radius: 6px;
+
+  background: var(--dialog-back-color);
+  color: var(--color-base);
+
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+
+  @media (--desktop) {
+    flex-direction: row;
+  }
+}
+
+/* stylelint-disable */
+.panel__menu {}
+/* stylelint-enable */
+
+.panel__content {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.panel__file-counter {
+  display: inline;
+}
+
+.panel__footer {
+  padding-top: 15px;
+
+  background: var(--color-bright-light);
+}
+
+.panel__icon {
+  box-sizing: border-box;
+
+  padding: 3px;
+}
+
+.panel__menu_hidden {
+  display: none;
+}
+
+/* stylelint-disable */
+.panel__message {}
+/* stylelint-enable */
+
+.panel__message_hidden {
+  color: var(--disable-color);
+}
+
+/* stylelint-disable */
+.panel__show-files {}
+
+.panel__done {}
+/* stylelint-enable */
+
+.panel__powered-by {
+  background: var(--color-base);
+  color: color(#fff a(50%));
+
+  @media (--desktop) {
+    display: none;
+  }
+
+  .tab:not(:nth-child(2)).tab_current ~ & {
+    display: none;
+  }
+}
+
+.panel_menu-hidden {
+  @media (--mobile) {
+    .tab__header {
+      padding: 6px var(--base-size) 0;
+      min-height: var(--base-size);
+    }
+  }
+}
+
+.panel:not(.panel_multiple) {
+  .panel__footer {
+    display: none;
+  }
+}
+
+.panel_multiple {
+  .tab_name_preview {
+    height: 100%;
+
+    .tab__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .tab__footer {
+      position: relative;
+
+      margin-top: 0;
+      padding-top: 15px;
+
+      &::before {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: 20px;
+
+        width: calc(100% - 40px);
+        height: 1px;
+
+        background: var(--color-gray-lightest);
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 module.exports = (ctx) => ({
   plugins: {
+    'postcss-import': {},
     'postcss-custom-media': {
       extensions: {
         '--large': '(min-width: 1210px)',
@@ -37,6 +38,12 @@ module.exports = (ctx) => ({
         'focus-outline': 'var(--focus-color) 2px solid',
         'base-size': '60px',
         'icon-size': '32px',
+        'widget-padding-h': '1em',
+        'widget-padding-v': '.4em',
+        'widget-margin-right': '.2em',
+        'widget-primary-color': 'var(--color-primary)',
+        'widget-base-color': '#c3c3c3',
+        'widget-focus-outline': 'var(--focus-outline)',
       },
     },
     'postcss-calc': {},

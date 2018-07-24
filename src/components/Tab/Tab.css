@@ -1,0 +1,38 @@
+/*
+  No styles:
+  * tab__action-button
+  * tab__footer
+ */
+
+.tab {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.tab__iframe {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+}
+
+.tab:not(.tab_current) {
+  display: none;
+}
+
+.tab_name_preview {
+  &.tab_current ~ .panel__footer {
+    display: none;
+  }
+}
+
+.tab_remote.tab_current ~ .panel__footer {
+  margin-top: 0;
+}

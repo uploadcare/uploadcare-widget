@@ -1,0 +1,10 @@
+.widget__text {
+  display: inline-block;
+
+  box-sizing: border-box;
+
+  margin-right: var(--widget-margin-right);
+  padding: var(--widget-padding-v) 0;
+
+  white-space: nowrap;
+}

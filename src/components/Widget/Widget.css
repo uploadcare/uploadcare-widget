@@ -1,0 +1,15 @@
+.widget {
+  display: inline-block;
+
+  vertical-align: baseline;
+}
+
+.widget_option_clearable {}
+
+.widget_status_error {}
+
+.widget_status_loaded {}
+
+.widget_status_ready {}
+
+.widget_status_started {}

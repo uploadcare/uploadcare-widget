@@ -2,6 +2,7 @@
 /* @jsx h */
 
 import {h, app} from 'hyperapp'
+import './index.css'
 import {Input} from './components/Input/Input'
 import {build as buildSettings} from './modules/settings'
 import {LocalizedDemo} from './components/LocalizedDemo/LocalizedDemo'

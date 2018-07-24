@@ -1,0 +1,15 @@
+.file-sources {
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  @media
+  (--desktop),
+  (--mobile) and (max-height: 450px) {
+    display: none;
+  }
+}

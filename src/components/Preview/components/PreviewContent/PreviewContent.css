@@ -1,0 +1,7 @@
+.preview__content {
+  overflow: hidden;
+}
+
+.preview__content_crop {
+  padding: 10px 20px;
+}
