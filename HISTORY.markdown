@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * New locales: Greek (`el`), Vietnamese (`vi`). See [#498][github-pr-498].
 
+### Changed
+
+* Url to Uploadcare in the “powered by” section.
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.1...HEAD
 [github-pr-498]: https://github.com/uploadcare/uploadcare-widget/pull/498
 
