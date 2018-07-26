@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * New locales: Greek (`el`), Vietnamese (`vi`). See [#498][github-pr-498].
 
+### Changed
+
+* Url to Uploadcare in the “powered by” section.
+
 ### Fixed
 
 * Use a bit more sharp Facebook logo to make it perfect. See [#496][github-pr-496]
