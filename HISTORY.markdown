@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.0...HEAD
+
+## [3.6.0] - 2018-07-26
+
 ### Added
 
 * New locales: Greek (`el`), Vietnamese (`vi`). See [#498][github-pr-498].
@@ -19,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Use a bit more sharp Facebook logo to make it perfect. See [#496][github-pr-496]
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.1...HEAD
+[3.6.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.1...v3.6.0
 [github-pr-498]: https://github.com/uploadcare/uploadcare-widget/pull/498
 [github-pr-496]: https://github.com/uploadcare/uploadcare-widget/pull/496
 
