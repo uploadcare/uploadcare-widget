@@ -23,7 +23,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [github-pr-498]: https://github.com/uploadcare/uploadcare-widget/pull/498
 [github-pr-496]: https://github.com/uploadcare/uploadcare-widget/pull/496
 
-
 ## [3.5.1] - 2018-07-10
 
 ### Fixed
