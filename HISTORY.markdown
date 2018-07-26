@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * New locales: Greek (`el`), Vietnamese (`vi`). See [#498][github-pr-498].
+
+### Fixed
+
 * Use a bit more sharp Facebook logo to make it perfect. See [#496][github-pr-496]
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.5.1...HEAD
