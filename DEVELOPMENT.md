@@ -37,6 +37,9 @@ bundle install
 Inside folder run
 
 ```bash
+npm install
+npm run build
+
 bundle install
 cd ./test/dummy
 bundle install
