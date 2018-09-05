@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Start using the [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format
   for the changelog at the `HISTORY.markdown` file.
 
+* Fixed error `Cannot read property 'type' of null` that often occurs together
+  with the grecaptcha2. See issue [#500][github-issue-500].
+
+[github-issue-500]: https://github.com/uploadcare/uploadcare-widget/issues/500
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.1...v2
 
 ## [2.11.1] - 2018-05-23

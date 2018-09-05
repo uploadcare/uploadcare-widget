@@ -12,7 +12,7 @@ uploadcare.namespace 'utils', (ns) ->
     catch
       return
 
-    if message.type of callbacks
+    if message?.type and message.type of callbacks
       for item in callbacks[message.type]
         if e.source == item[0]
           item[1](message)
