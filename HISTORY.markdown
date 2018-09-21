@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.6.1] - 2018-09-21
+
 ### Fixed
 
 * Fixed error `Cannot read property 'type' of null` that often occurs together
   with the grecaptcha2. See issue [#500][github-issue-500].
 
+[3.6.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.0...v3.6.1
 [github-issue-500]: https://github.com/uploadcare/uploadcare-widget/issues/500
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.0...HEAD
 
 ## [3.6.0] - 2018-07-26
 
