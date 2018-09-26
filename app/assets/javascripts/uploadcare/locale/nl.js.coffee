@@ -15,7 +15,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
       baddata: 'Ongeldige waarde'
       size: 'Bestand is te groot'
       upload: 'Kan niet uploaden'
-      user: 'Upload geannulleerd'
+      user: 'Upload geannuleerd'
       info: 'Kan informatie niet laden'
       image: 'Alleen afbeeldingen toegestaan'
       createGroup: 'Kan bestandsgroep niet maken'
@@ -46,11 +46,11 @@ uploadcare.namespace 'locale.translations', (ns) ->
           drag: 'Drop hier een bestand'
           nodrop: 'Upload bestanden van je computer'
           or: 'of'
-          button: 'Selecteer een bestand van je computer'
+          button: 'Selecteer een bestand op je computer'
           also: 'Je kan ook selecteren van'
         url:
-          title: 'Bestanden van het web'
-          line1: 'Selecteer een bestand van het web.'
+          title: 'Bestanden op het web'
+          line1: 'Selecteer een bestand op het web.'
           line2: 'Voer de link in.'
           input: 'Plak de link hier...'
           button: 'Upload'
@@ -65,7 +65,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           regular:
             title: 'Dit bestand toevoegen?'
             line1: 'Je staat op het punt bovenstaand bestand toe te voegen.'
-            line2: 'Bevestig.'
+            line2: 'Bevestig'
           image:
             title: 'Voeg deze afbeelding toe?'
             change: 'Annuleren'
@@ -76,14 +76,14 @@ uploadcare.namespace 'locale.translations', (ns) ->
             default:
               title: 'Oeps!'
               text: 'Er is een fout opgetreden tijdens het uploaden.'
-              back: 'Probeer het nog eens'
+              back: 'Probeer opnieuw'
             image:
               title: 'Alleen afbeeldingen worden geaccepteerd.'
-              text: 'Probeer het nog eens met een andere bestand.'
+              text: 'Probeer opnieuw met een andere bestand.'
               back: 'Selecteer afbeelding'
             size:
               title: 'Het geselecteerd bestand is groter dan de limiet.'
-              text: 'Probeer het nog eens met een andere bestand.'
+              text: 'Probeer opnieuw met een andere bestand.'
             loadImage:
               title: 'Fout'
               text: 'Kan afbeelding niet laden'
