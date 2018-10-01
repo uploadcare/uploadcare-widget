@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
 
+* Fixed typo and improved grammar in the Dutch (`nl`) locale. See [#504][github-pr-504].
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...HEAD
+[github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
 
 ## [3.6.1] - 2018-09-21
 
