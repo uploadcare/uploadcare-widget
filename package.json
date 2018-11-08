@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "classnames": "github:nd0ut/classnames#true-es-modules",
-    "hyperapp": "^1.2.9"
+    "hyperapp": "^1.2.9",
+    "nanoid": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -49,7 +50,6 @@
     "jest": "^23.6.0",
     "jest-environment-jsdom": "^23.4.0",
     "jest-environment-jsdom-global": "^1.1.0",
-    "nanoid": "^2.0.0",
     "ngrok": "^3.1.0",
     "parcel-bundler": "^1.10.3",
     "path": "^0.12.7",
@@ -67,6 +67,7 @@
     "rollup-plugin-alias": "^1.4.0",
     "rollup-plugin-analyzer": "^2.1.0",
     "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-postcss": "^1.6.2",

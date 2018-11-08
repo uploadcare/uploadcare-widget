@@ -20,6 +20,7 @@
   "extends": ["uploadcare", "plugin:react/recommended", "plugin:flowtype/recommended"],
   "plugins": ["flowtype"],
   "rules": {
+    "no-param-reassign": "off",
     "react/no-unknown-property": 0,
     "react/display-name": 0
   },

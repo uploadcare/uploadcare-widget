@@ -2,48 +2,55 @@
 /* @jsx h */
 
 import {h, app} from 'hyperapp'
-import './index.css'
-import {Input} from './components/Input/Input'
-import {build as buildSettings} from './modules/settings'
-import {LocalizedDemo} from './components/LocalizedDemo/LocalizedDemo'
-import {i18n, withLocales} from './i18n'
-import {ru} from './i18n/locales'
+import nanoid from 'nanoid'
 
-i18n.addLocale(ru)
+const DEFAULT_BINDERS_SELECTOR = '.uploadcare-uploader'
 
 const state = {}
 const actions = {}
 
-const view = () => (
+const Uploader = () => (
   <div>
-    Uploadcare Widget will be here.
-    <Input type='search' />
-    <LocalizedDemo />
+    Uploader will be here
   </div>
 )
 
-const init = (targetElement: HTMLElement | null = document.body) => {
-  if (!targetElement) {
+const createUploader = ($binder) => {
+  const {parentNode} = $binder
+
+  if (!parentNode) {
+    return null
+  }
+
+  const uploaderName = 'uploadcare--uploader'
+  const uploaderId = `${uploaderName}-${nanoid()}`
+  const $uploader = document.createElement('div')
+
+  $uploader.id = uploaderId
+  $uploader.classList.add(uploaderName)
+
+  parentNode.insertBefore($uploader, $binder)
+
+  app(state, actions, Uploader, $uploader)
+
+  return uploaderId
+}
+
+const init = ($container: HTMLElement | null = document.body) => {
+  if (!$container) {
     return
   }
 
-  const $widgetInputs = targetElement.querySelectorAll('.uploadcare-uploader')
+  const $binders = $container.querySelectorAll(DEFAULT_BINDERS_SELECTOR)
 
-  Array.from($widgetInputs).forEach($widgetInput => {
-    const $wrapper = document.createElement('div')
-    const parentNode = $widgetInput.parentNode
-
-    if (!parentNode) {
+  Array.from($binders).forEach($binder => {
+    if ($binder.dataset.uploaderId && document.getElementById($binder.dataset.uploaderId)) {
       return
     }
 
-    $wrapper.classList.add('uploadcare-uploader--widget')
-    parentNode.insertBefore($wrapper, $widgetInput)
-
-    const settings = buildSettings($widgetInput)
-
-    withLocales(app)(state, actions, view, $wrapper)
+    $binder.dataset.uploaderId = createUploader($binder)
+    $binder.hidden = true
   })
 }
 
-export default {uploader: {init}}
+init()
