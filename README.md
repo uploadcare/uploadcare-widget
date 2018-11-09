@@ -6,16 +6,27 @@
          alt="">
 </a>
 
-Uploadcare Widget is an HTML5 file uploader, a part of the
-[Uploadcare][uc-home]
-ecosystem that fully covers your file handling.
-
-Uploads affect your web or mobile app performance. The widget ensures all of your
-uploads are fast and hit their target.
+Uploadcare Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
+file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
 [![Build Status][badge-travis-img]][badge-travis-url]
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
+
+Uploads affect your web or mobile app performance. The widget ensures all of your
+uploads are fast and hit their target.
+
+The widget features:
+
+* Drag&Drop selection.
+* Multiple file upload with individual progress bars.
+* File moderation through validation by file size, extension or MIME type.
+* Image preview and image crop.
+* [Libraries and integrations][uc-libs] for jQuery, JavaScript, Ajax, PHP,
+  Python, Ruby, Rails, Angular, Meteor, and more.
+
+Uploads affect your web or mobile app performance. The widget ensures all of your
+uploads are fast and hit their target.
 
 It’s provided as a typical JavaScript library and can be easily embedded in your
 site.
@@ -35,23 +46,24 @@ Using the older `2.x` version? Check out the stuff under the [v2 tag][github-bra
 
 <!-- toc -->
 
-* [Docs](#docs)
-  * [Quick references](#quick-references)
-* [Types of bundles](#types-of-bundles)
-* [Install](#install)
-  * [NPM](#npm)
-  * [CDN](#cdn)
-  * [Other install methods](#other-install-methods)
-* [Usage](#usage)
-  * [Usage with React](#usage-with-react)
-  * [Usage with Angular](#usage-with-angular)
-* [Configuration](#configuration)
-* [JavaScript API](#javascript-api)
-* [Localization](#localization)
-* [Browser Support](#browser-support)
-* [Development](#development)
-* [Security issues](#security-issues)
-* [Feedback](#feedback)
+- [Uploadcare Widget](#uploadcare-widget)
+  - [Docs](#docs)
+    - [Quick references](#quick-references)
+  - [Types of bundles](#types-of-bundles)
+  - [Install](#install)
+    - [NPM](#npm)
+    - [CDN](#cdn)
+    - [Other install methods](#other-install-methods)
+  - [Usage](#usage)
+    - [Usage with React](#usage-with-react)
+    - [Usage with Angular](#usage-with-angular)
+  - [Configuration](#configuration)
+  - [JavaScript API](#javascript-api)
+  - [Localization](#localization)
+  - [Browser Support](#browser-support)
+  - [Development](#development)
+  - [Security issues](#security-issues)
+  - [Feedback](#feedback)
 
 <!-- tocstop -->
 
@@ -275,6 +287,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
+[uc-libs]: https://uploadcare.com/docs/libs/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-home]: https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-widget-configurator]: https://uploadcare.com/widget/configure/?utm_source=github&utm_campaign=uploadcare-widget
