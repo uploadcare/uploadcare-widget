@@ -15,15 +15,19 @@ const Uploader = () => (
   </div>
 )
 
+type BoundUploader = {|
+  id: string,
+|}
+
 /**
  * Creates before the Binder element the new DOM element that contain Uploader.
  * Saves the id of Uploader to the data attribute of Binder.
  * If Binder contains the id of existing Uploader, skips creating.
  *
  * @param {HTMLElement} $binder – The Binder element.
- * @returns {(string|null)} – The id of created or existing Uploader.
+ * @returns {(BoundUploader|null)} – The created or existing Uploader.
  */
-function createUploader($binder: HTMLElement): string | null {
+function createUploader($binder: HTMLElement): BoundUploader | null {
   if ($binder.dataset.uploaderId && document.getElementById($binder.dataset.uploaderId)) {
     return {id: $binder.dataset.uploaderId}
   }
@@ -52,25 +56,24 @@ function createUploader($binder: HTMLElement): string | null {
  * Creates as many Uploaders as Binders in the Container element.
  *
  * @param {HTMLElement} [$container] – The Container element, by default is body of the page.
- * @returns {Array<string>} – The list of ids of Uploaders.
+ * @returns {Array<BoundUploader>} – The list of Uploaders.
  */
-function init($container: HTMLElement | null = document.body): Array<string> {
-  if (!$container) {
-    return
-  }
-
+function init($container?: HTMLElement = document.body): Array<BoundUploader> {
   const $binders = $container.querySelectorAll(DEFAULT_BINDERS_SELECTOR)
 
   return Array.from($binders)
-    .map($binder => {
+    .reduce((uploaders, $binder) => {
       const uploader = createUploader($binder)
+
+      if (uploader === null) {
+        return
+      }
 
       $binder.dataset.uploaderId = uploader.id
       $binder.hidden = true
 
-      return uploader
-    })
-    .filter(id => id !== null)
+      uploaders.push(uploader)
+    }, [])
 }
 
 init()
