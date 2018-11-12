@@ -23,7 +23,8 @@
     "max-statements": ["error", 15],
     "no-param-reassign": "off",
     "react/no-unknown-property": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "react/prop-types": "off"
   },
 
   "overrides": [

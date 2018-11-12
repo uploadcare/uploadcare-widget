@@ -3,15 +3,16 @@
 
 import {h, app} from 'hyperapp'
 import nanoid from 'nanoid'
+import {withLocales} from './i18n'
 
 const DEFAULT_BINDERS_SELECTOR = '.uploadcare-uploader'
 
 const state = {}
 const actions = {}
 
-const Uploader = () => (
+const Uploader = ({locale}) => (
   <div>
-    Uploader will be here
+    Uploader will be here. Current locale is {locale}.
   </div>
 )
 
@@ -47,7 +48,7 @@ function createUploader($binder: HTMLElement): BoundUploader | null {
 
   parentNode.insertBefore($uploader, $binder)
 
-  app(state, actions, Uploader, $uploader)
+  withLocales(app)(state, actions, Uploader, $uploader)
 
   return {id}
 }
