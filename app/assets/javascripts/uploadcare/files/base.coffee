@@ -99,10 +99,9 @@ namespace 'files', (ns) ->
       if @s3Bucket and @cdnUrlModifiers
         @__rejectApi('baddata')
 
-      if not @onInfoReady.fired()
+      if data.is_ready
         @onInfoReady.fire(@__fileInfo())
 
-      if data.is_ready
         @__resolveApi()
 
     #
