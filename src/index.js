@@ -25,7 +25,7 @@ const Uploader = () => (
  */
 function createUploader($binder: HTMLElement): string | null {
   if ($binder.dataset.uploaderId && document.getElementById($binder.dataset.uploaderId)) {
-    return $binder.dataset.uploaderId
+    return {id: $binder.dataset.uploaderId}
   }
 
   const {parentNode} = $binder
@@ -34,18 +34,18 @@ function createUploader($binder: HTMLElement): string | null {
     return null
   }
 
-  const uploaderName = 'uploadcare--uploader'
-  const uploaderId = `${uploaderName}-${nanoid()}`
+  const name = 'uploadcare--uploader'
+  const id = `${name}-${nanoid()}`
   const $uploader = document.createElement('div')
 
-  $uploader.id = uploaderId
-  $uploader.classList.add(uploaderName)
+  $uploader.id = id
+  $uploader.classList.add(name)
 
   parentNode.insertBefore($uploader, $binder)
 
   app(state, actions, Uploader, $uploader)
 
-  return uploaderId
+  return {id}
 }
 
 /**
@@ -63,12 +63,12 @@ function init($container: HTMLElement | null = document.body): Array<string> {
 
   return Array.from($binders)
     .map($binder => {
-      const uploaderId = createUploader($binder)
+      const uploader = createUploader($binder)
 
-      $binder.dataset.uploaderId = uploaderId
+      $binder.dataset.uploaderId = uploader.id
       $binder.hidden = true
 
-      return uploaderId
+      return uploader
     })
     .filter(id => id !== null)
 }
