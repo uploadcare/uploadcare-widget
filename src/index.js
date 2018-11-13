@@ -66,13 +66,13 @@ function init($container?: HTMLElement = document.body): Array<BoundUploader> {
       const uploader = createUploader($binder)
 
       if (uploader === null) {
-        return
+        return uploaders
       }
 
       $binder.dataset.uploaderId = uploader.id
       $binder.hidden = true
 
-      uploaders.push(uploader)
+      return [...uploaders, uploader]
     }, [])
 }
 
