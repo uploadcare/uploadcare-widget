@@ -2,48 +2,78 @@
 /* @jsx h */
 
 import {h, app} from 'hyperapp'
-import './index.css'
-import {Input} from './components/Input/Input'
-import {build as buildSettings} from './modules/settings'
-import {LocalizedDemo} from './components/LocalizedDemo/LocalizedDemo'
-import {i18n, withLocales} from './i18n'
-import {ru} from './i18n/locales'
+import nanoid from 'nanoid'
 
-i18n.addLocale(ru)
+const DEFAULT_BINDERS_SELECTOR = '.uploadcare-uploader'
 
 const state = {}
 const actions = {}
 
-const view = () => (
+const Uploader = () => (
   <div>
-    Uploadcare Widget will be here.
-    <Input type='search' />
-    <LocalizedDemo />
+    Uploader will be here
   </div>
 )
 
-const init = (targetElement: HTMLElement | null = document.body) => {
-  if (!targetElement) {
-    return
+type BoundUploader = {|
+  id: string,
+|}
+
+/**
+ * Creates before the Binder element the new DOM element that contain Uploader.
+ * Saves the id of Uploader to the data attribute of Binder.
+ * If Binder contains the id of existing Uploader, skips creating.
+ *
+ * @param {HTMLElement} $binder – The Binder element.
+ * @returns {(BoundUploader|null)} – The created or existing Uploader.
+ */
+function createUploader($binder: HTMLElement): BoundUploader | null {
+  if ($binder.dataset.uploaderId && document.getElementById($binder.dataset.uploaderId)) {
+    return {id: $binder.dataset.uploaderId}
   }
 
-  const $widgetInputs = targetElement.querySelectorAll('.uploadcare-uploader')
+  const {parentNode} = $binder
 
-  Array.from($widgetInputs).forEach($widgetInput => {
-    const $wrapper = document.createElement('div')
-    const parentNode = $widgetInput.parentNode
+  if (!parentNode) {
+    return null
+  }
 
-    if (!parentNode) {
-      return
-    }
+  const name = 'uploadcare--uploader'
+  const id = `${name}-${nanoid()}`
+  const $uploader = document.createElement('div')
 
-    $wrapper.classList.add('uploadcare-uploader--widget')
-    parentNode.insertBefore($wrapper, $widgetInput)
+  $uploader.id = id
+  $uploader.classList.add(name)
 
-    const settings = buildSettings($widgetInput)
+  parentNode.insertBefore($uploader, $binder)
 
-    withLocales(app)(state, actions, view, $wrapper)
-  })
+  app(state, actions, Uploader, $uploader)
+
+  return {id}
 }
 
-export default {uploader: {init}}
+/**
+ * Creates as many Uploaders as Binders in the Container element.
+ *
+ * @param {HTMLElement} [$container] – The Container element, by default is body of the page.
+ * @returns {Array<BoundUploader>} – The list of Uploaders.
+ */
+function init($container?: HTMLElement = document.body): Array<BoundUploader> {
+  const $binders = $container.querySelectorAll(DEFAULT_BINDERS_SELECTOR)
+
+  return Array.from($binders)
+    .reduce((uploaders, $binder) => {
+      const uploader = createUploader($binder)
+
+      if (uploader === null) {
+        return uploaders
+      }
+
+      $binder.dataset.uploaderId = uploader.id
+      $binder.hidden = true
+
+      return [...uploaders, uploader]
+    }, [])
+}
+
+init()

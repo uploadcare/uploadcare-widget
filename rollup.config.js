@@ -8,6 +8,7 @@ import postcss from 'rollup-plugin-postcss'
 import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
 import {plugin as analyze} from 'rollup-plugin-analyzer'
 import alias from 'rollup-plugin-alias'
+import commonjs from 'rollup-plugin-commonjs'
 
 const onAnalysis = ({bundleSize}) => {
   const limitBytes = 250e3
@@ -28,6 +29,7 @@ const getPlugins = () =>
       plugins: [],
     }),
     babel(),
+    commonjs({sourceMap: false}),
     license({
       banner: `
       <%= pkg.name %> <%= pkg.version %>
