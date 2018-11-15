@@ -129,9 +129,6 @@ uploadcare.namespace 'files', (ns) ->
 
       if not @__file
         return df
-      if @settings.imagesOnly
-        @__rejectApi('image')
-        return df
 
       @multipartStart().done (data) =>
         @uploadParts(data.parts, data.uuid).done =>
