@@ -6,25 +6,34 @@
          alt="">
 </a>
 
-Uploadcare Widget is an HTML5 file uploader, a part of the
-[Uploadcare][uc-home]
-ecosystem that fully covers your file handling.
-
-Uploads affect your web or mobile app performance. The widget ensures all of your
-uploads are fast and hit their target.
+Uploadcare Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
+file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
 [![Build Status][badge-travis-img]][badge-travis-url]
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
 
-It’s provided as a typical JavaScript library and can be easily embedded in your
-site.
+Uploads affect your web or mobile app performance. The widget ensures you
+integrate file uploading into your product in minutes, no matter the development
+stack.
 
-The widget is highly customizable to fit your needs. It supports multi-file
-uploads, manual crop, and integrates with social media and cloud storage
-providers.
+The widget features:
 
-Using the older `2.x` version? Check out the stuff under the [v2 tag][github-branch-v2].
+* Drag&Drop selection.
+* Over a dozen [upload sources][uc-docs-widget-sources] including social media
+  and cloud storage providers.
+* Multiple file upload with individual progress bars.
+* File moderation through validation by file size, extension or MIME type.
+* Image preview and image crop.
+* [Libraries and integrations][uc-libs] for JavaScript, PHP, Python, Java,
+  Django, Ruby on Rails, Angular, and more.
+* 20+ languages, [learn more][uc-docs-widget-locales].
+
+We provide the file uploader as a typical JavaScript library; it can be easily
+embedded in your site.
+
+Using the older `2.x` version? Check out the stuff under the
+[v2 tag][github-branch-v2].
 
 <a href="https://uploadcare.com/widget/configure/" title="Play with the widget">
   <img src="https://ucarecdn.com/021e5297-c1c4-43d4-97fc-6de7dd97c856/"
@@ -275,6 +284,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
+[uc-libs]: https://uploadcare.com/docs/libs/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-home]: https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-features-effects-tab]: https://uploadcare.com/features/effects_tab/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-widget-configurator]: https://uploadcare.com/widget/configure/?utm_source=github&utm_campaign=uploadcare-widget
@@ -289,6 +299,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [uc-docs-widget-install]: https://uploadcare.com/docs/uploads/widget/install/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-options-public-key]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget#option-public-key
 [uc-docs-widget-options-locale-translations]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget#option-locale-translations
+[uc-docs-widget-sources]: https://uploadcare.com/docs/uploads/widget/locales/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-config]: https://uploadcare.com/docs/uploads/widget/config/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-locales]: https://uploadcare.com/docs/uploads/widget/locales/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-v2]: https://uploadcare.com/documentation/widget/v2/?utm_source=github&utm_campaign=uploadcare-widget
