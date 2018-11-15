@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Fixed multipart uploading when imagesOnly flag is set.
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.2...v2
 
 ## [2.11.2] - 2018-09-24
