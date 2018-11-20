@@ -2,7 +2,6 @@
 /* @jsx h */
 
 import {h, app} from 'hyperapp'
-import nanoid from 'nanoid'
 
 const DEFAULT_BINDERS_SELECTOR = '.uploadcare-uploader'
 
@@ -39,7 +38,7 @@ function createUploader($binder: HTMLElement): BoundUploader | null {
   }
 
   const name = 'uploadcare--uploader'
-  const id = `${name}-${nanoid()}`
+  const id = `${name}-${document.querySelectorAll(`.${name}`).length}`
   const $uploader = document.createElement('div')
 
   $uploader.id = id

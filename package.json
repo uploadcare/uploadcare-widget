@@ -22,8 +22,7 @@
   },
   "dependencies": {
     "classnames": "github:nd0ut/classnames#true-es-modules",
-    "hyperapp": "^1.2.9",
-    "nanoid": "^2.0.0"
+    "hyperapp": "^1.2.9"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
