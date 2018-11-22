@@ -11,7 +11,7 @@
     "lint:css": "stylelint src/**/*.pcss",
     "lint:js": "eslint .",
     "lint": "npm run lint:js && npm run lint:css",
-    "test": "jest --env=node",
+    "test": "jest",
     "e2e:local": "node scripts/tests/e2e/local.js",
     "e2e:browserstack": "node scripts/tests/e2e/browserstack.js",
     "test:debug": "node --debug-brk --inspect ./node_modules/.bin/jest -i",
