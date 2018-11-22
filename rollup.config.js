@@ -8,8 +8,9 @@ import postcss from 'rollup-plugin-postcss'
 import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
 import alias from 'rollup-plugin-alias'
 import commonjs from 'rollup-plugin-commonjs'
+import {terser} from 'rollup-plugin-terser'
 
-const createConfig = ({output}) => ({
+const createConfig = ({output, minimize}) => ({
   input: 'src/index.js',
   output: output.map(format => Object.assign({name: 'UCWidget'}, format)),
   plugins: [
@@ -22,6 +23,7 @@ const createConfig = ({output}) => ({
     }),
     babel(),
     commonjs({sourceMap: false}),
+    minimize && terser(),
     license({
       banner: `
     <%= pkg.name %> <%= pkg.version %>
@@ -31,7 +33,7 @@ const createConfig = ({output}) => ({
   `,
     }),
     sizeSnapshot(),
-  ],
+  ].filter(Boolean),
 })
 
 export default [
@@ -50,5 +52,14 @@ export default [
         format: 'umd',
       },
     ],
+  }),
+  createConfig({
+    output: [
+      {
+        file: 'dist/uploadcare.min.js',
+        format: 'umd',
+      },
+    ],
+    minimize: true,
   }),
 ]
