@@ -64,7 +64,6 @@
     "postcss-reporter": "^6.0.0",
     "rollup": "^0.67.3",
     "rollup-plugin-alias": "^1.4.0",
-    "rollup-plugin-analyzer": "^2.1.0",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",

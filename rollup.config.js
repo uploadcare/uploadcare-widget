@@ -6,18 +6,8 @@ import resolve from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
 import postcss from 'rollup-plugin-postcss'
 import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
-import {plugin as analyze} from 'rollup-plugin-analyzer'
 import alias from 'rollup-plugin-alias'
 import commonjs from 'rollup-plugin-commonjs'
-
-const onAnalysis = ({bundleSize}) => {
-  const limitBytes = 250e3
-
-  if (bundleSize < limitBytes) return
-  console.log(`ATTENTION: Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`)
-
-  return process.exit(1)
-}
 
 const createConfig = ({output}) => ({
   input: 'src/index.js',
@@ -41,7 +31,6 @@ const createConfig = ({output}) => ({
   `,
     }),
     sizeSnapshot(),
-    analyze({onAnalysis}),
   ],
 })
 
