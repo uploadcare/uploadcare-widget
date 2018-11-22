@@ -10,9 +10,11 @@ import alias from 'rollup-plugin-alias'
 import commonjs from 'rollup-plugin-commonjs'
 import {terser} from 'rollup-plugin-terser'
 
+const sourceMap = false
+
 const createConfig = ({output, minimize}) => ({
   input: 'src/index.js',
-  output: output.map(format => Object.assign({name: 'UCWidget'}, format)),
+  output: output.map(format => Object.assign({name: 'UploadcareWidget'}, format)),
   plugins: [
     alias({i18n: path.join(__dirname, 'src/i18n/index.js')}),
     replace({'process.env.NODE_ENV': process.env.NODE_ENV}),
@@ -22,8 +24,8 @@ const createConfig = ({output, minimize}) => ({
       plugins: [],
     }),
     babel(),
-    commonjs({sourceMap: false}),
-    minimize && terser(),
+    commonjs({sourceMap}),
+    minimize && terser({sourcemap: sourceMap}),
     license({
       banner: `
     <%= pkg.name %> <%= pkg.version %>
@@ -40,15 +42,15 @@ export default [
   createConfig({
     output: [
       {
-        file: 'dist/uploadcare.esm.js',
+        file: 'dist/uploadcare-widget.esm.js',
         format: 'es',
       },
       {
-        file: 'dist/uploadcare.cjs.js',
+        file: 'dist/uploadcare-widget.cjs.js',
         format: 'cjs',
       },
       {
-        file: 'dist/uploadcare.umd.js',
+        file: 'dist/uploadcare-widget.umd.js',
         format: 'umd',
       },
     ],
@@ -56,7 +58,7 @@ export default [
   createConfig({
     output: [
       {
-        file: 'dist/uploadcare.min.js',
+        file: 'dist/uploadcare-widget.min.js',
         format: 'umd',
       },
     ],

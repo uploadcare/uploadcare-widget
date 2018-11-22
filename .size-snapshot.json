@@ -1,31 +1,31 @@
 {
-  "dist/uploadcare.cjs.js": {
-    "bundled": 11323,
-    "minified": 4321,
-    "gzipped": 1887
+  "dist/uploadcare-widget.cjs.js": {
+    "bundled": 11321,
+    "minified": 4293,
+    "gzipped": 1869
   },
-  "dist/uploadcare.umd.js": {
-    "bundled": 12200,
-    "minified": 4332,
-    "gzipped": 1904
+  "dist/uploadcare-widget.umd.js": {
+    "bundled": 12206,
+    "minified": 4302,
+    "gzipped": 1885
   },
-  "dist/uploadcare.esm.js": {
-    "bundled": 11308,
-    "minified": 4308,
-    "gzipped": 1883,
+  "dist/uploadcare-widget.esm.js": {
+    "bundled": 11306,
+    "minified": 4280,
+    "gzipped": 1863,
     "treeshaked": {
       "rollup": {
-        "code": 4179,
+        "code": 4149,
         "import_statements": 0
       },
       "webpack": {
-        "code": 5150
+        "code": 5120
       }
     }
   },
-  "dist/uploadcare.min.js": {
-    "bundled": 4332,
-    "minified": 4274,
-    "gzipped": 1874
+  "dist/uploadcare-widget.min.js": {
+    "bundled": 4302,
+    "minified": 4244,
+    "gzipped": 1849
   }
 }
