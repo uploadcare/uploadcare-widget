@@ -19,8 +19,10 @@ const onAnalysis = ({bundleSize}) => {
   return process.exit(1)
 }
 
-const getPlugins = () =>
-  [
+const createConfig = ({output}) => ({
+  input: 'src/index.js',
+  output: output.map(format => Object.assign({name: 'UCWidget'}, format)),
+  plugins: [
     alias({i18n: path.join(__dirname, 'src/i18n/index.js')}),
     replace({'process.env.NODE_ENV': process.env.NODE_ENV}),
     resolve({browser: true}),
@@ -32,20 +34,19 @@ const getPlugins = () =>
     commonjs({sourceMap: false}),
     license({
       banner: `
-      <%= pkg.name %> <%= pkg.version %>
-      <%= pkg.description %>
-      <%= pkg.homepage %>
-      Date: <%= moment().format('YYYY-MM-DD') %>
-    `,
+    <%= pkg.name %> <%= pkg.version %>
+    <%= pkg.description %>
+    <%= pkg.homepage %>
+    Date: <%= moment().format('YYYY-MM-DD') %>
+  `,
     }),
     sizeSnapshot(),
     analyze({onAnalysis}),
-  ].filter(plugin => !!plugin)
+  ],
+})
 
 export default [
-  {
-    input: 'src/index.js',
-    plugins: getPlugins(),
+  createConfig({
     output: [
       {
         file: 'dist/uploadcare.esm.js',
@@ -56,10 +57,9 @@ export default [
         format: 'cjs',
       },
       {
-        file: 'dist/uploadcare.iife.js',
-        name: 'uploadcare',
-        format: 'iife',
+        file: 'dist/uploadcare.umd.js',
+        format: 'umd',
       },
     ],
-  },
+  }),
 ]
