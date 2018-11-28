@@ -29,9 +29,6 @@ namespace 'files', (ns) ->
       @s3Bucket = null
       @sourceInfo.source ||= @sourceName
 
-      # this can be exposed in the future
-      @onInfoReady = $.Callbacks('once memory')
-
       @__setupValidation()
       @__initApi()
 
@@ -73,7 +70,9 @@ namespace 'files', (ns) ->
           jsonerrors: 1
           file_id: @fileId
           pub_key: @settings.publicKey
-          wait_is_ready: +@onInfoReady.fired()
+          # Assume that we have all other info if isImage is set to something
+          # other than null and we only waiting for is_ready flag.
+          wait_is_ready: +(@isImage is null)
         },
         headers: {'X-UC-User-Agent': @settings._userAgent}
       )
@@ -99,8 +98,7 @@ namespace 'files', (ns) ->
       if @s3Bucket and @cdnUrlModifiers
         @__rejectApi('baddata')
 
-      if not @onInfoReady.fired()
-        @onInfoReady.fire(@__fileInfo())
+      @__runValidators()
 
       if data.is_ready
         @__resolveApi()
@@ -151,10 +149,8 @@ namespace 'files', (ns) ->
           if info.isImage is false
             throw new Error('image')
 
-      @onInfoReady.add(@__runValidators)
-
-    __runValidators: (info) =>
-      info = info || @__fileInfo()
+    __runValidators: =>
+      info = @__fileInfo()
       try
         for v in @validators
           v(info)
