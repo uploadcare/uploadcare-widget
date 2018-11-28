@@ -11,10 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fixed multipart uploading when imagesOnly flag is set.
 * Validators now run more frequently for each file than before.
+* Fixed the MIME type of the recorded video on the camera tab.
+  Now, the default MIME type is WebM. See [#513][github-pr-513].
 * Fixed typo and improved grammar in the Dutch (`nl`) locale. See [#504][github-pr-504].
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...HEAD
 [github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
+[github-pr-513]: https://github.com/uploadcare/uploadcare-widget/pull/513
 
 ## [3.6.1] - 2018-09-21
 
