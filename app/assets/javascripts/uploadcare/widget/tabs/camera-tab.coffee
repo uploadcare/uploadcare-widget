@@ -166,7 +166,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('recording')
 
       @__chunks = []
-      __recorderOptions = {}
+      __recorderOptions = {
+        mimeType: 'video/webm'
+      }
 
       if @settings.audioBitsPerSecond != null
         __recorderOptions.audioBitsPerSecond = @settings.audioBitsPerSecond
@@ -174,10 +176,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if @settings.videoBitsPerSecond != null
         __recorderOptions.videoBitsPerSecond = @settings.videoBitsPerSecond
 
-      if Object.keys(__recorderOptions).length != 0
-        @__recorder = new @MediaRecorder(@__stream, __recorderOptions)
-      else
-        @__recorder = new @MediaRecorder(@__stream)
+      @__recorder = new @MediaRecorder(@__stream, __recorderOptions)
 
       @__recorder.start()
       @__recorder.ondataavailable = (e) =>
@@ -187,12 +186,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('ready')
 
       @__recorder.onstop = =>
-        # I don't see any way to get correct value in Chrome.
-        # Currently Chrome and Firefox both uses webm.
-        mime = @__recorder.mimeType
-        mime = if mime then mime.split('/')[1] else 'webm'
-        blob = new Blob(@__chunks, {'type': "video/#{mime}"})
-        blob.name = "record.#{mime}"
+        blob = new Blob(@__chunks, {'type': @__recorder.mimeType})
+        blob.name = "record.webm"
         @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')
         @__chunks = []
