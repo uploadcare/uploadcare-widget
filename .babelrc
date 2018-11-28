@@ -1,16 +1,9 @@
 {
   "presets": [
     "@babel/preset-flow",
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": false,
-        "modules": false,
-        "targets": {
-          "esmodules": true
-        }
-      }
-    ]
+    ["@babel/preset-env", {
+      "loose": true
+    }]
   ],
   "plugins": [
     ["module-resolver", {
@@ -24,16 +17,13 @@
     "test": {
       "presets": [
         "@babel/preset-flow",
-        [
-          "@babel/preset-env",
-          {
-            "useBuiltIns": false,
-            "modules": "commonjs",
-            "targets": {
-              "esmodules": true
-            }
+        ["@babel/preset-env", {
+          "useBuiltIns": false,
+          "modules": "commonjs",
+          "targets": {
+            "esmodules": true
           }
-        ]
+        }]
       ]
     }
   }

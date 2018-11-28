@@ -6,21 +6,16 @@ import resolve from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
 import postcss from 'rollup-plugin-postcss'
 import {sizeSnapshot} from 'rollup-plugin-size-snapshot'
-import {plugin as analyze} from 'rollup-plugin-analyzer'
 import alias from 'rollup-plugin-alias'
 import commonjs from 'rollup-plugin-commonjs'
+import {terser} from 'rollup-plugin-terser'
 
-const onAnalysis = ({bundleSize}) => {
-  const limitBytes = 250e3
+const sourceMap = false
 
-  if (bundleSize < limitBytes) return
-  console.log(`ATTENTION: Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`)
-
-  return process.exit(1)
-}
-
-const getPlugins = () =>
-  [
+const createConfig = ({output, minimize}) => ({
+  input: 'src/index.js',
+  output: output.map(format => Object.assign({name: 'UploadcareWidget'}, format)),
+  plugins: [
     alias({i18n: path.join(__dirname, 'src/i18n/index.js')}),
     replace({'process.env.NODE_ENV': process.env.NODE_ENV}),
     resolve({browser: true}),
@@ -29,37 +24,44 @@ const getPlugins = () =>
       plugins: [],
     }),
     babel(),
-    commonjs({sourceMap: false}),
+    commonjs({sourceMap}),
+    minimize && terser({sourcemap: sourceMap}),
     license({
       banner: `
-      <%= pkg.name %> <%= pkg.version %>
-      <%= pkg.description %>
-      <%= pkg.homepage %>
-      Date: <%= moment().format('YYYY-MM-DD') %>
-    `,
+    <%= pkg.name %> <%= pkg.version %>
+    <%= pkg.description %>
+    <%= pkg.homepage %>
+    Date: <%= moment().format('YYYY-MM-DD') %>
+  `,
     }),
     sizeSnapshot(),
-    analyze({onAnalysis}),
-  ].filter(plugin => !!plugin)
+  ].filter(Boolean),
+})
 
 export default [
-  {
-    input: 'src/index.js',
-    plugins: getPlugins(),
+  createConfig({
     output: [
       {
-        file: 'dist/uploadcare.esm.js',
+        file: 'dist/uploadcare-widget.esm.js',
         format: 'es',
       },
       {
-        file: 'dist/uploadcare.cjs.js',
+        file: 'dist/uploadcare-widget.cjs.js',
         format: 'cjs',
       },
       {
-        file: 'dist/uploadcare.iife.js',
-        name: 'uploadcare',
-        format: 'iife',
+        file: 'dist/uploadcare-widget.js',
+        format: 'umd',
       },
     ],
-  },
+  }),
+  createConfig({
+    output: [
+      {
+        file: 'dist/uploadcare-widget.min.js',
+        format: 'umd',
+      },
+    ],
+    minimize: true,
+  }),
 ]
