@@ -50,7 +50,7 @@ export default [
         format: 'cjs',
       },
       {
-        file: 'dist/uploadcare-widget.umd.js',
+        file: 'dist/uploadcare-widget.js',
         format: 'umd',
       },
     ],

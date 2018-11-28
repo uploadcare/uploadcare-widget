@@ -4,7 +4,7 @@
     "minified": 4293,
     "gzipped": 1869
   },
-  "dist/uploadcare-widget.umd.js": {
+  "dist/uploadcare-widget.js": {
     "bundled": 12206,
     "minified": 4302,
     "gzipped": 1885
