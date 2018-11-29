@@ -166,9 +166,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('recording')
 
       @__chunks = []
-      __recorderOptions = {
-        mimeType: 'video/webm'
-      }
+      __recorderOptions = {}
 
       if @settings.audioBitsPerSecond != null
         __recorderOptions.audioBitsPerSecond = @settings.audioBitsPerSecond
@@ -176,7 +174,10 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if @settings.videoBitsPerSecond != null
         __recorderOptions.videoBitsPerSecond = @settings.videoBitsPerSecond
 
-      @__recorder = new @MediaRecorder(@__stream, __recorderOptions)
+      if Object.keys(__recorderOptions).length != 0
+        @__recorder = new @MediaRecorder(@__stream, __recorderOptions)
+      else
+        @__recorder = new @MediaRecorder(@__stream)
 
       @__recorder.start()
       @__recorder.ondataavailable = (e) =>
@@ -187,7 +188,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @__recorder.onstop = =>
         blob = new Blob(@__chunks, {'type': @__recorder.mimeType})
-        blob.name = "record.webm"
+        ext = @__guessExtensionByMime(@__recorder.mimeType)
+        blob.name = "record.#{ext}"
         @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')
         @__chunks = []
@@ -198,3 +200,26 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @__recorder.stop()
       @__chunks = []
+
+    __guessExtensionByMime: (mime) ->
+      known_containers = {
+        'mp4': 'mp4',
+        'ogg': 'ogg',
+        'webm': 'webm',
+        'quicktime': 'mov',
+        'x-matroska': 'mkv',
+      }
+      # e.g. "video/x-matroska;codecs=avc1,opus"
+      if mime
+        # e.g. ["video", "x-matroska;codecs=avc1,opus"]
+        mime = mime.split('/')
+        if mime[0] == 'video'
+          # e.g. "x-matroska;codecs=avc1,opus"
+          mime = mime.slice(1).join('/')
+          # e.g. "x-matroska"
+          container = mime.split(';')[0]
+          # e.g. "mkv"
+          if known_containers[container]
+            return known_containers[container]
+      # In all other cases just return the base extension for all times
+      return 'avi'
