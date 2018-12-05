@@ -129,8 +129,7 @@ uploadcare.namespace 'utils.image', (ns) ->
       df.resolve(canvas)
 
     cx = document.createElement('canvas').getContext('2d')
-    isChrome = navigator.userAgent.match(/\ Chrome\//)
-    if 'imageSmoothingQuality' of cx and not isChrome
+    if 'imageSmoothingQuality' of cx
       runNative()
     else
       run()
