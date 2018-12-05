@@ -209,6 +209,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         'quicktime': 'mov',
         'x-matroska': 'mkv',
       }
+      # MediaRecorder.mimeType returns empty string in Firefox.
+      # Firefox record video as WebM now by default.
+      # @link https://bugzilla.mozilla.org/show_bug.cgi?id=1512175
+      if mime == ''
+        return 'webm'
       # e.g. "video/x-matroska;codecs=avc1,opus"
       if mime
         # e.g. ["video", "x-matroska;codecs=avc1,opus"]
