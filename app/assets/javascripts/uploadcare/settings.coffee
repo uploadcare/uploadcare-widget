@@ -42,7 +42,7 @@ uploadcare.namespace 'settings', (ns) ->
     previewUrlCallback: null
     # fine tuning
     imagePreviewMaxSize: 25 * 1024 * 1024
-    multipartMinSize: 25 * 1024 * 1024
+    multipartMinSize: 10 * 1024 * 1024
     multipartPartSize: 5 * 1024 * 1024
     multipartMinLastPartSize: 1024 * 1024
     multipartConcurrency: 4
