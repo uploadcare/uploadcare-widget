@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * The default threshold for multipart uploads was dropped
   from 25 to 10 megabytes.
 * Validators now run more frequently for each file than before.
-* Enabled `imageSmoothingQuality` API for `imageShrink` for Google Chrome
+* Enabled [`imageSmoothingQuality`] API for `imageShrink` for Google Chrome
 * Fixed the file extension of the recorded video on the camera tab.
   Now it reflects a video container with fallback to "avi". See [#516][github-pr-516].
 * Fixed typo and improved grammar in the Dutch (`nl`) locale. See [#504][github-pr-504].
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...HEAD
 [github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
 [github-pr-516]: https://github.com/uploadcare/uploadcare-widget/pull/516
+[`imageSmoothingQuality`]: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingQuality
 
 ## [3.6.1] - 2018-09-21
 
