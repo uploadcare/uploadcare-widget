@@ -12,6 +12,7 @@ Benjamin Graf <bengra89@users.noreply.github.com>
 Benjamin Piouffle <benjamin.piouffle@gmail.com>
 Cassio Santos <sss.cassio@gmail.com>
 Cyprian Gracz <cyprian.gracz@micro-jumbo.eu>
+Dafyd Jones <djones@wespeke.com>
 David Avsajanishvili <david@davidavs.com>
 Dimitry Solovyov <dimituri@gmail.com>
 Dmitry Mukhin <dm@uploadcare.com>
@@ -32,6 +33,7 @@ ReadmeCritic <frankensteinbot@gmail.com>
 Roman Pominov <meshokmuki@gmail.com>
 Scott Ries <scottmries@gmail.com>
 Shane O'Grady <shane.ogrady@gmail.com>
+Siarhei Bautrukevich <s.boltrukevich@gmail.com>
 Sławek Ehlert <slafs@op.pl>
 Tlapi <jan@potentus.com>
 Torbjørn Kvåle <torbjokv@users.noreply.github.com>
