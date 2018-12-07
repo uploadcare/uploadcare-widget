@@ -17,11 +17,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Fixed the file extension of the recorded video on the camera tab.
   Now it reflects a video container with fallback to "avi". See [#516][github-pr-516].
 * Fixed typo and improved grammar in the Dutch (`nl`) locale. See [#504][github-pr-504].
+* Fixed work in the `strict mode`. See [#523][github-pr-523].
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...HEAD
 [github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
 [github-pr-511]: https://github.com/uploadcare/uploadcare-widget/pull/511
 [github-pr-516]: https://github.com/uploadcare/uploadcare-widget/pull/516
+[github-pr-523]: https://github.com/uploadcare/uploadcare-widget/pull/523
 [`imageSmoothingQuality`]: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingQuality
 
 ## [3.6.1] - 2018-09-21
