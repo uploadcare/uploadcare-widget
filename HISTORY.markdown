@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.3...v2
+
+## [2.11.3]
+
 ### Fixed
 
 * Fixed multipart uploading when `imagesOnly` flag is set.
@@ -17,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Fixed the file extension of the recorded video on the camera tab.
   Now it reflects a video container with fallback to "avi". See [#516][github-pr-516].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.2...v2
+[2.11.3]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.2...2.11.3
 [github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
 [github-pr-511]: https://github.com/uploadcare/uploadcare-widget/pull/511
 [github-pr-516]: https://github.com/uploadcare/uploadcare-widget/pull/516

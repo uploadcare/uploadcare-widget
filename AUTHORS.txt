@@ -22,6 +22,7 @@ Nikolay Zherdev <nickzherdev@gmail.com>
 ReadmeCritic <frankensteinbot@gmail.com>
 Roman Pominov <meshokmuki@gmail.com>
 Shane O'Grady <shane.ogrady@gmail.com>
+Siarhei Bautrukevich <s.boltrukevich@gmail.com>
 Sławek Ehlert <slafs@op.pl>
 Tlapi <jan@potentus.com>
 Torbjørn Kvåle <torbjokv@users.noreply.github.com>
