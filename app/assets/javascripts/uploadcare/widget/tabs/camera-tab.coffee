@@ -174,12 +174,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @__setState('ready')
 
       @__recorder.onstop = =>
-        # I don't see any way to get correct value in Chrome.
-        # Currently Chrome and Firefox both uses webm.
-        mime = @__recorder.mimeType
-        mime = if mime then mime.split('/')[1] else 'webm'
-        blob = new Blob(@__chunks, {'type': "video/#{mime}"})
-        blob.name = "record.#{mime}"
+        blob = new Blob(@__chunks, {'type': @__recorder.mimeType})
+        ext = @__guessExtensionByMime(@__recorder.mimeType)
+        blob.name = "record.#{ext}"
         @dialogApi.addFiles('object', [[blob, {source: 'camera'}]])
         @dialogApi.switchTab('preview')
         @__chunks = []
@@ -190,3 +187,31 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       @__recorder.stop()
       @__chunks = []
+
+    __guessExtensionByMime: (mime) ->
+      known_containers = {
+        'mp4': 'mp4',
+        'ogg': 'ogg',
+        'webm': 'webm',
+        'quicktime': 'mov',
+        'x-matroska': 'mkv',
+      }
+      # MediaRecorder.mimeType returns empty string in Firefox.
+      # Firefox record video as WebM now by default.
+      # @link https://bugzilla.mozilla.org/show_bug.cgi?id=1512175
+      if mime == ''
+        return 'webm'
+      # e.g. "video/x-matroska;codecs=avc1,opus"
+      if mime
+        # e.g. ["video", "x-matroska;codecs=avc1,opus"]
+        mime = mime.split('/')
+        if mime[0] == 'video'
+          # e.g. "x-matroska;codecs=avc1,opus"
+          mime = mime.slice(1).join('/')
+          # e.g. "x-matroska"
+          container = mime.split(';')[0]
+          # e.g. "mkv"
+          if known_containers[container]
+            return known_containers[container]
+      # In all other cases just return the base extension for all times
+      return 'avi'
