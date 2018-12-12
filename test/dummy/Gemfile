@@ -17,4 +17,5 @@ group :development, :test do
   gem 'guard-jasmine'
   gem 'rails-dev-tweaks', '~> 1.2.0'
   gem 'therubyracer'
+  gem 'ejs', :git => 'git@github.com:uploadcare/ruby-ejs.git'
 end
