@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.2...HEAD
+
+## [3.6.2]
+
 ### Fixed
 
 * Fixed multipart uploading when `imagesOnly` flag is set.
@@ -19,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Fixed typo and improved grammar in the Dutch (`nl`) locale. See [#504][github-pr-504].
 * Fixed work in the `strict mode`. See [#523][github-pr-523].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...HEAD
+[3.6.2]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.1...v3.6.2
 [github-pr-504]: https://github.com/uploadcare/uploadcare-widget/pull/504
 [github-pr-511]: https://github.com/uploadcare/uploadcare-widget/pull/511
 [github-pr-516]: https://github.com/uploadcare/uploadcare-widget/pull/516
