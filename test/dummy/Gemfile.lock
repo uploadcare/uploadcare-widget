@@ -1,4 +1,12 @@
 GIT
+  remote: git@github.com:uploadcare/ruby-ejs.git
+  revision: cd02889a13cfdee1f4d7811696f781ea1e3b1c84
+  specs:
+    ejs (1.1.1)
+      execjs (~> 0.4)
+      rkelly-remix (~> 0.0.7)
+
+GIT
   remote: https://github.com/bradphelan/jasminerice.git
   revision: 091349c27343bfa728b8e5745675f9ddbb7d9699
   specs:
@@ -8,7 +16,7 @@ GIT
 PATH
   remote: ../..
   specs:
-    uploadcare-widget (3.6.0)
+    uploadcare-widget (3.6.1)
       coffee-rails
       ejs
 
@@ -44,9 +52,9 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.3)
     builder (3.0.4)
-    childprocess (0.5.9)
+    childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    coderay (1.1.1)
+    coderay (1.1.2)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -54,10 +62,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    ejs (1.1.1)
+    concurrent-ruby (1.1.3)
     erubis (2.7.0)
-    execjs (2.6.0)
-    ffi (1.9.10)
+    execjs (0.4.0)
+      multi_json (~> 1.0)
+    ffi (1.9.25)
     formatador (0.2.5)
     guard (1.8.3)
       formatador (>= 0.2.4)
@@ -72,28 +81,28 @@ GEM
       thor
       tilt
     hike (1.2.3)
-    i18n (0.7.0)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     journey (1.0.4)
-    json (1.8.3)
-    libv8 (3.16.14.13)
+    json (1.8.6)
+    libv8 (3.16.14.19)
     listen (1.3.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    lumberjack (1.0.10)
-    mail (2.5.4)
+    lumberjack (1.0.13)
+    mail (2.5.5)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    method_source (0.8.2)
+    method_source (0.9.2)
     mime-types (1.25.1)
-    multi_json (1.11.2)
+    multi_json (1.13.1)
     polyglot (0.3.5)
-    pry (0.10.3)
+    pry (0.12.2)
       coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
+      method_source (~> 0.9.0)
     rack (1.4.7)
-    rack-cache (1.6.1)
+    rack-cache (1.8.0)
       rack (>= 0.4)
     rack-ssl (1.3.4)
       rack
@@ -117,30 +126,30 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (12.2.1)
-    rb-fsevent (0.9.7)
-    rb-inotify (0.9.7)
-      ffi (>= 0.5.0)
-    rb-kqueue (0.2.4)
+    rake (12.3.2)
+    rb-fsevent (0.10.3)
+    rb-inotify (0.9.10)
+      ffi (>= 0.5.0, < 2)
+    rb-kqueue (0.2.5)
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (2.0.0)
-    slop (3.6.0)
+    rkelly-remix (0.0.7)
     sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
       ref
-    thor (0.19.1)
+    thor (0.20.3)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.46)
+    tzinfo (0.3.55)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -151,6 +160,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.2)
   coffee-script-source (~> 1.6.3)
+  ejs!
   guard (~> 1.8)
   guard-jasmine
   jasminerice!
@@ -162,4 +172,4 @@ DEPENDENCIES
   uploadcare-widget!
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
