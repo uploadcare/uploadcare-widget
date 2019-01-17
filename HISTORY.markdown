@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
 
+* Specified the right license in `package.json` like in the `LICENSE` file.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.2...HEAD
 
