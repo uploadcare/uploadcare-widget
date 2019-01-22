@@ -242,6 +242,11 @@ uploadcare.namespace 'settings', (ns) ->
     if settings.previewProxy and not settings.previewUrlCallback
       settings.previewUrlCallback = defaultPreviewUrlCallback
 
+    skydriveIndex = settings.tabs.indexOf('skydrive')
+
+    if skydriveIndex != -1
+      settings.tabs[skydriveIndex] = 'onedrive'
+
     settings
 
 
