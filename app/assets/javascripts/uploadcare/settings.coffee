@@ -26,7 +26,7 @@ uploadcare.namespace 'settings', (ns) ->
     multipleMaxStrict: false
     imageShrink: false
     pathValue: true
-    tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive'
+    tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive'
     preferredTypes: ''
     inputAcceptTypes: ''  # '' means default, null means "disable accept"
     # upload settings
@@ -69,7 +69,7 @@ uploadcare.namespace 'settings', (ns) ->
 
   presets =
     tabs:
-      all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr skydrive box vk huddle'
+      all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle'
       default: defaults.tabs
 
   # integration setting from data attributes of script tag

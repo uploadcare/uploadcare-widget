@@ -53,7 +53,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           instagram: '인스타그램'
           evernote: '에버노트'
           box: '박스'
-          skydrive: '스카이드라이브'
+          onedrive: '스카이드라이브'
           flickr: '플리커'
         file:
           drag: '모든 파일을<br>드래그 & 드롭'
