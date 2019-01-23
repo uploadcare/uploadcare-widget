@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* New value `onedrive` for the `tabs` option to define OneDrive tab.
+  We continue to support the `skydrive` value, but it will be replaced
+  by `onedrive`. 
+
 ### Fixed
 
 * Specified the right license in `package.json` like in the `LICENSE` file.

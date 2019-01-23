@@ -54,7 +54,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           vk: 'في كي'
           evernote: 'إيفرنوت'
           box: 'بوكس'
-          skydrive: 'ون درايف'
+          onedrive: 'ون درايف'
           flickr: 'فليكر'
           huddle: 'هادل'
         file:

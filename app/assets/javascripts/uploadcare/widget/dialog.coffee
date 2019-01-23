@@ -146,7 +146,7 @@ uploadcare.namespace '', (ns) ->
   ns.registerTab('vk', tabs.RemoteTab)
   ns.registerTab('evernote', tabs.RemoteTab)
   ns.registerTab('box', tabs.RemoteTab)
-  ns.registerTab('skydrive', tabs.RemoteTab)
+  ns.registerTab('onedrive', tabs.RemoteTab)
   ns.registerTab('huddle', tabs.RemoteTab)
   ns.registerTab 'empty-pubkey', (tabPanel, _1, _2, settings) ->
     tabPanel.append(settings._emptyKeyText)

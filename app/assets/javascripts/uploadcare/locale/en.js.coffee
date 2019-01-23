@@ -50,7 +50,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
           vk: 'VK'
           evernote: 'Evernote'
           box: 'Box'
-          skydrive: 'OneDrive'
+          onedrive: 'OneDrive'
           flickr: 'Flickr'
           huddle: 'Huddle'
         file:
