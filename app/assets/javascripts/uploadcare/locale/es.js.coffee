@@ -35,6 +35,8 @@ uploadcare.namespace 'locale.translations', (ns) ->
           one: 'Escoge una imagen'
           other: 'Escoge imágenes'
     dialog:
+      close: 'Cerrar'
+      openMenu: 'Menú abierto'
       done: 'Hecho'
       showFiles: 'Mostrar archivos'
       tabs:
@@ -58,8 +60,12 @@ uploadcare.namespace 'locale.translations', (ns) ->
           input: 'Pega tu link aquí...'
           button: 'Subir'
         camera:
+          title: 'Archivo desde la cámara web'
           capture: 'Hacer una foto'
           mirror: 'Espejo'
+          startRecord: 'Grabar un video'
+          stopRecord: 'Detener'
+          cancelRecord: 'Cancelar'
           retry: 'Solicitar permisos de nuevo'
           pleaseAllow:
             title: 'Por favor, permite el acceso a tu cámara'
@@ -87,6 +93,9 @@ uploadcare.namespace 'locale.translations', (ns) ->
             title: 'Cortar y añadir esta imagen'
             done: 'Listo'
             free: 'libre'
+          video:
+            title: '¿Añadir este video?'
+            change: 'Cancelar'
           error:
             default:
               title: 'Ups!'
@@ -109,6 +118,11 @@ uploadcare.namespace 'locale.translations', (ns) ->
             tooFewFiles: 'Has escogido %files%. Hacen falta al menos %min%.'
             clear: 'Eliminar todo'
             done: 'Hecho'
+            file:
+              preview: 'Vista previa %file%'
+              remove: 'Quitar %file%'
+      footer:
+        text: 'alimentado por'
 
 
 # Pluralization rules taken from:
