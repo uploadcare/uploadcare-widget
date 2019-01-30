@@ -103,7 +103,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
               text: 'Das Bild kann nicht geladen werden'
           multiple:
             title: 'Sie haben %files% Dateien gewählt'
-            question: 'Möchten Sie all diese Datein hinzufügen?'
+            question: 'Möchten Sie all diese Dateien hinzufügen?'
             tooManyFiles: 'Sie haben zu viele Dateien gewählt. %max% ist das Maximum.'
             tooFewFiles: 'Sie haben %files% Dateien. Es sind mindestens %min% nötig.'
             clear: 'Alle löschen'
