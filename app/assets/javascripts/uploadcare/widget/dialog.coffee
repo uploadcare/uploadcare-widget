@@ -18,6 +18,14 @@
 
 uploadcare.namespace '', (ns) ->
 
+  lockDialogFocus = (e) ->
+    if !e.shiftKey and focusableElements.last().is(e.target)
+      e.preventDefault()
+      focusableElements.first().focus()
+    else if e.shiftKey and focusableElements.first().is(e.target)
+      e.preventDefault()
+      focusableElements.last().focus()
+
   lockScroll = (el, toTop) ->
     top = el.scrollTop()
     left = el.scrollLeft()
@@ -32,9 +40,13 @@ uploadcare.namespace '', (ns) ->
         e.stopImmediatePropagation()
         # close only topmost dialog
         currentDialogPr?.reject()
+      if e.which == 9  # Tab
+        lockDialogFocus(e)
 
   currentDialogPr = null
   openedClass = 'uploadcare--page'
+  originalFocusedElement = null
+  focusableElements = null
 
   ns.isDialogOpened = ->
     currentDialogPr != null
@@ -46,12 +58,17 @@ uploadcare.namespace '', (ns) ->
   ns.openDialog = (files, tab, settings) ->
     ns.closeDialog()
 
+    originalFocusedElement = document.activeElement
+
     dialog = $(tpl('dialog')).appendTo('body')
     dialogPr = ns.openPanel(dialog.find('.uploadcare--dialog__placeholder'),
                             files, tab, settings)
     dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
     dialog.addClass('uploadcare--dialog_status_active')
     dialogPr.dialogElement = dialog
+
+    focusableElements = dialog.find('select, input, textarea, button, a[href]')
+    focusableElements.first().focus()
 
     cancelLock = lockScroll($(window), dialog.css('position') is 'absolute')
     $('html, body').addClass(openedClass)
@@ -75,6 +92,7 @@ uploadcare.namespace '', (ns) ->
       currentDialogPr = null
       dialog.remove()
       cancelLock()
+      originalFocusedElement.focus()
 
 
   ns.openPreviewDialog = (file, settings) ->
