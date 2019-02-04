@@ -7,17 +7,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.0...HEAD
+
+## [3.7.0]
+
 ### Added
 
 * New value `onedrive` for the `tabs` option to define OneDrive tab.
   We continue to support the `skydrive` value, but it will be replaced
-  by `onedrive`. 
+  by `onedrive`.
+* Added missing translations to the Spanish (`es`) locale. See [#529][github-pr-529].
 
 ### Fixed
 
 * Specified the right license in `package.json` like in the `LICENSE` file.
+* Keyboard only users can navigate the dialog now. See [#524][github-pr-524].
+* Fixed typo in the German (`de`) locale. See [#530][github-pr-530].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.2...HEAD
+[3.7.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.6.2...v3.7.0
+[github-pr-524]: https://github.com/uploadcare/uploadcare-widget/pull/524
+[github-pr-529]: https://github.com/uploadcare/uploadcare-widget/pull/529
+[github-pr-530]: https://github.com/uploadcare/uploadcare-widget/pull/530
 
 ## [3.6.2]
 

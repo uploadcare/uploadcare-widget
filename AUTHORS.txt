@@ -18,6 +18,7 @@ Dimitry Solovyov <dimituri@gmail.com>
 Dmitry Mukhin <dm@uploadcare.com>
 Eddie Gatenby <eddie@edudoc.ie>
 Elijah <ilya@uploadcare.com>
+Erin Doyle <edoyle@cashstar.com>
 Hamza Abdullah Mohammad <hamzaabdullahmoh@gmail.com>
 Huseyin Beberoglu <hberberoglu@gmail.com>
 Jalil Wahdatehagh <j.wahdatehagh@gmail.com>
@@ -30,6 +31,7 @@ Matt Rohrer <matt@prognostikos.com>
 Milan <gxm210@gmail.com>
 Nikolay Zherdev <nickzherdev@gmail.com>
 ReadmeCritic <frankensteinbot@gmail.com>
+Robbie Paul <robbie.paul@dxw.com>
 Roman Pominov <meshokmuki@gmail.com>
 Scott Ries <scottmries@gmail.com>
 Shane O'Grady <shane.ogrady@gmail.com>
