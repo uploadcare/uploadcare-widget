@@ -8,7 +8,7 @@ GIT
 PATH
   remote: ../..
   specs:
-    uploadcare-widget (2.11.3)
+    uploadcare-widget (2.11.4)
       autoprefixer-rails
       coffee-rails
       csso-rails
