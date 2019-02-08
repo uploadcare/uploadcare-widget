@@ -12,6 +12,7 @@ file handling platform.
 [![NPM version][badge-npm-img]][badge-npm-url]
 [![Build Status][badge-travis-img]][badge-travis-url]
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget?ref=badge_shield)
 
 Uploads affect your web or mobile app performance. The widget ensures you
 integrate file uploading into your product in minutes, no matter the development
@@ -304,3 +305,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [uc-docs-widget-locales]: https://uploadcare.com/docs/uploads/widget/locales/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-docs-widget-v2]: https://uploadcare.com/documentation/widget/v2/?utm_source=github&utm_campaign=uploadcare-widget
 [uc-guides-advanced]: https://uploadcare.com/docs/guides/advanced/?utm_source=github&utm_campaign=uploadcare-widget
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget?ref=badge_large)
