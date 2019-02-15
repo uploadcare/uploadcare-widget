@@ -13,6 +13,7 @@ uploadcare.namespace 'locale.translations', (ns) ->
     errors:
       default: 'Erreur'
       baddata: 'Valeur incorrecte'
+      fileMinimalSize: 'Fichier trop petit'
       size: 'Fichier trop volumineux'
       upload: 'Envoi impossible'
       user: 'Envoi annulé'
