@@ -110,7 +110,7 @@ uploadcare.namespace 'settings', (ns) ->
   flagOptions = (settings, keys) ->
     for key in keys when settings[key]?
       value = settings[key]
-      if $.type(value) == 'string'
+      if typeof value is 'string'
         # "", "..." -> true
         # "false", "disabled" -> false
         value = $.trim(value).toLowerCase()

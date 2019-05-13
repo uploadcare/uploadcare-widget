@@ -125,7 +125,7 @@ Or, if you’re already using jQuery on your page, consider loading
 the light version of the widget: without built-in jQuery,
 
 ```html
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js" charset="utf-8"></script>
 ```
 

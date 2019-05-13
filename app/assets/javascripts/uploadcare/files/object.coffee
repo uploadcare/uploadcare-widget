@@ -167,13 +167,13 @@ uploadcare.namespace 'files', (ns) ->
 
     uploadParts: (parts, uuid) ->
       progress = []
-      lastUpdate = $.now()
+      lastUpdate = Date.now()
       updateProgress = (i, loaded) =>
         progress[i] = loaded
 
-        if $.now() - lastUpdate < 250
+        if Date.now() - lastUpdate < 250
           return
-        lastUpdate = $.now()
+        lastUpdate = Date.now()
 
         total = 0
         for loaded in progress

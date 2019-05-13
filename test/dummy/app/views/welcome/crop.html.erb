@@ -29,7 +29,7 @@ Result:
 <script>
   UPLOADCARE_LIVE = false;
 
-  $('#widget-with-crop-option').change(function(){
+  $('#widget-with-crop-option').on('change', function(){
     // uploadcare.jQuery need for ie8:
     // it clones nodes with jquery's expando.
     var wraper = uploadcare.jQuery('#widget-with-crop-wrap');
