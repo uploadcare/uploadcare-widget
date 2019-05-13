@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.0...HEAD
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.1...HEAD
+
+## [3.7.1]
+
+### Changed
+
+* Upgrade jquery to v3.4.1 due to security issue. See [#535][535].
+
+[535]: https://github.com/uploadcare/uploadcare-widget/issues/535
 
 ## [3.7.0]
 
