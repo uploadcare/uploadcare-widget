@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.3...HEAD
+
+## [3.7.3]
+
 ### Fixed
 
 * Fix broken minified bundle. See [#539][539].
 
 [539]: https://github.com/uploadcare/uploadcare-widget/pull/539
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.1...HEAD
 
 ## [3.7.1]
 
