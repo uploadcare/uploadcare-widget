@@ -92,7 +92,7 @@ def build_widget(version)
     },
     :mangle => {
       :eval => true,
-      :except => [
+      :reserved => [
         # in template engine
         '__p',
       ],

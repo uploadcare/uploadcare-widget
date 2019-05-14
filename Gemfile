@@ -21,7 +21,7 @@ gem 'coffee-rails', '~> 3.2.2'
 gem 'ejs', :git => 'git@github.com:uploadcare/ruby-ejs.git'
 gem 'fog', '~> 1.36.0'
 gem 'therubyracer'
-gem 'uglifier', '~> 2.7.2'
+gem 'uglifier', '~> 4.1.20'
 
 # newer versions generates bigger js files and have other differences
 gem 'coffee-script-source', '~> 1.6.3'
