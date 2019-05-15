@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed 
+
+* Google Photos icon was updated.
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.3...HEAD
 
 ## [3.7.3]
