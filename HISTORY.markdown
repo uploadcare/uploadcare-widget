@@ -7,13 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Google Photos icon geometry was fixed. See [#541][541].
+
+[541]: https://github.com/uploadcare/uploadcare-widget/pull/541
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.4...HEAD
 
 ## [3.7.4]
 
 ### Changed 
 
-* Google Photos icon was updated.
+* Google Photos icon was updated. See [#540][540].
+
+[540]: https://github.com/uploadcare/uploadcare-widget/pull/540
 
 ## [3.7.3]
 
