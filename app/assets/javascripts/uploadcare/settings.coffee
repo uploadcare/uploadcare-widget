@@ -270,8 +270,6 @@ uploadcare.namespace 'settings', (ns) ->
     if not ignoreGlobals
       defaults = $.extend(defaults, ns.globals())
     result = normalize($.extend(defaults, settings or {}))
-    if not result.publicKey
-      utils.commonWarning('publicKey')
     ns.waitForSettings.fire(result)
     result
 
