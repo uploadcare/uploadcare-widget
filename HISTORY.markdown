@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Do not show warning when global public key not set.
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.5...HEAD
 
 ## [3.7.5]
@@ -19,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [3.7.4]
 
-### Changed 
+### Changed
 
 * Google Photos icon was updated. See [#540][540].
 

@@ -23,17 +23,3 @@ uploadcare.namespace 'utils', (ns) ->
     if not messages[msg]?
       messages[msg] = true
       ns.warn(msg)
-
-  common =
-    publicKey: """
-      Global public key not set. Uploads may not work!
-      Add this to the <head> tag to set your key:
-
-      <script>
-      UPLOADCARE_PUBLIC_KEY = 'your_public_key';
-      </script>
-      """
-
-  ns.commonWarning = (name) ->
-    if common[name]?
-      ns.warnOnce(common[name])
