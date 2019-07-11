@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.6...HEAD
+
+## [3.7.6]
+
 ### Changed
 
-* Do not show warning when global public key not set.
+* Do not show warning when global public key not set. See [#546][546].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.5...HEAD
+[546]: https://github.com/uploadcare/uploadcare-widget/pull/546
 
 ## [3.7.5]
 
