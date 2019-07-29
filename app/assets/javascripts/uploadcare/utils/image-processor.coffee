@@ -33,9 +33,9 @@ uploadcare.namespace 'utils.image', (ns) ->
         # console.log('load: ' + (new Date() - start))
         df.notify(.10)
 
-        ns.getExif(file).always (exif) ->
+        exifOp = ns.getExif(file).always (exif) ->
           df.notify(.2)
-          isJPEG = op.state() is 'resolved'
+          isJPEG = exifOp.state() is 'resolved'
 
           # start = new Date()
           op = ns.shrinkImage(img, settings)
