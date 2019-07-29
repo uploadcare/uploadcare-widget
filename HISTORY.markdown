@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* New locale was added: Ukrainian (`uk`). See [#548][github-pr-548].
+
+[github-pr-548]: https://github.com/uploadcare/uploadcare-widget/pull/548
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.6...HEAD
 
 ## [3.7.6]
