@@ -7,13 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.7...HEAD
+
+## [3.7.7]
+
+### Added
+
 * New locale was added: Ukrainian (`uk`). See [#548][github-pr-548].
+
+### Fixed
+
 * Fixed transparency lost when shrinking images before uploading. See [#549][549].
 
 [github-pr-548]: https://github.com/uploadcare/uploadcare-widget/pull/548
 [549]: https://github.com/uploadcare/uploadcare-widget/pull/549
-
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.6...HEAD
 
 ## [3.7.6]
 
