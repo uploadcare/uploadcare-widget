@@ -8,3 +8,4 @@ pkg/
 app/**/*.css
 icons.jst.ejs
 *.log
+dist
