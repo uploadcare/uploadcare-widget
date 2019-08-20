@@ -1,4 +1,4 @@
-# = require ./abilities.js
+import uploadcare from './namespace.coffee'
 
 {
   jQuery: $,

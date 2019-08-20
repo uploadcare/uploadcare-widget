@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 {
   utils,
   utils: {abilities: {URL}},
@@ -12,7 +14,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTab extends ns.BasePreviewTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
-      super
+      super arguments...
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__setFile(file)

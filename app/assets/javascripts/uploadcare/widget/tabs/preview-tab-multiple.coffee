@@ -1,4 +1,4 @@
-# = require ../../vendor/jquery-ordering.js
+import uploadcare from './namespace.coffee'
 
 {
   utils,
@@ -14,7 +14,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTabMultiple extends ns.BasePreviewTab
 
     constructor: ->
-      super
+      super arguments...
 
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))

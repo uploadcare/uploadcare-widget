@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 {
   utils,
   settings,

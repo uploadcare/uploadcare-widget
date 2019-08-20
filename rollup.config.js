@@ -1,15 +1,16 @@
 import coffee from 'rollup-plugin-coffee-script';
 import jst from 'rollup-plugin-jst';
 
+import json from 'rollup-plugin-json';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  input: 'src/index.coffee',
+  input: 'app/assets/javascripts/uploadcare/build/_widget.coffee',
 
   output: {
     name: 'uploadcare',
-    format: 'umd',
+    format: 'iife',
     file: 'dist/index.js'
   },
 
@@ -27,6 +28,7 @@ export default {
 
       escapeModule: 'escape-html'
     }),
+    json(),
 
     resolve(),
     commonjs()

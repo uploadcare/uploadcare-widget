@@ -1,10 +1,4 @@
-# = require ../files.coffee
-# = require ./dragdrop.coffee
-# = require ./template.coffee
-# = require ./dialog.coffee
-# = require_self
-# = require ./widget.coffee
-# = require ./multiple-widget.coffee
+import uploadcare from './namespace.coffee'
 
 {
   utils,

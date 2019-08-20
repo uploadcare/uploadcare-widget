@@ -1,5 +1,4 @@
-# = require ../vendor/jquery-xdr.js
-# = require ../utils/image-processor.coffee
+import uploadcare from './namespace.coffee'
 
 {
   jQuery: $,
@@ -13,7 +12,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'local'
 
     constructor: (@__file) ->
-      super
+      super arguments...
 
       @fileName = @__file.name or 'original'
       @__notifyApi()

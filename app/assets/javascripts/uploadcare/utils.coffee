@@ -1,9 +1,4 @@
-# = require ./vendor/jquery-xdr.js
-# = require ./utils/abilities.coffee
-# = require ./utils/collection.coffee
-# = require ./utils/image-loader.coffee
-# = require ./utils/warnings.coffee
-# = require ./utils/messages.coffee
+import uploadcare from './namespace.coffee'
 
 {
   jQuery: $

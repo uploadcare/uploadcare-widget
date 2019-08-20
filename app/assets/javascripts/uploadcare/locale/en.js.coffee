@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 ##
 ## English locale is the default and used as a fallback.
 ##

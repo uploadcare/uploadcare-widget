@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 {
   jQuery: $
 } = uploadcare
@@ -65,17 +67,18 @@ uploadcare.namespace 'utils', (utils) ->
     add: (item) ->
       if item in @__items
         return
-      super
+      super arguments...
 
     __replace: (oldItem, newItem, i) ->
       if newItem in @__items
         @remove(oldItem)
       else
-        super
+        super arguments...
 
 
   class utils.CollectionOfPromises extends utils.UniqCollection
     constructor: ->
+      super arguments...
       @anyDoneList = $.Callbacks()
       @anyFailList = $.Callbacks()
       @anyProgressList = $.Callbacks()
@@ -83,8 +86,6 @@ uploadcare.namespace 'utils', (utils) ->
 
       @anyProgressList.add (item, firstArgument) ->
         $(item).data('lastProgress', firstArgument)
-
-      super
 
     onAnyDone: (cb) =>
       @anyDoneList.add(cb)
@@ -116,7 +117,7 @@ uploadcare.namespace 'utils', (utils) ->
       if @_thenArgs
         item = item.then(@_thenArgs...)
 
-      super
+      super arguments...
 
       @__watchItem(item)
 
@@ -124,7 +125,7 @@ uploadcare.namespace 'utils', (utils) ->
       if not (newItem and newItem.then)
         @remove(oldItem)
       else
-        super
+        super arguments...
         @__watchItem(newItem)
 
     __watchItem: (item) ->

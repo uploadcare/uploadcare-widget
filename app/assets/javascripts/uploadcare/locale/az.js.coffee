@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 ##
 ## Please, do not use this locale as a reference for new translations.
 ## It could be outdated or incomplete. Always use the latest English versions:

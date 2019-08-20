@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 uploadcare.namespace 'utils.abilities', (ns) ->
 
   ns.fileAPI = !!(window.File and window.FileList and window.FileReader)
