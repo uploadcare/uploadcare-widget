@@ -1,4 +1,4 @@
-import uploadcare from './namespace.coffee'
+import uploadcare from '../namespace.coffee'
 
 ##
 ## Please, do not use this locale as a reference for new translations.
