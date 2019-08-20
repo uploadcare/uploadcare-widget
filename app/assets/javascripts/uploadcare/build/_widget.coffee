@@ -103,7 +103,7 @@ import uploadcare from '../namespace.coffee'
 
 {expose} = uploadcare
 
-# expose('globals', uploadcare.settings.common)
+expose('globals', uploadcare.settings.common)
 expose('start')
 expose('initialize')
 expose('fileFrom')
@@ -114,7 +114,7 @@ expose('openDialog')
 expose('closeDialog')
 expose('openPanel')
 expose('registerTab')
-# expose('Circle', uploadcare.ui.progress.Circle)
+expose('Circle', uploadcare.ui.progress.Circle)
 expose('SingleWidget')
 expose('MultipleWidget')
 expose('Widget')
