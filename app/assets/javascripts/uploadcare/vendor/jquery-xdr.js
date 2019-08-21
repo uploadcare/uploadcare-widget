@@ -1,3 +1,5 @@
+import uploadcare from '../namespace.coffee'
+
 // from https://github.com/jaubourg/ajaxHooks/blob/master/src/xdr.js
 
 if ( window.XDomainRequest ) {

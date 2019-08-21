@@ -1,3 +1,4 @@
+import uploadcare from '../namespace.coffee'
 // from https://github.com/homm/jquery-ordering
 
 (function($) {
