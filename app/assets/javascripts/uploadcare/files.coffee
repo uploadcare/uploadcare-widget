@@ -1,9 +1,4 @@
-# = require ./files/base.coffee
-# = require ./files/object.coffee
-# = require ./files/input.coffee
-# = require ./files/url.coffee
-# = require ./files/uploaded.coffee
-# = require ./files/group.coffee
+import uploadcare from './namespace.coffee'
 
 {
   utils,

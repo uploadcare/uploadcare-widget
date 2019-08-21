@@ -1,5 +1,3 @@
-# In the devlopment enviroment this will be window.uploadcare.
-# In the release this will be local var in the scope.
 uploadcare = {__exports: {}}
 
 uploadcare.namespace = (path, fn) ->

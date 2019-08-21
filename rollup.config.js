@@ -7,10 +7,11 @@ import resolve from 'rollup-plugin-node-resolve';
 
 export default {
   input: 'app/assets/javascripts/uploadcare/build/_widget.coffee',
+  // input: 'app/assets/javascripts/uploadcare/index.js',
 
   output: {
     name: 'uploadcare',
-    format: 'iife',
+    format: 'umd',
     file: 'dist/index.js'
   },
 

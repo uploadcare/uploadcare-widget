@@ -16,7 +16,7 @@ import '../locale.coffee'
 import '../templates.coffee'
 
 # todo after templates
-# import '../stylesheets.coffee'
+import '../stylesheets.coffee'
 
 # todo wtf is this 
 import '../vendor/jquery-jcrop.js'

@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 import dialog from './templates/dialog.jst.ejs'
 import dialogPanel from './templates/dialog__panel.jst.ejs'
 import icons from './templates/icons.jst.ejs'
