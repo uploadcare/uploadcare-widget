@@ -6,7 +6,7 @@
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
     "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json app/assets/images/uploadcare/svg/icon-*.svg",
-    "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/stylesheets/uploadcare/styles.css -c ./scripts/postcss.config.js",
+    "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/javascripts/uploadcare/templates/styles.jst.ejs -c ./scripts/postcss.config.js",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build": "npm run build:svg && npm run build:css:min",
     "test": "echo \"Soon there will be tests 🖖\" && exit 0",

@@ -1,8 +1,8 @@
 import dialog from './templates/dialog.jst.ejs'
 import dialogPanel from './templates/dialog__panel.jst.ejs'
-# import icons from './templates/icons.jst.ejs'
+import icons from './templates/icons.jst.ejs'
 import progressText from './templates/progress__text.jst.ejs'
-# import styles from './templates/styles.jst.ejs'
+import styles from './templates/styles.jst.ejs'
 import tabCameraCapture from './templates/tab-camera-capture.jst.ejs'
 import tabCamera from './templates/tab-camera.jst.ejs'
 import tabFle from './templates/tab-file.jst.ejs'
@@ -28,9 +28,9 @@ uploadcare.namespace 'templates', (ns) ->
   ns.JST = {
     'dialog': dialog
     'dialog__panel': dialogPanel
-    # 'icons': icons
+    'icons': icons
     'progress__text': progressText
-    # 'styles': styles
+    'styles': styles
     'tab-camera-capture': tabCameraCapture
     'tab-camera': tabCamera
     'tab-file': tabFle

@@ -6,6 +6,9 @@ tmp/
 pkg/
 .vagrant
 app/**/*.css
+
 icons.jst.ejs
+styles.jst.ejs
+
 *.log
 dist
