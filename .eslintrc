@@ -1,7 +1,4 @@
 {
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "extends": "uploadcare"
+  "extends": ["standard"],
+  "parser": "babel-eslint"
 }
