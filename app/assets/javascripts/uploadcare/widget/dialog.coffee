@@ -404,6 +404,7 @@ uploadcare.namespace '', (ns) ->
             .removeClass("uploadcare--menu__item_current")
             .filter(".uploadcare--menu__item_tab_#{tab}")
             .addClass("uploadcare--menu__item_current")
+            .focus()
 
       className = "uploadcare--tab"
       @panel.find(".#{className}")
