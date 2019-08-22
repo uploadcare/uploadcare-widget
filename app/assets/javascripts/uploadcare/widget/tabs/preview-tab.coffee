@@ -24,11 +24,13 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @widget = null
       @__state = null
 
-    __setFile: (@file) =>
+    __setFile: (file) =>
+      @file = file
+
       ifCur = (fn) =>
-        =>
+        (args...) =>
           if file == @file
-            fn.apply(null, arguments)
+            fn.apply(null, args)
 
       tryToLoadImagePreview = utils.once(@__tryToLoadImagePreview)
       tryToLoadVideoPreview = utils.once(@__tryToLoadVideoPreview)
