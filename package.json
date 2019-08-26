@@ -22,6 +22,7 @@
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
     "cypress": "^3.4.1",
+    "cypress-file-upload": "^3.3.3",
     "eslint": "^6.2.1",
     "eslint-config-standard": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",

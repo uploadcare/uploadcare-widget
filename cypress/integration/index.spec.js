@@ -15,6 +15,22 @@ describe('uploadcare widget', function () {
 
     cy.get('.uploadcare--progress').should('exist')
 
-    cy.get('.uploadcare--link').should('exist')
+    cy.get('.uploadcare--link').should('exist').should('contain.text', 'small.png')
+  })
+
+  it('uploads with image', async () => {
+    const fileName = 'image.jpeg'
+    const fileContent = await cy.fixture(fileName)
+
+    cy.get('.uploadcare--progress').should('not.exist')
+
+    cy.get('.uploadcare--widget').upload(
+      { fileContent, fileName, mimeType: 'image/jpeg' },
+      { subjectType: 'drag-n-drop' }
+    )
+
+    cy.get('.uploadcare--progress').should('exist')
+
+    cy.get('.uploadcare--link').should('exist').should('contain.text', 'small.png')
   })
 })

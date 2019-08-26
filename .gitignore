@@ -8,3 +8,5 @@ pkg/
 app/**/*.css
 icons.jst.ejs
 *.log
+
+.DS_Store
