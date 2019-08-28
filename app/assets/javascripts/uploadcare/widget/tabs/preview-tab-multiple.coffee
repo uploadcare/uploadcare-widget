@@ -177,3 +177,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           @dialogApi.fileColl.remove(file)
       $(file).data('dpm-el', fileEl)
       fileEl
+
+    displayed: =>
+      @container.find('.uploadcare--preview__done').focus()

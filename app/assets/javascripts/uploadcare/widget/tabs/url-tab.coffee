@@ -34,3 +34,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           input.val('').trigger('change')
 
         false
+
+    displayed: =>
+      @container.find('.uploadcare--input').focus()

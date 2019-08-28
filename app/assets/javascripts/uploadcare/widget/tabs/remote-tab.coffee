@@ -13,6 +13,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @dialogApi.progress (name) =>
         if name == @name
           @__createIframe()
+          @container.find('.uploadcare--tab__iframe').focus()
         @__sendMessage
           type: 'visibility-changed'
           visible: name == @name

@@ -80,3 +80,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
         .append(tabIcon)
         .on 'click', =>
           @dialogApi.switchTab(name)
+
+    displayed: =>
+      @container.find('.uploadcare--tab__action-button').focus()

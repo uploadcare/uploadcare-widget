@@ -404,13 +404,15 @@ uploadcare.namespace '', (ns) ->
             .removeClass("uploadcare--menu__item_current")
             .filter(".uploadcare--menu__item_tab_#{tab}")
             .addClass("uploadcare--menu__item_current")
-            .focus()
 
       className = "uploadcare--tab"
       @panel.find(".#{className}")
             .removeClass("#{className}_current")
             .filter(".#{className}_name_#{tab}")
             .addClass("#{className}_current")
+
+      if @tabs[tab].displayed
+        @tabs[tab].displayed()
 
       @dfd.notify(tab)
 
