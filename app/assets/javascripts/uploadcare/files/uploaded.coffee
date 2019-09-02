@@ -11,7 +11,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'uploaded'
 
     constructor: (fileIdOrUrl) ->
-      super arguments...
+      super
 
       cdnUrl = utils.splitCdnUrl(fileIdOrUrl)
       if cdnUrl
@@ -26,7 +26,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'uploaded'
 
     constructor: (data) ->
-      super arguments...
+      super
       if not data
         @__rejectApi('deleted')
       else

@@ -20,10 +20,10 @@ uploadcare.namespace 'utils.pusher', (ns) ->
         clearTimeout(@disconnectTimeout)
         @disconnectTimeout = null
       @connect()
-      super arguments...
+      super
 
     unsubscribe: (name) ->
-      super arguments...
+      super
       # Schedule disconnect if no channels left.
       if $.isEmptyObject(@channels.channels)
         @disconnectTimeout = setTimeout =>

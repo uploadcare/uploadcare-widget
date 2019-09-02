@@ -12,7 +12,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'local'
 
     constructor: (@__file) ->
-      super arguments...
+      super
 
       @fileName = @__file.name or 'original'
       @__notifyApi()

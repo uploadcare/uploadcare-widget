@@ -14,7 +14,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTab extends ns.BasePreviewTab
 
     constructor: (@container, @tabButton, @dialogApi, @settings, @name) ->
-      super arguments...
+      super
 
       $.each @dialogApi.fileColl.get(), (i, file) =>
         @__setFile(file)
@@ -24,13 +24,11 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @widget = null
       @__state = null
 
-    __setFile: (file) =>
-      @file = file
-
+    __setFile: (@file) =>
       ifCur = (fn) =>
-        (args...) =>
+        =>
           if file == @file
-            fn.apply(null, args)
+            fn.apply(null, arguments)
 
       tryToLoadImagePreview = utils.once(@__tryToLoadImagePreview)
       tryToLoadVideoPreview = utils.once(@__tryToLoadVideoPreview)

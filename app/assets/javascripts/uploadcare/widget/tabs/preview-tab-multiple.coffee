@@ -14,7 +14,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
   class ns.PreviewTabMultiple extends ns.BasePreviewTab
 
     constructor: ->
-      super arguments...
+      super
 
       @container.append(tpl('tab-preview-multiple'))
       @__fileTpl = $(tpl('tab-preview-multiple-file'))

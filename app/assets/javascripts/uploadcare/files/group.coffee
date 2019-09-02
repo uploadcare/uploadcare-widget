@@ -143,10 +143,9 @@ namespace 'files', (ns) ->
 
 
   class ns.SavedFileGroup extends ns.FileGroup
-    constructor: (data, settings) ->
-      files = uploadcare.filesFrom('ready', data.files, settings)
+    constructor: (@__data, settings) ->
+      files = uploadcare.filesFrom('ready', @__data.files, settings)
       super(files, settings)
-      @__data = data
 
     __createGroup: ->
       utils.wrapToPromise(@__data)

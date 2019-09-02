@@ -14,7 +14,7 @@ uploadcare.namespace 'widget', (ns) ->
 
     __setObject: (group) =>
       if not utils.isFileGroupsEqual(@currentObject, group)
-        super group
+        super
 
       # special case, when multiple widget is used with clearable
       # and user or some external code clears the value after

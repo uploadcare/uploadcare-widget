@@ -17,7 +17,7 @@ uploadcare.namespace '', (ns) ->
     s = settings.build(s or {})
 
     for param in data
-      info = undefined
+      info = null
       if $.isArray(param)
         info = param[1]
         param = param[0]
