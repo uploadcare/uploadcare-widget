@@ -4,7 +4,7 @@ import jst from 'rollup-plugin-jst'
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
-import {terser} from 'rollup-plugin-terser'
+import { terser } from 'rollup-plugin-terser'
 
 const bundle = (input, output, options = {}) => ({
   input: `app/assets/javascripts/uploadcare/build/${input}`,
@@ -16,8 +16,8 @@ const bundle = (input, output, options = {}) => ({
     globals: options.includeJquery
       ? undefined
       : {
-          jquery: '$',
-        },
+        jquery: '$'
+      }
   },
 
   external: options.includeJquery ? undefined : ['jquery'],
@@ -26,15 +26,15 @@ const bundle = (input, output, options = {}) => ({
     coffee(),
     jst({
       templateOptions: {
-        variable: 'ext',
+        variable: 'ext'
       },
 
       minify: true,
       minifyOptions: {
-        collapseWhitespace: true,
+        collapseWhitespace: true
       },
 
-      escapeModule: 'escape-html',
+      escapeModule: 'escape-html'
     }),
     json(),
 
@@ -42,9 +42,9 @@ const bundle = (input, output, options = {}) => ({
     commonjs(),
 
     terser({
-      include: [/^.+\.min\.js$/],
-    }),
-  ],
+      include: [/^.+\.min\.js$/]
+    })
+  ]
 })
 
 export default [
@@ -57,6 +57,6 @@ export default [
   bundle('uploadcare.lang.en.coffee', 'uploadcare.lang.en.js'),
   bundle('uploadcare.lang.en.coffee', 'uploadcare.lang.en.min.js'),
 
-  bundle('uploadcare.full.coffee', 'uploadcare.full.js', {includeJquery: true}),
-  bundle('uploadcare.full.coffee', 'uploadcare.full.min.js', {includeJquery: true}),
+  bundle('uploadcare.full.coffee', 'uploadcare.full.js', { includeJquery: true }),
+  bundle('uploadcare.full.coffee', 'uploadcare.full.min.js', { includeJquery: true })
 ]
