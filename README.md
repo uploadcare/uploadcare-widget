@@ -104,7 +104,7 @@ You’re free to choose from the install methods listed below.
 ### NPM
 
 ```bash
-npm install uploadcare-widget --save
+npm install uploadcare-widget
 ```
 
 ```javascript
