@@ -24,7 +24,9 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       @widget = null
       @__state = null
 
-    __setFile: (@file) =>
+    __setFile: () =>
+      @file = file
+
       ifCur = (fn) =>
         =>
           if file == @file
