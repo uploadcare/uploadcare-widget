@@ -106,6 +106,8 @@ uploadcare.namespace('', function (ns) {
       cancelLock()
       return originalFocusedElement.focus()
     })
+
+    return currentDialogPr
   }
 
   ns.openPreviewDialog = function (file, settings) {

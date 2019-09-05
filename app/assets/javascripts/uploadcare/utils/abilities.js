@@ -27,8 +27,10 @@ uploadcare.namespace('utils.abilities', function (ns) {
   ns.iOSVersion = null
 
   ios = /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
-  ver = /OS (\d)_(\d)/.exec(ios[1])
+
   if (ios) {
+    ver = /OS (\d)_(\d)/.exec(ios[1])
+
     if (ver) {
       ns.iOSVersion = +ver[1] + ver[2] / 10
     }
