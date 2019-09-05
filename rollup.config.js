@@ -1,4 +1,4 @@
-import coffee from 'rollup-plugin-coffee-script'
+import babel from 'rollup-plugin-babel'
 import jst from 'rollup-plugin-jst'
 
 import json from 'rollup-plugin-json'
@@ -23,6 +23,10 @@ const bundle = (input, output, options = {}) => ({
   external: options.includeJquery ? undefined : ['jquery'],
 
   plugins: [
+    babel({
+      exclude: 'node_modules/**',
+      presets: [['@babel/env', { modules: false }]]
+    }),
     jst({
       templateOptions: {
         variable: 'ext'
