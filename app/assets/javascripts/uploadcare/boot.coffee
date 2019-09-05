@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import uploadcare from './namespace.coffee'
+import uploadcare from './namespace'
 import { version } from '../../../../package.json'
 
 uploadcare.version = version

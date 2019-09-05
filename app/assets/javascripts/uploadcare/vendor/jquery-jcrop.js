@@ -1,4 +1,4 @@
-import uploadcare from '../namespace.coffee'
+import uploadcare from '../namespace'
 
 /**
  * jquery.Jcrop.js v0.9.10

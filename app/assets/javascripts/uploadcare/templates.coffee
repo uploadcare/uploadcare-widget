@@ -1,4 +1,4 @@
-import uploadcare from './namespace.coffee'
+import uploadcare from './namespace'
 
 import dialog from './templates/dialog.jst.ejs'
 import dialogPanel from './templates/dialog__panel.jst.ejs'

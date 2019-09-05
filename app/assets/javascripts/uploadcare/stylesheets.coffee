@@ -1,4 +1,4 @@
-import uploadcare from './namespace.coffee'
+import uploadcare from './namespace'
 
 {jQuery: $} = uploadcare
 {tpl} = uploadcare.templates

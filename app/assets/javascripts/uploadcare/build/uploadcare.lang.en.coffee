@@ -1,5 +1,5 @@
-import uploadcare from '../namespace.coffee'
-import exports from './_widget.coffee'
+import uploadcare from '../namespace'
+import exports from './_widget'
 
 uploadcare.expose('locales', (key for key of uploadcare.locale.translations))
 
