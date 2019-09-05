@@ -10,7 +10,7 @@ uploadcare.namespace 'files', (ns) ->
     sourceName: 'local-compat'
 
     constructor: (@__input) ->
-      super
+      super arguments...
       @fileId = utils.uuid()
       @fileName = $(@__input).val().split('\\').pop()
       @__notifyApi()

@@ -60,7 +60,7 @@ uploadcare.namespace 'ui.progress', (ns) ->
 
   class ns.TextRenderer extends ns.BaseRenderer
     constructor: ->
-      super
+      super arguments...
       @element.addClass('uploadcare--progress_type_text')
       @element.html(tpl('progress__text'))
       @text = @element.find('.uploadcare--progress__text')
@@ -73,7 +73,7 @@ uploadcare.namespace 'ui.progress', (ns) ->
   class ns.CanvasRenderer extends ns.BaseRenderer
 
     constructor: ->
-      super
+      super arguments...
 
       @canvasEl = $('<canvas>').addClass('uploadcare--progress__canvas').get(0)
 
