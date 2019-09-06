@@ -2,14 +2,12 @@
 import uploadcare from '../namespace'
 
 var indexOf = [].indexOf
-var boundMethodCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new Error('Bound instance method accessed before binding') } }
 
 const {
   jQuery: $
 } = uploadcare
 
 uploadcare.namespace('utils', function (utils) {
-  var ref
   utils.Collection = class Collection {
     constructor (items = [], after = false) {
       this.onAdd = $.Callbacks()
@@ -19,13 +17,12 @@ uploadcare.namespace('utils', function (utils) {
       this.__items = []
 
       if (!after) {
-        this.init()
+        this.init(items)
       }
     }
 
-    init () {
+    init (items) {
       var item, j, len
-      const items = this.__items
       for (j = 0, len = items.length; j < len; j++) {
         item = items[j]
         this.add(item)
@@ -116,13 +113,9 @@ uploadcare.namespace('utils', function (utils) {
     }
   }
 
-  ref = utils.CollectionOfPromises = class CollectionOfPromises extends utils.UniqCollection {
+  utils.CollectionOfPromises = class CollectionOfPromises extends utils.UniqCollection {
     constructor () {
       super(...arguments, true)
-
-      this.onAnyDone = this.onAnyDone.bind(this)
-      this.onAnyFail = this.onAnyFail.bind(this)
-      this.onAnyProgress = this.onAnyProgress.bind(this)
 
       this.anyDoneList = $.Callbacks()
       this.anyFailList = $.Callbacks()
@@ -133,12 +126,11 @@ uploadcare.namespace('utils', function (utils) {
         return $(item).data('lastProgress', firstArgument)
       })
 
-      super.init()
+      super.init(arguments[0])
     }
 
     onAnyDone (cb) {
       var file, j, len, ref1, results
-      boundMethodCheck(this, ref)
       this.anyDoneList.add(cb)
       ref1 = this.__items
       results = []
@@ -157,7 +149,6 @@ uploadcare.namespace('utils', function (utils) {
 
     onAnyFail (cb) {
       var file, j, len, ref1, results
-      boundMethodCheck(this, ref)
       this.anyFailList.add(cb)
       ref1 = this.__items
       results = []
@@ -176,7 +167,6 @@ uploadcare.namespace('utils', function (utils) {
 
     onAnyProgress (cb) {
       var file, j, len, ref1, results
-      boundMethodCheck(this, ref)
       this.anyProgressList.add(cb)
       ref1 = this.__items
       results = []
@@ -227,7 +217,11 @@ uploadcare.namespace('utils', function (utils) {
         }
       }
 
-      return item.then(handler(this.anyDoneList), handler(this.anyFailList), handler(this.anyProgressList))
+      return item.then(
+        handler(this.anyDoneList),
+        handler(this.anyFailList),
+        handler(this.anyProgressList)
+      )
     }
 
     autoThen (...args) {
