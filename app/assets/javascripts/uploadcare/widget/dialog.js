@@ -142,10 +142,12 @@ uploadcare.namespace('', function (ns) {
   // result - File objects or FileGroup object (depends on settings.multiple)
   ns.openPanel = function (placeholder, files, tab, settings) {
     var filter, panel
+
     if ($.isPlainObject(tab)) {
       settings = tab
       tab = null
     }
+
     if (!files) {
       files = []
     } else if (utils.isFileGroup(files)) {
@@ -153,8 +155,11 @@ uploadcare.namespace('', function (ns) {
     } else if (!$.isArray(files)) {
       files = [files]
     }
+
     settings = s.build(settings)
+
     panel = new Panel(settings, placeholder, files, tab).publicPromise()
+
     filter = function (files) {
       if (settings.multiple) {
         return uploadcare.FileGroup(files, settings)
@@ -162,6 +167,7 @@ uploadcare.namespace('', function (ns) {
         return files[0]
       }
     }
+
     return utils.then(panel, filter, filter).promise(panel)
   }
   registeredTabs = {}
@@ -211,6 +217,7 @@ uploadcare.namespace('', function (ns) {
       this.hideTab = this.hideTab.bind(this)
       this.isTabVisible = this.isTabVisible.bind(this)
       this.openMenu = this.openMenu.bind(this)
+
       this.settings = settings1
       this.dfd = $.Deferred()
       this.dfd.always(this.__closePanel)
@@ -261,6 +268,7 @@ uploadcare.namespace('', function (ns) {
           onTabVisibility: utils.publicCallbacks(this.onTabVisibility)
         })
       }
+
       return this.promise
     }
 

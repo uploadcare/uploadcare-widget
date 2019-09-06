@@ -139,6 +139,7 @@ uploadcare.namespace('utils.image', function (ns) {
         return run()
       })
     }
+
     runNative = function () {
       var canvas, cx
       canvas = document.createElement('canvas')
@@ -151,7 +152,9 @@ uploadcare.namespace('utils.image', function (ns) {
       img.width = img.height = 1 // for canvas
       return df.resolve(canvas)
     }
+
     cx = document.createElement('canvas').getContext('2d')
+
     if ('imageSmoothingQuality' in cx) {
       runNative()
     } else {
@@ -159,6 +162,7 @@ uploadcare.namespace('utils.image', function (ns) {
     }
     return df.promise()
   }
+
   ns.drawFileToCanvas = function (file, mW, mH, bg, maxSource) {
     var df, op
     // in -> file
@@ -237,6 +241,7 @@ uploadcare.namespace('utils.image', function (ns) {
         return readNextChunk()
       })
     }
+
     readNextChunk = function () {
       var startPos
       startPos = pos
@@ -278,6 +283,7 @@ uploadcare.namespace('utils.image', function (ns) {
     })
     return df.promise()
   }
+
   ns.replaceJpegChunk = function (blob, marker, chunks) {
     var df, oldChunkLength, oldChunkPos, op
     df = $.Deferred()

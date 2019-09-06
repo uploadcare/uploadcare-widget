@@ -79,12 +79,11 @@ uploadcare.namespace('utils', function (ns) {
     target = {}
 
     $.each(methods, function (i, method) {
-      var fn
-      fn = source[method]
+      var fn = source[method]
+
       if ($.isFunction(fn)) {
-        target[method] = function () {
-          var result
-          result = fn.apply(source, arguments)
+        target[method] = function (...args) {
+          var result = fn.apply(source, args)
 
           // Fix chaining
           if (result === source) {
