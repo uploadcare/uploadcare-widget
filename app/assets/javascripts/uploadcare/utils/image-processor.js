@@ -36,11 +36,10 @@ uploadcare.namespace('utils.image', function (ns) {
       })
 
       return op.done(function (img) {
-        var exifOp
         // console.log('load: ' + (new Date() - start))
         df.notify(0.10)
 
-        ns.getExif(file).always(function (exif) {
+        var exifOp = ns.getExif(file).always(function (exif) {
           var e, isJPEG
           df.notify(0.2)
           isJPEG = exifOp.state() === 'resolved'
