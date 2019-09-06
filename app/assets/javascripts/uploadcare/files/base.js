@@ -141,6 +141,7 @@ namespace('files', function (ns) {
       } else {
         urlBase = `${this.settings.cdnBase}/${this.fileId}/`
       }
+
       return {
         uuid: this.fileId,
         name: this.fileName,
@@ -217,9 +218,10 @@ namespace('files', function (ns) {
 
     __extendApi (api) {
       api.cancel = this.__cancel
-      api.pipe = api.then = () => { // 'pipe' is alias to 'then' from jQuery 1.8
-        return this.__extendApi(utils.fixedPipe(api, ...arguments))
+      api.pipe = api.then = (...args) => { // 'pipe' is alias to 'then' from jQuery 1.8
+        return this.__extendApi(utils.fixedPipe(api, ...args))
       }
+
       return api // extended promise
     }
 

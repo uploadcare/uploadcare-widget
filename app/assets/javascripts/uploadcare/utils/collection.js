@@ -11,13 +11,21 @@ const {
 uploadcare.namespace('utils', function (utils) {
   var ref
   utils.Collection = class Collection {
-    constructor (items = []) {
-      var item, j, len
+    constructor (items = [], after = false) {
       this.onAdd = $.Callbacks()
       this.onRemove = $.Callbacks()
       this.onSort = $.Callbacks()
       this.onReplace = $.Callbacks()
       this.__items = []
+
+      if (!after) {
+        this.init()
+      }
+    }
+
+    init () {
+      var item, j, len
+      const items = this.__items
       for (j = 0, len = items.length; j < len; j++) {
         item = items[j]
         this.add(item)
@@ -110,17 +118,22 @@ uploadcare.namespace('utils', function (utils) {
 
   ref = utils.CollectionOfPromises = class CollectionOfPromises extends utils.UniqCollection {
     constructor () {
-      super(...arguments)
+      super(...arguments, true)
+
       this.onAnyDone = this.onAnyDone.bind(this)
       this.onAnyFail = this.onAnyFail.bind(this)
       this.onAnyProgress = this.onAnyProgress.bind(this)
+
       this.anyDoneList = $.Callbacks()
       this.anyFailList = $.Callbacks()
       this.anyProgressList = $.Callbacks()
+
       this._thenArgs = null
       this.anyProgressList.add(function (item, firstArgument) {
         return $(item).data('lastProgress', firstArgument)
       })
+
+      super.init()
     }
 
     onAnyDone (cb) {
@@ -132,8 +145,8 @@ uploadcare.namespace('utils', function (utils) {
       for (j = 0, len = ref1.length; j < len; j++) {
         file = ref1[j]
         if (file.state() === 'resolved') {
-          results.push(file.done(function () {
-            return cb(file, ...arguments)
+          results.push(file.done(function (...args) {
+            return cb(file, ...args)
           }))
         } else {
           results.push(undefined)
@@ -151,8 +164,8 @@ uploadcare.namespace('utils', function (utils) {
       for (j = 0, len = ref1.length; j < len; j++) {
         file = ref1[j]
         if (file.state() === 'rejected') {
-          results.push(file.fail(function () {
-            return cb(file, ...arguments)
+          results.push(file.fail(function (...args) {
+            return cb(file, ...args)
           }))
         } else {
           results.push(undefined)
@@ -206,29 +219,32 @@ uploadcare.namespace('utils', function (utils) {
     }
 
     __watchItem (item) {
-      var handler
-      handler = (callbacks) => {
-        return () => {
+      var handler = (callbacks) => {
+        return (...args) => {
           if (indexOf.call(this.__items, item) >= 0) {
-            return callbacks.fire(item, ...arguments)
+            return callbacks.fire(item, ...args)
           }
         }
       }
+
       return item.then(handler(this.anyDoneList), handler(this.anyFailList), handler(this.anyProgressList))
     }
 
-    autoThen () {
+    autoThen (...args) {
       var i, item, j, len, ref1, results
+
       if (this._thenArgs) {
         throw new Error('CollectionOfPromises.then() could be used only once')
       }
-      this._thenArgs = arguments
+
+      this._thenArgs = args
       ref1 = this.__items
       results = []
       for (i = j = 0, len = ref1.length; j < len; i = ++j) {
         item = ref1[i]
         results.push(this.__replace(item, item.then(...this._thenArgs), i))
       }
+
       return results
     }
   }
