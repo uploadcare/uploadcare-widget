@@ -19,7 +19,7 @@
   "devDependencies": {
     "autoprefixer": "^7.1.5",
     "babel-eslint": "^10.0.2",
-    "browser-sync": "^2.18.13",
+    "browser-sync": "^2.26.7",
     "coffee-script": "^1.12.7",
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
