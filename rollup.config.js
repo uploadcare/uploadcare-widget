@@ -42,6 +42,10 @@ const bundle = (input, output, options = {}) => ({
     commonjs(),
 
     terser({
+      compress: {
+        // https://github.com/terser/terser/issues/453
+        evaluate: false
+      },
       include: [/^.+\.min\.js$/]
     })
   ]
