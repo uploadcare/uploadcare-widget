@@ -1,4 +1,4 @@
-# = require ../utils/pusher.coffee
+import uploadcare from '../namespace.coffee'
 
 {
   jQuery: $,

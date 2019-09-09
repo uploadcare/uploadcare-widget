@@ -1,4 +1,4 @@
-# = require ./locale/en.js.coffee
+import uploadcare from './namespace.coffee'
 
 {
   utils,

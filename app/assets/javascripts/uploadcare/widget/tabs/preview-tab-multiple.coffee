@@ -1,4 +1,4 @@
-# = require ../../vendor/jquery-ordering.js
+import uploadcare from '../../namespace.coffee'
 
 {
   utils,

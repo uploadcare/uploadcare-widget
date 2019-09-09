@@ -1,10 +1,4 @@
-# = require ./tabs/file-tab.coffee
-# = require ./tabs/url-tab.coffee
-# = require ./tabs/camera-tab.coffee
-# = require ./tabs/remote-tab.coffee
-# = require ./tabs/base-preview-tab.coffee
-# = require ./tabs/preview-tab.coffee
-# = require ./tabs/preview-tab-multiple.coffee
+import uploadcare from '../namespace.coffee'
 
 {
   utils,

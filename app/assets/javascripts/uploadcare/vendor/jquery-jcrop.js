@@ -1,3 +1,5 @@
+import uploadcare from '../namespace.coffee'
+
 /**
  * jquery.Jcrop.js v0.9.10
  * jQuery Image Cropping Plugin - released under MIT License 

@@ -1,3 +1,5 @@
+import uploadcare from './namespace.coffee'
+
 {
   expose
   utils,
@@ -53,7 +55,7 @@ uploadcare.namespace 'settings', (ns) ->
     audioBitsPerSecond: null
     videoBitsPerSecond: null
     # maintain settings
-    scriptBase: "//ucarecdn.com/widget/#{uploadcare.version}/uploadcare/"
+    scriptBase: "//ucarecdn.com/widget/#{version}/uploadcare/"
     debugUploads: false
     integration: ''
 

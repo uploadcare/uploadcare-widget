@@ -1,4 +1,4 @@
-# = require ../ui/progress.coffee
+import uploadcare from '../namespace.coffee'
 
 {
   jQuery: $,

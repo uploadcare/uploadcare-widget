@@ -1,3 +1,5 @@
+import uploadcare from '../../namespace.coffee'
+
 {
   ui: {progress: {Circle}},
   jQuery: $

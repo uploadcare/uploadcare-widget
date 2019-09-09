@@ -1,3 +1,5 @@
+import uploadcare from '../../namespace.coffee'
+
 {
   utils,
   utils: {abilities: {URL}},
@@ -154,6 +156,7 @@ uploadcare.namespace 'widget.tabs', (ns) ->
     # error
     # unknown
     # image
+    # video
     # regular
     __setState: (state, data) =>
       @__state = state

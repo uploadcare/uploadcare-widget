@@ -1,4 +1,4 @@
-# = require ../vendor/jquery-jcrop.js
+import uploadcare from '../namespace.coffee'
 
 {
   jQuery: $,
