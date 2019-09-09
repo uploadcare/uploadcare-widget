@@ -1,6 +1,5 @@
 import '../boot.coffee'
 
-# todo wtf is this??
 import '../vendor/jquery-xdr.js'
 import '../utils/abilities.coffee'
 import '../utils/collection.coffee'
@@ -12,13 +11,10 @@ import '../settings.coffee'
 import '../locale/en.js.coffee'
 import '../locale.coffee'
 
-# todo import all in templates.coffee
 import '../templates.coffee'
 
-# todo after templates
 import '../stylesheets.coffee'
 
-# todo wtf is this 
 import '../vendor/jquery-jcrop.js'
 import '../ui/crop-widget.coffee'
 import '../files/base.coffee'
@@ -26,7 +22,6 @@ import '../utils/image-processor.coffee'
 import '../files/object.coffee'
 import '../files/input.coffee'
 
-# todo wtf is this??
 import '../vendor/pusher.js'
 import '../utils/pusher.coffee'
 import '../files/url.coffee'
@@ -43,7 +38,6 @@ import '../widget/tabs/remote-tab.coffee'
 import '../widget/tabs/base-preview-tab.coffee'
 import '../widget/tabs/preview-tab.coffee'
 
-# todo wtf is this
 import '../vendor/jquery-ordering.js'
 import '../widget/tabs/preview-tab-multiple.coffee'
 import '../widget/dialog.coffee'
