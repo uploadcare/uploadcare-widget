@@ -1,6 +1,5 @@
 import uploadcare from '../namespace'
-
-var boundMethodCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new Error('Bound instance method accessed before binding') } }
+import { boundMethodCheck } from '../utils/bound-method-check'
 
 const {
   jQuery: $,

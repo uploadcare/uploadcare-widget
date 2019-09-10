@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { boundMethodCheck } from './bound-method-check'
 
 var indexOf = [].indexOf
 
@@ -112,9 +113,13 @@ uploadcare.namespace('utils', function (utils) {
     }
   }
 
-  utils.CollectionOfPromises = class CollectionOfPromises extends utils.UniqCollection {
+  var ref = utils.CollectionOfPromises = class CollectionOfPromises extends utils.UniqCollection {
     constructor () {
       super(...arguments, true)
+
+      this.onAnyDone = this.onAnyDone.bind(this)
+      this.onAnyFail = this.onAnyFail.bind(this)
+      this.onAnyProgress = this.onAnyProgress.bind(this)
 
       this.anyDoneList = $.Callbacks()
       this.anyFailList = $.Callbacks()
@@ -130,6 +135,7 @@ uploadcare.namespace('utils', function (utils) {
 
     onAnyDone (cb) {
       var file, j, len, ref1, results
+      boundMethodCheck(this, ref)
       this.anyDoneList.add(cb)
       ref1 = this.__items
       results = []
@@ -148,6 +154,7 @@ uploadcare.namespace('utils', function (utils) {
 
     onAnyFail (cb) {
       var file, j, len, ref1, results
+      boundMethodCheck(this, ref)
       this.anyFailList.add(cb)
       ref1 = this.__items
       results = []
@@ -166,6 +173,7 @@ uploadcare.namespace('utils', function (utils) {
 
     onAnyProgress (cb) {
       var file, j, len, ref1, results
+      boundMethodCheck(this, ref)
       this.anyProgressList.add(cb)
       ref1 = this.__items
       results = []
