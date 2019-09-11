@@ -1,4 +1,4 @@
-import coffee from 'rollup-plugin-coffee-script'
+import babel from 'rollup-plugin-babel'
 import jst from 'rollup-plugin-jst'
 
 import json from 'rollup-plugin-json'
@@ -23,7 +23,10 @@ const bundle = (input, output, options = {}) => ({
   external: options.includeJquery ? undefined : ['jquery'],
 
   plugins: [
-    coffee(),
+    babel({
+      exclude: 'node_modules/**',
+      presets: [['@babel/env', { modules: false }]]
+    }),
     jst({
       templateOptions: {
         variable: 'ext'
@@ -51,15 +54,15 @@ const bundle = (input, output, options = {}) => ({
 })
 
 export default [
-  bundle('uploadcare.api.coffee', 'uploadcare.api.js'),
-  bundle('uploadcare.api.coffee', 'uploadcare.api.min.js'),
+  bundle('uploadcare.api.js', 'uploadcare.api.js'),
+  bundle('uploadcare.api.js', 'uploadcare.api.min.js'),
 
-  bundle('uploadcare.coffee', 'uploadcare.js'),
-  bundle('uploadcare.coffee', 'uploadcare.min.js'),
+  bundle('uploadcare.js', 'uploadcare.js'),
+  bundle('uploadcare.js', 'uploadcare.min.js'),
 
-  bundle('uploadcare.lang.en.coffee', 'uploadcare.lang.en.js'),
-  bundle('uploadcare.lang.en.coffee', 'uploadcare.lang.en.min.js'),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js'),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js'),
 
-  bundle('uploadcare.full.coffee', 'uploadcare.full.js', { includeJquery: true }),
-  bundle('uploadcare.full.coffee', 'uploadcare.full.min.js', { includeJquery: true })
+  bundle('uploadcare.full.js', 'uploadcare.full.js', { includeJquery: true }),
+  bundle('uploadcare.full.js', 'uploadcare.full.min.js', { includeJquery: true })
 ]
