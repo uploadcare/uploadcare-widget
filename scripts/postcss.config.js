@@ -5,7 +5,7 @@ module.exports = (ctx) => ({
   plugins: {
     'postcss-import': {
       path: stylesheetsPath,
-      plugins: [require('stylelint')],
+      plugins: [require('stylelint')]
     },
     'postcss-prefixer': {
       prefix: 'uploadcare--',
@@ -13,8 +13,8 @@ module.exports = (ctx) => ({
         /^\.uploadcare-/,
         /^\.ord-/,
         '.bottom',
-        '.right',
-      ],
+        '.right'
+      ]
     },
     'postcss-custom-media': {},
     'postcss-nested': {},
@@ -22,8 +22,8 @@ module.exports = (ctx) => ({
     'postcss-calc': {},
     'postcss-color-function': {},
     'postcss-flexbugs-fixes': {},
-    'autoprefixer': {},
-    'cssnano': ctx.env === 'production' ? {zindex: false} : false,
-    'postcss-reporter': {},
-  },
+    autoprefixer: {},
+    cssnano: ctx.env === 'production' ? { zindex: false } : false,
+    'postcss-reporter': {}
+  }
 })

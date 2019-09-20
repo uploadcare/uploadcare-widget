@@ -8,50 +8,14 @@ git clone https://github.com/uploadcare/uploadcare-widget
 
 ## Environment
 
-You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
+You need a working nodejs and npm.
 
-### Vagrant
-
-If you don't want to set up the environment to your machine,
-you can use [Vagrant](https://www.vagrantup.com/).
-Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/)
-or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
-
-After opening your terminal, go to this directory and run:
-
-```bash
-vagrant up
-vagrant ssh
-```
-
-In Vagrant run:
-
-```bash
-bundle install
-cd ./test/dummy
-bundle install
-```
-
-### Local environment (without Vagrant)
-
-Inside folder run
+## Build
 
 ```bash
 npm install
 npm run build
-
-bundle install
-cd ./test/dummy
-bundle install
 ```
-
-## Build
-
-* run `bundle exec rake js:latest:build` to build assets
-  to the **pkg/latest** directory (with the “latest” suffix).
-* run `bundle exec rake js:release:build` to build assets
-  to the **pkg/version** directory (with the current version suffix).
-  The version is specified in `lib/uploadcare-widget/version.rb`.
 
 ## Development
 

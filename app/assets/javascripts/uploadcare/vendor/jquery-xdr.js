@@ -1,4 +1,4 @@
-import uploadcare from '../namespace.coffee'
+import uploadcare from '../namespace'
 
 // from https://github.com/jaubourg/ajaxHooks/blob/master/src/xdr.js
 
