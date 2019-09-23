@@ -1,7 +1,11 @@
 {
   "name": "uploadcare-widget",
-  "version": "0.0.0",
-  "description": "Source of Uploadcare Widget",
+  "version": "3.7.7",
+  "description": "Uploadcare Widget: file uploader.",
+  "main": "uploadcare.min.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
@@ -59,6 +63,25 @@
   "browserslist": [
     "> .4%",
     "ie >= 10"
+  ],
+  "keywords": [
+    "uploadcare",
+    "file",
+    "uploader",
+    "preview",
+    "chunk",
+    "drag",
+    "drop",
+    "image",
+    "image-edit",
+    "widget",
+    "mobile",
+    "dialog",
+    "upload",
+    "store",
+    "transformations",
+    "cdn",
+    "jquery"
   ],
   "repository": {
     "type": "git",
