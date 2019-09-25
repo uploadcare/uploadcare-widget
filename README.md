@@ -171,7 +171,8 @@ upload is in progress. This can be a real time saver.
 
 ### Usage with React
 
-See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
+Check out our [React component](https://github.com/uploadcare/react-widget/)
+for Uploadcare Widget.
 
 ### Usage with Angular
 
