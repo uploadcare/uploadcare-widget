@@ -89,6 +89,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
           .removeClass(oldStates)
           .addClass("uploadcare--camera_status_#{newState}")
 
+      @container.find('.uploadcare--camera__button').focus()
+
     __requestCamera: =>
       @__loaded = true
       @getUserMedia.call(navigator,
@@ -228,3 +230,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
             return known_containers[container]
       # In all other cases just return the base extension for all times
       return 'avi'
+
+    displayed: =>
+      @container.find('.uploadcare--camera__button').focus()

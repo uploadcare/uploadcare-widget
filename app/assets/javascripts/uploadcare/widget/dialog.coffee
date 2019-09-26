@@ -411,6 +411,9 @@ uploadcare.namespace '', (ns) ->
             .filter(".#{className}_name_#{tab}")
             .addClass("#{className}_current")
 
+      if @tabs[tab].displayed
+        @tabs[tab].displayed()
+
       @dfd.notify(tab)
 
     showTab: (tab) =>

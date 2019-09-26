@@ -174,6 +174,8 @@ uploadcare.namespace 'widget.tabs', (ns) ->
       if state is 'error'
         @container.addClass('uploadcare--preview_status_error-' + data.error)
 
+      @container.find('.uploadcare--preview__done').focus()
+
     initImage: (imgSize, cdnModifiers) =>
       img = @container.find('.uploadcare--preview__image')
       done = @container.find('.uploadcare--preview__done')
@@ -258,3 +260,6 @@ uploadcare.namespace 'widget.tabs', (ns) ->
 
       template.remove()
       control.find('>*').eq(0).addClass(currentClass)
+
+    displayed: =>
+      @container.find('.uploadcare--preview__done').focus()
