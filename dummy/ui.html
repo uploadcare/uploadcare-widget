@@ -1,0 +1,180 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="../dist/uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<style>
+  body {
+    font-family: verdana;
+  }
+  dt {
+    font-family: monospace;
+    margin-bottom: 0.5em;
+  }
+  dd {
+    margin: 0 0 1.5em 0;
+  }
+
+  .uploadcare-widget-status-loaded .uploadcare-widget-status {
+    display: inline-block !important;
+  }
+  .lh-10,
+  .lh-10 .uploadcare-widget {
+    line-height: 1;
+  }
+  .lh-14,
+  .lh-14 .uploadcare-widget {
+    line-height: 1.3;
+  }
+  .lh-20 {
+    line-height: 1.3;
+  }
+  .lh-20 .uploadcare-widget {
+    line-height: 2;
+  }
+</style>
+
+<dl>
+  <dt>.uploadcare-dialog-button</dt>
+  <dd>
+    <button class="uploadcare-dialog-button" tabindex="0">click me</button>
+    <div class="uploadcare-dialog-button" tabindex="0">click me</div>
+  </dd>
+
+  <dt>
+    .uploadcare-dialog-button[disabled], <br />
+    .uploadcare-dialog-button.uploadcare-disabled-el
+  </dt>
+  <dd>
+    <button class="uploadcare-dialog-button" tabindex="0" disabled>
+      click me
+    </button>
+    <div class="uploadcare-dialog-button" tabindex="0" disabled>click me</div>
+  </dd>
+
+  <dt>.uploadcare-dialog-button-success</dt>
+  <dd>
+    <button class="uploadcare-dialog-button-success" tabindex="0">
+      click me
+    </button>
+    <div class="uploadcare-dialog-button-success" tabindex="0">click me</div>
+  </dd>
+
+  <dt>
+    .uploadcare-dialog-button-success[disabled], <br />
+    .uploadcare-dialog-button-success.uploadcare-disabled-el
+  </dt>
+  <dd>
+    <button class="uploadcare-dialog-button-success" tabindex="0" disabled>
+      click me
+    </button>
+    <div class="uploadcare-dialog-button-success" tabindex="0" disabled>
+      click me
+    </div>
+  </dd>
+</dl>
+
+<table border="0">
+  <tr>
+    <td style="font-size: 12px" class="lh-10">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 12px" class="lh-14">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 12px" class="lh-20">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 16px" class="lh-10">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 16px" class="lh-14">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 16px" class="lh-20">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 24px" class="lh-10">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 24px" class="lh-14">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+    <td style="font-size: 24px" class="lh-20">
+      prev line<br />
+      <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+      next line
+    </td>
+  </tr>
+</table>
+
+<script>
+  $(function() {
+    var all = $("table input")
+      .map(function() {
+        return uploadcare.SingleWidget(this);
+      })
+      .get();
+    $.each(all, function() {
+      var widget = this;
+      widget.onChange(function(file) {
+        $.each(all, function() {
+          if (this !== widget) {
+            this.value(file);
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<div
+  id="progress"
+  style="width: 100px; height: 100px; color:rgb(142, 207, 255); border-color: #eee;"
+></div>
+
+<button id="0">0</button> <button id="50">50</button>
+<button id="100">100</button>
+
+<script>
+  $(function() {
+    var circle = new uploadcare.Circle(progress);
+
+    $("#0").on("click", function() {
+      circle.renderer.setValue(0);
+    });
+    $("#50").on("click", function() {
+      circle.renderer.setValue(0.5, true);
+    });
+    $("#100").on("click", function() {
+      circle.renderer.setValue(1);
+    });
+  });
+</script>

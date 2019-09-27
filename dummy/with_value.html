@@ -1,0 +1,156 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="../dist/uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<style>
+  input {
+    width: 300px;
+    display: block;
+  }
+</style>
+
+<p>
+  With CDN URL value:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="CDNURL"
+    value="https://ucarecdn.com/a15a0473-5262-48c7-82e3-2fefcd14e293/-/crop/200x300/center/-/scale_crop/100x100/center/"
+    data-crop
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  With custom domain CDN URL value:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="CustomDomain"
+    value="http://my-static.com/a15a0473-5262-48c7-82e3-2fefcd14e293/-/scale_crop/100x100/center/"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  With UUID value:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="UUID"
+    value="a15a0473-5262-48c7-82e3-2fefcd14e293"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  With custom URL value (incorrect): <br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="InvalidURL"
+    value="https://staging0.ucarecdn.com/assets/images/olympia.0939bbb3e820.jpg"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  With invalid value:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="Invalid"
+    value="error"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  With invalid UUID value:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="InvalidUUID"
+    value="error/a15a0473-5262-48c7-82e3-2fefcd14e293"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  Empty:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="Empty"
+    value=""
+    data-images-only=""
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  Group UUID:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="GroupUUID"
+    value="cd334b26-c641-4393-bcce-b5041546430d~11"
+    data-images-only=""
+    data-multiple="true"
+  />
+  <button>Clear</button>
+</p>
+
+<p>
+  Group incorrect:<br />
+  <input
+    type="text"
+    data-public-key="1c86ca998ba22e75fbc6"
+    role="uploadcare-uploader"
+    name="GroupIncorrect"
+    value="cd334b26-c641-4393-bcce-b5041546430d~"
+    data-images-only=""
+    data-multiple="true"
+  />
+  <button>Clear</button>
+
+  <script>
+    UPLOADCARE_CLEARABLE = true;
+    $("p > button").on("click", function() {
+      uploadcare.Widget($(this).prevAll("input")).value(null);
+    });
+
+    $('input[role="uploadcare-uploader"]').each(function() {
+      var input = this;
+      uploadcare.Widget(input).onChange(function(file) {
+        console.log("change:", input.name, file);
+        if (file) {
+          file
+            .promise()
+            .done(function(info) {
+              console.log("done:", input.name, info);
+            })
+            .fail(function(reason, info) {
+              console.log("fail:", input.name, reason, info);
+            });
+        }
+      });
+    });
+  </script>
+</p>
