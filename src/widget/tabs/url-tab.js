@@ -44,6 +44,10 @@ uploadcare.namespace('widget.tabs', function (ns) {
           return false
         })
       }
+
+      displayed () {
+        this.container.find('.uploadcare--input').focus()
+      }
     };
 
     // starts with scheme

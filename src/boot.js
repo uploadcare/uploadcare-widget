@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import uploadcare from './namespace'
-import { version } from '../../../../package.json'
+import { version } from '../package.json'
 
 uploadcare.version = version
 uploadcare.jQuery = $

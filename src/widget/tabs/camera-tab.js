@@ -119,9 +119,10 @@ uploadcare.namespace('widget.tabs', function (ns) {
     }
 
     __setState (newState) {
-      var oldStates
-      oldStates = ['', 'ready', 'requested', 'denied', 'not-founded', 'recording'].join(' uploadcare--camera_status_')
-      return this.container.removeClass(oldStates).addClass(`uploadcare--camera_status_${newState}`)
+      const oldStates = ['', 'ready', 'requested', 'denied', 'not-founded', 'recording'].join(' uploadcare--camera_status_')
+
+      this.container.removeClass(oldStates).addClass(`uploadcare--camera_status_${newState}`)
+      this.container.find('.uploadcare--camera__button').focus()
     }
 
     __requestCamera () {
@@ -323,6 +324,10 @@ uploadcare.namespace('widget.tabs', function (ns) {
 
       // In all other cases just return the base extension for all times
       return 'avi'
+    }
+
+    displayed () {
+      this.container.find('.uploadcare--camera__button').focus()
     }
   }
 })

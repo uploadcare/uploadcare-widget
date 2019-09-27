@@ -1,5 +1,5 @@
 pkg/*
 test/*
 submodules/*
-app/assets/javascripts/uploadcare/vendor/*
+src/vendor/*
 !.stylelintrc.js

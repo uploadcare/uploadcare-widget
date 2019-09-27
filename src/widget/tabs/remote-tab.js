@@ -19,7 +19,9 @@ uploadcare.namespace('widget.tabs', function (ns) {
       this.dialogApi.progress((name) => {
         if (name === this.name) {
           this.__createIframe()
+          this.container.find('.uploadcare--tab__iframe').focus()
         }
+
         return this.__sendMessage({
           type: 'visibility-changed',
           visible: name === this.name

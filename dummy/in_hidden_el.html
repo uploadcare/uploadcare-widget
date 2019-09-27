@@ -1,0 +1,30 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="../dist/uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<div id="hidden-div" style="display:none">
+  <input type="hidden" role="uploadcare-uploader" />
+</div>
+
+<button onclick="$('#hidden-div').show()">show</button>
+
+<hr />
+
+use uploadcare.SingleWidget() before document ready:
+
+<input
+  type="hidden"
+  id="init-before-document-ready"
+  role="uploadcare-uploader"
+/>
+<script>
+  uploadcare.SingleWidget("#init-before-document-ready");
+</script>
