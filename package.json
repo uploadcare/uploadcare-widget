@@ -14,8 +14,7 @@
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build:js": "rollup -c",
     "build": "npm run build:svg && npm run build:css:min && npm run build:js",
-    "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "serve:latest": "node ./scripts/serve.js"
+    "test": "echo \"Soon there will be tests 🖖\" && exit 0"
   },
   "dependencies": {
     "jquery": "^3.4.1"
@@ -37,8 +36,6 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "ngrok": "^2.2.23",
-    "path": "^0.12.7",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
     "postcss-color-function": "^4.0.0",
