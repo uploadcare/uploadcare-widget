@@ -1,5 +1,5 @@
 {
-  "dest": "./app/assets/javascripts/uploadcare/templates",
+  "dest": "./src/templates",
   "log": "info",
   "shape": {
     "id": {

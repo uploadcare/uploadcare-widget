@@ -1,5 +1,5 @@
-const path = require('path')
-const stylesheetsPath = path.join(__dirname, 'app', 'assets', 'stylesheets', 'uploadcare')
+const { join } = require('path')
+const stylesheetsPath = join(__dirname, 'src/stylesheets')
 
 module.exports = (ctx) => ({
   plugins: {
