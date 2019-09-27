@@ -11,8 +11,8 @@
   }
 }(typeof window !== 'undefined' ? window : this, function (window, jQuery) {
   var uploadcare
-  // eslint-disable-next-line no-unused-vars
-  var document = window.document
+  // eslint-disable-next-line no-unused-vars, semi
+  var document = window.document;
 
   // eslint-disable-next-line no-undef, no-unused-expressions, camelcase
   ___widget_code___
