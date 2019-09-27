@@ -92,5 +92,9 @@ uploadcare.namespace('widget.tabs', function (ns) {
         return this.dialogApi.switchTab(name)
       })
     }
+
+    displayed () {
+      this.container.find('.uploadcare--tab__action-button').focus()
+    }
   }
 })

@@ -159,5 +159,9 @@ uploadcare.namespace('widget.tabs', function (ns) {
       $(file).data('dpm-el', fileEl)
       return fileEl
     }
+
+    displayed () {
+      this.container.find('.uploadcare--preview__done').focus()
+    }
   }
 })

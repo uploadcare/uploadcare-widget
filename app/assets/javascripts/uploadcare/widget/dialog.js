@@ -432,6 +432,11 @@ uploadcare.namespace('', function (ns) {
       this.panel.find('.uploadcare--menu__item').removeClass('uploadcare--menu__item_current').filter(`.uploadcare--menu__item_tab_${tab}`).addClass('uploadcare--menu__item_current')
       className = 'uploadcare--tab'
       this.panel.find(`.${className}`).removeClass(`${className}_current`).filter(`.${className}_name_${tab}`).addClass(`${className}_current`)
+
+      if (this.tabs[tab].displayed) {
+        this.tabs[tab].displayed()
+      }
+
       return this.dfd.notify(tab)
     }
 

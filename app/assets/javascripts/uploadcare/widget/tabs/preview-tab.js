@@ -188,12 +188,16 @@ uploadcare.namespace('widget.tabs', function (ns) {
           return !!~c.indexOf('uploadcare--preview_status_')
         }).join(' ')
       })
+
       if (state === 'unknown' && this.settings.crop) {
         this.container.find('.uploadcare--preview__done').hide()
       }
+
       if (state === 'error') {
-        return this.container.addClass('uploadcare--preview_status_error-' + data.error)
+        this.container.addClass('uploadcare--preview_status_error-' + data.error)
       }
+
+      this.container.find('.uploadcare--preview__done').focus()
     }
 
     initImage (imgSize, cdnModifiers) {
@@ -279,6 +283,10 @@ uploadcare.namespace('widget.tabs', function (ns) {
       template.remove()
 
       return control.find('>*').eq(0).addClass(currentClass)
+    }
+
+    displayed () {
+      this.container.find('.uploadcare--preview__done').focus()
     }
   }
 })
