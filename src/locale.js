@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+// import * as locales from './locales'
 
 const {
   utils,

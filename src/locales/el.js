@@ -6,7 +6,7 @@
 // #
 // # Any fixes are welcome.
 // #
-const translate = {
+const translations = {
   loadingInfo: 'Φόρτωση πληροφοριών...',
   errors: {
     default: 'Σφάλμα',
@@ -172,4 +172,4 @@ const pluralize = function (n) {
   return 'other'
 }
 
-export { translate, pluralize }
+export { translations, pluralize }

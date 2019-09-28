@@ -6,7 +6,7 @@
 // #
 // # Any fixes are welcome.
 // #
-const translate = {
+const translations = {
   uploading: 'Augšupielādē... Lūdzu, gaidiet.',
   errors: {
     default: 'Kļūda',
@@ -59,4 +59,4 @@ const pluralize = function (n) {
   return 'other'
 }
 
-export { translate, pluralize }
+export { translations, pluralize }
