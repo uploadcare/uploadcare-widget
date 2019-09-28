@@ -1,9 +1,9 @@
 import uploadcare from '../namespace'
+import { t } from '../locale'
 import { boundMethodCheck } from '../utils/bound-method-check'
 
 const {
-  utils,
-  locale: { t }
+  utils
 } = uploadcare
 
 uploadcare.namespace('widget', function (ns) {

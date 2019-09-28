@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+import { t } from './locale'
 import dialog from './templates/dialog.jst.ejs'
 import dialogPanel from './templates/dialog__panel.jst.ejs'
 import progressText from './templates/progress__text.jst.ejs'
@@ -21,7 +22,7 @@ import widget from './templates/widget.jst.ejs'
 import styles from './templates/styles.jst.ejs'
 import icons from './templates/icons.jst.ejs'
 
-const { locale, utils } = uploadcare
+const { utils } = uploadcare
 
 uploadcare.namespace('templates', function (ns) {
   ns.JST = {
@@ -51,7 +52,7 @@ uploadcare.namespace('templates', function (ns) {
 
     if (fn != null) {
       return fn({
-        t: locale.t,
+        t,
         utils,
         uploadcare,
         ...ctx

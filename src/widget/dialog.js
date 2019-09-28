@@ -1,8 +1,8 @@
 import uploadcare from '../namespace'
+import { t } from '../locale'
 
 const {
   utils,
-  locale: { t },
   templates: { tpl },
   widget: { tabs },
   settings: s,

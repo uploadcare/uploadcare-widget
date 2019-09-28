@@ -1,9 +1,9 @@
 import uploadcare from '../../namespace'
+import { t } from '../../locale'
 
 const {
   utils,
   dragdrop,
-  locale: { t },
   jQuery: $,
   templates: { tpl }
 } = uploadcare

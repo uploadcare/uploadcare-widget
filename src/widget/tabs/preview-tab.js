@@ -1,4 +1,5 @@
 import uploadcare from '../../namespace'
+import { t } from '../../locale'
 import { boundMethodCheck } from '../../utils/bound-method-check'
 
 const {
@@ -8,8 +9,7 @@ const {
   },
   templates: { tpl },
   jQuery: $,
-  crop: { CropWidget },
-  locale: { t }
+  crop: { CropWidget }
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {

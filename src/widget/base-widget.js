@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
+import { t } from '../locale'
 
 const {
   utils,
   jQuery: $,
-  dragdrop,
-  locale: { t }
+  dragdrop
 } = uploadcare
 
 uploadcare.namespace('widget', function (ns) {

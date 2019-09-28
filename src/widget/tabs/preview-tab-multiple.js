@@ -1,11 +1,11 @@
 import uploadcare from '../../namespace'
+import { t } from '../../locale'
 import { boundMethodCheck } from '../../utils/bound-method-check'
 
 const {
   utils,
   templates: { tpl },
-  jQuery: $,
-  locale: { t }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {

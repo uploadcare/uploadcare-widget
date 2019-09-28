@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
+import { t } from '../locale'
 
 const {
   namespace,
   jQuery: $,
   utils,
-  locale: { t },
   settings: s,
   files: ucFiles
 } = uploadcare
