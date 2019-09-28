@@ -1,10 +1,11 @@
+import merge from 'deepmerge'
+
 import uploadcare from './namespace'
 import * as locales from './locales'
 
 const {
   utils,
-  settings: s,
-  jQuery: $
+  settings: s
 } = uploadcare
 
 const translate = function (key, node) {
@@ -33,8 +34,7 @@ const defaults = {
 const _build = function (settings) {
   const lang = settings.locale || defaults.lang
 
-  const translations = $.extend(
-    true,
+  const translations = merge(
     {},
     locales[lang].translations,
     settings.localeTranslations
