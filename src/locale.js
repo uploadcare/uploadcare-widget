@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+import locales from './locales'
 
 const {
   utils,
@@ -6,69 +7,83 @@ const {
   jQuery: $
 } = uploadcare
 
-uploadcare.namespace('locale', function (ns) {
-  var _build, build, defaultLang, defaults, translate
+const translate = function (key, node) {
+  const path = key.split('.')
 
-  defaultLang = 'en'
+  for (let i = 0, len = path.length; i < len; i++) {
+    const subkey = path[i]
 
-  defaults = {
-    lang: defaultLang,
-    translations: ns.translations[defaultLang],
-    pluralize: ns.pluralize[defaultLang]
-  }
-
-  _build = function (settings) {
-    var lang, pluralize, translations
-    lang = settings.locale || defaults.lang
-    translations = $.extend(true, {}, ns.translations[lang], settings.localeTranslations)
-    pluralize = $.isFunction(settings.localePluralize) ? settings.localePluralize : ns.pluralize[lang]
-    return { lang, translations, pluralize }
-  }
-
-  build = utils.once(function () {
-    return _build(s.build())
-  })
-
-  // Backdoor for widget constructor
-  ns.rebuild = function (settings) {
-    var result
-    result = _build(s.build(settings))
-
-    build = function () {
-      return result
+    if (node == null) {
+      return null
     }
-
-    return build
+    node = node[subkey]
   }
 
-  translate = function (key, node) {
-    var i, len, path, subkey
-    path = key.split('.')
-    for (i = 0, len = path.length; i < len; i++) {
-      subkey = path[i]
-      if (node == null) {
-        return null
-      }
-      node = node[subkey]
-    }
-    return node
-  }
+  return node
+}
 
-  ns.t = function (key, n) {
-    var locale, ref, value
-    locale = build()
-    value = translate(key, locale.translations)
-    if ((value == null) && locale.lang !== defaults.lang) {
-      locale = defaults
-      value = translate(key, locale.translations)
-    }
-    if (n != null) {
-      if (locale.pluralize != null) {
-        value = ((ref = value[locale.pluralize(n)]) != null ? ref.replace('%1', n) : undefined) || n
-      } else {
-        value = ''
-      }
-    }
-    return value || ''
-  }
+const defaultLang = 'en'
+
+const defaults = {
+  lang: defaultLang,
+  translations: locales[defaultLang].translate,
+  pluralize: locales[defaultLang].pluralize
+}
+
+const _build = function (settings) {
+  const lang = settings.locale || defaults.lang
+
+  const translations = $.extend(
+    true,
+    {},
+    locales[lang].translate,
+    settings.localeTranslations
+  )
+
+  const pluralize = typeof settings.localePluralize === 'function'
+    ? settings.localePluralize
+    : locales[lang].pluralize
+
+  return { lang, translations, pluralize }
+}
+
+let build = utils.once(function () {
+  return _build(s.build())
 })
+
+// Backdoor for widget constructor
+const rebuild = function (settings) {
+  var result
+  result = _build(s.build(settings))
+
+  build = function () {
+    return result
+  }
+
+  return build
+}
+
+const t = function (key, n) {
+  var ref
+  let locale = build()
+  let value = translate(key, locale.translations)
+
+  if (value == null && locale.lang !== defaults.lang) {
+    locale = defaults
+    value = translate(key, locale.translations)
+  }
+
+  if (n != null) {
+    if (locale.pluralize != null) {
+      const plur = value[locale.pluralize(n)]
+
+      value = plur != null ? ref.replace('%1', n) : undefined
+      value = value || n
+    } else {
+      value = ''
+    }
+  }
+  return value || ''
+}
+
+export { rebuild, t }
