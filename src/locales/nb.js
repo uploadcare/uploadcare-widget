@@ -6,7 +6,7 @@
 // #
 // # Any fixes are welcome.
 // #
-const translate = {
+const translations = {
   uploading: 'Laster opp... Vennligst vent.',
   loadingInfo: 'Laster inn info...',
   errors: {
@@ -128,4 +128,4 @@ const pluralize = function (n) {
   return 'other'
 }
 
-export { translate, pluralize }
+export { translations, pluralize }

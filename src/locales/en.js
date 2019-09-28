@@ -2,7 +2,7 @@
 // #
 // # English locale is the default and used as a fallback.
 // #
-const translate = {
+const translations = {
   uploading: 'Uploading... Please wait.',
   loadingInfo: 'Loading info...',
   errors: {
@@ -168,4 +168,4 @@ const pluralize = function (n) {
   return 'other'
 }
 
-export { pluralize, translate }
+export { pluralize, translations }

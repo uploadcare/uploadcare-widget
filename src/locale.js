@@ -1,5 +1,5 @@
 import uploadcare from './namespace'
-import locales from './locales'
+import * as locales from './locales'
 
 const {
   utils,
@@ -26,7 +26,7 @@ const defaultLang = 'en'
 
 const defaults = {
   lang: defaultLang,
-  translations: locales[defaultLang].translate,
+  translations: locales[defaultLang].translations,
   pluralize: locales[defaultLang].pluralize
 }
 
@@ -36,7 +36,7 @@ const _build = function (settings) {
   const translations = $.extend(
     true,
     {},
-    locales[lang].translate,
+    locales[lang].translations,
     settings.localeTranslations
   )
 
