@@ -1,4 +1,3 @@
-import '../boot'
 import '../vendor/jquery-xdr'
 import '../utils/abilities'
 import '../utils/collection'
