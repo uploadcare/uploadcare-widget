@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import * as locales from './locales'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -99,10 +101,20 @@ const uploadcare = {
   },
 
   locale: {
-  //   translations
-  //   pluralize
-  //   rebuild
-  //   t
+    translations: Object.keys(locales).reduce((translations, lang) => {
+      translations[lang] = locales[lang].translations
+
+      return translations
+    }, {}),
+
+    pluralize: Object.keys(locales).reduce((pluralize, lang) => {
+      pluralize[lang] = locales[lang].pluralize
+
+      return pluralize
+    }, {})
+
+    //   rebuild
+    //   t
   },
 
   templates: {
