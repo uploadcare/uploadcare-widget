@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import { imageLoader, videoLoader } from './utils/image-loader'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -20,8 +22,8 @@ const uploadcare = {
     //   Collection
     //   UniqCollection
     //   CollectionOfPromises
-    //   imageLoader
-    //   videoLoader
+    imageLoader,
+    videoLoader,
     //   log
     //   debug
     //   warn
