@@ -1,6 +1,12 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import {
+  Collection,
+  UniqCollection,
+  CollectionOfPromises
+} from './utils/collection'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -17,9 +23,11 @@ const uploadcare = {
     //     URL
     //     FileReader
     },
-    //   Collection
-    //   UniqCollection
-    //   CollectionOfPromises
+
+    Collection,
+    UniqCollection,
+    CollectionOfPromises,
+
     //   imageLoader
     //   videoLoader
     //   log
