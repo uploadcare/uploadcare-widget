@@ -1,0 +1,46 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="../dist/uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js"></script>
+<script>
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+      FastClick.attach(document.body);
+    },
+    false
+  );
+</script>
+
+<p>
+  not system
+  <input type="hidden" role="uploadcare-uploader" data-clearable /><br />
+</p>
+<p>
+  single
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-clearable
+    data-system-dialog
+  /><br />
+</p>
+<p>
+  multiple
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-clearable
+    data-multiple
+    data-system-dialog
+  /><br />
+</p>

@@ -5,6 +5,10 @@ log/
 tmp/
 pkg/
 .vagrant
-app/**/*.css
-icons.jst.ejs
+src/**/*.css
+
+src/templates/icons.jst.ejs
+src/templates/styles.jst.ejs
+
 *.log
+dist

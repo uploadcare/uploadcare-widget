@@ -1,32 +1,41 @@
 {
   "name": "uploadcare-widget",
-  "version": "0.0.0",
-  "description": "Source of Uploadcare Widget",
+  "version": "3.7.9",
+  "description": "Uploadcare Widget: file uploader.",
+  "main": "uploadcare.min.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
-    "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json app/assets/images/uploadcare/svg/icon-*.svg",
-    "build:css": "postcss ./app/assets/stylesheets/uploadcare/styles.pcss -o ./app/assets/stylesheets/uploadcare/styles.css -c ./scripts/postcss.config.js",
+    "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
+    "build:css": "postcss ./src/stylesheets/styles.pcss -o ./src/templates/styles.jst.ejs -c ./scripts/postcss.config.js",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
-    "build": "npm run build:svg && npm run build:css:min",
-    "test": "echo \"Soon there will be tests 🖖\" && exit 0",
-    "serve:latest": "node ./scripts/serve.js"
+    "build:js": "rollup -c",
+    "build": "npm run build:svg && npm run build:css:min && npm run build:js",
+    "test": "echo \"Soon there will be tests 🖖\" && exit 0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.4.1"
+  },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
     "autoprefixer": "^7.1.5",
     "babel-eslint": "^10.0.2",
     "browser-sync": "^2.26.7",
+    "coffeescript": "^2.4.1",
     "cross-env": "^5.1.0",
     "cssnano": "^3.9.1",
+    "escape-html": "^1.0.3",
     "eslint": "^6.2.1",
     "eslint-config-standard": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "ngrok": "^2.2.23",
-    "path": "^0.12.7",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
     "postcss-color-function": "^4.0.0",
@@ -37,6 +46,13 @@
     "postcss-nested": "^2.1.2",
     "postcss-prefixer": "^2.0.5",
     "postcss-reporter": "^5.0.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-jst": "^1.2.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.1",
     "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0",
     "svg-sprite": "^1.5.0"
@@ -44,6 +60,25 @@
   "browserslist": [
     "> .4%",
     "ie >= 10"
+  ],
+  "keywords": [
+    "uploadcare",
+    "file",
+    "uploader",
+    "preview",
+    "chunk",
+    "drag",
+    "drop",
+    "image",
+    "image-edit",
+    "widget",
+    "mobile",
+    "dialog",
+    "upload",
+    "store",
+    "transformations",
+    "cdn",
+    "jquery"
   ],
   "repository": {
     "type": "git",
