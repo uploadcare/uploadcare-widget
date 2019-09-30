@@ -5,98 +5,107 @@ const uploadcare = {
   version,
   jQuery: $,
 
-  // utils:
-  //   abilities:
-  //     fileAPI
-  //     sendFileAPI
-  //     dragAndDrop
-  //     canvas
-  //     fileDragAndDrop
-  //     iOSVersion
-  //     Blob
-  //     URL
-  //     FileReader
-  //   Collection
-  //   UniqCollection
-  //   CollectionOfPromises
-  //   imageLoader
-  //   videoLoader
-  //   log
-  //   debug
-  //   warn
-  //   warnOnce
-  //   commonWarning
-  //   registerMessage
-  //   unregisterMessage
-  //   unique
-  //   defer
-  //   gcd
-  //   once
-  //   wrapToPromise
-  //   then
-  //   bindAll
-  //   upperCase
-  //   publicCallbacks
-  //   uuid
-  //   splitUrlRegex:
-  //   uuidRegex:
-  //   groupIdRegex:
-  //   cdnUrlRegex:
-  //   splitCdnUrl
-  //   escapeRegExp
-  //   globRegexp
-  //   normalizeUrl
-  //   fitText
-  //   fitSizeInCdnLimit
-  //   fitSize
-  //   applyCropCoordsToInfo
-  //   fileInput
-  //   fileSelectDialog
-  //   fileSizeLabels
-  //   readableFileSize
-  //   ajaxDefaults:
-  //     dataType
-  //     crossDomain
-  //     cache
-  //   jsonp
-  //   canvasToBlob
-  //   taskRunner
-  //   fixedPipe
-  //   isFile
-  //   valueToFile
-  //   image:
-  //     shrinkFile
-  //     shrinkImage
-  //     drawFileToCanvas
-  //     readJpegChunks
-  //     replaceJpegChunk
-  //     getExif
-  //     parseExifOrientation
-  //     hasTransparency
-  //   pusher:
-  //     getPusher
-  //   isFileGroup
-  //   valueToGroup
-  //   isFileGroupsEqual
+  utils: {
+    abilities: {
+    //     fileAPI
+    //     sendFileAPI
+    //     dragAndDrop
+    //     canvas
+    //     fileDragAndDrop
+    //     iOSVersion
+    //     Blob
+    //     URL
+    //     FileReader
+    },
+    //   Collection
+    //   UniqCollection
+    //   CollectionOfPromises
+    //   imageLoader
+    //   videoLoader
+    //   log
+    //   debug
+    //   warn
+    //   warnOnce
+    //   commonWarning
+    //   registerMessage
+    //   unregisterMessage
+    //   unique
+    //   defer
+    //   gcd
+    //   once
+    //   wrapToPromise
+    //   then
+    //   bindAll
+    //   upperCase
+    //   publicCallbacks
+    //   uuid
+    //   splitUrlRegex:
+    //   uuidRegex:
+    //   groupIdRegex:
+    //   cdnUrlRegex:
+    //   splitCdnUrl
+    //   escapeRegExp
+    //   globRegexp
+    //   normalizeUrl
+    //   fitText
+    //   fitSizeInCdnLimit
+    //   fitSize
+    //   applyCropCoordsToInfo
+    //   fileInput
+    //   fileSelectDialog
+    //   fileSizeLabels
+    //   readableFileSize
+    //   ajaxDefaults:
+    //     dataType
+    //     crossDomain
+    //     cache
+    //   jsonp
+    //   canvasToBlob
+    //   taskRunner
+    //   fixedPipe
+    //   isFile
+    //   valueToFile
 
-  // settings:
+    image: {
+    //     shrinkFile
+    //     shrinkImage
+    //     drawFileToCanvas
+    //     readJpegChunks
+    //     replaceJpegChunk
+    //     getExif
+    //     parseExifOrientation
+    //     hasTransparency
+    }
+
+    //   pusher:
+    //     getPusher
+    //   isFileGroup
+    //   valueToGroup
+    //   isFileGroupsEqual
+
+  },
+
+  settings: {
   //   globals
   //   common
   //   build
   //   waitForSettings
   //   CssCollector
+  },
 
-  // tabsCss:
+  tabsCss: {
   //   urls
   //   styles
+  },
 
-  // locale:
+  locale: {
   //   translations
   //   pluralize
   //   rebuild
   //   t
+  },
 
-  // templates:
+  templates: {
   //   JST:
   //     dialog
   //     dialog__panel
@@ -118,19 +127,22 @@ const uploadcare = {
   //     widget-file-name
   //     widget
   //   tpl
+  },
 
-  // crop:
-  //   CropWidget
+  crop: {
+    //   CropWidget
+  },
 
-  // files:
-  //   BaseFile
-  //   ObjectFile
-  //   InputFile
-  //   UrlFile
-  //   UploadedFile
-  //   ReadyFile
-  //   FileGroup
-  //   SavedFileGroup
+  files: {
+    //   BaseFile
+    //   ObjectFile
+    //   InputFile
+    //   UrlFile
+    //   UploadedFile
+    //   ReadyFile
+    //   FileGroup
+    //   SavedFileGroup
+  },
 
   // Pusher
   // FileGroup
@@ -138,32 +150,37 @@ const uploadcare = {
   // fileFrom
   // filesFrom
 
-  // dragdrop:
-  //   support
-  //   uploadDrop
-  //   receiveDrop
-  //   watchDragging
+  dragdrop: {
+    //   support
+    //   uploadDrop
+    //   receiveDrop
+    //   watchDragging
+  },
 
-  // ui:
-  //   progress:
-  //     Circle
-  //     BaseRenderer
-  //     TextRenderer
-  //     CanvasRenderer
+  ui: {
+    progress: {
+    //     Circle
+    //     BaseRenderer
+    //     TextRenderer
+    //     CanvasRenderer
+    }
+  },
 
-  // widget:
+  widget: {
+    tabs: {
+    //     FileTab
+    //     UrlTab
+    //     CameraTab
+    //     RemoteTab
+    //     BasePreviewTab
+    //     PreviewTab
+    //     PreviewTabMultiple
+    }
   //   Template
-  //   tabs:
-  //     FileTab
-  //     UrlTab
-  //     CameraTab
-  //     RemoteTab
-  //     BasePreviewTab
-  //     PreviewTab
-  //     PreviewTabMultiple
   //   BaseWidget
   //   Widget
   //   MultipleWidget
+  },
 
   // isDialogOpened
   // closeDialog
