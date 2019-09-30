@@ -1,4 +1,5 @@
 import uploadcare from '../../namespace'
+import { registerMessage, unregisterMessage } from '../../utils/messages'
 
 const {
   utils,
@@ -82,7 +83,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
 
       iframe = this.iframe[0].contentWindow
 
-      utils.registerMessage('file-selected', iframe, (message) => {
+      registerMessage('file-selected', iframe, (message) => {
         var file, sourceInfo, url
         url = (() => {
           var i, key, len, ref, type
@@ -118,7 +119,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         return this.dialogApi.addFiles([file.promise()])
       })
 
-      utils.registerMessage('open-new-window', iframe, (message) => {
+      registerMessage('open-new-window', iframe, (message) => {
         var interval, popup, resolve
         if (this.settings.debugUploads) {
           utils.debug('Open new window message.', this.name)
@@ -155,8 +156,8 @@ uploadcare.namespace('widget.tabs', function (ns) {
       })
 
       return this.dialogApi.done(() => {
-        utils.unregisterMessage('file-selected', iframe)
-        return utils.unregisterMessage('open-new-window', iframe)
+        unregisterMessage('file-selected', iframe)
+        return unregisterMessage('open-new-window', iframe)
       })
     }
   }
