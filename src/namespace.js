@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import { registerMessage, unregisterMessage } from './utils/messages'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -27,8 +29,10 @@ const uploadcare = {
     //   warn
     //   warnOnce
     //   commonWarning
-    //   registerMessage
-    //   unregisterMessage
+
+    registerMessage,
+    unregisterMessage,
+
     //   unique
     //   defer
     //   gcd
