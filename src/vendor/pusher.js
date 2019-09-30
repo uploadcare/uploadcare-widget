@@ -1,5 +1,3 @@
-import uploadcare from '../namespace'
-
 // changed:
 //   Pusher.dependency_suffix = '.min'; (was '')
 //   window.WEB_SOCKET_SWF_LOCATION = "https://s3.amazonaws.com/uploadcare-static/WebSocketMainInsecure.swf"
@@ -1287,4 +1285,4 @@ var _require = (function() {
 
 this.Pusher = Pusher;
 
-}).call(uploadcare);
+}).call(exports);
