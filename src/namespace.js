@@ -1,22 +1,35 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import {
+  FileReader,
+  URL,
+  Blob,
+  iOSVersion,
+  fileDragAndDrop,
+  canvas,
+  dragAndDrop,
+  sendFileAPI,
+  fileAPI
+} from './utils/abilities'
+
 const uploadcare = {
   version,
   jQuery: $,
 
   utils: {
     abilities: {
-    //     fileAPI
-    //     sendFileAPI
-    //     dragAndDrop
-    //     canvas
-    //     fileDragAndDrop
-    //     iOSVersion
-    //     Blob
-    //     URL
-    //     FileReader
+      fileAPI,
+      sendFileAPI,
+      dragAndDrop,
+      canvas,
+      fileDragAndDrop,
+      iOSVersion,
+      Blob,
+      URL,
+      FileReader
     },
+
     //   Collection
     //   UniqCollection
     //   CollectionOfPromises
