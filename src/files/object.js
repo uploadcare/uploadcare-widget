@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { Blob, iOSVersion } from '../utils/abilities'
 import { boundMethodCheck } from '../utils/bound-method-check'
 
 const {
@@ -43,11 +44,11 @@ uploadcare.namespace('files', function (ns) {
           this.__file = null
           return this.__file
         })
-        if (this.__file.size >= this.settings.multipartMinSize && utils.abilities.Blob) {
+        if (this.__file.size >= this.settings.multipartMinSize && Blob) {
           this.setFile()
           return this.multipartUpload()
         }
-        ios = utils.abilities.iOSVersion
+        ios = iOSVersion
         if (!this.settings.imageShrink || (ios && ios < 8)) {
           this.setFile()
           return this.directUpload()

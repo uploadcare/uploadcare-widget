@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+import { sendFileAPI } from './utils/abilities'
 
 var indexOf = [].indexOf
 
@@ -262,7 +263,7 @@ uploadcare.namespace('settings', function (ns) {
     if (settings.crop || settings.multiple) {
       settings.previewStep = true
     }
-    if (!utils.abilities.sendFileAPI) {
+    if (!sendFileAPI) {
       settings.systemDialog = false
     }
     if (settings.validators) {
