@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import { getPusher } from './utils/pusher'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -75,10 +77,12 @@ const uploadcare = {
     //     getExif
     //     parseExifOrientation
     //     hasTransparency
+    },
+
+    pusher: {
+      getPusher
     }
 
-    //   pusher:
-    //     getPusher
     //   isFileGroup
     //   valueToGroup
     //   isFileGroupsEqual
