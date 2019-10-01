@@ -1,6 +1,8 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+import { log, debug, warn, warnOnce } from './utils/warnings'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -22,10 +24,12 @@ const uploadcare = {
     //   CollectionOfPromises
     //   imageLoader
     //   videoLoader
-    //   log
-    //   debug
-    //   warn
-    //   warnOnce
+
+    log,
+    debug,
+    warn,
+    warnOnce,
+
     //   commonWarning
     //   registerMessage
     //   unregisterMessage
