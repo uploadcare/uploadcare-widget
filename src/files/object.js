@@ -1,5 +1,6 @@
 import uploadcare from '../namespace'
 import { boundMethodCheck } from '../utils/bound-method-check'
+import { log, debug } from '../../utils/warnings'
 
 const {
   jQuery: $,
@@ -31,7 +32,7 @@ uploadcare.namespace('files', function (ns) {
         this.fileSize = this.__file.size
         this.fileType = this.__file.type || 'application/octet-stream'
         if (this.settings.debugUploads) {
-          utils.debug('Use local file.', this.fileName, this.fileType, this.fileSize)
+          debug('Use local file.', this.fileName, this.fileType, this.fileSize)
         }
         this.__runValidators()
         return this.__notifyApi()
@@ -180,7 +181,7 @@ uploadcare.namespace('files', function (ns) {
           }
         })).fail((reason) => {
           if (this.settings.debugUploads) {
-            return utils.log("Can't start multipart upload.", reason, data)
+            return log("Can't start multipart upload.", reason, data)
           }
         })
       }
@@ -250,12 +251,12 @@ uploadcare.namespace('files', function (ns) {
                 attempts += 1
                 if (attempts > this.settings.multipartMaxAttempts) {
                   if (this.settings.debugUploads) {
-                    utils.log(`Part #${partNo} and file upload is failed.`, uuid)
+                    log(`Part #${partNo} and file upload is failed.`, uuid)
                   }
                   return df.reject()
                 } else {
                   if (this.settings.debugUploads) {
-                    utils.debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
+                    debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
                   }
                   return retry()
                 }
@@ -288,7 +289,7 @@ uploadcare.namespace('files', function (ns) {
           }
         })).fail((reason) => {
           if (this.settings.debugUploads) {
-            return utils.log("Can't complete multipart upload.", uuid, this.settings.publicKey, reason)
+            return log("Can't complete multipart upload.", uuid, this.settings.publicKey, reason)
           }
         })
       }

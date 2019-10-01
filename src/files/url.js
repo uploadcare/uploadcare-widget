@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { debug } from '../utils/warnings'
 import { boundMethodCheck } from '../utils/bound-method-check'
 
 const {
@@ -65,7 +66,7 @@ uploadcare.namespace('files', function (ns) {
             }
           }).fail((reason) => {
             if (this.settings.debugUploads) {
-              utils.debug("Can't start upload from URL.", reason, data)
+              debug("Can't start upload from URL.", reason, data)
             }
             return df.reject()
           }).done((data) => {
@@ -74,12 +75,12 @@ uploadcare.namespace('files', function (ns) {
               return
             }
             if (this.settings.debugUploads) {
-              utils.debug('Start watchers.', data.token)
+              debug('Start watchers.', data.token)
               logger = setInterval(() => {
-                return utils.debug('Still watching.', data.token)
+                return debug('Still watching.', data.token)
               }, 5000)
               df.done(() => {
-                return utils.debug('Stop watchers.', data.token)
+                return debug('Stop watchers.', data.token)
               }).always(() => {
                 return clearInterval(logger)
               })
@@ -96,7 +97,7 @@ uploadcare.namespace('files', function (ns) {
                 return
               }
               if (this.settings.debugUploads) {
-                utils.debug('Start using pusher.', data.token)
+                debug('Start using pusher.', data.token)
               }
               return pollWatcher.stopWatching()
             })
