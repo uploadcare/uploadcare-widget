@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...HEAD
 
+### Fixed
+
 - Spanish locale was updated.
 
 ## [3.7.9]
