@@ -281,7 +281,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
 [github-branch-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
 [github-home]: https://github.com/uploadcare/uploadcare-widget
-[github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
+[github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/src/locales
 [github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
