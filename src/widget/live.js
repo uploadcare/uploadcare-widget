@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { warn } from '../utils/warnings'
 
 var $, settings, utils;
 
@@ -57,7 +58,7 @@ uploadcare.namespace('', function (ns) {
     if (inputArr.length === 0) {
       throw new Error('No DOM elements found matching selector')
     } else if (inputArr.length > 1) {
-      utils.warn('There are multiple DOM elements matching selector')
+      warn('There are multiple DOM elements matching selector')
     }
     input = inputArr.eq(0)
     s = settings.build(input.data())
