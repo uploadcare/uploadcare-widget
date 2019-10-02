@@ -3,6 +3,16 @@
   "version": "3.7.9",
   "description": "Uploadcare Widget: file uploader.",
   "main": "uploadcare.js",
+  "files": [
+    "uploadcare.api.js",
+    "uploadcare.api.min.js",
+    "uploadcare.full.js",
+    "uploadcare.full.min.js",
+    "uploadcare.js",
+    "uploadcare.min.js",
+    "uploadcare.lang.en.js",
+    "uploadcare.lang.en.min.js"
+  ],
   "scripts": {
     "lint:css": "stylelint app/**/*.pcss",
     "lint:js": "eslint .",
