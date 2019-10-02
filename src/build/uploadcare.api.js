@@ -1,5 +1,4 @@
 import '../vendor/jquery-xdr'
-import '../utils/messages'
 import '../utils'
 import '../settings'
 import '../locale'

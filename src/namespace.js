@@ -2,12 +2,6 @@ import $ from 'jquery'
 import { version } from '../package.json'
 
 import {
-  Collection,
-  UniqCollection,
-  CollectionOfPromises
-} from './utils/collection'
-
-import {
   FileReader,
   URL,
   Blob,
@@ -19,8 +13,15 @@ import {
   fileAPI
 } from './utils/abilities'
 
+import {
+  Collection,
+  UniqCollection,
+  CollectionOfPromises
+} from './utils/collection'
+
 import * as locales from './locales'
 
+import { registerMessage, unregisterMessage } from './utils/messages'
 import { imageLoader, videoLoader } from './utils/image-loader'
 import { log, debug, warn, warnOnce } from './utils/warnings'
 import { getPusher } from './utils/pusher'
@@ -55,8 +56,10 @@ const uploadcare = {
     warnOnce,
 
     //   commonWarning
-    //   registerMessage
-    //   unregisterMessage
+
+    registerMessage,
+    unregisterMessage,
+
     //   unique
     //   defer
     //   gcd
