@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+import * as locales from './locales'
 
 const {
   utils,
@@ -13,15 +14,15 @@ uploadcare.namespace('locale', function (ns) {
 
   defaults = {
     lang: defaultLang,
-    translations: ns.translations[defaultLang],
-    pluralize: ns.pluralize[defaultLang]
+    translations: locales[defaultLang].translations,
+    pluralize: locales[defaultLang].pluralize
   }
 
   _build = function (settings) {
     var lang, pluralize, translations
     lang = settings.locale || defaults.lang
-    translations = $.extend(true, {}, ns.translations[lang], settings.localeTranslations)
-    pluralize = $.isFunction(settings.localePluralize) ? settings.localePluralize : ns.pluralize[lang]
+    translations = $.extend(true, {}, locales[lang].translations, settings.localeTranslations)
+    pluralize = $.isFunction(settings.localePluralize) ? settings.localePluralize : locales[lang].pluralize
     return { lang, translations, pluralize }
   }
 

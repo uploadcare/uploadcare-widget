@@ -25,7 +25,8 @@ const bundle = (input, output, options = {}) => ({
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]]
+      presets: [['@babel/env', { modules: false }]],
+      plugins: ['@babel/plugin-proposal-export-namespace-from']
     }),
     jst({
       templateOptions: {
