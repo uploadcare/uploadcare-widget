@@ -3,6 +3,10 @@ import { version } from '../package.json'
 
 import * as locales from './locales'
 
+import { imageLoader, videoLoader } from './utils/image-loader'
+import { log, debug, warn, warnOnce } from './utils/warnings'
+import { getPusher } from './utils/pusher'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -22,12 +26,15 @@ const uploadcare = {
     //   Collection
     //   UniqCollection
     //   CollectionOfPromises
-    //   imageLoader
-    //   videoLoader
-    //   log
-    //   debug
-    //   warn
-    //   warnOnce
+
+    imageLoader,
+    videoLoader,
+
+    log,
+    debug,
+    warn,
+    warnOnce,
+
     //   commonWarning
     //   registerMessage
     //   unregisterMessage
@@ -77,10 +84,12 @@ const uploadcare = {
     //     getExif
     //     parseExifOrientation
     //     hasTransparency
+    },
+
+    pusher: {
+      getPusher
     }
 
-    //   pusher:
-    //     getPusher
     //   isFileGroup
     //   valueToGroup
     //   isFileGroupsEqual

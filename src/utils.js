@@ -1,4 +1,5 @@
 import uploadcare from './namespace'
+import { warn } from './utils/warnings'
 
 var $
 var indexOf = [].indexOf;
@@ -305,7 +306,8 @@ uploadcare.namespace('utils', function (ns) {
     }, function (_, textStatus, errorThrown) {
       var text
       text = `${textStatus} (${errorThrown})`
-      ns.warn(`JSONP unexpected error: ${text} while loading ${url}`)
+      warn(`JSONP unexpected error: ${text} while loading ${url}`)
+
       return text
     })
   }

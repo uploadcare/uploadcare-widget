@@ -1,4 +1,5 @@
 import uploadcare from '../../namespace'
+import { warn } from '../../utils/warnings'
 
 const {
   utils,
@@ -105,7 +106,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
       this.URL = window.URL || window.webkitURL
       this.MediaRecorder = window.MediaRecorder
       if (!isSecure) {
-        utils.warn('Camera is not allowed for HTTP. Please use HTTPS connection.')
+        warn('Camera is not allowed for HTTP. Please use HTTPS connection.')
       }
       isLocalhost = document.location.hostname === 'localhost'
       return !!this.getUserMedia && Uint8Array && (isSecure || isLocalhost)

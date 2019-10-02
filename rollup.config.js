@@ -43,7 +43,9 @@ const bundle = (input, output, options = {}) => ({
     json(),
 
     resolve(),
-    commonjs(),
+    commonjs({
+      namedExports: { './src/vendor/pusher.js': ['Pusher'] }
+    }),
 
     terser({
       compress: {
