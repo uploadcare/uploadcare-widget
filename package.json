@@ -36,6 +36,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "git-branch-is": "^3.0.0",
+    "husky": "^3.0.8",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
     "postcss-color-function": "^4.0.0",
@@ -89,5 +91,10 @@
   "bugs": {
     "url": "https://github.com/uploadcare/uploadcare-widget/issues"
   },
-  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme"
+  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "git-branch-is --not master"
+    }
+  }
 }
