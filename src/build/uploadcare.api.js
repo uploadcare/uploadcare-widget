@@ -1,5 +1,8 @@
+import $ from 'jquery'
 import '../vendor/jquery-xdr'
-import '../settings'
+
+import { presets, defaults } from '../settings'
+
 import '../locale'
 import '../files/base'
 import '../files/object'
@@ -11,6 +14,11 @@ import '../files'
 import uploadcare from '../namespace'
 
 const { expose } = uploadcare
+
+// Defaults (not normalized)
+expose('defaults', $.extend({
+  allTabs: presets.tabs.all
+}, defaults))
 
 expose('globals', uploadcare.settings.common)
 expose('start', uploadcare.settings.common)

@@ -60,6 +60,8 @@ import {
   fixedPipe
 } from './utils'
 
+import { globals, build, common, waitForSettings, CssCollector } from './settings'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -151,17 +153,15 @@ const uploadcare = {
   },
 
   settings: {
-  //   globals
-  //   common
-  //   build
-  //   waitForSettings
-  //   CssCollector
+    globals,
+    build,
+    common,
+    waitForSettings,
+    CssCollector
   },
 
-  tabsCss: {
-  //   urls
-  //   styles
-  },
+  // TODO: move to separete file
+  tabsCss: new CssCollector(),
 
   locale: {
     translations: Object.keys(locales).reduce((translations, lang) => {
