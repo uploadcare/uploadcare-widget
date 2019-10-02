@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { log, debug } from '../../utils/warnings'
 
 const {
   namespace,
@@ -57,12 +58,12 @@ namespace('files', function (ns) {
       // Update info until @apiDeferred resolved.
       ncalls = 0
       if (this.settings.debugUploads) {
-        utils.debug('Load file info.', this.fileId, this.settings.publicKey)
+        debug('Load file info.', this.fileId, this.settings.publicKey)
         logger = setInterval(() => {
-          return utils.debug('Still waiting for file ready.', ncalls, this.fileId, this.settings.publicKey)
+          return debug('Still waiting for file ready.', ncalls, this.fileId, this.settings.publicKey)
         }, 5000)
         this.apiDeferred.done(() => {
-          return utils.debug('File uploaded.', ncalls, this.fileId, this.settings.publicKey)
+          return debug('File uploaded.', ncalls, this.fileId, this.settings.publicKey)
         }).always(() => {
           return clearInterval(logger)
         })
@@ -94,7 +95,7 @@ namespace('files', function (ns) {
         }
       }).fail((reason) => {
         if (this.settings.debugUploads) {
-          utils.log("Can't load file info. Probably removed.", this.fileId, this.settings.publicKey, reason)
+          log("Can't load file info. Probably removed.", this.fileId, this.settings.publicKey, reason)
         }
         return this.__rejectApi('info')
       }).done(this.__handleFileData)

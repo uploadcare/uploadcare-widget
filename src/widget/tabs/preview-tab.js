@@ -1,11 +1,10 @@
 import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
+import { URL, Blob } from '../../utils/abilities'
+import { imageLoader, videoLoader } from '../../utils/image-loader'
 
 const {
   utils,
-  utils: {
-    abilities: { URL }
-  },
   templates: { tpl },
   jQuery: $,
   crop: { CropWidget },
@@ -60,7 +59,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         label = (info.name || '') + utils.readableFileSize(info.size, '', ', ')
         this.container.find('.uploadcare--preview__file-name').text(label)
         source = info.sourceInfo
-        blob = utils.abilities.Blob
+        blob = Blob
         if (source.file && blob && source.file instanceof blob) {
           return tryToLoadImagePreview(file, source.file).fail(() => {
             return tryToLoadVideoPreview(file, source.file)
@@ -143,7 +142,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         return df.reject().promise()
       }
       src = URL.createObjectURL(blob)
-      op = utils.videoLoader(src)
+      op = videoLoader(src)
       op.fail(() => {
         URL.revokeObjectURL(src)
         return df.reject()
@@ -205,7 +204,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
       boundMethodCheck(this, ref)
       img = this.container.find('.uploadcare--preview__image')
       done = this.container.find('.uploadcare--preview__done')
-      imgLoader = utils.imageLoader(img[0]).done(() => {
+      imgLoader = imageLoader(img[0]).done(() => {
         return this.container.addClass('uploadcare--preview_status_loaded')
       }).fail(() => {
         this.file = null

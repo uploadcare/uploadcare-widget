@@ -7,33 +7,53 @@ import {
   CollectionOfPromises
 } from './utils/collection'
 
+import {
+  FileReader,
+  URL,
+  Blob,
+  iOSVersion,
+  fileDragAndDrop,
+  canvas,
+  dragAndDrop,
+  sendFileAPI,
+  fileAPI
+} from './utils/abilities'
+
+import * as locales from './locales'
+
+import { imageLoader, videoLoader } from './utils/image-loader'
+import { log, debug, warn, warnOnce } from './utils/warnings'
+import { getPusher } from './utils/pusher'
+
 const uploadcare = {
   version,
   jQuery: $,
 
   utils: {
     abilities: {
-    //     fileAPI
-    //     sendFileAPI
-    //     dragAndDrop
-    //     canvas
-    //     fileDragAndDrop
-    //     iOSVersion
-    //     Blob
-    //     URL
-    //     FileReader
+      fileAPI,
+      sendFileAPI,
+      dragAndDrop,
+      canvas,
+      fileDragAndDrop,
+      iOSVersion,
+      Blob,
+      URL,
+      FileReader
     },
 
     Collection,
     UniqCollection,
     CollectionOfPromises,
 
-    //   imageLoader
-    //   videoLoader
-    //   log
-    //   debug
-    //   warn
-    //   warnOnce
+    imageLoader,
+    videoLoader,
+
+    log,
+    debug,
+    warn,
+    warnOnce,
+
     //   commonWarning
     //   registerMessage
     //   unregisterMessage
@@ -83,10 +103,12 @@ const uploadcare = {
     //     getExif
     //     parseExifOrientation
     //     hasTransparency
+    },
+
+    pusher: {
+      getPusher
     }
 
-    //   pusher:
-    //     getPusher
     //   isFileGroup
     //   valueToGroup
     //   isFileGroupsEqual
@@ -107,10 +129,20 @@ const uploadcare = {
   },
 
   locale: {
-  //   translations
-  //   pluralize
-  //   rebuild
-  //   t
+    translations: Object.keys(locales).reduce((translations, lang) => {
+      translations[lang] = locales[lang].translations
+
+      return translations
+    }, {}),
+
+    pluralize: Object.keys(locales).reduce((pluralize, lang) => {
+      pluralize[lang] = locales[lang].pluralize
+
+      return pluralize
+    }, {})
+
+    //   rebuild
+    //   t
   },
 
   templates: {

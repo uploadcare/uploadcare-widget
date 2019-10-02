@@ -1,4 +1,5 @@
 import uploadcare from '../../namespace'
+import { warn, debug } from '../../utils/warnings'
 
 const {
   utils,
@@ -121,16 +122,16 @@ uploadcare.namespace('widget.tabs', function (ns) {
       utils.registerMessage('open-new-window', iframe, (message) => {
         var interval, popup, resolve
         if (this.settings.debugUploads) {
-          utils.debug('Open new window message.', this.name)
+          debug('Open new window message.', this.name)
         }
         popup = window.open(message.url, '_blank')
         if (!popup) {
-          utils.warn("Can't open new window. Possible blocked.", this.name)
+          warn("Can't open new window. Possible blocked.", this.name)
           return
         }
         resolve = () => {
           if (this.settings.debugUploads) {
-            utils.debug('Window is closed.', this.name)
+            debug('Window is closed.', this.name)
           }
           return this.__sendMessage({
             type: 'navigate',
