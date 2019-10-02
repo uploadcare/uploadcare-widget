@@ -1,8 +1,4 @@
-import uploadcare from '../namespace'
-
-const {
-  jQuery: $
-} = uploadcare
+import $ from 'jquery'
 
 const canSubmit = function (form) {
   var notSubmittable
