@@ -1,12 +1,10 @@
 import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
+import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 
 const {
   utils,
-  utils: {
-    abilities: { URL }
-  },
   templates: { tpl },
   jQuery: $,
   crop: { CropWidget },
@@ -61,7 +59,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         label = (info.name || '') + utils.readableFileSize(info.size, '', ', ')
         this.container.find('.uploadcare--preview__file-name').text(label)
         source = info.sourceInfo
-        blob = utils.abilities.Blob
+        blob = Blob
         if (source.file && blob && source.file instanceof blob) {
           return tryToLoadImagePreview(file, source.file).fail(() => {
             return tryToLoadVideoPreview(file, source.file)

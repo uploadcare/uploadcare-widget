@@ -1,11 +1,25 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
+
+import {
+  FileReader,
+  URL,
+  Blob,
+  iOSVersion,
+  fileDragAndDrop,
+  canvas,
+  dragAndDrop,
+  sendFileAPI,
+  fileAPI
+} from './utils/abilities'
+
 import * as locales from './locales'
 
 import { imageLoader, videoLoader } from './utils/image-loader'
 import { log, debug, warn, warnOnce } from './utils/warnings'
 import { getPusher } from './utils/pusher'
+
 
 const uploadcare = {
   version,
@@ -13,16 +27,17 @@ const uploadcare = {
 
   utils: {
     abilities: {
-    //     fileAPI
-    //     sendFileAPI
-    //     dragAndDrop
-    //     canvas
-    //     fileDragAndDrop
-    //     iOSVersion
-    //     Blob
-    //     URL
-    //     FileReader
+      fileAPI,
+      sendFileAPI,
+      dragAndDrop,
+      canvas,
+      fileDragAndDrop,
+      iOSVersion,
+      Blob,
+      URL,
+      FileReader
     },
+
     //   Collection
     //   UniqCollection
     //   CollectionOfPromises

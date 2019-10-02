@@ -1,15 +1,13 @@
 import uploadcare from '../namespace'
+import { fileDragAndDrop } from '../utils/abilities'
 
-var $, s, utils;
-
-({
-  utils,
+const {
   settings: s,
   jQuery: $
-} = uploadcare)
+} = uploadcare
 
 uploadcare.namespace('dragdrop', function (ns) {
-  ns.support = utils.abilities.fileDragAndDrop
+  ns.support = fileDragAndDrop
 
   ns.uploadDrop = function (el, callback, settings) {
     settings = s.build(settings)

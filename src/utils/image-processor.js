@@ -1,12 +1,11 @@
 import uploadcare from '../namespace'
+
+import { Blob, FileReader, URL } from '../utils/abilities'
 import { imageLoader } from '../utils/image-loader'
 
 const {
   jQuery: $,
-  utils,
-  utils: {
-    abilities: { Blob, FileReader, URL }
-  }
+  utils
 } = uploadcare
 
 uploadcare.namespace('utils.image', function (ns) {
