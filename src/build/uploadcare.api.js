@@ -1,5 +1,4 @@
 import '../vendor/jquery-xdr'
-import '../utils'
 import '../settings'
 import '../locale'
 import '../files/base'
