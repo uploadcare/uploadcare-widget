@@ -2,7 +2,7 @@
   "name": "uploadcare-widget",
   "version": "3.7.9",
   "description": "Uploadcare Widget: file uploader.",
-  "main": "uploadcare.min.js",
+  "main": "uploadcare.js",
   "directories": {
     "test": "test"
   },
