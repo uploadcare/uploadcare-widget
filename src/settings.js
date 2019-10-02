@@ -1,5 +1,7 @@
 import uploadcare from './namespace'
+
 import { sendFileAPI } from './utils/abilities'
+import { warnOnce } from './utils/warnings'
 
 var indexOf = [].indexOf
 
@@ -209,7 +211,8 @@ uploadcare.namespace('settings', function (ns) {
     }
     size = shrink[1] * shrink[2]
     if (size > 5000000) { // ios max canvas square
-      utils.warnOnce('Shrinked size can not be larger than 5MP. ' + `You have set ${shrink[1]}x${shrink[2]} (` + `${Math.ceil(size / 1000 / 100) / 10}MP).`)
+      warnOnce('Shrinked size can not be larger than 5MP. ' + `You have set ${shrink[1]}x${shrink[2]} (` + `${Math.ceil(size / 1000 / 100) / 10}MP).`)
+
       return false
     }
     return {

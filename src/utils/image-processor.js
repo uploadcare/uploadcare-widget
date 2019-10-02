@@ -1,5 +1,7 @@
 import uploadcare from '../namespace'
+
 import { Blob, FileReader, URL } from '../utils/abilities'
+import { imageLoader } from '../utils/image-loader'
 
 const {
   jQuery: $,
@@ -24,7 +26,7 @@ uploadcare.namespace('utils.image', function (ns) {
       // console.log('delayed: ' + (new Date() - start))
       df.always(release)
       // start = new Date()
-      op = utils.imageLoader(URL.createObjectURL(file))
+      op = imageLoader(URL.createObjectURL(file))
       op.always(function (img) {
         return URL.revokeObjectURL(img.src)
       })
@@ -167,7 +169,7 @@ uploadcare.namespace('utils.image', function (ns) {
     if (!URL) {
       return df.reject('support')
     }
-    op = utils.imageLoader(URL.createObjectURL(file))
+    op = imageLoader(URL.createObjectURL(file))
     op.always(function (img) {
       return URL.revokeObjectURL(img.src)
     })
