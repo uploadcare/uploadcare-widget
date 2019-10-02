@@ -26,6 +26,40 @@ import { imageLoader, videoLoader } from './utils/image-loader'
 import { log, debug, warn, warnOnce } from './utils/warnings'
 import { getPusher } from './utils/pusher'
 
+import {
+  unique,
+  defer,
+  gcd,
+  once,
+  wrapToPromise,
+  then,
+  bindAll,
+  upperCase,
+  publicCallbacks,
+  uuid,
+  splitUrlRegex,
+  uuidRegex,
+  groupIdRegex,
+  cdnUrlRegex,
+  splitCdnUrl,
+  escapeRegExp,
+  globRegexp,
+  normalizeUrl,
+  fitText,
+  fitSizeInCdnLimit,
+  fitSize,
+  applyCropCoordsToInfo,
+  fileInput,
+  fileSelectDialog,
+  fileSizeLabels,
+  readableFileSize,
+  ajaxDefaults,
+  jsonp,
+  canvasToBlob,
+  taskRunner,
+  fixedPipe
+} from './utils'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -60,40 +94,38 @@ const uploadcare = {
     registerMessage,
     unregisterMessage,
 
-    //   unique
-    //   defer
-    //   gcd
-    //   once
-    //   wrapToPromise
-    //   then
-    //   bindAll
-    //   upperCase
-    //   publicCallbacks
-    //   uuid
-    //   splitUrlRegex:
-    //   uuidRegex:
-    //   groupIdRegex:
-    //   cdnUrlRegex:
-    //   splitCdnUrl
-    //   escapeRegExp
-    //   globRegexp
-    //   normalizeUrl
-    //   fitText
-    //   fitSizeInCdnLimit
-    //   fitSize
-    //   applyCropCoordsToInfo
-    //   fileInput
-    //   fileSelectDialog
-    //   fileSizeLabels
-    //   readableFileSize
-    //   ajaxDefaults:
-    //     dataType
-    //     crossDomain
-    //     cache
-    //   jsonp
-    //   canvasToBlob
-    //   taskRunner
-    //   fixedPipe
+    unique,
+    defer,
+    gcd,
+    once,
+    wrapToPromise,
+    then,
+    bindAll,
+    upperCase,
+    publicCallbacks,
+    uuid,
+    splitUrlRegex,
+    uuidRegex,
+    groupIdRegex,
+    cdnUrlRegex,
+    splitCdnUrl,
+    escapeRegExp,
+    globRegexp,
+    normalizeUrl,
+    fitText,
+    fitSizeInCdnLimit,
+    fitSize,
+    applyCropCoordsToInfo,
+    fileInput,
+    fileSelectDialog,
+    fileSizeLabels,
+    readableFileSize,
+    ajaxDefaults,
+    jsonp,
+    canvasToBlob,
+    taskRunner,
+    fixedPipe,
+
     //   isFile
     //   valueToFile
 
