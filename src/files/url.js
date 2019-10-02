@@ -2,12 +2,12 @@ import uploadcare from '../namespace'
 import { debug } from '../utils/warnings'
 import { boundMethodCheck } from '../utils/bound-method-check'
 
+import { getPusher } from '../utils/pusher'
+
 const {
   jQuery: $,
   utils
 } = uploadcare
-
-const { pusher } = uploadcare.utils
 
 uploadcare.namespace('files', function (ns) {
   var PollWatcher, PusherWatcher, ref
@@ -132,7 +132,7 @@ uploadcare.namespace('files', function (ns) {
     constructor (settings) {
       this.settings = settings
       try {
-        this.pusher = pusher.getPusher(this.settings.pusherKey)
+        this.pusher = getPusher(this.settings.pusherKey)
       } catch (error) {
         this.pusher = null
       }
