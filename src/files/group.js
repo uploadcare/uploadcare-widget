@@ -1,4 +1,6 @@
 import uploadcare from '../namespace'
+
+import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
 
 const {
@@ -15,7 +17,7 @@ namespace('files', function (ns) {
     constructor (files, settings) {
       this.__uuid = null
       this.settings = s.build(settings)
-      this.__fileColl = new utils.CollectionOfPromises(files)
+      this.__fileColl = new CollectionOfPromises(files)
       this.__allFilesDf = $.when(...this.files())
       this.__fileInfosDf = (() => {
         var file

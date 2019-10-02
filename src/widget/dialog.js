@@ -1,4 +1,5 @@
 import uploadcare from '../namespace'
+import { CollectionOfPromises } from '../utils/collection'
 
 const {
   utils,
@@ -233,7 +234,7 @@ uploadcare.namespace('', function (ns) {
         return this.panel.find('.uploadcare--menu').toggleClass('uploadcare--menu_opened')
       })
       // files collection
-      this.files = new utils.CollectionOfPromises(files)
+      this.files = new CollectionOfPromises(files)
       this.files.onRemove.add(() => {
         if (this.files.length() === 0) {
           return this.hideTab('preview')
