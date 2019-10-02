@@ -1,8 +1,8 @@
 import uploadcare from '../namespace'
+import { canvas } from '../utils/abilities'
 
 const {
   jQuery: $,
-  utils: { abilities },
   templates: { tpl }
 } = uploadcare
 
@@ -10,7 +10,7 @@ uploadcare.namespace('ui.progress', function (ns) {
   ns.Circle = class Circle {
     constructor (element) {
       this.update = this.update.bind(this)
-      if (abilities.canvas) {
+      if (canvas) {
         this.renderer = new ns.CanvasRenderer(element)
       } else {
         this.renderer = new ns.TextRenderer(element)

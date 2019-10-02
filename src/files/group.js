@@ -1,5 +1,8 @@
 import uploadcare from '../namespace'
 
+import { CollectionOfPromises } from '../utils/collection'
+import { log } from '../utils/warnings'
+
 const {
   namespace,
   jQuery: $,
@@ -14,7 +17,7 @@ namespace('files', function (ns) {
     constructor (files, settings) {
       this.__uuid = null
       this.settings = s.build(settings)
-      this.__fileColl = new utils.CollectionOfPromises(files)
+      this.__fileColl = new CollectionOfPromises(files)
       this.__allFilesDf = $.when(...this.files())
       this.__fileInfosDf = (() => {
         var file
@@ -162,7 +165,7 @@ namespace('files', function (ns) {
             }
           }).fail((reason) => {
             if (this.settings.debugUploads) {
-              utils.log("Can't create group.", this.settings.publicKey, reason)
+              log("Can't create group.", this.settings.publicKey, reason)
             }
             return df.reject()
           }).done(df.resolve)
@@ -230,7 +233,7 @@ namespace('', function (ns) {
         }
       }).fail((reason) => {
         if (settings.debugUploads) {
-          utils.log("Can't load group info. Probably removed.", id[0], settings.publicKey, reason)
+          log("Can't load group info. Probably removed.", id[0], settings.publicKey, reason)
         }
         return df.reject()
       }).done(function (data) {

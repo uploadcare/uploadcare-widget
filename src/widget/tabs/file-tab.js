@@ -1,4 +1,5 @@
 import uploadcare from '../../namespace'
+import { fileDragAndDrop, sendFileAPI } from '../../utils/abilities'
 
 const {
   utils,
@@ -26,7 +27,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
     __initDragNDrop () {
       var dropArea
       dropArea = this.container.find('.uploadcare--draganddrop')
-      if (utils.abilities.fileDragAndDrop) {
+      if (fileDragAndDrop) {
         dragdrop.receiveDrop(dropArea, (type, files) => {
           this.dialogApi.addFiles(type, files)
           return this.dialogApi.switchTab('preview')
@@ -38,7 +39,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
     __setupFileButton () {
       var fileButton
       fileButton = this.container.find('.uploadcare--tab__action-button')
-      if (utils.abilities.sendFileAPI) {
+      if (sendFileAPI) {
         return fileButton.on('click', () => {
           utils.fileSelectDialog(this.container, this.settings, (input) => {
             this.dialogApi.addFiles('object', input.files)
