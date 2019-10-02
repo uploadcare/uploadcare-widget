@@ -1,7 +1,6 @@
 import '../vendor/jquery-xdr'
 import '../utils/abilities'
 import '../utils/collection'
-import '../utils/image-loader'
 import '../utils/messages'
 import '../utils'
 import '../settings'
