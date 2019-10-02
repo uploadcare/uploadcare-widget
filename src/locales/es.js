@@ -56,10 +56,10 @@ uploadcare.namespace('locale.translations', function (ns) {
         },
         file: {
           drag: 'Arrastra un archivo aquí',
-          nodrop: 'Sube fotos desde tu ordenador',
+          nodrop: 'Sube fotos desde tu dispositivo',
           cloudsTip: 'Almacenamiento en la nube<br>y redes sociales',
           or: 'o',
-          button: 'Elige un archivo de tu ordenador',
+          button: 'Elige un archivo de tu dispositivo',
           also: 'Tambien puedes seleccionarlo de'
         },
         url: {
