@@ -3,13 +3,13 @@ import uploadcare from '../namespace'
 import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
 import { wrapToPromise, bindAll, groupIdRegex, jsonp } from '../utils'
+import { build } from '../settings'
 
 const {
   namespace,
   jQuery: $,
   utils,
   locale: { t },
-  settings: s,
   files: ucFiles
 } = uploadcare
 
@@ -17,7 +17,7 @@ namespace('files', function (ns) {
   ns.FileGroup = class FileGroup {
     constructor (files, settings) {
       this.__uuid = null
-      this.settings = s.build(settings)
+      this.settings = build(settings)
       this.__fileColl = new CollectionOfPromises(files)
       this.__allFilesDf = $.when(...this.files())
       this.__fileInfosDf = (() => {
@@ -220,7 +220,7 @@ namespace('', function (ns) {
 
   ns.loadFileGroup = function (groupIdOrUrl, settings) {
     var df, id
-    settings = s.build(settings)
+    settings = build(settings)
     df = $.Deferred()
     id = groupIdRegex.exec(groupIdOrUrl)
     if (id) {

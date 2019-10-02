@@ -1,10 +1,10 @@
 import uploadcare from './namespace'
 import { once } from './utils'
+import { build as buildSettings } from './settings'
 
 import * as locales from './locales'
 
 const {
-  settings: s,
   jQuery: $
 } = uploadcare
 
@@ -28,13 +28,13 @@ uploadcare.namespace('locale', function (ns) {
   }
 
   build = once(function () {
-    return _build(s.build())
+    return _build(buildSettings())
   })
 
   // Backdoor for widget constructor
   ns.rebuild = function (settings) {
     var result
-    result = _build(s.build(settings))
+    result = _build(buildSettings(settings))
 
     build = function () {
       return result
