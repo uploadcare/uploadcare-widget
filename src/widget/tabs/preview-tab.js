@@ -2,6 +2,7 @@ import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
+import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } from '../../utils'
 
 const {
   utils,
@@ -50,13 +51,13 @@ uploadcare.namespace('widget.tabs', function (ns) {
           }
         }
       }
-      tryToLoadImagePreview = utils.once(this.__tryToLoadImagePreview)
-      tryToLoadVideoPreview = utils.once(this.__tryToLoadVideoPreview)
+      tryToLoadImagePreview = once(this.__tryToLoadImagePreview)
+      tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview)
       this.__setState('unknown', {})
       this.file.progress(ifCur((info) => {
         var blob, label, source
         info = info.incompleteFileInfo
-        label = (info.name || '') + utils.readableFileSize(info.size, '', ', ')
+        label = (info.name || '') + readableFileSize(info.size, '', ', ')
         this.container.find('.uploadcare--preview__file-name').text(label)
         source = info.sourceInfo
         blob = Blob
@@ -111,7 +112,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         return df.reject().promise()
       }
       utils.image.drawFileToCanvas(blob, 1550, 924, '#ffffff', this.settings.imagePreviewMaxSize).done((canvas, size) => {
-        return utils.canvasToBlob(canvas, 'image/jpeg', 0.95, (blob) => {
+        return canvasToBlob(canvas, 'image/jpeg', 0.95, (blob) => {
           var src
           df.resolve()
           canvas.width = canvas.height = 1
@@ -238,7 +239,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
           // Often IE 11 doesn't do reflow after image.onLoad
           // and actual image remains 28x30 (broken image placeholder).
           // Looks like defer always fixes it.
-          return utils.defer(startCrop)
+          return defer(startCrop)
         })
       }
     }
@@ -253,7 +254,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         var caption, gcd, icon, item, prefered, size
         prefered = crop.preferedSize
         if (prefered) {
-          gcd = utils.gcd(prefered[0], prefered[1])
+          gcd = calcGCD(prefered[0], prefered[1])
           caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
         } else {
           caption = t('dialog.tabs.preview.crop.free')
@@ -269,7 +270,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
           }
         })
         if (prefered) {
-          size = utils.fitSize(prefered, [30, 30], true)
+          size = fitSize(prefered, [30, 30], true)
           return item.children().css({
             width: Math.max(20, size[0]),
             height: Math.max(12, size[1])

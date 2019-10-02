@@ -1,5 +1,7 @@
 import uploadcare from '../namespace'
 
+import { defer, bindAll, publicCallbacks, fileSelectDialog } from '../utils'
+
 const {
   utils,
   jQuery: $,
@@ -28,7 +30,7 @@ uploadcare.namespace('widget', function (ns) {
       this.element.on('change.uploadcare', this.reloadInfo)
       // Delay loading info to allow set custom validators on page load.
       this.__hasValue = false
-      utils.defer(() => {
+      defer(() => {
         // Do not reload info if user call uc.Widget().value(uuid) manual.
         if (!this.__hasValue) {
           return this.reloadInfo()
@@ -142,7 +144,7 @@ uploadcare.namespace('widget', function (ns) {
 
     openDialog (tab) {
       if (this.settings.systemDialog) {
-        return utils.fileSelectDialog(this.template.content, this.settings, (input) => {
+        return fileSelectDialog(this.template.content, this.settings, (input) => {
           return this.__handleDirectSelection('object', input.files)
         })
       } else {
@@ -159,10 +161,10 @@ uploadcare.namespace('widget', function (ns) {
 
     api () {
       if (!this.__api) {
-        this.__api = utils.bindAll(this, ['openDialog', 'reloadInfo', 'value', 'validators'])
-        this.__api.onChange = utils.publicCallbacks(this.__onChange)
-        this.__api.onUploadComplete = utils.publicCallbacks(this.__onUploadComplete)
-        this.__api.onDialogOpen = utils.publicCallbacks(this.__onDialogOpen)
+        this.__api = bindAll(this, ['openDialog', 'reloadInfo', 'value', 'validators'])
+        this.__api.onChange = publicCallbacks(this.__onChange)
+        this.__api.onUploadComplete = publicCallbacks(this.__onUploadComplete)
+        this.__api.onDialogOpen = publicCallbacks(this.__onDialogOpen)
         this.__api.inputElement = this.element.get(0)
       }
       return this.__api

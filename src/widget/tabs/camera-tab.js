@@ -1,8 +1,8 @@
 import uploadcare from '../../namespace'
 import { warn } from '../../utils/warnings'
+import { fileSelectDialog, canvasToBlob } from '../../utils'
 
 const {
-  utils,
   jQuery: $,
   templates: { tpl }
 } = uploadcare
@@ -47,7 +47,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
 
     __captureInput (accept) {
       return () => {
-        return utils.fileSelectDialog(this.container, {
+        return fileSelectDialog(this.container, {
           inputAcceptTypes: accept
         }, this.__captureInputHandle, {
           capture: 'camera'
@@ -219,7 +219,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
         ctx.scale(-1, 1)
       }
       ctx.drawImage(video, 0, 0, w, h)
-      return utils.canvasToBlob(canvas, 'image/jpeg', 0.9, (blob) => {
+      return canvasToBlob(canvas, 'image/jpeg', 0.9, (blob) => {
         canvas.width = canvas.height = 1
         blob.name = 'camera.jpg'
         this.dialogApi.addFiles('object', [

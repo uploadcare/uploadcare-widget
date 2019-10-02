@@ -1,8 +1,8 @@
 import uploadcare from '../../namespace'
 import { fileDragAndDrop, sendFileAPI } from '../../utils/abilities'
+import { fileInput, fileSelectDialog } from '../utils'
 
 const {
-  utils,
   dragdrop,
   locale: { t },
   jQuery: $,
@@ -41,14 +41,14 @@ uploadcare.namespace('widget.tabs', function (ns) {
       fileButton = this.container.find('.uploadcare--tab__action-button')
       if (sendFileAPI) {
         return fileButton.on('click', () => {
-          utils.fileSelectDialog(this.container, this.settings, (input) => {
+          fileSelectDialog(this.container, this.settings, (input) => {
             this.dialogApi.addFiles('object', input.files)
             return this.dialogApi.switchTab('preview')
           })
           return false
         })
       } else {
-        return utils.fileInput(fileButton, this.settings, (input) => {
+        return fileInput(fileButton, this.settings, (input) => {
           this.dialogApi.addFiles('input', [input])
           return this.dialogApi.switchTab('preview')
         })

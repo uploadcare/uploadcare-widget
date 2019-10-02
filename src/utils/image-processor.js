@@ -2,16 +2,15 @@ import uploadcare from '../namespace'
 
 import { Blob, FileReader, URL } from '../utils/abilities'
 import { imageLoader } from '../utils/image-loader'
+import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('utils.image', function (ns) {
-  var DataView, taskRunner
-  DataView = window.DataView
-  taskRunner = utils.taskRunner(1)
+  var DataView = window.DataView
+  var runner = taskRunner(1)
   ns.shrinkFile = function (file, settings) {
     var df
     // in -> file
@@ -21,7 +20,7 @@ uploadcare.namespace('utils.image', function (ns) {
       return df.reject('support')
     }
     // start = new Date()
-    taskRunner((release) => {
+    runner((release) => {
       var op
       // console.log('delayed: ' + (new Date() - start))
       df.always(release)
@@ -58,7 +57,7 @@ uploadcare.namespace('utils.image', function (ns) {
               format = 'image/png'
               quality = undefined
             }
-            return utils.canvasToBlob(canvas, format, quality, function (blob) {
+            return canvasToBlob(canvas, format, quality, function (blob) {
               canvas.width = canvas.height = 1
               df.notify(0.9)
               // console.log('to blob: ' + (new Date() - start))
@@ -106,7 +105,7 @@ uploadcare.namespace('utils.image', function (ns) {
         df.resolve(img)
         return
       }
-      return utils.defer(function () {
+      return defer(function () {
         var canvas
         sW = Math.round(sW * step)
         sH = Math.round(sH * step)
@@ -188,7 +187,7 @@ uploadcare.namespace('utils.image', function (ns) {
         orientation = ns.parseExifOrientation(exif) || 1
         swap = orientation > 4
         sSize = swap ? [img.height, img.width] : [img.width, img.height];
-        [dW, dH] = utils.fitSize(sSize, [mW, mH])
+        [dW, dH] = fitSize(sSize, [mW, mH])
         trns = [[1, 0, 0, 1, 0, 0], [-1, 0, 0, 1, dW, 0], [-1, 0, 0, -1, dW, dH], [1, 0, 0, -1, 0, dH], [0, 1, 1, 0, 0, 0], [0, 1, -1, 0, dW, 0], [0, -1, -1, 0, dW, dH], [0, -1, 1, 0, 0, dH]][orientation - 1]
         if (!trns) {
           return df.reject('bad image')

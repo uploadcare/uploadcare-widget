@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
 import { warn } from '../utils/warnings'
+import { once } from '../utils'
 
-var $, settings, utils;
+var $, settings
 
 ({
-  utils,
   settings,
   jQuery: $
 } = uploadcare)
@@ -88,7 +88,7 @@ uploadcare.namespace('', function (ns) {
     })
   }
 
-  ns.start = utils.once(function (s, isolated) {
+  ns.start = once(function (s, isolated) {
     // when isolated, call settings.common(s) only
     s = settings.common(s, isolated)
     if (isolated) {

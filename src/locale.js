@@ -1,8 +1,9 @@
 import uploadcare from './namespace'
+import { once } from './utils'
+
 import * as locales from './locales'
 
 const {
-  utils,
   settings: s,
   jQuery: $
 } = uploadcare
@@ -26,7 +27,7 @@ uploadcare.namespace('locale', function (ns) {
     return { lang, translations, pluralize }
   }
 
-  build = utils.once(function () {
+  build = once(function () {
     return _build(s.build())
   })
 

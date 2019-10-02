@@ -2,9 +2,9 @@ import uploadcare from '../../namespace'
 
 import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
+import { globRegexp } from '../../utils'
 
 const {
-  utils,
   tabsCss,
   jQuery: $,
   files
@@ -93,7 +93,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
             ref = this.settings.preferredTypes
             for (i = 0, len = ref.length; i < len; i++) {
               type = ref[i]
-              type = utils.globRegexp(type)
+              type = globRegexp(type)
               for (key in message.alternatives) {
                 if (type.test(key)) {
                   return message.alternatives[key]

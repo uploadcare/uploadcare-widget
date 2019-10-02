@@ -1,8 +1,8 @@
 import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
+import { readableFileSize } from '../../utils'
 
 const {
-  utils,
   templates: { tpl },
   jQuery: $,
   locale: { t }
@@ -82,7 +82,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
       fileEl.find('.uploadcare--file__name').text(filename)
       fileEl.find('.uploadcare--file__description').attr('title', t('dialog.tabs.preview.multiple.file.preview').replace('%file%', filename))
       fileEl.find('.uploadcare--file__remove').attr('title', t('dialog.tabs.preview.multiple.file.remove').replace('%file%', filename))
-      return fileEl.find('.uploadcare--file__size').text(utils.readableFileSize(info.size, '–'))
+      return fileEl.find('.uploadcare--file__size').text(readableFileSize(info.size, '–'))
     }
 
     __fileProgress (file, progressInfo) {

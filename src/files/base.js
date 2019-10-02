@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
-import { log, debug } from '../../utils/warnings'
+import { log, debug } from '../utils/warnings'
+import { jsonp, fixedPipe } from '../utils'
 
 const {
   namespace,
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 namespace('files', function (ns) {
@@ -82,7 +82,7 @@ namespace('files', function (ns) {
     }
 
     __updateInfo () {
-      return utils.jsonp(`${this.settings.urlBase}/info/`, 'GET', {
+      return jsonp(`${this.settings.urlBase}/info/`, 'GET', {
         jsonerrors: 1,
         file_id: this.fileId,
         pub_key: this.settings.publicKey,
@@ -219,7 +219,7 @@ namespace('files', function (ns) {
     __extendApi (api) {
       api.cancel = this.__cancel
       api.pipe = api.then = (...args) => { // 'pipe' is alias to 'then' from jQuery 1.8
-        return this.__extendApi(utils.fixedPipe(api, ...args))
+        return this.__extendApi(fixedPipe(api, ...args))
       }
 
       return api // extended promise

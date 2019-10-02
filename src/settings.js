@@ -2,12 +2,12 @@ import uploadcare from './namespace'
 
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
+import { unique, once, upperCase, normalizeUrl } from './utils'
 
 var indexOf = [].indexOf
 
 const {
   expose,
-  utils,
   jQuery: $,
   version
 } = uploadcare
@@ -117,7 +117,7 @@ uploadcare.namespace('settings', function (ns) {
           }
         }
       }
-      settings[key] = utils.unique(value)
+      settings[key] = unique(value)
     }
     return settings
   }
@@ -126,7 +126,7 @@ uploadcare.namespace('settings', function (ns) {
     for (i = 0, len = keys.length; i < len; i++) {
       key = keys[i]
       if (settings[key] != null) {
-        settings[key] = utils.normalizeUrl(settings[key])
+        settings[key] = normalizeUrl(settings[key])
       }
     }
     return settings
@@ -292,7 +292,7 @@ uploadcare.namespace('settings', function (ns) {
     var key, scriptSettings, value
     scriptSettings = {}
     for (key in defaults) {
-      value = window[`UPLOADCARE_${utils.upperCase(key)}`]
+      value = window[`UPLOADCARE_${upperCase(key)}`]
       if (value != null) {
         scriptSettings[key] = value
       }
@@ -302,7 +302,7 @@ uploadcare.namespace('settings', function (ns) {
 
   // Defaults + global variables + global overrides (once from uploadcare.start)
   // Not publicly-accessible
-  ns.common = utils.once(function (settings, ignoreGlobals) {
+  ns.common = once(function (settings, ignoreGlobals) {
     var result
     if (!ignoreGlobals) {
       defaults = $.extend(defaults, ns.globals())
