@@ -5,6 +5,7 @@ import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
+import license from 'rollup-plugin-license'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/build/${input}`,
@@ -49,6 +50,12 @@ const bundle = (input, output, options = {}) => ({
         passes: 2 // https://github.com/terser/terser/issues/453
       },
       include: [/^.+\.min\.js$/]
+    }),
+
+    license({
+      banner: `
+<%= pkg.name %> <%= pkg.version %>
+Date: <%= moment().format('YYYY-MM-DD') %>`
     })
   ]
 })
