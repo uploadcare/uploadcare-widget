@@ -61,6 +61,7 @@ import {
 } from './utils'
 
 import { globals, build, common, waitForSettings, CssCollector } from './settings'
+import { rebuild, t } from './locale'
 
 const uploadcare = {
   version,
@@ -174,10 +175,10 @@ const uploadcare = {
       pluralize[lang] = locales[lang].pluralize
 
       return pluralize
-    }, {})
+    }, {}),
 
-    //   rebuild
-    //   t
+    rebuild,
+    t
   },
 
   templates: {
