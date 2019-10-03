@@ -1,11 +1,11 @@
 import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
 import { readableFileSize } from '../../utils'
+import { t } from '../../locale'
 
 const {
   templates: { tpl },
-  jQuery: $,
-  locale: { t }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {
