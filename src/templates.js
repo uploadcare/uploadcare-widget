@@ -67,6 +67,14 @@ import {
   hasTransparency
 } from './utils/image-processor'
 
+import {
+  isFileGroup,
+  valueToGroup,
+  isFileGroupsEqual,
+  isFile,
+  valueToFile
+} from './utils/files'
+
 // templates
 import dialog from './templates/dialog.jst.ejs'
 import dialogPanel from './templates/dialog__panel.jst.ejs'
@@ -178,8 +186,8 @@ const utils = {
   taskRunner,
   fixedPipe,
 
-  //   isFile
-  //   valueToFile
+  isFile,
+  valueToFile,
 
   image: {
     shrinkFile,
@@ -194,12 +202,11 @@ const utils = {
 
   pusher: {
     getPusher
-  }
+  },
 
-  //   isFileGroup
-  //   valueToGroup
-  //   isFileGroupsEqual
-
+  isFileGroup,
+  valueToGroup,
+  isFileGroupsEqual
 }
 
 const tpl = (key, ctx = {}) => {
