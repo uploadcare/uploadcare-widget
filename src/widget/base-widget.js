@@ -1,12 +1,12 @@
 import uploadcare from '../namespace'
 
+import { t } from '../locale'
 import { defer, bindAll, publicCallbacks, fileSelectDialog } from '../utils'
 
 const {
   utils,
   jQuery: $,
-  dragdrop,
-  locale: { t }
+  dragdrop
 } = uploadcare
 
 uploadcare.namespace('widget', function (ns) {

@@ -2,10 +2,10 @@ import uploadcare from '../namespace'
 import { CollectionOfPromises } from '../utils/collection'
 import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
 import { build } from '../settings'
+import { t } from '../locale'
 
 const {
   utils,
-  locale: { t },
   templates: { tpl },
   widget: { tabs },
   jQuery: $
