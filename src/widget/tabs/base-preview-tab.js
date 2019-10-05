@@ -1,9 +1,7 @@
 import uploadcare from '../../namespace'
+import { Circle } from '../../ui/progress'
 
 const {
-  ui: {
-    progress: { Circle }
-  },
   jQuery: $
 } = uploadcare
 

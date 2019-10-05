@@ -6,10 +6,10 @@ import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } 
 import { drawFileToCanvas } from '../../utils/image-processor'
 import { t } from '../../locale'
 import { tpl } from '../../templates'
+import { CropWidget } from '../../ui/crop-widget'
 
 const {
-  jQuery: $,
-  crop: { CropWidget }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {
