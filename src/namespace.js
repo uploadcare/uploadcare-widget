@@ -18,6 +18,37 @@ import { FileGroup as FileGroupClass, SavedFileGroup } from './files/group'
 
 import { fileFrom, filesFrom } from './files'
 import { FileGroup, loadFileGroup } from './files/group-creator'
+import { support, uploadDrop, watchDragging, receiveDrop } from './widget/dragdrop'
+
+import { FileTab } from './widget/tabs/file-tab'
+import { UrlTab } from './widget/tabs/url-tab'
+import { CameraTab } from './widget/tabs/camera-tab'
+import { RemoteTab } from './widget/tabs/remote-tab'
+import { BasePreviewTab } from './widget/tabs/base-preview-tab'
+import { PreviewTab } from './widget/tabs/preview-tab'
+import { PreviewTabMultiple } from './widget/tabs/preview-tab-multiple'
+
+import { TemplateClass } from './widget/template'
+import { BaseWidgetClass } from './widget/base-widget'
+import { WidgetClass } from './widget/widget'
+import { MultipleWidgetClass } from './widget/multiple-widget'
+
+import {
+  isDialogOpened,
+  closeDialog,
+  openDialog,
+  openPreviewDialog,
+  openPanel,
+  registerTab
+} from './widget/dialog'
+
+import {
+  initialize,
+  SingleWidget,
+  MultipleWidget,
+  Widget,
+  start
+} from './widget/live'
 
 const uploadcare = {
   version,
@@ -81,10 +112,10 @@ const uploadcare = {
   filesFrom,
 
   dragdrop: {
-    //   support
-    //   uploadDrop
-    //   receiveDrop
-    //   watchDragging
+    support,
+    uploadDrop,
+    watchDragging,
+    receiveDrop
   },
 
   ui: {
@@ -98,31 +129,32 @@ const uploadcare = {
 
   widget: {
     tabs: {
-    //     FileTab
-    //     UrlTab
-    //     CameraTab
-    //     RemoteTab
-    //     BasePreviewTab
-    //     PreviewTab
-    //     PreviewTabMultiple
-    }
-  //   Template
-  //   BaseWidget
-  //   Widget
-  //   MultipleWidget
+      FileTab,
+      UrlTab,
+      CameraTab,
+      RemoteTab,
+      BasePreviewTab,
+      PreviewTab,
+      PreviewTabMultiple
+    },
+
+    Template: TemplateClass,
+    BaseWidget: BaseWidgetClass,
+    Widget: WidgetClass,
+    MultipleWidget: MultipleWidgetClass
   },
 
-  // isDialogOpened
-  // closeDialog
-  // openDialog
-  // openPreviewDialog
-  // openPanel
-  // registerTab
-  // initialize
-  // SingleWidget
-  // MultipleWidget
-  // Widget
-  // start
+  isDialogOpened,
+  closeDialog,
+  openDialog,
+  openPreviewDialog,
+  openPanel,
+  registerTab,
+  initialize,
+  SingleWidget,
+  MultipleWidget,
+  Widget,
+  start,
 
   __exports: {
     plugin: function (fn) {

@@ -1,64 +1,65 @@
-import uploadcare from '../namespace'
+import { BaseWidget } from './base-widget'
 import { boundMethodCheck } from '../utils/bound-method-check'
 import { t } from '../locale'
+import { filesFrom } from '../files'
+import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/files'
 
-uploadcare.namespace('widget', function (ns) {
-  var ref
-  ref = ns.MultipleWidget = class MultipleWidget extends ns.BaseWidget {
-    constructor () {
-      super(...arguments)
-      this.__setObject = this.__setObject.bind(this)
-      this.__handleDirectSelection = this.__handleDirectSelection.bind(this)
-    }
+class MultipleWidget extends BaseWidget {
+  constructor () {
+    super(...arguments)
+    this.__setObject = this.__setObject.bind(this)
+    this.__handleDirectSelection = this.__handleDirectSelection.bind(this)
+  }
 
-    __currentFile () {
-      var ref1
-      return (ref1 = this.currentObject) != null ? ref1.promise() : undefined
-    }
+  __currentFile () {
+    var ref1
+    return (ref1 = this.currentObject) != null ? ref1.promise() : undefined
+  }
 
-    __setObject (group) {
-      boundMethodCheck(this, ref)
-      if (!isFileGroupsEqual(this.currentObject, group)) {
-        return super.__setObject(group)
-      // special case, when multiple widget is used with clearable
-      // and user or some external code clears the value after
-      // group loading error.
-      } else if (!group) {
-        this.__reset()
-        return this.element.val('')
-      }
-    }
-
-    __setExternalValue (value) {
-      var groupPr
-      this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
-      if (value) {
-        this.template.setStatus('started')
-        this.template.statusText.text(t('loadingInfo'))
-      }
-      return groupPr.done((group) => {
-        if (this.__lastGroupPr === groupPr) {
-          return this.__setObject(group)
-        }
-      }).fail(() => {
-        if (this.__lastGroupPr === groupPr) {
-          return this.__onUploadingFailed('createGroup')
-        }
-      })
-    }
-
-    __handleDirectSelection (type, data) {
-      var files
-      boundMethodCheck(this, ref)
-      files = uploadcare.filesFrom(type, data, this.settings)
-      if (this.settings.systemDialog) {
-        return this.__setObject(uploadcare.FileGroup(files, this.settings))
-      } else {
-        return this.__openDialog('preview').addFiles(files)
-      }
+  __setObject (group) {
+    boundMethodCheck(this, MultipleWidget)
+    if (!isFileGroupsEqual(this.currentObject, group)) {
+      return super.__setObject(group)
+    // special case, when multiple widget is used with clearable
+    // and user or some external code clears the value after
+    // group loading error.
+    } else if (!group) {
+      this.__reset()
+      return this.element.val('')
     }
   }
 
-  ns.MultipleWidget._name = 'MultipleWidget'
-})
+  __setExternalValue (value) {
+    var groupPr
+    this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
+    if (value) {
+      this.template.setStatus('started')
+      this.template.statusText.text(t('loadingInfo'))
+    }
+    return groupPr.done((group) => {
+      if (this.__lastGroupPr === groupPr) {
+        return this.__setObject(group)
+      }
+    }).fail(() => {
+      if (this.__lastGroupPr === groupPr) {
+        return this.__onUploadingFailed('createGroup')
+      }
+    })
+  }
+
+  __handleDirectSelection (type, data) {
+    var files
+    boundMethodCheck(this, MultipleWidget)
+    files = filesFrom(type, data, this.settings)
+    if (this.settings.systemDialog) {
+      return this.__setObject(FileGroup(files, this.settings))
+    } else {
+      return this.__openDialog('preview').addFiles(files)
+    }
+  }
+}
+
+MultipleWidget._name = 'MultipleWidget'
+
+export { MultipleWidget }
