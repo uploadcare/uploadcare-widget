@@ -3,13 +3,13 @@ import { boundMethodCheck } from '../../utils/bound-method-check'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } from '../../utils'
+import { drawFileToCanvas } from '../../utils/image-processor'
+import { t } from '../../locale'
 
 const {
-  utils,
   templates: { tpl },
   jQuery: $,
-  crop: { CropWidget },
-  locale: { t }
+  crop: { CropWidget }
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {
@@ -111,7 +111,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
       if (file.state() !== 'pending' || !blob.size || blob.size >= this.settings.multipartMinSize) {
         return df.reject().promise()
       }
-      utils.image.drawFileToCanvas(blob, 1550, 924, '#ffffff', this.settings.imagePreviewMaxSize).done((canvas, size) => {
+      drawFileToCanvas(blob, 1550, 924, '#ffffff', this.settings.imagePreviewMaxSize).done((canvas, size) => {
         return canvasToBlob(canvas, 'image/jpeg', 0.95, (blob) => {
           var src
           df.resolve()

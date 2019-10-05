@@ -1,13 +1,13 @@
 import uploadcare from '../namespace'
 import { CollectionOfPromises } from '../utils/collection'
 import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
+import { build } from '../settings'
+import { t } from '../locale'
 
 const {
   utils,
-  locale: { t },
   templates: { tpl },
   widget: { tabs },
-  settings: s,
   jQuery: $
 } = uploadcare
 
@@ -157,7 +157,7 @@ uploadcare.namespace('', function (ns) {
       files = [files]
     }
 
-    settings = s.build(settings)
+    settings = build(settings)
 
     panel = new Panel(settings, placeholder, files, tab).publicPromise()
 

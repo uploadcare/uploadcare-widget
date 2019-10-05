@@ -1,9 +1,9 @@
 import uploadcare from '../namespace'
+import { t } from '../locale'
 
 const {
   jQuery: $,
   ui: { progress },
-  locale: { t },
   templates: { tpl }
 } = uploadcare
 

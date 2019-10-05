@@ -1,9 +1,9 @@
 import uploadcare from './namespace'
+import { build } from './settings'
 
 const {
   jQuery: $,
-  files: f,
-  settings
+  files: f
 } = uploadcare
 
 uploadcare.namespace('', function (ns) {
@@ -21,7 +21,7 @@ uploadcare.namespace('', function (ns) {
 
   ns.filesFrom = function (type, data, s) {
     var i, info, len, param, results
-    s = settings.build(s || {})
+    s = build(s || {})
     results = []
 
     for (i = 0, len = data.length; i < len; i++) {

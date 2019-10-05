@@ -1,10 +1,10 @@
 import uploadcare from '../../namespace'
 import { fileDragAndDrop, sendFileAPI } from '../../utils/abilities'
-import { fileInput, fileSelectDialog } from '../utils'
+import { fileInput, fileSelectDialog } from '../../utils'
+import { t } from '../../locale'
 
 const {
   dragdrop,
-  locale: { t },
   jQuery: $,
   templates: { tpl }
 } = uploadcare

@@ -60,6 +60,20 @@ import {
   fixedPipe
 } from './utils'
 
+import { globals, build, common, waitForSettings, CssCollector } from './settings'
+import { rebuild, t } from './locale'
+
+import {
+  shrinkFile,
+  shrinkImage,
+  drawFileToCanvas,
+  readJpegChunks,
+  replaceJpegChunk,
+  getExif,
+  parseExifOrientation,
+  hasTransparency
+} from './utils/image-processor'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -130,14 +144,14 @@ const uploadcare = {
     //   valueToFile
 
     image: {
-    //     shrinkFile
-    //     shrinkImage
-    //     drawFileToCanvas
-    //     readJpegChunks
-    //     replaceJpegChunk
-    //     getExif
-    //     parseExifOrientation
-    //     hasTransparency
+      shrinkFile,
+      shrinkImage,
+      drawFileToCanvas,
+      readJpegChunks,
+      replaceJpegChunk,
+      getExif,
+      parseExifOrientation,
+      hasTransparency
     },
 
     pusher: {
@@ -151,17 +165,15 @@ const uploadcare = {
   },
 
   settings: {
-  //   globals
-  //   common
-  //   build
-  //   waitForSettings
-  //   CssCollector
+    globals,
+    build,
+    common,
+    waitForSettings,
+    CssCollector
   },
 
-  tabsCss: {
-  //   urls
-  //   styles
-  },
+  // TODO: move to separete file
+  tabsCss: new CssCollector(),
 
   locale: {
     translations: Object.keys(locales).reduce((translations, lang) => {
@@ -174,10 +186,10 @@ const uploadcare = {
       pluralize[lang] = locales[lang].pluralize
 
       return pluralize
-    }, {})
+    }, {}),
 
-    //   rebuild
-    //   t
+    rebuild,
+    t
   },
 
   templates: {
