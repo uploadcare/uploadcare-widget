@@ -2,11 +2,11 @@ import uploadcare from '../../namespace'
 import { fileDragAndDrop, sendFileAPI } from '../../utils/abilities'
 import { fileInput, fileSelectDialog } from '../../utils'
 import { t } from '../../locale'
+import { tpl } from '../../templates'
 
 const {
   dragdrop,
-  jQuery: $,
-  templates: { tpl }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {
