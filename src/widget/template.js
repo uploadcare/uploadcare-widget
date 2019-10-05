@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
 import { t } from '../locale'
-import { tpl } from '../../templates'
+import { tpl } from '../templates'
+import { Circle } from '../ui/progress'
 
 const {
-  jQuery: $,
-  ui: { progress }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget', function (ns) {
@@ -14,7 +14,7 @@ uploadcare.namespace('widget', function (ns) {
       this.element = element
       this.content = $(tpl('widget'))
       this.element.after(this.content)
-      this.circle = new progress.Circle(this.content.find('.uploadcare--widget__progress').removeClass('uploadcare--widget__progress'))
+      this.circle = new Circle(this.content.find('.uploadcare--widget__progress').removeClass('uploadcare--widget__progress'))
       this.content.find('.uploadcare--progress').addClass('uploadcare--widget__progress')
       this.statusText = this.content.find('.uploadcare--widget__text')
       this.content.toggleClass('uploadcare--widget_option_clearable', this.settings.clearable)
