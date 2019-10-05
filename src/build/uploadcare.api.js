@@ -3,13 +3,6 @@ import '../vendor/jquery-xdr'
 
 import { presets, defaults } from '../settings'
 
-import '../files/base'
-import '../files/object'
-import '../files/input'
-import '../files/url'
-import '../files/uploaded'
-import '../files/group'
-import '../files'
 import uploadcare from '../namespace'
 
 const { expose } = uploadcare
