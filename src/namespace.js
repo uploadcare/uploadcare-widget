@@ -9,6 +9,15 @@ import { rebuild, t } from './locale'
 import { utils, JST, tpl } from './templates'
 import { CropWidget } from './ui/crop-widget'
 import { Circle, BaseRenderer, TextRenderer, CanvasRenderer } from './ui/progress'
+import { BaseFile } from './files/base'
+import { ObjectFile } from './files/object'
+import { InputFile } from './files/input'
+import { UrlFile } from './files/url'
+import { UploadedFile, ReadyFile } from './files/uploaded'
+import { FileGroup as FileGroupClass, SavedFileGroup } from './files/group'
+
+import { fileFrom, filesFrom } from './files'
+import { FileGroup, loadFileGroup } from './files/group-creator'
 
 const uploadcare = {
   version,
@@ -54,21 +63,22 @@ const uploadcare = {
   },
 
   files: {
-    //   BaseFile
-    //   ObjectFile
-    //   InputFile
-    //   UrlFile
-    //   UploadedFile
-    //   ReadyFile
-    //   FileGroup
-    //   SavedFileGroup
+    BaseFile,
+    ObjectFile,
+    InputFile,
+    UrlFile,
+    UploadedFile,
+    ReadyFile,
+    FileGroup: FileGroupClass,
+    SavedFileGroup
   },
 
   // Pusher
-  // FileGroup
-  // loadFileGroup
-  // fileFrom
-  // filesFrom
+
+  FileGroup,
+  loadFileGroup,
+  fileFrom,
+  filesFrom,
 
   dragdrop: {
     //   support

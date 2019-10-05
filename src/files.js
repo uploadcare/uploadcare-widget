@@ -1,40 +1,40 @@
-import uploadcare from './namespace'
+import $ from 'jquery'
 import { build } from './settings'
 
-const {
-  jQuery: $,
-  files: f
-} = uploadcare
+import { ObjectFile } from './files/object'
+import { InputFile } from './files/input'
+import { UrlFile } from './files/url'
+import { UploadedFile, ReadyFile } from './files/uploaded'
 
-uploadcare.namespace('', function (ns) {
-  var converters = {
-    object: f.ObjectFile,
-    input: f.InputFile,
-    url: f.UrlFile,
-    uploaded: f.UploadedFile,
-    ready: f.ReadyFile
-  }
+var converters = {
+  object: ObjectFile,
+  input: InputFile,
+  url: UrlFile,
+  uploaded: UploadedFile,
+  ready: ReadyFile
+}
 
-  ns.fileFrom = function (type, data, s) {
-    return ns.filesFrom(type, [data], s)[0]
-  }
+const fileFrom = function (type, data, s) {
+  return filesFrom(type, [data], s)[0]
+}
 
-  ns.filesFrom = function (type, data, s) {
-    var i, info, len, param, results
-    s = build(s || {})
-    results = []
+const filesFrom = function (type, data, s) {
+  var i, info, len, param, results
+  s = build(s || {})
+  results = []
 
-    for (i = 0, len = data.length; i < len; i++) {
-      param = data[i]
+  for (i = 0, len = data.length; i < len; i++) {
+    param = data[i]
 
-      info = undefined
+    info = undefined
 
-      if ($.isArray(param)) {
-        info = param[1]
-        param = param[0]
-      }
-      results.push(new converters[type](param, s, info).promise())
+    if ($.isArray(param)) {
+      info = param[1]
+      param = param[0]
     }
-    return results
+    results.push(new converters[type](param, s, info).promise())
   }
-})
+  return results
+}
+
+export { fileFrom, filesFrom }
