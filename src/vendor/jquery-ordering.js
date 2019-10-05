@@ -1,4 +1,4 @@
-import uploadcare from '../namespace'
+import $ from 'jquery'
 // from https://github.com/homm/jquery-ordering
 
 (function($) {
@@ -249,4 +249,4 @@ import uploadcare from '../namespace'
     return this[movableName](oMovable);
   };
   $.fn.extend(extend);
-})(uploadcare.jQuery);
+})($);

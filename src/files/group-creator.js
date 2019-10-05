@@ -3,7 +3,8 @@ import $ from 'jquery'
 import { log } from '../utils/warnings'
 import { groupIdRegex, jsonp } from '../utils'
 import { build } from '../settings'
-import { isFile, isFileGroup } from '../utils/files'
+import { isFile } from '../utils/files'
+import { isFileGroup } from '../utils/groups'
 import { FileGroup as FileGroupClass, SavedFileGroup } from './group'
 
 // root

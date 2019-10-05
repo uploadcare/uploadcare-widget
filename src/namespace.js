@@ -28,10 +28,10 @@ import { BasePreviewTab } from './widget/tabs/base-preview-tab'
 import { PreviewTab } from './widget/tabs/preview-tab'
 import { PreviewTabMultiple } from './widget/tabs/preview-tab-multiple'
 
-import { TemplateClass } from './widget/template'
-import { BaseWidgetClass } from './widget/base-widget'
-import { WidgetClass } from './widget/widget'
-import { MultipleWidgetClass } from './widget/multiple-widget'
+import { Template as TemplateClass } from './widget/template'
+import { BaseWidget as BaseWidgetClass } from './widget/base-widget'
+import { Widget as WidgetClass } from './widget/widget'
+import { MultipleWidget as MultipleWidgetClass } from './widget/multiple-widget'
 
 import {
   isDialogOpened,

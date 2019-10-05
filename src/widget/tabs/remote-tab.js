@@ -6,7 +6,7 @@ import { globRegexp } from '../../utils'
 import { UrlFile } from '../../files/url'
 import { CssCollector } from '../../settings'
 
-import { version } from '../../../packaje.json'
+import { version } from '../../../package.json'
 
 const tabsCss = new CssCollector()
 

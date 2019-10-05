@@ -14,7 +14,7 @@ import { t } from '../locale'
 import { tpl } from '../templates'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
-import { isFileGroup } from '../utils/files'
+import { isFileGroup } from '../utils/groups'
 
 const lockDialogFocus = function (e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {

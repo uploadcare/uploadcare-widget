@@ -3,7 +3,7 @@ import { boundMethodCheck } from '../utils/bound-method-check'
 import { t } from '../locale'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
-import { isFileGroupsEqual, valueToGroup } from '../utils/files'
+import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
 
 class MultipleWidget extends BaseWidget {
   constructor () {

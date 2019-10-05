@@ -67,13 +67,8 @@ import {
   hasTransparency
 } from './utils/image-processor'
 
-import {
-  isFileGroup,
-  valueToGroup,
-  isFileGroupsEqual,
-  isFile,
-  valueToFile
-} from './utils/files'
+import { isFile, valueToFile } from './utils/files'
+import { isFileGroup, valueToGroup, isFileGroupsEqual } from './utils/groups'
 
 // templates
 import dialog from './templates/dialog.jst.ejs'
