@@ -1,9 +1,9 @@
 import uploadcare from '../namespace'
 import { canvas } from '../utils/abilities'
+import { tpl } from '../templates'
 
 const {
-  jQuery: $,
-  templates: { tpl }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('ui.progress', function (ns) {

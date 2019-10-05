@@ -1,10 +1,10 @@
 import uploadcare from '../namespace'
 import { t } from '../locale'
+import { tpl } from '../../templates'
 
 const {
   jQuery: $,
-  ui: { progress },
-  templates: { tpl }
+  ui: { progress }
 } = uploadcare
 
 uploadcare.namespace('widget', function (ns) {

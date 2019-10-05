@@ -2,9 +2,9 @@ import uploadcare from '../../namespace'
 import { boundMethodCheck } from '../../utils/bound-method-check'
 import { readableFileSize } from '../../utils'
 import { t } from '../../locale'
+import { tpl } from '../../templates'
 
 const {
-  templates: { tpl },
   jQuery: $
 } = uploadcare
 

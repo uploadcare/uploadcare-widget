@@ -1,10 +1,10 @@
 import uploadcare from '../../namespace'
 import { warn } from '../../utils/warnings'
 import { fileSelectDialog, canvasToBlob } from '../../utils'
+import { tpl } from '../../templates'
 
 const {
-  jQuery: $,
-  templates: { tpl }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {

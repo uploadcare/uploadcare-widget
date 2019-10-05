@@ -1,8 +1,8 @@
 import uploadcare from '../../namespace'
+import { tpl } from '../../templates'
 
 const {
-  jQuery: $,
-  templates: { tpl }
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {

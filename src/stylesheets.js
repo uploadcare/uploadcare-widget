@@ -1,9 +1,9 @@
 import uploadcare from './namespace'
 
+import { tpl } from './templates'
 import { waitForSettings } from './settings'
 
 const { jQuery: $ } = uploadcare
-const { tpl } = uploadcare.templates
 
 waitForSettings.add(function (settings) {
   const css = tpl('styles', { settings })

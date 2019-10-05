@@ -3,10 +3,10 @@ import { CollectionOfPromises } from '../utils/collection'
 import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
 import { build } from '../settings'
 import { t } from '../locale'
+import { tpl } from '../templates'
 
 const {
   utils,
-  templates: { tpl },
   widget: { tabs },
   jQuery: $
 } = uploadcare

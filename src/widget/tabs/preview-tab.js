@@ -5,9 +5,9 @@ import { imageLoader, videoLoader } from '../../utils/image-loader'
 import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } from '../../utils'
 import { drawFileToCanvas } from '../../utils/image-processor'
 import { t } from '../../locale'
+import { tpl } from '../../templates'
 
 const {
-  templates: { tpl },
   jQuery: $,
   crop: { CropWidget }
 } = uploadcare
