@@ -3,10 +3,10 @@ import { Blob, iOSVersion } from '../utils/abilities'
 import { boundMethodCheck } from '../utils/bound-method-check'
 import { log, debug } from '../utils/warnings'
 import { jsonp, taskRunner } from '../utils'
+import { shrinkFile } from '../utils/image-processor'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('files', function (ns) {
@@ -58,7 +58,7 @@ uploadcare.namespace('files', function (ns) {
         // if @settings.imageShrink
         df = $.Deferred()
         resizeShare = 0.4
-        utils.image.shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
+        shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
           return df.notify(progress * resizeShare)
         }).done(this.setFile).fail(() => {
           this.setFile()

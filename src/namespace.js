@@ -63,6 +63,17 @@ import {
 import { globals, build, common, waitForSettings, CssCollector } from './settings'
 import { rebuild, t } from './locale'
 
+import {
+  shrinkFile,
+  shrinkImage,
+  drawFileToCanvas,
+  readJpegChunks,
+  replaceJpegChunk,
+  getExif,
+  parseExifOrientation,
+  hasTransparency
+} from './utils/image-processor'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -133,14 +144,14 @@ const uploadcare = {
     //   valueToFile
 
     image: {
-    //     shrinkFile
-    //     shrinkImage
-    //     drawFileToCanvas
-    //     readJpegChunks
-    //     replaceJpegChunk
-    //     getExif
-    //     parseExifOrientation
-    //     hasTransparency
+      shrinkFile,
+      shrinkImage,
+      drawFileToCanvas,
+      readJpegChunks,
+      replaceJpegChunk,
+      getExif,
+      parseExifOrientation,
+      hasTransparency
     },
 
     pusher: {
