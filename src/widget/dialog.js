@@ -4,9 +4,9 @@ import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
 import { build } from '../settings'
 import { t } from '../locale'
 import { tpl } from '../templates'
+import { isFileGroup } from '../utils/files'
 
 const {
-  utils,
   widget: { tabs },
   jQuery: $
 } = uploadcare
@@ -151,7 +151,7 @@ uploadcare.namespace('', function (ns) {
 
     if (!files) {
       files = []
-    } else if (utils.isFileGroup(files)) {
+    } else if (isFileGroup(files)) {
       files = files.files()
     } else if (!$.isArray(files)) {
       files = [files]

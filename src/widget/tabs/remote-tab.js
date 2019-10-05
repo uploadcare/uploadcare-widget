@@ -3,11 +3,11 @@ import uploadcare from '../../namespace'
 import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
 import { globRegexp } from '../../utils'
+import { UrlFile } from '../../files/url'
 
 const {
   tabsCss,
-  jQuery: $,
-  files
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {
@@ -108,7 +108,7 @@ uploadcare.namespace('widget.tabs', function (ns) {
           source: this.name
         }, message.info || {})
 
-        file = new files.UrlFile(url, this.settings, sourceInfo)
+        file = new UrlFile(url, this.settings, sourceInfo)
 
         if (message.filename) {
           file.setName(message.filename)

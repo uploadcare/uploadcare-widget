@@ -2,9 +2,9 @@ import uploadcare from '../namespace'
 
 import { t } from '../locale'
 import { defer, bindAll, publicCallbacks, fileSelectDialog } from '../utils'
+import { valueToFile } from '../utils/files'
 
 const {
-  utils,
   jQuery: $,
   dragdrop
 } = uploadcare
@@ -125,7 +125,7 @@ uploadcare.namespace('widget', function (ns) {
     }
 
     __setExternalValue (value) {
-      return this.__setObject(utils.valueToFile(value, this.settings))
+      return this.__setObject(valueToFile(value, this.settings))
     }
 
     value (value) {

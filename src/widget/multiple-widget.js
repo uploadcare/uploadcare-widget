@@ -1,10 +1,7 @@
 import uploadcare from '../namespace'
 import { boundMethodCheck } from '../utils/bound-method-check'
 import { t } from '../locale'
-
-const {
-  utils
-} = uploadcare
+import { isFileGroupsEqual, valueToGroup } from '../utils/files'
 
 uploadcare.namespace('widget', function (ns) {
   var ref
@@ -22,7 +19,7 @@ uploadcare.namespace('widget', function (ns) {
 
     __setObject (group) {
       boundMethodCheck(this, ref)
-      if (!utils.isFileGroupsEqual(this.currentObject, group)) {
+      if (!isFileGroupsEqual(this.currentObject, group)) {
         return super.__setObject(group)
       // special case, when multiple widget is used with clearable
       // and user or some external code clears the value after
@@ -35,7 +32,7 @@ uploadcare.namespace('widget', function (ns) {
 
     __setExternalValue (value) {
       var groupPr
-      this.__lastGroupPr = groupPr = utils.valueToGroup(value, this.settings)
+      this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
       if (value) {
         this.template.setStatus('started')
         this.template.statusText.text(t('loadingInfo'))
