@@ -4,7 +4,6 @@ import '../vendor/jquery-xdr'
 import { presets, defaults } from '../settings'
 
 import '../stylesheets'
-import '../vendor/jquery-jcrop'
 import '../ui/crop-widget'
 import '../files/base'
 import '../files/object'

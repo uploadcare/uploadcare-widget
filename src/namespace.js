@@ -7,6 +7,8 @@ import { globals, build, common, waitForSettings, CssCollector } from './setting
 import { rebuild, t } from './locale'
 
 import { utils, JST, tpl } from './templates'
+import { CropWidget } from './ui/crop-widget'
+import { Circle, BaseRenderer, TextRenderer, CanvasRenderer } from './ui/progress'
 
 const uploadcare = {
   version,
@@ -48,7 +50,7 @@ const uploadcare = {
   },
 
   crop: {
-    //   CropWidget
+    CropWidget
   },
 
   files: {
@@ -77,10 +79,10 @@ const uploadcare = {
 
   ui: {
     progress: {
-    //     Circle
-    //     BaseRenderer
-    //     TextRenderer
-    //     CanvasRenderer
+      Circle,
+      BaseRenderer,
+      TextRenderer,
+      CanvasRenderer
     }
   },
 
