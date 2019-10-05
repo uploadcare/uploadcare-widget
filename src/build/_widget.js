@@ -3,7 +3,6 @@ import '../vendor/jquery-xdr'
 
 import { presets, defaults } from '../settings'
 
-import '../templates'
 import '../stylesheets'
 import '../vendor/jquery-jcrop'
 import '../ui/crop-widget'
