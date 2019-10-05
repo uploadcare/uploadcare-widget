@@ -26,6 +26,54 @@ import { imageLoader, videoLoader } from './utils/image-loader'
 import { log, debug, warn, warnOnce } from './utils/warnings'
 import { getPusher } from './utils/pusher'
 
+import {
+  unique,
+  defer,
+  gcd,
+  once,
+  wrapToPromise,
+  then,
+  bindAll,
+  upperCase,
+  publicCallbacks,
+  uuid,
+  splitUrlRegex,
+  uuidRegex,
+  groupIdRegex,
+  cdnUrlRegex,
+  splitCdnUrl,
+  escapeRegExp,
+  globRegexp,
+  normalizeUrl,
+  fitText,
+  fitSizeInCdnLimit,
+  fitSize,
+  applyCropCoordsToInfo,
+  fileInput,
+  fileSelectDialog,
+  fileSizeLabels,
+  readableFileSize,
+  ajaxDefaults,
+  jsonp,
+  canvasToBlob,
+  taskRunner,
+  fixedPipe
+} from './utils'
+
+import { globals, build, common, waitForSettings, CssCollector } from './settings'
+import { rebuild, t } from './locale'
+
+import {
+  shrinkFile,
+  shrinkImage,
+  drawFileToCanvas,
+  readJpegChunks,
+  replaceJpegChunk,
+  getExif,
+  parseExifOrientation,
+  hasTransparency
+} from './utils/image-processor'
+
 const uploadcare = {
   version,
   jQuery: $,
@@ -60,52 +108,50 @@ const uploadcare = {
     registerMessage,
     unregisterMessage,
 
-    //   unique
-    //   defer
-    //   gcd
-    //   once
-    //   wrapToPromise
-    //   then
-    //   bindAll
-    //   upperCase
-    //   publicCallbacks
-    //   uuid
-    //   splitUrlRegex:
-    //   uuidRegex:
-    //   groupIdRegex:
-    //   cdnUrlRegex:
-    //   splitCdnUrl
-    //   escapeRegExp
-    //   globRegexp
-    //   normalizeUrl
-    //   fitText
-    //   fitSizeInCdnLimit
-    //   fitSize
-    //   applyCropCoordsToInfo
-    //   fileInput
-    //   fileSelectDialog
-    //   fileSizeLabels
-    //   readableFileSize
-    //   ajaxDefaults:
-    //     dataType
-    //     crossDomain
-    //     cache
-    //   jsonp
-    //   canvasToBlob
-    //   taskRunner
-    //   fixedPipe
+    unique,
+    defer,
+    gcd,
+    once,
+    wrapToPromise,
+    then,
+    bindAll,
+    upperCase,
+    publicCallbacks,
+    uuid,
+    splitUrlRegex,
+    uuidRegex,
+    groupIdRegex,
+    cdnUrlRegex,
+    splitCdnUrl,
+    escapeRegExp,
+    globRegexp,
+    normalizeUrl,
+    fitText,
+    fitSizeInCdnLimit,
+    fitSize,
+    applyCropCoordsToInfo,
+    fileInput,
+    fileSelectDialog,
+    fileSizeLabels,
+    readableFileSize,
+    ajaxDefaults,
+    jsonp,
+    canvasToBlob,
+    taskRunner,
+    fixedPipe,
+
     //   isFile
     //   valueToFile
 
     image: {
-    //     shrinkFile
-    //     shrinkImage
-    //     drawFileToCanvas
-    //     readJpegChunks
-    //     replaceJpegChunk
-    //     getExif
-    //     parseExifOrientation
-    //     hasTransparency
+      shrinkFile,
+      shrinkImage,
+      drawFileToCanvas,
+      readJpegChunks,
+      replaceJpegChunk,
+      getExif,
+      parseExifOrientation,
+      hasTransparency
     },
 
     pusher: {
@@ -119,17 +165,15 @@ const uploadcare = {
   },
 
   settings: {
-  //   globals
-  //   common
-  //   build
-  //   waitForSettings
-  //   CssCollector
+    globals,
+    build,
+    common,
+    waitForSettings,
+    CssCollector
   },
 
-  tabsCss: {
-  //   urls
-  //   styles
-  },
+  // TODO: move to separete file
+  tabsCss: new CssCollector(),
 
   locale: {
     translations: Object.keys(locales).reduce((translations, lang) => {
@@ -142,10 +186,10 @@ const uploadcare = {
       pluralize[lang] = locales[lang].pluralize
 
       return pluralize
-    }, {})
+    }, {}),
 
-    //   rebuild
-    //   t
+    rebuild,
+    t
   },
 
   templates: {

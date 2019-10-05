@@ -1,7 +1,7 @@
 import uploadcare from '../namespace'
+import { defer } from '../utils'
 
 const {
-  utils,
   jQuery: $
 } = uploadcare
 
@@ -11,7 +11,7 @@ const mouseFocusedClass = 'uploadcare--mouse-focused'
 
 $(document.documentElement).on('mousedown', fakeButtons, function (e) {
   // http://wd.dizaina.net/internet-maintenance/on-outlines/
-  return utils.defer(function () {
+  return defer(function () {
     var activeElement
     activeElement = document.activeElement
     if (activeElement && activeElement !== document.body) {

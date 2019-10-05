@@ -1,8 +1,8 @@
 import uploadcare from '../namespace'
 import { fileDragAndDrop } from '../utils/abilities'
+import { build } from '../settings'
 
 const {
-  settings: s,
   jQuery: $
 } = uploadcare
 
@@ -10,7 +10,7 @@ uploadcare.namespace('dragdrop', function (ns) {
   ns.support = fileDragAndDrop
 
   ns.uploadDrop = function (el, callback, settings) {
-    settings = s.build(settings)
+    settings = build(settings)
     return ns.receiveDrop(el, function (type, data) {
       return callback(settings.multiple ? uploadcare.filesFrom(type, data, settings) : uploadcare.fileFrom(type, data[0], settings))
     })

@@ -1,8 +1,5 @@
 import uploadcare from '../namespace'
-
-const {
-  utils
-} = uploadcare
+import { splitCdnUrl } from '../utils'
 
 uploadcare.namespace('files', function (ns) {
   ns.UploadedFile = (function () {
@@ -10,7 +7,7 @@ uploadcare.namespace('files', function (ns) {
       constructor (fileIdOrUrl) {
         var cdnUrl
         super(...arguments)
-        cdnUrl = utils.splitCdnUrl(fileIdOrUrl)
+        cdnUrl = splitCdnUrl(fileIdOrUrl)
         if (cdnUrl) {
           this.fileId = cdnUrl[1]
           if (cdnUrl[2]) {

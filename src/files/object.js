@@ -1,11 +1,12 @@
 import uploadcare from '../namespace'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { boundMethodCheck } from '../utils/bound-method-check'
-import { log, debug } from '../../utils/warnings'
+import { log, debug } from '../utils/warnings'
+import { jsonp, taskRunner } from '../utils'
+import { shrinkFile } from '../utils/image-processor'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('files', function (ns) {
@@ -57,7 +58,7 @@ uploadcare.namespace('files', function (ns) {
         // if @settings.imageShrink
         df = $.Deferred()
         resizeShare = 0.4
-        utils.image.shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
+        shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
           return df.notify(progress * resizeShare)
         }).done(this.setFile).fail(() => {
           this.setFile()
@@ -79,7 +80,7 @@ uploadcare.namespace('files', function (ns) {
 
       directRunner (task) {
         if (!_directRunner) {
-          _directRunner = utils.taskRunner(this.settings.parallelDirectUploads)
+          _directRunner = taskRunner(this.settings.parallelDirectUploads)
         }
         return _directRunner(task)
       }
@@ -176,7 +177,7 @@ uploadcare.namespace('files', function (ns) {
           part_size: this.settings.multipartPartSize,
           UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
         }
-        return this.__autoAbort(utils.jsonp(`${this.settings.urlBase}/multipart/start/?jsonerrors=1`, 'POST', data, {
+        return this.__autoAbort(jsonp(`${this.settings.urlBase}/multipart/start/?jsonerrors=1`, 'POST', data, {
           headers: {
             'X-UC-User-Agent': this.settings._userAgent
           }
@@ -284,7 +285,7 @@ uploadcare.namespace('files', function (ns) {
           UPLOADCARE_PUB_KEY: this.settings.publicKey,
           uuid: uuid
         }
-        return this.__autoAbort(utils.jsonp(`${this.settings.urlBase}/multipart/complete/?jsonerrors=1`, 'POST', data, {
+        return this.__autoAbort(jsonp(`${this.settings.urlBase}/multipart/complete/?jsonerrors=1`, 'POST', data, {
           headers: {
             'X-UC-User-Agent': this.settings._userAgent
           }

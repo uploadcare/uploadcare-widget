@@ -1,8 +1,8 @@
 import uploadcare from '../namespace'
+import { fitSize, applyCropCoordsToInfo } from '../utils'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('crop', function (ns) {
@@ -47,7 +47,7 @@ uploadcare.namespace('crop', function (ns) {
 
         return this.__api.setOptions({
           aspectRatio: crop.preferedSize ? crop.preferedSize[0] / crop.preferedSize[1] : 0,
-          minSize: crop.notLess ? utils.fitSize(crop.preferedSize, this.originalSize) : [0, 0]
+          minSize: crop.notLess ? fitSize(crop.preferedSize, this.originalSize) : [0, 0]
         })
       }
 
@@ -61,7 +61,7 @@ uploadcare.namespace('crop', function (ns) {
           size = this.originalSize
         }
         if (this.crop.preferedSize) {
-          size = utils.fitSize(this.crop.preferedSize, size, true)
+          size = fitSize(this.crop.preferedSize, size, true)
         }
         if (center) {
           left = (this.originalSize[0] - size[0]) / 2
@@ -105,7 +105,7 @@ uploadcare.namespace('crop', function (ns) {
 
       applySelectionToFile (file) {
         return file.then((info) => {
-          return utils.applyCropCoordsToInfo(info, this.crop, this.originalSize, this.getSelection())
+          return applyCropCoordsToInfo(info, this.crop, this.originalSize, this.getSelection())
         })
       }
     };

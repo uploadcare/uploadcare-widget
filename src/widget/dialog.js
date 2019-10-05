@@ -1,12 +1,13 @@
 import uploadcare from '../namespace'
 import { CollectionOfPromises } from '../utils/collection'
+import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
+import { build } from '../settings'
+import { t } from '../locale'
 
 const {
   utils,
-  locale: { t },
   templates: { tpl },
   widget: { tabs },
-  settings: s,
   jQuery: $
 } = uploadcare
 
@@ -156,7 +157,7 @@ uploadcare.namespace('', function (ns) {
       files = [files]
     }
 
-    settings = s.build(settings)
+    settings = build(settings)
 
     panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
@@ -168,7 +169,7 @@ uploadcare.namespace('', function (ns) {
       }
     }
 
-    return utils.then(panel, filter, filter).promise(panel)
+    return then(panel, filter, filter).promise(panel)
   }
   registeredTabs = {}
   ns.registerTab = function (tabName, constructor) {
@@ -265,7 +266,7 @@ uploadcare.namespace('', function (ns) {
           showTab: this.showTab,
           isTabVisible: this.isTabVisible,
           openMenu: this.openMenu,
-          onTabVisibility: utils.publicCallbacks(this.onTabVisibility)
+          onTabVisibility: publicCallbacks(this.onTabVisibility)
         })
       }
 
@@ -324,8 +325,8 @@ uploadcare.namespace('', function (ns) {
           return fileInfo
         }
         info = fileInfo.originalImageInfo
-        size = utils.fitSize(this.settings.crop[0].preferedSize, [info.width, info.height], true)
-        return utils.applyCropCoordsToInfo(fileInfo, this.settings.crop[0], [info.width, info.height], {
+        size = fitSize(this.settings.crop[0].preferedSize, [info.width, info.height], true)
+        return applyCropCoordsToInfo(fileInfo, this.settings.crop[0], [info.width, info.height], {
           width: size[0],
           height: size[1],
           left: Math.round((info.width - size[0]) / 2),

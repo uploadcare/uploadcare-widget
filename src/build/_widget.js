@@ -1,13 +1,13 @@
+import $ from 'jquery'
 import '../vendor/jquery-xdr'
-import '../utils'
-import '../settings'
-import '../locale'
+
+import { presets, defaults } from '../settings'
+
 import '../templates'
 import '../stylesheets'
 import '../vendor/jquery-jcrop'
 import '../ui/crop-widget'
 import '../files/base'
-import '../utils/image-processor'
 import '../files/object'
 import '../files/input'
 import '../files/url'
@@ -36,6 +36,11 @@ import '../widget/accessibility'
 import uploadcare from '../namespace'
 
 const { expose } = uploadcare
+
+// Defaults (not normalized)
+expose('defaults', $.extend({
+  allTabs: presets.tabs.all
+}, defaults))
 
 expose('globals', uploadcare.settings.common)
 expose('start')

@@ -2,13 +2,14 @@ import uploadcare from '../namespace'
 
 import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
+import { wrapToPromise, bindAll, groupIdRegex, jsonp } from '../utils'
+import { build } from '../settings'
+import { t } from '../locale'
 
 const {
   namespace,
   jQuery: $,
   utils,
-  locale: { t },
-  settings: s,
   files: ucFiles
 } = uploadcare
 
@@ -16,7 +17,7 @@ namespace('files', function (ns) {
   ns.FileGroup = class FileGroup {
     constructor (files, settings) {
       this.__uuid = null
-      this.settings = s.build(settings)
+      this.settings = build(settings)
       this.__fileColl = new CollectionOfPromises(files)
       this.__allFilesDf = $.when(...this.files())
       this.__fileInfosDf = (() => {
@@ -146,7 +147,7 @@ namespace('files', function (ns) {
       if (this.__fileColl.length()) {
         this.__fileInfosDf.done((...infos) => {
           var info
-          return utils.jsonp(`${this.settings.urlBase}/group/`, 'POST', {
+          return jsonp(`${this.settings.urlBase}/group/`, 'POST', {
             pub_key: this.settings.publicKey,
             signature: this.settings.secureSignature,
             expire: this.settings.secureExpire,
@@ -178,7 +179,7 @@ namespace('files', function (ns) {
 
     api () {
       if (!this.__api) {
-        this.__api = utils.bindAll(this, ['promise', 'files'])
+        this.__api = bindAll(this, ['promise', 'files'])
       }
       return this.__api
     }
@@ -193,7 +194,7 @@ namespace('files', function (ns) {
     }
 
     __createGroup () {
-      return utils.wrapToPromise(this.__data)
+      return wrapToPromise(this.__data)
     }
   }
 })
@@ -219,11 +220,11 @@ namespace('', function (ns) {
 
   ns.loadFileGroup = function (groupIdOrUrl, settings) {
     var df, id
-    settings = s.build(settings)
+    settings = build(settings)
     df = $.Deferred()
-    id = utils.groupIdRegex.exec(groupIdOrUrl)
+    id = groupIdRegex.exec(groupIdOrUrl)
     if (id) {
-      utils.jsonp(`${settings.urlBase}/group/info/`, 'GET', {
+      jsonp(`${settings.urlBase}/group/info/`, 'GET', {
         jsonerrors: 1,
         pub_key: settings.publicKey,
         group_id: id[0]
@@ -273,7 +274,7 @@ namespace('utils', function (utils) {
         }
       }
     }
-    return utils.wrapToPromise(value || null)
+    return wrapToPromise(value || null)
   }
 
   // check if two groups contains same files in same order

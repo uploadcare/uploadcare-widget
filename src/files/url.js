@@ -3,10 +3,10 @@ import { debug } from '../utils/warnings'
 import { boundMethodCheck } from '../utils/bound-method-check'
 
 import { getPusher } from '../utils/pusher'
+import { defer, splitUrlRegex, jsonp } from '../utils'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('files', function (ns) {
@@ -18,7 +18,7 @@ uploadcare.namespace('files', function (ns) {
         super(...arguments)
         this.__listenWatcher = this.__listenWatcher.bind(this)
         this.__url = __url
-        filename = utils.splitUrlRegex.exec(this.__url)[3].split('/').pop()
+        filename = splitUrlRegex.exec(this.__url)[3].split('/').pop()
         if (filename) {
           try {
             this.fileName = decodeURIComponent(filename)
@@ -56,11 +56,11 @@ uploadcare.namespace('files', function (ns) {
           jsonerrors: 1
         }
 
-        utils.defer(() => {
+        defer(() => {
           if (this.apiDeferred.state() !== 'pending') {
             return
           }
-          return utils.jsonp(`${this.settings.urlBase}/from_url/`, 'GET', data, {
+          return jsonp(`${this.settings.urlBase}/from_url/`, 'GET', data, {
             headers: {
               'X-UC-User-Agent': this.settings._userAgent
             }
@@ -191,7 +191,7 @@ uploadcare.namespace('files', function (ns) {
     }
 
     __updateStatus () {
-      return utils.jsonp(this.poolUrl, 'GET', { token: this.token }, {
+      return jsonp(this.poolUrl, 'GET', { token: this.token }, {
         headers: {
           'X-UC-User-Agent': this.settings._userAgent
         }

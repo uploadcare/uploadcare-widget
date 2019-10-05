@@ -1,9 +1,9 @@
 import uploadcare from '../namespace'
 import { boundMethodCheck } from '../utils/bound-method-check'
+import { uuid } from '../utils'
 
 const {
-  jQuery: $,
-  utils
+  jQuery: $
 } = uploadcare
 
 uploadcare.namespace('files', function (ns) {
@@ -13,7 +13,7 @@ uploadcare.namespace('files', function (ns) {
         super(...arguments)
         this.__cleanUp = this.__cleanUp.bind(this)
         this.__input = __input
-        this.fileId = utils.uuid()
+        this.fileId = uuid()
         this.fileName = $(this.__input).val().split('\\').pop()
         this.__notifyApi()
       }

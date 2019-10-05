@@ -1,11 +1,11 @@
 import uploadcare from '../namespace'
 import { warn } from '../utils/warnings'
+import { once } from '../utils'
+import { build, common } from '../settings'
 
-var $, settings, utils;
+var $
 
 ({
-  utils,
-  settings,
   jQuery: $
 } = uploadcare)
 
@@ -61,7 +61,7 @@ uploadcare.namespace('', function (ns) {
       warn('There are multiple DOM elements matching selector')
     }
     input = inputArr.eq(0)
-    s = settings.build(input.data())
+    s = build(input.data())
     Widget = s.multiple ? ns.widget.MultipleWidget : ns.widget.Widget
     if (targetClass && Widget !== targetClass) {
       throw new Error(`This element should be processed using ${Widget._name}`)
@@ -88,9 +88,9 @@ uploadcare.namespace('', function (ns) {
     })
   }
 
-  ns.start = utils.once(function (s, isolated) {
+  ns.start = once(function (s, isolated) {
     // when isolated, call settings.common(s) only
-    s = settings.common(s, isolated)
+    s = common(s, isolated)
     if (isolated) {
       return
     }
