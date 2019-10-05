@@ -1,168 +1,18 @@
 import $ from 'jquery'
 import { version } from '../package.json'
 
-import {
-  FileReader,
-  URL,
-  Blob,
-  iOSVersion,
-  fileDragAndDrop,
-  canvas,
-  dragAndDrop,
-  sendFileAPI,
-  fileAPI
-} from './utils/abilities'
-
-import {
-  Collection,
-  UniqCollection,
-  CollectionOfPromises
-} from './utils/collection'
-
 import * as locales from './locales'
-
-import { registerMessage, unregisterMessage } from './utils/messages'
-import { imageLoader, videoLoader } from './utils/image-loader'
-import { log, debug, warn, warnOnce } from './utils/warnings'
-import { getPusher } from './utils/pusher'
-
-import {
-  unique,
-  defer,
-  gcd,
-  once,
-  wrapToPromise,
-  then,
-  bindAll,
-  upperCase,
-  publicCallbacks,
-  uuid,
-  splitUrlRegex,
-  uuidRegex,
-  groupIdRegex,
-  cdnUrlRegex,
-  splitCdnUrl,
-  escapeRegExp,
-  globRegexp,
-  normalizeUrl,
-  fitText,
-  fitSizeInCdnLimit,
-  fitSize,
-  applyCropCoordsToInfo,
-  fileInput,
-  fileSelectDialog,
-  fileSizeLabels,
-  readableFileSize,
-  ajaxDefaults,
-  jsonp,
-  canvasToBlob,
-  taskRunner,
-  fixedPipe
-} from './utils'
 
 import { globals, build, common, waitForSettings, CssCollector } from './settings'
 import { rebuild, t } from './locale'
 
-import {
-  shrinkFile,
-  shrinkImage,
-  drawFileToCanvas,
-  readJpegChunks,
-  replaceJpegChunk,
-  getExif,
-  parseExifOrientation,
-  hasTransparency
-} from './utils/image-processor'
+import { utils, JST, tpl } from './templates'
 
 const uploadcare = {
   version,
   jQuery: $,
 
-  utils: {
-    abilities: {
-      fileAPI,
-      sendFileAPI,
-      dragAndDrop,
-      canvas,
-      fileDragAndDrop,
-      iOSVersion,
-      Blob,
-      URL,
-      FileReader
-    },
-
-    Collection,
-    UniqCollection,
-    CollectionOfPromises,
-
-    imageLoader,
-    videoLoader,
-
-    log,
-    debug,
-    warn,
-    warnOnce,
-
-    //   commonWarning
-
-    registerMessage,
-    unregisterMessage,
-
-    unique,
-    defer,
-    gcd,
-    once,
-    wrapToPromise,
-    then,
-    bindAll,
-    upperCase,
-    publicCallbacks,
-    uuid,
-    splitUrlRegex,
-    uuidRegex,
-    groupIdRegex,
-    cdnUrlRegex,
-    splitCdnUrl,
-    escapeRegExp,
-    globRegexp,
-    normalizeUrl,
-    fitText,
-    fitSizeInCdnLimit,
-    fitSize,
-    applyCropCoordsToInfo,
-    fileInput,
-    fileSelectDialog,
-    fileSizeLabels,
-    readableFileSize,
-    ajaxDefaults,
-    jsonp,
-    canvasToBlob,
-    taskRunner,
-    fixedPipe,
-
-    //   isFile
-    //   valueToFile
-
-    image: {
-      shrinkFile,
-      shrinkImage,
-      drawFileToCanvas,
-      readJpegChunks,
-      replaceJpegChunk,
-      getExif,
-      parseExifOrientation,
-      hasTransparency
-    },
-
-    pusher: {
-      getPusher
-    }
-
-    //   isFileGroup
-    //   valueToGroup
-    //   isFileGroupsEqual
-
-  },
+  utils,
 
   settings: {
     globals,
@@ -193,27 +43,8 @@ const uploadcare = {
   },
 
   templates: {
-  //   JST:
-  //     dialog
-  //     dialog__panel
-  //     icons
-  //     progress__text
-  //     styles
-  //     tab-camera-capture
-  //     tab-camera
-  //     tab-file
-  //     tab-preview-error
-  //     tab-preview-image
-  //     tab-preview-multiple-file
-  //     tab-preview-multiple
-  //     tab-preview-regular
-  //     tab-preview-unknown
-  //     tab-preview-video
-  //     tab-url
-  //     widget-button
-  //     widget-file-name
-  //     widget
-  //   tpl
+    JST,
+    tpl
   },
 
   crop: {
