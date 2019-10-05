@@ -3,7 +3,6 @@ import '../vendor/jquery-xdr'
 
 import { presets, defaults } from '../settings'
 
-import '../locale'
 import '../files/base'
 import '../files/object'
 import '../files/input'

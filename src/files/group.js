@@ -4,12 +4,12 @@ import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
 import { wrapToPromise, bindAll, groupIdRegex, jsonp } from '../utils'
 import { build } from '../settings'
+import { t } from '../locale'
 
 const {
   namespace,
   jQuery: $,
   utils,
-  locale: { t },
   files: ucFiles
 } = uploadcare
 

@@ -4,12 +4,12 @@ import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } from '../../utils'
 import { drawFileToCanvas } from '../../utils/image-processor'
+import { t } from '../../locale'
 
 const {
   templates: { tpl },
   jQuery: $,
-  crop: { CropWidget },
-  locale: { t }
+  crop: { CropWidget }
 } = uploadcare
 
 uploadcare.namespace('widget.tabs', function (ns) {

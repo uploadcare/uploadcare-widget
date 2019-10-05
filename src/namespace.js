@@ -61,6 +61,7 @@ import {
 } from './utils'
 
 import { globals, build, common, waitForSettings, CssCollector } from './settings'
+import { rebuild, t } from './locale'
 
 import {
   shrinkFile,
@@ -185,10 +186,10 @@ const uploadcare = {
       pluralize[lang] = locales[lang].pluralize
 
       return pluralize
-    }, {})
+    }, {}),
 
-    //   rebuild
-    //   t
+    rebuild,
+    t
   },
 
   templates: {

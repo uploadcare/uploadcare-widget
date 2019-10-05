@@ -21,7 +21,9 @@ import widget from './templates/widget.jst.ejs'
 import styles from './templates/styles.jst.ejs'
 import icons from './templates/icons.jst.ejs'
 
-const { locale, utils } = uploadcare
+import { t } from './locale'
+
+const { utils } = uploadcare
 
 uploadcare.namespace('templates', function (ns) {
   ns.JST = {
@@ -51,7 +53,7 @@ uploadcare.namespace('templates', function (ns) {
 
     if (fn != null) {
       return fn({
-        t: locale.t,
+        t,
         utils,
         uploadcare,
         ...ctx
