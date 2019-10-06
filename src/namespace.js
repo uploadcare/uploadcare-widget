@@ -23,7 +23,7 @@ import { support, uploadDrop, watchDragging, receiveDrop } from './widget/dragdr
 import { FileTab } from './widget/tabs/file-tab'
 import { UrlTab } from './widget/tabs/url-tab'
 import { CameraTab } from './widget/tabs/camera-tab'
-import { RemoteTab } from './widget/tabs/remote-tab'
+import { RemoteTab, tabsCss } from './widget/tabs/remote-tab'
 import { BasePreviewTab } from './widget/tabs/base-preview-tab'
 import { PreviewTab } from './widget/tabs/preview-tab'
 import { PreviewTabMultiple } from './widget/tabs/preview-tab-multiple'
@@ -42,13 +42,7 @@ import {
   registerTab
 } from './widget/dialog'
 
-import {
-  initialize,
-  SingleWidget,
-  MultipleWidget,
-  Widget,
-  start
-} from './widget/live'
+import { initialize, SingleWidget, MultipleWidget, Widget, start } from './widget/live'
 
 const uploadcare = {
   version,
@@ -64,8 +58,7 @@ const uploadcare = {
     CssCollector
   },
 
-  // TODO: move to separete file
-  tabsCss: new CssCollector(),
+  tabsCss,
 
   locale: {
     translations: Object.keys(locales).reduce((translations, lang) => {
@@ -156,13 +149,7 @@ const uploadcare = {
   Widget,
   start,
 
-  __exports: {
-    plugin: function (fn) {
-      return fn(uploadcare)
-    },
-    version,
-    jQuery: $
-  },
+  __exports: {},
 
   namespace: (path, fn) => {
     let target = uploadcare
@@ -204,4 +191,9 @@ const uploadcare = {
   }
 }
 
+function plugin (fn) {
+  return fn(uploadcare)
+}
+
+export { plugin }
 export default uploadcare

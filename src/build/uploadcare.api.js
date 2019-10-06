@@ -1,23 +1,35 @@
 import $ from 'jquery'
 import '../vendor/jquery-xdr'
 
-import { presets, defaults } from '../settings'
+import { presets, defaults, common } from '../settings'
 
-import uploadcare from '../namespace'
+import '../stylesheets'
+import '../widget/submit-guard'
+import '../widget/accessibility'
 
-const { expose } = uploadcare
+import { en } from '../locales'
 
-// Defaults (not normalized)
-expose('defaults', $.extend({
-  allTabs: presets.tabs.all
-}, defaults))
+import { fileFrom, filesFrom } from '../files'
+import { FileGroup, loadFileGroup } from '../files/group-creator'
 
-expose('globals', uploadcare.settings.common)
-expose('start', uploadcare.settings.common)
-expose('fileFrom')
-expose('filesFrom')
-expose('FileGroup')
-expose('loadFileGroup')
-expose('locales', Object.keys(uploadcare.locale.translations))
+import { plugin } from '../namespace'
+import { version } from '../../package.json'
 
-export default uploadcare.__exports
+export default {
+  plugin,
+  version,
+  jQuery: $,
+
+  // Defaults (not normalized)
+  defaults: $.extend({
+    allTabs: presets.tabs.all
+  }, defaults),
+
+  globals: common,
+  start: common,
+  fileFrom,
+  filesFrom,
+  FileGroup,
+  loadFileGroup,
+  locales: Object.keys({ en })
+}
