@@ -1,0 +1,111 @@
+import $ from 'jquery'
+import { version } from '../../package.json'
+
+import { en } from '../locales'
+
+import { globals, build, common, waitForSettings, CssCollector } from '../settings'
+import { rebuild, t } from '../locale'
+
+import { utils } from '../templates'
+import { Pusher } from '../vendor/pusher'
+import { BaseFile } from '../files/base'
+import { ObjectFile } from '../files/object'
+import { InputFile } from '../files/input'
+import { UrlFile } from '../files/url'
+import { UploadedFile, ReadyFile } from '../files/uploaded'
+import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
+
+import { tabsCss } from '../widget/tabs/remote-tab'
+
+import { fileFrom, filesFrom } from '../files'
+import { FileGroup, loadFileGroup } from '../files/group-creator'
+
+const uploadcare = {
+  version,
+  jQuery: $,
+
+  utils,
+
+  settings: {
+    globals,
+    build,
+    common,
+    waitForSettings,
+    CssCollector
+  },
+
+  locale: {
+    translations: { en: en.translations },
+    pluralize: { en: en.pluralize },
+    rebuild,
+    t
+  },
+
+  tabsCss,
+
+  files: {
+    BaseFile,
+    ObjectFile,
+    InputFile,
+    UrlFile,
+    UploadedFile,
+    ReadyFile,
+    FileGroup: FileGroupClass,
+    SavedFileGroup
+  },
+
+  Pusher,
+
+  FileGroup,
+  loadFileGroup,
+  fileFrom,
+  filesFrom,
+
+  __exports: {},
+
+  namespace: (path, fn) => {
+    let target = uploadcare
+
+    if (path) {
+      const ref = path.split('.')
+
+      for (let i = 0, len = ref.length; i < len; i++) {
+        const part = ref[i]
+
+        if (!target[part]) {
+          target[part] = {}
+        }
+
+        target = target[part]
+      }
+    }
+
+    return fn(target)
+  },
+
+  expose: (key, value) => {
+    const parts = key.split('.')
+    const last = parts.pop()
+    let target = uploadcare.__exports
+    let source = uploadcare
+
+    for (let i = 0, len = parts.length; i < len; i++) {
+      const part = parts[i]
+      if (!target[part]) {
+        target[part] = {}
+      }
+
+      target = target[part]
+      source = source != null ? source[part] : undefined
+    }
+
+    target[last] = value || source[last]
+  }
+}
+
+function plugin (fn) {
+  return fn(uploadcare)
+}
+
+export { plugin }
+export default uploadcare

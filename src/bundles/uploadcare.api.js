@@ -12,7 +12,7 @@ import { en } from '../locales'
 import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
-import { plugin } from '../namespace'
+import { plugin } from './namespace.api'
 import { version } from '../../package.json'
 
 export default {

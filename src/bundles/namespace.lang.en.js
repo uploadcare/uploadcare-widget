@@ -1,37 +1,38 @@
 import $ from 'jquery'
-import { version } from '../package.json'
+import { version } from '../../package.json'
 
-import * as locales from './locales'
+import { en } from '../locales'
 
-import { globals, build, common, waitForSettings, CssCollector } from './settings'
-import { rebuild, t } from './locale'
+import { globals, build, common, waitForSettings, CssCollector } from '../settings'
+import { rebuild, t } from '../locale'
 
-import { utils, JST, tpl } from './templates'
-import { CropWidget } from './ui/crop-widget'
-import { Circle, BaseRenderer, TextRenderer, CanvasRenderer } from './ui/progress'
-import { BaseFile } from './files/base'
-import { ObjectFile } from './files/object'
-import { InputFile } from './files/input'
-import { UrlFile } from './files/url'
-import { UploadedFile, ReadyFile } from './files/uploaded'
-import { FileGroup as FileGroupClass, SavedFileGroup } from './files/group'
+import { utils, JST, tpl } from '../templates'
+import { CropWidget } from '../ui/crop-widget'
+import { Circle, BaseRenderer, TextRenderer, CanvasRenderer } from '../ui/progress'
+import { Pusher } from '../vendor/pusher'
+import { BaseFile } from '../files/base'
+import { ObjectFile } from '../files/object'
+import { InputFile } from '../files/input'
+import { UrlFile } from '../files/url'
+import { UploadedFile, ReadyFile } from '../files/uploaded'
+import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
 
-import { fileFrom, filesFrom } from './files'
-import { FileGroup, loadFileGroup } from './files/group-creator'
-import { support, uploadDrop, watchDragging, receiveDrop } from './widget/dragdrop'
+import { fileFrom, filesFrom } from '../files'
+import { FileGroup, loadFileGroup } from '../files/group-creator'
+import { support, uploadDrop, watchDragging, receiveDrop } from '../widget/dragdrop'
 
-import { FileTab } from './widget/tabs/file-tab'
-import { UrlTab } from './widget/tabs/url-tab'
-import { CameraTab } from './widget/tabs/camera-tab'
-import { RemoteTab, tabsCss } from './widget/tabs/remote-tab'
-import { BasePreviewTab } from './widget/tabs/base-preview-tab'
-import { PreviewTab } from './widget/tabs/preview-tab'
-import { PreviewTabMultiple } from './widget/tabs/preview-tab-multiple'
+import { FileTab } from '../widget/tabs/file-tab'
+import { UrlTab } from '../widget/tabs/url-tab'
+import { CameraTab } from '../widget/tabs/camera-tab'
+import { RemoteTab, tabsCss } from '../widget/tabs/remote-tab'
+import { BasePreviewTab } from '../widget/tabs/base-preview-tab'
+import { PreviewTab } from '../widget/tabs/preview-tab'
+import { PreviewTabMultiple } from '../widget/tabs/preview-tab-multiple'
 
-import { Template as TemplateClass } from './widget/template'
-import { BaseWidget as BaseWidgetClass } from './widget/base-widget'
-import { Widget as WidgetClass } from './widget/widget'
-import { MultipleWidget as MultipleWidgetClass } from './widget/multiple-widget'
+import { Template as TemplateClass } from '../widget/template'
+import { BaseWidget as BaseWidgetClass } from '../widget/base-widget'
+import { Widget as WidgetClass } from '../widget/widget'
+import { MultipleWidget as MultipleWidgetClass } from '../widget/multiple-widget'
 
 import {
   isDialogOpened,
@@ -40,9 +41,9 @@ import {
   openPreviewDialog,
   openPanel,
   registerTab
-} from './widget/dialog'
+} from '../widget/dialog'
 
-import { initialize, SingleWidget, MultipleWidget, Widget, start } from './widget/live'
+import { initialize, SingleWidget, MultipleWidget, Widget, start } from '../widget/live'
 
 const uploadcare = {
   version,
@@ -61,18 +62,8 @@ const uploadcare = {
   tabsCss,
 
   locale: {
-    translations: Object.keys(locales).reduce((translations, lang) => {
-      translations[lang] = locales[lang].translations
-
-      return translations
-    }, {}),
-
-    pluralize: Object.keys(locales).reduce((pluralize, lang) => {
-      pluralize[lang] = locales[lang].pluralize
-
-      return pluralize
-    }, {}),
-
+    translations: { en: en.translations },
+    pluralize: { en: en.pluralize },
     rebuild,
     t
   },
@@ -97,7 +88,7 @@ const uploadcare = {
     SavedFileGroup
   },
 
-  // Pusher
+  Pusher,
 
   FileGroup,
   loadFileGroup,

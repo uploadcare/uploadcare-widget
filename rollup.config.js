@@ -7,7 +7,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
 const bundle = (input, output, options = {}) => ({
-  input: `src/build/${input}`,
+  input: `src/bundles/${input}`,
 
   output: {
     name: 'uploadcare',
