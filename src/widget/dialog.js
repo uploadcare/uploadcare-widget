@@ -380,8 +380,12 @@ uploadcare.namespace('', function (ns) {
       const files = this.files.length()
       tooManyFiles = files > this.settings.multipleMax
       tooFewFiles = files < this.settings.multipleMin
-      this.footer.find('.uploadcare--panel__done').attr('disabled', tooManyFiles || tooFewFiles)
-      this.footer.find('.uploadcare--panel__show-files').attr('disabled', files === 0)
+      this.footer.find('.uploadcare--panel__done')
+        .attr('disabled', tooManyFiles || tooFewFiles)
+        .attr('aria-disabled', tooManyFiles || tooFewFiles)
+      this.footer.find('.uploadcare--panel__show-files')
+        .attr('disabled', files === 0)
+        .attr('aria-disabled', files === 0)
       footer = tooManyFiles ? t('dialog.tabs.preview.multiple.tooManyFiles').replace('%max%', this.settings.multipleMax) : files && tooFewFiles ? t('dialog.tabs.preview.multiple.tooFewFiles').replace('%min%', this.settings.multipleMin) : t('dialog.tabs.preview.multiple.title')
       this.footer.find('.uploadcare--panel__message').toggleClass('uploadcare--panel__message_hidden', files === 0).toggleClass('uploadcare--error', tooManyFiles || tooFewFiles).text(footer.replace('%files%', t('file', files)))
       return this.footer.find('.uploadcare--panel__file-counter').toggleClass('uploadcare--error', tooManyFiles || tooFewFiles).text(files ? `(${files})` : '')
