@@ -120,7 +120,7 @@ uploadcare.namespace('utils', function (ns) {
   }
 
   // splitUrlRegex("url") => ["url", "scheme", "host", "path", "query", "fragment"]
-  ns.splitUrlRegex = /^(?:([^:\/?#]+):)?(?:\/\/([^\/?\#]*))?([^?\#]*)\??([^\#]*)\#?(.*)$/
+  ns.splitUrlRegex = /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)\??([^#]*)#?(.*)$/
   ns.uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
   ns.groupIdRegex = new RegExp(`${ns.uuidRegex.source}~[0-9]+`, 'i')
   ns.cdnUrlRegex = new RegExp(`^/?(${ns.uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$`, 'i')
