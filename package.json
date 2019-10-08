@@ -14,13 +14,20 @@
     "uploadcare.lang.en.min.js"
   ],
   "scripts": {
+    "dev:svg": "nodemon --watch src/svgs --exec 'svg-sprite --config ./scripts/svg-sprite.config.json' src/svgs/icon-*.svg", 
+    "dev:css": "nodemon --watch src/stylesheets --exec 'postcss -o ./src/templates/styles.jst.ejs -c ./scripts/postcss.config.js' src/stylesheets/styles.pcss", 
+    "dev:js": "rollup -wc scripts/rollup.config.dev.js",
+    "dev": "npm run dev:css & npm run dev:svg & npm run dev:js",
+
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
+    
     "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
-    "build:css": "postcss ./src/stylesheets/styles.pcss -o ./src/templates/styles.jst.ejs -c ./scripts/postcss.config.js",
+    "build:css": "postcss -o ./src/templates/styles.jst.ejs -c ./scripts/postcss.config.js ./src/stylesheets/styles.pcss",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build:js": "rollup -c",
     "build": "npm run build:svg && npm run build:css:min && npm run build:js",
+    
     "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
   },
   "dependencies": {
@@ -43,6 +50,7 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^1.19.3",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
     "postcss-color-function": "^4.0.0",
@@ -60,6 +68,7 @@
     "rollup-plugin-jst": "^1.2.0",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^5.1.1",
     "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0",
