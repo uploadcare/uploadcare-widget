@@ -1,13 +1,8 @@
-import $ from 'jquery'
-import '../vendor/jquery-xdr'
-
-import { presets, defaults, common } from '../settings'
+import uploadcare from './uploadcare.api'
 
 import '../stylesheets'
 import '../widget/submit-guard'
 import '../widget/accessibility'
-
-import { en } from '../locales'
 
 import { Circle } from '../ui/progress'
 
@@ -16,29 +11,16 @@ import { initialize, SingleWidget, MultipleWidget, Widget, start } from '../widg
 import { closeDialog, openDialog, openPanel, registerTab } from '../widget/dialog'
 import { receiveDrop, support, uploadDrop } from '../widget/dragdrop'
 
-import { fileFrom, filesFrom } from '../files'
-import { FileGroup, loadFileGroup } from '../files/group-creator'
-
 import { plugin } from './namespace.lang.en'
-import { version } from '../../package.json'
 
 export default {
+  ...uploadcare,
+
   plugin,
-  version,
-  jQuery: $,
 
-  // Defaults (not normalized)
-  defaults: $.extend({
-    allTabs: presets.tabs.all
-  }, defaults),
-
-  globals: common,
   start,
   initialize,
-  fileFrom,
-  filesFrom,
-  FileGroup,
-  loadFileGroup,
+
   openDialog,
   closeDialog,
   openPanel,
@@ -48,7 +30,7 @@ export default {
   MultipleWidget,
   Widget,
   tabsCss,
-  locales: Object.keys({ en }),
+
   dragdrop: {
     receiveDrop,
     support,

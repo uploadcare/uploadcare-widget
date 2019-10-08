@@ -1,10 +1,9 @@
 import $ from 'jquery'
-import { version } from '../../package.json'
 
 import { en } from '../locales'
+import { rebuild, t } from '../locale'
 
 import { globals, build, common, waitForSettings, CssCollector } from '../settings'
-import { rebuild, t } from '../locale'
 
 import { utils } from '../templates'
 import { Pusher } from '../vendor/pusher'
@@ -20,7 +19,9 @@ import { tabsCss } from '../widget/tabs/remote-tab'
 import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
-const uploadcare = {
+import { version } from '../../package.json'
+
+const namespace = {
   version,
   jQuery: $,
 
@@ -64,7 +65,7 @@ const uploadcare = {
   __exports: {},
 
   namespace: (path, fn) => {
-    let target = uploadcare
+    let target = namespace
 
     if (path) {
       const ref = path.split('.')
@@ -86,8 +87,8 @@ const uploadcare = {
   expose: (key, value) => {
     const parts = key.split('.')
     const last = parts.pop()
-    let target = uploadcare.__exports
-    let source = uploadcare
+    let target = namespace.__exports
+    let source = namespace
 
     for (let i = 0, len = parts.length; i < len; i++) {
       const part = parts[i]
@@ -103,9 +104,11 @@ const uploadcare = {
   }
 }
 
-function plugin (fn) {
-  return fn(uploadcare)
+function createPlugin (ns) {
+  return fn => fn(ns)
 }
 
-export { plugin }
-export default uploadcare
+const plugin = createPlugin(namespace)
+
+export { plugin, createPlugin }
+export default namespace
