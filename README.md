@@ -95,7 +95,7 @@ There are a few types of JS bundles:
 Each bundle has its minified version. Just add `.min` before `.js`,
 e.g. `uploadcare.min.js`.
 
-By default, `uploadcare.min.js` is exported for npm and other package managers.
+By default, `uploadcare.js` is exported for npm and other package managers.
 
 ## Install
 
