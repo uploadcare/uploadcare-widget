@@ -1,4 +1,4 @@
-import uploadcare from './uploadcare.api'
+import uploadcare from './uploadcare.lang.en'
 import { plugin } from './namespace'
 
 import * as locales from '../locales'
