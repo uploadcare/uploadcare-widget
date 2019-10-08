@@ -14,14 +14,14 @@
     "uploadcare.lang.en.min.js"
   ],
   "scripts": {
-    "lint:css": "stylelint app/**/*.pcss",
+    "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
     "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
     "build:css": "postcss ./src/stylesheets/styles.pcss -o ./src/templates/styles.jst.ejs -c ./scripts/postcss.config.js",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build:js": "rollup -c",
     "build": "npm run build:svg && npm run build:css:min && npm run build:js",
-    "test": "echo \"Soon there will be tests 🖖\" && exit 0"
+    "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
   },
   "dependencies": {
     "jquery": "^3.4.1"
