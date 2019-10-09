@@ -5,14 +5,15 @@ import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
+import license from 'rollup-plugin-license'
 
 const bundle = (input, output, options = {}) => ({
-  input: `src/build/${input}`,
+  input: `src/bundles/${input}`,
 
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: `dist/${output}`,
+    file: `${output}`,
     globals: options.includeJquery
       ? undefined
       : {
@@ -25,7 +26,8 @@ const bundle = (input, output, options = {}) => ({
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]]
+      presets: [['@babel/env', { modules: false }]],
+      plugins: ['@babel/plugin-proposal-export-namespace-from']
     }),
     jst({
       templateOptions: {
@@ -42,13 +44,21 @@ const bundle = (input, output, options = {}) => ({
     json(),
 
     resolve(),
-    commonjs(),
+    commonjs({
+      namedExports: { './src/vendor/pusher.js': ['Pusher'] }
+    }),
 
     terser({
       compress: {
         passes: 2 // https://github.com/terser/terser/issues/453
       },
       include: [/^.+\.min\.js$/]
+    }),
+
+    license({
+      banner: `
+<%= pkg.name %> <%= pkg.version %>
+Date: <%= moment().format('YYYY-MM-DD') %>`
     })
   ]
 })

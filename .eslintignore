@@ -1,5 +1,12 @@
-pkg/*
-test/*
-submodules/*
 src/vendor/*
+
 !.stylelintrc.js
+
+uploadcare.api.js
+uploadcare.api.min.js
+uploadcare.full.js
+uploadcare.full.min.js
+uploadcare.js
+uploadcare.min.js
+uploadcare.lang.en.js
+uploadcare.lang.en.min.js

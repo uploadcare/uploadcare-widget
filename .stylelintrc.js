@@ -5,13 +5,13 @@ module.exports = {
   rules: {
     'declaration-empty-line-before': ['always', {
       except: [
-        'first-nested',
+        'first-nested'
       ],
       ignore: [
         'after-comment',
         'after-declaration',
-        'inside-single-line-block',
-      ],
-    }],
-  },
+        'inside-single-line-block'
+      ]
+    }]
+  }
 }
