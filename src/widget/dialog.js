@@ -9,7 +9,7 @@ import { PreviewTabMultiple } from './tabs/preview-tab-multiple'
 
 import { CollectionOfPromises } from '../utils/collection'
 import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
-import { build } from '../settings'
+import { build, emptyKeyText } from '../settings'
 import { t } from '../locale'
 import { tpl } from '../templates'
 import { filesFrom } from '../files'
@@ -196,7 +196,7 @@ registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
 registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
-  return tabPanel.append(settings._emptyKeyText)
+  return tabPanel.append(emptyKeyText)
 })
 
 registerTab('preview', function (tabPanel, tabButton, dialogApi, settings, name) {
