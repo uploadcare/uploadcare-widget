@@ -4,7 +4,9 @@ import locale from '../locale'
 const tabPreviewMultiple = () => html`
   <div class="uploadcare--tab__header">
     <div
+      id="preview__title" 
       class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"
+      role="status" aria-live="assertive"
     ></div>
   </div>
 
@@ -27,6 +29,7 @@ const tabPreviewMultiple = () => html`
     <button
       type="button"
       class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done"
+      aria-describedby="preview_title"
     >
       ${locale.t('dialog.tabs.preview.multiple.done')}
     </button>
