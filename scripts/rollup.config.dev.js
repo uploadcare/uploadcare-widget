@@ -6,9 +6,10 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 
 import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 
 export default {
-  input: 'src/build/uploadcare.full.js',
+  input: 'src/bundles/uploadcare.full.js',
 
   output: {
     name: 'uploadcare',
@@ -25,7 +26,8 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]]
+      presets: [['@babel/env', { modules: false }]],
+      plugins: ['@babel/plugin-proposal-export-namespace-from']
     }),
     jst({
       templateOptions: {
@@ -37,8 +39,11 @@ export default {
     json(),
 
     resolve(),
-    commonjs(),
+    commonjs({
+      namedExports: { './src/vendor/pusher.js': ['Pusher'] }
+    }),
 
-    serve(['dummy', 'dist'])
+    serve(['dummy', 'dist']),
+    livereload({ watch: ['dummy', 'dist'] })
   ]
 }
