@@ -8,7 +8,7 @@ import { terser } from 'rollup-plugin-terser'
 import license from 'rollup-plugin-license'
 
 const bundle = (input, output, options = {}) => ({
-  input: `src/build/${input}`,
+  input: `src/bundles/${input}`,
 
   output: {
     name: 'uploadcare',
@@ -26,7 +26,8 @@ const bundle = (input, output, options = {}) => ({
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]]
+      presets: [['@babel/env', { modules: false }]],
+      plugins: ['@babel/plugin-proposal-export-namespace-from']
     }),
     jst({
       templateOptions: {
@@ -43,7 +44,9 @@ const bundle = (input, output, options = {}) => ({
     json(),
 
     resolve(),
-    commonjs(),
+    commonjs({
+      namedExports: { './src/vendor/pusher.js': ['Pusher'] }
+    }),
 
     terser({
       compress: {

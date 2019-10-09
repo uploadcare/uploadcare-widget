@@ -1,4 +1,4 @@
-import uploadcare from '../namespace'
+import $ from 'jquery'
 
 /**
  * jquery.Jcrop.js v0.9.10
@@ -1501,4 +1501,4 @@ import uploadcare from '../namespace'
   };
 
   // }}}
-}(uploadcare.jQuery));
+}($));

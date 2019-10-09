@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
     "@babel/preset-env": "^7.5.5",
     "autoprefixer": "^7.1.5",
     "babel-eslint": "^10.0.2",
