@@ -1,51 +1,62 @@
-import uploadcare from '../namespace'
+// utils.abilities
+const fileAPI = !!(window.File && window.FileList && window.FileReader)
 
-uploadcare.namespace('utils.abilities', function (ns) {
-  var ios, ref, url, ver
+const sendFileAPI = !!(window.FormData && fileAPI)
 
-  ns.fileAPI = !!(window.File && window.FileList && window.FileReader)
+// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
+const dragAndDrop = (function () {
+  var el
+  el = document.createElement('div')
+  return 'draggable' in el || ('ondragstart' in el && 'ondrop' in el)
+})()
 
-  ns.sendFileAPI = !!(window.FormData && ns.fileAPI)
+// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas.js
+const canvas = (function () {
+  var el
+  el = document.createElement('canvas')
+  return !!(el.getContext && el.getContext('2d'))
+})()
 
-  // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
-  ns.dragAndDrop = (function () {
-    var el
-    el = document.createElement('div')
-    return ('draggable' in el) || ('ondragstart' in el && 'ondrop' in el)
-  })()
+const fileDragAndDrop = fileAPI && dragAndDrop
 
-  // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas.js
-  ns.canvas = (function () {
-    var el
-    el = document.createElement('canvas')
-    return !!(el.getContext && el.getContext('2d'))
-  })()
+let iOSVersion = null
 
-  ns.fileDragAndDrop = ns.fileAPI && ns.dragAndDrop
+// TODO: don't access to navigator in module scope (NODE don't have navigator)
+const ios = /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
 
-  ns.iOSVersion = null
+if (ios) {
+  const ver = /OS (\d)_(\d)/.exec(ios[1])
 
-  ios = /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
-
-  if (ios) {
-    ver = /OS (\d)_(\d)/.exec(ios[1])
-
-    if (ver) {
-      ns.iOSVersion = +ver[1] + ver[2] / 10
-    }
+  if (ver) {
+    iOSVersion = +ver[1] + ver[2] / 10
   }
+}
 
-  ns.Blob = false
+let Blob = false
 
-  try {
-    if (new window.Blob()) {
-      ns.Blob = window.Blob
-    }
-  } catch (error) {}
+try {
+  if (new window.Blob()) {
+    Blob = window.Blob
+  }
+} catch (error) {}
 
-  url = window.URL || window.webkitURL || false
+const url = window.URL || window.webkitURL || false
 
-  ns.URL = url && url.createObjectURL && url
+const URL = url && url.createObjectURL && url
 
-  ns.FileReader = ((ref = window.FileReader) != null ? ref.prototype.readAsArrayBuffer : undefined) && window.FileReader
-})
+const FileReader =
+  (window.FileReader != null
+    ? window.FileReader.prototype.readAsArrayBuffer
+    : undefined) && window.FileReader
+
+export {
+  FileReader,
+  URL,
+  Blob,
+  iOSVersion,
+  fileDragAndDrop,
+  canvas,
+  dragAndDrop,
+  sendFileAPI,
+  fileAPI
+}

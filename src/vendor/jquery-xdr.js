@@ -1,9 +1,9 @@
-import uploadcare from '../namespace'
+import jQuery from 'jquery'
 
 // from https://github.com/jaubourg/ajaxHooks/blob/master/src/xdr.js
 
 if ( window.XDomainRequest ) {
-	uploadcare.jQuery.ajaxTransport(function( s ) {
+	jQuery.ajaxTransport(function( s ) {
 		if ( s.crossDomain && s.async ) {
 			if ( s.timeout ) {
 				s.xdrTimeout = s.timeout;

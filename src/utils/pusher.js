@@ -1,47 +1,48 @@
-import uploadcare from '../namespace'
+import $ from 'jquery'
 
-const {
-  jQuery: $
-} = uploadcare
+import { Pusher } from '../vendor/pusher'
 
-uploadcare.namespace('utils.pusher', function (ns) {
-  var ManagedPusher, pushers
-  pushers = {}
-  // This fixes Pusher's prototype. Because Pusher replaces it:
-  // Pusher.prototype = {method: ...}
-  // instead of extending:
-  // Pusher.prototype.method = ...
-  uploadcare.Pusher.prototype.constructor = uploadcare.Pusher
-  ManagedPusher = class ManagedPusher extends uploadcare.Pusher {
-    subscribe (name) {
-      // Ensure we are connected when subscribing.
-      if (this.disconnectTimeout) {
-        clearTimeout(this.disconnectTimeout)
+// utils.pusher
+var pushers = {}
+
+// This fixes Pusher's prototype. Because Pusher replaces it:
+// Pusher.prototype = {method: ...}
+// instead of extending:
+// Pusher.prototype.method = ...
+Pusher.prototype.constructor = Pusher
+class ManagedPusher extends Pusher {
+  subscribe (name) {
+    // Ensure we are connected when subscribing.
+    if (this.disconnectTimeout) {
+      clearTimeout(this.disconnectTimeout)
+      this.disconnectTimeout = null
+    }
+    this.connect()
+    return super.subscribe(...arguments)
+  }
+
+  unsubscribe (name) {
+    super.unsubscribe(...arguments)
+    // Schedule disconnect if no channels left.
+    if ($.isEmptyObject(this.channels.channels)) {
+      this.disconnectTimeout = setTimeout(() => {
         this.disconnectTimeout = null
-      }
-      this.connect()
-      return super.subscribe(...arguments)
-    }
-
-    unsubscribe (name) {
-      super.unsubscribe(...arguments)
-      // Schedule disconnect if no channels left.
-      if ($.isEmptyObject(this.channels.channels)) {
-        this.disconnectTimeout = setTimeout(() => {
-          this.disconnectTimeout = null
-          return this.disconnect()
-        }, 5000)
-      }
+        return this.disconnect()
+      }, 5000)
     }
   }
+}
 
-  ns.getPusher = function (key) {
-    if (pushers[key] == null) {
-      pushers[key] = new ManagedPusher(key)
-    }
-
-    // Preconnect before we actually need channel.
-    pushers[key].connect()
-    return pushers[key]
+const getPusher = function (key) {
+  if (pushers[key] == null) {
+    pushers[key] = new ManagedPusher(key)
   }
-})
+
+  // Preconnect before we actually need channel.
+  pushers[key].connect()
+  return pushers[key]
+}
+
+export {
+  getPusher
+}
