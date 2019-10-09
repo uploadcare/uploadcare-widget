@@ -15,7 +15,10 @@ class UrlTab {
 
     input = this.container.find('.uploadcare--input')
     input.on('change keyup input', function () {
-      return button.attr('disabled', !$.trim(this.value))
+      var isDisabled = !$.trim(this.value)
+      return button
+        .attr('disabled', isDisabled)
+        .attr('aria-disabled', isDisabled)
     })
 
     button = this.container.find('.uploadcare--button[type=submit]').attr('disabled', true)

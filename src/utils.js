@@ -115,7 +115,7 @@ const uuid = function () {
 }
 
 // splitUrlRegex("url") => ["url", "scheme", "host", "path", "query", "fragment"]
-const splitUrlRegex = /^(?:([^:\/?#]+):)?(?:\/\/([^\/?\#]*))?([^?\#]*)\??([^\#]*)\#?(.*)$/
+const splitUrlRegex = /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)\??([^#]*)#?(.*)$/
 const uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
 const groupIdRegex = new RegExp(`${uuidRegex.source}~[0-9]+`, 'i')
 const cdnUrlRegex = new RegExp(`^/?(${uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$`, 'i')

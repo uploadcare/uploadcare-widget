@@ -213,7 +213,9 @@ class PreviewTab extends BasePreviewTab {
 
     startCrop = () => {
       this.container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', false).attr('tabindex', 0)
-      done.attr('disabled', false)
+      done
+        .attr('disabled', false)
+        .attr('aria-disabled', false)
       this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
       if (cdnModifiers) {
         this.widget.setSelectionFromModifiers(cdnModifiers)
@@ -228,7 +230,9 @@ class PreviewTab extends BasePreviewTab {
     if (this.settings.crop) {
       this.container.find('.uploadcare--preview__title').text(t('dialog.tabs.preview.crop.title'))
       this.container.find('.uploadcare--preview__content').addClass('uploadcare--preview__content_crop')
-      done.attr('disabled', true)
+      done
+        .attr('disabled', true)
+        .attr('aria-disabled', true)
       done.text(t('dialog.tabs.preview.crop.done'))
       this.populateCropSizes()
       this.container.find('.uploadcare--crop-sizes__item').attr('aria-disabled', true).attr('tabindex', -1)

@@ -66,7 +66,9 @@ class PreviewTabMultiple extends BasePreviewTab {
     tooManyFiles = files > this.settings.multipleMax
     tooFewFiles = files < this.settings.multipleMin
     hasWrongNumberFiles = tooManyFiles || tooFewFiles
-    this.doneBtnEl.attr('disabled', hasWrongNumberFiles)
+    this.doneBtnEl
+      .attr('disabled', hasWrongNumberFiles)
+      .attr('aria-disabled', hasWrongNumberFiles)
     title = t('dialog.tabs.preview.multiple.question').replace('%files%', t('file', files))
     this.container.find('.uploadcare--preview__title').text(title)
     errorContainer = this.container.find('.uploadcare--preview__message')
