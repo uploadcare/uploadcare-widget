@@ -106,7 +106,7 @@ class PreviewTabMultiple extends BasePreviewTab {
     fileEl
       .find('.uploadcare--file__description')
       .attr(
-        'title',
+        'aria-label',
         locale
           .t('dialog.tabs.preview.multiple.file.preview')
           .replace('%file%', filename)
@@ -118,6 +118,12 @@ class PreviewTabMultiple extends BasePreviewTab {
         locale
           .t('dialog.tabs.preview.multiple.file.remove')
           .replace('%file%', filename)
+      )
+      .attr(
+          'aria-label',
+          locale
+              .t('dialog.tabs.preview.multiple.file.remove')
+              .replace('%file%', filename)
       )
     return fileEl
       .find('.uploadcare--file__size')
