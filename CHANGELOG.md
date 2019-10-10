@@ -13,8 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Migrate from coffee to javascript. See [#567][567].
-- Es modules instaed namespaces. See [#569][569].
+- Migrate from Coffee to Javascript. See [#567][567].
+- Es modules instead namespaces. See [#569][569].
 
 ### Fixed
 
