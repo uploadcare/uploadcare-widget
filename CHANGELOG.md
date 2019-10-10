@@ -9,9 +9,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...HEAD
 
+## [3.8.0]
+
+### Changed
+
+- Migrate from coffee to javascript. See [#567][567].
+- Es modules instaed namespaces. See [#569][569].
+
 ### Fixed
 
-- Spanish locale was updated.
+- Improve accessibility. Thanks to @erin-doyle. See [#594][594] and [#595][595].
+- Spanish locale was updated. Thanks to @HerrLindner. See [#550][550].
+- German locale was updated. Thanks to @thomasklemm. See [#580][580].
+
+[3.8.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...v3.8.0
+[550]: https://github.com/uploadcare/uploadcare-widget/pull/550
+[567]: https://github.com/uploadcare/uploadcare-widget/pull/567
+[569]: https://github.com/uploadcare/uploadcare-widget/pull/569
+[580]: https://github.com/uploadcare/uploadcare-widget/pull/580
+[594]: https://github.com/uploadcare/uploadcare-widget/pull/594
+[595]: https://github.com/uploadcare/uploadcare-widget/pull/595
 
 ## [3.7.9]
 
