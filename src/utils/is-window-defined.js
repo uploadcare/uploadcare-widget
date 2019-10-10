@@ -1,1 +1,1 @@
-export const isWindowDefined = () => typeof widnow === 'object'
+export const isWindowDefined = () => typeof window === 'object'
