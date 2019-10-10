@@ -21,9 +21,10 @@ export default {
   jQuery: $,
 
   // Defaults (not normalized)
-  defaults: $.extend({
+  defaults: {
+    ...defaults,
     allTabs: presets.tabs.all
-  }, defaults),
+  },
 
   globals: common,
   start: common,

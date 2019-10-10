@@ -6,6 +6,7 @@ import { MultipleWidget as MultipleWidgetClass } from './multiple-widget'
 import { warn } from '../utils/warnings'
 import { once } from '../utils'
 import { build, common } from '../settings'
+import { isWindowDefined } from '../utils/is-window-defined'
 
 const dataAttr = 'uploadcareWidget'
 const selector = '[role~="uploadcare-uploader"]'
@@ -104,7 +105,7 @@ const start = once(function (s, isolated) {
   return initialize()
 })
 
-$(function () {
+isWindowDefined() && $(function () {
   if (!window.UPLOADCARE_MANUAL_START) {
     start()
   }

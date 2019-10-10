@@ -1,10 +1,11 @@
 import $ from 'jquery'
+import { isWindowDefined } from './is-window-defined'
 
 // utils
 
 var callbacks = {}
 
-$(window).on('message', ({
+isWindowDefined() && $(window).on('message', ({
   originalEvent: e
 }) => {
   var i, item, len, message, ref, results

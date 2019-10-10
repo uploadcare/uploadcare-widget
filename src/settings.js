@@ -4,6 +4,7 @@ import { version } from '../package.json'
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl } from './utils'
+import { isWindowDefined } from './utils/is-window-defined'
 
 var indexOf = [].indexOf
 
@@ -78,13 +79,13 @@ presets = {
   }
 }
 // integration setting from data attributes of script tag
-script = document.currentScript || (function () {
+script = isWindowDefined() && (document.currentScript || (function () {
   var scripts
   scripts = document.getElementsByTagName('script')
   return scripts[scripts.length - 1]
-})()
-integration = $(script).data('integration')
-if (integration != null) {
+})())
+integration = isWindowDefined() && $(script).data('integration')
+if (integration && integration != null) {
   defaults = $.extend(defaults, { integration })
 }
 str2arr = function (value) {
@@ -312,7 +313,7 @@ const build = function (settings) {
   return result
 }
 
-const waitForSettings = $.Callbacks('once memory')
+const waitForSettings = isWindowDefined() && $.Callbacks('once memory')
 
 const CssCollector = class CssCollector {
   constructor () {
