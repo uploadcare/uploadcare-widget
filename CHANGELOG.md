@@ -13,14 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Migrate from Coffee to Javascript. See [#567][567].
-- Es modules instead of namespaces. See [#569][569].
+* Migrate from Coffee to Javascript. See [#567][567].
+* Es modules instead of namespaces. See [#569][569].
 
 ### Fixed
 
-- Improve accessibility. Thanks to @erin-doyle. See [#594][594] and [#595][595].
-- Spanish locale was updated. Thanks to @HerrLindner. See [#550][550].
-- German locale was updated. Thanks to @thomasklemm. See [#580][580].
+* Improve accessibility. Thanks to @erin-doyle. See [#594][594] and [#595][595].
+* Spanish locale was updated. Thanks to @HerrLindner. See [#550][550].
+* German locale was updated. Thanks to @thomasklemm. See [#580][580].
 
 [3.8.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...v3.8.0
 [550]: https://github.com/uploadcare/uploadcare-widget/pull/550
