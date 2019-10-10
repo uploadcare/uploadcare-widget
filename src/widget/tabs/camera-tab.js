@@ -2,8 +2,9 @@ import $ from 'jquery'
 import { warn } from '../../utils/warnings'
 import { fileSelectDialog, canvasToBlob } from '../../utils'
 import { tpl } from '../../templates'
+import { isWindowDefined } from '../../utils/is-window-defined'
 
-var isSecure = document.location.protocol === 'https:'
+var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
 class CameraTab {
   constructor (container1, tabButton, dialogApi, settings, name1) {

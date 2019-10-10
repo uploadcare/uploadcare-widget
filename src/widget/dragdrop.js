@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { fileDragAndDrop } from '../utils/abilities'
 import { build } from '../settings'
 import { filesFrom, fileFrom } from '../files'
+import { isWindowDefined } from '../utils/is-window-defined'
 
 const support = fileDragAndDrop
 
@@ -84,6 +85,6 @@ const watchDragging = !support
     })
   }
 
-watchDragging('body', document)
+isWindowDefined() && watchDragging('body', document)
 
 export { support, uploadDrop, watchDragging, receiveDrop }

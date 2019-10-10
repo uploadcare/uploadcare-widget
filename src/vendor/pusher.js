@@ -10,6 +10,8 @@
  * Released under the MIT licence.
  */
 
+const { isWindowDefined } = require('../utils/is-window-defined')
+
 ;(function() {
   var Pusher, _require;
 
@@ -1211,30 +1213,30 @@ var _require = (function() {
 
 ;(function() {
   // Support Firefox versions which prefix WebSocket
-  if (!window['WebSocket'] && window['MozWebSocket']) {
+  if (isWindowDefined() && !window['WebSocket'] && window['MozWebSocket']) {
     window['WebSocket'] = window['MozWebSocket']
   }
 
-  if (window['WebSocket']) {
+  if (isWindowDefined() && window['WebSocket']) {
     Pusher.Transport = window['WebSocket'];
     Pusher.TransportType = 'native';
   }
 
-  var cdn = (document.location.protocol == 'http:') ? Pusher.cdn_http : Pusher.cdn_https;
+  var cdn = isWindowDefined() && ((document.location.protocol == 'http:') ? Pusher.cdn_http : Pusher.cdn_https);
   var root = cdn + Pusher.VERSION;
   var deps = [];
 
-  if (!window['JSON']) {
+  if (isWindowDefined() && !window['JSON']) {
     deps.push(root + '/json2' + Pusher.dependency_suffix + '.js');
   }
-  if (!window['WebSocket']) {
+  if (isWindowDefined() && !window['WebSocket']) {
     // We manually initialize web-socket-js to iron out cross browser issues
     window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION = true;
     deps.push(root + '/flashfallback' + Pusher.dependency_suffix + '.js');
   }
 
   var initialize = function() {
-    if (window['WebSocket']) {
+    if (isWindowDefined() && window['WebSocket']) {
       // Initialize function in the case that we have native WebSocket support
       return function() {
         Pusher.ready();
@@ -1266,7 +1268,7 @@ var _require = (function() {
   // Allows calling a function when the document body is available
   var ondocumentbody = function(callback) {
     var load_body = function() {
-      document.body ? callback() : setTimeout(load_body, 0);
+      isWindowDefined() && (document.body ? callback() : setTimeout(load_body, 0));
     }
     load_body();
   };

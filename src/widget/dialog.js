@@ -15,6 +15,7 @@ import { tpl } from '../templates'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
+import { isWindowDefined } from '../utils/is-window-defined'
 
 const lockDialogFocus = function (e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -38,7 +39,7 @@ const lockScroll = function (el, toTop) {
   }
 }
 
-$(window).on('keydown', (e) => {
+isWindowDefined() && $(window).on('keydown', (e) => {
   if (isDialogOpened()) {
     if (e.which === 27) { // Escape
       e.stopImmediatePropagation()

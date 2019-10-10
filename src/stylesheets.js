@@ -2,8 +2,9 @@ import $ from 'jquery'
 
 import { tpl } from './templates'
 import { waitForSettings } from './settings'
+import { isWindowDefined } from './utils/is-window-defined'
 
-waitForSettings.add(function (settings) {
+isWindowDefined() && waitForSettings.add(function (settings) {
   const css = tpl('styles', { settings })
   const style = document.createElement('style')
 

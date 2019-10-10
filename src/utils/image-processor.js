@@ -3,9 +3,10 @@ import $ from 'jquery'
 import { Blob, FileReader, URL } from '../utils/abilities'
 import { imageLoader } from '../utils/image-loader'
 import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
+import { isWindowDefined } from './is-window-defined'
 
 // utils image
-var DataView = window.DataView
+var DataView = isWindowDefined() && window.DataView
 var runner = taskRunner(1)
 
 const shrinkFile = function (file, settings) {
