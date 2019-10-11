@@ -1,7 +1,5 @@
 import namespaceApi, { createPlugin } from './namespace.api'
 
-import { en } from '../locales'
-
 import { JST, tpl } from '../templates'
 
 import { CropWidget } from '../ui/crop-widget'
@@ -35,12 +33,6 @@ import { initialize, SingleWidget, MultipleWidget, Widget, start } from '../widg
 
 const namespace = {
   ...namespaceApi,
-
-  locale: {
-    ...namespaceApi.locale,
-    translations: { en: en.translations },
-    pluralize: { en: en.pluralize }
-  },
 
   templates: {
     JST,
