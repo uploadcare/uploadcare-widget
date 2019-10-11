@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { en } from '../locales'
+import { pluralize, translations } from '../locales/en'
 import { rebuild, t } from '../locale'
 
 import { globals, build, common, waitForSettings, CssCollector } from '../settings'
@@ -36,8 +36,8 @@ const namespace = {
   },
 
   locale: {
-    translations: { en: en.translations },
-    pluralize: { en: en.pluralize },
+    translations: { en: translations },
+    pluralize: { en: pluralize },
     rebuild,
     t
   },
