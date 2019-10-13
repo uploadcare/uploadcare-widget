@@ -150,6 +150,7 @@ class CanvasRenderer extends BaseRenderer {
 
   __setValue(val) {
     this.val = val
+    this.element.attr('aria-valuenow', (val * 100).toFixed(0))
     return this.update()
   }
 

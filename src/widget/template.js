@@ -41,6 +41,7 @@ class Template {
   reset() {
     this.circle.reset()
     this.setStatus('ready')
+    this.content.attr('aria-busy', false)
     this.__file = undefined
 
     return this.__file
@@ -48,6 +49,7 @@ class Template {
 
   loaded() {
     this.setStatus('loaded')
+    this.content.attr('aria-busy', false)
     return this.circle.reset(true)
   }
 
@@ -56,6 +58,7 @@ class Template {
 
     this.circle.listen(file, 'uploadProgress')
     this.setStatus('started')
+    this.content.attr('aria-busy', true)
 
     return file.progress(info => {
       if (file === this.__file) {
@@ -71,6 +74,7 @@ class Template {
 
   error(type) {
     this.statusText.text(locale.t(`errors.${type || 'default'}`))
+    this.content.attr('aria-busy', false)
     return this.setStatus('error')
   }
 
