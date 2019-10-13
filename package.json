@@ -36,6 +36,7 @@
     "@babel/preset-env": "^7.5.5",
     "autoprefixer": "^7.1.5",
     "babel-eslint": "^10.0.2",
+    "babel-plugin-html-tag": "^1.4.0",
     "browser-sync": "^2.26.7",
     "coffeescript": "^2.4.1",
     "cross-env": "^5.1.0",

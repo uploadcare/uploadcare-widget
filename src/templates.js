@@ -85,7 +85,7 @@ import tabPreviewRegular from './templates/tab-preview-regular.jst.ejs'
 import tabPreviewUnknown from './templates/tab-preview-unknown.jst.ejs'
 import tabPreviewVideo from './templates/tab-preview-video.jst.ejs'
 import tabUrl from './templates/tab-url.jst.ejs'
-import widgetButton from './templates/widget-button.jst.ejs'
+import { widgetButton } from './templates/widget-button.js'
 import widgetFileName from './templates/widget-file-name.jst.ejs'
 import widget from './templates/widget.jst.ejs'
 
