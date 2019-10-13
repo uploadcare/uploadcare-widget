@@ -1,24 +1,16 @@
 import { BaseWidget } from './base-widget'
-import { boundMethodCheck } from '../utils/bound-method-check'
 import { t } from '../locale'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
 
 class MultipleWidget extends BaseWidget {
-  constructor () {
-    super(...arguments)
-    this.__setObject = this.__setObject.bind(this)
-    this.__handleDirectSelection = this.__handleDirectSelection.bind(this)
-  }
-
   __currentFile () {
     var ref1
     return (ref1 = this.currentObject) != null ? ref1.promise() : undefined
   }
 
   __setObject (group) {
-    boundMethodCheck(this, MultipleWidget)
     if (!isFileGroupsEqual(this.currentObject, group)) {
       return super.__setObject(group)
     // special case, when multiple widget is used with clearable
@@ -49,9 +41,7 @@ class MultipleWidget extends BaseWidget {
   }
 
   __handleDirectSelection (type, data) {
-    var files
-    boundMethodCheck(this, MultipleWidget)
-    files = filesFrom(type, data, this.settings)
+    var files = filesFrom(type, data, this.settings)
     if (this.settings.systemDialog) {
       return this.__setObject(FileGroup(files, this.settings))
     } else {

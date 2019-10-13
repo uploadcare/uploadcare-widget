@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import { boundMethodCheck } from './bound-method-check'
 
 var indexOf = [].indexOf
 
@@ -114,10 +113,6 @@ class CollectionOfPromises extends UniqCollection {
   constructor () {
     super(...arguments, true)
 
-    this.onAnyDone = this.onAnyDone.bind(this)
-    this.onAnyFail = this.onAnyFail.bind(this)
-    this.onAnyProgress = this.onAnyProgress.bind(this)
-
     this.anyDoneList = $.Callbacks()
     this.anyFailList = $.Callbacks()
     this.anyProgressList = $.Callbacks()
@@ -132,7 +127,7 @@ class CollectionOfPromises extends UniqCollection {
 
   onAnyDone (cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyDoneList.add(cb)
     ref1 = this.__items
     results = []
@@ -151,7 +146,7 @@ class CollectionOfPromises extends UniqCollection {
 
   onAnyFail (cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyFailList.add(cb)
     ref1 = this.__items
     results = []
@@ -170,7 +165,7 @@ class CollectionOfPromises extends UniqCollection {
 
   onAnyProgress (cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyProgressList.add(cb)
     ref1 = this.__items
     results = []

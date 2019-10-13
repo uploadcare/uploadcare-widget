@@ -9,9 +9,6 @@ import { openDialog } from './dialog'
 
 class BaseWidget {
   constructor (element, settings) {
-    this.__reset = this.__reset.bind(this)
-    this.__setObject = this.__setObject.bind(this)
-    this.reloadInfo = this.reloadInfo.bind(this)
     this.element = element
     this.settings = settings
     this.validators = this.settings.validators = []
@@ -24,7 +21,7 @@ class BaseWidget {
       }) : undefined
     })
     this.__setupWidget()
-    this.element.on('change.uploadcare', this.reloadInfo)
+    this.element.on('change.uploadcare', this.reloadInfo.bind(this))
     // Delay loading info to allow set custom validators on page load.
     this.__hasValue = false
     defer(() => {
@@ -54,7 +51,7 @@ class BaseWidget {
       return this.openDialog()
     })
     // Enable drag and drop
-    receiveDrop(this.template.content, this.__handleDirectSelection)
+    receiveDrop(this.template.content, this.__handleDirectSelection.bind(this))
     return this.template.reset()
   }
 
@@ -153,7 +150,7 @@ class BaseWidget {
     var dialogApi
     dialogApi = openDialog(this.currentObject, tab, this.settings)
     this.__onDialogOpen.fire(dialogApi)
-    return dialogApi.done(this.__setObject)
+    return dialogApi.done(this.__setObject.bind(this))
   }
 
   api () {

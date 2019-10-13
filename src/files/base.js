@@ -15,20 +15,6 @@ class BaseFile {
   constructor (param, settings1, sourceInfo = {}) {
     var base
 
-    // Complete uploading
-
-    this.__completeUpload = this.__completeUpload.bind(this)
-    this.__updateInfo = this.__updateInfo.bind(this)
-    this.__handleFileData = this.__handleFileData.bind(this)
-    this.__fileInfo = this.__fileInfo.bind(this)
-    this.__runValidators = this.__runValidators.bind(this)
-    this.__rejectApi = this.__rejectApi.bind(this)
-    this.__resolveApi = this.__resolveApi.bind(this)
-
-    // External API
-
-    this.__cancel = this.__cancel.bind(this)
-    this.__extendApi = this.__extendApi.bind(this)
     this.settings = settings1
     this.sourceInfo = sourceInfo
     this.fileId = null
@@ -95,7 +81,7 @@ class BaseFile {
         log("Can't load file info. Probably removed.", this.fileId, this.settings.publicKey, reason)
       }
       return this.__rejectApi('info')
-    }).done(this.__handleFileData)
+    }).done(this.__handleFileData.bind(this))
   }
 
   __handleFileData (data) {
@@ -214,7 +200,7 @@ class BaseFile {
   }
 
   __extendApi (api) {
-    api.cancel = this.__cancel
+    api.cancel = this.__cancel.bind(this)
     api.pipe = api.then = (...args) => { // 'pipe' is alias to 'then' from jQuery 1.8
       return this.__extendApi(fixedPipe(api, ...args))
     }
