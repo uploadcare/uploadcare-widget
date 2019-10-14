@@ -6,6 +6,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import license from 'rollup-plugin-license'
+import replace from 'rollup-plugin-replace'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -24,6 +25,12 @@ const bundle = (input, output, options = {}) => ({
   external: options.includeJquery ? undefined : ['jquery'],
 
   plugins: [
+    options.enOnly && replace({
+      include: 'src/locales/index.js',
+      values: {
+        all: 'enOnly'
+      }
+    }),
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]],
@@ -64,14 +71,14 @@ Date: <%= moment().format('YYYY-MM-DD') %>`
 })
 
 export default [
-  bundle('uploadcare.api.js', 'uploadcare.api.js'),
-  bundle('uploadcare.api.js', 'uploadcare.api.min.js'),
+  bundle('uploadcare.api.js', 'uploadcare.api.js', { enOnly: true }),
+  bundle('uploadcare.api.js', 'uploadcare.api.min.js', { enOnly: true }),
 
   bundle('uploadcare.js', 'uploadcare.js'),
   bundle('uploadcare.js', 'uploadcare.min.js'),
 
-  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js'),
-  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js'),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js', { enOnly: true }),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js', { enOnly: true }),
 
   bundle('uploadcare.full.js', 'uploadcare.full.js', { includeJquery: true }),
   bundle('uploadcare.full.js', 'uploadcare.full.min.js', { includeJquery: true })
