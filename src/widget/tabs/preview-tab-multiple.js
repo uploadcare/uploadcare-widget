@@ -5,7 +5,6 @@ import { BasePreviewTab } from './base-preview-tab'
 
 import { openPreviewDialog } from '../dialog'
 
-import { boundMethodCheck } from '../../utils/bound-method-check'
 import { readableFileSize } from '../../utils'
 import { t } from '../../locale'
 import { tpl } from '../../templates'
@@ -13,13 +12,6 @@ import { tpl } from '../../templates'
 class PreviewTabMultiple extends BasePreviewTab {
   constructor () {
     super(...arguments)
-    this.__updateContainerView = this.__updateContainerView.bind(this)
-    this.__fileProgress = this.__fileProgress.bind(this)
-    this.__fileDone = this.__fileDone.bind(this)
-    this.__fileFailed = this.__fileFailed.bind(this)
-    this.__fileAdded = this.__fileAdded.bind(this)
-    this.__fileRemoved = this.__fileRemoved.bind(this)
-    this.__fileReplaced = this.__fileReplaced.bind(this)
     this.container.append(tpl('tab-preview-multiple'))
     this.__fileTpl = $(tpl('tab-preview-multiple-file'))
     this.fileListEl = this.container.find('.uploadcare--files')
@@ -28,12 +20,12 @@ class PreviewTabMultiple extends BasePreviewTab {
       return this.__fileAdded(file)
     })
     this.__updateContainerView()
-    this.dialogApi.fileColl.onAdd.add(this.__fileAdded, this.__updateContainerView)
-    this.dialogApi.fileColl.onRemove.add(this.__fileRemoved, this.__updateContainerView)
-    this.dialogApi.fileColl.onReplace.add(this.__fileReplaced, this.__updateContainerView)
-    this.dialogApi.fileColl.onAnyProgress(this.__fileProgress)
-    this.dialogApi.fileColl.onAnyDone(this.__fileDone)
-    this.dialogApi.fileColl.onAnyFail(this.__fileFailed)
+    this.dialogApi.fileColl.onAdd.add(this.__fileAdded.bind(this), () => this.__updateContainerView())
+    this.dialogApi.fileColl.onRemove.add(this.__fileRemoved.bind(this), () => this.__updateContainerView())
+    this.dialogApi.fileColl.onReplace.add(this.__fileReplaced.bind(this), () => this.__updateContainerView())
+    this.dialogApi.fileColl.onAnyProgress(this.__fileProgress.bind(this))
+    this.dialogApi.fileColl.onAnyDone(this.__fileDone.bind(this))
+    this.dialogApi.fileColl.onAnyFail(this.__fileFailed.bind(this))
     this.fileListEl.addClass(this.settings.imagesOnly ? 'uploadcare--files_type_tiles' : 'uploadcare--files_type_table')
     this.__setupSorting()
   }
@@ -61,7 +53,6 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __updateContainerView () {
     var errorContainer, files, hasWrongNumberFiles, title, tooFewFiles, tooManyFiles, wrongNumberFilesMessage
-    boundMethodCheck(this, PreviewTabMultiple)
     files = this.dialogApi.fileColl.length()
     tooManyFiles = files > this.settings.multipleMax
     tooFewFiles = files < this.settings.multipleMin
@@ -90,7 +81,6 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __fileProgress (file, progressInfo) {
     var fileEl
-    boundMethodCheck(this, PreviewTabMultiple)
     fileEl = this.__fileToEl(file)
     fileEl.find('.uploadcare--progressbar__value').css('width', Math.round(progressInfo.progress * 100) + '%')
     return this.__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
@@ -98,7 +88,6 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __fileDone (file, info) {
     var cdnURL, fileEl, filePreview
-    boundMethodCheck(this, PreviewTabMultiple)
     fileEl = this.__fileToEl(file).removeClass('uploadcare--file_status_uploading').addClass('uploadcare--file_status_uploaded')
     fileEl.find('.uploadcare--progressbar__value').css('width', '100%')
     this.__updateFileInfo(fileEl, info)
@@ -121,7 +110,6 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __fileFailed (file, error, info) {
     var fileEl, filePreview
-    boundMethodCheck(this, PreviewTabMultiple)
     fileEl = this.__fileToEl(file).removeClass('uploadcare--file_status_uploading').addClass('uploadcare--file_status_error')
     fileEl.find('.uploadcare--file__error').text(t(`errors.${error}`))
     filePreview = $("<svg width='32' height='32'><use xlink:hPreviewTabMultiple='#uploadcare--icon-error'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
@@ -130,20 +118,18 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __fileAdded (file) {
     var fileEl
-    boundMethodCheck(this, PreviewTabMultiple)
+
     fileEl = this.__createFileEl(file)
     return fileEl.appendTo(this.fileListEl)
   }
 
   __fileRemoved (file) {
-    boundMethodCheck(this, PreviewTabMultiple)
     this.__fileToEl(file).remove()
     return $(file).removeData()
   }
 
   __fileReplaced (oldFile, newFile) {
     var fileEl
-    boundMethodCheck(this, PreviewTabMultiple)
     fileEl = this.__createFileEl(newFile)
     fileEl.insertAfter(this.__fileToEl(oldFile))
     return this.__fileRemoved(oldFile)

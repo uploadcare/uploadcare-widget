@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import { debug } from '../utils/warnings'
-import { boundMethodCheck } from '../utils/bound-method-check'
 
 import { getPusher } from '../utils/pusher'
 import { defer, splitUrlRegex, jsonp } from '../utils'
@@ -11,7 +10,6 @@ class UrlFile extends BaseFile {
   constructor (__url) {
     var filename
     super(...arguments)
-    this.__listenWatcher = this.__listenWatcher.bind(this)
     this.__url = __url
     filename = splitUrlRegex.exec(this.__url)[3].split('/').pop()
     if (filename) {
@@ -104,7 +102,6 @@ class UrlFile extends BaseFile {
   }
 
   __listenWatcher (df, watcher) {
-    boundMethodCheck(this, UrlFile)
     return watcher.on('progress', (e, data) => {
       this.fileSize = data.total
       return df.notify(data.done / data.total)

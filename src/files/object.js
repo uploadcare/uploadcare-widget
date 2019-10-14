@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
-import { boundMethodCheck } from '../utils/bound-method-check'
 import { log, debug } from '../utils/warnings'
 import { jsonp, taskRunner } from '../utils'
 import { shrinkFile } from '../utils/image-processor'
@@ -12,14 +11,12 @@ var _directRunner = null
 class ObjectFile extends BaseFile {
   constructor (__file) {
     super(...arguments)
-    this.setFile = this.setFile.bind(this)
     this.__file = __file
     this.fileName = this.__file.name || 'original'
     this.__notifyApi()
   }
 
   setFile (file) {
-    boundMethodCheck(this, ObjectFile)
     if (file) {
       this.__file = file
     }
@@ -56,7 +53,7 @@ class ObjectFile extends BaseFile {
     resizeShare = 0.4
     shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
       return df.notify(progress * resizeShare)
-    }).done(this.setFile).fail(() => {
+    }).done(this.setFile.bind(this)).fail(() => {
       this.setFile()
       resizeShare = resizeShare * 0.1
       return resizeShare

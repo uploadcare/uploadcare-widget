@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import { boundMethodCheck } from '../utils/bound-method-check'
 import { uuid } from '../utils'
 
 import { BaseFile } from './base'
@@ -7,7 +6,6 @@ import { BaseFile } from './base'
 class InputFile extends BaseFile {
   constructor (__input) {
     super(...arguments)
-    this.__cleanUp = this.__cleanUp.bind(this)
     this.__input = __input
     this.fileId = uuid()
     this.fileName = $(this.__input).val().split('\\').pop()
@@ -37,12 +35,11 @@ class InputFile extends BaseFile {
       enctype: 'multipart/form-data',
       target: iframeId
     }).append(formParam('UPLOADCARE_PUB_KEY', this.settings.publicKey)).append(formParam('UPLOADCARE_SIGNATURE', this.settings.secureSignature)).append(formParam('UPLOADCARE_EXPIRE', this.settings.secureExpire)).append(formParam('UPLOADCARE_FILE_ID', this.fileId)).append(formParam('UPLOADCARE_STORE', this.settings.doNotStore ? '' : 'auto')).append(formParam('UPLOADCARE_SOURCE', this.sourceInfo.source)).append(this.__input).css('display', 'none').appendTo('body').submit()
-    return df.always(this.__cleanUp)
+    return df.always(this.__cleanUp.bind(this))
   }
 
   __cleanUp () {
     var ref1, ref2
-    boundMethodCheck(this, InputFile)
     if ((ref1 = this.__iframe) != null) {
       ref1.off('load error').remove()
     }

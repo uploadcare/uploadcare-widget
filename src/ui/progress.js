@@ -5,7 +5,6 @@ import { tpl } from '../templates'
 // ui.progress
 class Circle {
   constructor (element) {
-    this.update = this.update.bind(this)
     if (canvas) {
       this.renderer = new CanvasRenderer(element)
     } else {

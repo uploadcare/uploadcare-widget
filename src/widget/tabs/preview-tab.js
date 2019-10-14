@@ -1,6 +1,5 @@
 import $ from 'jquery'
 
-import { boundMethodCheck } from '../../utils/bound-method-check'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import { defer, gcd as calcGCD, once, fitSize, readableFileSize, canvasToBlob } from '../../utils'
@@ -13,33 +12,30 @@ import { BasePreviewTab } from './base-preview-tab'
 class PreviewTab extends BasePreviewTab {
   constructor (container, tabButton, dialogApi, settings, name) {
     super(...arguments)
-    this.__setFile = this.__setFile.bind(this)
-    this.__tryToLoadImagePreview = this.__tryToLoadImagePreview.bind(this)
-    this.__tryToLoadVideoPreview = this.__tryToLoadVideoPreview.bind(this)
+
     // error
     // unknown
     // image
     // video
     // regular
-    this.__setState = this.__setState.bind(this)
-    this.initImage = this.initImage.bind(this)
-    this.populateCropSizes = this.populateCropSizes.bind(this)
     this.container = container
     this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
+
     $.each(this.dialogApi.fileColl.get(), (i, file) => {
       return this.__setFile(file)
     })
-    this.dialogApi.fileColl.onAdd.add(this.__setFile)
+
+    this.dialogApi.fileColl.onAdd.add(this.__setFile.bind(this))
     this.widget = null
     this.__state = null
   }
 
   __setFile (file) {
     var ifCur, tryToLoadImagePreview, tryToLoadVideoPreview
-    boundMethodCheck(this, PreviewTab)
+
     this.file = file
     ifCur = (fn) => {
       return (...args) => {
@@ -48,8 +44,8 @@ class PreviewTab extends BasePreviewTab {
         }
       }
     }
-    tryToLoadImagePreview = once(this.__tryToLoadImagePreview)
-    tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview)
+    tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
+    tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
     this.file.progress(ifCur((info) => {
       var blob, label, source
@@ -103,7 +99,7 @@ class PreviewTab extends BasePreviewTab {
 
   __tryToLoadImagePreview (file, blob) {
     var df
-    boundMethodCheck(this, PreviewTab)
+
     df = $.Deferred()
     if (file.state() !== 'pending' || !blob.size || blob.size >= this.settings.multipartMinSize) {
       return df.reject().promise()
@@ -134,7 +130,7 @@ class PreviewTab extends BasePreviewTab {
 
   __tryToLoadVideoPreview (file, blob) {
     var df, op, src
-    boundMethodCheck(this, PreviewTab)
+
     df = $.Deferred()
     if (!URL || !blob.size) {
       return df.reject().promise()
@@ -175,7 +171,6 @@ class PreviewTab extends BasePreviewTab {
   }
 
   __setState (state, data) {
-    boundMethodCheck(this, PreviewTab)
     this.__state = state
     data = data || {}
     data.crop = this.settings.crop
@@ -199,7 +194,7 @@ class PreviewTab extends BasePreviewTab {
 
   initImage (imgSize, cdnModifiers) {
     var done, img, imgLoader, startCrop
-    boundMethodCheck(this, PreviewTab)
+
     img = this.container.find('.uploadcare--preview__image')
     done = this.container.find('.uploadcare--preview__done')
     imgLoader = imageLoader(img[0]).done(() => {
@@ -247,7 +242,7 @@ class PreviewTab extends BasePreviewTab {
 
   populateCropSizes () {
     var control, currentClass, template
-    boundMethodCheck(this, PreviewTab)
+
     control = this.container.find('.uploadcare--crop-sizes')
     template = control.children()
     currentClass = 'uploadcare--crop-sizes__item_current'
