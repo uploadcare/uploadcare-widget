@@ -1,11 +1,12 @@
 import { html } from '../utils/html'
+import { t } from '../locale'
 
 const tabPreviewMultipleFile = () => html`
 <div class="uploadcare--file uploadcare--files__item uploadcare--file_status_uploading">
   <div class="uploadcare--file__description" tabindex="0">
     <div class="uploadcare--file__preview"></div>
     <div class="uploadcare--file__name">
-        <%- ext.t('dialog.tabs.preview.unknownName') %>
+        ${t('dialog.tabs.preview.unknownName')}
     </div>
     <div class="uploadcare--file__size"></div>
     <div class="uploadcare--file__error"></div>
