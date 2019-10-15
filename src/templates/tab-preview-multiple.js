@@ -1,3 +1,6 @@
+import { html } from '../utils/html'
+
+const tabPreviewMultiple = () => html`
 <div class="uploadcare--tab__header">
   <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"></div>
 </div>
@@ -17,3 +20,6 @@
       <%- ext.t('dialog.tabs.preview.multiple.done') %>
   </button>
 </div>
+`
+
+export { tabPreviewMultiple }

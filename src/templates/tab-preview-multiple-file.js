@@ -1,3 +1,6 @@
+import { html } from '../utils/html'
+
+const tabPreviewMultipleFile = () => html`
 <div class="uploadcare--file uploadcare--files__item uploadcare--file_status_uploading">
   <div class="uploadcare--file__description" tabindex="0">
     <div class="uploadcare--file__preview"></div>
@@ -20,3 +23,6 @@
     </svg>
   </button>
 </div>
+`
+
+export { tabPreviewMultipleFile }

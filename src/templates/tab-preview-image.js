@@ -1,3 +1,6 @@
+import { html } from '../utils/html'
+
+const tabPreviewImage = () => html`
 <div class="uploadcare--tab__header">
   <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title">
     <%- ext.t('dialog.tabs.preview.image.title') %>
@@ -38,3 +41,6 @@
       <%- ext.t('dialog.tabs.preview.done') %>
   </button>
 </div>
+`
+
+export { tabPreviewImage }

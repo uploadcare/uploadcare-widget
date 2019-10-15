@@ -1,3 +1,6 @@
+import { html } from '../utils/html'
+
+const tabPreviewRegular = () => html`
 <div class="uploadcare--tab__header">
   <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"><%- ext.t('dialog.tabs.preview.regular.title') %></div>
 </div>
@@ -17,4 +20,6 @@
       <%- ext.t('dialog.tabs.preview.done') %>
   </button>
 </div>
+`
 
+export { tabPreviewRegular }
