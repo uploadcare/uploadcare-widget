@@ -7,7 +7,7 @@ import { isWindowDefined } from '../../utils/is-window-defined'
 var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
 class CameraTab {
-  constructor (container1, tabButton, dialogApi, settings, name1) {
+  constructor(container1, tabButton, dialogApi, settings, name1) {
     var video
     this.__captureInput = this.__captureInput.bind(this)
     this.__captureInputHandle = this.__captureInputHandle.bind(this)
@@ -27,8 +27,12 @@ class CameraTab {
     if (this.__checkCapture()) {
       this.container.append(tpl('tab-camera-capture'))
       this.container.addClass('uploadcare--camera')
-      this.container.find('.uploadcare--camera__button_type_photo').on('click', this.__captureInput('image/*'))
-      video = this.container.find('.uploadcare--camera__button_type_video').on('click', this.__captureInput('video/*'))
+      this.container
+        .find('.uploadcare--camera__button_type_photo')
+        .on('click', this.__captureInput('image/*'))
+      video = this.container
+        .find('.uploadcare--camera__button_type_video')
+        .on('click', this.__captureInput('video/*'))
       if (this.settings.imagesOnly) {
         video.hide()
       }
@@ -41,42 +45,59 @@ class CameraTab {
     }
   }
 
-  __captureInput (accept) {
+  __captureInput(accept) {
     return () => {
-      return fileSelectDialog(this.container, {
-        inputAcceptTypes: accept
-      }, this.__captureInputHandle, {
-        capture: 'camera'
-      })
+      return fileSelectDialog(
+        this.container,
+        {
+          inputAcceptTypes: accept
+        },
+        this.__captureInputHandle,
+        {
+          capture: 'camera'
+        }
+      )
     }
   }
 
-  __captureInputHandle (input) {
+  __captureInputHandle(input) {
     this.dialogApi.addFiles('object', input.files)
     return this.dialogApi.switchTab('preview')
   }
 
-  __initCamera () {
+  __initCamera() {
     var startRecord
     this.__loaded = false
     this.mirrored = true
     this.container.append(tpl('tab-camera'))
     this.container.addClass('uploadcare--camera')
     this.container.addClass('uploadcare--camera_status_requested')
-    this.container.find('.uploadcare--camera__button_type_capture').on('click', this.__capture)
-    startRecord = this.container.find('.uploadcare--camera__button_type_start-record').on('click', this.__startRecording)
-    this.container.find('.uploadcare--camera__button_type_stop-record').on('click', this.__stopRecording)
-    this.container.find('.uploadcare--camera__button_type_cancel-record').on('click', this.__cancelRecording)
-    this.container.find('.uploadcare--camera__button_type_mirror').on('click', this.__mirror)
-    this.container.find('.uploadcare--camera__button_type_retry').on('click', this.__requestCamera)
+    this.container
+      .find('.uploadcare--camera__button_type_capture')
+      .on('click', this.__capture)
+    startRecord = this.container
+      .find('.uploadcare--camera__button_type_start-record')
+      .on('click', this.__startRecording)
+    this.container
+      .find('.uploadcare--camera__button_type_stop-record')
+      .on('click', this.__stopRecording)
+    this.container
+      .find('.uploadcare--camera__button_type_cancel-record')
+      .on('click', this.__cancelRecording)
+    this.container
+      .find('.uploadcare--camera__button_type_mirror')
+      .on('click', this.__mirror)
+    this.container
+      .find('.uploadcare--camera__button_type_retry')
+      .on('click', this.__requestCamera)
     if (!this.MediaRecorder || this.settings.imagesOnly) {
       startRecord.hide()
     }
     this.video = this.container.find('.uploadcare--camera__video')
-    this.video.on('loadeddata', function () {
+    this.video.on('loadeddata', function() {
       return this.play()
     })
-    this.dialogApi.progress((name) => {
+    this.dialogApi.progress(name => {
       if (name === this.name) {
         if (!this.__loaded) {
           return this.__requestCamera()
@@ -90,14 +111,24 @@ class CameraTab {
     return this.dialogApi.always(this.__revoke)
   }
 
-  __checkCompatibility () {
+  __checkCompatibility() {
     var isLocalhost
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      this.getUserMedia = function (constraints, successCallback, errorCallback) {
-        return navigator.mediaDevices.getUserMedia(constraints).then(successCallback).catch(errorCallback)
+      this.getUserMedia = function(
+        constraints,
+        successCallback,
+        errorCallback
+      ) {
+        return navigator.mediaDevices
+          .getUserMedia(constraints)
+          .then(successCallback)
+          .catch(errorCallback)
       }
     } else {
-      this.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+      this.getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia
     }
     this.URL = window.URL || window.webkitURL
     this.MediaRecorder = window.MediaRecorder
@@ -108,72 +139,89 @@ class CameraTab {
     return !!this.getUserMedia && Uint8Array && (isSecure || isLocalhost)
   }
 
-  __checkCapture () {
+  __checkCapture() {
     var input
     input = document.createElement('input')
     input.setAttribute('capture', 'camera')
     return !!input.capture
   }
 
-  __setState (newState) {
-    const oldStates = ['', 'ready', 'requested', 'denied', 'not-founded', 'recording'].join(' uploadcare--camera_status_')
+  __setState(newState) {
+    const oldStates = [
+      '',
+      'ready',
+      'requested',
+      'denied',
+      'not-founded',
+      'recording'
+    ].join(' uploadcare--camera_status_')
 
-    this.container.removeClass(oldStates).addClass(`uploadcare--camera_status_${newState}`)
+    this.container
+      .removeClass(oldStates)
+      .addClass(`uploadcare--camera_status_${newState}`)
     this.container.find('.uploadcare--camera__button').focus()
   }
 
-  __requestCamera () {
+  __requestCamera() {
     this.__loaded = true
-    return this.getUserMedia.call(navigator, {
-      audio: true,
-      video: {
-        optional: [
-          {
-            minWidth: 320
-          },
-          {
-            minWidth: 640
-          },
-          {
-            minWidth: 1024
-          },
-          {
-            minWidth: 1280
-          },
-          {
-            minWidth: 1920
-          }
-        ]
-      }
-    }, (stream) => {
-      this.__setState('ready')
-      this.__stream = stream
-      if ('srcObject' in this.video[0]) {
-        this.video.prop('srcObject', stream)
-        return this.video.on('loadedmetadata', () => {
-          return this.video[0].play()
-        })
-      } else {
-        if (this.URL) {
-          this.__streamObject = this.URL.createObjectURL(stream)
-          this.video.prop('src', this.__streamObject)
-        } else {
-          this.video.prop('src', stream)
+    return this.getUserMedia.call(
+      navigator,
+      {
+        audio: true,
+        video: {
+          optional: [
+            {
+              minWidth: 320
+            },
+            {
+              minWidth: 640
+            },
+            {
+              minWidth: 1024
+            },
+            {
+              minWidth: 1280
+            },
+            {
+              minWidth: 1920
+            }
+          ]
         }
-        return this.video[0].play()
+      },
+      stream => {
+        this.__setState('ready')
+        this.__stream = stream
+        if ('srcObject' in this.video[0]) {
+          this.video.prop('srcObject', stream)
+          return this.video.on('loadedmetadata', () => {
+            return this.video[0].play()
+          })
+        } else {
+          if (this.URL) {
+            this.__streamObject = this.URL.createObjectURL(stream)
+            this.video.prop('src', this.__streamObject)
+          } else {
+            this.video.prop('src', stream)
+          }
+          return this.video[0].play()
+        }
+      },
+      error => {
+        if (
+          error === 'NO_DEVICES_FOUND' ||
+          error.name === 'DevicesNotFoundError'
+        ) {
+          this.__setState('not-founded')
+        } else {
+          this.__setState('denied')
+        }
+        this.__loaded = false
+        return this.__loaded
       }
-    }, (error) => {
-      if (error === 'NO_DEVICES_FOUND' || error.name === 'DevicesNotFoundError') {
-        this.__setState('not-founded')
-      } else {
-        this.__setState('denied')
-      }
-      this.__loaded = false
-      return this.__loaded
-    })
+    )
   }
 
-  __revoke () {
+  __revoke() {
     var base
     this.__setState('requested')
     this.__loaded = false
@@ -184,7 +232,7 @@ class CameraTab {
       this.URL.revokeObjectURL(this.__streamObject)
     }
     if (this.__stream.getTracks) {
-      $.each(this.__stream.getTracks(), function () {
+      $.each(this.__stream.getTracks(), function() {
         return typeof this.stop === 'function' ? this.stop() : undefined
       })
     } else {
@@ -196,12 +244,15 @@ class CameraTab {
     return this.__stream
   }
 
-  __mirror () {
+  __mirror() {
     this.mirrored = !this.mirrored
-    return this.video.toggleClass('uploadcare--camera__video_mirrored', this.mirrored)
+    return this.video.toggleClass(
+      'uploadcare--camera__video_mirrored',
+      this.mirrored
+    )
   }
 
-  __capture () {
+  __capture() {
     var canvas, ctx, h, video, w
     video = this.video[0]
     w = video.videoWidth
@@ -215,7 +266,7 @@ class CameraTab {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(video, 0, 0, w, h)
-    return canvasToBlob(canvas, 'image/jpeg', 0.9, (blob) => {
+    return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
       this.dialogApi.addFiles('object', [
@@ -230,7 +281,7 @@ class CameraTab {
     })
   }
 
-  __startRecording () {
+  __startRecording() {
     var __recorderOptions
     this.__setState('recording')
     this.__chunks = []
@@ -248,14 +299,14 @@ class CameraTab {
     }
     this.__recorder.start()
 
-    this.__recorder.ondataavailable = (e) => {
+    this.__recorder.ondataavailable = e => {
       return this.__chunks.push(e.data)
     }
 
     return this.__recorder.ondataavailable
   }
 
-  __stopRecording () {
+  __stopRecording() {
     this.__setState('ready')
     this.__recorder.onstop = () => {
       var blob, ext
@@ -280,14 +331,14 @@ class CameraTab {
     return this.__recorder.stop()
   }
 
-  __cancelRecording () {
+  __cancelRecording() {
     this.__setState('ready')
     this.__recorder.stop()
     this.__chunks = []
     return this.__chunks
   }
 
-  __guessExtensionByMime (mime) {
+  __guessExtensionByMime(mime) {
     const knownContainers = {
       mp4: 'mp4',
       ogg: 'ogg',
@@ -323,7 +374,7 @@ class CameraTab {
     return 'avi'
   }
 
-  displayed () {
+  displayed() {
     this.container.find('.uploadcare--camera__button').focus()
   }
 }

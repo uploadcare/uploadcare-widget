@@ -9,7 +9,25 @@ import { isWindowDefined } from './utils/is-window-defined'
 var indexOf = [].indexOf
 
 // settings
-var arrayOptions, constrainOptions, constraints, defaultPreviewUrlCallback, defaults, flagOptions, intOptions, integration, integrationToUserAgent, normalize, parseCrop, parseShrink, presets, script, str2arr, transformOptions, transforms, urlOptions
+var arrayOptions,
+  constrainOptions,
+  constraints,
+  defaultPreviewUrlCallback,
+  defaults,
+  flagOptions,
+  intOptions,
+  integration,
+  integrationToUserAgent,
+  normalize,
+  parseCrop,
+  parseShrink,
+  presets,
+  script,
+  str2arr,
+  transformOptions,
+  transforms,
+  urlOptions
+
 defaults = {
   // developer hooks
   live: true,
@@ -29,7 +47,8 @@ defaults = {
   multipleMaxStrict: false,
   imageShrink: false,
   pathValue: true,
-  tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
+  tabs:
+    'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
   preferredTypes: '',
   inputAcceptTypes: '', // '' means default, null means "disable accept"
   // upload settings
@@ -74,28 +93,32 @@ constraints = {
 }
 presets = {
   tabs: {
-    all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle',
+    all:
+      'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle',
     default: defaults.tabs
   }
 }
 // integration setting from data attributes of script tag
-script = isWindowDefined() && (document.currentScript || (function () {
-  var scripts
-  scripts = document.getElementsByTagName('script')
-  return scripts[scripts.length - 1]
-})())
+script =
+  isWindowDefined() &&
+  (document.currentScript ||
+    (function() {
+      var scripts
+      scripts = document.getElementsByTagName('script')
+      return scripts[scripts.length - 1]
+    })())
 integration = isWindowDefined() && $(script).data('integration')
 if (integration && integration != null) {
   defaults = $.extend(defaults, { integration })
 }
-str2arr = function (value) {
+str2arr = function(value) {
   if (!$.isArray(value)) {
     value = $.trim(value)
     value = value ? value.split(' ') : []
   }
   return value
 }
-arrayOptions = function (settings, keys) {
+arrayOptions = function(settings, keys) {
   var hasOwnProperty = Object.prototype.hasOwnProperty
 
   var i, item, j, key, len, len1, source, value
@@ -117,7 +140,7 @@ arrayOptions = function (settings, keys) {
   }
   return settings
 }
-urlOptions = function (settings, keys) {
+urlOptions = function(settings, keys) {
   var i, key, len
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -127,7 +150,7 @@ urlOptions = function (settings, keys) {
   }
   return settings
 }
-flagOptions = function (settings, keys) {
+flagOptions = function(settings, keys) {
   var i, key, len, value
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -146,7 +169,7 @@ flagOptions = function (settings, keys) {
   }
   return settings
 }
-intOptions = function (settings, keys) {
+intOptions = function(settings, keys) {
   var i, key, len
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -157,12 +180,14 @@ intOptions = function (settings, keys) {
   return settings
 }
 
-integrationToUserAgent = function (settings) {
-  settings._userAgent = `UploadcareWidget/${version}/${settings.publicKey} (JavaScript${(settings.integration ? `; ${settings.integration}` : '')})`
+integrationToUserAgent = function(settings) {
+  settings._userAgent = `UploadcareWidget/${version}/${
+    settings.publicKey
+  } (JavaScript${settings.integration ? `; ${settings.integration}` : ''})`
   return settings
 }
 
-transformOptions = function (settings, transforms) {
+transformOptions = function(settings, transforms) {
   var key, transform
   for (key in transforms) {
     transform = transforms[key]
@@ -175,10 +200,10 @@ transformOptions = function (settings, transforms) {
   return settings
 }
 
-constrainOptions = function (settings, constraints) {
+constrainOptions = function(settings, constraints) {
   var key, max, min
   for (key in constraints) {
-    ({ min, max } = constraints[key])
+    ;({ min, max } = constraints[key])
     if (settings[key] != null) {
       settings[key] = Math.min(Math.max(settings[key], min), max)
     }
@@ -186,7 +211,7 @@ constrainOptions = function (settings, constraints) {
   return settings
 }
 
-parseCrop = function (val) {
+parseCrop = function(val) {
   var ratio, reRatio
   reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
   ratio = reRatio.exec($.trim(val.toLowerCase())) || []
@@ -198,7 +223,7 @@ parseCrop = function (val) {
   }
 }
 
-parseShrink = function (val) {
+parseShrink = function(val) {
   var reShrink, shrink, size
   reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
   shrink = reShrink.exec($.trim(val.toLowerCase())) || []
@@ -206,8 +231,13 @@ parseShrink = function (val) {
     return false
   }
   size = shrink[1] * shrink[2]
-  if (size > 5000000) { // ios max canvas square
-    warnOnce('Shrinked size can not be larger than 5MP. ' + `You have set ${shrink[1]}x${shrink[2]} (` + `${Math.ceil(size / 1000 / 100) / 10}MP).`)
+  if (size > 5000000) {
+    // ios max canvas square
+    warnOnce(
+      'Shrinked size can not be larger than 5MP. ' +
+        `You have set ${shrink[1]}x${shrink[2]} (` +
+        `${Math.ceil(size / 1000 / 100) / 10}MP).`
+    )
 
     return false
   }
@@ -217,7 +247,7 @@ parseShrink = function (val) {
   }
 }
 
-defaultPreviewUrlCallback = function (url, info) {
+defaultPreviewUrlCallback = function(url, info) {
   var addAmpersand, addName, addQuery, queryPart
   if (!this.previewProxy) {
     return url
@@ -238,19 +268,39 @@ defaultPreviewUrlCallback = function (url, info) {
   return this.previewProxy + queryPart
 }
 
-normalize = function (settings) {
+normalize = function(settings) {
   var skydriveIndex
   arrayOptions(settings, ['tabs', 'preferredTypes'])
   urlOptions(settings, ['cdnBase', 'socialBase', 'urlBase', 'scriptBase'])
-  flagOptions(settings, ['doNotStore', 'imagesOnly', 'multiple', 'clearable', 'pathValue', 'previewStep', 'systemDialog', 'debugUploads', 'multipleMaxStrict'])
-  intOptions(settings, ['multipleMax', 'multipleMin', 'multipartMinSize', 'multipartPartSize', 'multipartMinLastPartSize', 'multipartConcurrency', 'multipartMaxAttempts', 'parallelDirectUploads'])
+  flagOptions(settings, [
+    'doNotStore',
+    'imagesOnly',
+    'multiple',
+    'clearable',
+    'pathValue',
+    'previewStep',
+    'systemDialog',
+    'debugUploads',
+    'multipleMaxStrict'
+  ])
+  intOptions(settings, [
+    'multipleMax',
+    'multipleMin',
+    'multipartMinSize',
+    'multipartPartSize',
+    'multipartMinLastPartSize',
+    'multipartConcurrency',
+    'multipartMaxAttempts',
+    'parallelDirectUploads'
+  ])
   transformOptions(settings, transforms)
   constrainOptions(settings, constraints)
   integrationToUserAgent(settings)
   if (settings.crop !== false && !$.isArray(settings.crop)) {
     if (/^(disabled?|false|null)$/i.test(settings.crop)) {
       settings.crop = false
-    } else if ($.isPlainObject(settings.crop)) { // old format
+    } else if ($.isPlainObject(settings.crop)) {
+      // old format
       settings.crop = [settings.crop]
     } else {
       settings.crop = $.map(('' + settings.crop).split(','), parseCrop)
@@ -279,7 +329,7 @@ normalize = function (settings) {
 }
 
 // global variables only
-const globals = function () {
+const globals = function() {
   var key, scriptSettings, value
   scriptSettings = {}
   for (key in defaults) {
@@ -293,7 +343,7 @@ const globals = function () {
 
 // Defaults + global variables + global overrides (once from uploadcare.start)
 // Not publicly-accessible
-const common = once(function (settings, ignoreGlobals) {
+const common = once(function(settings, ignoreGlobals) {
   var result
   if (!ignoreGlobals) {
     defaults = $.extend(defaults, globals())
@@ -304,7 +354,7 @@ const common = once(function (settings, ignoreGlobals) {
 })
 
 // Defaults + global variables + global overrides + local overrides
-const build = function (settings) {
+const build = function(settings) {
   var result
   result = $.extend({}, common())
   if (!$.isEmptyObject(settings)) {
@@ -316,12 +366,12 @@ const build = function (settings) {
 const waitForSettings = isWindowDefined() && $.Callbacks('once memory')
 
 const CssCollector = class CssCollector {
-  constructor () {
+  constructor() {
     this.urls = []
     this.styles = []
   }
 
-  addUrl (url) {
+  addUrl(url) {
     if (!/^https?:\/\//i.test(url)) {
       throw new Error('Embedded urls should be absolute. ' + url)
     }
@@ -330,18 +380,18 @@ const CssCollector = class CssCollector {
     }
   }
 
-  addStyle (style) {
+  addStyle(style) {
     return this.styles.push(style)
   }
 }
 
-const emptyKeyText = "<div class=\"uploadcare--tab__content\">\n<div class=\"uploadcare--text uploadcare--text_size_large uploadcare--tab__title\">Hello!</div>\n<div class=\"uploadcare--text\">Your <a class=\"uploadcare--link\" href=\"https://uploadcare.com/dashboard/\">public key</a> is not set.</div>\n<div class=\"uploadcare--text\">Add this to the &lt;head&gt; tag to start uploading files:</div>\n<div class=\"uploadcare--text uploadcare--text_pre\">&lt;script&gt;\nUPLOADCARE_PUBLIC_KEY = 'your_public_key';\n&lt;/script&gt;</div>\n</div>"
+const emptyKeyText =
+  '<div class="uploadcare--tab__content">\n<div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">Hello!</div>\n<div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>\n<div class="uploadcare--text">Add this to the &lt;head&gt; tag to start uploading files:</div>\n<div class="uploadcare--text uploadcare--text_pre">&lt;script&gt;\nUPLOADCARE_PUBLIC_KEY = \'your_public_key\';\n&lt;/script&gt;</div>\n</div>'
 
 export {
   defaults,
   presets,
   emptyKeyText,
-
   globals,
   build,
   common,

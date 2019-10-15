@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -17,7 +16,7 @@ const translations = {
     user: 'Envoi annulé',
     info: 'Impossible de charger les informations',
     image: 'Seules les images sont autorisées',
-    createGroup: 'Création d\'1 groupe impossible',
+    createGroup: "Création d'1 groupe impossible",
     deleted: 'Le fichier a été supprimé'
   },
   draghere: 'Glissez-déposez un fichier ici',
@@ -73,7 +72,7 @@ const translations = {
       },
       url: {
         title: 'Fichiers depuis le Web',
-        line1: 'Prenez n\'importe quel fichier depuis un site web.',
+        line1: "Prenez n'importe quel fichier depuis un site web.",
         line2: 'Saisissez simplement son adresse.',
         input: 'Collez le lien ici...',
         button: 'Envoi'
@@ -87,12 +86,14 @@ const translations = {
         cancelRecord: 'Annuler',
         retry: 'Envoyer une nouvelle demande de permission',
         pleaseAllow: {
-          title: 'Autorisez l\'accès à votre appareil photo',
-          text: 'Vous avez été invité à autoriser l\'accès à votre appareil photo. Pour prendre des photos avec votre caméra vous devez approuver cette demande.'
+          title: "Autorisez l'accès à votre appareil photo",
+          text:
+            "Vous avez été invité à autoriser l'accès à votre appareil photo. Pour prendre des photos avec votre caméra vous devez approuver cette demande."
         },
         notFound: {
           title: 'Aucun appareil photo détecté',
-          text: 'Il semblerait que vous n\'ayez pas d\'appareil photo connecté à cet appareil.'
+          text:
+            "Il semblerait que vous n'ayez pas d'appareil photo connecté à cet appareil."
         }
       },
       preview: {
@@ -106,7 +107,7 @@ const translations = {
         },
         regular: {
           title: 'Ajouter ce fichier ?',
-          line1: 'Vous êtes sur le point d\'ajouter le fichier ci-dessus.',
+          line1: "Vous êtes sur le point d'ajouter le fichier ci-dessus.",
           line2: 'Merci de confirmer.'
         },
         image: {
@@ -125,7 +126,7 @@ const translations = {
         error: {
           default: {
             title: 'Oups!',
-            text: 'Quelque chose n\'a pas fonctionné pendant l\'envoi.',
+            text: "Quelque chose n'a pas fonctionné pendant l'envoi.",
             back: 'Merci de bien vouloir recommencer'
           },
           image: {
@@ -139,13 +140,14 @@ const translations = {
           },
           loadImage: {
             title: 'Erreur',
-            text: 'Impossible de charger l\'image'
+            text: "Impossible de charger l'image"
           }
         },
         multiple: {
           title: 'Vous avez choisi %files%',
           question: 'Voulez vous ajouter tous ces fichiers ?',
-          tooManyFiles: 'Vous avez choisi trop de fichiers. %max% est le maximum.',
+          tooManyFiles:
+            'Vous avez choisi trop de fichiers. %max% est le maximum.',
           tooFewFiles: 'Vous avez choisi %fichiers%. %min% est le minimum.',
           clear: 'Tout retirer',
           done: 'Terminer',
@@ -161,7 +163,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }

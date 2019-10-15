@@ -3,7 +3,13 @@ import $ from 'jquery'
 import { pluralize, translations } from '../locales/en'
 import { rebuild, t } from '../locale'
 
-import { globals, build, common, waitForSettings, CssCollector } from '../settings'
+import {
+  globals,
+  build,
+  common,
+  waitForSettings,
+  CssCollector
+} from '../settings'
 
 import { utils } from '../templates'
 import { Pusher } from '../vendor/pusher'
@@ -104,7 +110,7 @@ const namespace = {
   }
 }
 
-function createPlugin (ns) {
+function createPlugin(ns) {
   return fn => fn(ns)
 }
 

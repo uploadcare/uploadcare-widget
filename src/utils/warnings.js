@@ -1,13 +1,17 @@
 // utils
 
-const log = function () {
+const log = function() {
   var ref
   try {
-    return (ref = window.console) != null ? typeof ref.log === 'function' ? ref.log(...arguments) : undefined : undefined
+    return (ref = window.console) != null
+      ? typeof ref.log === 'function'
+        ? ref.log(...arguments)
+        : undefined
+      : undefined
   } catch (error) {}
 }
 
-const debug = function () {
+const debug = function() {
   var ref
   if ((ref = window.console) != null ? ref.debug : undefined) {
     try {
@@ -18,7 +22,7 @@ const debug = function () {
   }
 }
 
-const warn = function () {
+const warn = function() {
   var ref
   if ((ref = window.console) != null ? ref.warn : undefined) {
     try {
@@ -30,16 +34,11 @@ const warn = function () {
 }
 
 const messages = {}
-const warnOnce = function (msg) {
+const warnOnce = function(msg) {
   if (messages[msg] == null) {
     messages[msg] = true
     return warn(msg)
   }
 }
 
-export {
-  log,
-  debug,
-  warn,
-  warnOnce
-}
+export { log, debug, warn, warnOnce }

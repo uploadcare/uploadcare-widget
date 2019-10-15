@@ -11,7 +11,7 @@ var pushers = {}
 // Pusher.prototype.method = ...
 Pusher.prototype.constructor = Pusher
 class ManagedPusher extends Pusher {
-  subscribe (name) {
+  subscribe(name) {
     // Ensure we are connected when subscribing.
     if (this.disconnectTimeout) {
       clearTimeout(this.disconnectTimeout)
@@ -21,7 +21,7 @@ class ManagedPusher extends Pusher {
     return super.subscribe(...arguments)
   }
 
-  unsubscribe (name) {
+  unsubscribe(name) {
     super.unsubscribe(...arguments)
     // Schedule disconnect if no channels left.
     if ($.isEmptyObject(this.channels.channels)) {
@@ -33,7 +33,7 @@ class ManagedPusher extends Pusher {
   }
 }
 
-const getPusher = function (key) {
+const getPusher = function(key) {
   if (pushers[key] == null) {
     pushers[key] = new ManagedPusher(key)
   }
@@ -43,6 +43,4 @@ const getPusher = function (key) {
   return pushers[key]
 }
 
-export {
-  getPusher
-}
+export { getPusher }

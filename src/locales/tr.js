@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -70,7 +69,8 @@ const translations = {
         retry: 'Tekrar izin iste',
         pleaseAllow: {
           title: 'Lütfen kameranıza erişilmesine izin verin',
-          text: 'Bu siteden kamera erişimine izin vermeniz talep ediliyor. Kameranızla fotoğraf çekmek için bu isteği onaylamanız gerekmektedir.'
+          text:
+            'Bu siteden kamera erişimine izin vermeniz talep ediliyor. Kameranızla fotoğraf çekmek için bu isteği onaylamanız gerekmektedir.'
         },
         notFound: {
           title: 'Kamera algılanamadı',
@@ -122,7 +122,8 @@ const translations = {
         multiple: {
           title: '%files% dosya seçtiniz',
           question: 'Bu dosyaların hepsini eklemek istiyor musunuz?',
-          tooManyFiles: 'Fazla sayıda dosya seçtiniz, en fazla %max% dosya olabilir.',
+          tooManyFiles:
+            'Fazla sayıda dosya seçtiniz, en fazla %max% dosya olabilir.',
           tooFewFiles: '%files% dosya seçtiniz, en az %min% dosya olmalıdır.',
           clear: 'Hepsini kaldır',
           done: 'Bitti'
@@ -132,7 +133,7 @@ const translations = {
   }
 }
 
-const pluralize = function (n) {
+const pluralize = function(n) {
   return 'other'
 }
 

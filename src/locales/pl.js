@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -78,11 +77,14 @@ const translations = {
         retry: 'Poproś ponownie o dostęp',
         pleaseAllow: {
           title: 'Prośba o udostępnienie aparatu',
-          text: 'Zostałeś poproszony przez tę stronę o dostęp do aparatu. ' + 'Aby robić zdjecia, musisz zaakceptować tę prośbę.'
+          text:
+            'Zostałeś poproszony przez tę stronę o dostęp do aparatu. ' +
+            'Aby robić zdjecia, musisz zaakceptować tę prośbę.'
         },
         notFound: {
           title: 'Nie wykryto aparatu.',
-          text: 'Wygląda na to, że nie masz podłączonego aparatu do tego urządzenia.'
+          text:
+            'Wygląda na to, że nie masz podłączonego aparatu do tego urządzenia.'
         }
       },
       preview: {
@@ -151,11 +153,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   var ref
   if (n === 1) {
     return 'one'
-  } else if ((((ref = n % 10) >= 2 && ref <= 4)) && ((n / 10 % 10 | 0) !== 1)) {
+  } else if ((ref = n % 10) >= 2 && ref <= 4 && ((n / 10) % 10 | 0) !== 1) {
     return 'few'
   } else {
     return 'many'

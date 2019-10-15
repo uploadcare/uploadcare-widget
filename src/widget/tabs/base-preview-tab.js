@@ -3,7 +3,7 @@ import $ from 'jquery'
 import { Circle } from '../../ui/progress'
 
 class BasePreviewTab {
-  constructor (container, tabButton, dialogApi, settings, name) {
+  constructor(container, tabButton, dialogApi, settings, name) {
     var notDisabled
     this.container = container
     this.tabButton = tabButton
@@ -13,13 +13,21 @@ class BasePreviewTab {
     this.__initTabButtonCircle()
     this.container.addClass('uploadcare--preview')
     notDisabled = ':not(:disabled)'
-    this.container.on('click', '.uploadcare--preview__back' + notDisabled, () => {
-      return this.dialogApi.fileColl.clear()
-    })
-    this.container.on('click', '.uploadcare--preview__done' + notDisabled, this.dialogApi.resolve)
+    this.container.on(
+      'click',
+      '.uploadcare--preview__back' + notDisabled,
+      () => {
+        return this.dialogApi.fileColl.clear()
+      }
+    )
+    this.container.on(
+      'click',
+      '.uploadcare--preview__done' + notDisabled,
+      this.dialogApi.resolve
+    )
   }
 
-  __initTabButtonCircle () {
+  __initTabButtonCircle() {
     var circle, circleDf, circleEl, update
     circleEl = this.tabButton.find('.uploadcare--panel__icon')
     circleDf = $.Deferred()
@@ -29,7 +37,9 @@ class BasePreviewTab {
       progress = 0
       for (i = 0, len = infos.length; i < len; i++) {
         progressInfo = infos[i]
-        progress += ((progressInfo != null ? progressInfo.progress : undefined) || 0) / infos.length
+        progress +=
+          ((progressInfo != null ? progressInfo.progress : undefined) || 0) /
+          infos.length
       }
       return circleDf.notify(progress)
     }

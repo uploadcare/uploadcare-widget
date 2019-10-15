@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -71,11 +70,14 @@ const translations = {
         retry: 'Begär tillstånd igen',
         pleaseAllow: {
           title: 'Vänligen ge tillgång till din kamera',
-          text: 'Du har uppmanats att tillåta att denna webbplats får tillgång till din kamera.' + 'För att ta bilder med din kamera måste du godkänna denna begäran.'
+          text:
+            'Du har uppmanats att tillåta att denna webbplats får tillgång till din kamera.' +
+            'För att ta bilder med din kamera måste du godkänna denna begäran.'
         },
         notFound: {
           title: 'Ingen kamera hittades',
-          text: 'Det verkar som att du inte har någon kamera ansluten till denna enheten.'
+          text:
+            'Det verkar som att du inte har någon kamera ansluten till denna enheten.'
         }
       },
       preview: {
@@ -136,7 +138,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
