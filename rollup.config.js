@@ -1,10 +1,9 @@
 import babel from 'rollup-plugin-babel'
-import jst from 'rollup-plugin-jst'
-
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
+import { string } from 'rollup-plugin-string'
 import license from 'rollup-plugin-license'
 
 const bundle = (input, output, options = {}) => ({
@@ -32,17 +31,12 @@ const bundle = (input, output, options = {}) => ({
         'babel-plugin-html-tag'
       ]
     }),
-    jst({
-      templateOptions: {
-        variable: 'ext'
-      },
 
-      minify: true,
-      minifyOptions: {
-        collapseWhitespace: true
-      },
-
-      escapeModule: 'escape-html'
+    string({
+      include: [
+        'src/stylesheets/styles.css',
+        'src/svgs/icons.html'
+      ]
     }),
     json(),
 
