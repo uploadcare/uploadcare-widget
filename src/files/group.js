@@ -22,8 +22,8 @@ class FileGroup {
         results = []
         for (j = 0, len = ref.length; j < len; j++) {
           file = ref[j]
-          // eslint-disable-next-line handle-callback-err
           results.push(
+            // eslint-disable-next-line handle-callback-err
             file.then(null, function(err, info) {
               return $.when(info)
             })
