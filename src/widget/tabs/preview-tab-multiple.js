@@ -98,7 +98,7 @@ class PreviewTabMultiple extends BasePreviewTab {
       }
       filePreview = $('<img>').attr('src', cdnURL).addClass('uploadcare--file__icon')
     } else {
-      filePreview = $("<svg width='32' height='32'><use xlink:hPreviewTabMultiple='#uploadcare--icon-file'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
+      filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
     }
     fileEl.find('.uploadcare--file__preview').html(filePreview)
     return fileEl.find('.uploadcare--file__description').on('click', () => {
@@ -112,7 +112,7 @@ class PreviewTabMultiple extends BasePreviewTab {
     var fileEl, filePreview
     fileEl = this.__fileToEl(file).removeClass('uploadcare--file_status_uploading').addClass('uploadcare--file_status_error')
     fileEl.find('.uploadcare--file__error').text(t(`errors.${error}`))
-    filePreview = $("<svg width='32' height='32'><use xlink:hPreviewTabMultiple='#uploadcare--icon-error'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
+    filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
     return fileEl.find('.uploadcare--file__preview').html(filePreview)
   }
 
