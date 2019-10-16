@@ -17,7 +17,7 @@ class BaseWidget {
     this.__onUploadComplete = $.Callbacks()
     this.__onChange = $.Callbacks().add((object) => {
       return object != null ? object.promise().done((info) => {
-        return this.__onUploadComplete.fire(info)
+        return setTimeout(() => this.__onUploadComplete.fire(info), 0)
       }) : undefined
     })
     this.__setupWidget()
