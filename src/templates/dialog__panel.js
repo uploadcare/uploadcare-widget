@@ -68,7 +68,7 @@ const dialogPanel = () => html`
             role="presentation"
             class="uploadcare--icon uploadcare--powered-by__logo"
           >
-            <use xlink:href="#uploadcare--icon-uploadcare"></use>\
+            <use xlink:href="#uploadcare--icon-uploadcare"></use>
           </svg>
           
           ${t('dialog.footer.link')}
