@@ -8,17 +8,19 @@ import { Template } from './template'
 import { openDialog } from './dialog'
 
 class BaseWidget {
-  constructor (element, settings) {
+  constructor(element, settings) {
     this.element = element
     this.settings = settings
     this.validators = this.settings.validators = []
     this.currentObject = null
     this.__onDialogOpen = $.Callbacks()
     this.__onUploadComplete = $.Callbacks()
-    this.__onChange = $.Callbacks().add((object) => {
-      return object != null ? object.promise().done((info) => {
-        return this.__onUploadComplete.fire(info)
-      }) : undefined
+    this.__onChange = $.Callbacks().add(object => {
+      return object != null
+        ? object.promise().done(info => {
+            return this.__onUploadComplete.fire(info)
+          })
+        : undefined
     })
     this.__setupWidget()
     this.element.on('change.uploadcare', this.reloadInfo.bind(this))
@@ -32,15 +34,18 @@ class BaseWidget {
     })
   }
 
-  __setupWidget () {
+  __setupWidget() {
     var path
     this.template = new Template(this.settings, this.element)
     path = ['buttons.choose']
     path.push(this.settings.imagesOnly ? 'images' : 'files')
     path.push(this.settings.multiple ? 'other' : 'one')
-    this.template.addButton('open', t(path.join('.'))).toggleClass('needsclick', this.settings.systemDialog).on('click', () => {
-      return this.openDialog()
-    })
+    this.template
+      .addButton('open', t(path.join('.')))
+      .toggleClass('needsclick', this.settings.systemDialog)
+      .on('click', () => {
+        return this.openDialog()
+      })
     this.template.addButton('cancel', t('buttons.cancel')).on('click', () => {
       return this.__setObject(null)
     })
@@ -55,7 +60,7 @@ class BaseWidget {
     return this.template.reset()
   }
 
-  __infoToValue (info) {
+  __infoToValue(info) {
     if (info.cdnUrlModifiers || this.settings.pathValue) {
       return info.cdnUrl
     } else {
@@ -63,7 +68,7 @@ class BaseWidget {
     }
   }
 
-  __reset () {
+  __reset() {
     var object
     // low-level primitive. @__setObject(null) could be better.
     object = this.currentObject
@@ -76,7 +81,7 @@ class BaseWidget {
     return this.template.reset()
   }
 
-  __setObject (newFile) {
+  __setObject(newFile) {
     if (newFile === this.currentObject) {
       return
     }
@@ -90,39 +95,41 @@ class BaseWidget {
     return this.__onChange.fire(this.currentObject)
   }
 
-  __watchCurrentObject () {
+  __watchCurrentObject() {
     var object
     object = this.__currentFile()
     if (object) {
       this.template.listen(object)
-      return object.done((info) => {
-        if (object === this.__currentFile()) {
-          return this.__onUploadingDone(info)
-        }
-      }).fail((error) => {
-        if (object === this.__currentFile()) {
-          return this.__onUploadingFailed(error)
-        }
-      })
+      return object
+        .done(info => {
+          if (object === this.__currentFile()) {
+            return this.__onUploadingDone(info)
+          }
+        })
+        .fail(error => {
+          if (object === this.__currentFile()) {
+            return this.__onUploadingFailed(error)
+          }
+        })
     }
   }
 
-  __onUploadingDone (info) {
+  __onUploadingDone(info) {
     this.element.val(this.__infoToValue(info))
     this.template.setFileInfo(info)
     return this.template.loaded()
   }
 
-  __onUploadingFailed (error) {
+  __onUploadingFailed(error) {
     this.template.reset()
     return this.template.error(error)
   }
 
-  __setExternalValue (value) {
+  __setExternalValue(value) {
     return this.__setObject(valueToFile(value, this.settings))
   }
 
-  value (value) {
+  value(value) {
     if (value !== undefined) {
       this.__hasValue = true
       this.__setExternalValue(value)
@@ -132,13 +139,13 @@ class BaseWidget {
     }
   }
 
-  reloadInfo () {
+  reloadInfo() {
     return this.value(this.element.val())
   }
 
-  openDialog (tab) {
+  openDialog(tab) {
     if (this.settings.systemDialog) {
-      return fileSelectDialog(this.template.content, this.settings, (input) => {
+      return fileSelectDialog(this.template.content, this.settings, input => {
         return this.__handleDirectSelection('object', input.files)
       })
     } else {
@@ -146,16 +153,21 @@ class BaseWidget {
     }
   }
 
-  __openDialog (tab) {
+  __openDialog(tab) {
     var dialogApi
     dialogApi = openDialog(this.currentObject, tab, this.settings)
     this.__onDialogOpen.fire(dialogApi)
     return dialogApi.done(this.__setObject.bind(this))
   }
 
-  api () {
+  api() {
     if (!this.__api) {
-      this.__api = bindAll(this, ['openDialog', 'reloadInfo', 'value', 'validators'])
+      this.__api = bindAll(this, [
+        'openDialog',
+        'reloadInfo',
+        'value',
+        'validators'
+      ])
       this.__api.onChange = publicCallbacks(this.__onChange)
       this.__api.onUploadComplete = publicCallbacks(this.__onUploadComplete)
       this.__api.onDialogOpen = publicCallbacks(this.__onDialogOpen)

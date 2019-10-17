@@ -1,9 +1,8 @@
-
 import { splitCdnUrl } from '../utils'
 import { BaseFile } from './base'
 
 class UploadedFile extends BaseFile {
-  constructor (fileIdOrUrl) {
+  constructor(fileIdOrUrl) {
     var cdnUrl
     super(...arguments)
     cdnUrl = splitCdnUrl(fileIdOrUrl)
@@ -16,12 +15,12 @@ class UploadedFile extends BaseFile {
       this.__rejectApi('baddata')
     }
   }
-};
+}
 
 UploadedFile.prototype.sourceName = 'uploaded'
 
 class ReadyFile extends BaseFile {
-  constructor (data) {
+  constructor(data) {
     super(...arguments)
     if (!data) {
       this.__rejectApi('deleted')
@@ -30,7 +29,7 @@ class ReadyFile extends BaseFile {
       this.__handleFileData(data)
     }
   }
-};
+}
 
 ReadyFile.prototype.sourceName = 'uploaded'
 

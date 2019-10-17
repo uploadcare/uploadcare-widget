@@ -7,7 +7,7 @@ import { fitSize, applyCropCoordsToInfo } from '../utils'
 var cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
 class CropWidget {
-  constructor (element, originalSize, crop = {}) {
+  constructor(element, originalSize, crop = {}) {
     this.element = element
     this.originalSize = originalSize
     this.__api = $.Jcrop(this.element[0], {
@@ -39,16 +39,20 @@ class CropWidget {
   // the prefered aspect ratio.
   // If set to `null` any aspect ratio will be acceptable.
   // Array: [123, 123]. (optional)
-  setCrop (crop) {
+  setCrop(crop) {
     this.crop = crop
 
     return this.__api.setOptions({
-      aspectRatio: crop.preferedSize ? crop.preferedSize[0] / crop.preferedSize[1] : 0,
-      minSize: crop.notLess ? fitSize(crop.preferedSize, this.originalSize) : [0, 0]
+      aspectRatio: crop.preferedSize
+        ? crop.preferedSize[0] / crop.preferedSize[1]
+        : 0,
+      minSize: crop.notLess
+        ? fitSize(crop.preferedSize, this.originalSize)
+        : [0, 0]
     })
   }
 
-  setSelection (selection) {
+  setSelection(selection) {
     var center, left, size, top
     if (selection) {
       center = selection.center
@@ -70,8 +74,9 @@ class CropWidget {
     return this.__api.setSelect([left, top, size[0] + left, size[1] + top])
   }
 
-  __parseModifiers (modifiers) {
-    var raw = modifiers != null ? modifiers.match(cropModifierRegExp) : undefined
+  __parseModifiers(modifiers) {
+    var raw =
+      modifiers != null ? modifiers.match(cropModifierRegExp) : undefined
     if (raw) {
       return {
         width: parseInt(raw[1], 10),
@@ -83,11 +88,11 @@ class CropWidget {
     }
   }
 
-  setSelectionFromModifiers (modifiers) {
+  setSelectionFromModifiers(modifiers) {
     return this.setSelection(this.__parseModifiers(modifiers))
   }
 
-  getSelection () {
+  getSelection() {
     var coords, left, top
     coords = this.__api.tellSelect()
     left = Math.round(Math.max(0, coords.x))
@@ -100,11 +105,16 @@ class CropWidget {
     }
   }
 
-  applySelectionToFile (file) {
-    return file.then((info) => {
-      return applyCropCoordsToInfo(info, this.crop, this.originalSize, this.getSelection())
+  applySelectionToFile(file) {
+    return file.then(info => {
+      return applyCropCoordsToInfo(
+        info,
+        this.crop,
+        this.originalSize,
+        this.getSelection()
+      )
     })
   }
-};
+}
 
 export { CropWidget }

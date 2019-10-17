@@ -1,4 +1,3 @@
-
 // #
 // # English locale is the default and used as a fallback.
 // #
@@ -84,7 +83,9 @@ const translations = {
         retry: 'Request permissions again',
         pleaseAllow: {
           title: 'Please allow access to your camera',
-          text: 'You have been prompted to allow camera access from this site.<br>' + 'In order to take pictures with your camera you must approve this request.'
+          text:
+            'You have been prompted to allow camera access from this site.<br>' +
+            'In order to take pictures with your camera you must approve this request.'
         },
         notFound: {
           title: 'No camera detected',
@@ -161,7 +162,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }

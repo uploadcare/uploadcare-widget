@@ -17,7 +17,7 @@ import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 
-const lockDialogFocus = function (e) {
+const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
     return focusableElements.first().focus()
@@ -27,43 +27,49 @@ const lockDialogFocus = function (e) {
   }
 }
 
-const lockScroll = function (el, toTop) {
+const lockScroll = function(el, toTop) {
   var left, top
   top = el.scrollTop()
   left = el.scrollLeft()
   if (toTop) {
     el.scrollTop(0).scrollLeft(0)
   }
-  return function () {
+  return function() {
     return el.scrollTop(top).scrollLeft(left)
   }
 }
 
-isWindowDefined() && $(window).on('keydown', (e) => {
-  if (isDialogOpened()) {
-    if (e.which === 27) { // Escape
-      e.stopImmediatePropagation()
-      // close only topmost dialog
-      if (typeof currentDialogPr !== 'undefined' && currentDialogPr !== null) {
-        currentDialogPr.reject()
+isWindowDefined() &&
+  $(window).on('keydown', e => {
+    if (isDialogOpened()) {
+      if (e.which === 27) {
+        // Escape
+        e.stopImmediatePropagation()
+        // close only topmost dialog
+        if (
+          typeof currentDialogPr !== 'undefined' &&
+          currentDialogPr !== null
+        ) {
+          currentDialogPr.reject()
+        }
+      }
+      if (e.which === 9) {
+        // Tab
+        return lockDialogFocus(e)
       }
     }
-    if (e.which === 9) { // Tab
-      return lockDialogFocus(e)
-    }
-  }
-})
+  })
 
 let currentDialogPr = null
 const openedClass = 'uploadcare--page'
 let originalFocusedElement = null
 let focusableElements = null
 
-const isDialogOpened = function () {
+const isDialogOpened = function() {
   return currentDialogPr !== null
 }
 
-const closeDialog = function () {
+const closeDialog = function() {
   // todo fix this
 
   var results = []
@@ -76,12 +82,17 @@ const closeDialog = function () {
   return results
 }
 
-const openDialog = function (files, tab, settings) {
+const openDialog = function(files, tab, settings) {
   var cancelLock, dialog, dialogPr
   closeDialog()
   originalFocusedElement = document.activeElement
   dialog = $(tpl('dialog')).appendTo('body')
-  dialogPr = openPanel(dialog.find('.uploadcare--dialog__placeholder'), files, tab, settings)
+  dialogPr = openPanel(
+    dialog.find('.uploadcare--dialog__placeholder'),
+    files,
+    tab,
+    settings
+  )
   dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
   dialog.addClass('uploadcare--dialog_status_active')
   dialogPr.dialogElement = dialog
@@ -90,20 +101,23 @@ const openDialog = function (files, tab, settings) {
   cancelLock = lockScroll($(window), dialog.css('position') === 'absolute')
   $('html, body').addClass(openedClass)
   dialog.find('.uploadcare--dialog__close').on('click', dialogPr.reject)
-  dialog.on('dblclick', function (e) {
+  dialog.on('dblclick', function(e) {
     var showStoppers
     // handler can be called after element detached (close button)
     if (!$.contains(document.documentElement, e.target)) {
       return
     }
     showStoppers = '.uploadcare--dialog__panel, .uploadcare--dialog__powered-by'
-    if ($(e.target).is(showStoppers) || $(e.target).parents(showStoppers).length) {
+    if (
+      $(e.target).is(showStoppers) ||
+      $(e.target).parents(showStoppers).length
+    ) {
       return
     }
     return dialogPr.reject()
   })
 
-  currentDialogPr = dialogPr.always(function () {
+  currentDialogPr = dialogPr.always(function() {
     $('html, body').removeClass(openedClass)
     currentDialogPr = null
     dialog.remove()
@@ -114,7 +128,7 @@ const openDialog = function (files, tab, settings) {
   return currentDialogPr
 }
 
-const openPreviewDialog = function (file, settings) {
+const openPreviewDialog = function(file, settings) {
   var dialog, oldDialogPr
   // hide current opened dialog and open new one
   oldDialogPr = currentDialogPr
@@ -127,12 +141,14 @@ const openPreviewDialog = function (file, settings) {
   if (oldDialogPr != null) {
     oldDialogPr.dialogElement.addClass('uploadcare--dialog_status_inactive')
   }
-  dialog.always(function () {
+  dialog.always(function() {
     currentDialogPr = oldDialogPr
     if (oldDialogPr != null) {
       // still opened
       $('html, body').addClass(openedClass)
-      return oldDialogPr.dialogElement.removeClass('uploadcare--dialog_status_inactive')
+      return oldDialogPr.dialogElement.removeClass(
+        'uploadcare--dialog_status_inactive'
+      )
     }
   })
   dialog.onTabVisibility((tab, shown) => {
@@ -145,7 +161,7 @@ const openPreviewDialog = function (file, settings) {
 
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
-const openPanel = function (placeholder, files, tab, settings) {
+const openPanel = function(placeholder, files, tab, settings) {
   var filter, panel
 
   if ($.isPlainObject(tab)) {
@@ -165,7 +181,7 @@ const openPanel = function (placeholder, files, tab, settings) {
 
   panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
-  filter = function (files) {
+  filter = function(files) {
     if (settings.multiple) {
       return FileGroup(files, settings)
     } else {
@@ -177,7 +193,7 @@ const openPanel = function (placeholder, files, tab, settings) {
 }
 
 const registeredTabs = {}
-const registerTab = function (tabName, constructor) {
+const registerTab = function(tabName, constructor) {
   registeredTabs[tabName] = constructor
   return registeredTabs[tabName]
 }
@@ -196,11 +212,17 @@ registerTab('evernote', RemoteTab)
 registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
-registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
+registerTab('empty-pubkey', function(tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
 
-registerTab('preview', function (tabPanel, tabButton, dialogApi, settings, name) {
+registerTab('preview', function(
+  tabPanel,
+  tabButton,
+  dialogApi,
+  settings,
+  name
+) {
   var tabCls
   if (!settings.previewStep && dialogApi.fileColl.length() === 0) {
     return
@@ -211,7 +233,7 @@ registerTab('preview', function (tabPanel, tabButton, dialogApi, settings, name)
 })
 
 class Panel {
-  constructor (settings1, placeholder, files, tab) {
+  constructor(settings1, placeholder, files, tab) {
     var sel
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
@@ -238,7 +260,9 @@ class Panel {
       this.panel.addClass('uploadcare--panel_multiple')
     }
     this.panel.find('.uploadcare--menu__toggle').on('click', () => {
-      return this.panel.find('.uploadcare--menu').toggleClass('uploadcare--menu_opened')
+      return this.panel
+        .find('.uploadcare--menu')
+        .toggleClass('uploadcare--menu_opened')
     })
     // files collection
     this.files = new CollectionOfPromises(files)
@@ -251,7 +275,9 @@ class Panel {
     this.tabs = {}
     this.__prepareFooter()
     this.onTabVisibility = $.Callbacks().add((tab, show) => {
-      return this.panel.find(`.uploadcare--menu__item_tab_${tab}`).toggleClass('uploadcare--menu__item_hidden', !show)
+      return this.panel
+        .find(`.uploadcare--menu__item_tab_${tab}`)
+        .toggleClass('uploadcare--menu__item_hidden', !show)
     })
     if (this.settings.publicKey) {
       this.__prepareTabs(tab)
@@ -260,7 +286,7 @@ class Panel {
     }
   }
 
-  publicPromise () {
+  publicPromise() {
     if (!this.promise) {
       this.promise = this.dfd.promise({
         reject: this.__reject,
@@ -279,7 +305,7 @@ class Panel {
     return this.promise
   }
 
-  addFiles (files, data) {
+  addFiles(files, data) {
     var file, i, len
     if (data) {
       // 'files' is actually file type
@@ -309,7 +335,7 @@ class Panel {
     }
   }
 
-  __autoCrop (files) {
+  __autoCrop(files) {
     var crop, i, len, ref
     if (!this.settings.crop || !this.settings.multiple) {
       return
@@ -323,7 +349,7 @@ class Panel {
         return
       }
     }
-    return files.autoThen((fileInfo) => {
+    return files.autoThen(fileInfo => {
       var info, size
       // .cdnUrlModifiers came from already cropped files
       // .crop came from autocrop even if autocrop do not set cdnUrlModifiers
@@ -331,25 +357,34 @@ class Panel {
         return fileInfo
       }
       info = fileInfo.originalImageInfo
-      size = fitSize(this.settings.crop[0].preferedSize, [info.width, info.height], true)
-      return applyCropCoordsToInfo(fileInfo, this.settings.crop[0], [info.width, info.height], {
-        width: size[0],
-        height: size[1],
-        left: Math.round((info.width - size[0]) / 2),
-        top: Math.round((info.height - size[1]) / 2)
-      })
+      size = fitSize(
+        this.settings.crop[0].preferedSize,
+        [info.width, info.height],
+        true
+      )
+      return applyCropCoordsToInfo(
+        fileInfo,
+        this.settings.crop[0],
+        [info.width, info.height],
+        {
+          width: size[0],
+          height: size[1],
+          left: Math.round((info.width - size[0]) / 2),
+          top: Math.round((info.height - size[1]) / 2)
+        }
+      )
     })
   }
 
-  __resolve () {
+  __resolve() {
     return this.dfd.resolve(this.files.get())
   }
 
-  __reject () {
+  __reject() {
     return this.dfd.reject(this.files.get())
   }
 
-  __prepareTabs (tab) {
+  __prepareTabs(tab) {
     var i, len, ref, tabName
     this.addTab('preview')
     ref = this.settings.tabs
@@ -366,45 +401,74 @@ class Panel {
     }
     if (this.settings.tabs.length === 0) {
       this.panel.addClass('uploadcare--panel_menu-hidden')
-      return this.panel.find('.uploadcare--panel__menu').addClass('uploadcare--panel__menu_hidden')
+      return this.panel
+        .find('.uploadcare--panel__menu')
+        .addClass('uploadcare--panel__menu_hidden')
     }
   }
 
-  __prepareFooter () {
+  __prepareFooter() {
     var notDisabled
     this.footer = this.panel.find('.uploadcare--panel__footer')
     notDisabled = ':not(:disabled)'
-    this.footer.on('click', '.uploadcare--panel__show-files' + notDisabled, () => {
-      return this.switchTab('preview')
-    })
-    this.footer.on('click', '.uploadcare--panel__done' + notDisabled, this.__resolve)
+    this.footer.on(
+      'click',
+      '.uploadcare--panel__show-files' + notDisabled,
+      () => {
+        return this.switchTab('preview')
+      }
+    )
+    this.footer.on(
+      'click',
+      '.uploadcare--panel__done' + notDisabled,
+      this.__resolve
+    )
     this.__updateFooter()
     this.files.onAdd.add(this.__updateFooter)
     return this.files.onRemove.add(this.__updateFooter)
   }
 
-  __updateFooter () {
+  __updateFooter() {
     var footer, tooFewFiles, tooManyFiles
     const files = this.files.length()
     tooManyFiles = files > this.settings.multipleMax
     tooFewFiles = files < this.settings.multipleMin
-    this.footer.find('.uploadcare--panel__done')
+    this.footer
+      .find('.uploadcare--panel__done')
       .attr('disabled', tooManyFiles || tooFewFiles)
       .attr('aria-disabled', tooManyFiles || tooFewFiles)
-    this.footer.find('.uploadcare--panel__show-files')
+    this.footer
+      .find('.uploadcare--panel__show-files')
       .attr('disabled', files === 0)
       .attr('aria-disabled', files === 0)
-    footer = tooManyFiles ? t('dialog.tabs.preview.multiple.tooManyFiles').replace('%max%', this.settings.multipleMax) : files && tooFewFiles ? t('dialog.tabs.preview.multiple.tooFewFiles').replace('%min%', this.settings.multipleMin) : t('dialog.tabs.preview.multiple.title')
-    this.footer.find('.uploadcare--panel__message').toggleClass('uploadcare--panel__message_hidden', files === 0).toggleClass('uploadcare--error', tooManyFiles || tooFewFiles).text(footer.replace('%files%', t('file', files)))
-    return this.footer.find('.uploadcare--panel__file-counter').toggleClass('uploadcare--error', tooManyFiles || tooFewFiles).text(files ? `(${files})` : '')
+    footer = tooManyFiles
+      ? t('dialog.tabs.preview.multiple.tooManyFiles').replace(
+          '%max%',
+          this.settings.multipleMax
+        )
+      : files && tooFewFiles
+      ? t('dialog.tabs.preview.multiple.tooFewFiles').replace(
+          '%min%',
+          this.settings.multipleMin
+        )
+      : t('dialog.tabs.preview.multiple.title')
+    this.footer
+      .find('.uploadcare--panel__message')
+      .toggleClass('uploadcare--panel__message_hidden', files === 0)
+      .toggleClass('uploadcare--error', tooManyFiles || tooFewFiles)
+      .text(footer.replace('%files%', t('file', files)))
+    return this.footer
+      .find('.uploadcare--panel__file-counter')
+      .toggleClass('uploadcare--error', tooManyFiles || tooFewFiles)
+      .text(files ? `(${files})` : '')
   }
 
-  __closePanel () {
+  __closePanel() {
     this.panel.replaceWith(this.placeholder)
     return this.content.remove()
   }
 
-  addTab (name) {
+  addTab(name) {
     var TabCls, tabButton, tabIcon, tabPanel
     if (name in this.tabs) {
       return
@@ -413,37 +477,71 @@ class Panel {
     if (!TabCls) {
       throw new Error(`No such tab: ${name}`)
     }
-    tabPanel = $('<div>').addClass('uploadcare--tab').addClass(`uploadcare--tab_name_${name}`).insertBefore(this.footer)
+    tabPanel = $('<div>')
+      .addClass('uploadcare--tab')
+      .addClass(`uploadcare--tab_name_${name}`)
+      .insertBefore(this.footer)
     if (name === 'preview') {
-      tabIcon = $('<div class="uploadcare--menu__icon uploadcare--panel__icon">')
+      tabIcon = $(
+        '<div class="uploadcare--menu__icon uploadcare--panel__icon">'
+      )
     } else {
-      tabIcon = $(`<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${name}'/></svg>`).attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--menu__icon')
+      tabIcon = $(
+        `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${name}'/></svg>`
+      )
+        .attr('role', 'presentation')
+        .attr('class', 'uploadcare--icon uploadcare--menu__icon')
     }
     tabButton = $('<div>', {
       role: 'button',
       tabindex: '0'
-    }).addClass('uploadcare--menu__item').addClass(`uploadcare--menu__item_tab_${name}`).attr('title', t(`dialog.tabs.names.${name}`)).append(tabIcon).appendTo(this.panel.find('.uploadcare--menu__items')).on('click', () => {
-      if (name === this.currentTab) {
-        return this.panel.find('.uploadcare--panel__menu').removeClass('uploadcare--menu_opened')
-      } else {
-        return this.switchTab(name)
-      }
     })
-    this.tabs[name] = new TabCls(tabPanel, tabButton, this.publicPromise(), this.settings, name)
+      .addClass('uploadcare--menu__item')
+      .addClass(`uploadcare--menu__item_tab_${name}`)
+      .attr('title', t(`dialog.tabs.names.${name}`))
+      .append(tabIcon)
+      .appendTo(this.panel.find('.uploadcare--menu__items'))
+      .on('click', () => {
+        if (name === this.currentTab) {
+          return this.panel
+            .find('.uploadcare--panel__menu')
+            .removeClass('uploadcare--menu_opened')
+        } else {
+          return this.switchTab(name)
+        }
+      })
+    this.tabs[name] = new TabCls(
+      tabPanel,
+      tabButton,
+      this.publicPromise(),
+      this.settings,
+      name
+    )
 
     return this.tabs[name]
   }
 
-  switchTab (tab) {
+  switchTab(tab) {
     var className
     if (!tab || this.currentTab === tab) {
       return
     }
     this.currentTab = tab
-    this.panel.find('.uploadcare--panel__menu').removeClass('uploadcare--menu_opened').attr('data-current', tab)
-    this.panel.find('.uploadcare--menu__item').removeClass('uploadcare--menu__item_current').filter(`.uploadcare--menu__item_tab_${tab}`).addClass('uploadcare--menu__item_current')
+    this.panel
+      .find('.uploadcare--panel__menu')
+      .removeClass('uploadcare--menu_opened')
+      .attr('data-current', tab)
+    this.panel
+      .find('.uploadcare--menu__item')
+      .removeClass('uploadcare--menu__item_current')
+      .filter(`.uploadcare--menu__item_tab_${tab}`)
+      .addClass('uploadcare--menu__item_current')
     className = 'uploadcare--tab'
-    this.panel.find(`.${className}`).removeClass(`${className}_current`).filter(`.${className}_name_${tab}`).addClass(`${className}_current`)
+    this.panel
+      .find(`.${className}`)
+      .removeClass(`${className}_current`)
+      .filter(`.${className}_name_${tab}`)
+      .addClass(`${className}_current`)
 
     if (this.tabs[tab].displayed) {
       this.tabs[tab].displayed()
@@ -452,26 +550,30 @@ class Panel {
     return this.dfd.notify(tab)
   }
 
-  showTab (tab) {
+  showTab(tab) {
     return this.onTabVisibility.fire(tab, true)
   }
 
-  hideTab (tab) {
+  hideTab(tab) {
     this.onTabVisibility.fire(tab, false)
     if (this.currentTab === tab) {
       return this.switchTab(this.__firstVisibleTab())
     }
   }
 
-  isTabVisible (tab) {
-    return !this.panel.find(`.uploadcare--menu__item_tab_${tab}`).is('.uploadcare--menu__item_hidden')
+  isTabVisible(tab) {
+    return !this.panel
+      .find(`.uploadcare--menu__item_tab_${tab}`)
+      .is('.uploadcare--menu__item_hidden')
   }
 
-  openMenu () {
-    return this.panel.find('.uploadcare--panel__menu').addClass('uploadcare--menu_opened')
+  openMenu() {
+    return this.panel
+      .find('.uploadcare--panel__menu')
+      .addClass('uploadcare--menu_opened')
   }
 
-  __firstVisibleTab () {
+  __firstVisibleTab() {
     var i, len, ref, tab
     ref = this.settings.tabs
     for (i = 0, len = ref.length; i < len; i++) {
@@ -482,7 +584,7 @@ class Panel {
     }
   }
 
-  __welcome () {
+  __welcome() {
     var i, len, ref, tabName
     this.addTab('empty-pubkey')
     this.switchTab('empty-pubkey')
@@ -494,13 +596,23 @@ class Panel {
     return null
   }
 
-  __addFakeTab (name) {
+  __addFakeTab(name) {
     var tabIcon
-    tabIcon = $(`<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${name}'/></svg>`).attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--menu__icon')
+    tabIcon = $(
+      `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${name}'/></svg>`
+    )
+      .attr('role', 'presentation')
+      .attr('class', 'uploadcare--icon uploadcare--menu__icon')
     if (name === 'empty-pubkey') {
       tabIcon.addClass('uploadcare--panel__icon')
     }
-    return $('<div>').addClass('uploadcare--menu__item').addClass(`uploadcare--menu__item_tab_${name}`).attr('aria-disabled', true).attr('title', t(`dialog.tabs.names.${name}`)).append(tabIcon).appendTo(this.panel.find('.uploadcare--menu__items'))
+    return $('<div>')
+      .addClass('uploadcare--menu__item')
+      .addClass(`uploadcare--menu__item_tab_${name}`)
+      .attr('aria-disabled', true)
+      .attr('title', t(`dialog.tabs.names.${name}`))
+      .append(tabIcon)
+      .appendTo(this.panel.find('.uploadcare--menu__items'))
   }
 }
 

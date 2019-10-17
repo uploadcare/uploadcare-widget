@@ -3,9 +3,19 @@ import namespaceApi, { createPlugin } from './namespace.api'
 import { JST, tpl } from '../templates'
 
 import { CropWidget } from '../ui/crop-widget'
-import { Circle, BaseRenderer, TextRenderer, CanvasRenderer } from '../ui/progress'
+import {
+  Circle,
+  BaseRenderer,
+  TextRenderer,
+  CanvasRenderer
+} from '../ui/progress'
 
-import { support, uploadDrop, watchDragging, receiveDrop } from '../widget/dragdrop'
+import {
+  support,
+  uploadDrop,
+  watchDragging,
+  receiveDrop
+} from '../widget/dragdrop'
 
 import { FileTab } from '../widget/tabs/file-tab'
 import { UrlTab } from '../widget/tabs/url-tab'
@@ -29,7 +39,13 @@ import {
   registerTab
 } from '../widget/dialog'
 
-import { initialize, SingleWidget, MultipleWidget, Widget, start } from '../widget/live'
+import {
+  initialize,
+  SingleWidget,
+  MultipleWidget,
+  Widget,
+  start
+} from '../widget/live'
 
 const namespace = {
   ...namespaceApi,

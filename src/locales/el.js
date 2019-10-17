@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -87,7 +86,8 @@ const translations = {
         stopRecord: 'Διακοπή',
         retry: 'Νέο αίτημα για άδεια',
         pleaseAllow: {
-          text: 'Έχετε δεχτεί υπόδειξη να επιτρέψετε την πρόσβαση στην κάμερα από αυτόν τον ιστότοπο.<br>Για να τραβήξετε φωτογραφίες με την κάμερά σας πρέπει να εγκρίνετε αυτό το αίτημα.',
+          text:
+            'Έχετε δεχτεί υπόδειξη να επιτρέψετε την πρόσβαση στην κάμερα από αυτόν τον ιστότοπο.<br>Για να τραβήξετε φωτογραφίες με την κάμερά σας πρέπει να εγκρίνετε αυτό το αίτημα.',
           title: 'Παρακαλούμε επιτρέψτε την πρόσβαση στην κάμερά σας'
         },
         notFound: {
@@ -145,7 +145,8 @@ const translations = {
         multiple: {
           title: 'Έχετε επιλέξει %files%',
           question: 'Προσθήκη %files%;',
-          tooManyFiles: 'Έχετε επιλέξει πάρα πολλά αρχεία. Το μέγιστο είναι %max%.',
+          tooManyFiles:
+            'Έχετε επιλέξει πάρα πολλά αρχεία. Το μέγιστο είναι %max%.',
           tooFewFiles: 'Έχετε επιλέξει %files%. Απαιτούνται τουλάχιστον %min%.',
           clear: 'Κατάργηση όλων',
           file: {
@@ -165,7 +166,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }

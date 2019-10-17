@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -74,7 +73,9 @@ const translations = {
         retry: 'Request permissions again',
         pleaseAllow: {
           title: 'Please allow access to your camera',
-          text: 'You have been prompted to allow camera access from this site. ' + 'In order to take pictures with your camera you must approve this request.'
+          text:
+            'You have been prompted to allow camera access from this site. ' +
+            'In order to take pictures with your camera you must approve this request.'
         },
         notFound: {
           title: 'No camera detected',
@@ -131,7 +132,8 @@ const translations = {
         multiple: {
           title: 'Oled valinud %files%',
           question: 'Kas sa soovid lisada kõik failid?',
-          tooManyFiles: 'Oled valinud liiga suure hulga faile. %max% on maksimaalne.',
+          tooManyFiles:
+            'Oled valinud liiga suure hulga faile. %max% on maksimaalne.',
           tooFewFiles: 'Oled valinud %files%. Vähemalt %min% nõutud.',
           clear: 'Eemalda kõik',
           done: 'Valmis'
@@ -143,7 +145,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }

@@ -75,7 +75,13 @@ import { isFileGroup, valueToGroup, isFileGroupsEqual } from '../utils/groups'
 import { pluralize, translations } from '../locales/en'
 import { rebuild, t } from '../locale'
 
-import { globals, build, common, waitForSettings, CssCollector } from '../settings'
+import {
+  globals,
+  build,
+  common,
+  waitForSettings,
+  CssCollector
+} from '../settings'
 
 import { Pusher } from '../vendor/pusher'
 import { BaseFile } from '../files/base'
@@ -258,7 +264,7 @@ const namespace = {
   }
 }
 
-function createPlugin (ns) {
+function createPlugin(ns) {
   return fn => fn(ns)
 }
 

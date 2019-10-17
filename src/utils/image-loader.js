@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 // utils
-const trackLoading = function (image, src) {
+const trackLoading = function(image, src) {
   var def
   def = $.Deferred()
   if (src) {
@@ -21,7 +21,7 @@ const trackLoading = function (image, src) {
   return def.promise()
 }
 
-const imageLoader = function (image) {
+const imageLoader = function(image) {
   // if argument is an array, treat as
   // load(['1.jpg', '2.jpg'])
   if ($.isArray(image)) {
@@ -34,15 +34,17 @@ const imageLoader = function (image) {
   }
 }
 
-const videoLoader = function (src) {
+const videoLoader = function(src) {
   var def = $.Deferred()
 
-  $('<video/>').on('loadeddata', def.resolve).on('error', def.reject).attr('src', src).get(0).load()
+  $('<video/>')
+    .on('loadeddata', def.resolve)
+    .on('error', def.reject)
+    .attr('src', src)
+    .get(0)
+    .load()
 
   return def.promise()
 }
 
-export {
-  imageLoader,
-  videoLoader
-}
+export { imageLoader, videoLoader }

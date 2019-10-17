@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -109,7 +108,8 @@ const translations = {
           title: '%files%つのファイルを選択中',
           question: 'これら全てのファイルを追加しますか？',
           tooManyFiles: '選択ファイルが多すぎます。%max%つ以下にしてください。',
-          tooFewFiles: '選択ファイルが少なすぎます。%files%つ選択中です。少なくとも%min%つ選択してください。',
+          tooFewFiles:
+            '選択ファイルが少なすぎます。%files%つ選択中です。少なくとも%min%つ選択してください。',
           clear: '全て削除',
           done: '完了'
         }
@@ -120,7 +120,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   return 'other'
 }
 

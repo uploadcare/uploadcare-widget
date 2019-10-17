@@ -13,31 +13,38 @@ var defaults = {
   pluralize: locales[defaultLang].pluralize
 }
 
-var _build = function (settings) {
+var _build = function(settings) {
   var lang, pluralize, translations
   lang = settings.locale || defaults.lang
-  translations = $.extend(true, {}, locales[lang].translations, settings.localeTranslations)
-  pluralize = $.isFunction(settings.localePluralize) ? settings.localePluralize : locales[lang].pluralize
+  translations = $.extend(
+    true,
+    {},
+    locales[lang].translations,
+    settings.localeTranslations
+  )
+  pluralize = $.isFunction(settings.localePluralize)
+    ? settings.localePluralize
+    : locales[lang].pluralize
   return { lang, translations, pluralize }
 }
 
-var build = once(function () {
+var build = once(function() {
   return _build(buildSettings())
 })
 
 // Backdoor for widget constructor
-const rebuild = function (settings) {
+const rebuild = function(settings) {
   var result
   result = _build(buildSettings(settings))
 
-  build = function () {
+  build = function() {
     return result
   }
 
   return build
 }
 
-var translate = function (key, node) {
+var translate = function(key, node) {
   var i, len, path, subkey
   path = key.split('.')
   for (i = 0, len = path.length; i < len; i++) {
@@ -50,17 +57,20 @@ var translate = function (key, node) {
   return node
 }
 
-const t = function (key, n) {
+const t = function(key, n) {
   var locale, ref, value
   locale = build()
   value = translate(key, locale.translations)
-  if ((value == null) && locale.lang !== defaults.lang) {
+  if (value == null && locale.lang !== defaults.lang) {
     locale = defaults
     value = translate(key, locale.translations)
   }
   if (n != null) {
     if (locale.pluralize != null) {
-      value = ((ref = value[locale.pluralize(n)]) != null ? ref.replace('%1', n) : undefined) || n
+      value =
+        ((ref = value[locale.pluralize(n)]) != null
+          ? ref.replace('%1', n)
+          : undefined) || n
     } else {
       value = ''
     }
@@ -68,7 +78,4 @@ const t = function (key, n) {
   return value || ''
 }
 
-export {
-  rebuild,
-  t
-}
+export { rebuild, t }

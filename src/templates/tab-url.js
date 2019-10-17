@@ -3,7 +3,9 @@ import { t } from '../locale'
 
 const tabUrl = () => html`
   <div class="uploadcare--tab__content">
-    <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">
+    <div
+      class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"
+    >
       ${t('dialog.tabs.url.title')}
     </div>
 

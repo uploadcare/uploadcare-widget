@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -74,11 +73,13 @@ const translations = {
         retry: 'Berechtigungen erneut anfordern',
         pleaseAllow: {
           title: 'Bitte erlauben Sie den Zugriff auf Ihre Kamera',
-          text: 'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
+          text:
+            'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
         },
         notFound: {
           title: 'Keine Kamera gefunden',
-          text: 'Es sieht so aus, als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
+          text:
+            'Es sieht so aus, als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
         }
       },
       preview: {
@@ -123,8 +124,10 @@ const translations = {
         multiple: {
           title: 'Sie haben %files% Dateien gewählt',
           question: 'Möchten Sie all diese Dateien hinzufügen?',
-          tooManyFiles: 'Sie haben zu viele Dateien gewählt. %max% ist das Maximum.',
-          tooFewFiles: 'Sie haben %files% Dateien gewählt. Es sind mindestens %min% nötig.',
+          tooManyFiles:
+            'Sie haben zu viele Dateien gewählt. %max% ist das Maximum.',
+          tooFewFiles:
+            'Sie haben %files% Dateien gewählt. Es sind mindestens %min% nötig.',
           clear: 'Alle löschen',
           done: 'Fertig',
           file: {
@@ -139,7 +142,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
