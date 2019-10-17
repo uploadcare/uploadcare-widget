@@ -14,7 +14,8 @@ export default {
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: 'dist/uploadcare.full.js'
+    file: 'dist/uploadcare.full.js',
+    sourcemap: 'inline'
   },
 
   watch: {
@@ -26,7 +27,6 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]],
       plugins: ['@babel/plugin-proposal-export-namespace-from']
     }),
     jst({
