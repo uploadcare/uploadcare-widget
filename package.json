@@ -18,6 +18,7 @@
     "dev:css": "nodemon --watch src/stylesheets --exec 'postcss -o ./src/stylesheets/styles.css -c ./scripts/postcss.config.js' src/stylesheets/styles.pcss",
     "dev:js": "rollup -wc scripts/rollup.config.dev.js",
     "dev": "npm run dev:css & npm run dev:svg & npm run dev:js",
+    "format": "prettier src/**/*.js --write",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
     "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
