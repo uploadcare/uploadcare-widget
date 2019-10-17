@@ -194,7 +194,8 @@ class CollectionOfPromises extends UniqCollection {
     if (this._thenArgs) {
       item = item.then(...this._thenArgs)
     }
-    super.add(...arguments)
+
+    super.add(item)
     return this.__watchItem(item)
   }
 
