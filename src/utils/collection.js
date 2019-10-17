@@ -194,7 +194,8 @@ class CollectionOfPromises extends UniqCollection {
     if (this._thenArgs) {
       item = item.then(...this._thenArgs)
     }
-    super.add(...arguments)
+
+    super.add(item)
     return this.__watchItem(item)
   }
 
@@ -219,7 +220,12 @@ class CollectionOfPromises extends UniqCollection {
     return item.then(
       handler(this.anyDoneList),
       handler(this.anyFailList),
-      handler(this.anyProgressList)
+      // handler(this.anyProgressList)
+      (...args) => {
+        if (indexOf.call(this.__items, item) >= 0) {
+          return this.anyProgressList.fire(item, ...args)
+        }
+      }
     )
   }
 
