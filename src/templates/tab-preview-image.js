@@ -25,7 +25,7 @@ const tabPreviewImage = ({ src, name = '', crop }) => html`
 
 <div class="uploadcare--footer uploadcare--tab__footer">
   <div class="uploadcare--footer__additions">
-    ${crop && html`
+    ${crop ? html`
       <div class="uploadcare--crop-sizes">
         <div
           role="button"
@@ -36,7 +36,7 @@ const tabPreviewImage = ({ src, name = '', crop }) => html`
           <div class="uploadcare--crop-sizes__icon"></div>
         </div>
       </div>
-    `}
+    ` : ''}
   </div>
 
   <!-- TODO Change Cancel to Remove -->
