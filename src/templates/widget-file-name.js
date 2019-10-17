@@ -9,10 +9,8 @@ const widgetFileName = ({ name, size }) => html`
   >
     ${fitText(name, 20)}
   </div>
-  <!--  ¯\_(ツ)_/¯  -->
-  <div class="uploadcare--widget__file-size">,
-    ${readableFileSize(size)}
-  </div>
+
+  <div class="uploadcare--widget__file-size">, ${readableFileSize(size)}</div>
 `
 
 export { widgetFileName }

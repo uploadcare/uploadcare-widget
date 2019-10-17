@@ -9,6 +9,4 @@ const widgetButton = ({ caption, name }) => html`
   </button>
 `
 
-export {
-  widgetButton
-}
+export { widgetButton }

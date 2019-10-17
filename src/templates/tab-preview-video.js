@@ -12,7 +12,10 @@ const tabPreviewVideo = () => html`
 
   <div class="uploadcare--tab__content uploadcare--preview__content">
     <div class="uploadcare--media">
-      <video controls class="uploadcare--media__video uploadcare--preview__video"></video>
+      <video
+        controls
+        class="uploadcare--media__video uploadcare--preview__video"
+      ></video>
     </div>
   </div>
 

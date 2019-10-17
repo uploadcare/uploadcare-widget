@@ -3,7 +3,9 @@ import { t } from '../locale'
 
 const tabPreviewUnknown = () => html`
   <div class="uploadcare--tab__header">
-    <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title">
+    <div
+      class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"
+    >
       ${t('dialog.tabs.preview.unknown.title')}
     </div>
   </div>
@@ -14,7 +16,7 @@ const tabPreviewUnknown = () => html`
 
   <div class="uploadcare--footer uploadcare--tab__footer">
     <!-- TODO Change Cancel to Remove -->
-    
+
     <button
       type="button"
       class="uploadcare--button uploadcare--footer__button uploadcare--preview__back"

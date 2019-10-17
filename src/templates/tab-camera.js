@@ -3,7 +3,9 @@ import { t } from '../locale'
 
 const tabCamera = () => html`
   <div class="uploadcare--tab__content">
-    <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">
+    <div
+      class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"
+    >
       ${t('dialog.tabs.camera.title')}
     </div>
 
@@ -13,25 +15,40 @@ const tabCamera = () => html`
         class="uploadcare--media__video uploadcare--camera__video uploadcare--camera__video_mirrored"
       ></video>
 
-      <button type="button" class="uploadcare--button uploadcare--button_size_small uploadcare--button_overlay uploadcare--camera__button uploadcare--camera__button_type_mirror">
+      <button
+        type="button"
+        class="uploadcare--button uploadcare--button_size_small uploadcare--button_overlay uploadcare--camera__button uploadcare--camera__button_type_mirror"
+      >
         ${t('dialog.tabs.camera.mirror')}
       </button>
     </div>
 
     <div class="uploadcare--camera__controls">
-      <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_start-record">
+      <button
+        type="button"
+        class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_start-record"
+      >
         ${t('dialog.tabs.camera.startRecord')}
       </button>
-  
-      <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_capture">
+
+      <button
+        type="button"
+        class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_capture"
+      >
         ${t('dialog.tabs.camera.capture')}
       </button>
-    
-      <button type="button" class="uploadcare--button uploadcare--camera__button uploadcare--camera__button_type_cancel-record">
+
+      <button
+        type="button"
+        class="uploadcare--button uploadcare--camera__button uploadcare--camera__button_type_cancel-record"
+      >
         ${t('dialog.tabs.camera.cancelRecord')}
       </button>
-    
-      <button type="button" class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_stop-record">
+
+      <button
+        type="button"
+        class="uploadcare--button uploadcare--button_primary uploadcare--camera__button uploadcare--camera__button_type_stop-record"
+      >
         ${t('dialog.tabs.camera.stopRecord')}
       </button>
     </div>

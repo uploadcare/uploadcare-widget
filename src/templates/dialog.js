@@ -11,7 +11,12 @@ const dialog = () => html`
         aria-label="${t('dialog.close')}"
         class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--dialog__close"
       >
-        <svg role="presentation" width="32" height="32" class="uploadcare--icon">
+        <svg
+          role="presentation"
+          width="32"
+          height="32"
+          class="uploadcare--icon"
+        >
           <use xlink:href="#uploadcare--icon-close"></use>
         </svg>
       </button>
@@ -34,7 +39,7 @@ const dialog = () => html`
         >
           <use xlink:href="#uploadcare--icon-uploadcare"></use>
         </svg>
-      
+
         ${t('dialog.footer.link')}
       </a>
     </div>

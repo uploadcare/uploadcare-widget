@@ -3,7 +3,9 @@ import { t } from '../locale'
 
 const tabFile = () => html`
   <div class="uploadcare--tab__content uploadcare--draganddrop">
-    <div class="uploadcare--text uploadcare--text_size_extra-large uploadcare--dragging__show">
+    <div
+      class="uploadcare--text uploadcare--text_size_extra-large uploadcare--dragging__show"
+    >
       ${t('draghere')}
     </div>
 
@@ -12,12 +14,16 @@ const tabFile = () => html`
         <div class="uploadcare--text uploadcare--text_size_extra-large">
           ${t('dialog.tabs.file.drag')}
         </div>
-        <div class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted">
+        <div
+          class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted"
+        >
           ${t('dialog.tabs.file.or')}
         </div>
       </div>
 
-      <div class="uploadcare--text uploadcare--text_size_large uploadcare--draganddrop__not-supported">
+      <div
+        class="uploadcare--text uploadcare--text_size_large uploadcare--draganddrop__not-supported"
+      >
         ${t('dialog.tabs.file.nodrop')}
       </div>
     </div>
@@ -30,14 +36,24 @@ const tabFile = () => html`
     </button>
 
     <div class="uploadcare--file-sources uploadcare--dragging__hide">
-      <div class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted uploadcare--file-sources__caption">
+      <div
+        class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted uploadcare--file-sources__caption"
+      >
         ${t('dialog.tabs.file.also')}
       </div>
       <div class="uploadcare--file-sources__items">
-        <button type="button" class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item">
-            <svg role="presentation" width="32" height="32" class="uploadcare--icon">
-                <use xlink:href="#uploadcare--icon-more"></use>
-            </svg>
+        <button
+          type="button"
+          class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item"
+        >
+          <svg
+            role="presentation"
+            width="32"
+            height="32"
+            class="uploadcare--icon"
+          >
+            <use xlink:href="#uploadcare--icon-more"></use>
+          </svg>
         </button>
       </div>
     </div>

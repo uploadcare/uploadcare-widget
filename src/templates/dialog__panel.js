@@ -35,7 +35,9 @@ const dialogPanel = () => html`
 
     <div class="uploadcare--panel__content">
       <div class="uploadcare--footer uploadcare--panel__footer">
-        <div class="uploadcare--footer__additions uploadcare--panel__message"></div>
+        <div
+          class="uploadcare--footer__additions uploadcare--panel__message"
+        ></div>
 
         <button
           type="button"
@@ -70,7 +72,7 @@ const dialogPanel = () => html`
           >
             <use xlink:href="#uploadcare--icon-uploadcare"></use>
           </svg>
-          
+
           ${t('dialog.footer.link')}
         </a>
       </div>
