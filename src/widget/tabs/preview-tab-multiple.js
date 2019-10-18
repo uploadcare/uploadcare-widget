@@ -137,7 +137,7 @@ class PreviewTabMultiple extends BasePreviewTab {
   }
 
   __fileDone(file, info) {
-    var cdnURL, fileEl, filePreview
+    var cdnURL, fileEl, filePreview, filename
     fileEl = this.__fileToEl(file)
       .removeClass('uploadcare--file_status_uploading')
       .addClass('uploadcare--file_status_uploaded')
@@ -148,8 +148,10 @@ class PreviewTabMultiple extends BasePreviewTab {
       if (this.settings.previewUrlCallback) {
         cdnURL = this.settings.previewUrlCallback(cdnURL, info)
       }
+      filename = fileEl.find('.uploadcare--file__name').text()
       filePreview = $('<img>')
         .attr('src', cdnURL)
+        .attr('alt', filename)
         .addClass('uploadcare--file__icon')
     } else {
       filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
