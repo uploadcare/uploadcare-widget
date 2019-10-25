@@ -1,5 +1,5 @@
 import { BaseWidget } from './base-widget'
-import { t } from '../locale'
+import locale from '../locale'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
@@ -27,7 +27,7 @@ class MultipleWidget extends BaseWidget {
     this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
     if (value) {
       this.template.setStatus('started')
-      this.template.statusText.text(t('loadingInfo'))
+      this.template.statusText.text(locale.t('loadingInfo'))
     }
     return groupPr
       .done(group => {

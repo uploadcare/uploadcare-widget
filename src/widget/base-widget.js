@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { t } from '../locale'
+import locale from '../locale'
 import { defer, bindAll, publicCallbacks, fileSelectDialog } from '../utils'
 import { valueToFile } from '../utils/files'
 import { receiveDrop } from './dragdrop'
@@ -41,15 +41,15 @@ class BaseWidget {
     path.push(this.settings.imagesOnly ? 'images' : 'files')
     path.push(this.settings.multiple ? 'other' : 'one')
     this.template
-      .addButton('open', t(path.join('.')))
+      .addButton('open', locale.t(path.join('.')))
       .toggleClass('needsclick', this.settings.systemDialog)
       .on('click', () => {
         return this.openDialog()
       })
-    this.template.addButton('cancel', t('buttons.cancel')).on('click', () => {
+    this.template.addButton('cancel', locale.t('buttons.cancel')).on('click', () => {
       return this.__setObject(null)
     })
-    this.template.addButton('remove', t('buttons.remove')).on('click', () => {
+    this.template.addButton('remove', locale.t('buttons.remove')).on('click', () => {
       return this.__setObject(null)
     })
     this.template.content.on('click', '.uploadcare--widget__file-name', () => {

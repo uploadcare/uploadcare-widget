@@ -157,4 +157,4 @@ const pluralize = function(n) {
   }
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

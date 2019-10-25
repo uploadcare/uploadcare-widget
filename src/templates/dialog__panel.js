@@ -1,5 +1,5 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 import { version } from '../../package.json'
 
 const dialogPanel = () => html`
@@ -7,8 +7,8 @@ const dialogPanel = () => html`
     <div class="uploadcare--menu uploadcare--panel__menu">
       <button
         type="button"
-        title="${t('dialog.openMenu')}"
-        aria-label="${t('dialog.openMenu')}"
+        title="${locale.t('dialog.openMenu')}"
+        aria-label="${locale.t('dialog.openMenu')}"
         class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--menu__toggle"
       >
         <svg
@@ -43,7 +43,7 @@ const dialogPanel = () => html`
           type="button"
           class="uploadcare--button uploadcare--footer__button uploadcare--panel__show-files"
         >
-          ${t('dialog.showFiles')}
+          ${locale.t('dialog.showFiles')}
 
           <div class="uploadcare--panel__file-counter"></div>
         </button>
@@ -52,12 +52,12 @@ const dialogPanel = () => html`
           type="button"
           class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--panel__done"
         >
-          ${t('dialog.done')}
+          ${locale.t('dialog.done')}
         </button>
       </div>
 
       <div class="uploadcare--powered-by uploadcare--panel__powered-by">
-        ${t('dialog.footer.text')}
+        ${locale.t('dialog.footer.text')}
 
         <a
           class="uploadcare--link uploadcare--powered-by__link"
@@ -73,7 +73,7 @@ const dialogPanel = () => html`
             <use xlink:href="#uploadcare--icon-uploadcare"></use>
           </svg>
 
-          ${t('dialog.footer.link')}
+          ${locale.t('dialog.footer.link')}
         </a>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import uploadcare from './uploadcare.lang.en'
 import { plugin } from './namespace'
 
-import * as locales from '../locales'
+import locale from '../locale'
 
 export default {
   ...uploadcare,
   plugin,
 
-  locales: Object.keys(locales)
+  locales: Object.keys(locale.translations)
 }

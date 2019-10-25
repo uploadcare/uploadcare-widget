@@ -72,8 +72,7 @@ import {
 import { isFile, valueToFile } from '../utils/files'
 import { isFileGroup, valueToGroup, isFileGroupsEqual } from '../utils/groups'
 
-import { pluralize, translations } from '../locales/en'
-import { rebuild, t } from '../locale'
+import locale from '../locale'
 
 import {
   globals,
@@ -195,12 +194,7 @@ const namespace = {
     CssCollector
   },
 
-  locale: {
-    translations: { en: translations },
-    pluralize: { en: pluralize },
-    rebuild,
-    t
-  },
+  locale,
 
   tabsCss,
 

@@ -169,4 +169,4 @@ const pluralize = function(n) {
   return 'other'
 }
 
-export { pluralize, translations }
+export default { pluralize, translations }

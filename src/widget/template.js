@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { t } from '../locale'
+import locale from '../locale'
 import { tpl } from '../templates'
 import { Circle } from '../ui/progress'
 
@@ -61,16 +61,16 @@ class Template {
       if (file === this.__file) {
         switch (info.state) {
           case 'uploading':
-            return this.statusText.text(t('uploading'))
+            return this.statusText.text(locale.t('uploading'))
           case 'uploaded':
-            return this.statusText.text(t('loadingInfo'))
+            return this.statusText.text(locale.t('loadingInfo'))
         }
       }
     })
   }
 
   error(type) {
-    this.statusText.text(t(`errors.${type || 'default'}`))
+    this.statusText.text(locale.t(`errors.${type || 'default'}`))
     return this.setStatus('error')
   }
 
