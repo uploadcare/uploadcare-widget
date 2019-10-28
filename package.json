@@ -19,6 +19,7 @@
     "dev:js": "rollup -wc scripts/rollup.config.dev.js",
     "dev": "npm run dev:css & npm run dev:svg & npm run dev:js",
     "format": "prettier src/**/*.js --write",
+    "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
     "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
@@ -35,6 +36,7 @@
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
     "@babel/preset-env": "^7.5.5",
+    "@size-limit/preset-big-lib": "^2.1.6",
     "autoprefixer": "^7.1.5",
     "babel-eslint": "^10.0.2",
     "babel-plugin-html-tag": "^1.4.0",
@@ -75,6 +77,24 @@
     "stylelint-config-uploadcare": "^3.0.0",
     "svg-sprite": "^1.5.0"
   },
+  "size-limit": [
+    {
+      "limit": "60 KB",
+      "path": "uploadcare.api.min.js"
+    },
+    {
+      "limit": "120 KB",
+      "path": "uploadcare.full.min.js"
+    },
+    {
+      "limit": "120 KB",
+      "path": "uploadcare.min.js"
+    },
+    {
+      "limit": "90 KB",
+      "path": "uploadcare.lang.en.min.js"
+    }
+  ],
   "browserslist": [
     "> .4%",
     "ie >= 10"
