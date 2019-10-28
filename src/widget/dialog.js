@@ -442,15 +442,13 @@ class Panel {
       .attr('disabled', files === 0)
       .attr('aria-disabled', files === 0)
     footer = tooManyFiles
-      ? locale.t('dialog.tabs.preview.multiple.tooManyFiles').replace(
-          '%max%',
-          this.settings.multipleMax
-        )
+      ? locale
+          .t('dialog.tabs.preview.multiple.tooManyFiles')
+          .replace('%max%', this.settings.multipleMax)
       : files && tooFewFiles
-      ? locale.t('dialog.tabs.preview.multiple.tooFewFiles').replace(
-          '%min%',
-          this.settings.multipleMin
-        )
+      ? locale
+          .t('dialog.tabs.preview.multiple.tooFewFiles')
+          .replace('%min%', this.settings.multipleMin)
       : locale.t('dialog.tabs.preview.multiple.title')
     this.footer
       .find('.uploadcare--panel__message')

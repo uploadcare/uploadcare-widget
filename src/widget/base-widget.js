@@ -46,12 +46,16 @@ class BaseWidget {
       .on('click', () => {
         return this.openDialog()
       })
-    this.template.addButton('cancel', locale.t('buttons.cancel')).on('click', () => {
-      return this.__setObject(null)
-    })
-    this.template.addButton('remove', locale.t('buttons.remove')).on('click', () => {
-      return this.__setObject(null)
-    })
+    this.template
+      .addButton('cancel', locale.t('buttons.cancel'))
+      .on('click', () => {
+        return this.__setObject(null)
+      })
+    this.template
+      .addButton('remove', locale.t('buttons.remove'))
+      .on('click', () => {
+        return this.__setObject(null)
+      })
     this.template.content.on('click', '.uploadcare--widget__file-name', () => {
       return this.openDialog()
     })

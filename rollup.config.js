@@ -5,7 +5,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import { string } from 'rollup-plugin-string'
 import license from 'rollup-plugin-license'
-import replacement from "rollup-plugin-module-replacement"
+import replacement from 'rollup-plugin-module-replacement'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -26,10 +26,12 @@ const bundle = (input, output, options = {}) => ({
   plugins: [
     options.enOnly &&
       replacement({
-        entries: [{
-          find: './all-locales',
-          replacement: require.resolve('./src/locales/en-only-locale.js')
-        }]
+        entries: [
+          {
+            find: './all-locales',
+            replacement: require.resolve('./src/locales/en-only-locale.js')
+          }
+        ]
       }),
     babel({
       exclude: 'node_modules/**',
@@ -38,10 +40,7 @@ const bundle = (input, output, options = {}) => ({
     }),
 
     string({
-      include: [
-        'src/stylesheets/styles.css',
-        'src/svgs/icons.html'
-      ]
+      include: ['src/stylesheets/styles.css', 'src/svgs/icons.html']
     }),
     json(),
 

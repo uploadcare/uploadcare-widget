@@ -8,23 +8,23 @@ let currentLocale = null
 const locale = {
   translations: Object.keys(locales).reduce((translations, lang) => {
     translations[lang] = locales[lang].translations
-  
+
     return translations
   }, {}),
 
   pluralize: Object.keys(locales).reduce((pluralize, lang) => {
     pluralize[lang] = locales[lang].pluralize
-  
+
     return pluralize
   }, {}),
-  
+
   // Backdoor for widget constructor
   rebuild: function(settings) {
     currentLocale = null
 
     return _build(settings)
   },
-  
+
   t: function(key, n) {
     let locale, ref, value
     locale = _build()
@@ -65,15 +65,14 @@ const _build = function(stgs) {
       locale.translations[lang],
       settings.localeTranslations
     )
-  
+
     const pluralize = $.isFunction(settings.localePluralize)
       ? settings.localePluralize
       : locale.pluralize[lang]
 
-
     currentLocale = { lang, translations, pluralize }
   }
-    
+
   return currentLocale
 }
 

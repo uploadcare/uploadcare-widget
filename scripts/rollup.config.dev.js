@@ -29,10 +29,7 @@ export default {
       presets: [['@babel/env', { modules: false }]]
     }),
     string({
-      include: [
-        'src/stylesheets/styles.css',
-        'src/svgs/icons.html'
-      ]
+      include: ['src/stylesheets/styles.css', 'src/svgs/icons.html']
     }),
     json(),
 

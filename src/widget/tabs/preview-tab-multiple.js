@@ -76,21 +76,20 @@ class PreviewTabMultiple extends BasePreviewTab {
     this.doneBtnEl
       .attr('disabled', hasWrongNumberFiles)
       .attr('aria-disabled', hasWrongNumberFiles)
-    title = locale.t('dialog.tabs.preview.multiple.question').replace(
-      '%files%',
-      locale.t('file', files)
-    )
+    title = locale
+      .t('dialog.tabs.preview.multiple.question')
+      .replace('%files%', locale.t('file', files))
     this.container.find('.uploadcare--preview__title').text(title)
     errorContainer = this.container.find('.uploadcare--preview__message')
     errorContainer.empty()
     if (hasWrongNumberFiles) {
       wrongNumberFilesMessage = tooManyFiles
-        ? locale.t('dialog.tabs.preview.multiple.tooManyFiles').replace(
-            '%max%',
-            this.settings.multipleMax
-          )
+        ? locale
+            .t('dialog.tabs.preview.multiple.tooManyFiles')
+            .replace('%max%', this.settings.multipleMax)
         : files && tooFewFiles
-        ? locale.t('dialog.tabs.preview.multiple.tooFewFiles')
+        ? locale
+            .t('dialog.tabs.preview.multiple.tooFewFiles')
             .replace('%min%', this.settings.multipleMin)
             .replace('%files%', locale.t('file', files))
         : undefined
@@ -108,19 +107,17 @@ class PreviewTabMultiple extends BasePreviewTab {
       .find('.uploadcare--file__description')
       .attr(
         'title',
-        locale.t('dialog.tabs.preview.multiple.file.preview').replace(
-          '%file%',
-          filename
-        )
+        locale
+          .t('dialog.tabs.preview.multiple.file.preview')
+          .replace('%file%', filename)
       )
     fileEl
       .find('.uploadcare--file__remove')
       .attr(
         'title',
-        locale.t('dialog.tabs.preview.multiple.file.remove').replace(
-          '%file%',
-          filename
-        )
+        locale
+          .t('dialog.tabs.preview.multiple.file.remove')
+          .replace('%file%', filename)
       )
     return fileEl
       .find('.uploadcare--file__size')
@@ -152,7 +149,11 @@ class PreviewTabMultiple extends BasePreviewTab {
         .attr('src', cdnURL)
         .addClass('uploadcare--file__icon')
     } else {
-      filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
+      filePreview = $(
+        "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>"
+      )
+        .attr('role', 'presentation')
+        .attr('class', 'uploadcare--icon uploadcare--file__icon')
     }
     fileEl.find('.uploadcare--file__preview').html(filePreview)
     return fileEl.find('.uploadcare--file__description').on('click', () => {
@@ -168,7 +169,11 @@ class PreviewTabMultiple extends BasePreviewTab {
       .removeClass('uploadcare--file_status_uploading')
       .addClass('uploadcare--file_status_error')
     fileEl.find('.uploadcare--file__error').text(locale.t(`errors.${error}`))
-    filePreview = $("<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>").attr('role', 'presentation').attr('class', 'uploadcare--icon uploadcare--file__icon')
+    filePreview = $(
+      "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>"
+    )
+      .attr('role', 'presentation')
+      .attr('class', 'uploadcare--icon uploadcare--file__icon')
     return fileEl.find('.uploadcare--file__preview').html(filePreview)
   }
 
