@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
     "@babel/preset-env": "^7.5.5",
     "@size-limit/preset-big-lib": "^2.1.6",
     "autoprefixer": "^7.1.5",
@@ -68,8 +67,8 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-livereload": "^1.0.4",
+    "rollup-plugin-module-replacement": "^1.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-terser": "^5.1.1",
