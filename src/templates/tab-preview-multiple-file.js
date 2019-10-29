@@ -1,5 +1,5 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 
 const tabPreviewMultipleFile = () => html`
   <div
@@ -8,7 +8,7 @@ const tabPreviewMultipleFile = () => html`
     <div class="uploadcare--file__description" tabindex="0">
       <div class="uploadcare--file__preview"></div>
       <div class="uploadcare--file__name">
-        ${t('dialog.tabs.preview.unknownName')}
+        ${locale.t('dialog.tabs.preview.unknownName')}
       </div>
       <div class="uploadcare--file__size"></div>
       <div class="uploadcare--file__error"></div>

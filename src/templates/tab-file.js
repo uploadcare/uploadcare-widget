@@ -1,30 +1,30 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 
 const tabFile = () => html`
   <div class="uploadcare--tab__content uploadcare--draganddrop">
     <div
       class="uploadcare--text uploadcare--text_size_extra-large uploadcare--dragging__show"
     >
-      ${t('draghere')}
+      ${locale.t('draghere')}
     </div>
 
     <div class="uploadcare--draganddrop__title uploadcare--dragging__hide">
       <div class="uploadcare--draganddrop__supported">
         <div class="uploadcare--text uploadcare--text_size_extra-large">
-          ${t('dialog.tabs.file.drag')}
+          ${locale.t('dialog.tabs.file.drag')}
         </div>
         <div
           class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted"
         >
-          ${t('dialog.tabs.file.or')}
+          ${locale.t('dialog.tabs.file.or')}
         </div>
       </div>
 
       <div
         class="uploadcare--text uploadcare--text_size_large uploadcare--draganddrop__not-supported"
       >
-        ${t('dialog.tabs.file.nodrop')}
+        ${locale.t('dialog.tabs.file.nodrop')}
       </div>
     </div>
 
@@ -32,14 +32,14 @@ const tabFile = () => html`
       type="button"
       class="uploadcare--button uploadcare--button_size_big uploadcare--button_primary uploadcare--tab__action-button needsclick uploadcare--dragging__hide"
     >
-      ${t('dialog.tabs.file.button')}
+      ${locale.t('dialog.tabs.file.button')}
     </button>
 
     <div class="uploadcare--file-sources uploadcare--dragging__hide">
       <div
         class="uploadcare--text uploadcare--text_size_small uploadcare--text_muted uploadcare--file-sources__caption"
       >
-        ${t('dialog.tabs.file.also')}
+        ${locale.t('dialog.tabs.file.also')}
       </div>
       <div class="uploadcare--file-sources__items">
         <button

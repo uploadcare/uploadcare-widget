@@ -26,13 +26,10 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      plugins: ['@babel/plugin-proposal-export-namespace-from']
+      presets: [['@babel/env', { modules: false }]]
     }),
     string({
-      include: [
-        'src/stylesheets/styles.css',
-        'src/svgs/icons.html'
-      ]
+      include: ['src/stylesheets/styles.css', 'src/svgs/icons.html']
     }),
     json(),
 

@@ -10,7 +10,7 @@ import { PreviewTabMultiple } from './tabs/preview-tab-multiple'
 import { CollectionOfPromises } from '../utils/collection'
 import { then, publicCallbacks, fitSize, applyCropCoordsToInfo } from '../utils'
 import { build, emptyKeyText } from '../settings'
-import { t } from '../locale'
+import locale from '../locale'
 import { tpl } from '../templates'
 import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
@@ -442,21 +442,19 @@ class Panel {
       .attr('disabled', files === 0)
       .attr('aria-disabled', files === 0)
     footer = tooManyFiles
-      ? t('dialog.tabs.preview.multiple.tooManyFiles').replace(
-          '%max%',
-          this.settings.multipleMax
-        )
+      ? locale
+          .t('dialog.tabs.preview.multiple.tooManyFiles')
+          .replace('%max%', this.settings.multipleMax)
       : files && tooFewFiles
-      ? t('dialog.tabs.preview.multiple.tooFewFiles').replace(
-          '%min%',
-          this.settings.multipleMin
-        )
-      : t('dialog.tabs.preview.multiple.title')
+      ? locale
+          .t('dialog.tabs.preview.multiple.tooFewFiles')
+          .replace('%min%', this.settings.multipleMin)
+      : locale.t('dialog.tabs.preview.multiple.title')
     this.footer
       .find('.uploadcare--panel__message')
       .toggleClass('uploadcare--panel__message_hidden', files === 0)
       .toggleClass('uploadcare--error', tooManyFiles || tooFewFiles)
-      .text(footer.replace('%files%', t('file', files)))
+      .text(footer.replace('%files%', locale.t('file', files)))
     return this.footer
       .find('.uploadcare--panel__file-counter')
       .toggleClass('uploadcare--error', tooManyFiles || tooFewFiles)
@@ -498,7 +496,7 @@ class Panel {
     })
       .addClass('uploadcare--menu__item')
       .addClass(`uploadcare--menu__item_tab_${name}`)
-      .attr('title', t(`dialog.tabs.names.${name}`))
+      .attr('title', locale.t(`dialog.tabs.names.${name}`))
       .append(tabIcon)
       .appendTo(this.panel.find('.uploadcare--menu__items'))
       .on('click', () => {
@@ -610,7 +608,7 @@ class Panel {
       .addClass('uploadcare--menu__item')
       .addClass(`uploadcare--menu__item_tab_${name}`)
       .attr('aria-disabled', true)
-      .attr('title', t(`dialog.tabs.names.${name}`))
+      .attr('title', locale.t(`dialog.tabs.names.${name}`))
       .append(tabIcon)
       .appendTo(this.panel.find('.uploadcare--menu__items'))
   }

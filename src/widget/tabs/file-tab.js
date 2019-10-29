@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { fileDragAndDrop, sendFileAPI } from '../../utils/abilities'
 import { fileInput, fileSelectDialog } from '../../utils'
-import { t } from '../../locale'
+import locale from '../../locale'
 import { tpl } from '../../templates'
 import { receiveDrop } from '../dragdrop'
 
@@ -99,7 +99,7 @@ class FileTab {
       .addClass(`uploadcare--file-source_${name}`)
       .addClass('uploadcare--file-sources__item')
       .attr('type', 'button')
-      .attr('title', t(`dialog.tabs.names.${name}`))
+      .attr('title', locale.t(`dialog.tabs.names.${name}`))
       .attr('data-tab', name)
       .append(tabIcon)
       .on('click', () => {

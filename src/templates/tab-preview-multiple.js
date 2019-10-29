@@ -1,5 +1,5 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 
 const tabPreviewMultiple = () => html`
   <div class="uploadcare--tab__header">
@@ -21,14 +21,14 @@ const tabPreviewMultiple = () => html`
       type="button"
       class="uploadcare--button uploadcare--footer__button uploadcare--preview__back"
     >
-      ${t('dialog.tabs.preview.multiple.clear')}
+      ${locale.t('dialog.tabs.preview.multiple.clear')}
     </button>
 
     <button
       type="button"
       class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done"
     >
-      ${t('dialog.tabs.preview.multiple.done')}
+      ${locale.t('dialog.tabs.preview.multiple.done')}
     </button>
   </div>
 `

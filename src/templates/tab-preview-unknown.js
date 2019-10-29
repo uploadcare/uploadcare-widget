@@ -1,12 +1,12 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 
 const tabPreviewUnknown = () => html`
   <div class="uploadcare--tab__header">
     <div
       class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"
     >
-      ${t('dialog.tabs.preview.unknown.title')}
+      ${locale.t('dialog.tabs.preview.unknown.title')}
     </div>
   </div>
 
@@ -21,14 +21,14 @@ const tabPreviewUnknown = () => html`
       type="button"
       class="uploadcare--button uploadcare--footer__button uploadcare--preview__back"
     >
-      ${t('dialog.tabs.preview.change')}
+      ${locale.t('dialog.tabs.preview.change')}
     </button>
 
     <button
       type="button"
       class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done"
     >
-      ${t('dialog.tabs.preview.unknown.done')}
+      ${locale.t('dialog.tabs.preview.unknown.done')}
     </button>
   </div>
 `

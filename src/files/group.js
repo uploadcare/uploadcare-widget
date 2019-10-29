@@ -4,7 +4,7 @@ import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
 import { wrapToPromise, bindAll, jsonp } from '../utils'
 import { build } from '../settings'
-import { t } from '../locale'
+import locale from '../locale'
 import { filesFrom } from '../files'
 
 // files
@@ -123,7 +123,7 @@ class FileGroup {
     info = {
       uuid: this.__uuid,
       cdnUrl: this.__uuid ? `${this.settings.cdnBase}/${this.__uuid}/` : null,
-      name: t('file', this.__fileColl.length()),
+      name: locale.t('file', this.__fileColl.length()),
       count: this.__fileColl.length(),
       size: 0,
       isImage: true,

@@ -1,3 +1,3 @@
-export * from './all'
+import locales from './all-locales'
 
-// don't change this file
+export default locales

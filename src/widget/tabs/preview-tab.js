@@ -11,7 +11,7 @@ import {
   canvasToBlob
 } from '../../utils'
 import { drawFileToCanvas } from '../../utils/image-processor'
-import { t } from '../../locale'
+import locale from '../../locale'
 import { tpl } from '../../templates'
 import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
@@ -264,12 +264,12 @@ class PreviewTab extends BasePreviewTab {
     if (this.settings.crop) {
       this.container
         .find('.uploadcare--preview__title')
-        .text(t('dialog.tabs.preview.crop.title'))
+        .text(locale.t('dialog.tabs.preview.crop.title'))
       this.container
         .find('.uploadcare--preview__content')
         .addClass('uploadcare--preview__content_crop')
       done.attr('disabled', true).attr('aria-disabled', true)
-      done.text(t('dialog.tabs.preview.crop.done'))
+      done.text(locale.t('dialog.tabs.preview.crop.done'))
       this.populateCropSizes()
       this.container
         .find('.uploadcare--crop-sizes__item')
@@ -297,7 +297,7 @@ class PreviewTab extends BasePreviewTab {
         gcd = calcGCD(prefered[0], prefered[1])
         caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
       } else {
-        caption = t('dialog.tabs.preview.crop.free')
+        caption = locale.t('dialog.tabs.preview.crop.free')
       }
       item = template
         .clone()

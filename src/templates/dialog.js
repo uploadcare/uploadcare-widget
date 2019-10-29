@@ -1,5 +1,5 @@
 import { html } from '../utils/html'
-import { t } from '../locale'
+import locale from '../locale'
 import { version } from '../../package.json'
 
 const dialog = () => html`
@@ -7,8 +7,8 @@ const dialog = () => html`
     <div class="uploadcare--dialog__container">
       <button
         type="button"
-        title="${t('dialog.close')}"
-        aria-label="${t('dialog.close')}"
+        title="${locale.t('dialog.close')}"
+        aria-label="${locale.t('dialog.close')}"
         class="uploadcare--button uploadcare--button_icon uploadcare--button_muted uploadcare--dialog__close"
       >
         <svg
@@ -25,7 +25,7 @@ const dialog = () => html`
     </div>
 
     <div class="uploadcare--powered-by uploadcare--dialog__powered-by">
-      ${t('dialog.footer.text')}
+      ${locale.t('dialog.footer.text')}
       <a
         class="uploadcare--link uploadcare--powered-by__link"
         href="https://uploadcare.com/uploader/${version}/"
@@ -40,7 +40,7 @@ const dialog = () => html`
           <use xlink:href="#uploadcare--icon-uploadcare"></use>
         </svg>
 
-        ${t('dialog.footer.link')}
+        ${locale.t('dialog.footer.link')}
       </a>
     </div>
   </div>

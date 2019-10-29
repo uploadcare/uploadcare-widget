@@ -1,0 +1,21 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="./uploadcare.full.js"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+
+  uploadcare.registerTab('preview', uploadcareTabEffects)
+</script>
+
+<p>
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+  />
+</p>
