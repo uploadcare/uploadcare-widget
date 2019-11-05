@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* Migrated from CoffeScript to JavaScript. See [#567][567].
+* Migrated from CoffeeScript to JavaScript. See [#567][567].
 * Switched to ES Modules instead of namespaces. See [#569][569].
 * Migrated templates to tagged HTML strings from EJS. See [#603][603].
 
