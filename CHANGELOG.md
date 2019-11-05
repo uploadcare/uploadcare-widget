@@ -13,16 +13,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* Migrate from Coffee to Javascript. See [#567][567].
-* Es modules instead of namespaces. See [#569][569].
-* Migrate templates to tagged HTML strings from EJS. See [#603][603].
+* Migrated from CoffeScript to JavaScript. See [#567][567].
+* Switched to ES Modules instead of namespaces. See [#569][569].
+* Migrated templates to tagged HTML strings from EJS. See [#603][603].
 
 ### Fixed
 
-* Improve accessibility. Big thanks to @erin-doyle. See [#594][594], [#595][595] and [#611][611].
-* Spanish locale was updated. Thanks to @HerrLindner. See [#550][550].
-* German locale was updated. Thanks to @thomasklemm. See [#580][580].
-* Fix effects tab locales. See [#613][613].
+* Improved widget accessibility. Big thanks to @erin-doyle. See [#594][594], [#595][595] and [#611][611].
+* Updated Spanish locale. Thanks to @HerrLindner. See [#550][550].
+* Updated German locale. Thanks to @thomasklemm. See [#580][580].
+* Fixed effects tab locales. See [#613][613].
 
 [3.8.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...v3.8.0
 [613]: https://github.com/uploadcare/uploadcare-widget/pull/613
