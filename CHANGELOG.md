@@ -9,9 +9,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...HEAD
 
+## [3.8.0]
+
+### Changed
+
+* Migrated from CoffeeScript to JavaScript. See [#567][567].
+* Switched to ES Modules instead of namespaces. See [#569][569].
+* Migrated templates to tagged HTML strings from EJS. See [#603][603].
+
 ### Fixed
 
-- Spanish locale was updated.
+* Improved widget accessibility. Big thanks to @erin-doyle. See [#594][594], [#595][595] and [#611][611].
+* Updated Spanish locale. Thanks to @HerrLindner. See [#550][550].
+* Updated German locale. Thanks to @thomasklemm. See [#580][580].
+* Fixed effects tab locales. See [#613][613].
+
+[3.8.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...v3.8.0
+[613]: https://github.com/uploadcare/uploadcare-widget/pull/613
+[611]: https://github.com/uploadcare/uploadcare-widget/pull/611
+[603]: https://github.com/uploadcare/uploadcare-widget/pull/603
+[550]: https://github.com/uploadcare/uploadcare-widget/pull/550
+[567]: https://github.com/uploadcare/uploadcare-widget/pull/567
+[569]: https://github.com/uploadcare/uploadcare-widget/pull/569
+[580]: https://github.com/uploadcare/uploadcare-widget/pull/580
+[594]: https://github.com/uploadcare/uploadcare-widget/pull/594
+[595]: https://github.com/uploadcare/uploadcare-widget/pull/595
 
 ## [3.7.9]
 
