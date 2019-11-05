@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -73,7 +72,9 @@ const translations = {
         retry: 'Повторно запросить разрешение',
         pleaseAllow: {
           title: 'Пожалуйста, разрешите доступ к камере',
-          text: 'Для того, чтобы сделать снимок, мы запросили разрешение ' + 'на доступ к камере с этого сайта.'
+          text:
+            'Для того, чтобы сделать снимок, мы запросили разрешение ' +
+            'на доступ к камере с этого сайта.'
         },
         notFound: {
           title: 'Камера не найдена',
@@ -146,8 +147,8 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
-  if (((n / 10 % 10 | 0) === 1) || (n % 10 === 0) || (n % 10 > 4)) {
+const pluralize = function(n) {
+  if (((n / 10) % 10 | 0) === 1 || n % 10 === 0 || n % 10 > 4) {
     return 'many'
   } else if (n % 10 === 1) {
     return 'one'
@@ -156,4 +157,4 @@ const pluralize = function (n) {
   }
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

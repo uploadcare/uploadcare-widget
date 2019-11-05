@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -86,7 +85,9 @@ const translations = {
         retry: '재 시도',
         pleaseAllow: {
           title: '카메라 접근 허용',
-          text: '카메라 접근을 허용하시겠습니까?<br>' + '승인 요청을 해주셔야 합니다'
+          text:
+            '카메라 접근을 허용하시겠습니까?<br>' +
+            '승인 요청을 해주셔야 합니다'
         },
         notFound: {
           title: '카메라가 없습니다',
@@ -143,7 +144,8 @@ const translations = {
         multiple: {
           title: '%files%을(를) 선택하였습니다',
           question: '%files%을 추가하시겠습니까?',
-          tooManyFiles: '너무 많은 파일을 추가하셨습니다. %max%가 최대 한도입니다',
+          tooManyFiles:
+            '너무 많은 파일을 추가하셨습니다. %max%가 최대 한도입니다',
           tooFewFiles: '%files%을(를) 선택하였습니다 최소 %min%이상 필요합니다',
           clear: '모두 삭제',
           done: '추가',
@@ -163,11 +165,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

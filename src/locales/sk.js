@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -89,7 +88,9 @@ const translations = {
         retry: 'Znovu požiadať o prístup',
         pleaseAllow: {
           title: 'Prosím povoľte prístup k vašej kamere',
-          text: 'Boli ste vyzvaní aby ste umožnili tejto stránke prístup ku kamere.<br>' + 'Prístup musíte povolit aby ste mohli fotiť s vašou kamerou.'
+          text:
+            'Boli ste vyzvaní aby ste umožnili tejto stránke prístup ku kamere.<br>' +
+            'Prístup musíte povolit aby ste mohli fotiť s vašou kamerou.'
         },
         notFound: {
           title: 'Kamera nebola nájdená',
@@ -162,14 +163,14 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
-  } else if ((n >= 2 && n <= 4)) {
+  } else if (n >= 2 && n <= 4) {
     return 'few'
   } else {
     return 'many'
   }
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

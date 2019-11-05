@@ -1,6 +1,5 @@
 import babel from 'rollup-plugin-babel'
-import jst from 'rollup-plugin-jst'
-
+import { string } from 'rollup-plugin-string'
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
@@ -14,7 +13,8 @@ export default {
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: 'dist/uploadcare.full.js'
+    file: 'dist/uploadcare.full.js',
+    sourcemap: 'inline'
   },
 
   watch: {
@@ -26,15 +26,10 @@ export default {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: [['@babel/env', { modules: false }]],
-      plugins: ['@babel/plugin-proposal-export-namespace-from']
+      presets: [['@babel/env', { modules: false }]]
     }),
-    jst({
-      templateOptions: {
-        variable: 'ext'
-      },
-
-      escapeModule: 'escape-html'
+    string({
+      include: ['src/stylesheets/styles.css', 'src/svgs/icons.html']
     }),
     json(),
 

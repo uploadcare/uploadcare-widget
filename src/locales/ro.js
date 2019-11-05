@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -88,7 +87,9 @@ const translations = {
         retry: 'Cere permisiune din nou',
         pleaseAllow: {
           title: 'Te rog sa-mi dai acces la cameră',
-          text: 'Ai fost rugat să dai acces la cameră de acest site.<br>' + 'Pentru a putea face fotografii cu camera, trebuie să aprobi această cerere.'
+          text:
+            'Ai fost rugat să dai acces la cameră de acest site.<br>' +
+            'Pentru a putea face fotografii cu camera, trebuie să aprobi această cerere.'
         },
         notFound: {
           title: 'Nicio cameră detectată',
@@ -165,11 +166,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

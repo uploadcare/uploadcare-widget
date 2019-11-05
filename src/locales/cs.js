@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -82,7 +81,9 @@ const translations = {
         retry: 'Znovu požádat o povolení',
         pleaseAllow: {
           title: 'Prosím povolte přístup k webkameře',
-          text: 'Byl(a) jste požádán(a) o přístup k webkameře. ' + 'Abyste mohl(a) pořídit fotografii, musíte přístup povolit.'
+          text:
+            'Byl(a) jste požádán(a) o přístup k webkameře. ' +
+            'Abyste mohl(a) pořídit fotografii, musíte přístup povolit.'
         },
         notFound: {
           title: 'Nebyla nalezena webkamera',
@@ -136,7 +137,8 @@ const translations = {
           title: 'Bylo vybráno %files% souborů',
           question: 'Chcete přidat všechny tyto soubory?',
           tooManyFiles: 'Bylo vybráno moc souborů. Maximum je %max%',
-          tooFewFiles: 'Bylo vybráno %files% souborů. Musíte vybrat minimálně %min%',
+          tooFewFiles:
+            'Bylo vybráno %files% souborů. Musíte vybrat minimálně %min%',
           clear: 'Odstranit vše',
           done: 'Hotovo'
         }
@@ -147,14 +149,14 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
-  } else if ((n >= 2 && n <= 4)) {
+  } else if (n >= 2 && n <= 4) {
     return 'few'
   } else {
     return 'many'
   }
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

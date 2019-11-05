@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -109,7 +108,8 @@ const translations = {
           title: 'Du har valgt %files% filer',
           question: 'Vil du tilføje alle disse filer?',
           tooManyFiles: 'Du har valgt for mange filer. %max% er maximum.',
-          tooFewFiles: 'Du har valgt %files% filer. Men du skal vælge mindst %min%.',
+          tooFewFiles:
+            'Du har valgt %files% filer. Men du skal vælge mindst %min%.',
           clear: 'Fjern alle',
           done: 'Fortsæt'
         }
@@ -120,11 +120,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

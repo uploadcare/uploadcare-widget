@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -71,11 +70,14 @@ const translations = {
         retry: 'Requisitar permissão novamente',
         pleaseAllow: {
           title: 'Por favor permita o acesso a sua câmera',
-          text: 'Você foi solicitado a permitir o acesso à câmera a partir deste site. ' + 'Para tirar fotos com sua câmera, você deve aprovar este pedido.'
+          text:
+            'Você foi solicitado a permitir o acesso à câmera a partir deste site. ' +
+            'Para tirar fotos com sua câmera, você deve aprovar este pedido.'
         },
         notFoud: {
           title: 'Câmera não detectada',
-          text: 'Parece que você não tem uma câmera conectada a este dispositivo'
+          text:
+            'Parece que você não tem uma câmera conectada a este dispositivo'
         }
       },
       preview: {
@@ -134,11 +136,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

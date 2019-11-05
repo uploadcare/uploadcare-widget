@@ -1,4 +1,5 @@
 {
-  "extends": ["standard"],
-  "parser": "babel-eslint"
+  "extends": ["standard", "prettier"],
+  "parser": "babel-eslint",
+  "plugins": ["prettier"]
 }

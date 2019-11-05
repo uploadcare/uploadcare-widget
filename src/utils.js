@@ -5,7 +5,7 @@ import { warn } from './utils/warnings'
 var indexOf = [].indexOf
 
 // utils
-const unique = function (arr) {
+const unique = function(arr) {
   var item, j, len, result
   result = []
   for (j = 0, len = arr.length; j < len; j++) {
@@ -17,11 +17,11 @@ const unique = function (arr) {
   return result
 }
 
-const defer = function (fn) {
+const defer = function(fn) {
   return setTimeout(fn, 0)
 }
 
-const gcd = function (a, b) {
+const gcd = function(a, b) {
   var c
   while (b) {
     c = a % b
@@ -31,11 +31,11 @@ const gcd = function (a, b) {
   return a
 }
 
-const once = function (fn) {
+const once = function(fn) {
   var called, result
   called = false
   result = null
-  return function () {
+  return function() {
     if (!called) {
       result = fn.apply(this, arguments)
       called = true
@@ -44,39 +44,54 @@ const once = function (fn) {
   }
 }
 
-const wrapToPromise = function (value) {
-  return $.Deferred().resolve(value).promise()
+const wrapToPromise = function(value) {
+  return $.Deferred()
+    .resolve(value)
+    .promise()
 }
 
 // same as promise.then(), but if filter returns promise
 // it will be just passed forward without any special behavior
-const then = function (pr, doneFilter, failFilter, progressFilter) {
+const then = function(pr, doneFilter, failFilter, progressFilter) {
   var compose, df
   df = $.Deferred()
-  compose = function (fn1, fn2) {
+  compose = function(fn1, fn2) {
     if (fn1 && fn2) {
-      return function () {
+      return function() {
         return fn2.call(this, fn1.apply(this, arguments))
       }
     } else {
       return fn1 || fn2
     }
   }
-  pr.then(compose(doneFilter, df.resolve), compose(failFilter, df.reject), compose(progressFilter, df.notify))
+  pr.then(
+    compose(
+      doneFilter,
+      df.resolve
+    ),
+    compose(
+      failFilter,
+      df.reject
+    ),
+    compose(
+      progressFilter,
+      df.notify
+    )
+  )
   return df.promise()
 }
 
 // Build copy of source with only specified methods.
 // Handles chaining correctly.
-const bindAll = function (source, methods) {
+const bindAll = function(source, methods) {
   var target
   target = {}
 
-  $.each(methods, function (i, method) {
+  $.each(methods, function(i, method) {
     var fn = source[method]
 
     if ($.isFunction(fn)) {
-      target[method] = function (...args) {
+      target[method] = function(...args) {
         var result = fn.apply(source, args)
 
         // Fix chaining
@@ -93,11 +108,11 @@ const bindAll = function (source, methods) {
   return target
 }
 
-const upperCase = function (s) {
+const upperCase = function(s) {
   return s.replace(/([A-Z])/g, '_$1').toUpperCase()
 }
 
-const publicCallbacks = function (callbacks) {
+const publicCallbacks = function(callbacks) {
   var result
   result = callbacks.add
   result.add = callbacks.add
@@ -105,10 +120,10 @@ const publicCallbacks = function (callbacks) {
   return result
 }
 
-const uuid = function () {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0
-    var v = c === 'x' ? r : r & 3 | 8
+const uuid = function() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (Math.random() * 16) | 0
+    var v = c === 'x' ? r : (r & 3) | 8
 
     return v.toString(16)
   })
@@ -118,21 +133,24 @@ const uuid = function () {
 const splitUrlRegex = /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)\??([^#]*)#?(.*)$/
 const uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
 const groupIdRegex = new RegExp(`${uuidRegex.source}~[0-9]+`, 'i')
-const cdnUrlRegex = new RegExp(`^/?(${uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$`, 'i')
-const splitCdnUrl = function (url) {
+const cdnUrlRegex = new RegExp(
+  `^/?(${uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$`,
+  'i'
+)
+const splitCdnUrl = function(url) {
   return cdnUrlRegex.exec(splitUrlRegex.exec(url)[3])
 }
-const escapeRegExp = function (str) {
+const escapeRegExp = function(str) {
   return str.replace(/[\\-\\[]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
 }
 
-const globRegexp = function (str, flags = 'i') {
+const globRegexp = function(str, flags = 'i') {
   var parts
   parts = $.map(str.split('*'), escapeRegExp)
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
-const normalizeUrl = function (url) {
+const normalizeUrl = function(url) {
   var scheme
   // google.com/ → google.com
   // /google.com/ → /google.com
@@ -144,7 +162,7 @@ const normalizeUrl = function (url) {
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
-const fitText = function (text, max) {
+const fitText = function(text, max) {
   var head, tail
   if (text.length > max) {
     head = Math.ceil((max - 3) / 2)
@@ -155,11 +173,11 @@ const fitText = function (text, max) {
   }
 }
 
-const fitSizeInCdnLimit = function (objSize) {
+const fitSizeInCdnLimit = function(objSize) {
   return fitSize(objSize, [2048, 2048])
 }
 
-const fitSize = function (objSize, boxSize, upscale) {
+const fitSize = function(objSize, boxSize, upscale) {
   var heightRation, widthRatio
   if (objSize[0] > boxSize[0] || objSize[1] > boxSize[1] || upscale) {
     widthRatio = boxSize[0] / objSize[0]
@@ -174,12 +192,9 @@ const fitSize = function (objSize, boxSize, upscale) {
   }
 }
 
-const applyCropCoordsToInfo = function (info, crop, size, coords) {
-  var downscale, h, modifiers, prefered, upscale, w, wholeImage;
-  ({
-    width: w,
-    height: h
-  } = coords)
+const applyCropCoordsToInfo = function(info, crop, size, coords) {
+  var downscale, h, modifiers, prefered, upscale, w, wholeImage
+  ;({ width: w, height: h } = coords)
   prefered = crop.preferedSize
   modifiers = ''
   wholeImage = w === size[0] && h === size[1]
@@ -189,7 +204,7 @@ const applyCropCoordsToInfo = function (info, crop, size, coords) {
   downscale = crop.downscale && (w > prefered[0] || h > prefered[1])
   upscale = crop.upscale && (w < prefered[0] || h < prefered[1])
   if (downscale || upscale) {
-    [coords.sw, coords.sh] = prefered
+    ;[coords.sw, coords.sh] = prefered
     modifiers += `-/resize/${prefered.join('x')}/`
   } else if (!wholeImage) {
     modifiers += '-/preview/'
@@ -201,7 +216,7 @@ const applyCropCoordsToInfo = function (info, crop, size, coords) {
   return info
 }
 
-const fileInput = function (container, settings, fn) {
+const fileInput = function(container, settings, fn) {
   var accept, input, run
   input = null
   accept = settings.inputAcceptTypes
@@ -209,59 +224,82 @@ const fileInput = function (container, settings, fn) {
     accept = settings.imagesOnly ? 'image/*' : null
   }
 
-  (run = function () {
-    input = (settings.multiple ? $('<input type="file" multiple>') : $('<input type="file">')).attr('accept', accept).css({
-      position: 'absolute',
-      top: 0,
-      opacity: 0,
-      margin: 0,
-      padding: 0,
-      width: 'auto',
-      height: 'auto',
-      cursor: container.css('cursor')
-    }).on('change', function () {
-      fn(this)
-      $(this).hide()
-      return run()
-    })
+  ;(run = function() {
+    input = (settings.multiple
+      ? $('<input type="file" multiple>')
+      : $('<input type="file">')
+    )
+      .attr('accept', accept)
+      .css({
+        position: 'absolute',
+        top: 0,
+        opacity: 0,
+        margin: 0,
+        padding: 0,
+        width: 'auto',
+        height: 'auto',
+        cursor: container.css('cursor')
+      })
+      .on('change', function() {
+        fn(this)
+        $(this).hide()
+        return run()
+      })
     return container.append(input)
   })()
 
-  return container.css({
-    position: 'relative',
-    overflow: 'hidden'
-  // to make it posible to set `cursor:pointer` on button
-  // http://stackoverflow.com/a/9182787/478603
-  }).mousemove(function (e) {
-    var left, top, width;
-    ({ left, top } = $(this).offset())
-    width = input.width()
-    return input.css({
-      left: e.pageX - left - width + 10,
-      top: e.pageY - top - 10
+  return container
+    .css({
+      position: 'relative',
+      overflow: 'hidden'
+      // to make it posible to set `cursor:pointer` on button
+      // http://stackoverflow.com/a/9182787/478603
     })
-  })
+    .mousemove(function(e) {
+      var left, top, width
+      ;({ left, top } = $(this).offset())
+      width = input.width()
+      return input.css({
+        left: e.pageX - left - width + 10,
+        top: e.pageY - top - 10
+      })
+    })
 }
 
-const fileSelectDialog = function (container, settings, fn, attributes = {}) {
+const fileSelectDialog = function(container, settings, fn, attributes = {}) {
   var accept
   accept = settings.inputAcceptTypes
   if (accept === '') {
     accept = settings.imagesOnly ? 'image/*' : null
   }
-  return $(settings.multiple ? '<input type="file" multiple>' : '<input type="file">').attr('accept', accept).attr(attributes).css({
-    position: 'fixed',
-    bottom: 0,
-    opacity: 0
-  }).on('change', function () {
-    fn(this)
-    return $(this).remove()
-  }).appendTo(container).focus().click().hide()
+  return $(
+    settings.multiple ? '<input type="file" multiple>' : '<input type="file">'
+  )
+    .attr('accept', accept)
+    .attr(attributes)
+    .css({
+      position: 'fixed',
+      bottom: 0,
+      opacity: 0
+    })
+    .on('change', function() {
+      fn(this)
+      return $(this).remove()
+    })
+    .appendTo(container)
+    .focus()
+    .click()
+    .hide()
 }
 
 const fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split(' ')
 
-const readableFileSize = function (value, onNaN = '', prefix = '', postfix = '') {
+const readableFileSize = function(
+  value,
+  onNaN = '',
+  prefix = '',
+  postfix = ''
+) {
   var digits, fixedTo, i, threshold
   value = parseInt(value, 10)
   if (isNaN(value)) {
@@ -288,25 +326,28 @@ const ajaxDefaults = {
   cache: false
 }
 
-const jsonp = function (url, type, data, settings = {}) {
-  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(function (data) {
-    var text
-    if (data.error) {
-      text = data.error.content || data.error
-      return $.Deferred().reject(text)
-    } else {
-      return data
-    }
-  }, function (_, textStatus, errorThrown) {
-    var text
-    text = `${textStatus} (${errorThrown})`
-    warn(`JSONP unexpected error: ${text} while loading ${url}`)
+const jsonp = function(url, type, data, settings = {}) {
+  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
+    function(data) {
+      var text
+      if (data.error) {
+        text = data.error.content || data.error
+        return $.Deferred().reject(text)
+      } else {
+        return data
+      }
+    },
+    function(_, textStatus, errorThrown) {
+      var text
+      text = `${textStatus} (${errorThrown})`
+      warn(`JSONP unexpected error: ${text} while loading ${url}`)
 
-    return text
-  })
+      return text
+    }
+  )
 }
 
-const canvasToBlob = function (canvas, type, quality, callback) {
+const canvasToBlob = function(canvas, type, quality, callback) {
   var arr, binStr, dataURL, i, j, ref
   if (window.HTMLCanvasElement.prototype.toBlob) {
     return canvas.toBlob(callback, type, quality)
@@ -318,22 +359,24 @@ const canvasToBlob = function (canvas, type, quality, callback) {
   for (i = j = 0, ref = binStr.length; j < ref; i = j += 1) {
     arr[i] = binStr.charCodeAt(i)
   }
-  return callback(new window.Blob([arr], {
-    type: /:(.+\/.+);/.exec(dataURL[0])[1]
-  }))
+  return callback(
+    new window.Blob([arr], {
+      type: /:(.+\/.+);/.exec(dataURL[0])[1]
+    })
+  )
 }
 
-const taskRunner = function (capacity) {
+const taskRunner = function(capacity) {
   var queue, release, run, running
   running = 0
   queue = []
-  release = function () {
+  release = function() {
     var task
 
     if (queue.length) {
       task = queue.shift()
 
-      return defer(function () {
+      return defer(function() {
         return task(release)
       })
     } else {
@@ -343,11 +386,11 @@ const taskRunner = function (capacity) {
     }
   }
 
-  run = function (task) {
+  run = function(task) {
     if (!capacity || running < capacity) {
       running += 1
 
-      return defer(function () {
+      return defer(function() {
         return task(release)
       })
     } else {
@@ -360,21 +403,32 @@ const taskRunner = function (capacity) {
 // This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
 // action, add listener, callbacks,
 // ... .then handlers, argument index, [final state]
-const pipeTuples = [['notify', 'progress', 2], ['resolve', 'done', 0], ['reject', 'fail', 1]]
+const pipeTuples = [
+  ['notify', 'progress', 2],
+  ['resolve', 'done', 0],
+  ['reject', 'fail', 1]
+]
 
-const fixedPipe = function (promise, ...fns) {
-  return $.Deferred(function (newDefer) {
-    return $.each(pipeTuples, function (i, tuple) {
+const fixedPipe = function(promise, ...fns) {
+  return $.Deferred(function(newDefer) {
+    return $.each(pipeTuples, function(i, tuple) {
       var fn
       // Map tuples (progress, done, fail) to arguments (done, fail, progress)
       fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
-      return promise[tuple[1]](function () {
+      return promise[tuple[1]](function() {
         var returned
         returned = fn && fn.apply(this, arguments)
         if (returned && $.isFunction(returned.promise)) {
-          return returned.promise().progress(newDefer.notify).done(newDefer.resolve).fail(newDefer.reject)
+          return returned
+            .promise()
+            .progress(newDefer.notify)
+            .done(newDefer.resolve)
+            .fail(newDefer.reject)
         } else {
-          return newDefer[tuple[0] + 'With'](this === promise ? newDefer.promise() : this, fn ? [returned] : arguments)
+          return newDefer[tuple[0] + 'With'](
+            this === promise ? newDefer.promise() : this,
+            fn ? [returned] : arguments
+          )
         }
       })
     })

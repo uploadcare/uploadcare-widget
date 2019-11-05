@@ -1,11 +1,11 @@
 import babel from 'rollup-plugin-babel'
-import jst from 'rollup-plugin-jst'
-
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
+import { string } from 'rollup-plugin-string'
 import license from 'rollup-plugin-license'
+import replacement from 'rollup-plugin-module-replacement'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -17,29 +17,30 @@ const bundle = (input, output, options = {}) => ({
     globals: options.includeJquery
       ? undefined
       : {
-        jquery: '$'
-      }
+          jquery: '$'
+        }
   },
 
   external: options.includeJquery ? undefined : ['jquery'],
 
   plugins: [
+    options.enOnly &&
+      replacement({
+        entries: [
+          {
+            find: './all-locales',
+            replacement: require.resolve('./src/locales/en-only-locale.js')
+          }
+        ]
+      }),
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]],
-      plugins: ['@babel/plugin-proposal-export-namespace-from']
+      plugins: ['babel-plugin-html-tag']
     }),
-    jst({
-      templateOptions: {
-        variable: 'ext'
-      },
 
-      minify: true,
-      minifyOptions: {
-        collapseWhitespace: true
-      },
-
-      escapeModule: 'escape-html'
+    string({
+      include: ['src/stylesheets/styles.css', 'src/svgs/icons.html']
     }),
     json(),
 
@@ -64,15 +65,19 @@ Date: <%= moment().format('YYYY-MM-DD') %>`
 })
 
 export default [
-  bundle('uploadcare.api.js', 'uploadcare.api.js'),
-  bundle('uploadcare.api.js', 'uploadcare.api.min.js'),
+  bundle('uploadcare.api.js', 'uploadcare.api.js', { enOnly: true }),
+  bundle('uploadcare.api.js', 'uploadcare.api.min.js', { enOnly: true }),
 
   bundle('uploadcare.js', 'uploadcare.js'),
   bundle('uploadcare.js', 'uploadcare.min.js'),
 
-  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js'),
-  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js'),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js', { enOnly: true }),
+  bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js', {
+    enOnly: true
+  }),
 
   bundle('uploadcare.full.js', 'uploadcare.full.js', { includeJquery: true }),
-  bundle('uploadcare.full.js', 'uploadcare.full.min.js', { includeJquery: true })
+  bundle('uploadcare.full.js', 'uploadcare.full.min.js', {
+    includeJquery: true
+  })
 ]

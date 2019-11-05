@@ -12,23 +12,9 @@ import { jsonp, fixedPipe } from '../utils'
 //   __rejectApi: file failed on any stage
 //   __completeUpload: file uploaded, info required
 class BaseFile {
-  constructor (param, settings1, sourceInfo = {}) {
+  constructor(param, settings1, sourceInfo = {}) {
     var base
 
-    // Complete uploading
-
-    this.__completeUpload = this.__completeUpload.bind(this)
-    this.__updateInfo = this.__updateInfo.bind(this)
-    this.__handleFileData = this.__handleFileData.bind(this)
-    this.__fileInfo = this.__fileInfo.bind(this)
-    this.__runValidators = this.__runValidators.bind(this)
-    this.__rejectApi = this.__rejectApi.bind(this)
-    this.__resolveApi = this.__resolveApi.bind(this)
-
-    // External API
-
-    this.__cancel = this.__cancel.bind(this)
-    this.__extendApi = this.__extendApi.bind(this)
     this.settings = settings1
     this.sourceInfo = sourceInfo
     this.fileId = null
@@ -40,30 +26,42 @@ class BaseFile {
     this.isImage = null
     this.imageInfo = null
     this.mimeType = null
-    this.s3Bucket = null;
-    (base = this.sourceInfo).source || (base.source = this.sourceName)
+    this.s3Bucket = null
+    ;(base = this.sourceInfo).source || (base.source = this.sourceName)
     this.__setupValidation()
     this.__initApi()
   }
 
-  __startUpload () {
+  __startUpload() {
     return $.Deferred().resolve()
   }
 
-  __completeUpload () {
+  __completeUpload() {
     var check, logger, ncalls, timeout
     // Update info until @apiDeferred resolved.
     ncalls = 0
     if (this.settings.debugUploads) {
       debug('Load file info.', this.fileId, this.settings.publicKey)
       logger = setInterval(() => {
-        return debug('Still waiting for file ready.', ncalls, this.fileId, this.settings.publicKey)
+        return debug(
+          'Still waiting for file ready.',
+          ncalls,
+          this.fileId,
+          this.settings.publicKey
+        )
       }, 5000)
-      this.apiDeferred.done(() => {
-        return debug('File uploaded.', ncalls, this.fileId, this.settings.publicKey)
-      }).always(() => {
-        return clearInterval(logger)
-      })
+      this.apiDeferred
+        .done(() => {
+          return debug(
+            'File uploaded.',
+            ncalls,
+            this.fileId,
+            this.settings.publicKey
+          )
+        })
+        .always(() => {
+          return clearInterval(logger)
+        })
     }
     timeout = 100
     return (check = () => {
@@ -78,27 +76,39 @@ class BaseFile {
     })()
   }
 
-  __updateInfo () {
-    return jsonp(`${this.settings.urlBase}/info/`, 'GET', {
-      jsonerrors: 1,
-      file_id: this.fileId,
-      pub_key: this.settings.publicKey,
-      // Assume that we have all other info if isImage is set to something
-      // other than null and we only waiting for is_ready flag.
-      wait_is_ready: +(this.isImage === null)
-    }, {
-      headers: {
-        'X-UC-User-Agent': this.settings._userAgent
+  __updateInfo() {
+    return jsonp(
+      `${this.settings.urlBase}/info/`,
+      'GET',
+      {
+        jsonerrors: 1,
+        file_id: this.fileId,
+        pub_key: this.settings.publicKey,
+        // Assume that we have all other info if isImage is set to something
+        // other than null and we only waiting for is_ready flag.
+        wait_is_ready: +(this.isImage === null)
+      },
+      {
+        headers: {
+          'X-UC-User-Agent': this.settings._userAgent
+        }
       }
-    }).fail((reason) => {
-      if (this.settings.debugUploads) {
-        log("Can't load file info. Probably removed.", this.fileId, this.settings.publicKey, reason)
-      }
-      return this.__rejectApi('info')
-    }).done(this.__handleFileData)
+    )
+      .fail(reason => {
+        if (this.settings.debugUploads) {
+          log(
+            "Can't load file info. Probably removed.",
+            this.fileId,
+            this.settings.publicKey,
+            reason
+          )
+        }
+        return this.__rejectApi('info')
+      })
+      .done(this.__handleFileData.bind(this))
   }
 
-  __handleFileData (data) {
+  __handleFileData(data) {
     this.fileName = data.original_filename
     this.sanitizedName = data.filename
     this.fileSize = data.size
@@ -121,17 +131,20 @@ class BaseFile {
 
   // Retrieve info
 
-  __progressInfo () {
+  __progressInfo() {
     var ref
     return {
       state: this.__progressState,
       uploadProgress: this.__progress,
-      progress: (ref = this.__progressState) === 'ready' || ref === 'error' ? 1 : this.__progress * 0.9,
+      progress:
+        (ref = this.__progressState) === 'ready' || ref === 'error'
+          ? 1
+          : this.__progress * 0.9,
       incompleteFileInfo: this.__fileInfo()
     }
   }
 
-  __fileInfo () {
+  __fileInfo() {
     var urlBase
     if (this.s3Bucket) {
       urlBase = `https://${this.s3Bucket}.s3.amazonaws.com/${this.fileId}/${this.sanitizedName}`
@@ -156,10 +169,11 @@ class BaseFile {
 
   // Validators
 
-  __setupValidation () {
-    this.validators = this.settings.validators || this.settings.__validators || []
+  __setupValidation() {
+    this.validators =
+      this.settings.validators || this.settings.__validators || []
     if (this.settings.imagesOnly) {
-      return this.validators.push(function (info) {
+      return this.validators.push(function(info) {
         if (info.isImage === false) {
           throw new Error('image')
         }
@@ -167,7 +181,7 @@ class BaseFile {
     }
   }
 
-  __runValidators () {
+  __runValidators() {
     var err, i, info, len, ref, results, v
     info = this.__fileInfo()
     try {
@@ -186,43 +200,44 @@ class BaseFile {
 
   // Internal API control
 
-  __initApi () {
+  __initApi() {
     this.apiDeferred = $.Deferred()
     this.__progressState = 'uploading'
     this.__progress = 0
     return this.__notifyApi()
   }
 
-  __notifyApi () {
+  __notifyApi() {
     return this.apiDeferred.notify(this.__progressInfo())
   }
 
-  __rejectApi (err) {
+  __rejectApi(err) {
     this.__progressState = 'error'
     this.__notifyApi()
     return this.apiDeferred.reject(err, this.__fileInfo())
   }
 
-  __resolveApi () {
+  __resolveApi() {
     this.__progressState = 'ready'
     this.__notifyApi()
     return this.apiDeferred.resolve(this.__fileInfo())
   }
 
-  __cancel () {
+  __cancel() {
     return this.__rejectApi('user')
   }
 
-  __extendApi (api) {
-    api.cancel = this.__cancel
-    api.pipe = api.then = (...args) => { // 'pipe' is alias to 'then' from jQuery 1.8
+  __extendApi(api) {
+    api.cancel = this.__cancel.bind(this)
+    api.pipe = api.then = (...args) => {
+      // 'pipe' is alias to 'then' from jQuery 1.8
       return this.__extendApi(fixedPipe(api, ...args))
     }
 
     return api // extended promise
   }
 
-  promise () {
+  promise() {
     var op
     if (!this.__apiPromise) {
       this.__apiPromise = this.__extendApi(this.apiDeferred.promise())
@@ -235,7 +250,7 @@ class BaseFile {
           this.__notifyApi()
           return this.__completeUpload()
         })
-        op.progress((progress) => {
+        op.progress(progress => {
           if (progress > this.__progress) {
             this.__progress = progress
             return this.__notifyApi()

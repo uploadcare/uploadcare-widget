@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -72,7 +71,9 @@ const translations = {
         retry: 'Yenidən icazə sorğusu göndərin.',
         pleaseAllow: {
           title: 'Lütfən, kameranıza giriş hüququ verin',
-          text: 'Bu saytdan kameranıza daxil olmaq icazəsi verildi. ' + 'Kameranız ilə şəkil çəkmək üçün bu sorğunu təsdiq etməlisiniz.'
+          text:
+            'Bu saytdan kameranıza daxil olmaq icazəsi verildi. ' +
+            'Kameranız ilə şəkil çəkmək üçün bu sorğunu təsdiq etməlisiniz.'
         },
         notFound: {
           title: 'Kamera aşkar edilmədi',
@@ -135,8 +136,8 @@ const translations = {
   }
 }
 
-const pluralize = function (n) {
+const pluralize = function(n) {
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

@@ -7,8 +7,8 @@ pkg/
 .vagrant
 src/**/*.css
 
-src/templates/icons.jst.ejs
-src/templates/styles.jst.ejs
+src/svgs/icons.html
+src/stylesheets/styles.css
 
 *.log
 
@@ -20,3 +20,4 @@ uploadcare.js
 uploadcare.min.js
 uploadcare.lang.en.js
 uploadcare.lang.en.min.js
+dist

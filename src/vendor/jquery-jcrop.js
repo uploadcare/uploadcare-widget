@@ -1,5 +1,5 @@
 import $ from 'jquery'
-
+import { isWindowDefined } from '../utils/is-window-defined'
 /**
  * jquery.Jcrop.js v0.9.10
  * jQuery Image Cropping Plugin - released under MIT License 
@@ -31,7 +31,7 @@ import $ from 'jquery'
  * }}}
  */
 
-(function ($) {
+isWindowDefined() && (function ($) {
 
   $.Jcrop = function (obj, opt) {
     var options = $.extend({}, $.Jcrop.defaults),

@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -88,7 +87,9 @@ const translations = {
         retry: 'Тражи дозволу поново',
         pleaseAllow: {
           title: 'Молимо вас да дозволите приступ вашој камери',
-          text: 'Упитани сте да дозволите приступ вашој камери са овог сајта.<br>' + 'Уколико желите да сликате, морате одобрити овај захтев.'
+          text:
+            'Упитани сте да дозволите приступ вашој камери са овог сајта.<br>' +
+            'Уколико желите да сликате, морате одобрити овај захтев.'
         },
         notFound: {
           title: 'Камера није препозната',
@@ -165,11 +166,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

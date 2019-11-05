@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -70,7 +69,9 @@ const translations = {
         retry: '重新取得相機權限',
         pleaseAllow: {
           title: '請允許使存取您的相機',
-          text: '你一直在提示允許來自這個網站的訪問攝像頭。' + '為了拍照用你的相機，你必須批准這一請求。'
+          text:
+            '你一直在提示允許來自這個網站的訪問攝像頭。' +
+            '為了拍照用你的相機，你必須批准這一請求。'
         },
         notFound: {
           title: '沒有找到相機',
@@ -135,8 +136,8 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

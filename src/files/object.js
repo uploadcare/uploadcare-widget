@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
-import { boundMethodCheck } from '../utils/bound-method-check'
 import { log, debug } from '../utils/warnings'
 import { jsonp, taskRunner } from '../utils'
 import { shrinkFile } from '../utils/image-processor'
@@ -10,16 +9,14 @@ import { BaseFile } from './base'
 var _directRunner = null
 
 class ObjectFile extends BaseFile {
-  constructor (__file) {
+  constructor(__file) {
     super(...arguments)
-    this.setFile = this.setFile.bind(this)
     this.__file = __file
     this.fileName = this.__file.name || 'original'
     this.__notifyApi()
   }
 
-  setFile (file) {
-    boundMethodCheck(this, ObjectFile)
+  setFile(file) {
     if (file) {
       this.__file = file
     }
@@ -36,7 +33,7 @@ class ObjectFile extends BaseFile {
     return this.__notifyApi()
   }
 
-  __startUpload () {
+  __startUpload() {
     var df, ios, resizeShare
     this.apiDeferred.always(() => {
       this.__file = null
@@ -54,34 +51,41 @@ class ObjectFile extends BaseFile {
     // if @settings.imageShrink
     df = $.Deferred()
     resizeShare = 0.4
-    shrinkFile(this.__file, this.settings.imageShrink).progress(function (progress) {
-      return df.notify(progress * resizeShare)
-    }).done(this.setFile).fail(() => {
-      this.setFile()
-      resizeShare = resizeShare * 0.1
-      return resizeShare
-    }).always(() => {
-      df.notify(resizeShare)
-      return this.directUpload().done(df.resolve).fail(df.reject).progress(function (progress) {
-        return df.notify(resizeShare + progress * (1 - resizeShare))
+    shrinkFile(this.__file, this.settings.imageShrink)
+      .progress(function(progress) {
+        return df.notify(progress * resizeShare)
       })
-    })
+      .done(this.setFile.bind(this))
+      .fail(() => {
+        this.setFile()
+        resizeShare = resizeShare * 0.1
+        return resizeShare
+      })
+      .always(() => {
+        df.notify(resizeShare)
+        return this.directUpload()
+          .done(df.resolve)
+          .fail(df.reject)
+          .progress(function(progress) {
+            return df.notify(resizeShare + progress * (1 - resizeShare))
+          })
+      })
     return df
   }
 
-  __autoAbort (xhr) {
+  __autoAbort(xhr) {
     this.apiDeferred.fail(xhr.abort)
     return xhr
   }
 
-  directRunner (task) {
+  directRunner(task) {
     if (!_directRunner) {
       _directRunner = taskRunner(this.settings.parallelDirectUploads)
     }
     return _directRunner(task)
   }
 
-  directUpload () {
+  directUpload() {
     var df
     df = $.Deferred()
     if (!this.__file) {
@@ -92,7 +96,7 @@ class ObjectFile extends BaseFile {
       this.__rejectApi('size')
       return df
     }
-    this.directRunner((release) => {
+    this.directRunner(release => {
       var formData
       df.always(release)
       if (this.apiDeferred.state() !== 'pending') {
@@ -102,65 +106,81 @@ class ObjectFile extends BaseFile {
       formData.append('UPLOADCARE_PUB_KEY', this.settings.publicKey)
       formData.append('signature', this.settings.secureSignature)
       formData.append('expire', this.settings.secureExpire)
-      formData.append('UPLOADCARE_STORE', this.settings.doNotStore ? '' : 'auto')
+      formData.append(
+        'UPLOADCARE_STORE',
+        this.settings.doNotStore ? '' : 'auto'
+      )
       formData.append('file', this.__file, this.fileName)
       formData.append('file_name', this.fileName)
       formData.append('source', this.sourceInfo.source)
-      return this.__autoAbort($.ajax({
-        xhr: () => {
-          var xhr
-          // Naked XHR for progress tracking
-          xhr = $.ajaxSettings.xhr()
-          if (xhr.upload) {
-            xhr.upload.addEventListener('progress', (e) => {
-              return df.notify(e.loaded / e.total)
-            }, false)
+      return this.__autoAbort(
+        $.ajax({
+          xhr: () => {
+            var xhr
+            // Naked XHR for progress tracking
+            xhr = $.ajaxSettings.xhr()
+            if (xhr.upload) {
+              xhr.upload.addEventListener(
+                'progress',
+                e => {
+                  return df.notify(e.loaded / e.total)
+                },
+                false
+              )
+            }
+            return xhr
+          },
+          crossDomain: true,
+          type: 'POST',
+          url: `${this.settings.urlBase}/base/?jsonerrors=1`,
+          headers: {
+            'X-UC-User-Agent': this.settings._userAgent
+          },
+          contentType: false, // For correct boundary string
+          processData: false,
+          data: formData,
+          dataType: 'json',
+          error: df.reject,
+          success: data => {
+            if (data != null ? data.file : undefined) {
+              this.fileId = data.file
+              return df.resolve()
+            } else {
+              return df.reject()
+            }
           }
-          return xhr
-        },
-        crossDomain: true,
-        type: 'POST',
-        url: `${this.settings.urlBase}/base/?jsonerrors=1`,
-        headers: {
-          'X-UC-User-Agent': this.settings._userAgent
-        },
-        contentType: false, // For correct boundary string
-        processData: false,
-        data: formData,
-        dataType: 'json',
-        error: df.reject,
-        success: (data) => {
-          if (data != null ? data.file : undefined) {
-            this.fileId = data.file
-            return df.resolve()
-          } else {
-            return df.reject()
-          }
-        }
-      }))
+        })
+      )
     })
     return df
   }
 
-  multipartUpload () {
+  multipartUpload() {
     var df
     df = $.Deferred()
     if (!this.__file) {
       return df
     }
-    this.multipartStart().done((data) => {
-      return this.uploadParts(data.parts, data.uuid).done(() => {
-        return this.multipartComplete(data.uuid).done((data) => {
-          this.fileId = data.uuid
-          this.__handleFileData(data)
-          return df.resolve()
-        }).fail(df.reject)
-      }).progress(df.notify).fail(df.reject)
-    }).fail(df.reject)
+    this.multipartStart()
+      .done(data => {
+        return this.uploadParts(data.parts, data.uuid)
+          .done(() => {
+            return this.multipartComplete(data.uuid)
+              .done(data => {
+                this.fileId = data.uuid
+                this.__handleFileData(data)
+                return df.resolve()
+              })
+              .fail(df.reject)
+          })
+          .progress(df.notify)
+          .fail(df.reject)
+      })
+      .fail(df.reject)
     return df
   }
 
-  multipartStart () {
+  multipartStart() {
     var data
     data = {
       UPLOADCARE_PUB_KEY: this.settings.publicKey,
@@ -173,19 +193,35 @@ class ObjectFile extends BaseFile {
       part_size: this.settings.multipartPartSize,
       UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
     }
-    return this.__autoAbort(jsonp(`${this.settings.urlBase}/multipart/start/?jsonerrors=1`, 'POST', data, {
-      headers: {
-        'X-UC-User-Agent': this.settings._userAgent
-      }
-    })).fail((reason) => {
+    return this.__autoAbort(
+      jsonp(
+        `${this.settings.urlBase}/multipart/start/?jsonerrors=1`,
+        'POST',
+        data,
+        {
+          headers: {
+            'X-UC-User-Agent': this.settings._userAgent
+          }
+        }
+      )
+    ).fail(reason => {
       if (this.settings.debugUploads) {
         return log("Can't start multipart upload.", reason, data)
       }
     })
   }
 
-  uploadParts (parts, uuid) {
-    var df, inProgress, j, lastUpdate, progress, ref1, submit, submittedBytes, submittedParts, updateProgress
+  uploadParts(parts, uuid) {
+    var df,
+      inProgress,
+      j,
+      lastUpdate,
+      progress,
+      ref1,
+      submit,
+      submittedBytes,
+      submittedParts,
+      updateProgress
     progress = []
     lastUpdate = Date.now()
     updateProgress = (i, loaded) => {
@@ -212,7 +248,10 @@ class ObjectFile extends BaseFile {
         return
       }
       bytesToSubmit = submittedBytes + this.settings.multipartPartSize
-      if (this.fileSize < bytesToSubmit + this.settings.multipartMinLastPartSize) {
+      if (
+        this.fileSize <
+        bytesToSubmit + this.settings.multipartMinLastPartSize
+      ) {
         bytesToSubmit = this.fileSize
       }
       blob = this.__file.slice(submittedBytes, bytesToSubmit)
@@ -226,72 +265,94 @@ class ObjectFile extends BaseFile {
           return
         }
         progress[partNo] = 0
-        return this.__autoAbort($.ajax({
-          xhr: () => {
-            var xhr
-            // Naked XHR for progress tracking
-            xhr = $.ajaxSettings.xhr()
-            xhr.responseType = 'text'
-            if (xhr.upload) {
-              xhr.upload.addEventListener('progress', (e) => {
-                return updateProgress(partNo, e.loaded)
-              }, false)
-            }
-            return xhr
-          },
-          url: parts[partNo],
-          crossDomain: true,
-          type: 'PUT',
-          processData: false,
-          contentType: this.fileType,
-          data: blob,
-          error: () => {
-            attempts += 1
-            if (attempts > this.settings.multipartMaxAttempts) {
-              if (this.settings.debugUploads) {
-                log(`Part #${partNo} and file upload is failed.`, uuid)
+        return this.__autoAbort(
+          $.ajax({
+            xhr: () => {
+              var xhr
+              // Naked XHR for progress tracking
+              xhr = $.ajaxSettings.xhr()
+              xhr.responseType = 'text'
+              if (xhr.upload) {
+                xhr.upload.addEventListener(
+                  'progress',
+                  e => {
+                    return updateProgress(partNo, e.loaded)
+                  },
+                  false
+                )
               }
-              return df.reject()
-            } else {
-              if (this.settings.debugUploads) {
-                debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
+              return xhr
+            },
+            url: parts[partNo],
+            crossDomain: true,
+            type: 'PUT',
+            processData: false,
+            contentType: this.fileType,
+            data: blob,
+            error: () => {
+              attempts += 1
+              if (attempts > this.settings.multipartMaxAttempts) {
+                if (this.settings.debugUploads) {
+                  log(`Part #${partNo} and file upload is failed.`, uuid)
+                }
+                return df.reject()
+              } else {
+                if (this.settings.debugUploads) {
+                  debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
+                }
+                return retry()
               }
-              return retry()
+            },
+            success: function() {
+              inProgress -= 1
+              submit()
+              if (!inProgress) {
+                return df.resolve()
+              }
             }
-          },
-          success: function () {
-            inProgress -= 1
-            submit()
-            if (!inProgress) {
-              return df.resolve()
-            }
-          }
-        }))
+          })
+        )
       })()
     }
-    for (j = 0, ref1 = this.settings.multipartConcurrency; (ref1 >= 0 ? j < ref1 : j > ref1); ref1 >= 0 ? ++j : --j) {
+    for (
+      j = 0, ref1 = this.settings.multipartConcurrency;
+      ref1 >= 0 ? j < ref1 : j > ref1;
+      ref1 >= 0 ? ++j : --j
+    ) {
       submit()
     }
     return df
   }
 
-  multipartComplete (uuid) {
+  multipartComplete(uuid) {
     var data
     data = {
       UPLOADCARE_PUB_KEY: this.settings.publicKey,
       uuid: uuid
     }
-    return this.__autoAbort(jsonp(`${this.settings.urlBase}/multipart/complete/?jsonerrors=1`, 'POST', data, {
-      headers: {
-        'X-UC-User-Agent': this.settings._userAgent
-      }
-    })).fail((reason) => {
+    return this.__autoAbort(
+      jsonp(
+        `${this.settings.urlBase}/multipart/complete/?jsonerrors=1`,
+        'POST',
+        data,
+        {
+          headers: {
+            'X-UC-User-Agent': this.settings._userAgent
+          }
+        }
+      )
+    ).fail(reason => {
       if (this.settings.debugUploads) {
-        return log("Can't complete multipart upload.", uuid, this.settings.publicKey, reason)
+        return log(
+          "Can't complete multipart upload.",
+          uuid,
+          this.settings.publicKey,
+          reason
+        )
       }
     })
   }
-};
+}
 
 ObjectFile.prototype.sourceName = 'local'
 

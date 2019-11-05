@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -66,7 +65,7 @@ const translations = {
       },
       file: {
         drag: 'Перетягніть<br>будь-які файли',
-        nodrop: 'Завантаження файлів з вашого комп\'ютера',
+        nodrop: "Завантаження файлів з вашого комп'ютера",
         cloudsTip: 'Хмарні сховища<br>та соціальні мережі',
         or: 'або',
         button: 'Обрати локальний файл',
@@ -89,7 +88,9 @@ const translations = {
         retry: 'Повторний запит дозволу',
         pleaseAllow: {
           title: 'Будь ласка, надайте доступ до вашої камери',
-          text: 'Вам буде запропоновано дозволити доступ до камери з цього сайту.<br>' + 'Для того, щоб фотографувати за допомогою камери, ви повинні схвалити цей запит.'
+          text:
+            'Вам буде запропоновано дозволити доступ до камери з цього сайту.<br>' +
+            'Для того, щоб фотографувати за допомогою камери, ви повинні схвалити цей запит.'
         },
         notFound: {
           title: 'Камера не виявлена',
@@ -146,7 +147,8 @@ const translations = {
         multiple: {
           title: 'Ви вибрали %files%.',
           question: 'Додати %files%?',
-          tooManyFiles: 'Ви вибрали забагато файлів. Максимальна кількість %max%.',
+          tooManyFiles:
+            'Ви вибрали забагато файлів. Максимальна кількість %max%.',
           tooFewFiles: 'Ви вибрали %files%. Мінімальна кількість %min%.',
           clear: 'Видалити все',
           done: 'Додати'
@@ -166,8 +168,8 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
-  if (((n / 10 % 10 | 0) === 1) || (n % 10 === 0) || (n % 10 > 4)) {
+const pluralize = function(n) {
+  if (((n / 10) % 10 | 0) === 1 || n % 10 === 0 || n % 10 > 4) {
     return 'many'
   } else if (n % 10 === 1) {
     return 'one'
@@ -176,4 +178,4 @@ const pluralize = function (n) {
   }
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

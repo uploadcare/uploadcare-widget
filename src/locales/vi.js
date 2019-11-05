@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -7,7 +6,6 @@
 // # Any fixes are welcome.
 // #
 const translations = {
-
   loadingInfo: 'Đang tải thông tin...',
   errors: {
     default: 'Lỗi',
@@ -85,7 +83,8 @@ const translations = {
         stopRecord: 'Dừng',
         retry: 'Yêu cầu cấp phép lần nữa',
         pleaseAllow: {
-          text: 'Bạn đã được nhắc nhở để cho phép truy cập vào camera từ trang này.<br>Để có thể chụp ảnh với camera, bạn phải chấp thuận yêu cầu này.',
+          text:
+            'Bạn đã được nhắc nhở để cho phép truy cập vào camera từ trang này.<br>Để có thể chụp ảnh với camera, bạn phải chấp thuận yêu cầu này.',
           title: 'Vui lòng cho phép truy cập tới camera của bạn'
         },
         notFound: {
@@ -163,8 +162,8 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

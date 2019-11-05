@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -13,11 +12,11 @@ const translations = {
     default: 'Error',
     baddata: 'Valor incorrecte',
     size: 'Massa gran',
-    upload: 'No s\'ha pogut carregar',
+    upload: "No s'ha pogut carregar",
     user: 'Carrega cancel·lada',
-    info: 'No s\'ha pogut carregar la informació',
+    info: "No s'ha pogut carregar la informació",
     image: 'Només es permeten imatges',
-    createGroup: 'No es pot crear el grup d\'arxius',
+    createGroup: "No es pot crear el grup d'arxius",
     deleted: 'Fitxer eliminat'
   },
   draghere: 'Arrossega els fitxers fins aquí',
@@ -71,10 +70,12 @@ const translations = {
         retry: 'Demanar permisos una altra vegada',
         pleaseAllow: {
           title: 'Si us plau, permet accés a la teva càmera',
-          text: 'Aquest lloc t\'ha demanat de permetre accés a la càmera. ' + 'Per tal de realitzar imatges amb la teva càmera has d\'acceptar aquesta petició.'
+          text:
+            "Aquest lloc t'ha demanat de permetre accés a la càmera. " +
+            "Per tal de realitzar imatges amb la teva càmera has d'acceptar aquesta petició."
         },
         notFound: {
-          title: 'No s\'ha detectat cap càmera',
+          title: "No s'ha detectat cap càmera",
           text: 'Sembla que no tens cap càmera connectada a aquest dispositiu.'
         }
       },
@@ -104,25 +105,26 @@ const translations = {
         error: {
           default: {
             title: 'La pujada ha fallat!',
-            text: 'S\'ha produït un error durant la pujada.',
+            text: "S'ha produït un error durant la pujada.",
             back: 'Si us plau, provi-ho de nou.'
           },
           image: {
-            title: 'Només s\'accepten fitxers d\'imatges.',
+            title: "Només s'accepten fitxers d'imatges.",
             text: 'Si us plau, provi-ho de nou amb un altre fitxer.',
             back: 'Escull imatge'
           },
           size: {
-            title: 'La mida del fitxer que has seleccionat sobrepassa el límit.',
+            title:
+              'La mida del fitxer que has seleccionat sobrepassa el límit.',
             text: 'Si us plau, provi-ho de nou amb un altre fitxer.'
           },
           loadImage: {
             title: 'Error',
-            text: 'No s\'ha pogut carregar la imatge'
+            text: "No s'ha pogut carregar la imatge"
           }
         },
         multiple: {
-          title: 'N\'has escollit %files%',
+          title: "N'has escollit %files%",
           question: 'Vols afegir tots aquests fitxers?',
           tooManyFiles: 'Has escollit massa fitxers. %max% és el màxim.',
           tooFewFiles: 'Has escollit %files%. Com a mínim en calen %min%.',
@@ -136,11 +138,11 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   if (n === 1) {
     return 'one'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

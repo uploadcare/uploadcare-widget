@@ -1,4 +1,3 @@
-
 // #
 // # Please, do not use this locale as a reference for new translations.
 // # It could be outdated or incomplete. Always use the latest English versions:
@@ -88,7 +87,9 @@ const translations = {
         retry: 'طلب الإذن مرة أخرى',
         pleaseAllow: {
           title: 'يرجى السماح بالوصول إلى الكاميرا',
-          text: 'تمت مطالبتك بالسماح بالدخول إلى الكاميرا من هذا الموقع<br>' + 'من أجل التقاط الصور من الكاميرا يجب عليك الموافقة على هذا الطلب'
+          text:
+            'تمت مطالبتك بالسماح بالدخول إلى الكاميرا من هذا الموقع<br>' +
+            'من أجل التقاط الصور من الكاميرا يجب عليك الموافقة على هذا الطلب'
         },
         notFound: {
           title: 'لم يتم اكتشاف أي كاميرا',
@@ -145,7 +146,8 @@ const translations = {
         multiple: {
           title: 'لقد اخترت %files%',
           question: 'إضافة %files%?',
-          tooManyFiles: 'لقد اخترت عددا كبيرا جدا من الملفات %max% هو الحد الأقصى',
+          tooManyFiles:
+            'لقد اخترت عددا كبيرا جدا من الملفات %max% هو الحد الأقصى',
           tooFewFiles: 'لقد اخترت %files%. على الأقل %min% مطلوب',
           clear: 'حذف الكل',
           done: 'إضافة',
@@ -165,7 +167,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-const pluralize = function (n) {
+const pluralize = function(n) {
   var mod
   if (n === 0) {
     return 'zero'
@@ -177,13 +179,13 @@ const pluralize = function (n) {
     return 'two'
   }
   mod = n % 100
-  if ((mod >= 3 && mod <= 10)) {
+  if (mod >= 3 && mod <= 10) {
     return 'few'
   }
-  if ((mod >= 11 && mod <= 99)) {
+  if (mod >= 11 && mod <= 99) {
     return 'many'
   }
   return 'other'
 }
 
-export { translations, pluralize }
+export default { translations, pluralize }

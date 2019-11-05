@@ -1,5 +1,5 @@
 {
-  "dest": "./src/templates",
+  "dest": "./src/svgs",
   "log": "info",
   "shape": {
     "id": {
@@ -11,7 +11,7 @@
       "inline": true,
       "css": false,
       "dest": "",
-      "sprite": "icons.jst.ejs"
+      "sprite": "icons.html"
     }
   }
 }

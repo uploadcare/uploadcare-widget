@@ -1,7 +1,8 @@
 import $ from 'jquery'
+import { isWindowDefined } from '../utils/is-window-defined'
 // from https://github.com/homm/jquery-ordering
 
-(function($) {
+isWindowDefined() && (function($) {
   function nearestFinder (targets) {
     this.targets = targets;
     this.last = null;

@@ -1,11 +1,87 @@
 import $ from 'jquery'
 
-import { en } from '../locales'
-import { rebuild, t } from '../locale'
+// utils
+import {
+  FileReader,
+  URL,
+  Blob,
+  iOSVersion,
+  fileDragAndDrop,
+  canvas,
+  dragAndDrop,
+  sendFileAPI,
+  fileAPI
+} from '../utils/abilities'
 
-import { globals, build, common, waitForSettings, CssCollector } from '../settings'
+import {
+  Collection,
+  UniqCollection,
+  CollectionOfPromises
+} from '../utils/collection'
 
-import { utils } from '../templates'
+import { registerMessage, unregisterMessage } from '../utils/messages'
+import { imageLoader, videoLoader } from '../utils/image-loader'
+import { log, debug, warn, warnOnce } from '../utils/warnings'
+import { getPusher } from '../utils/pusher'
+
+import {
+  unique,
+  defer,
+  gcd,
+  once,
+  wrapToPromise,
+  then,
+  bindAll,
+  upperCase,
+  publicCallbacks,
+  uuid,
+  splitUrlRegex,
+  uuidRegex,
+  groupIdRegex,
+  cdnUrlRegex,
+  splitCdnUrl,
+  escapeRegExp,
+  globRegexp,
+  normalizeUrl,
+  fitText,
+  fitSizeInCdnLimit,
+  fitSize,
+  applyCropCoordsToInfo,
+  fileInput,
+  fileSelectDialog,
+  fileSizeLabels,
+  readableFileSize,
+  ajaxDefaults,
+  jsonp,
+  canvasToBlob,
+  taskRunner,
+  fixedPipe
+} from '../utils'
+
+import {
+  shrinkFile,
+  shrinkImage,
+  drawFileToCanvas,
+  readJpegChunks,
+  replaceJpegChunk,
+  getExif,
+  parseExifOrientation,
+  hasTransparency
+} from '../utils/image-processor'
+
+import { isFile, valueToFile } from '../utils/files'
+import { isFileGroup, valueToGroup, isFileGroupsEqual } from '../utils/groups'
+
+import locale from '../locale'
+
+import {
+  globals,
+  build,
+  common,
+  waitForSettings,
+  CssCollector
+} from '../settings'
+
 import { Pusher } from '../vendor/pusher'
 import { BaseFile } from '../files/base'
 import { ObjectFile } from '../files/object'
@@ -25,7 +101,90 @@ const namespace = {
   version,
   jQuery: $,
 
-  utils,
+  utils: {
+    abilities: {
+      fileAPI,
+      sendFileAPI,
+      dragAndDrop,
+      canvas,
+      fileDragAndDrop,
+      iOSVersion,
+      Blob,
+      URL,
+      FileReader
+    },
+
+    Collection,
+    UniqCollection,
+    CollectionOfPromises,
+
+    imageLoader,
+    videoLoader,
+
+    log,
+    debug,
+    warn,
+    warnOnce,
+
+    //   commonWarning
+
+    registerMessage,
+    unregisterMessage,
+
+    unique,
+    defer,
+    gcd,
+    once,
+    wrapToPromise,
+    then,
+    bindAll,
+    upperCase,
+    publicCallbacks,
+    uuid,
+    splitUrlRegex,
+    uuidRegex,
+    groupIdRegex,
+    cdnUrlRegex,
+    splitCdnUrl,
+    escapeRegExp,
+    globRegexp,
+    normalizeUrl,
+    fitText,
+    fitSizeInCdnLimit,
+    fitSize,
+    applyCropCoordsToInfo,
+    fileInput,
+    fileSelectDialog,
+    fileSizeLabels,
+    readableFileSize,
+    ajaxDefaults,
+    jsonp,
+    canvasToBlob,
+    taskRunner,
+    fixedPipe,
+
+    isFile,
+    valueToFile,
+
+    image: {
+      shrinkFile,
+      shrinkImage,
+      drawFileToCanvas,
+      readJpegChunks,
+      replaceJpegChunk,
+      getExif,
+      parseExifOrientation,
+      hasTransparency
+    },
+
+    pusher: {
+      getPusher
+    },
+
+    isFileGroup,
+    valueToGroup,
+    isFileGroupsEqual
+  },
 
   settings: {
     globals,
@@ -35,12 +194,7 @@ const namespace = {
     CssCollector
   },
 
-  locale: {
-    translations: { en: en.translations },
-    pluralize: { en: en.pluralize },
-    rebuild,
-    t
-  },
+  locale,
 
   tabsCss,
 
@@ -104,7 +258,7 @@ const namespace = {
   }
 }
 
-function createPlugin (ns) {
+function createPlugin(ns) {
   return fn => fn(ns)
 }
 

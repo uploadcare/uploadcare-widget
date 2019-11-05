@@ -1,12 +1,11 @@
 import $ from 'jquery'
-import { boundMethodCheck } from './bound-method-check'
 
 var indexOf = [].indexOf
 
 // utils
 
 class Collection {
-  constructor (items = [], after = false) {
+  constructor(items = [], after = false) {
     this.onAdd = $.Callbacks()
     this.onRemove = $.Callbacks()
     this.onSort = $.Callbacks()
@@ -18,7 +17,7 @@ class Collection {
     }
   }
 
-  init (items) {
+  init(items) {
     var item, j, len
     for (j = 0, len = items.length; j < len; j++) {
       item = items[j]
@@ -26,16 +25,16 @@ class Collection {
     }
   }
 
-  add (item) {
+  add(item) {
     return this.__add(item, this.__items.length)
   }
 
-  __add (item, i) {
+  __add(item, i) {
     this.__items.splice(i, 0, item)
     return this.onAdd.fire(item, i)
   }
 
-  remove (item) {
+  remove(item) {
     var i
     i = $.inArray(item, this.__items)
     if (i !== -1) {
@@ -43,12 +42,12 @@ class Collection {
     }
   }
 
-  __remove (item, i) {
+  __remove(item, i) {
     this.__items.splice(i, 1)
     return this.onRemove.fire(item, i)
   }
 
-  clear () {
+  clear() {
     var i, item, items, j, len, results
     items = this.get()
     this.__items.length = 0
@@ -60,7 +59,7 @@ class Collection {
     return results
   }
 
-  replace (oldItem, newItem) {
+  replace(oldItem, newItem) {
     var i
     if (oldItem !== newItem) {
       i = $.inArray(oldItem, this.__items)
@@ -70,17 +69,17 @@ class Collection {
     }
   }
 
-  __replace (oldItem, newItem, i) {
+  __replace(oldItem, newItem, i) {
     this.__items[i] = newItem
     return this.onReplace.fire(oldItem, newItem, i)
   }
 
-  sort (comparator) {
+  sort(comparator) {
     this.__items.sort(comparator)
     return this.onSort.fire()
   }
 
-  get (index) {
+  get(index) {
     if (index != null) {
       return this.__items[index]
     } else {
@@ -88,20 +87,20 @@ class Collection {
     }
   }
 
-  length () {
+  length() {
     return this.__items.length
   }
 }
 
 class UniqCollection extends Collection {
-  add (item) {
+  add(item) {
     if (indexOf.call(this.__items, item) >= 0) {
       return
     }
     return super.add(...arguments)
   }
 
-  __replace (oldItem, newItem, i) {
+  __replace(oldItem, newItem, i) {
     if (indexOf.call(this.__items, newItem) >= 0) {
       return this.remove(oldItem)
     } else {
@@ -111,37 +110,35 @@ class UniqCollection extends Collection {
 }
 
 class CollectionOfPromises extends UniqCollection {
-  constructor () {
+  constructor() {
     super(...arguments, true)
-
-    this.onAnyDone = this.onAnyDone.bind(this)
-    this.onAnyFail = this.onAnyFail.bind(this)
-    this.onAnyProgress = this.onAnyProgress.bind(this)
 
     this.anyDoneList = $.Callbacks()
     this.anyFailList = $.Callbacks()
     this.anyProgressList = $.Callbacks()
 
     this._thenArgs = null
-    this.anyProgressList.add(function (item, firstArgument) {
+    this.anyProgressList.add(function(item, firstArgument) {
       return $(item).data('lastProgress', firstArgument)
     })
 
     super.init(arguments[0])
   }
 
-  onAnyDone (cb) {
+  onAnyDone(cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyDoneList.add(cb)
     ref1 = this.__items
     results = []
     for (j = 0, len = ref1.length; j < len; j++) {
       file = ref1[j]
       if (file.state() === 'resolved') {
-        results.push(file.done(function (...args) {
-          return cb(file, ...args)
-        }))
+        results.push(
+          file.done(function(...args) {
+            return cb(file, ...args)
+          })
+        )
       } else {
         results.push(undefined)
       }
@@ -149,18 +146,20 @@ class CollectionOfPromises extends UniqCollection {
     return results
   }
 
-  onAnyFail (cb) {
+  onAnyFail(cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyFailList.add(cb)
     ref1 = this.__items
     results = []
     for (j = 0, len = ref1.length; j < len; j++) {
       file = ref1[j]
       if (file.state() === 'rejected') {
-        results.push(file.fail(function (...args) {
-          return cb(file, ...args)
-        }))
+        results.push(
+          file.fail(function(...args) {
+            return cb(file, ...args)
+          })
+        )
       } else {
         results.push(undefined)
       }
@@ -168,9 +167,9 @@ class CollectionOfPromises extends UniqCollection {
     return results
   }
 
-  onAnyProgress (cb) {
+  onAnyProgress(cb) {
     var file, j, len, ref1, results
-    boundMethodCheck(this, CollectionOfPromises)
+
     this.anyProgressList.add(cb)
     ref1 = this.__items
     results = []
@@ -181,7 +180,7 @@ class CollectionOfPromises extends UniqCollection {
     return results
   }
 
-  lastProgresses () {
+  lastProgresses() {
     var item, j, len, ref1, results
     ref1 = this.__items
     results = []
@@ -192,18 +191,19 @@ class CollectionOfPromises extends UniqCollection {
     return results
   }
 
-  add (item) {
+  add(item) {
     if (!(item && item.then)) {
       return
     }
     if (this._thenArgs) {
       item = item.then(...this._thenArgs)
     }
-    super.add(...arguments)
+
+    super.add(item)
     return this.__watchItem(item)
   }
 
-  __replace (oldItem, newItem, i) {
+  __replace(oldItem, newItem, i) {
     if (!(newItem && newItem.then)) {
       return this.remove(oldItem)
     } else {
@@ -212,8 +212,8 @@ class CollectionOfPromises extends UniqCollection {
     }
   }
 
-  __watchItem (item) {
-    var handler = (callbacks) => {
+  __watchItem(item) {
+    var handler = callbacks => {
       return (...args) => {
         if (indexOf.call(this.__items, item) >= 0) {
           return callbacks.fire(item, ...args)
@@ -228,7 +228,7 @@ class CollectionOfPromises extends UniqCollection {
     )
   }
 
-  autoThen (...args) {
+  autoThen(...args) {
     var i, item, j, len, ref1, results
 
     if (this._thenArgs) {
@@ -247,8 +247,4 @@ class CollectionOfPromises extends UniqCollection {
   }
 }
 
-export {
-  Collection,
-  UniqCollection,
-  CollectionOfPromises
-}
+export { Collection, UniqCollection, CollectionOfPromises }

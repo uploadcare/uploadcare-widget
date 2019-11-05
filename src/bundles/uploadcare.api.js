@@ -2,13 +2,6 @@ import $ from 'jquery'
 import '../vendor/jquery-xdr'
 
 import { presets, defaults, common } from '../settings'
-
-import '../stylesheets'
-import '../widget/submit-guard'
-import '../widget/accessibility'
-
-import { en } from '../locales'
-
 import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
@@ -21,9 +14,10 @@ export default {
   jQuery: $,
 
   // Defaults (not normalized)
-  defaults: $.extend({
+  defaults: {
+    ...defaults,
     allTabs: presets.tabs.all
-  }, defaults),
+  },
 
   globals: common,
   start: common,
@@ -31,5 +25,5 @@ export default {
   filesFrom,
   FileGroup,
   loadFileGroup,
-  locales: Object.keys({ en })
+  locales: ['en']
 }
