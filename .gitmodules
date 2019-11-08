@@ -1,3 +1,0 @@
-[submodule "submodules/uploadcare-bower"]
-	path = submodules/uploadcare-bower
-	url = https://github.com/uploadcare/uploadcare-bower.git

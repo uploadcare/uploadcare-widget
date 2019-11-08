@@ -5,8 +5,21 @@ log/
 tmp/
 pkg/
 .vagrant
-app/**/*.css
-icons.jst.ejs
+src/**/*.css
+
+src/svgs/icons.html
+src/stylesheets/styles.css
+
 *.log
 
 .DS_Store
+
+uploadcare.api.js
+uploadcare.api.min.js
+uploadcare.full.js
+uploadcare.full.min.js
+uploadcare.js
+uploadcare.min.js
+uploadcare.lang.en.js
+uploadcare.lang.en.min.js
+dist

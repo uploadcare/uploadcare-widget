@@ -8,85 +8,32 @@ git clone https://github.com/uploadcare/uploadcare-widget
 
 ## Environment
 
-You need a working Ruby 2.0.0 and above environment with [Bundler](http://bundler.io).
+You need a working nodejs and npm.
 
-### Vagrant
-
-If you don't want to set up the environment to your machine,
-you can use [Vagrant](https://www.vagrantup.com/).
-Just [install Vagrant](https://www.vagrantup.com/docs/installation/) and [VirtualBox](https://www.virtualbox.org/)
-or [other provider](https://www.vagrantup.com/docs/getting-started/providers.html).
-
-After opening your terminal, go to this directory and run:
-
-```bash
-vagrant up
-vagrant ssh
-```
-
-In Vagrant run:
-
-```bash
-bundle install
-cd ./test/dummy
-bundle install
-```
-
-### Local environment (without Vagrant)
-
-Inside folder run
+## Build
 
 ```bash
 npm install
 npm run build
-
-bundle install
-cd ./test/dummy
-bundle install
 ```
-
-## Build
-
-* run `bundle exec rake js:latest:build` to build assets
-  to the **pkg/latest** directory (with the “latest” suffix).
-* run `bundle exec rake js:release:build` to build assets
-  to the **pkg/version** directory (with the current version suffix).
-  The version is specified in `lib/uploadcare-widget/version.rb`.
 
 ## Development
 
-Go to `test/dummy/`. There is a simple Rails app. Run it:
-
 ```bash
-bundle exec rails server
+npm run dev
 ```
     
-Open http://127.0.0.1:3000/. Follow any link. 
+Open http://localhost:10001. Follow any link. 
 There's going to be a widget or three. Edit code and reload the page :-)
+
+
+### VS Code templates syntax highlight
+
+We use tagged HTML strings for templates. Use [lit-html][lit-html] plugin
+for beautiful syntax highlight and HTML autocomplete.
 
 ## Testing
 
-Use [Jasminerice](https://github.com/bradphelan/jasminerice)
-installed under the `test/dummy/` Rails app.
+Soon there will be tests 🖖
 
-To run tests in your browser go to http://127.0.0.1:3000/jasmine.
-
-For more information, see 
-[jasminerice docs](https://github.com/bradphelan/jasminerice).
-
-#### guard-jasmine
-
-To run tests in a terminal you must first 
-[install phantomjs](https://github.com/guard/guard-jasmine#phantomjs).
-
-Then, there are two options:
-
-  - run `bundle exec guard start`
-  - run `bundle exec guard-jasmine`
-
-The first one is for continuous tests execution,
-the second one runs tests just once.
-Both should be executed from the `test/dummy/` directory.
-
-See [guard-jasmine docs](https://github.com/netzpirat/guard-jasmine) 
-for more information.
+[lit-html]: https://marketplace.visualstudio.com/items?itemName=bierner.lit-html

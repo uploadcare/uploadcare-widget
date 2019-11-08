@@ -95,7 +95,7 @@ There are a few types of JS bundles:
 Each bundle has its minified version. Just add `.min` before `.js`,
 e.g. `uploadcare.min.js`.
 
-By default, `uploadcare.min.js` is exported for npm and other package managers.
+By default, `uploadcare.js` is exported for npm and other package managers.
 
 ## Install
 
@@ -104,7 +104,7 @@ You’re free to choose from the install methods listed below.
 ### NPM
 
 ```bash
-npm install uploadcare-widget --save
+npm install uploadcare-widget
 ```
 
 ```javascript
@@ -171,7 +171,8 @@ upload is in progress. This can be a real time saver.
 
 ### Usage with React
 
-See [demo app](https://github.com/uploadcare/uploadcare-widget-react-demo/).
+Check out our [React component](https://github.com/uploadcare/react-widget/)
+for Uploadcare Widget.
 
 ### Usage with Angular
 
@@ -280,7 +281,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
 [github-branch-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
 [github-home]: https://github.com/uploadcare/uploadcare-widget
-[github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/javascripts/uploadcare/locale
+[github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/src/locales
 [github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com

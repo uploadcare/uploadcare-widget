@@ -1,0 +1,40 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<style>
+  .param {
+    font-size: 12px;
+    margin-bottom: 1em;
+  }
+</style>
+
+<form role="uploadcare-upload-form" method="post">
+  <div>
+    <input type="hidden" role="uploadcare-uploader" name="upload_a" />
+    <div class="param"></div>
+  </div>
+  <div>
+    <input type="hidden" role="uploadcare-uploader" name="upload_b" />
+    <div class="param"></div>
+  </div>
+  <input type="text" />
+  <button type="submit">Clickity</button>
+</form>
+
+<form style="margin-top: 60px;" method="post">
+  <legend>Submitting not prevented here:</legend>
+  <div>
+    <input type="hidden" role="uploadcare-uploader" name="upload_c" />
+    <div class="param"></div>
+  </div>
+  <button type="submit">Clickity</button>
+</form>

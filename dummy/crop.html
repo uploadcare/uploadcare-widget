@@ -1,0 +1,74 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<style>
+  .long-input {
+    width: 800px;
+  }
+</style>
+
+<h2>Widget with crop</h2>
+<pre><code>&lt;input class="long-input" role="uploadcare-uploader" data-crop="<input
+  id="widget-with-crop-option"
+  placeholder="4:3, 100x200 upscale, etc"
+  value="1170x650 minimum"
+>"&gt;</code></pre>
+
+Try:
+<code
+  ><ul>
+    <li>disabled</li>
+    <li>4:3</li>
+    <li>100x200</li>
+    <li>100x200 upscale</li>
+    <li>100x100 minimum</li>
+    <li>or empty string</li>
+  </ul></code
+>
+
+Result:
+<div id="widget-with-crop-wrap">
+  <input
+    class="long-input"
+    role="uploadcare-uploader"
+    placeholder="here will be result CDN url"
+    data-crop="1170x650 minimum"
+    value=""
+  />
+</div>
+
+<script>
+  UPLOADCARE_LIVE = false;
+
+  $("#widget-with-crop-option").on("change", function() {
+    // uploadcare.jQuery need for ie8:
+    // it clones nodes with jquery's expando.
+    var wraper = uploadcare.jQuery("#widget-with-crop-wrap");
+    var input = wraper
+      .find('[role="uploadcare-uploader"]')
+      .attr("data-crop", this.value);
+    wraper.empty().append(input.clone());
+    uploadcare.initialize(wraper);
+  });
+</script>
+
+<p>
+  Shrink before upload:
+  <input
+    class="long-input"
+    role="uploadcare-uploader"
+    placeholder="here will be result CDN url"
+    data-image-shrink="800x680"
+    data-preview-step=""
+    value=""
+  />
+</p>

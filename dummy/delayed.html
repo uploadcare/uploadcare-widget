@@ -1,0 +1,46 @@
+<meta charset="UTF-8">
+
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<script>
+  UPLOADCARE_MANUAL_START = true;
+  UPLOADCARE_PUBLIC_KEY = "";
+
+  $(function($) {
+    var countdown = 3;
+    var counter = $("#countdown").html(countdown);
+    var tick = function() {
+      countdown--;
+      if (countdown > 0) {
+        counter.html(countdown);
+        setTimeout(tick, 1000);
+      } else {
+        counter.remove();
+        uploadcare.start({
+          publicKey: "demopublickey",
+          localeTranslations: { ready: "BANG!" }
+        });
+      }
+    };
+    setTimeout(tick, 1000);
+  });
+</script>
+
+<div id="countdown" style="font-size: 60px;"></div>
+<div class="hidden">
+  <input type="hidden" role="uploadcare-uploader" />
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    value="cdd5795a-ae83-49ea-9b2e-e9c6999f3421"
+  />
+</div>

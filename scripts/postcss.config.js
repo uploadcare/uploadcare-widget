@@ -1,7 +1,7 @@
-const path = require('path')
-const stylesheetsPath = path.join(__dirname, 'app', 'assets', 'stylesheets', 'uploadcare')
+const { join } = require('path')
+const stylesheetsPath = join(__dirname, 'src/stylesheets')
 
-module.exports = (ctx) => ({
+module.exports = ctx => ({
   plugins: {
     'postcss-import': {
       path: stylesheetsPath,
@@ -9,12 +9,7 @@ module.exports = (ctx) => ({
     },
     'postcss-prefixer': {
       prefix: 'uploadcare--',
-      ignore: [
-        /^\.uploadcare-/,
-        /^\.ord-/,
-        '.bottom',
-        '.right'
-      ]
+      ignore: [/^\.uploadcare-/, /^\.ord-/, '.bottom', '.right']
     },
     'postcss-custom-media': {},
     'postcss-nested': {},

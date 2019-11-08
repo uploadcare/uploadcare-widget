@@ -1,0 +1,68 @@
+<meta charset="UTF-8">
+<script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_TABS = "default huddle";
+  UPLOADCARE_DEBUG_UPLOADS = true;
+</script>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<input
+  type="text"
+  role="uploadcare-uploader"
+  data-crop="4:3"
+  data-multiple
+/>
+
+<input
+  type="text"
+  size="100"
+  role="uploadcare-uploader"
+  data-crop="1:1"
+  data-images-only
+  data-multiple="true"
+  id="uploader"
+  value=""
+/>
+
+<div id="list"></div>
+
+<script>
+  var $ = uploadcare.jQuery;
+  var widget = uploadcare.MultipleWidget("#uploader");
+
+  widget.onChange(function(group) {
+    var $list = $("#list").empty();
+    if (!group) {
+      return;
+    }
+    $.when.apply(this, group.files()).done(function() {
+      $.each(group.files(), function(i) {
+        var file = this;
+        file.done(function(fileInfo) {
+          $list.append(
+            $("<div/>").append(
+              $('<a href="#"/>')
+                .text(fileInfo.name)
+                .on("click", function() {
+                  uploadcare
+                    .openDialog(file, {
+                      crop: "150x150"
+                    })
+                    .done(function(file) {
+                      var files = group.files();
+                      files[i] = file;
+                      widget.value(uploadcare.FileGroup(files));
+                    });
+                  return false;
+                })
+            )
+          );
+        });
+      });
+    });
+  });
+</script>
