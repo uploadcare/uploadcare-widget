@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 /* eslint-env mocha */
+/* global cy */
 
 describe('uploadcare widget', function () {
   beforeEach(function () {
