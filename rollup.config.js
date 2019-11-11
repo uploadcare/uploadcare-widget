@@ -33,6 +33,7 @@ const bundle = (input, output, options = {}) => ({
           }
         ]
       }),
+      
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]],

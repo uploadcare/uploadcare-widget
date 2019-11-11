@@ -14,22 +14,27 @@
     "uploadcare.lang.en.min.js"
   ],
   "scripts": {
+    "help:dev": "SCRIPTS FOR LOCAL DEVELOPMENT",
     "dev:svg": "nodemon --watch src/svgs --exec 'svg-sprite --config ./scripts/svg-sprite.config.json' src/svgs/icon-*.svg",
     "dev:css": "nodemon --watch src/stylesheets --exec 'postcss -o ./src/stylesheets/styles.css -c ./scripts/postcss.config.js' src/stylesheets/styles.pcss",
     "dev:js": "rollup -wc scripts/rollup.config.dev.js",
     "dev": "npm run dev:css & npm run dev:svg & npm run dev:js",
+
+    "help:build": "SCRIPTS FOR BUILD PRODUCTION VERSION",
+    "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
+    "build:css": "postcss -o ./src/stylesheets/styles.css -c ./scripts/postcss.config.js ./src/stylesheets/styles.pcss",
+    "build:css:min": "cross-env NODE_ENV=production npm run build:css",
+    "build:js": "rollup -c",
+    "build": "npm run build:svg && npm run build:css:min && npm run build:js",
+
+    "help:test": "SCRIPTS FOR TESTS AND CODE QUALITY CHECKS",
     "format": "prettier --write \"**/*.js\"",
     "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
-    "build:svg": "svg-sprite --config ./scripts/svg-sprite.config.json src/svgs/icon-*.svg",
-    "build:css": "postcss -o ./src/stylesheets/styles.css -c ./scripts/postcss.config.js ./src/stylesheets/styles.pcss",
-    "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "test:e2e": "cypress run",
-    "ci": "start-test dev:js :10001 test:e2e",
-    "build:js": "rollup -c",
-    "build": "npm run build:svg && npm run build:css:min && npm run build:js",
-    "test": "npm run lint:css && npm run lint:js && npm run ci"
+    "test:ci": "start-test dev:js :10001 test:e2e",
+    "test": "npm run lint:css && npm run lint:js && && npm run test:ci"
   },
   "dependencies": {
     "jquery": "^3.4.1"
