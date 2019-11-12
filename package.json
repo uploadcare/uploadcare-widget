@@ -34,7 +34,7 @@
     "lint:js": "eslint .",
     "test:e2e": "cypress run",
     "test:ci": "start-test dev:js :10001 test:e2e",
-    "test": "npm run lint:css && npm run lint:js && && npm run test:ci"
+    "test": "npm run lint:css && npm run lint:js && npm run test:ci"
   },
   "dependencies": {
     "jquery": "^3.4.1"
