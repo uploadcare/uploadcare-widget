@@ -33,7 +33,8 @@
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
     "test:e2e": "cypress run",
-    "test:ci": "start-test dev:js :10001 test:e2e",
+    "start-server": "npm run build:css && npm run build:svg && npm run dev:js",
+    "test:ci": "start-test start-server :10001 test:e2e",
     "test": "npm run lint:css && npm run lint:js && npm run test:ci"
   },
   "dependencies": {
