@@ -20,7 +20,7 @@ const ACCESS_KEY = process.env.ACCESS_KEY
 const SECRET_KEY = process.env.SECRET_KEY
 
 if (!BUCKET || !ACCESS_KEY || !SECRET_KEY) {
-  console.log('don\'t found credentials skip publish to s3')
+  console.log("don't found credentials skip publish to s3")
   process.exit(0)
 }
 
@@ -56,20 +56,20 @@ const uploadToS3 = (data, path, { dry } = {}) => {
   return promise
 }
 
-const uploadFile = async (data, fileName, options) =>
-  Promise.all(
+const uploadFile = (data, fileName, options) => {
+  return Promise.all(
     VERSION_TYPES.map(version =>
       uploadToS3(data, `${BASE_PATH}${version}/${fileName}`, options)
     )
   )
+}
 
-Promise.all(
-  pkg.files.map(name =>
-    Promise.all([readFile(name), name]).then(([data, name]) =>
-      uploadFile(data, name)
-    )
+// main part starts here
+Promise.all(pkg.files.map(name => Promise.all([readFile(name), name])))
+  .then(files =>
+    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: true })))
   )
-).catch(error => {
-  console.error(error)
-  process.exit(1)
-})
+  .catch(error => {
+    console.error('Error: \n', error.message)
+    process.exit(1)
+  })
