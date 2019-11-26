@@ -5,7 +5,9 @@ import locale from '../locale'
 const tabPreviewRegular = ({ file }) => html`
   <div class="uploadcare--tab__header">
     <div
+      id="tab__title"
       class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"
+      role="status" aria-live="assertive"
     >
       ${locale.t('dialog.tabs.preview.regular.title')}
     </div>
@@ -29,6 +31,7 @@ const tabPreviewRegular = ({ file }) => html`
     <button
       type="button"
       class="uploadcare--button uploadcare--button_primary uploadcare--footer__button uploadcare--preview__done"
+      aria-describedby="tab__title"
     >
       ${locale.t('dialog.tabs.preview.done')}
     </button>
