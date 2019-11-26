@@ -79,6 +79,21 @@ defaults = {
   debugUploads: false,
   integration: ''
 }
+
+if (process.env.NODE_ENV === 'production') {
+  let debugUploads = false
+  Object.defineProperty(defaults, 'debugUploads', {
+    get: () => debugUploads,
+    set: newValue => {
+      debugUploads = newValue
+      warn(
+        "Flag `debugUploads` don't work in minified bundles",
+        'Please use not minified version for better development experience'
+      )
+    }
+  })
+}
+
 transforms = {
   multipleMax: {
     from: 0,
