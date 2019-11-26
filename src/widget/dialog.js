@@ -122,6 +122,9 @@ const openDialog = function(files, tab, settings) {
     currentDialogPr = null
     dialog.remove()
     cancelLock()
+    if (settings.multiple) {
+      return $('.uploadcare--widget').attr('tabindex', 0).focus()
+    }
     return originalFocusedElement.focus()
   })
 
@@ -481,7 +484,7 @@ class Panel {
       .insertBefore(this.footer)
     if (name === 'preview') {
       tabIcon = $(
-        '<div class="uploadcare--menu__icon uploadcare--panel__icon">'
+        '<div class="uploadcare--menu__icon uploadcare--panel__icon" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">'
       )
     } else {
       tabIcon = $(
