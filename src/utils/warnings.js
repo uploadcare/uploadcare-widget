@@ -1,43 +1,73 @@
-// utils
+import { warn as print } from './logger'
 
 const log = function() {
-  var ref
-  try {
-    return (ref = window.console) != null
-      ? typeof ref.log === 'function'
-        ? ref.log(...arguments)
+  if (process.env.NODE_ENV !== 'production') {
+    print(
+      "Please don't use `log` function.\n" +
+        'Support for it will be removed in the next major release.'
+    )
+
+    var ref
+
+    try {
+      return (ref = window.console) != null
+        ? typeof ref.log === 'function'
+          ? ref.log(...arguments)
+          : undefined
         : undefined
-      : undefined
-  } catch (error) {}
+    } catch (error) {}
+  }
 }
 
 const debug = function() {
-  var ref
-  if ((ref = window.console) != null ? ref.debug : undefined) {
-    try {
-      return window.console.debug(...arguments)
-    } catch (error) {}
-  } else {
-    return log('Debug:', ...arguments)
+  if (process.env.NODE_ENV !== 'production') {
+    print(
+      "Please don't use `debug` function.\n" +
+        'Support for it will be removed in the next major release.'
+    )
+
+    var ref
+
+    if ((ref = window.console) != null ? ref.debug : undefined) {
+      try {
+        return window.console.debug(...arguments)
+      } catch (error) {}
+    } else {
+      return log('Debug:', ...arguments)
+    }
   }
 }
 
 const warn = function() {
-  var ref
-  if ((ref = window.console) != null ? ref.warn : undefined) {
-    try {
-      return window.console.warn(...arguments)
-    } catch (error) {}
-  } else {
-    return log('Warning:', ...arguments)
+  if (process.env.NODE_ENV !== 'production') {
+    print(
+      "Please don't use `warn` function.\n" +
+        'Support for it will be removed in the next major release.'
+    )
+
+    var ref
+
+    if ((ref = window.console) != null ? ref.warn : undefined) {
+      try {
+        return window.console.warn(...arguments)
+      } catch (error) {}
+    } else {
+      return log('Warning:', ...arguments)
+    }
   }
 }
 
 const messages = {}
 const warnOnce = function(msg) {
-  if (messages[msg] == null) {
-    messages[msg] = true
-    return warn(msg)
+  if (process.env.NODE_ENV !== 'production') {
+    print(
+      "Please don't use `warnOnce` function.\n" +
+        'Support for it will be removed in the next major release.'
+    )
+    if (messages[msg] == null) {
+      messages[msg] = true
+      return warn(msg)
+    }
   }
 }
 
