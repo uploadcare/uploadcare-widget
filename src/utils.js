@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { warn } from './utils/warnings'
+import { warn } from './utils/logger'
 
 var indexOf = [].indexOf
 
@@ -338,9 +338,11 @@ const jsonp = function(url, type, data, settings = {}) {
       }
     },
     function(_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
-      warn(`JSONP unexpected error: ${text} while loading ${url}`)
+      const text = `${textStatus} (${errorThrown})`
+      
+      if (process.env.NODE_ENV !== 'production') {
+        warn(`JSONP unexpected error: ${text} while loading ${url}`)
+      }
 
       return text
     }

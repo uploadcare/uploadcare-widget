@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
-import { warnOnce } from './utils/warnings'
+import { warn } from './utils/logger'
 import { unique, once, upperCase, normalizeUrl } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 
@@ -233,11 +233,13 @@ parseShrink = function(val) {
   size = shrink[1] * shrink[2]
   if (size > 5000000) {
     // ios max canvas square
-    warnOnce(
-      'Shrinked size can not be larger than 5MP. ' +
-        `You have set ${shrink[1]}x${shrink[2]} (` +
-        `${Math.ceil(size / 1000 / 100) / 10}MP).`
-    )
+    if (process.env.NODE_ENV !== 'production') {
+      warn(
+        'Shrinked size can not be larger than 5MP. ' +
+          `You have set ${shrink[1]}x${shrink[2]} (` +
+          `${Math.ceil(size / 1000 / 100) / 10}MP).`
+      )
+    }
 
     return false
   }

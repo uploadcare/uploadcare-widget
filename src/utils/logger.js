@@ -1,12 +1,12 @@
-const warn = (message) => {
+const warn = (...args) => {
   if (typeof console !== "undefined") {
-    console.warn(message)
+    console.warn(...args)
   }
 }
 
-const log = (message) => {
+const log = (...args) => {
   if (typeof console !== "undefined") {
-    console.log(message)
+    console.log(...args)
   }
 }
 

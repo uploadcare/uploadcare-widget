@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { debug } from '../utils/warnings'
+import { log } from '../utils/logger'
 
 import { getPusher } from '../utils/pusher'
 import { defer, splitUrlRegex, jsonp } from '../utils'
@@ -62,8 +62,10 @@ class UrlFile extends BaseFile {
         }
       })
         .fail(reason => {
-          if (this.settings.debugUploads) {
-            debug("Can't start upload from URL.", reason, data)
+          if (process.env.NODE_ENV !== 'production') {
+            if (this.settings.debugUploads) {
+              log("Can't start upload from URL.", reason, data)
+            }
           }
           return df.reject()
         })
@@ -72,16 +74,18 @@ class UrlFile extends BaseFile {
           if (this.apiDeferred.state() !== 'pending') {
             return
           }
-          if (this.settings.debugUploads) {
-            debug('Start watchers.', data.token)
-            logger = setInterval(() => {
-              return debug('Still watching.', data.token)
-            }, 5000)
-            df.done(() => {
-              return debug('Stop watchers.', data.token)
-            }).always(() => {
-              return clearInterval(logger)
-            })
+          if (process.env.NODE_ENV !== 'production') {
+            if (this.settings.debugUploads) {
+              log('Start watchers.', data.token)
+              logger = setInterval(() => {
+                return log('Still watching.', data.token)
+              }, 5000)
+              df.done(() => {
+                return log('Stop watchers.', data.token)
+              }).always(() => {
+                return clearInterval(logger)
+              })
+            }
           }
           this.__listenWatcher(df, $([pusherWatcher, pollWatcher]))
           df.always(() => {
@@ -94,8 +98,10 @@ class UrlFile extends BaseFile {
             if (!pollWatcher.interval) {
               return
             }
-            if (this.settings.debugUploads) {
-              debug('Start using pusher.', data.token)
+            if (process.env.NODE_ENV !== 'production') {
+              if (this.settings.debugUploads) {
+                log('Start using pusher.', data.token)
+              }
             }
             return pollWatcher.stopWatching()
           })
