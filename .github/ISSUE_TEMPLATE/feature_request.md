@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Come up with an idea for Widget
 title: ''
 labels: ''
 assignees: ''
@@ -11,12 +11,12 @@ assignees: ''
 
 ## Summary
 
-<!-- Brief explanation of the feature. -->
+<!-- Provide a brief description of the feature. -->
 
 ### Basic example
 
-<!-- If the proposal involves a new or changed API, include a basic code example. Omit this section if it's not applicable. -->
+<!-- Include a basic code example if your request involves a new or changed API. Omit this section if not applicable. -->
 
 ### Motivation
 
-<!-- Why are we doing this? What use cases does it support? What is the expected outcome? -->
+<!-- Why should we implement that? What are the possible use-cases? What is the expected outcome? What good will that do? -->
