@@ -11,22 +11,22 @@ assignees: ''
 
 ## Description
 
-<!-- Describe the issue that you're seeing. -->
+<!-- Describe the issue you encounter. -->
 
 ### Steps to reproduce
 
-<!-- Clear steps describing how to reproduce the issue. Please link to a demo project if possible, this makes your issue _much_ easier to diagnose (seriously). -->
+<!-- Describe clear steps to reproduce the issue. If possible, share a link to a demo project; thus, it will be much easier to troubleshoot your issue. -->
 
 ### Expected result
 
-<!-- What should happen? -->
+<!-- What is the normal behavior in the issue context?  -->
 
 ### Actual result
 
-<!-- What happened. -->
+<!-- What did you get instead of the expected result? -->
 
 ### Environment
-<!-- Please complete the following information -->
+<!-- Please fill out the versions of the following software so we can set up the same environment as yours. -->
 
 - widget version: 
 - `node -v`:
