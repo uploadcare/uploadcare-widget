@@ -1,18 +1,16 @@
 ---
 name: Question
-about: Usage question or discussion about uploadcare-widget.
+about: Usage question or discussion on Widget
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-<!-- To make it easier for us to help you, please include as much useful information as possible. -->
-
 ## Summary
 
 ## Relevant information
 
-<!-- Provide as much useful information as you can -->
+<!-- Please include as much info as possible so we can help you rapidly. -->
 
 ### Environment (if relevant)
