@@ -1,0 +1,35 @@
+<meta charset="UTF-8" />
+<script>
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_TABS = 'default huddle'
+  UPLOADCARE_DEBUG_UPLOADS = true
+</script>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery
+  jQuery = uploadcare.jQuery
+</script>
+
+<script>
+  let rebuild = locale =>
+    uploadcare.plugin(uc => {
+      uc.locale.rebuild({ locale })
+    })
+</script>
+
+<ul>
+  <li>
+    <button onclick="rebuild('ru')">RU</button>
+  </li>
+  <li>
+    <button onclick="rebuild('en')">EN</button>
+  </li>
+  <li>
+    <button onclick="rebuild('uk')">UK</button>
+  </li>
+  <li>
+    <button onclick="rebuild('zh')">ZH</button>
+  </li>
+</ul>
+
+<p><input type="hidden" data-multiple role="uploadcare-uploader" /></p>
