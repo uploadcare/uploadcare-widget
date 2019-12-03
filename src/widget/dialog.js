@@ -70,16 +70,11 @@ const isDialogOpened = function() {
 }
 
 const closeDialog = function() {
-  // todo fix this
-
-  var results = []
-
-  // eslint-disable-next-line no-unmodified-loop-condition
-  while (currentDialogPr) {
-    results.push(currentDialogPr.reject())
+  if (currentDialogPr) {
+    return [currentDialogPr.reject()]
   }
 
-  return results
+  return []
 }
 
 const openDialog = function(files, tab, settings) {
@@ -123,7 +118,9 @@ const openDialog = function(files, tab, settings) {
     dialog.remove()
     cancelLock()
     if (settings.multiple) {
-      return $('.uploadcare--widget').attr('tabindex', 0).focus()
+      return $('.uploadcare--widget')
+        .attr('tabindex', 0)
+        .focus()
     }
     return originalFocusedElement.focus()
   })
