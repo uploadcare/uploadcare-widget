@@ -70,16 +70,10 @@ const isDialogOpened = function() {
 }
 
 const closeDialog = function() {
-  // todo fix this
-
-  var results = []
-
-  // eslint-disable-next-line no-unmodified-loop-condition
-  while (currentDialogPr) {
-    results.push(currentDialogPr.reject())
+  if (currentDialogPr) {
+    currentDialogPr.reject()
+    currentDialogPr = null
   }
-
-  return results
 }
 
 const openDialog = function(files, tab, settings) {
