@@ -78,6 +78,9 @@ const initializeWidget = function(input, targetClass) {
     widget.template.content.data(dataAttr, api)
   }
 
+  // ignore clicks received from parent label
+  input.parent('label').on('click', e => e.preventDefault())
+
   return api
 }
 
