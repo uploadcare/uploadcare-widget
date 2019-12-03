@@ -71,10 +71,8 @@ const isDialogOpened = function() {
 
 const closeDialog = function() {
   if (currentDialogPr) {
-    return [currentDialogPr.reject()]
+    currentDialogPr.reject()
   }
-
-  return []
 }
 
 const openDialog = function(files, tab, settings) {
