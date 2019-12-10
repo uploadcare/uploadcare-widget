@@ -13,7 +13,7 @@ const getVersionTypes = version => [
   version.replace(/^(\d+)\.\d+\.\d+/, '$1.x')
 ]
 
-const BASE_PATH = 'libs/widget/'
+const BASE_PATH = 'widget/'
 const VERSION_TYPES = getVersionTypes(pkg.version)
 const BUCKET = process.env.BUCKET
 const ACCESS_KEY = process.env.ACCESS_KEY
@@ -45,7 +45,9 @@ const readFile = filePath => {
 
 const uploadToS3 = (data, path, { dry } = {}) => {
   let promise = Promise.resolve()
-  if (!dry) {
+  if (dry) {
+    console.log('DRY RUN.')
+  } else {
     promise = baseS3upload(
       Object.assign({}, UPLOAD_CONFIG, { Body: data, Key: path })
     )
@@ -59,7 +61,7 @@ const uploadToS3 = (data, path, { dry } = {}) => {
 const uploadFile = (data, fileName, options) => {
   return Promise.all(
     VERSION_TYPES.map(version =>
-      uploadToS3(data, `${BASE_PATH}${version}/${fileName}`, options)
+      uploadToS3(data, `${BASE_PATH}${version}/uploadcare/${fileName}`, options)
     )
   )
 }
@@ -67,7 +69,7 @@ const uploadFile = (data, fileName, options) => {
 // main part starts here
 Promise.all(pkg.files.map(name => Promise.all([readFile(name), name])))
   .then(files =>
-    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: true })))
+    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: false })))
   )
   .catch(error => {
     console.error('Error: \n', error.message)
