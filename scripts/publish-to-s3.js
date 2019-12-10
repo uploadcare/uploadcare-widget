@@ -45,7 +45,9 @@ const readFile = filePath => {
 
 const uploadToS3 = (data, path, { dry } = {}) => {
   let promise = Promise.resolve()
-  if (!dry) {
+  if (dry) {
+    console.log('DRY RUN.')
+  } else {
     promise = baseS3upload(
       Object.assign({}, UPLOAD_CONFIG, { Body: data, Key: path })
     )
@@ -67,7 +69,7 @@ const uploadFile = (data, fileName, options) => {
 // main part starts here
 Promise.all(pkg.files.map(name => Promise.all([readFile(name), name])))
   .then(files =>
-    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: true })))
+    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: false })))
   )
   .catch(error => {
     console.error('Error: \n', error.message)
