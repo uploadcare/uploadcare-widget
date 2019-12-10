@@ -13,7 +13,7 @@ const getVersionTypes = version => [
   version.replace(/^(\d+)\.\d+\.\d+/, '$1.x')
 ]
 
-const BASE_PATH = 'libs/widget/'
+const BASE_PATH = 'widget/'
 const VERSION_TYPES = getVersionTypes(pkg.version)
 const BUCKET = process.env.BUCKET
 const ACCESS_KEY = process.env.ACCESS_KEY
