@@ -19,8 +19,7 @@
     "url": "https://github.com/uploadcare/uploadcare-widget/issues"
   },
   "homepage": "https://github.com/uploadcare/uploadcare-widget",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "jquery": ">=1.10.2"
   }

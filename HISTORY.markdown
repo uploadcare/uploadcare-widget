@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.4...v2
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.5...v2
+
+## [2.11.5]
+
+### Added
+
+* Add deprecation message. See [#620][github-pr-620].
+
+[2.11.5]: https://github.com/uploadcare/uploadcare-widget/compare/v2.11.4...v2.11.5
+[github-pr-620]: https://github.com/uploadcare/uploadcare-widget/pull/620
 
 ## [2.11.4]
 
