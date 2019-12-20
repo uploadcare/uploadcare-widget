@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import { canvas } from '../utils/abilities'
 import { tpl } from '../templates'
 
@@ -56,9 +55,9 @@ class Circle {
 
 class BaseRenderer {
   constructor(el) {
-    this.element = $(el)
-    this.element.data('uploadcare-progress-renderer', this)
-    this.element.addClass('uploadcare--progress')
+    this.element = document.querySelector(el)
+    this.element.dataset['uploadcare-progress-renderer'] = this
+    this.element.classList.add('uploadcare--progress')
   }
 
   update() {}
@@ -67,31 +66,36 @@ class BaseRenderer {
 class TextRenderer extends BaseRenderer {
   constructor() {
     super(...arguments)
-    this.element.addClass('uploadcare--progress_type_text')
-    this.element.html(tpl('progress__text'))
-    this.text = this.element.find('.uploadcare--progress__text')
+    this.element.classList.add('uploadcare--progress_type_text')
+    this.element.innerHTML = tpl('progress__text')
+    this.text = this.element.querySelector('.uploadcare--progress__text')
   }
 
   setValue(val) {
     val = Math.round(val * 100)
-    return this.text.html(`${val} %`)
+    return (this.text.innerHTML = `${val} %`)
   }
 }
 
 class CanvasRenderer extends BaseRenderer {
   constructor() {
     super(...arguments)
-    this.canvasEl = $('<canvas>')
-      .addClass('uploadcare--progress__canvas')
-      .get(0)
-    this.element.addClass('uploadcare--progress_type_canvas')
-    this.element.html(this.canvasEl)
+    this.canvasEl = document
+      .createElement('canvas')
+      .classList.add('uploadcare--progress__canvas')
+    this.element.classList.add('uploadcare--progress_type_canvas')
+    this.element.innerHTML = this.canvasEl
     this.setValue(0, true)
   }
 
   update() {
     var arc, ctx, half, size
-    half = Math.floor(Math.min(this.element.width(), this.element.height()))
+    const getWidth = element =>
+      parseFloat(getComputedStyle(element, null).width.replace('px', ''))
+    const getHeight = element => element.offsetHeight
+
+    half = Math.floor(Math.min(getWidth(this.element), getHeight(this.element)))
+
     size = half * 2
     if (half) {
       if (this.canvasEl.width !== size || this.canvasEl.height !== size) {
@@ -150,7 +154,7 @@ class CanvasRenderer extends BaseRenderer {
 
   __setValue(val) {
     this.val = val
-    this.element.attr('aria-valuenow', (val * 100).toFixed(0))
+    this.element.setAttribute('aria-valuenow', (val * 100).toFixed(0));
     return this.update()
   }
 
