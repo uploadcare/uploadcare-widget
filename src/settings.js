@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
@@ -107,13 +106,13 @@ script =
       scripts = document.getElementsByTagName('script')
       return scripts[scripts.length - 1]
     })())
-integration = isWindowDefined() && $(script).data('integration')
+integration = isWindowDefined() && script.dataset.integration
 if (integration && integration != null) {
-  defaults = $.extend(defaults, { integration })
+  defaults = Object.assign(defaults, { integration })
 }
 str2arr = function(value) {
-  if (!$.isArray(value)) {
-    value = $.trim(value)
+  if (!Array.isArray(value)) {
+    value = value.trim()
     value = value ? value.split(' ') : []
   }
   return value
@@ -161,7 +160,7 @@ flagOptions = function(settings, keys) {
     if (typeof value === 'string') {
       // "", "..." -> true
       // "false", "disabled" -> false
-      value = $.trim(value).toLowerCase()
+      value = value.trim().toLowerCase()
       settings[key] = !(value === 'false' || value === 'disabled')
     } else {
       settings[key] = !!value
@@ -214,7 +213,7 @@ constrainOptions = function(settings, constraints) {
 parseCrop = function(val) {
   var ratio, reRatio
   reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
-  ratio = reRatio.exec($.trim(val.toLowerCase())) || []
+  ratio = reRatio.exec(val.toLowerCase().trim()) || []
   return {
     downscale: ratio[2] === 'x',
     upscale: !!ratio[4],
@@ -226,7 +225,7 @@ parseCrop = function(val) {
 parseShrink = function(val) {
   var reShrink, shrink, size
   reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
-  shrink = reShrink.exec($.trim(val.toLowerCase())) || []
+  shrink = reShrink.exec(val.toLowerCase().trim()) || []
   if (!shrink.length) {
     return false
   }
@@ -296,17 +295,17 @@ normalize = function(settings) {
   transformOptions(settings, transforms)
   constrainOptions(settings, constraints)
   integrationToUserAgent(settings)
-  if (settings.crop !== false && !$.isArray(settings.crop)) {
+  if (settings.crop !== false && !Array.isArray(settings.crop)) {
     if (/^(disabled?|false|null)$/i.test(settings.crop)) {
       settings.crop = false
-    } else if ($.isPlainObject(settings.crop)) {
+    } else if (isPlainObject(settings.crop)) {
       // old format
       settings.crop = [settings.crop]
     } else {
-      settings.crop = $.map(('' + settings.crop).split(','), parseCrop)
+      settings.crop = ('' + settings.crop).split(',').map(parseCrop)
     }
   }
-  if (settings.imageShrink && !$.isPlainObject(settings.imageShrink)) {
+  if (settings.imageShrink && !isPlainObject(settings.imageShrink)) {
     settings.imageShrink = parseShrink(settings.imageShrink)
   }
   if (settings.crop || settings.multiple) {
@@ -346,9 +345,9 @@ const globals = function() {
 const common = once(function(settings, ignoreGlobals) {
   var result
   if (!ignoreGlobals) {
-    defaults = $.extend(defaults, globals())
+    defaults = Object.assign(defaults, globals())
   }
-  result = normalize($.extend(defaults, settings || {}))
+  result = normalize(Object.assign(defaults, settings || {}))
   waitForSettings.fire(result)
   return result
 })
@@ -356,9 +355,9 @@ const common = once(function(settings, ignoreGlobals) {
 // Defaults + global variables + global overrides + local overrides
 const build = function(settings) {
   var result
-  result = $.extend({}, common())
-  if (!$.isEmptyObject(settings)) {
-    result = normalize($.extend(result, settings))
+  result = Object.assign({}, common())
+  if (!Object.keys(settings).length === 0) {
+    result = normalize(Object.assign(result, settings))
   }
   return result
 }
@@ -383,6 +382,10 @@ const CssCollector = class CssCollector {
   addStyle(style) {
     return this.styles.push(style)
   }
+}
+
+const isPlainObject = (obj) => {
+  return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
 const emptyKeyText =
