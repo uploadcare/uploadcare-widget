@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import {callbacks} from '../utils'
 
 var indexOf = [].indexOf
 
@@ -6,10 +6,10 @@ var indexOf = [].indexOf
 
 class Collection {
   constructor(items = [], after = false) {
-    this.onAdd = $.Callbacks()
-    this.onRemove = $.Callbacks()
-    this.onSort = $.Callbacks()
-    this.onReplace = $.Callbacks()
+    this.onAdd = callbacks()
+    this.onRemove = callbacks()
+    this.onSort = callbacks()
+    this.onReplace = callbacks()
     this.__items = []
 
     if (!after) {
@@ -36,7 +36,7 @@ class Collection {
 
   remove(item) {
     var i
-    i = $.inArray(item, this.__items)
+    i = this.__items.includes(item)
     if (i !== -1) {
       return this.__remove(item, i)
     }
@@ -62,7 +62,7 @@ class Collection {
   replace(oldItem, newItem) {
     var i
     if (oldItem !== newItem) {
-      i = $.inArray(oldItem, this.__items)
+      i = this.__items.includes(oldItem)
       if (i !== -1) {
         return this.__replace(oldItem, newItem, i)
       }
@@ -113,13 +113,13 @@ class CollectionOfPromises extends UniqCollection {
   constructor() {
     super(...arguments, true)
 
-    this.anyDoneList = $.Callbacks()
-    this.anyFailList = $.Callbacks()
-    this.anyProgressList = $.Callbacks()
+    this.anyDoneList = callbacks()
+    this.anyFailList = callbacks()
+    this.anyProgressList = callbacks()
 
     this._thenArgs = null
     this.anyProgressList.add(function(item, firstArgument) {
-      return $(item).data('lastProgress', firstArgument)
+      return (item.dataset.lastProgress = firstArgument)
     })
 
     super.init(arguments[0])
@@ -175,7 +175,7 @@ class CollectionOfPromises extends UniqCollection {
     results = []
     for (j = 0, len = ref1.length; j < len; j++) {
       file = ref1[j]
-      results.push(cb(file, $(file).data('lastProgress')))
+      results.push(cb(file, file.dataset.lastProgress))
     }
     return results
   }
@@ -186,7 +186,7 @@ class CollectionOfPromises extends UniqCollection {
     results = []
     for (j = 0, len = ref1.length; j < len; j++) {
       item = ref1[j]
-      results.push($(item).data('lastProgress'))
+      results.push(item.dataset.lastProgress)
     }
     return results
   }
