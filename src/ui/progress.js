@@ -91,7 +91,7 @@ class CanvasRenderer extends BaseRenderer {
   update() {
     var arc, ctx, half, size
     const getWidth = element =>
-      parseFloat(getComputedStyle(element, null).width.replace('px', ''))
+      parseFloat(window.getComputedStyle(element, null).width.replace('px', ''))
     const getHeight = element => element.offsetHeight
 
     half = Math.floor(Math.min(getWidth(this.element), getHeight(this.element)))
