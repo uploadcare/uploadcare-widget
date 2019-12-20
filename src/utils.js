@@ -45,9 +45,7 @@ const once = function(fn) {
 }
 
 const wrapToPromise = function(value) {
-  return $.Deferred()
-    .resolve(value)
-    .promise()
+  return Promise.resolve(value)
 }
 
 // same as promise.then(), but if filter returns promise
@@ -87,10 +85,10 @@ const bindAll = function(source, methods) {
   var target
   target = {}
 
-  $.each(methods, function(i, method) {
+  methods.forEach(function(i, method) {
     var fn = source[method]
 
-    if ($.isFunction(fn)) {
+    if (isFunction(fn)) {
       target[method] = function(...args) {
         var result = fn.apply(source, args)
 
@@ -105,6 +103,7 @@ const bindAll = function(source, methods) {
       target[method] = fn
     }
   })
+
   return target
 }
 
@@ -146,7 +145,7 @@ const escapeRegExp = function(str) {
 
 const globRegexp = function(str, flags = 'i') {
   var parts
-  parts = $.map(str.split('*'), escapeRegExp)
+  parts = str.split('*').map(escapeRegExp)
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
@@ -209,7 +208,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
   } else if (!wholeImage) {
     modifiers += '-/preview/'
   }
-  info = $.extend({}, info)
+  info = Object.assign({}, info)
   info.cdnUrlModifiers = modifiers
   info.cdnUrl = `${info.originalUrl}${modifiers || ''}`
   info.crop = coords
@@ -414,11 +413,11 @@ const fixedPipe = function(promise, ...fns) {
     return $.each(pipeTuples, function(i, tuple) {
       var fn
       // Map tuples (progress, done, fail) to arguments (done, fail, progress)
-      fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
+      fn = isFunction(fns[tuple[2]]) && fns[tuple[2]]
       return promise[tuple[1]](function() {
         var returned
         returned = fn && fn.apply(this, arguments)
-        if (returned && $.isFunction(returned.promise)) {
+        if (returned && isFunction(returned.promise)) {
           return returned
             .promise()
             .progress(newDefer.notify)
@@ -435,12 +434,12 @@ const fixedPipe = function(promise, ...fns) {
   }).promise()
 }
 
-const isFunction = ( fn ) => {
+const isFunction = fn => {
   // Support: Chrome <=57, Firefox <=52
   // In some browsers, typeof returns "function" for HTML <object> elements
   // (i.e., `typeof document.createElement( "object" ) === "function"`).
   // We don't want to classify *any* DOM node as a function.
-  return typeof fn === "function" && typeof fn.nodeType !== "number"
+  return typeof fn === 'function' && typeof fn.nodeType !== 'number'
 }
 
 export {
@@ -475,5 +474,5 @@ export {
   canvasToBlob,
   taskRunner,
   fixedPipe,
-  isFunction,
+  isFunction
 }
