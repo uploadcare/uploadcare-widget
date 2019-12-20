@@ -1,7 +1,6 @@
-import $ from 'jquery'
-
 import { build as buildSettings } from './settings'
 import locales from './locales'
+import {isFunction} from './utils'
 
 let currentLocale = null
 
@@ -59,14 +58,13 @@ const _build = function(stgs) {
   if (!currentLocale) {
     const settings = buildSettings(stgs)
     const lang = settings.locale || defaults.lang
-    const translations = $.extend(
-      true,
+    const translations = Object.assign(
       {},
       locale.translations[lang],
       settings.localeTranslations
     )
 
-    const pluralize = $.isFunction(settings.localePluralize)
+    const pluralize = isFunction(settings.localePluralize)
       ? settings.localePluralize
       : locale.pluralize[lang]
 
