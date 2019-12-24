@@ -2,7 +2,14 @@ import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
-import {unique, once, upperCase, normalizeUrl, callbacks} from './utils'
+import {
+  unique,
+  once,
+  upperCase,
+  normalizeUrl,
+  callbacks,
+  extend
+} from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 
 var indexOf = [].indexOf
@@ -108,7 +115,7 @@ script =
     })())
 integration = isWindowDefined() && script.dataset.integration
 if (integration && integration != null) {
-  defaults = Object.assign(defaults, { integration })
+  defaults = extend(defaults, { integration })
 }
 str2arr = function(value) {
   if (!Array.isArray(value)) {
@@ -345,9 +352,9 @@ const globals = function() {
 const common = once(function(settings, ignoreGlobals) {
   var result
   if (!ignoreGlobals) {
-    defaults = Object.assign(defaults, globals())
+    defaults = extend(defaults, globals())
   }
-  result = normalize(Object.assign(defaults, settings || {}))
+  result = normalize(extend(defaults, settings || {}))
   waitForSettings.fire(result)
   return result
 })
@@ -355,9 +362,9 @@ const common = once(function(settings, ignoreGlobals) {
 // Defaults + global variables + global overrides + local overrides
 const build = function(settings) {
   var result
-  result = Object.assign({}, common())
+  result = extend({}, common())
   if (settings && !Object.keys(settings).length === 0) {
-    result = normalize(Object.assign(result, settings))
+    result = normalize(extend(result, settings))
   }
   return result
 }
@@ -384,7 +391,7 @@ const CssCollector = class CssCollector {
   }
 }
 
-const isPlainObject = (obj) => {
+const isPlainObject = obj => {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
