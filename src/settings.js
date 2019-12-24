@@ -1,9 +1,8 @@
-import $ from 'jquery'
 import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
-import { unique, once, upperCase, normalizeUrl } from './utils'
+import {unique, once, upperCase, normalizeUrl, callbacks} from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 
 var indexOf = [].indexOf
@@ -363,7 +362,7 @@ const build = function(settings) {
   return result
 }
 
-const waitForSettings = isWindowDefined() && $.Callbacks('once memory')
+const waitForSettings = isWindowDefined() && callbacks('once memory')
 
 const CssCollector = class CssCollector {
   constructor() {
