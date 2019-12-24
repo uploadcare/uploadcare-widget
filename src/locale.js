@@ -1,6 +1,6 @@
 import { build as buildSettings } from './settings'
 import locales from './locales'
-import {isFunction} from './utils'
+import { extend, isFunction } from './utils'
 
 let currentLocale = null
 
@@ -58,7 +58,7 @@ const _build = function(stgs) {
   if (!currentLocale) {
     const settings = buildSettings(stgs)
     const lang = settings.locale || defaults.lang
-    const translations = Object.assign(
+    const translations = extend(
       {},
       locale.translations[lang],
       settings.localeTranslations
