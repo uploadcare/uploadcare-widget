@@ -694,6 +694,34 @@ const callbacks = function(options) {
   return self
 }
 
+const isPlainObject = function(obj) {
+  var proto, Ctor
+
+  // Detect obvious negatives
+  // Use toString instead of jQuery.type to catch host objects
+  if (!obj || toString.call(obj) !== '[object Object]') {
+    return false
+  }
+
+  proto = Object.getPrototypeOf(obj)
+
+  // Objects with no prototype (e.g., `Object.create( null )`) are plain
+  if (!proto) {
+    return true
+  }
+
+  var class2type = {}
+  var hasOwn = class2type.hasOwnProperty
+  var fnToString = hasOwn.toString
+  var ObjectFunctionString = fnToString.call(Object)
+
+  // Objects with prototype are plain iff they were constructed by a global Object function
+  Ctor = hasOwn.call(proto, 'constructor') && proto.constructor
+  return (
+    typeof Ctor === 'function' && fnToString.call(Ctor) === ObjectFunctionString
+  )
+}
+
 const extend = function() {
   var options
   var name
@@ -743,14 +771,14 @@ const extend = function() {
         if (
           deep &&
           copy &&
-          (jQuery.isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))
+          (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))
         ) {
           src = target[name]
 
           // Ensure proper type for the source value
           if (copyIsArray && !Array.isArray(src)) {
             clone = []
-          } else if (!copyIsArray && !jQuery.isPlainObject(src)) {
+          } else if (!copyIsArray && !isPlainObject(src)) {
             clone = {}
           } else {
             clone = src
