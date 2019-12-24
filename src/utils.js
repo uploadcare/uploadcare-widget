@@ -1,7 +1,6 @@
 import $ from 'jquery'
 
 import { warn } from './utils/warnings'
-import ar from './locales/ar'
 
 var indexOf = [].indexOf
 
