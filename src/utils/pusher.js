@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import { Pusher } from '../vendor/pusher'
 
 // utils.pusher
@@ -24,7 +22,7 @@ class ManagedPusher extends Pusher {
   unsubscribe(name) {
     super.unsubscribe(...arguments)
     // Schedule disconnect if no channels left.
-    if ($.isEmptyObject(this.channels.channels)) {
+    if (this.channels.channels && Object.keys(this.channels.channels).length === 0) {
       this.disconnectTimeout = setTimeout(() => {
         this.disconnectTimeout = null
         return this.disconnect()
