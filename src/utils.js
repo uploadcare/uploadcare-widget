@@ -435,6 +435,371 @@ const fixedPipe = function(promise, ...fns) {
   }).promise()
 }
 
+const isFunction = fn => {
+  // Support: Chrome <=57, Firefox <=52
+  // In some browsers, typeof returns "function" for HTML <object> elements
+  // (i.e., `typeof document.createElement( "object" ) === "function"`).
+  // We don't want to classify *any* DOM node as a function.
+  return typeof fn === 'function' && typeof fn.nodeType !== 'number'
+}
+
+const inArray = (elem, arr, i) => {
+  return arr == null ? -1 : indexOf.call(arr, elem, i)
+}
+
+function toType(obj) {
+  if (obj == null) {
+    return obj + ''
+  }
+
+  const class2type = {}
+
+  // Support: Android <=2.3 only (functionish RegExp)
+  return typeof obj === 'object' || typeof obj === 'function'
+    ? class2type[toString.call(obj)] || 'object'
+    : typeof obj
+}
+
+const isArrayLike = obj => {
+  function isWindow(obj) {
+    return obj != null && obj === obj.window
+  }
+
+  // Support: real iOS 8.2 only (not reproducible in simulator)
+  // `in` check used to prevent JIT error (gh-2145)
+  // hasOwn isn't used here due to false negatives
+  // regarding Nodelist length in IE
+  var length = !!obj && 'length' in obj && obj.length
+  var type = toType(obj)
+
+  if (isFunction(obj) || isWindow(obj)) {
+    return false
+  }
+
+  return (
+    type === 'array' ||
+    length === 0 ||
+    (typeof length === 'number' && length > 0 && length - 1 in obj)
+  )
+}
+
+const callbacks = function(options) {
+  const each = function(obj, callback) {
+    var length
+    var i = 0
+
+    if (isArrayLike(obj)) {
+      length = obj.length
+      for (; i < length; i++) {
+        if (callback.call(obj[i], i, obj[i]) === false) {
+          break
+        }
+      }
+    } else {
+      for (i in obj) {
+        if (callback.call(obj[i], i, obj[i]) === false) {
+          break
+        }
+      }
+    }
+
+    return obj
+  }
+
+  // Convert String-formatted options into Object-formatted ones
+  function createOptions(options) {
+    var object = {}
+    const arr = options.match(/[^\x20\t\r\n\f]+/g) || []
+    arr.forEach(function(_, flag) {
+      object[flag] = true
+    })
+    return object
+  }
+
+  // Convert options from String-formatted to Object-formatted if needed
+  // (we check in cache first)
+  options =
+    typeof options === 'string'
+      ? createOptions(options)
+      : Object.assign({}, options)
+
+  // Flag to know if list is currently firing
+  var firing
+  // Last fire value for non-forgettable lists
+  var memory
+  // Flag to know if list was already fired
+  var fired
+  // Flag to prevent firing
+  var locked
+  // Actual callback list
+  var list = []
+  // Queue of execution data for repeatable lists
+  var queue = []
+  // Index of currently firing callback (modified by add/remove as needed)
+  var firingIndex = -1
+  // Fire callbacks
+  var fire = function() {
+    // Enforce single-firing
+    locked = locked || options.once
+
+    // Execute callbacks for all pending executions,
+    // respecting firingIndex overrides and runtime changes
+    fired = firing = true
+    for (; queue.length; firingIndex = -1) {
+      memory = queue.shift()
+      while (++firingIndex < list.length) {
+        // Run callback and check for early termination
+        if (
+          list[firingIndex].apply(memory[0], memory[1]) === false &&
+          options.stopOnFalse
+        ) {
+          // Jump to end and forget the data so .add doesn't re-fire
+          firingIndex = list.length
+          memory = false
+        }
+      }
+    }
+
+    // Forget the data if we're done with it
+    if (!options.memory) {
+      memory = false
+    }
+
+    firing = false
+
+    // Clean up if we're done firing for good
+    if (locked) {
+      // Keep an empty list if we have data for future add calls
+      if (memory) {
+        list = []
+
+        // Otherwise, this object is spent
+      } else {
+        list = ''
+      }
+    }
+  }
+  // Actual Callbacks object
+  var self = {
+    // Add a callback or a collection of callbacks to the list
+    add: function() {
+      if (list) {
+        // If we have memory from a past run, we should fire after adding
+        if (memory && !firing) {
+          firingIndex = list.length - 1
+          queue.push(memory)
+        }
+
+        ;(function add(args) {
+          each(args, function(_, arg) {
+            if (isFunction(arg)) {
+              if (!options.unique || !self.has(arg)) {
+                list.push(arg)
+              }
+            } else if (arg && arg.length && toType(arg) !== 'string') {
+              // Inspect recursively
+              add(arg)
+            }
+          })
+        })(arguments)
+
+        if (memory && !firing) {
+          fire()
+        }
+      }
+      return this
+    },
+
+    // Remove a callback from the list
+    remove: function() {
+      each(arguments, function(_, arg) {
+        var index
+        while ((index = inArray(arg, list, index)) > -1) {
+          list.splice(index, 1)
+
+          // Handle firing indexes
+          if (index <= firingIndex) {
+            firingIndex--
+          }
+        }
+      })
+      return this
+    },
+
+    // Check if a given callback is in the list.
+    // If no argument is given, return whether or not list has callbacks attached.
+    has: function(fn) {
+      return fn ? inArray(fn, list) > -1 : list.length > 0
+    },
+
+    // Remove all callbacks from the list
+    empty: function() {
+      if (list) {
+        list = []
+      }
+      return this
+    },
+
+    // Disable .fire and .add
+    // Abort any current/pending executions
+    // Clear all callbacks and values
+    disable: function() {
+      locked = queue = []
+      list = memory = ''
+      return this
+    },
+    disabled: function() {
+      return !list
+    },
+
+    // Disable .fire
+    // Also disable .add unless we have memory (since it would have no effect)
+    // Abort any pending executions
+    lock: function() {
+      locked = queue = []
+      if (!memory && !firing) {
+        list = memory = ''
+      }
+      return this
+    },
+    locked: function() {
+      return !!locked
+    },
+
+    // Call all callbacks with the given context and arguments
+    fireWith: function(context, args) {
+      if (!locked) {
+        args = args || []
+        args = [context, args.slice ? args.slice() : args]
+        queue.push(args)
+        if (!firing) {
+          fire()
+        }
+      }
+      return this
+    },
+
+    // Call all the callbacks with the given arguments
+    fire: function() {
+      self.fireWith(this, arguments)
+      return this
+    },
+
+    // To know if the callbacks have already been called at least once
+    fired: function() {
+      return !!fired
+    }
+  }
+
+  return self
+}
+
+const isPlainObject = function(obj) {
+  var proto, Ctor
+
+  // Detect obvious negatives
+  // Use toString instead of jQuery.type to catch host objects
+  if (!obj || toString.call(obj) !== '[object Object]') {
+    return false
+  }
+
+  proto = Object.getPrototypeOf(obj)
+
+  // Objects with no prototype (e.g., `Object.create( null )`) are plain
+  if (!proto) {
+    return true
+  }
+
+  var class2type = {}
+  var hasOwn = class2type.hasOwnProperty
+  var fnToString = hasOwn.toString
+  var ObjectFunctionString = fnToString.call(Object)
+
+  // Objects with prototype are plain iff they were constructed by a global Object function
+  Ctor = hasOwn.call(proto, 'constructor') && proto.constructor
+  return (
+    typeof Ctor === 'function' && fnToString.call(Ctor) === ObjectFunctionString
+  )
+}
+
+const extend = function() {
+  var options
+  var name
+  var src
+  var copy
+  var copyIsArray
+  var clone
+  var target = arguments[0] || {}
+  var i = 1
+  var length = arguments.length
+  var deep = false
+
+  // Handle a deep copy situation
+  if (typeof target === 'boolean') {
+    deep = target
+
+    // Skip the boolean and the target
+    target = arguments[i] || {}
+    i++
+  }
+
+  // Handle case when target is a string or something (possible in deep copy)
+  if (typeof target !== 'object' && !isFunction(target)) {
+    target = {}
+  }
+
+  // Extend jQuery itself if only one argument is passed
+  if (i === length) {
+    target = this
+    i--
+  }
+
+  for (; i < length; i++) {
+    // Only deal with non-null/undefined values
+    if ((options = arguments[i]) != null) {
+      // Extend the base object
+      for (name in options) {
+        copy = options[name]
+
+        // Prevent Object.prototype pollution
+        // Prevent never-ending loop
+        if (name === '__proto__' || target === copy) {
+          continue
+        }
+
+        // Recurse if we're merging plain objects or arrays
+        if (
+          deep &&
+          copy &&
+          (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))
+        ) {
+          src = target[name]
+
+          // Ensure proper type for the source value
+          if (copyIsArray && !Array.isArray(src)) {
+            clone = []
+          } else if (!copyIsArray && !isPlainObject(src)) {
+            clone = {}
+          } else {
+            clone = src
+          }
+          copyIsArray = false
+
+          // Never move original objects, clone them
+          target[name] = extend(deep, clone, copy)
+
+          // Don't bring in undefined values
+        } else if (copy !== undefined) {
+          target[name] = copy
+        }
+      }
+    }
+  }
+
+  // Return the modified object
+  return target
+}
+
 export {
   unique,
   defer,
@@ -466,5 +831,9 @@ export {
   jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
+  fixedPipe,
+  isFunction,
+  callbacks,
+  inArray,
+  extend
 }
