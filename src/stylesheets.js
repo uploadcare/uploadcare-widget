@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import { tpl } from './templates'
 import { waitForSettings } from './settings'
 import { isWindowDefined } from './utils/is-window-defined'
@@ -16,6 +14,7 @@ isWindowDefined() &&
     } else {
       style.appendChild(document.createTextNode(css))
     }
+    const head = document.querySelector('head')
 
-    return $('head').prepend(style)
+    return head.insertBefore(style, head.firstChild)
   })

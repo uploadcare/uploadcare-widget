@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import { build } from './settings'
 
 import { ObjectFile } from './files/object'
@@ -28,7 +27,7 @@ const filesFrom = function(type, data, s) {
 
     info = undefined
 
-    if ($.isArray(param)) {
+    if (Array.isArray(param)) {
       info = param[1]
       param = param[0]
     }
