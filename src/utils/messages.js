@@ -1,12 +1,12 @@
-import $ from 'jquery'
 import { isWindowDefined } from './is-window-defined'
+import { grep } from '../utils'
 
 // utils
 
 var callbacks = {}
 
 isWindowDefined() &&
-  $(window).on('message', ({ originalEvent: e }) => {
+  window.addEventListener('message', ({ originalEvent: e }) => {
     var i, item, len, message, ref, results
     try {
       message = JSON.parse(e.data)
@@ -41,7 +41,7 @@ const registerMessage = function(type, sender, callback) {
 
 const unregisterMessage = function(type, sender) {
   if (type in callbacks) {
-    callbacks[type] = $.grep(callbacks[type], function(item) {
+    callbacks[type] = grep(callbacks[type], function(item) {
       return item[0] !== sender
     })
 
