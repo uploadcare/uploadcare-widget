@@ -44,7 +44,7 @@ const bundle = (input, output, options = {}) => ({
     }),
     json(),
 
-    resolve(),
+    resolve({ browser: true }),
     commonjs({
       namedExports: { './src/vendor/pusher.js': ['Pusher'] }
     }),
