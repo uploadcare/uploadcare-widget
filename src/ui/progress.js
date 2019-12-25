@@ -18,11 +18,11 @@ class Circle {
     selectorFn =
       selector != null
         ? function(info) {
-            return info[selector]
-          }
+          return info[selector]
+        }
         : function(x) {
-            return x
-          }
+          return x
+        }
     this.observed = file
     if (this.observed.state() === 'resolved') {
       this.renderer.setValue(1, true)
@@ -55,8 +55,7 @@ class Circle {
 
 class BaseRenderer {
   constructor(el) {
-    this.element = document.querySelector(el)
-    this.element.dataset['uploadcare-progress-renderer'] = this
+    this.element = el
     this.element.classList.add('uploadcare--progress')
   }
 
@@ -82,9 +81,9 @@ class CanvasRenderer extends BaseRenderer {
     super(...arguments)
     this.canvasEl = document
       .createElement('canvas')
-      .classList.add('uploadcare--progress__canvas')
+    this.canvasEl.className = 'uploadcare--progress__canvas'
     this.element.classList.add('uploadcare--progress_type_canvas')
-    this.element.innerHTML = this.canvasEl
+    this.element.appendChild(this.canvasEl)
     this.setValue(0, true)
   }
 
@@ -115,10 +114,10 @@ class CanvasRenderer extends BaseRenderer {
       ctx.clearRect(0, 0, size, size)
       // Background circle
       ctx.globalCompositeOperation = 'source-over'
-      ctx.fillStyle = this.element.css('border-left-color')
+      ctx.fillStyle = window.getComputedStyle(this.element)['border-left-color']
       arc(half - 0.5, 1)
       // Progress circle
-      ctx.fillStyle = this.element.css('color')
+      ctx.fillStyle = window.getComputedStyle(this.element).color
       arc(half, this.val)
       // Make a hole
       ctx.globalCompositeOperation = 'destination-out'
@@ -154,7 +153,7 @@ class CanvasRenderer extends BaseRenderer {
 
   __setValue(val) {
     this.val = val
-    this.element.setAttribute('aria-valuenow', (val * 100).toFixed(0));
+    this.element.setAttribute('aria-valuenow', (val * 100).toFixed(0))
     return this.update()
   }
 
