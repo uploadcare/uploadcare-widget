@@ -13,7 +13,7 @@ class Template {
     this.circle = new Circle(
       this.content
         .find('.uploadcare--widget__progress')
-        .removeClass('uploadcare--widget__progress')
+        .removeClass('uploadcare--widget__progress')[0]
     )
     this.content
       .find('.uploadcare--progress')
