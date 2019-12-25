@@ -33,6 +33,7 @@
     "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
   },
   "dependencies": {
+    "@uploadcare/upload-client": "^1.0.0",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
