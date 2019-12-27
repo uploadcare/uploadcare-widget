@@ -1,47 +1,43 @@
-import $ from 'jquery'
-
 import locale from '../locale'
 import { tpl } from '../templates'
 import { Circle } from '../ui/progress'
+import { parseHTML } from '../utils'
 
 class Template {
   constructor(settings, element) {
     this.settings = settings
-    this.element = $(element)
-    this.content = $(tpl('widget'))
-    this.element.after(this.content)
-    this.circle = new Circle(
-      this.content
-        .find('.uploadcare--widget__progress')
-        .removeClass('uploadcare--widget__progress')[0]
-    )
-    this.content
-      .find('.uploadcare--progress')
-      .addClass('uploadcare--widget__progress')
-    this.statusText = this.content.find('.uploadcare--widget__text')
-    this.content.toggleClass(
+    this.element = element
+    this.content = parseHTML(tpl('widget'))
+    this.element.insertAdjacentElement('afterend', this.content)
+    const progressContainer = this.content
+      .querySelector('.uploadcare--widget__progress')
+    this.circle = new Circle(progressContainer)
+    this.statusText = this.content.querySelector('.uploadcare--widget__text')
+    this.content.classList.toggle(
       'uploadcare--widget_option_clearable',
       this.settings.clearable
     )
   }
 
   addButton(name, caption = '') {
-    return $(tpl('widget-button', { name, caption })).appendTo(this.content)
+    const button = parseHTML(tpl('widget-button', { name, caption }))
+    this.content.appendChild(button)
+
+    return button
   }
 
   setStatus(status) {
     var prefix
     prefix = 'uploadcare--widget_status_'
-    this.content.removeClass(prefix + this.content.attr('data-status'))
-    this.content.attr('data-status', status)
-    this.content.addClass(prefix + status)
-    return this.element.trigger(`${status}.uploadcare`)
+    this.content.classList.remove(prefix + this.content.getAttribute('data-status'))
+    this.content.setAttribute('data-status', status)
+    this.content.classList.add(prefix + status)
   }
 
   reset() {
     this.circle.reset()
     this.setStatus('ready')
-    this.content.attr('aria-busy', false)
+    this.content.setAttribute('aria-busy', false)
     this.__file = undefined
 
     return this.__file
@@ -49,7 +45,7 @@ class Template {
 
   loaded() {
     this.setStatus('loaded')
-    this.content.attr('aria-busy', false)
+    this.content.setAttribute('aria-busy', false)
     return this.circle.reset(true)
   }
 
@@ -58,31 +54,33 @@ class Template {
 
     this.circle.listen(file, 'uploadProgress')
     this.setStatus('started')
-    this.content.attr('aria-busy', true)
+    this.content.setAttribute('aria-busy', true)
 
     return file.progress(info => {
       if (file === this.__file) {
         switch (info.state) {
           case 'uploading':
-            return this.statusText.text(locale.t('uploading'))
+            this.statusText.textContent = locale.t('uploading')
+            break
           case 'uploaded':
-            return this.statusText.text(locale.t('loadingInfo'))
+            this.statusText.textContent = locale.t('loadingInfo')
+            break
         }
       }
     })
   }
 
   error(type) {
-    this.statusText.text(locale.t(`errors.${type || 'default'}`))
-    this.content.attr('aria-busy', false)
-    return this.setStatus('error')
+    this.statusText.textContent = locale.t(`errors.${type || 'default'}`)
+    this.content.setAttribute('aria-busy', false)
+    this.setStatus('error')
   }
 
   setFileInfo(info) {
-    return this.statusText
-      .html(tpl('widget-file-name', info))
-      .find('.uploadcare--widget__file-name')
-      .toggleClass('needsclick', this.settings.systemDialog)
+    this.statusText.innerHTML = tpl('widget-file-name', info)
+
+    const fileName = this.statusText.querySelector('.uploadcare--widget__file-name')
+    fileName && fileName.classList.toggle('needsclick', this.settings.systemDialog)
   }
 }
 

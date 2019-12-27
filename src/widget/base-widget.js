@@ -37,25 +37,29 @@ class BaseWidget {
     const path = ['buttons.choose']
     path.push(this.settings.imagesOnly ? 'images' : 'files')
     path.push(this.settings.multiple ? 'other' : 'one')
-    this.template
-      .addButton('open', locale.t(path.join('.')))
-      .toggleClass('needsclick', this.settings.systemDialog)
-      .on('click', () => {
-        return this.openDialog()
-      })
-    this.template
-      .addButton('cancel', locale.t('buttons.cancel'))
-      .on('click', () => {
-        return this.__setObject(null)
-      })
-    this.template
-      .addButton('remove', locale.t('buttons.remove'))
-      .on('click', () => {
-        return this.__setObject(null)
-      })
-    this.template.content.on('click', '.uploadcare--widget__file-name', () => {
+
+    const openButton = this.template.addButton('open', locale.t(path.join('.')))
+    openButton.classList.toggle('needsclick', this.settings.systemDialog)
+    openButton.addEventListener('click', () => {
       return this.openDialog()
     })
+
+    const cancelButton = this.template.addButton('cancel', locale.t('buttons.cancel'))
+    cancelButton.addEventListener('click', () => {
+      return this.__setObject(null)
+    })
+
+    const removeButton = this.template.addButton('remove', locale.t('buttons.remove'))
+    removeButton.addEventListener('click', () => {
+      return this.__setObject(null)
+    })
+
+    this.template.content.addEventListener('click', (e) => {
+      if (e.target.classList.contains('uploadcare--widget__file-name')) {
+        this.openDialog()
+      }
+    })
+
     // Enable drag and drop
     receiveDrop(this.template.content, this.__handleDirectSelection.bind(this))
     return this.template.reset()
