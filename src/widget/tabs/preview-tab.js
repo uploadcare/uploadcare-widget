@@ -8,9 +8,9 @@ import {
   once,
   fitSize,
   readableFileSize,
-  canvasToBlob
+  // canvasToBlob
 } from '../../utils'
-import { drawFileToCanvas } from '../../utils/image-processor'
+// import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
 import { CropWidget } from '../../ui/crop-widget'
@@ -125,39 +125,39 @@ class PreviewTab extends BasePreviewTab {
     ) {
       return df.reject().promise()
     }
-    drawFileToCanvas(
-      blob,
-      1550,
-      924,
-      '#ffffff',
-      this.settings.imagePreviewMaxSize
-    )
-      .done((canvas, size) => {
-        return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
-          var src
-          df.resolve()
-          canvas.width = canvas.height = 1
-          if (
-            file.state() !== 'pending' ||
-            this.dialogApi.state() !== 'pending' ||
-            this.file !== file
-          ) {
-            return
-          }
-          src = URL.createObjectURL(blob)
-          this.dialogApi.always(function() {
-            return URL.revokeObjectURL(src)
-          })
-          if (this.__state !== 'image') {
-            this.__setState('image', {
-              src,
-              name: ''
-            })
-            return this.initImage(size)
-          }
-        })
-      })
-      .fail(df.reject)
+    // drawFileToCanvas(
+    //   blob,
+    //   1550,
+    //   924,
+    //   '#ffffff',
+    //   this.settings.imagePreviewMaxSize
+    // )
+    //   .done((canvas, size) => {
+    //     return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
+    //       var src
+    //       df.resolve()
+    //       canvas.width = canvas.height = 1
+    //       if (
+    //         file.state() !== 'pending' ||
+    //         this.dialogApi.state() !== 'pending' ||
+    //         this.file !== file
+    //       ) {
+    //         return
+    //       }
+    //       src = URL.createObjectURL(blob)
+    //       this.dialogApi.always(function() {
+    //         return URL.revokeObjectURL(src)
+    //       })
+    //       if (this.__state !== 'image') {
+    //         this.__setState('image', {
+    //           src,
+    //           name: ''
+    //         })
+    //         return this.initImage(size)
+    //       }
+    //     })
+    //   })
+    //   .fail(df.reject)
     return df.promise()
   }
 
@@ -234,10 +234,10 @@ class PreviewTab extends BasePreviewTab {
     img = this.container.find('.uploadcare--preview__image')
     done = this.container.find('.uploadcare--preview__done')
     imgLoader = imageLoader(img[0])
-      .done(() => {
+      .then(() => {
         return this.container.addClass('uploadcare--preview_status_loaded')
       })
-      .fail(() => {
+      .catch(() => {
         this.file = null
         return this.__setState('error', {
           error: 'loadImage'
