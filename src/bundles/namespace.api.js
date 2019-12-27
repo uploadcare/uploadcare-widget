@@ -92,7 +92,7 @@ import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
 
 import { tabsCss } from '../widget/tabs/remote-tab'
 
-import { fileFrom, filesFrom } from '../files'
+import { filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
 import { version } from '../../package.json'
@@ -213,7 +213,6 @@ const namespace = {
 
   FileGroup,
   loadFileGroup,
-  fileFrom,
   filesFrom,
 
   __exports: {},

@@ -1,5 +1,5 @@
 import { BaseWidget } from './base-widget'
-import { fileFrom } from '../files'
+import { uploadFile } from '@uploadcare/upload-client'
 
 class Widget extends BaseWidget {
   __currentFile() {
@@ -7,7 +7,7 @@ class Widget extends BaseWidget {
   }
 
   __handleDirectSelection(type, data) {
-    var file = fileFrom(type, data[0], this.settings)
+    var file = uploadFile(data[0], this.settings)
     if (this.settings.systemDialog || !this.settings.previewStep) {
       return this.__setObject(file)
     } else {

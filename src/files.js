@@ -13,10 +13,6 @@ var converters = {
   ready: ReadyFile
 }
 
-const fileFrom = function(type, data, s) {
-  return filesFrom(type, [data], s)[0]
-}
-
 const filesFrom = function(type, data, s) {
   var i, info, len, param, results
   s = build(s || {})
@@ -36,4 +32,4 @@ const filesFrom = function(type, data, s) {
   return results
 }
 
-export { fileFrom, filesFrom }
+export { filesFrom }

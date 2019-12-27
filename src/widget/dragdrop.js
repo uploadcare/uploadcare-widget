@@ -1,8 +1,9 @@
 import $ from 'jquery'
 import { fileDragAndDrop } from '../utils/abilities'
 import { build } from '../settings'
-import { filesFrom, fileFrom } from '../files'
 import { isWindowDefined } from '../utils/is-window-defined'
+import { uploadFile } from '@uploadcare/upload-client'
+import { filesFrom } from '../files'
 
 const support = fileDragAndDrop
 
@@ -13,7 +14,7 @@ const uploadDrop = function(el, callback, settings) {
     return callback(
       settings.multiple
         ? filesFrom(type, data, settings)
-        : fileFrom(type, data[0], settings)
+        : uploadFile(data[0], settings)
     )
   })
 }
