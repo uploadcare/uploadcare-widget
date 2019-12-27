@@ -45,7 +45,7 @@ const receiveDrop = !support
             .map(uri => uri.trim())
             .filter(uri => uri && uri[0] !== '#')
 
-          if (uris) {
+          if (uris.length) {
             return callback(uris)
           }
         }
