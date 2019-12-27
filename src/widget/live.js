@@ -61,8 +61,7 @@ const initializeWidget = function(input, targetClass) {
     const widget = new Widget(input, s)
 
     api = widget.api()
-    input.dataset[dataAttr] = api
-    widget.template.content.data(dataAttr, api)
+    cache.set(input, api)
   }
 
   return api
