@@ -27,12 +27,12 @@ const receiveDrop = !support
       el.addEventListener('dragover', function(e) {
         e.preventDefault() // Prevent opening files.
         // This is way to change cursor.
-        e.originalEvent.dataTransfer.dropEffect = 'copy'
+        e.dataTransfer.dropEffect = 'copy'
       })
 
       el.addEventListener('drop', function(e) {
         e.preventDefault() // Prevent opening files.
-        const dt = e.originalEvent.dataTransfer
+        const dt = e.dataTransfer
         if (!dt) {
           return
         }

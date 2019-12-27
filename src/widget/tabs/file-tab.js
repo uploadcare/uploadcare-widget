@@ -22,8 +22,8 @@ class FileTab {
   __initDragNDrop() {
     var dropArea = this.container.find('.uploadcare--draganddrop')
     if (fileDragAndDrop) {
-      receiveDrop(dropArea.get(0), (type, files) => {
-        this.dialogApi.addFiles(type, files)
+      receiveDrop(dropArea.get(0), (files) => {
+        this.dialogApi.addFiles('object', files)
         return this.dialogApi.switchTab('preview')
       })
       return dropArea.addClass('uploadcare--draganddrop_supported')
