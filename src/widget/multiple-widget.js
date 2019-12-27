@@ -18,7 +18,7 @@ class MultipleWidget extends BaseWidget {
       // group loading error.
     } else if (!group) {
       this.__reset()
-      return this.element.val('')
+      this.element.value = ''
     }
   }
 
@@ -27,7 +27,7 @@ class MultipleWidget extends BaseWidget {
     this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
     if (value) {
       this.template.setStatus('started')
-      this.template.statusText.text(locale.t('loadingInfo'))
+      this.template.statusText.textContent = locale.t('loadingInfo')
     }
     return groupPr
       .done(group => {
