@@ -170,10 +170,10 @@ class PreviewTab extends BasePreviewTab {
     }
     src = URL.createObjectURL(blob)
     op = videoLoader(src)
-    op.fail(() => {
+    op.catch(() => {
       URL.revokeObjectURL(src)
       return df.reject()
-    }).done(() => {
+    }).then(() => {
       var videoTag
       df.resolve()
       this.dialogApi.always(function() {
