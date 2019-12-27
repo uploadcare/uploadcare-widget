@@ -9,7 +9,7 @@ import { openDialog } from './dialog'
 
 class BaseWidget {
   constructor(element, settings) {
-    this.element = element
+    this.element = $(element)
     this.settings = settings
     this.validators = this.settings.validators = []
     this.currentObject = null
