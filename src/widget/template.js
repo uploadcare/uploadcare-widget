@@ -7,7 +7,7 @@ import { Circle } from '../ui/progress'
 class Template {
   constructor(settings, element) {
     this.settings = settings
-    this.element = element
+    this.element = $(element)
     this.content = $(tpl('widget'))
     this.element.after(this.content)
     this.circle = new Circle(
