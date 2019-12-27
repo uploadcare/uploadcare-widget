@@ -1,35 +1,26 @@
-import $ from 'jquery'
-
 // utils
-const trackLoading = function(image, src) {
-  let promiseResolve
-  let promiseReject
-  const promise = new Promise((resolve, reject) => {
-    resolve = promiseResolve
-    reject = promiseReject
+const trackLoading = (image, src) =>
+  new Promise((resolve, reject) => {
+    if (src) {
+      image.src = src
+    }
+    if (image.complete) {
+      resolve(image)
+    } else {
+      image.addEventListener('load', () => {
+        resolve(image)
+      })
+      image.addEventListener('error', () => {
+        reject(image)
+      })
+    }
   })
-  if (src) {
-    image.src = src
-  }
-  if (image.complete) {
-    promiseResolve(image)
-  } else {
-    $(image).one('load', () => {
-      return promiseResolve(image)
-    })
-    $(image).one('error', () => {
-      return promiseReject(image)
-    })
-  }
-
-  return promise
-}
 
 const imageLoader = function(image) {
   // if argument is an array, treat as
   // load(['1.jpg', '2.jpg'])
   if (Array.isArray(image)) {
-    return $.when.apply(null, image.map(imageLoader))
+    return Promise.all(image.map(imageLoader))
   }
   if (image.src) {
     return trackLoading(image)
@@ -39,22 +30,16 @@ const imageLoader = function(image) {
 }
 
 const videoLoader = function(src) {
-  let promiseResolve
-  let promiseReject
-  const promise = new Promise((resolve, reject) => {
-    resolve = promiseResolve
-    reject = promiseReject
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video')
+
+    video.addEventListener('loadeddata', resolve)
+    video.addEventListener('error', reject)
+
+    video.setAttribute('src', src)
+
+    video.load()
   })
-  const video = document.createElement('video')
-
-  video.addEventListener('loadeddata', promiseResolve)
-  video.addEventListener('error', promiseReject)
-
-  video.setAttribute('src', src)
-
-  video.load()
-
-  return promise
 }
 
 export { imageLoader, videoLoader }
