@@ -61,7 +61,7 @@ class BaseWidget {
     })
 
     // Enable drag and drop
-    receiveDrop(this.template.content, this.__handleDirectSelection.bind(this))
+    receiveDrop(this.template.content, (files) => this.__handleDirectSelection('object', files))
     return this.template.reset()
   }
 
