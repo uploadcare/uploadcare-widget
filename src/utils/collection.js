@@ -1,15 +1,13 @@
-import $ from 'jquery'
-
-var indexOf = [].indexOf
+import { callbacks } from '../utils'
 
 // utils
 
 class Collection {
   constructor(items = [], after = false) {
-    this.onAdd = $.Callbacks()
-    this.onRemove = $.Callbacks()
-    this.onSort = $.Callbacks()
-    this.onReplace = $.Callbacks()
+    this.onAdd = callbacks()
+    this.onRemove = callbacks()
+    this.onSort = callbacks()
+    this.onReplace = callbacks()
     this.__items = []
 
     if (!after) {
@@ -35,8 +33,7 @@ class Collection {
   }
 
   remove(item) {
-    var i
-    i = $.inArray(item, this.__items)
+    var i = this.__items.indexOf(item)
     if (i !== -1) {
       return this.__remove(item, i)
     }
@@ -48,21 +45,18 @@ class Collection {
   }
 
   clear() {
-    var i, item, items, j, len, results
-    items = this.get()
+    const items = this.get()
     this.__items.length = 0
-    results = []
-    for (i = j = 0, len = items.length; j < len; i = ++j) {
-      item = items[i]
-      results.push(this.onRemove.fire(item, i))
+
+    for (let i = 0, j = 0, len = items.length; j < len; i = ++j) {
+      const item = items[i]
+      this.onRemove.fire(item, i)
     }
-    return results
   }
 
   replace(oldItem, newItem) {
-    var i
     if (oldItem !== newItem) {
-      i = $.inArray(oldItem, this.__items)
+      var i = this.__items.indexOf(oldItem)
       if (i !== -1) {
         return this.__replace(oldItem, newItem, i)
       }
@@ -94,14 +88,14 @@ class Collection {
 
 class UniqCollection extends Collection {
   add(item) {
-    if (indexOf.call(this.__items, item) >= 0) {
+    if (this.__items.indexOf(item) >= 0) {
       return
     }
     return super.add(...arguments)
   }
 
   __replace(oldItem, newItem, i) {
-    if (indexOf.call(this.__items, newItem) >= 0) {
+    if (this.__items.indexOf(newItem) >= 0) {
       return this.remove(oldItem)
     } else {
       return super.__replace(...arguments)
@@ -113,16 +107,21 @@ class CollectionOfPromises extends UniqCollection {
   constructor() {
     super(...arguments, true)
 
-    this.anyDoneList = $.Callbacks()
-    this.anyFailList = $.Callbacks()
-    this.anyProgressList = $.Callbacks()
+    this.anyDoneList = callbacks()
+    this.anyFailList = callbacks()
+    this.anyProgressList = callbacks()
 
     this._thenArgs = null
-    this.anyProgressList.add(function(item, firstArgument) {
-      return $(item).data('lastProgress', firstArgument)
-    })
 
     super.init(arguments[0])
+
+    this._lastProgress = []
+    this.anyProgressList.add((item, firstArgument) => {
+      const index = this.__items.indexOf(item)
+      if (index >= 0) {
+        this._lastProgress[index] = firstArgument
+      }
+    })
   }
 
   onAnyDone(cb) {
@@ -168,27 +167,24 @@ class CollectionOfPromises extends UniqCollection {
   }
 
   onAnyProgress(cb) {
-    var file, j, len, ref1, results
-
     this.anyProgressList.add(cb)
-    ref1 = this.__items
-    results = []
-    for (j = 0, len = ref1.length; j < len; j++) {
-      file = ref1[j]
-      results.push(cb(file, $(file).data('lastProgress')))
+
+    for (let j = 0, len = this.__items.length; j < len; j++) {
+      const file = this.__items[j]
+      const lastProgress = this._lastProgress[j] || {}
+      cb(file, lastProgress)
     }
-    return results
   }
 
   lastProgresses() {
-    var item, j, len, ref1, results
-    ref1 = this.__items
-    results = []
-    for (j = 0, len = ref1.length; j < len; j++) {
-      item = ref1[j]
-      results.push($(item).data('lastProgress'))
-    }
-    return results
+    return this.__items.map((_, index) => {
+      const progress = this._lastProgress[index]
+      if (progress) {
+        return progress
+      }
+
+      return {}
+    })
   }
 
   add(item) {
@@ -215,7 +211,7 @@ class CollectionOfPromises extends UniqCollection {
   __watchItem(item) {
     var handler = callbacks => {
       return (...args) => {
-        if (indexOf.call(this.__items, item) >= 0) {
+        if (this.__items.indexOf(item) >= 0) {
           return callbacks.fire(item, ...args)
         }
       }

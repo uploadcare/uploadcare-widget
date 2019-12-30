@@ -2,7 +2,7 @@ import namespaceApi, { createPlugin } from './namespace.api'
 
 import { JST, tpl } from '../templates'
 
-import { CropWidget } from '../ui/crop-widget'
+// import { CropWidget } from '../ui/crop-widget'
 import {
   Circle,
   BaseRenderer,
@@ -56,7 +56,7 @@ const namespace = {
   },
 
   crop: {
-    CropWidget
+    // CropWidget
   },
 
   dragdrop: {

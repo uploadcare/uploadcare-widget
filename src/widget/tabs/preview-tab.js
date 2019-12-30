@@ -3,17 +3,17 @@ import $ from 'jquery'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
-  defer,
+  // defer,
   gcd as calcGCD,
   once,
   fitSize,
   readableFileSize,
-  canvasToBlob
+  // canvasToBlob
 } from '../../utils'
-import { drawFileToCanvas } from '../../utils/image-processor'
+// import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
-import { CropWidget } from '../../ui/crop-widget'
+// import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
 
 class PreviewTab extends BasePreviewTab {
@@ -125,82 +125,80 @@ class PreviewTab extends BasePreviewTab {
     ) {
       return df.reject().promise()
     }
-    drawFileToCanvas(
-      blob,
-      1550,
-      924,
-      '#ffffff',
-      this.settings.imagePreviewMaxSize
-    )
-      .done((canvas, size) => {
-        return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
-          var src
-          df.resolve()
-          canvas.width = canvas.height = 1
-          if (
-            file.state() !== 'pending' ||
-            this.dialogApi.state() !== 'pending' ||
-            this.file !== file
-          ) {
-            return
-          }
-          src = URL.createObjectURL(blob)
-          this.dialogApi.always(function() {
-            return URL.revokeObjectURL(src)
-          })
-          if (this.__state !== 'image') {
-            this.__setState('image', {
-              src,
-              name: ''
-            })
-            return this.initImage(size)
-          }
-        })
-      })
-      .fail(df.reject)
+    // drawFileToCanvas(
+    //   blob,
+    //   1550,
+    //   924,
+    //   '#ffffff',
+    //   this.settings.imagePreviewMaxSize
+    // )
+    //   .done((canvas, size) => {
+    //     return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
+    //       var src
+    //       df.resolve()
+    //       canvas.width = canvas.height = 1
+    //       if (
+    //         file.state() !== 'pending' ||
+    //         this.dialogApi.state() !== 'pending' ||
+    //         this.file !== file
+    //       ) {
+    //         return
+    //       }
+    //       src = URL.createObjectURL(blob)
+    //       this.dialogApi.always(function() {
+    //         return URL.revokeObjectURL(src)
+    //       })
+    //       if (this.__state !== 'image') {
+    //         this.__setState('image', {
+    //           src,
+    //           name: ''
+    //         })
+    //         return this.initImage(size)
+    //       }
+    //     })
+    //   })
+    //   .fail(df.reject)
     return df.promise()
   }
 
   __tryToLoadVideoPreview(file, blob) {
-    var df, op, src
+    return new Promise((resolve, reject) => {
+      if (!URL || !blob.size) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject()
+      }
+      const src = URL.createObjectURL(blob)
 
-    df = $.Deferred()
-    if (!URL || !blob.size) {
-      return df.reject().promise()
-    }
-    src = URL.createObjectURL(blob)
-    op = videoLoader(src)
-    op.fail(() => {
-      URL.revokeObjectURL(src)
-      return df.reject()
-    }).done(() => {
-      var videoTag
-      df.resolve()
-      this.dialogApi.always(function() {
-        return URL.revokeObjectURL(src)
+      videoLoader(src).then(() => {
+        var videoTag
+        resolve()
+        this.dialogApi.always(function() {
+          return URL.revokeObjectURL(src)
+        })
+        this.__setState('video')
+        videoTag = this.container.find('.uploadcare--preview__video')
+        // hack to enable seeking due to bug in MediaRecorder API
+        // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
+        videoTag.on('loadeddata', function() {
+          var el
+          el = videoTag.get(0)
+          el.currentTime = 360000 // 100 hours
+          return videoTag.off('loadeddata')
+        })
+        videoTag.on('ended', function() {
+          var el
+          el = videoTag.get(0)
+          el.currentTime = 0
+          return videoTag.off('ended')
+        })
+        // end of hack
+        videoTag.attr('src', src)
+        // hack to load first-frame poster on ios safari
+        return videoTag.get(0).load()
+      }).catch(() => {
+        URL.revokeObjectURL(src)
       })
-      this.__setState('video')
-      videoTag = this.container.find('.uploadcare--preview__video')
-      // hack to enable seeking due to bug in MediaRecorder API
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
-      videoTag.on('loadeddata', function() {
-        var el
-        el = videoTag.get(0)
-        el.currentTime = 360000 // 100 hours
-        return videoTag.off('loadeddata')
-      })
-      videoTag.on('ended', function() {
-        var el
-        el = videoTag.get(0)
-        el.currentTime = 0
-        return videoTag.off('ended')
-      })
-      // end of hack
-      videoTag.attr('src', src)
-      // hack to load first-frame poster on ios safari
-      return videoTag.get(0).load()
     })
-    return df.promise()
   }
 
   __setState(state, data) {
@@ -229,59 +227,63 @@ class PreviewTab extends BasePreviewTab {
   }
 
   initImage(imgSize, cdnModifiers) {
-    var done, img, imgLoader, startCrop
+    // let done
+    // let img
+    // let imgLoader
+    // let startCrop
 
-    img = this.container.find('.uploadcare--preview__image')
-    done = this.container.find('.uploadcare--preview__done')
-    imgLoader = imageLoader(img[0])
-      .done(() => {
+    const img = this.container.find('.uploadcare--preview__image')
+    // done = this.container.find('.uploadcare--preview__done')
+    return  imageLoader(img[0])
+      .then(() => {
         return this.container.addClass('uploadcare--preview_status_loaded')
       })
-      .fail(() => {
+      .catch(() => {
         this.file = null
         return this.__setState('error', {
           error: 'loadImage'
         })
       })
 
-    startCrop = () => {
-      this.container
-        .find('.uploadcare--crop-sizes__item')
-        .attr('aria-disabled', false)
-        .attr('tabindex', 0)
-      done.attr('disabled', false).attr('aria-disabled', false)
-      this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
-      if (cdnModifiers) {
-        this.widget.setSelectionFromModifiers(cdnModifiers)
-      }
-      return done.on('click', () => {
-        var newFile
-        newFile = this.widget.applySelectionToFile(this.file)
-        this.dialogApi.fileColl.replace(this.file, newFile)
-        return true
-      })
-    }
-    if (this.settings.crop) {
-      this.container
-        .find('.uploadcare--preview__title')
-        .text(locale.t('dialog.tabs.preview.crop.title'))
-      this.container
-        .find('.uploadcare--preview__content')
-        .addClass('uploadcare--preview__content_crop')
-      done.attr('disabled', true).attr('aria-disabled', true)
-      done.text(locale.t('dialog.tabs.preview.crop.done'))
-      this.populateCropSizes()
-      this.container
-        .find('.uploadcare--crop-sizes__item')
-        .attr('aria-disabled', true)
-        .attr('tabindex', -1)
-      return imgLoader.done(function() {
-        // Often IE 11 doesn't do reflow after image.onLoad
-        // and actual image remains 28x30 (broken image placeholder).
-        // Looks like defer always fixes it.
-        return defer(startCrop)
-      })
-    }
+    // startCrop = () => {
+    //   this.container
+    //     .find('.uploadcare--crop-sizes__item')
+    //     .attr('aria-disabled', false)
+    //     .attr('tabindex', 0)
+    //   done.attr('disabled', false).attr('aria-disabled', false)
+    //   this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
+    //   if (cdnModifiers) {
+    //     this.widget.setSelectionFromModifiers(cdnModifiers)
+    //   }
+    //   return done.on('click', () => {
+    //     var newFile
+    //     newFile = this.widget.applySelectionToFile(this.file)
+    //     this.dialogApi.fileColl.replace(this.file, newFile)
+    //     return true
+    //   })
+    // }
+    //
+    // if (this.settings.crop) {
+    //   this.container
+    //     .find('.uploadcare--preview__title')
+    //     .text(locale.t('dialog.tabs.preview.crop.title'))
+    //   this.container
+    //     .find('.uploadcare--preview__content')
+    //     .addClass('uploadcare--preview__content_crop')
+    //   done.attr('disabled', true).attr('aria-disabled', true)
+    //   done.text(locale.t('dialog.tabs.preview.crop.done'))
+    //   this.populateCropSizes()
+    //   this.container
+    //     .find('.uploadcare--crop-sizes__item')
+    //     .attr('aria-disabled', true)
+    //     .attr('tabindex', -1)
+    //   return imgLoader.done(function() {
+    //     // Often IE 11 doesn't do reflow after image.onLoad
+    //     // and actual image remains 28x30 (broken image placeholder).
+    //     // Looks like defer always fixes it.
+    //     return defer(startCrop)
+    //   })
+    // }
   }
 
   populateCropSizes() {

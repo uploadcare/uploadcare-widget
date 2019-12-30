@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import '../vendor/jquery-xdr'
 
 import { presets, defaults, common } from '../settings'
 import { filesFrom } from '../files'

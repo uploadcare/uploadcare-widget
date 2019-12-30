@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { log, debug } from '../utils/warnings'
 import { jsonp, taskRunner } from '../utils'
-import { shrinkFile } from '../utils/image-processor'
+// import { shrinkFile } from '../utils/image-processor'
 
 import { BaseFile } from './base'
 
@@ -34,7 +34,9 @@ class ObjectFile extends BaseFile {
   }
 
   __startUpload() {
-    var df, ios, resizeShare
+    var df
+    var ios
+    // var resizeShare
     this.apiDeferred.always(() => {
       this.__file = null
       return this.__file
@@ -50,26 +52,26 @@ class ObjectFile extends BaseFile {
     }
     // if @settings.imageShrink
     df = $.Deferred()
-    resizeShare = 0.4
-    shrinkFile(this.__file, this.settings.imageShrink)
-      .progress(function(progress) {
-        return df.notify(progress * resizeShare)
-      })
-      .done(this.setFile.bind(this))
-      .fail(() => {
-        this.setFile()
-        resizeShare = resizeShare * 0.1
-        return resizeShare
-      })
-      .always(() => {
-        df.notify(resizeShare)
-        return this.directUpload()
-          .done(df.resolve)
-          .fail(df.reject)
-          .progress(function(progress) {
-            return df.notify(resizeShare + progress * (1 - resizeShare))
-          })
-      })
+    // resizeShare = 0.4
+    // shrinkFile(this.__file, this.settings.imageShrink)
+    //   .progress(function(progress) {
+    //     return df.notify(progress * resizeShare)
+    //   })
+    //   .done(this.setFile.bind(this))
+    //   .fail(() => {
+    //     this.setFile()
+    //     resizeShare = resizeShare * 0.1
+    //     return resizeShare
+    //   })
+    //   .always(() => {
+    //     df.notify(resizeShare)
+    //     return this.directUpload()
+    //       .done(df.resolve)
+    //       .fail(df.reject)
+    //       .progress(function(progress) {
+    //         return df.notify(resizeShare + progress * (1 - resizeShare))
+    //       })
+    //   })
     return df
   }
 

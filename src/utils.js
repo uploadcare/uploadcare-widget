@@ -800,10 +800,29 @@ const extend = function() {
   return target
 }
 
+const grep = (elems, callback, invert) => {
+  var callbackInverse
+  var matches = []
+  var i = 0
+  var length = elems.length
+  var callbackExpect = !invert
+
+  // Go through the array, only saving the items
+  // that pass the validator function
+  for (; i < length; i++) {
+    callbackInverse = !callback(elems[i], i)
+    if (callbackInverse !== callbackExpect) {
+      matches.push(elems[i])
+    }
+  }
+
+  return matches
+}
+
 const parseHTML = function(str) {
   var tmp = document.implementation.createHTMLDocument()
   tmp.body.innerHTML = str
-  return tmp.body.children
+  return tmp.body.children[0]
 }
 
 export {
@@ -842,5 +861,6 @@ export {
   callbacks,
   inArray,
   extend,
+  grep,
   parseHTML,
 }

@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import '../../vendor/jquery-ordering'
+// import '../../vendor/jquery-ordering'
 
 import { BasePreviewTab } from './base-preview-tab'
 

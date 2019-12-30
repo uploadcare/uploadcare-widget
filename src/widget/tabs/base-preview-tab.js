@@ -47,7 +47,7 @@ class BasePreviewTab {
     this.dialogApi.fileColl.onAdd.add(update)
     this.dialogApi.fileColl.onRemove.add(update)
     update()
-    circle = new Circle(circleEl).listen(circleDf.promise())
+    circle = new Circle(circleEl[0]).listen(circleDf.promise())
     return this.dialogApi.progress((...args) => circle.update(...args))
   }
 }

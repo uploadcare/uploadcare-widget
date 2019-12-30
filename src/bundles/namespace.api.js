@@ -58,16 +58,16 @@ import {
   fixedPipe
 } from '../utils'
 
-import {
-  shrinkFile,
-  shrinkImage,
-  drawFileToCanvas,
-  readJpegChunks,
-  replaceJpegChunk,
-  getExif,
-  parseExifOrientation,
-  hasTransparency
-} from '../utils/image-processor'
+// import {
+//   shrinkFile,
+//   shrinkImage,
+//   drawFileToCanvas,
+//   readJpegChunks,
+//   replaceJpegChunk,
+//   getExif,
+//   parseExifOrientation,
+//   hasTransparency
+// } from '../utils/image-processor'
 
 import { isFile, valueToFile } from '../utils/files'
 import { isFileGroup, valueToGroup, isFileGroupsEqual } from '../utils/groups'
@@ -166,16 +166,16 @@ const namespace = {
     isFile,
     valueToFile,
 
-    image: {
-      shrinkFile,
-      shrinkImage,
-      drawFileToCanvas,
-      readJpegChunks,
-      replaceJpegChunk,
-      getExif,
-      parseExifOrientation,
-      hasTransparency
-    },
+    // image: {
+      // shrinkFile,
+      // shrinkImage,
+      // drawFileToCanvas,
+      // readJpegChunks,
+      // replaceJpegChunk,
+      // getExif,
+      // parseExifOrientation,
+      // hasTransparency
+    // },
 
     pusher: {
       getPusher
