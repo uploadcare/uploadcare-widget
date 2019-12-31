@@ -28,10 +28,10 @@ class BasePreviewTab {
   }
 
   __initTabButtonCircle() {
-    var circle, circleDf, circleEl, update
-    circleEl = this.tabButton.find('.uploadcare--panel__icon')
-    circleDf = $.Deferred()
-    update = () => {
+    const circleEl = this.tabButton.find('.uploadcare--panel__icon')
+
+    const progressCallback = callbacks()
+    const update = () => {
       var i, infos, len, progress, progressInfo
       infos = this.dialogApi.fileColl.lastProgresses()
       progress = 0
@@ -41,13 +41,16 @@ class BasePreviewTab {
           ((progressInfo != null ? progressInfo.progress : undefined) || 0) /
           infos.length
       }
-      return circleDf.notify(progress)
+      return progressCallback.fire(progress)
     }
+
     this.dialogApi.fileColl.onAnyProgress(update)
     this.dialogApi.fileColl.onAdd.add(update)
     this.dialogApi.fileColl.onRemove.add(update)
+
     update()
-    circle = new Circle(circleEl[0]).listen(circleDf.promise())
+
+    const circle = new Circle(circleEl[0]).listen(progressCallback)
     return this.dialogApi.progress((...args) => circle.update(...args))
   }
 }
