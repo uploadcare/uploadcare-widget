@@ -8,8 +8,8 @@ import { receiveDrop } from '../dragdrop'
 class FileTab {
   constructor(container, tabButton1, dialogApi, settings, name1) {
     this.__initTabsList = this.__initTabsList.bind(this)
-    this.container = container
-    this.tabButton = tabButton1
+    this.container = $(container)
+    this.tabButton = $(tabButton1)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name1

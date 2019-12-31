@@ -6,8 +6,8 @@ var fixUrl, urlRegexp
 class UrlTab {
   constructor(container, tabButton, dialogApi, settings, name) {
     var button, input
-    this.container = container
-    this.tabButton = tabButton
+    this.container = $(container)
+    this.tabButton = $(tabButton)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name

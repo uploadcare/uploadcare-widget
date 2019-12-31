@@ -19,8 +19,8 @@ class CameraTab {
     this.__startRecording = this.__startRecording.bind(this)
     this.__stopRecording = this.__stopRecording.bind(this)
     this.__cancelRecording = this.__cancelRecording.bind(this)
-    this.container = container1
-    this.tabButton = tabButton
+    this.container = $(container1)
+    this.tabButton = $(tabButton)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name1

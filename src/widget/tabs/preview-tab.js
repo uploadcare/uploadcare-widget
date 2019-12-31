@@ -25,8 +25,8 @@ class PreviewTab extends BasePreviewTab {
     // image
     // video
     // regular
-    this.container = container
-    this.tabButton = tabButton
+    this.container = $(container)
+    this.tabButton = $(tabButton)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name

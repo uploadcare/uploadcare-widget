@@ -13,8 +13,8 @@ const tabsCss = new CssCollector()
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {
     this.__createIframe = this.__createIframe.bind(this)
-    this.container = container
-    this.tabButton = tabButton
+    this.container = $(container)
+    this.tabButton = $(tabButton)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name1
