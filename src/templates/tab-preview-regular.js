@@ -1,3 +1,4 @@
+import escape from 'escape-html'
 import { html } from '../utils/html'
 import { readableFileSize } from '../utils'
 import locale from '../locale'
@@ -15,7 +16,7 @@ const tabPreviewRegular = ({ file }) => html`
 
   <div class="uploadcare--tab__content uploadcare--preview__content">
     <div class="uploadcare--text uploadcare--preview__file-name">
-      ${file.name || locale.t('dialog.tabs.preview.unknownName')}
+      ${escape(file.name) || locale.t('dialog.tabs.preview.unknownName')}
       ${readableFileSize(file.size, '', ', ')}
     </div>
   </div>
