@@ -1,6 +1,5 @@
-import $ from 'jquery'
-
 import { Circle } from '../../ui/progress'
+import { callbacks } from '../../utils'
 
 class BasePreviewTab {
   constructor(container, tabButton, dialogApi, settings, name) {
