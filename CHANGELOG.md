@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-* Escaped filename. See [#643][643]
+* Escaping special symbols in filenames to avoid XSS attacks. See [#643][643]
 
 [3.8.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.0...v3.8.1
 [643]:https://github.com/uploadcare/uploadcare-widget/pull/643
