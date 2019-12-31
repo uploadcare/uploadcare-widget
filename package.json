@@ -33,6 +33,7 @@
     "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
   },
   "dependencies": {
+    "escape-html": "^1.0.3",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
