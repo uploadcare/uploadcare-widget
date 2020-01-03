@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { CollectionOfPromises } from '../utils/collection'
-import { log } from '../utils/warnings'
+import { log } from '../utils/logger'
 import { wrapToPromise, bindAll, jsonp } from '../utils'
 import { build } from '../settings'
 import locale from '../locale'
@@ -175,8 +175,10 @@ class FileGroup {
           }
         )
           .fail(reason => {
-            if (this.settings.debugUploads) {
-              log("Can't create group.", this.settings.publicKey, reason)
+            if (process.env.NODE_ENV !== 'production') {
+              if (this.settings.debugUploads) {
+                log("Can't create group.", this.settings.publicKey, reason)
+              }
             }
             return df.reject()
           })

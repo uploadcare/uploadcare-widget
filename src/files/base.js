@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { log, debug } from '../utils/warnings'
+import { log } from '../utils/logger'
 import { jsonp, fixedPipe } from '../utils'
 
 // files
@@ -40,28 +40,31 @@ class BaseFile {
     var check, logger, ncalls, timeout
     // Update info until @apiDeferred resolved.
     ncalls = 0
-    if (this.settings.debugUploads) {
-      debug('Load file info.', this.fileId, this.settings.publicKey)
-      logger = setInterval(() => {
-        return debug(
-          'Still waiting for file ready.',
-          ncalls,
-          this.fileId,
-          this.settings.publicKey
-        )
-      }, 5000)
-      this.apiDeferred
-        .done(() => {
-          return debug(
-            'File uploaded.',
+    if (process.env.NODE_ENV !== 'production') {
+      if (this.settings.debugUploads) {
+        log('Load file info.', this.fileId, this.settings.publicKey)
+        logger = setInterval(() => {
+          log(
+            'Still waiting for file ready.',
             ncalls,
             this.fileId,
             this.settings.publicKey
           )
-        })
-        .always(() => {
-          return clearInterval(logger)
-        })
+        }, 5000)
+
+        this.apiDeferred
+          .done(() => {
+            return log(
+              'File uploaded.',
+              ncalls,
+              this.fileId,
+              this.settings.publicKey
+            )
+          })
+          .always(() => {
+            return clearInterval(logger)
+          })
+      }
     }
     timeout = 100
     return (check = () => {
@@ -95,13 +98,15 @@ class BaseFile {
       }
     )
       .fail(reason => {
-        if (this.settings.debugUploads) {
-          log(
-            "Can't load file info. Probably removed.",
-            this.fileId,
-            this.settings.publicKey,
-            reason
-          )
+        if (process.env.NODE_ENV !== 'production') {
+          if (this.settings.debugUploads) {
+            log(
+              "Can't load file info. Probably removed.",
+              this.fileId,
+              this.settings.publicKey,
+              reason
+            )
+          }
         }
         return this.__rejectApi('info')
       })

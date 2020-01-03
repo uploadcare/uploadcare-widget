@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
-import { log, debug } from '../utils/warnings'
+import { log } from '../utils/logger'
 import { jsonp, taskRunner } from '../utils'
 import { shrinkFile } from '../utils/image-processor'
 
@@ -26,8 +26,10 @@ class ObjectFile extends BaseFile {
     }
     this.fileSize = this.__file.size
     this.fileType = this.__file.type || 'application/octet-stream'
-    if (this.settings.debugUploads) {
-      debug('Use local file.', this.fileName, this.fileType, this.fileSize)
+    if (process.env.NODE_ENV !== 'production') {
+      if (this.settings.debugUploads) {
+        log('Use local file.', this.fileName, this.fileType, this.fileSize)
+      }
     }
     this.__runValidators()
     return this.__notifyApi()
@@ -205,8 +207,10 @@ class ObjectFile extends BaseFile {
         }
       )
     ).fail(reason => {
-      if (this.settings.debugUploads) {
-        return log("Can't start multipart upload.", reason, data)
+      if (process.env.NODE_ENV !== 'production') {
+        if (this.settings.debugUploads) {
+          return log("Can't start multipart upload.", reason, data)
+        }
       }
     })
   }
@@ -292,13 +296,17 @@ class ObjectFile extends BaseFile {
             error: () => {
               attempts += 1
               if (attempts > this.settings.multipartMaxAttempts) {
-                if (this.settings.debugUploads) {
-                  log(`Part #${partNo} and file upload is failed.`, uuid)
+                if (process.env.NODE_ENV !== 'production') {
+                  if (this.settings.debugUploads) {
+                    log(`Part #${partNo} and file upload is failed.`, uuid)
+                  }
                 }
                 return df.reject()
               } else {
-                if (this.settings.debugUploads) {
-                  debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
+                if (process.env.NODE_ENV !== 'production') {
+                  if (this.settings.debugUploads) {
+                    log(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
+                  }
                 }
                 return retry()
               }
@@ -342,13 +350,15 @@ class ObjectFile extends BaseFile {
         }
       )
     ).fail(reason => {
-      if (this.settings.debugUploads) {
-        return log(
-          "Can't complete multipart upload.",
-          uuid,
-          this.settings.publicKey,
-          reason
-        )
+      if (process.env.NODE_ENV !== 'production') {
+        if (this.settings.debugUploads) {
+          log(
+            "Can't complete multipart upload.",
+            uuid,
+            this.settings.publicKey,
+            reason
+          )
+        }
       }
     })
   }

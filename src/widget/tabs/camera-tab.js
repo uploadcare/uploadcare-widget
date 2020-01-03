@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { warn } from '../../utils/warnings'
+import { warn } from '../../utils/logger'
 import { fileSelectDialog, canvasToBlob } from '../../utils'
 import { tpl } from '../../templates'
 import { isWindowDefined } from '../../utils/is-window-defined'
@@ -132,8 +132,10 @@ class CameraTab {
     }
     this.URL = window.URL || window.webkitURL
     this.MediaRecorder = window.MediaRecorder
-    if (!isSecure) {
-      warn('Camera is not allowed for HTTP. Please use HTTPS connection.')
+    if (process.env.NODE_ENV !== 'production') {
+      if (!isSecure) {
+        warn('Camera is not allowed for HTTP. Please use HTTPS connection.')
+      }
     }
     isLocalhost = document.location.hostname === 'localhost'
     return !!this.getUserMedia && Uint8Array && (isSecure || isLocalhost)

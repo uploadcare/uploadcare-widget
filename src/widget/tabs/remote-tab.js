@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { registerMessage, unregisterMessage } from '../../utils/messages'
-import { warn, debug } from '../../utils/warnings'
+import { warn, log } from '../../utils/logger'
 import { globRegexp } from '../../utils'
 import { UrlFile } from '../../files/url'
 import { CssCollector } from '../../settings'
@@ -135,17 +135,24 @@ class RemoteTab {
 
     registerMessage('open-new-window', iframe, message => {
       var interval, popup, resolve
+      
       if (this.settings.debugUploads) {
-        debug('Open new window message.', this.name)
+        log('Open new window message.', this.name)
       }
+
       popup = window.open(message.url, '_blank')
       if (!popup) {
-        warn("Can't open new window. Possible blocked.", this.name)
+        if (process.env.NODE_ENV !== 'production') {
+          warn("Can't open new window. Possible blocked.", this.name)
+        }
         return
       }
+
       resolve = () => {
-        if (this.settings.debugUploads) {
-          debug('Window is closed.', this.name)
+        if (process.env.NODE_ENV !== 'production') {
+          if (this.settings.debugUploads) {
+            log('Window is closed.', this.name)
+          }
         }
         return this.__sendMessage({
           type: 'navigate',

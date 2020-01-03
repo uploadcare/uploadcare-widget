@@ -3,7 +3,7 @@ import $ from 'jquery'
 import { Widget as WidgetClass } from './widget'
 import { MultipleWidget as MultipleWidgetClass } from './multiple-widget'
 
-import { warn } from '../utils/warnings'
+import { warn } from '../utils/logger'
 import { once } from '../utils'
 import { build, common } from '../settings'
 import { isWindowDefined } from '../utils/is-window-defined'
@@ -56,7 +56,9 @@ const initializeWidget = function(input, targetClass) {
   if (inputArr.length === 0) {
     throw new Error('No DOM elements found matching selector')
   } else if (inputArr.length > 1) {
-    warn('There are multiple DOM elements matching selector')
+    if (process.env.NODE_ENV !== 'production') {
+      warn('There are multiple DOM elements matching selector')
+    }
   }
 
   input = inputArr.eq(0)

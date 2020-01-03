@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import { log } from '../utils/warnings'
+import { log } from '../utils/logger'
 import { groupIdRegex, jsonp } from '../utils'
 import { build } from '../settings'
 import { isFile } from '../utils/files'

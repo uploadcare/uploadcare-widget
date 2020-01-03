@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser'
 import { string } from 'rollup-plugin-string'
 import license from 'rollup-plugin-license'
 import replacement from 'rollup-plugin-module-replacement'
+import replace from '@rollup/plugin-replace'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -33,6 +34,13 @@ const bundle = (input, output, options = {}) => ({
           }
         ]
       }),
+
+    replace({
+      'process.env.NODE_ENV': /\.min\.js$/.test(output)
+        ? '"production"'
+        : '"development"'
+    }),
+
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]],
