@@ -1,0 +1,5 @@
+{
+  "extends": ["config:js-lib", "schedule:nonOfficeHours", ":automergeMinor"],
+  "reviewers": ["jeetiss", "bautrukevich"],
+  "timezone": "Europe/Moscow"
+}
