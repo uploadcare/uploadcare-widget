@@ -64,7 +64,7 @@
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-import": "11.0.0",
     "postcss-nested": "2.1.2",
-    "postcss-prefixer": "2.0.5",
+    "postcss-prefixer": "2.1.2",
     "postcss-reporter": "5.0.0",
     "prettier": "1.18.2",
     "rollup": "1.19.4",
