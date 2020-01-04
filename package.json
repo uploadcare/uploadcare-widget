@@ -44,7 +44,7 @@
     "aws-sdk": "2.575.0",
     "babel-eslint": "10.0.2",
     "babel-plugin-html-tag": "1.4.0",
-    "cross-env": "5.1.0",
+    "cross-env": "5.2.1",
     "cssnano": "3.10.0",
     "dotenv": "8.2.0",
     "eslint": "6.2.1",
