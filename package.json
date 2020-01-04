@@ -62,7 +62,7 @@
     "postcss-css-variables": "0.8.0",
     "postcss-custom-media": "6.0.0",
     "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-import": "11.0.0",
+    "postcss-import": "11.1.0",
     "postcss-nested": "2.1.2",
     "postcss-prefixer": "2.0.5",
     "postcss-reporter": "5.0.0",
