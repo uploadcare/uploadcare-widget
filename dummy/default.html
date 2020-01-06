@@ -36,34 +36,3 @@
   Clearable:
   <input type="hidden" role="uploadcare-uploader" data-clearable />
 </label>
-
-<div id="last-result"></div>
-<ul id="events"></ul>
-<script>
-  $(function($) {
-    var log = function(text) {
-      var time = new Date().toLocaleTimeString();
-      $("<li>")
-        .appendTo("#events")
-        .text(time + " " + text);
-    };
-    var widgets = uploadcare.initialize();
-    for (var i = 0; i < widgets.length; i++) {
-      widgets[i].onChange.add(function(file) {
-        if (file) {
-          file.done(function(info) {
-            log("change: " + info.uuid);
-            $("#last-result").html(
-              $("<img/>", {
-                src: info.originalUrl + "-/preview/500x500/"
-              })
-            );
-          });
-        } else {
-          $("#last-result").empty();
-          log("change: (empty)");
-        }
-      });
-    }
-  });
-</script>
