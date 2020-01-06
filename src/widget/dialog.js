@@ -116,9 +116,7 @@ const openDialog = function(files, tab, settings) {
     currentDialogPr = null
     dialog.remove()
     cancelLock()
-    if (settings.multiple) {
-      return $('.uploadcare--widget').attr('tabindex', 0).focus()
-    }
+
     return originalFocusedElement.focus()
   })
 
