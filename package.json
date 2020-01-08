@@ -66,7 +66,7 @@
     "postcss-nested": "2.1.2",
     "postcss-prefixer": "2.0.5",
     "postcss-reporter": "5.0.0",
-    "prettier": "1.18.2",
+    "prettier": "1.19.1",
     "rollup": "1.29.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.0.2",
