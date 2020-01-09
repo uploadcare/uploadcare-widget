@@ -1,7 +1,7 @@
 import locale from '../locale'
 import { tpl } from '../templates'
 import { Circle } from '../ui/progress'
-import { parseHTML } from '../utils'
+import { parseHTML, callbacks } from '../utils'
 
 class Template {
   constructor(settings, element) {
@@ -52,12 +52,16 @@ class Template {
   listen(file) {
     this.__file = file
 
-    this.circle.listen(file, 'uploadProgress')
+    const progressCallback = callbacks()
+
+    this.circle.listen(progressCallback, Promise.resolve(file.promise()), 'uploadProgress')
     this.setStatus('started')
     this.content.setAttribute('aria-busy', true)
 
     return file.progress(info => {
       if (file === this.__file) {
+        progressCallback.fire(info)
+
         switch (info.state) {
           case 'uploading':
             this.statusText.textContent = locale.t('uploading')
