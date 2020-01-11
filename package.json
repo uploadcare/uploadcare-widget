@@ -78,7 +78,7 @@
     "rollup-plugin-serve": "1.0.1",
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.1.1",
-    "stylelint": "8.2.0",
+    "stylelint": "8.4.0",
     "stylelint-config-uploadcare": "3.0.0",
     "svg-sprite": "1.5.0"
   },
