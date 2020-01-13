@@ -8,7 +8,8 @@ import {
   upperCase,
   normalizeUrl,
   callbacks,
-  extend
+  extend,
+  isPlainObject
 } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 
@@ -389,10 +390,6 @@ const CssCollector = class CssCollector {
   addStyle(style) {
     return this.styles.push(style)
   }
-}
-
-const isPlainObject = obj => {
-  return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
 const emptyKeyText =
