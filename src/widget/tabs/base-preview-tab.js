@@ -1,5 +1,4 @@
 import $ from 'jquery'
-
 import { Circle } from '../../ui/progress'
 
 class BasePreviewTab {
