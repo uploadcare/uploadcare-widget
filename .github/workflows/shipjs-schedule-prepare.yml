@@ -1,0 +1,27 @@
+name: Ship js Schedule Prepare
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  "0 8 * * 2"
+jobs:
+  schedule_prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+          ref: master
+      - uses: actions/setup-node@master
+      - run: |
+          if [ -f "yarn.lock" ]; then
+            yarn install
+          else
+            npm install
+          fi
+      - run: |
+          git config --global user.email "jeetiss@yandex.ru"
+          git config --global user.name "jeetiss"
+      - run: npm run release:prepare -- --yes --no-browse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_INCOMING_HOOK: ${{ secrets.SLACK_INCOMING_HOOK }}

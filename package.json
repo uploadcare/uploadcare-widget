@@ -30,7 +30,9 @@
     "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
-    "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
+    "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "dependencies": {
     "escape-html": "^1.0.3",
@@ -78,6 +80,7 @@
     "rollup-plugin-serve": "1.0.1",
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.1.1",
+    "shipjs": "0.13.1",
     "stylelint": "8.2.0",
     "stylelint-config-uploadcare": "3.0.0",
     "svg-sprite": "1.5.0"
