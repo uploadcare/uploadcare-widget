@@ -825,6 +825,20 @@ const parseHTML = function(str) {
   return tmp.body.children[0]
 }
 
+const matches = function(el, selector) {
+  return (
+    el &&
+    (
+      el.matches ||
+      el.matchesSelector ||
+      el.msMatchesSelector ||
+      el.mozMatchesSelector ||
+      el.webkitMatchesSelector ||
+      el.oMatchesSelector
+    ).call(el, selector)
+  )
+}
+
 export {
   unique,
   defer,
@@ -863,4 +877,6 @@ export {
   extend,
   grep,
   parseHTML,
+  isPlainObject,
+  matches
 }

@@ -1,11 +1,12 @@
+import $ from 'jquery'
 import { Circle } from '../../ui/progress'
 import { callbacks } from '../../utils'
 
 class BasePreviewTab {
   constructor(container, tabButton, dialogApi, settings, name) {
     var notDisabled
-    this.container = container
-    this.tabButton = tabButton
+    this.container = $(container)
+    this.tabButton = $(tabButton)
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
