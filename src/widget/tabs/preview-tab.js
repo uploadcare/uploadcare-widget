@@ -8,6 +8,7 @@ import {
   once,
   fitSize,
   readableFileSize,
+  parseHTML
   // canvasToBlob
 } from '../../utils'
 // import { drawFileToCanvas } from '../../utils/image-processor'
@@ -25,14 +26,14 @@ class PreviewTab extends BasePreviewTab {
     // image
     // video
     // regular
-    this.container = $(container)
-    this.tabButton = $(tabButton)
+    this.container = container
+    this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
 
-    $.each(this.dialogApi.fileColl.get(), (i, file) => {
-      return this.__setFile(file)
+    this.dialogApi.fileColl.get().forEach(file => {
+      this.__setFile(file)
     })
 
     this.dialogApi.fileColl.onAdd.add(this.__setFile.bind(this))
@@ -41,27 +42,29 @@ class PreviewTab extends BasePreviewTab {
   }
 
   __setFile(file) {
-    var ifCur, tryToLoadImagePreview, tryToLoadVideoPreview
-
     this.file = file
-    ifCur = fn => {
+
+    const ifCur = fn => {
       return (...args) => {
         if (file === this.file) {
           return fn.apply(null, args)
         }
       }
     }
-    tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
-    tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
+
+    const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
+    const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
+
     this.file.progress(
       ifCur(info => {
-        var blob, label, source
         info = info.incompleteFileInfo
-        label = (info.name || '') + readableFileSize(info.size, '', ', ')
-        this.container.find('.uploadcare--preview__file-name').text(label)
-        source = info.sourceInfo
-        blob = Blob
+        const label = (info.name || '') + readableFileSize(info.size, '', ', ')
+        this.container.querySelector(
+          '.uploadcare--preview__file-name'
+        ).textContent = label
+        const source = info.sourceInfo
+        const blob = Blob
         if (source.file && blob && source.file instanceof blob) {
           return tryToLoadImagePreview(file, source.file).fail(() => {
             return tryToLoadVideoPreview(file, source.file)
@@ -115,50 +118,49 @@ class PreviewTab extends BasePreviewTab {
   }
 
   __tryToLoadImagePreview(file, blob) {
-    var df
-
-    df = $.Deferred()
-    if (
-      file.state() !== 'pending' ||
-      !blob.size ||
-      blob.size >= this.settings.multipartMinSize
-    ) {
-      return df.reject().promise()
-    }
-    // drawFileToCanvas(
-    //   blob,
-    //   1550,
-    //   924,
-    //   '#ffffff',
-    //   this.settings.imagePreviewMaxSize
-    // )
-    //   .done((canvas, size) => {
-    //     return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
-    //       var src
-    //       df.resolve()
-    //       canvas.width = canvas.height = 1
-    //       if (
-    //         file.state() !== 'pending' ||
-    //         this.dialogApi.state() !== 'pending' ||
-    //         this.file !== file
-    //       ) {
-    //         return
-    //       }
-    //       src = URL.createObjectURL(blob)
-    //       this.dialogApi.always(function() {
-    //         return URL.revokeObjectURL(src)
-    //       })
-    //       if (this.__state !== 'image') {
-    //         this.__setState('image', {
-    //           src,
-    //           name: ''
-    //         })
-    //         return this.initImage(size)
-    //       }
-    //     })
-    //   })
-    //   .fail(df.reject)
-    return df.promise()
+    return new Promise((resolve, reject) => {
+      if (
+        file.state() !== 'pending' ||
+        !blob.size ||
+        blob.size >= this.settings.multipartMinSize
+      ) {
+        reject(new Error('reason'))
+      }
+      // drawFileToCanvas(
+      //   blob,
+      //   1550,
+      //   924,
+      //   '#ffffff',
+      //   this.settings.imagePreviewMaxSize
+      // )
+      //   .done((canvas, size) => {
+      //     return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
+      //       var src
+      //       df.resolve()
+      //       canvas.width = canvas.height = 1
+      //       if (
+      //         file.state() !== 'pending' ||
+      //         this.dialogApi.state() !== 'pending' ||
+      //         this.file !== file
+      //       ) {
+      //         return
+      //       }
+      //       src = URL.createObjectURL(blob)
+      //       this.dialogApi.always(function() {
+      //         return URL.revokeObjectURL(src)
+      //       })
+      //       if (this.__state !== 'image') {
+      //         this.__setState('image', {
+      //           src,
+      //           name: ''
+      //         })
+      //         return this.initImage(size)
+      //       }
+      //     })
+      //   })
+      //   .fail(df.reject)
+      resolve()
+    })
   }
 
   __tryToLoadVideoPreview(file, blob) {
@@ -169,35 +171,35 @@ class PreviewTab extends BasePreviewTab {
       }
       const src = URL.createObjectURL(blob)
 
-      videoLoader(src).then(() => {
-        var videoTag
-        resolve()
-        this.dialogApi.always(function() {
-          return URL.revokeObjectURL(src)
+      videoLoader(src)
+        .then(() => {
+          resolve()
+          this.dialogApi.always(function() {
+            return URL.revokeObjectURL(src)
+          })
+          this.__setState('video')
+          const videoTag = this.container.querySelector(
+            '.uploadcare--preview__video'
+          )
+          // hack to enable seeking due to bug in MediaRecorder API
+          // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
+          videoTag.addEventListener('loadeddata', function loadedHandler() {
+            videoTag.currentTime = 360000 // 100 hours
+            videoTag.removeEventListener('loadeddata', loadedHandler)
+          })
+          videoTag.addEventListener('ended', function endedHandler() {
+            videoTag.currentTime = 0
+            videoTag.removeEventListener('ended', endedHandler)
+          })
+          // end of hack
+
+          videoTag.src = src
+          // hack to load first-frame poster on ios safari
+          videoTag.load()
         })
-        this.__setState('video')
-        videoTag = this.container.find('.uploadcare--preview__video')
-        // hack to enable seeking due to bug in MediaRecorder API
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
-        videoTag.on('loadeddata', function() {
-          var el
-          el = videoTag.get(0)
-          el.currentTime = 360000 // 100 hours
-          return videoTag.off('loadeddata')
+        .catch(() => {
+          URL.revokeObjectURL(src)
         })
-        videoTag.on('ended', function() {
-          var el
-          el = videoTag.get(0)
-          el.currentTime = 0
-          return videoTag.off('ended')
-        })
-        // end of hack
-        videoTag.attr('src', src)
-        // hack to load first-frame poster on ios safari
-        return videoTag.get(0).load()
-      }).catch(() => {
-        URL.revokeObjectURL(src)
-      })
     })
   }
 
@@ -205,36 +207,39 @@ class PreviewTab extends BasePreviewTab {
     this.__state = state
     data = data || {}
     data.crop = this.settings.crop
-    this.container.empty().append(tpl(`tab-preview-${state}`, data))
-    this.container.removeClass(function(index, classes) {
-      return classes
-        .split(' ')
-        .filter(function(c) {
-          return !!~c.indexOf('uploadcare--preview_status_')
-        })
-        .join(' ')
-    })
+
+    while (this.container.firstChild) {
+      this.container.removeChild(this.container.firstChild)
+    }
+
+    this.container.appendChild(parseHTML(tpl(`tab-preview-${state}`, data)))
+
+    Array.from(this.container.classList)
+      .filter(className => className.indexOf('uploadcare--preview_status_'))
+      .forEach(classToRemove => {
+        this.container.classList.remove(classToRemove)
+      })
 
     if (state === 'unknown' && this.settings.crop) {
-      this.container.find('.uploadcare--preview__done').hide()
+      this.container.querySelector('.uploadcare--preview__done').style.display = 'none'
     }
 
     if (state === 'error') {
-      this.container.addClass('uploadcare--preview_status_error-' + data.error)
+      this.container.classList.add('uploadcare--preview_status_error-' + data.error)
     }
 
-    this.container.find('.uploadcare--preview__done').focus()
+    const done = this.container.querySelector('.uploadcare--preview__done')
+    done && done.focus()
   }
 
   initImage(imgSize, cdnModifiers) {
     // let done
-    // let img
     // let imgLoader
     // let startCrop
 
-    const img = this.container.find('.uploadcare--preview__image')
+    const img = this.container.querySelector('.uploadcare--preview__image')
     // done = this.container.find('.uploadcare--preview__done')
-    return  imageLoader(img[0])
+    return imageLoader(img)
       .then(() => {
         return this.container.addClass('uploadcare--preview_status_loaded')
       })
@@ -287,11 +292,9 @@ class PreviewTab extends BasePreviewTab {
   }
 
   populateCropSizes() {
-    var control, currentClass, template
-
-    control = this.container.find('.uploadcare--crop-sizes')
-    template = control.children()
-    currentClass = 'uploadcare--crop-sizes__item_current'
+    const control = this.container.find('.uploadcare--crop-sizes')
+    const template = control.children()
+    const currentClass = 'uploadcare--crop-sizes__item_current'
     $.each(this.settings.crop, (i, crop) => {
       var caption, gcd, icon, item, prefered, size
       prefered = crop.preferedSize
@@ -346,7 +349,7 @@ class PreviewTab extends BasePreviewTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--preview__done').focus()
+    this.container.querySelector('.uploadcare--preview__done').focus()
   }
 }
 

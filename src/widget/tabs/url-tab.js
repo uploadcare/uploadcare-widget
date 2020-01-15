@@ -1,31 +1,50 @@
-import $ from 'jquery'
 import { tpl } from '../../templates'
+import { parseHTML } from '../../utils'
 
-var fixUrl, urlRegexp
+// starts with scheme
+const urlRegexp = /^[a-z][a-z0-9+\-.]*:?\/\//
+
+const fixUrl = function(url) {
+  url = url.trim && url.trim()
+  if (urlRegexp.test(url)) {
+    return url
+  } else {
+    return 'http://' + url
+  }
+}
 
 class UrlTab {
   constructor(container, tabButton, dialogApi, settings, name) {
-    var button, input
-    this.container = $(container)
-    this.tabButton = $(tabButton)
+    this.container = container
+    this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
-    this.container.append(tpl('tab-url'))
+    this.container.appendChild(
+      parseHTML(
+        tpl('tab-url')
+      )
+    )
 
-    input = this.container.find('.uploadcare--input')
-    input.on('change keyup input', function() {
-      var isDisabled = !$.trim(this.value)
-      return button
-        .attr('disabled', isDisabled)
-        .attr('aria-disabled', isDisabled)
-    })
+    const input = this.container.querySelector('.uploadcare--input')
+    const button = this.container.querySelector('.uploadcare--button[type=submit]')
 
-    button = this.container
-      .find('.uploadcare--button[type=submit]')
-      .attr('disabled', true)
+    button.setAttribute('disabled', true)
+    button.setAttribute('aria-disabled', true)
 
-    this.container.find('.uploadcare--form').on('submit', () => {
+    function inputHandler() {
+      const isDisabled = !this.value.trim()
+
+      button.setAttribute('disabled', isDisabled)
+      button.setAttribute('aria-disabled', isDisabled)
+    }
+
+    input.addEventListener('change', inputHandler)
+    input.addEventListener('keyup', inputHandler)
+    input.addEventListener('input', inputHandler)
+
+    const form = this.container.querySelector('.uploadcare--form')
+    form.addEventListener('submit', () => {
       var url = fixUrl(input.val())
 
       if (url) {
@@ -38,26 +57,15 @@ class UrlTab {
           ]
         ])
 
-        input.val('').trigger('change')
+        input.value = ''
       }
+
       return false
     })
   }
 
   displayed() {
     this.container.find('.uploadcare--input').focus()
-  }
-}
-
-// starts with scheme
-urlRegexp = /^[a-z][a-z0-9+\-.]*:?\/\//
-
-fixUrl = function(url) {
-  url = $.trim(url)
-  if (urlRegexp.test(url)) {
-    return url
-  } else {
-    return 'http://' + url
   }
 }
 

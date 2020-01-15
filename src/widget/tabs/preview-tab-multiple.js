@@ -1,25 +1,27 @@
-import $ from 'jquery'
 // import '../../vendor/jquery-ordering'
 
 import { BasePreviewTab } from './base-preview-tab'
-
 import { openPreviewDialog } from '../dialog'
 
-import { readableFileSize } from '../../utils'
+import { readableFileSize, parseHTML, matches } from '../../utils'
 import locale from '../../locale'
 import { tpl } from '../../templates'
+import { html } from '../../utils/html'
 
 class PreviewTabMultiple extends BasePreviewTab {
   constructor() {
     super(...arguments)
-    this.container.append(tpl('tab-preview-multiple'))
-    this.__fileTpl = $(tpl('tab-preview-multiple-file'))
-    this.fileListEl = this.container.find('.uploadcare--files')
-    this.doneBtnEl = this.container.find('.uploadcare--preview__done')
-    $.each(this.dialogApi.fileColl.get(), (i, file) => {
-      return this.__fileAdded(file)
+    this.container.appendChild(parseHTML(tpl('tab-preview-multiple')))
+    this.__fileTpl = parseHTML(tpl('tab-preview-multiple-file'))
+    this.fileListEl = this.container.querySelector('.uploadcare--files')
+    this.doneBtnEl = this.container.querySelector('.uploadcare--preview__done')
+
+    this.dialogApi.fileColl.get().forEach(file => {
+      this.__fileAdded(file)
     })
+
     this.__updateContainerView()
+
     this.dialogApi.fileColl.onAdd.add(this.__fileAdded.bind(this), () =>
       this.__updateContainerView()
     )
@@ -32,58 +34,61 @@ class PreviewTabMultiple extends BasePreviewTab {
     this.dialogApi.fileColl.onAnyProgress(this.__fileProgress.bind(this))
     this.dialogApi.fileColl.onAnyDone(this.__fileDone.bind(this))
     this.dialogApi.fileColl.onAnyFail(this.__fileFailed.bind(this))
-    this.fileListEl.addClass(
+    this.fileListEl.classList.add(
       this.settings.imagesOnly
         ? 'uploadcare--files_type_tiles'
         : 'uploadcare--files_type_table'
     )
-    this.__setupSorting()
+    this._mapadelegatov = new WeakMap()
+    // this.__setupSorting()
   }
 
-  __setupSorting() {
-    return this.fileListEl.uploadcareSortable({
-      touch: false,
-      axis: this.settings.imagesOnly ? 'xy' : 'y',
-      start: function(info) {
-        return info.dragged.css('visibility', 'hidden')
-      },
-      finish: info => {
-        var elements, index
-        info.dragged.css('visibility', 'visible')
-        elements = this.container.find('.uploadcare--file')
-        index = file => {
-          return elements.index(this.__fileToEl(file))
-        }
-        return this.dialogApi.fileColl.sort(function(a, b) {
-          return index(a) - index(b)
-        })
-      }
-    })
-  }
+  // __setupSorting() {
+  //   return this.fileListEl.uploadcareSortable({
+  //     touch: false,
+  //     axis: this.settings.imagesOnly ? 'xy' : 'y',
+  //     start: function(info) {
+  //       return info.dragged.css('visibility', 'hidden')
+  //     },
+  //     finish: info => {
+  //       var elements, index
+  //       info.dragged.css('visibility', 'visible')
+  //       elements = this.container.find('.uploadcare--file')
+  //       index = file => {
+  //         return elements.index(this.__fileToEl(file))
+  //       }
+  //       return this.dialogApi.fileColl.sort(function(a, b) {
+  //         return index(a) - index(b)
+  //       })
+  //     }
+  //   })
+  // }
 
   __updateContainerView() {
-    var errorContainer,
-      files,
-      hasWrongNumberFiles,
-      title,
-      tooFewFiles,
-      tooManyFiles,
-      wrongNumberFilesMessage
-    files = this.dialogApi.fileColl.length()
-    tooManyFiles = files > this.settings.multipleMax
-    tooFewFiles = files < this.settings.multipleMin
-    hasWrongNumberFiles = tooManyFiles || tooFewFiles
-    this.doneBtnEl
-      .attr('disabled', hasWrongNumberFiles)
-      .attr('aria-disabled', hasWrongNumberFiles)
-    title = locale
+    const files = this.dialogApi.fileColl.length()
+    const tooManyFiles = files > this.settings.multipleMax
+    const tooFewFiles = files < this.settings.multipleMin
+    const hasWrongNumberFiles = tooManyFiles || tooFewFiles
+
+    this.doneBtnEl.setAttribute('disabled', hasWrongNumberFiles)
+    this.doneBtnEl.setAttribute('aria-disabled', hasWrongNumberFiles)
+
+    const title = locale
       .t('dialog.tabs.preview.multiple.question')
       .replace('%files%', locale.t('file', files))
-    this.container.find('.uploadcare--preview__title').text(title)
-    errorContainer = this.container.find('.uploadcare--preview__message')
-    errorContainer.empty()
+
+    this.container.querySelector(
+      '.uploadcare--preview__title'
+    ).textContent = title
+    const errorContainer = this.container.querySelector(
+      '.uploadcare--preview__message'
+    )
+
+    while (errorContainer.firstChild)
+      errorContainer.removeChild(errorContainer.firstChild)
+
     if (hasWrongNumberFiles) {
-      wrongNumberFilesMessage = tooManyFiles
+      const wrongNumberFilesMessage = tooManyFiles
         ? locale
             .t('dialog.tabs.preview.multiple.tooManyFiles')
             .replace('%max%', this.settings.multipleMax)
@@ -93,135 +98,160 @@ class PreviewTabMultiple extends BasePreviewTab {
             .replace('%min%', this.settings.multipleMin)
             .replace('%files%', locale.t('file', files))
         : undefined
-      return errorContainer
-        .addClass('uploadcare--error')
-        .text(wrongNumberFilesMessage)
+
+      errorContainer.classList.add('uploadcare--error')
+      errorContainer.textContent = wrongNumberFilesMessage
     }
   }
 
   __updateFileInfo(fileEl, info) {
-    var filename
-    filename = info.name || locale.t('dialog.tabs.preview.unknownName')
-    fileEl.find('.uploadcare--file__name').text(filename)
+    var filename = info.name || locale.t('dialog.tabs.preview.unknownName')
+    fileEl.querySelector('.uploadcare--file__name').textContent = filename
     fileEl
-      .find('.uploadcare--file__description')
-      .attr(
+      .querySelector('.uploadcare--file__description')
+      .setAttribute(
         'aria-label',
         locale
           .t('dialog.tabs.preview.multiple.file.preview')
           .replace('%file%', filename)
       )
-    fileEl
-      .find('.uploadcare--file__remove')
-      .attr(
-        'title',
-        locale
-          .t('dialog.tabs.preview.multiple.file.remove')
-          .replace('%file%', filename)
-      )
-      .attr(
-          'aria-label',
-          locale
-              .t('dialog.tabs.preview.multiple.file.remove')
-              .replace('%file%', filename)
-      )
-    return fileEl
-      .find('.uploadcare--file__size')
-      .text(readableFileSize(info.size, '–'))
+
+    const removeButton = fileEl.querySelector('.uploadcare--file__remove')
+    removeButton.setAttribute(
+      'title',
+      locale
+        .t('dialog.tabs.preview.multiple.file.remove')
+        .replace('%file%', filename)
+    )
+    removeButton.setAttribute(
+      'aria-label',
+      locale
+        .t('dialog.tabs.preview.multiple.file.remove')
+        .replace('%file%', filename)
+    )
+
+    fileEl.querySelector(
+      '.uploadcare--file__size'
+    ).textContent = readableFileSize(info.size, '–')
   }
 
   __fileProgress(file, progressInfo) {
-    var fileEl
-    fileEl = this.__fileToEl(file)
-    fileEl
-      .find('.uploadcare--progressbar__value')
-      .css('width', Math.round(progressInfo.progress * 100) + '%')
+    var fileEl = this.__fileToEl(file)
+    const progress = fileEl.querySelector('.uploadcare--progressbar__value')
+
+    progress.style.width = Math.round(progressInfo.progress * 100) + '%'
+
     return this.__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
   }
 
   __fileDone(file, info) {
-    var cdnURL, fileEl, filePreview, filename
-    fileEl = this.__fileToEl(file)
-      .removeClass('uploadcare--file_status_uploading')
-      .addClass('uploadcare--file_status_uploaded')
-    fileEl.find('.uploadcare--progressbar__value').css('width', '100%')
+    const fileEl = this.__fileToEl(file)
+    fileEl.classList.remove('uploadcare--file_status_uploading')
+    fileEl.classList.add('uploadcare--file_status_uploaded')
+
+    fileEl.querySelector('.uploadcare--progressbar__value').style.width = '100%'
+
     this.__updateFileInfo(fileEl, info)
+
+    let filePreview
     if (info.isImage) {
-      cdnURL = `${info.cdnUrl}-/quality/lightest/-/preview/108x108/`
+      let cdnURL = `${info.cdnUrl}-/quality/lightest/-/preview/108x108/`
       if (this.settings.previewUrlCallback) {
         cdnURL = this.settings.previewUrlCallback(cdnURL, info)
       }
-      filename = fileEl.find('.uploadcare--file__name').text()
-      filePreview = $('<img>')
-        .attr('src', cdnURL)
-        .attr('alt', filename)
-        .addClass('uploadcare--file__icon')
+      const filename = (fileEl.querySelector(
+        '.uploadcare--file__name'
+      ).textContent = '')
+      filePreview = html`
+        <img src="${cdnURL}" alt="${filename}" class="uploadcare--file__icon"></img>
+      `
     } else {
-      filePreview = $(
-        "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-file'/></svg>"
-      )
-        .attr('role', 'presentation')
-        .attr('class', 'uploadcare--icon uploadcare--file__icon')
+      filePreview = html`
+        <svg
+          width="32"
+          height="32"
+          role="presentation"
+          class="uploadcare--icon uploadcare--file__icon"
+        >
+          <use xlink:href="#uploadcare--icon-file" />
+        </svg>
+      `
     }
-    fileEl.find('.uploadcare--file__preview').html(filePreview)
-    return fileEl.find('.uploadcare--file__description').on('click', () => {
-      return openPreviewDialog(file, this.settings).done(newFile => {
-        return this.dialogApi.fileColl.replace(file, newFile)
+    fileEl.querySelector('.uploadcare--file__preview').innerHTML = filePreview
+
+    return fileEl
+      .querySelector('.uploadcare--file__description')
+      .addEventListener('click', () => {
+        return openPreviewDialog(file, this.settings).done(newFile => {
+          return this.dialogApi.fileColl.replace(file, newFile)
+        })
       })
-    })
   }
 
   __fileFailed(file, error, info) {
-    var fileEl, filePreview
-    fileEl = this.__fileToEl(file)
-      .removeClass('uploadcare--file_status_uploading')
-      .addClass('uploadcare--file_status_error')
-    fileEl.find('.uploadcare--file__error').text(locale.t(`errors.${error}`))
-    filePreview = $(
-      "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>"
+    const fileEl = this.__fileToEl(file)
+    fileEl.removeClass('uploadcare--file_status_uploading')
+    fileEl.addClass('uploadcare--file_status_error')
+    fileEl.querySelector('.uploadcare--file__error').textContent = locale.t(
+      `errors.${error}`
     )
-      .attr('role', 'presentation')
-      .attr('class', 'uploadcare--icon uploadcare--file__icon')
-    return fileEl.find('.uploadcare--file__preview').html(filePreview)
+
+    const filePreview = html`
+      <svg
+        width="32"
+        height="32"
+        role="presentation"
+        class="uploadcare--icon uploadcare--file__icon"
+      >
+        <use xlink:href="#uploadcare--icon-error" />
+      </svg>
+    `
+
+    fileEl.querySelector('.uploadcare--file__preview').innerHTML = filePreview
   }
 
   __fileAdded(file) {
-    var fileEl
-
-    fileEl = this.__createFileEl(file)
-    return fileEl.appendTo(this.fileListEl)
+    this.fileListEl.appendChild(this.__createFileEl(file))
   }
 
   __fileRemoved(file) {
-    this.__fileToEl(file).remove()
-    return $(file).removeData()
+    const node = this.__fileToEl(file)
+    node.parentNode.removeChild(node)
+    this._mapadelegatov.delete(file)
   }
 
   __fileReplaced(oldFile, newFile) {
-    var fileEl
-    fileEl = this.__createFileEl(newFile)
-    fileEl.insertAfter(this.__fileToEl(oldFile))
-    return this.__fileRemoved(oldFile)
+    const oldNode = this.__fileToEl(oldFile)
+
+    oldNode.parentNode.insertBefore(this.__createFileEl(newFile), oldNode.nextSibling)
+    this.__fileRemoved(oldFile)
   }
 
   __fileToEl(file) {
     // File can be removed before.
-    return $(file).data('dpm-el') || $()
+    if (this._mapadelegatov.has(file)) {
+      return this._mapadelegatov.get(file)
+    } else {
+      return this.__createFileEl(file)
+    }
   }
 
   __createFileEl(file) {
-    var fileEl
-    fileEl = this.__fileTpl
-      .clone()
-      .on('click', '.uploadcare--file__remove', () => {
-        return this.dialogApi.fileColl.remove(file)
-      })
-    $(file).data('dpm-el', fileEl)
+    const fileEl = this.__fileTpl.cloneNode(true)
+
+    fileEl.addEventListener('click', e => {
+      if (matches(e.target, '.uploadcare--file__remove')) {
+        this.dialogApi.fileColl.remove(file)
+      }
+    })
+
+    this._mapadelegatov.set(file, fileEl)
+
     return fileEl
   }
 
   displayed() {
-    this.container.find('.uploadcare--preview__done').focus()
+    this.container.querySelector('.uploadcare--preview__done').focus()
   }
 }
 

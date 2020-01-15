@@ -90,8 +90,6 @@ import { UrlFile } from '../files/url'
 import { UploadedFile, ReadyFile } from '../files/uploaded'
 import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
 
-import { tabsCss } from '../widget/tabs/remote-tab'
-
 import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
@@ -195,8 +193,6 @@ const namespace = {
   },
 
   locale,
-
-  tabsCss,
 
   files: {
     BaseFile,

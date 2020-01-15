@@ -96,10 +96,8 @@ const openDialog = function(files, tab, settings) {
     settings
   )
 
-  dialog.classList.add(
-    'uploadcare--dialog_status_active',
-    'uploadcare--dialog__panel'
-  )
+  dialog.classList.add('uploadcare--dialog_status_active')
+  dialog.querySelector('.uploadcare--panel').classList.add('uploadcare--dialog__panel')
 
   dialogPr.dialogElement = dialog
 
