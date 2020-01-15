@@ -829,7 +829,15 @@ const grep = (elems, callback, invert) => {
 const parseHTML = function(str) {
   var tmp = document.implementation.createHTMLDocument()
   tmp.body.innerHTML = str
-  return tmp.body.children[0]
+
+  if (tmp.body.childElementCount <= 1) {
+    return tmp.body.children[0]
+  } else {
+    return Array.from(tmp.body.children).reduce((fragment, node) => {
+      fragment.appendChild(node)
+      return fragment
+    }, document.createDocumentFragment())
+  }
 }
 
 const matches = function(el, selector) {
