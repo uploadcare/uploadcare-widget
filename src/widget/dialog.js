@@ -96,10 +96,10 @@ const openDialog = function(files, tab, settings) {
     settings
   )
 
-  dialog.classList.add(
-    'uploadcare--dialog_status_active',
-    'uploadcare--dialog__panel'
-  )
+  dialog.classList.add('uploadcare--dialog_status_active')
+  dialog
+    .querySelector('.uploadcare--panel')
+    .classList.add('uploadcare--dialog__panel')
 
   dialogPr.dialogElement = dialog
 
@@ -610,9 +610,8 @@ class Panel {
     const currentTab = this.panel.querySelector(`.uploadcare--tab_current`)
     currentTab && currentTab.classList.remove(`uploadcare--tab_current`)
 
-    this.panel
-      .querySelector(`.uploadcare--tab_name_${tab}`)
-      .classList.add(`uploadcare--tab_current`)
+    const tabNode = this.panel.querySelector(`.uploadcare--tab_name_${tab}`)
+    tabNode && tabNode.classList.add(`uploadcare--tab_current`)
 
     if (this.tabs[tab].displayed) {
       this.tabs[tab].displayed()
