@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
 import { warn } from './utils/warnings'
+import { html } from './utils/html'
 
 var indexOf = [].indexOf
 
@@ -217,9 +218,9 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
 }
 
 const fileInput = function(container, settings, fn) {
-  var accept, input, run
-  input = null
-  accept = settings.inputAcceptTypes
+  var run
+  let input = null
+  let accept = settings.inputAcceptTypes
   if (accept === '') {
     accept = settings.imagesOnly ? 'image/*' : null
   }
@@ -267,29 +268,35 @@ const fileInput = function(container, settings, fn) {
 }
 
 const fileSelectDialog = function(container, settings, fn, attributes = {}) {
-  var accept
-  accept = settings.inputAcceptTypes
+  let accept = settings.inputAcceptTypes
   if (accept === '') {
     accept = settings.imagesOnly ? 'image/*' : null
   }
-  return $(
-    settings.multiple ? '<input type="file" multiple>' : '<input type="file">'
+
+  const serializedAttr = Object.entries(attributes).reduce(
+    (ser, [name, value]) => `${ser} ${name}='${value}'`,
+    ''
   )
-    .attr('accept', accept)
-    .attr(attributes)
-    .css({
-      position: 'fixed',
-      bottom: 0,
-      opacity: 0
-    })
-    .on('change', function() {
-      fn(this)
-      return $(this).remove()
-    })
-    .appendTo(container)
-    .focus()
-    .click()
-    .hide()
+
+  const input = parseHTML(html`
+    <input
+      type="file" ${settings.multiple ? 'multiple' : ''}
+      accept='${accept}'
+      style="position: fixed;bottom: 0;opacity: 0;"
+      ${serializedAttr}
+    ></input>
+  `)
+
+  input.addEventListener('change', e => {
+    fn(e.target)
+    container.removeChild(input)
+  })
+
+  container.appendChild(input)
+
+  input.click()
+
+  input.style.display = 'none'
 }
 
 const fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split(' ')
@@ -822,7 +829,29 @@ const grep = (elems, callback, invert) => {
 const parseHTML = function(str) {
   var tmp = document.implementation.createHTMLDocument()
   tmp.body.innerHTML = str
-  return tmp.body.children[0]
+
+  if (tmp.body.childElementCount <= 1) {
+    return tmp.body.children[0]
+  } else {
+    return Array.from(tmp.body.children).reduce((fragment, node) => {
+      fragment.appendChild(node)
+      return fragment
+    }, document.createDocumentFragment())
+  }
+}
+
+const matches = function(el, selector) {
+  return (
+    el &&
+    (
+      el.matches ||
+      el.matchesSelector ||
+      el.msMatchesSelector ||
+      el.mozMatchesSelector ||
+      el.webkitMatchesSelector ||
+      el.oMatchesSelector
+    ).call(el, selector)
+  )
 }
 
 export {
@@ -863,4 +892,6 @@ export {
   extend,
   grep,
   parseHTML,
+  isPlainObject,
+  matches
 }

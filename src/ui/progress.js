@@ -12,10 +12,9 @@ class Circle {
     this.observed = null
   }
 
-  listen(file, selector) {
-    var selectorFn
+  listen(callback, promise, selector) {
     this.reset()
-    selectorFn =
+    var selectorFn =
       selector != null
         ? function(info) {
           return info[selector]
@@ -23,23 +22,17 @@ class Circle {
         : function(x) {
           return x
         }
-    this.observed = file
-    if (this.observed.state() === 'resolved') {
+
+    callback.add(progress => {
+      this.renderer.setValue(selectorFn(progress))
+    })
+
+    promise && promise.then(() => {
       this.renderer.setValue(1, true)
-    } else {
-      this.observed
-        .progress(progress => {
-          // if we are still listening to this one
-          if (file === this.observed) {
-            return this.renderer.setValue(selectorFn(progress))
-          }
-        })
-        .always(uploadedFile => {
-          if (file === this.observed) {
-            return this.renderer.setValue(1, false)
-          }
-        })
-    }
+    }).finally(() => {
+      this.renderer.setValue(1, false)
+    })
+
     return this
   }
 
