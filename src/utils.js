@@ -288,7 +288,7 @@ const fileSelectDialog = function(container, settings, fn, attributes = {}) {
   `)
 
   input.addEventListener('change', e => {
-    fn(e)
+    fn(e.target)
     container.removeChild(input)
   })
 

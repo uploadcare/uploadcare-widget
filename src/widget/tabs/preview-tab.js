@@ -66,7 +66,7 @@ class PreviewTab extends BasePreviewTab {
         const source = info.sourceInfo
         const blob = Blob
         if (source.file && blob && source.file instanceof blob) {
-          return tryToLoadImagePreview(file, source.file).fail(() => {
+          return tryToLoadImagePreview(file, source.file).catch(() => {
             return tryToLoadVideoPreview(file, source.file)
           })
         }

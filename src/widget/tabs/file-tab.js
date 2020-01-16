@@ -52,9 +52,6 @@ class FileTab {
     while (list.childElementCount > 1) {
       list.removeChild(list.lastChild);
     }
-    // list.remove(
-    //   '.uploadcare--file-sources__item:not(.uploadcare--file-source_all)'
-    // )
 
     let n = 0
     for (let i = 0, len = this.settings.tabs.length; i < len; i++) {
