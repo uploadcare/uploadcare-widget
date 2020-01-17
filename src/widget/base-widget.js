@@ -15,7 +15,7 @@ class BaseWidget {
     this.__onUploadComplete = callbacks()
     this.__onChange = callbacks().add(object => {
       return object != null
-        ? object.promise().done(info => {
+        ? object.then(info => {
             return this.__onUploadComplete.fire(info)
           })
         : undefined
@@ -104,12 +104,12 @@ class BaseWidget {
     if (object) {
       this.template.listen(object)
       return object
-        .done(info => {
+        .then(info => {
           if (object === this.__currentFile()) {
             return this.__onUploadingDone(info)
           }
         })
-        .fail(error => {
+        .catch(error => {
           if (object === this.__currentFile()) {
             return this.__onUploadingFailed(error)
           }

@@ -3,18 +3,18 @@ import $ from 'jquery'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
-  // defer,
+  defer,
   gcd as calcGCD,
   once,
   fitSize,
   readableFileSize,
-  parseHTML
-  // canvasToBlob
+  canvasToBlob,
+  parseHTML,
 } from '../../utils'
-// import { drawFileToCanvas } from '../../utils/image-processor'
+import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
-// import { CropWidget } from '../../ui/crop-widget'
+import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
 
 class PreviewTab extends BasePreviewTab {
@@ -55,7 +55,6 @@ class PreviewTab extends BasePreviewTab {
     const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
     const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
-
     this.file.progress(
       ifCur(info => {
         info = info.incompleteFileInfo
@@ -72,7 +71,7 @@ class PreviewTab extends BasePreviewTab {
         }
       })
     )
-    this.file.done(
+    this.file.then(
       ifCur(info => {
         var imgInfo, src
         if (this.__state === 'video') {
@@ -107,8 +106,9 @@ class PreviewTab extends BasePreviewTab {
         }
       })
     )
-    return this.file.fail(
+    return this.file.catch(
       ifCur((error, info) => {
+        console.log(error, info)
         return this.__setState('error', {
           error,
           file: info
@@ -120,54 +120,52 @@ class PreviewTab extends BasePreviewTab {
   __tryToLoadImagePreview(file, blob) {
     return new Promise((resolve, reject) => {
       if (
-        file.state() !== 'pending' ||
         !blob.size ||
         blob.size >= this.settings.multipartMinSize
       ) {
-        reject(new Error('reason'))
+        return reject(Error('!blob.size'))
       }
-      // drawFileToCanvas(
-      //   blob,
-      //   1550,
-      //   924,
-      //   '#ffffff',
-      //   this.settings.imagePreviewMaxSize
-      // )
-      //   .done((canvas, size) => {
-      //     return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
-      //       var src
-      //       df.resolve()
-      //       canvas.width = canvas.height = 1
-      //       if (
-      //         file.state() !== 'pending' ||
-      //         this.dialogApi.state() !== 'pending' ||
-      //         this.file !== file
-      //       ) {
-      //         return
-      //       }
-      //       src = URL.createObjectURL(blob)
-      //       this.dialogApi.always(function() {
-      //         return URL.revokeObjectURL(src)
-      //       })
-      //       if (this.__state !== 'image') {
-      //         this.__setState('image', {
-      //           src,
-      //           name: ''
-      //         })
-      //         return this.initImage(size)
-      //       }
-      //     })
-      //   })
-      //   .fail(df.reject)
-      resolve()
+      drawFileToCanvas(
+        blob,
+        1550,
+        924,
+        '#ffffff',
+        this.settings.imagePreviewMaxSize
+      )
+        .then((canvas, size) => {
+          return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
+            var src
+            resolve()
+            canvas.width = canvas.height = 1
+            if (
+              // file.state() !== 'pending' ||
+              this.dialogApi.state() !== 'pending' ||
+              this.file !== file
+            ) {
+              return
+            }
+            src = URL.createObjectURL(blob)
+            this.dialogApi.always(function() {
+              return URL.revokeObjectURL(src)
+            })
+            console.log(this.__state)
+            if (this.__state !== 'image') {
+              this.__setState('image', {
+                src,
+                name: ''
+              })
+              return this.initImage(size)
+            }
+          })
+        })
+        .catch(reject)
     })
   }
 
   __tryToLoadVideoPreview(file, blob) {
     return new Promise((resolve, reject) => {
       if (!URL || !blob.size) {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject()
+        reject(Error('url'))
       }
       const src = URL.createObjectURL(blob)
 
@@ -241,7 +239,7 @@ class PreviewTab extends BasePreviewTab {
     // done = this.container.find('.uploadcare--preview__done')
     return imageLoader(img)
       .then(() => {
-        return this.container.addClass('uploadcare--preview_status_loaded')
+        return this.container.classList.add('uploadcare--preview_status_loaded')
       })
       .catch(() => {
         this.file = null
@@ -250,7 +248,7 @@ class PreviewTab extends BasePreviewTab {
         })
       })
 
-    // startCrop = () => {
+    // const startCrop = () => {
     //   this.container
     //     .find('.uploadcare--crop-sizes__item')
     //     .attr('aria-disabled', false)
@@ -267,7 +265,6 @@ class PreviewTab extends BasePreviewTab {
     //     return true
     //   })
     // }
-    //
     // if (this.settings.crop) {
     //   this.container
     //     .find('.uploadcare--preview__title')

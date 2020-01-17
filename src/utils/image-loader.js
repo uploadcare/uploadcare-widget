@@ -17,6 +17,7 @@ const trackLoading = (image, src) =>
   })
 
 const imageLoader = function(image) {
+  console.log(image)
   // if argument is an array, treat as
   // load(['1.jpg', '2.jpg'])
   if (Array.isArray(image)) {

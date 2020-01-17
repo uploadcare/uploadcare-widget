@@ -171,63 +171,63 @@ const shrinkImage = function(img, settings) {
 }
 
 const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
-  var df, op
+  return new Promise((resolve, reject) => {
+    if (!URL) {
+      // return df.reject('support')
+      return reject(Error('support'))
+    }
+    const op = imageLoader(URL.createObjectURL(file))
+    // op.finally(function(img) {
+    //   return URL.revokeObjectURL(img.src)
+    // })
+    op.catch(function() {
+      return reject(Error('not image'))
+    })
+    op.then(function(img) {
+      // df.always(function() {
+      //   img.src = '//:0'
+      // })
+      if (maxSource && img.width * img.height > maxSource) {
+        return reject(Error('max source'))
+      }
+      return getExif(file).always(function(exif) {
+        var canvas, ctx, dH, dW, orientation, sSize, swap, trns
+        orientation = parseExifOrientation(exif) || 1
+        swap = orientation > 4
+        sSize = swap ? [img.height, img.width] : [img.width, img.height]
+        ;[dW, dH] = fitSize(sSize, [mW, mH])
+        trns = [
+          [1, 0, 0, 1, 0, 0],
+          [-1, 0, 0, 1, dW, 0],
+          [-1, 0, 0, -1, dW, dH],
+          [1, 0, 0, -1, 0, dH],
+          [0, 1, 1, 0, 0, 0],
+          [0, 1, -1, 0, dW, 0],
+          [0, -1, -1, 0, dW, dH],
+          [0, -1, 1, 0, 0, dH]
+        ][orientation - 1]
+        if (!trns) {
+          return reject(Error('bad image'))
+        }
+        canvas = document.createElement('canvas')
+        canvas.width = dW
+        canvas.height = dH
+        ctx = canvas.getContext('2d')
+        ctx.transform.apply(ctx, trns)
+        if (swap) {
+          ;[dW, dH] = [dH, dW]
+        }
+        if (bg) {
+          ctx.fillStyle = bg
+          ctx.fillRect(0, 0, dW, dH)
+        }
+        ctx.drawImage(img, 0, 0, dW, dH)
+        return resolve(canvas, sSize)
+      })
+    })
+  })
   // in -> file
   // out <- canvas
-  df = $.Deferred()
-  if (!URL) {
-    return df.reject('support')
-  }
-  op = imageLoader(URL.createObjectURL(file))
-  op.always(function(img) {
-    return URL.revokeObjectURL(img.src)
-  })
-  op.fail(function() {
-    return df.reject('not image')
-  })
-  op.done(function(img) {
-    df.always(function() {
-      img.src = '//:0'
-    })
-    if (maxSource && img.width * img.height > maxSource) {
-      return df.reject('max source')
-    }
-    return getExif(file).always(function(exif) {
-      var canvas, ctx, dH, dW, orientation, sSize, swap, trns
-      orientation = parseExifOrientation(exif) || 1
-      swap = orientation > 4
-      sSize = swap ? [img.height, img.width] : [img.width, img.height]
-      ;[dW, dH] = fitSize(sSize, [mW, mH])
-      trns = [
-        [1, 0, 0, 1, 0, 0],
-        [-1, 0, 0, 1, dW, 0],
-        [-1, 0, 0, -1, dW, dH],
-        [1, 0, 0, -1, 0, dH],
-        [0, 1, 1, 0, 0, 0],
-        [0, 1, -1, 0, dW, 0],
-        [0, -1, -1, 0, dW, dH],
-        [0, -1, 1, 0, 0, dH]
-      ][orientation - 1]
-      if (!trns) {
-        return df.reject('bad image')
-      }
-      canvas = document.createElement('canvas')
-      canvas.width = dW
-      canvas.height = dH
-      ctx = canvas.getContext('2d')
-      ctx.transform.apply(ctx, trns)
-      if (swap) {
-        ;[dW, dH] = [dH, dW]
-      }
-      if (bg) {
-        ctx.fillStyle = bg
-        ctx.fillRect(0, 0, dW, dH)
-      }
-      ctx.drawImage(img, 0, 0, dW, dH)
-      return df.resolve(canvas, sSize)
-    })
-  })
-  return df.promise()
 }
 
 // Util functions
