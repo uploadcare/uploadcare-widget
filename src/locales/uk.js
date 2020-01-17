@@ -50,18 +50,7 @@ const translations = {
         preview: 'Попередній перегляд',
         file: 'Локальні файли',
         url: 'Пряме посилання',
-        camera: 'Камера',
-        facebook: 'Facebook',
-        dropbox: 'Dropbox',
-        gdrive: 'Google Drive',
-        gphotos: 'Google Photos',
-        instagram: 'Instagram',
-        vk: 'VK',
-        evernote: 'Evernote',
-        box: 'Box',
-        onedrive: 'OneDrive',
-        flickr: 'Flickr',
-        huddle: 'Huddle'
+        camera: 'Камера'
       },
       file: {
         drag: 'Перетягніть<br>будь-які файли',
