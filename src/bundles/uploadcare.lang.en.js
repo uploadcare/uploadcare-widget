@@ -6,7 +6,6 @@ import '../widget/accessibility'
 
 import { Circle } from '../ui/progress'
 
-import { tabsCss } from '../widget/tabs/remote-tab'
 import {
   initialize,
   SingleWidget,
@@ -40,7 +39,6 @@ export default {
   SingleWidget,
   MultipleWidget,
   Widget,
-  tabsCss,
 
   dragdrop: {
     receiveDrop,

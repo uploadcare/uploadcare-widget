@@ -1,34 +1,38 @@
-import $ from 'jquery'
 import { Circle } from '../../ui/progress'
-import { callbacks } from '../../utils'
+import { callbacks, matches } from '../../utils'
 
 class BasePreviewTab {
   constructor(container, tabButton, dialogApi, settings, name) {
-    var notDisabled
-    this.container = $(container)
-    this.tabButton = $(tabButton)
+    this.container = container
+    this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
     this.__initTabButtonCircle()
-    this.container.addClass('uploadcare--preview')
-    notDisabled = ':not(:disabled)'
-    this.container.on(
+    this.container.classList.add('uploadcare--preview')
+    const notDisabled = ':not(:disabled)'
+
+    this.container.addEventListener(
       'click',
-      '.uploadcare--preview__back' + notDisabled,
-      () => {
-        return this.dialogApi.fileColl.clear()
+      (e) => {
+        if (matches(e.target, '.uploadcare--preview__back' + notDisabled)) {
+          return this.dialogApi.fileColl.clear()
+        }
       }
     )
-    this.container.on(
+
+    this.container.addEventListener(
       'click',
-      '.uploadcare--preview__done' + notDisabled,
-      this.dialogApi.resolve
+      (e) => {
+        if (matches(e.target, '.uploadcare--preview__done' + notDisabled)) {
+          this.dialogApi.resolve()
+        }
+      }
     )
   }
 
   __initTabButtonCircle() {
-    const circleEl = this.tabButton.find('.uploadcare--panel__icon')
+    const circleEl = this.tabButton.querySelector('.uploadcare--panel__icon')
 
     const progressCallback = callbacks()
     const update = () => {
@@ -50,7 +54,7 @@ class BasePreviewTab {
 
     update()
 
-    const circle = new Circle(circleEl[0]).listen(progressCallback)
+    const circle = new Circle(circleEl).listen(progressCallback)
     return this.dialogApi.progress((...args) => circle.update(...args))
   }
 }
