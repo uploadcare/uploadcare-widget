@@ -3,7 +3,7 @@ import $ from 'jquery'
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
-  defer,
+  // defer,
   gcd as calcGCD,
   once,
   fitSize,
@@ -14,7 +14,7 @@ import {
 import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
-import { CropWidget } from '../../ui/crop-widget'
+// import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
 
 class PreviewTab extends BasePreviewTab {
@@ -108,7 +108,6 @@ class PreviewTab extends BasePreviewTab {
     )
     return this.file.catch(
       ifCur((error, info) => {
-        console.log(error, info)
         return this.__setState('error', {
           error,
           file: info
