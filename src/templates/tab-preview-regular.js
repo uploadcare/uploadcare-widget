@@ -1,4 +1,4 @@
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 import { readableFileSize } from '../utils'
 import locale from '../locale'
 

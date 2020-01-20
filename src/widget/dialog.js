@@ -23,7 +23,7 @@ import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -237,7 +237,7 @@ registerTab('evernote', RemoteTab)
 registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
-registerTab('empty-pubkey', function(tabPanel, _1, _2, settings) {
+registerTab('empty-pubkey', function(tabPanel, _1, _2, _) {
   return tabPanel.append(emptyKeyText)
 })
 

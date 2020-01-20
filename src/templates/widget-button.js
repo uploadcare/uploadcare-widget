@@ -1,4 +1,4 @@
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 
 const widgetButton = ({ caption, name }) => html`
   <button

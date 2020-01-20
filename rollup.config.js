@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser'
 import { string } from 'rollup-plugin-string'
 import license from 'rollup-plugin-license'
 import replacement from 'rollup-plugin-module-replacement'
+import typescript from '@rollup/plugin-typescript'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -33,6 +34,7 @@ const bundle = (input, output, options = {}) => ({
           }
         ]
       }),
+    typescript(),
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]],
