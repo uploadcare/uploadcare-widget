@@ -237,7 +237,7 @@ registerTab('evernote', RemoteTab)
 registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
-registerTab('empty-pubkey', function(tabPanel, _1, _2, _) {
+registerTab('empty-pubkey', function(tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
 
