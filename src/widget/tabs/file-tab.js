@@ -50,7 +50,7 @@ class FileTab {
     )
 
     while (list.childElementCount > 1) {
-      list.removeChild(list.lastChild);
+      list.removeChild(list.lastChild)
     }
 
     let n = 0

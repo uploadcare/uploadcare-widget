@@ -1,5 +1,5 @@
 import { fitText, readableFileSize } from '../utils'
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 
 const widgetFileName = ({ name, size }) => html`
   <div

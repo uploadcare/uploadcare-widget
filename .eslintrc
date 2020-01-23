@@ -1,5 +1,17 @@
 {
   "extends": ["standard", "prettier"],
-  "parser": "babel-eslint",
-  "plugins": ["prettier"]
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["prettier", "@typescript-eslint"],
+
+  // add hacky support typescript for standard linter
+  // remove when https://github.com/standard/standard/issues/1283
+  // will be fixed
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "camelcase": "off",
+    "@typescript-eslint/camelcase": ["error", { "properties": "never" }],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error", "never"]
+  }
 }

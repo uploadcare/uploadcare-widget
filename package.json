@@ -29,8 +29,9 @@
     "format": "prettier --write \"**/*.js\"",
     "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
-    "lint:js": "eslint .",
-    "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
+    "lint:js": "eslint . --ext=ts,js",
+    "test:it": "jest",
+    "test": "npm run lint:css && npm run lint:js && npm run test:it"
   },
   "dependencies": {
     "jquery": "^3.4.1"
@@ -38,7 +39,11 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@rollup/plugin-typescript": "^2.1.0",
     "@size-limit/preset-big-lib": "^2.1.6",
+    "@types/jest": "^24.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
     "autoprefixer": "^7.1.5",
     "aws-sdk": "^2.575.0",
     "babel-eslint": "^10.0.2",
@@ -54,6 +59,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.3",
     "postcss-calc": "^6.0.1",
     "postcss-cli": "^4.1.1",
@@ -66,7 +72,7 @@
     "postcss-prefixer": "^2.0.5",
     "postcss-reporter": "^5.0.0",
     "prettier": "1.18.2",
-    "rollup": "^1.19.4",
+    "rollup": "^1.29.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-json": "^4.0.0",
@@ -79,7 +85,9 @@
     "rollup-plugin-terser": "^5.1.1",
     "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0",
-    "svg-sprite": "^1.5.0"
+    "svg-sprite": "^1.5.0",
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.5"
   },
   "size-limit": [
     {

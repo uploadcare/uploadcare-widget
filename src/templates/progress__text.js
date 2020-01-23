@@ -1,4 +1,4 @@
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 
 const progressText = () => html`
   <div class="uploadcare--progress__text-container">

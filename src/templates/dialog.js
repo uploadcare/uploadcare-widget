@@ -1,4 +1,4 @@
-import { html } from '../utils/html'
+import { html } from '../utils/html.ts'
 import locale from '../locale'
 import { version } from '../../package.json'
 

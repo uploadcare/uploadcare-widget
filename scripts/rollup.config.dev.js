@@ -3,6 +3,7 @@ import { string } from 'rollup-plugin-string'
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
@@ -24,6 +25,7 @@ export default {
   },
 
   plugins: [
+    typescript(),
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]]
