@@ -3,9 +3,9 @@
 // For production 'babel-plugin-html-tag' removes html
 // function and evaluates and minifies tagged html
 
-type Base = string | number | boolean |  null | undefined
+type Base = string | number | boolean | null | undefined
 
-const validate = (value: Base, fallback: string = ''): string => {
+const validate = (value: Base, fallback = ''): string => {
   if (value == null) {
     return fallback
   } else if (typeof value === 'boolean' && value === false) {
