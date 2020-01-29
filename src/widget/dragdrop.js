@@ -13,7 +13,7 @@ const uploadDrop = function(el, callback, settings) {
   return receiveDrop(el, function(data) {
     return callback(
       settings.multiple
-        ? null // filesFrom(type, data, settings)
+        ? data[0].map(file => uploadFile(file, settings))
         : uploadFile(data[0], settings)
     )
   })
