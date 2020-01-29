@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
@@ -10,6 +8,7 @@ import {
   readableFileSize,
   canvasToBlob,
   parseHTML,
+  each
 } from '../../utils'
 import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
@@ -291,7 +290,7 @@ class PreviewTab extends BasePreviewTab {
     const control = this.container.find('.uploadcare--crop-sizes')
     const template = control.children()
     const currentClass = 'uploadcare--crop-sizes__item_current'
-    $.each(this.settings.crop, (i, crop) => {
+    each(this.settings.crop, (i, crop) => {
       var caption, gcd, icon, item, prefered, size
       prefered = crop.preferedSize
       if (prefered) {
