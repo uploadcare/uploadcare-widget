@@ -23,7 +23,7 @@ class FileTab {
     var dropArea = this.container.querySelector('.uploadcare--draganddrop')
     if (fileDragAndDrop) {
       receiveDrop(dropArea, files => {
-        this.dialogApi.addFiles('object', files)
+        this.dialogApi.addData('object', files)
         this.dialogApi.switchTab('preview')
       })
 
@@ -38,7 +38,7 @@ class FileTab {
 
     fileButton.addEventListener('click', () => {
       fileSelectDialog(this.container, this.settings, input => {
-        this.dialogApi.addFiles('object', input.files)
+        this.dialogApi.addData('object', input.files)
         return this.dialogApi.switchTab('preview')
       })
     })
