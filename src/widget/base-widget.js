@@ -1,5 +1,11 @@
 import locale from '../locale'
-import { defer, bindAll, publicCallbacks, fileSelectDialog, callbacks } from '../utils'
+import {
+  defer,
+  bindAll,
+  publicCallbacks,
+  fileSelectDialog,
+  callbacks
+} from '../utils'
 import { valueToFile } from '../utils/files'
 import { receiveDrop } from './dragdrop'
 import { Template } from './template'
@@ -44,24 +50,32 @@ class BaseWidget {
       return this.openDialog()
     })
 
-    const cancelButton = this.template.addButton('cancel', locale.t('buttons.cancel'))
+    const cancelButton = this.template.addButton(
+      'cancel',
+      locale.t('buttons.cancel')
+    )
     cancelButton.addEventListener('click', () => {
       return this.__setObject(null)
     })
 
-    const removeButton = this.template.addButton('remove', locale.t('buttons.remove'))
+    const removeButton = this.template.addButton(
+      'remove',
+      locale.t('buttons.remove')
+    )
     removeButton.addEventListener('click', () => {
       return this.__setObject(null)
     })
 
-    this.template.content.addEventListener('click', (e) => {
+    this.template.content.addEventListener('click', e => {
       if (e.target.classList.contains('uploadcare--widget__file-name')) {
         this.openDialog()
       }
     })
 
     // Enable drag and drop
-    receiveDrop(this.template.content, (files) => this.__handleDirectSelection('object', files))
+    receiveDrop(this.template.content, files =>
+      this.__handleDirectSelection('object', files)
+    )
     return this.template.reset()
   }
 
@@ -100,17 +114,17 @@ class BaseWidget {
   }
 
   __watchCurrentObject() {
-    var object = this.__currentFile()
+    var object = this.currentObject
     if (object) {
       this.template.listen(object)
       return object
         .then(info => {
-          if (object === this.__currentFile()) {
+          if (object === this.currentObject) {
             return this.__onUploadingDone(info)
           }
         })
         .catch(error => {
-          if (object === this.__currentFile()) {
+          if (object === this.currentObject) {
             return this.__onUploadingFailed(error)
           }
         })
@@ -159,7 +173,7 @@ class BaseWidget {
   __openDialog(tab) {
     var dialogApi = openDialog(this.currentObject, tab, this.settings)
     this.__onDialogOpen.fire(dialogApi)
-    return dialogApi.done(this.__setObject.bind(this))
+    return dialogApi.then(this.__setObject.bind(this))
   }
 
   api() {
