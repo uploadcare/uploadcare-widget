@@ -19,11 +19,13 @@ import {
 import { build, emptyKeyText } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
-import { filesFrom } from '../files'
-import { FileGroup } from '../files/group-creator'
+// import { filesFrom } from '../files'
+// import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html'
+
+import { uploadFile } from '@uploadcare/upload-client'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -130,7 +132,7 @@ const openDialog = function(files, tab, settings) {
   //   return dialogPr.reject()
   // })
 
-  currentDialogPr = dialogPr.always(function() {
+  currentDialogPr = dialogPr.finally(function() {
     document.documentElement.classList.remove(openedClass)
     document.body.classList.remove(openedClass)
 
@@ -207,14 +209,16 @@ const openPanel = function(placeholder, files, tab, settings) {
   panel = new Panel(settings, placeholder, files, tab).publicPromise()
 
   filter = function(files) {
-    if (settings.multiple) {
-      return FileGroup(files, settings)
-    } else {
-      return files[0]
-    }
+    // if (settings.multiple) {
+    //   return FileGroup(files, settings)
+    // } else {
+    //   return files[0]
+    // }
+
+    return files[0]
   }
 
-  return then(panel, filter, filter).promise(panel)
+  return then(panel, filter, filter).then(() => Promise.resolve(panel))
 }
 
 const registeredTabs = {}
@@ -352,8 +356,12 @@ class Panel {
   addFiles(files, data) {
     var file, i, len
     if (data) {
-      // 'files' is actually file type
-      files = filesFrom(files, data, this.settings)
+      files = Array.from(data).map(file =>
+        uploadFile(file, {
+          ...this.settings,
+          onProgress: () => {}
+        })
+      )
     }
     if (!this.settings.multiple) {
       this.files.clear()
