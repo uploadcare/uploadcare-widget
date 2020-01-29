@@ -261,6 +261,7 @@ class Panel {
   constructor(settings1, placeholder, files, tab) {
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
+    this.addData = this.addData.bind(this)
     this.__resolve = this.__resolve.bind(this)
     this.__reject = this.__reject.bind(this)
     this.__updateFooter = this.__updateFooter.bind(this)
@@ -337,6 +338,7 @@ class Panel {
         resolve: this.__resolve,
         fileColl: this.files,
         addFiles: this.addFiles,
+        addData: this.addData,
         switchTab: this.switchTab,
         hideTab: this.hideTab,
         showTab: this.showTab,
@@ -349,12 +351,15 @@ class Panel {
     return this.promise
   }
 
-  addFiles(files, data) {
+  addData(type, data) {
+    // 'files' is actually file type
+    const files = filesFrom(type, data, this.settings)
+
+    this.addFiles(files)
+  }
+
+  addFiles(files) {
     var file, i, len
-    if (data) {
-      // 'files' is actually file type
-      files = filesFrom(files, data, this.settings)
-    }
     if (!this.settings.multiple) {
       this.files.clear()
       files = [files[0]]
