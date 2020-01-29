@@ -54,24 +54,35 @@ class Template {
 
     const progressCallback = callbacks()
 
-    this.circle.listen(progressCallback, Promise.resolve(file.promise()), 'uploadProgress')
+    this.circle.listen(progressCallback, file, 'value')
     this.setStatus('started')
     this.content.setAttribute('aria-busy', true)
 
-    return file.progress(info => {
-      if (file === this.__file) {
-        progressCallback.fire(info)
+    // onUploadingProgress(({value}) => {
+    //   console.log(value)
+    //   // progressCallback.fire(info)
+    //
+    //   if (value < 1) {
+    //     this.statusText.textContent = locale.t('uploading')
+    //   } else {
+    //     this.statusText.textContent = locale.t('loadingInfo')
+    //   }
+    // })
 
-        switch (info.state) {
-          case 'uploading':
-            this.statusText.textContent = locale.t('uploading')
-            break
-          case 'uploaded':
-            this.statusText.textContent = locale.t('loadingInfo')
-            break
-        }
-      }
-    })
+    // return file.progress(info => {
+    //   if (file === this.__file) {
+    //     progressCallback.fire(info)
+    //
+    //     switch (info.state) {
+    //       case 'uploading':
+    //         this.statusText.textContent = locale.t('uploading')
+    //         break
+    //       case 'uploaded':
+    //         this.statusText.textContent = locale.t('loadingInfo')
+    //         break
+    //     }
+    //   }
+    // })
   }
 
   error(type) {
