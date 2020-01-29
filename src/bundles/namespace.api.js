@@ -52,10 +52,8 @@ import {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
 } from '../utils'
 
 // import {
@@ -83,15 +81,15 @@ import {
 } from '../settings'
 
 import { Pusher } from '../vendor/pusher'
-import { BaseFile } from '../files/base'
-import { ObjectFile } from '../files/object'
-import { InputFile } from '../files/input'
-import { UrlFile } from '../files/url'
-import { UploadedFile, ReadyFile } from '../files/uploaded'
-import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
+// import { BaseFile } from '../files/base'
+// import { ObjectFile } from '../files/object'
+// import { InputFile } from '../files/input'
+// import { UrlFile } from '../files/url'
+// import { UploadedFile, ReadyFile } from '../files/uploaded'
+// import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
 
-import { filesFrom } from '../files'
-import { FileGroup, loadFileGroup } from '../files/group-creator'
+// import { filesFrom } from '../files'
+// import { FileGroup, loadFileGroup } from '../files/group-creator'
 
 import { version } from '../../package.json'
 
@@ -156,10 +154,8 @@ const namespace = {
     fileSizeLabels,
     readableFileSize,
     ajaxDefaults,
-    jsonp,
     canvasToBlob,
     taskRunner,
-    fixedPipe,
 
     isFile,
     valueToFile,
@@ -195,21 +191,21 @@ const namespace = {
   locale,
 
   files: {
-    BaseFile,
-    ObjectFile,
-    InputFile,
-    UrlFile,
-    UploadedFile,
-    ReadyFile,
-    FileGroup: FileGroupClass,
-    SavedFileGroup
+    // BaseFile,
+    // ObjectFile,
+    // InputFile,
+    // UrlFile,
+    // UploadedFile,
+    // ReadyFile,
+    // FileGroup: FileGroupClass,
+    // SavedFileGroup
   },
 
   Pusher,
 
-  FileGroup,
-  loadFileGroup,
-  filesFrom,
+  // FileGroup,
+  // loadFileGroup,
+  // filesFrom,
 
   __exports: {},
 
