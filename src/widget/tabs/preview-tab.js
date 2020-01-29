@@ -304,17 +304,17 @@ class PreviewTab extends BasePreviewTab {
         .appendTo(control)
         .attr('data-caption', caption)
         .on('click', e => {
-          if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+          if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
             return
           }
           if (
-            !$(e.currentTarget).hasClass(currentClass) &&
+            !e.currentTarget.classList.contains(currentClass) &&
             this.settings.crop.length > 1 &&
             this.widget
           ) {
             this.widget.setCrop(crop)
-            control.find('>*').removeClass(currentClass)
-            item.addClass(currentClass)
+            control.find('>*').classList.remove(currentClass)
+            item.classList.add(currentClass)
           }
         })
       if (prefered) {
@@ -324,11 +324,11 @@ class PreviewTab extends BasePreviewTab {
           height: Math.max(12, size[1])
         })
       } else {
-        icon = $(
+        icon = parseHTML(
           "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
         )
-          .attr('role', 'presentation')
-          .attr('class', 'uploadcare--icon')
+          .setAttribute('role', 'presentation')
+          .setAttribute('class', 'uploadcare--icon')
         return item
           .children()
           .append(icon)
