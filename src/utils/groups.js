@@ -2,7 +2,7 @@ import $ from 'jquery'
 
 import { wrapToPromise } from '../utils'
 import { valueToFile } from './files'
-import { loadFileGroup, FileGroup } from '../files/group-creator'
+// import { loadFileGroup, FileGroup } from '../files/group-creator'
 
 const isFileGroup = function(obj) {
   return obj && obj.files && obj.promise
