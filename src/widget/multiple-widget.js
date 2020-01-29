@@ -1,7 +1,7 @@
 import { BaseWidget } from './base-widget'
 import locale from '../locale'
-import { filesFrom } from '../files'
-import { FileGroup } from '../files/group-creator'
+// import { filesFrom } from '../files'
+// import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
 
 class MultipleWidget extends BaseWidget {
@@ -43,11 +43,11 @@ class MultipleWidget extends BaseWidget {
   }
 
   __handleDirectSelection(type, data) {
-    var files = filesFrom(type, data, this.settings)
+    // var files = filesFrom(type, data, this.settings)
     if (this.settings.systemDialog) {
-      return this.__setObject(FileGroup(files, this.settings))
+      // return this.__setObject(FileGroup(files, this.settings))
     } else {
-      return this.__openDialog('preview').addFiles(files)
+      // return this.__openDialog('preview').addFiles(files)
     }
   }
 }
