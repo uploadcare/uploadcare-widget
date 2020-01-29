@@ -843,5 +843,6 @@ export {
   grep,
   parseHTML,
   isPlainObject,
-  matches
+  matches,
+  each,
 }
