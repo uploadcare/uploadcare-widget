@@ -1,6 +1,3 @@
-import $ from 'jquery'
-
-import { warn } from './utils/warnings'
 import { html } from './utils/html'
 
 var indexOf = [].indexOf
@@ -46,17 +43,13 @@ const once = function(fn) {
 }
 
 const wrapToPromise = function(value) {
-  return $.Deferred()
-    .resolve(value)
-    .promise()
+  return Promise.resolve(value)
 }
 
 // same as promise.then(), but if filter returns promise
 // it will be just passed forward without any special behavior
 const then = function(pr, doneFilter, failFilter, progressFilter) {
-  var compose, df
-  df = $.Deferred()
-  compose = function(fn1, fn2) {
+  const compose = function(fn1, fn2) {
     if (fn1 && fn2) {
       return function() {
         return fn2.call(this, fn1.apply(this, arguments))
@@ -65,21 +58,19 @@ const then = function(pr, doneFilter, failFilter, progressFilter) {
       return fn1 || fn2
     }
   }
-  pr.then(
-    compose(
-      doneFilter,
-      df.resolve
-    ),
-    compose(
-      failFilter,
-      df.reject
-    ),
-    compose(
-      progressFilter,
-      df.notify
+
+  return new Promise((resolve, reject) => {
+    return pr.then(
+      compose(
+        doneFilter,
+        resolve
+      ),
+      compose(
+        failFilter,
+        reject
+      )
     )
-  )
-  return df.promise()
+  })
 }
 
 // Build copy of source with only specified methods.
@@ -88,10 +79,10 @@ const bindAll = function(source, methods) {
   var target
   target = {}
 
-  $.each(methods, function(i, method) {
+  each(methods, function(i, method) {
     var fn = source[method]
 
-    if ($.isFunction(fn)) {
+    if (isFunction(fn)) {
       target[method] = function(...args) {
         var result = fn.apply(source, args)
 
@@ -146,8 +137,8 @@ const escapeRegExp = function(str) {
 }
 
 const globRegexp = function(str, flags = 'i') {
-  var parts
-  parts = $.map(str.split('*'), escapeRegExp)
+  const parts = str.split('*').map(escapeRegExp)
+
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
@@ -210,7 +201,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
   } else if (!wholeImage) {
     modifiers += '-/preview/'
   }
-  info = $.extend({}, info)
+  info = extend({}, info)
   info.cdnUrlModifiers = modifiers
   info.cdnUrl = `${info.originalUrl}${modifiers || ''}`
   info.crop = coords
@@ -226,45 +217,53 @@ const fileInput = function(container, settings, fn) {
   }
 
   ;(run = function() {
-    input = (settings.multiple
-      ? $('<input type="file" multiple>')
-      : $('<input type="file">')
-    )
-      .attr('accept', accept)
-      .css({
-        position: 'absolute',
-        top: 0,
-        opacity: 0,
-        margin: 0,
-        padding: 0,
-        width: 'auto',
-        height: 'auto',
-        cursor: container.css('cursor')
-      })
-      .on('change', function() {
-        fn(this)
-        $(this).hide()
-        return run()
-      })
-    return container.append(input)
+    input = document.createElement('input')
+    input.type = 'file'
+
+    if (settings.multiple) {
+      input.setAttribute('multiple', '')
+    }
+
+    input.setAttribute('accept', accept)
+
+    input.addEventListener('change', function() {
+      fn(this)
+      input.style.display = 'none'
+
+      return run()
+    })
+
+    input.style.position = 'absolute'
+    input.style.top = '0'
+    input.style.opacity = '0'
+    input.style.margin = '0'
+    input.style.padding = '0'
+    input.style.width = 'auto'
+    input.style.height = 'auto'
+    input.style.cursor = window.getComputedStyle(container).cursor
+
+    return container.appendChild(input)
   })()
 
+  container.style.position = 'relative'
+  container.style.overflow = 'hidden'
+
+  container.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect()
+
+    const { left, top } = {
+      top: rect.top + document.body.scrollTop,
+      left: rect.left + document.body.scrollLeft
+    }
+    const width = parseFloat(
+      window.getComputedStyle(input, null).width.replace('px', '')
+    )
+
+    input.style.left = e.pageX - left - width + 10
+    input.style.top = e.pageY - top - 10
+  })
+
   return container
-    .css({
-      position: 'relative',
-      overflow: 'hidden'
-      // to make it posible to set `cursor:pointer` on button
-      // http://stackoverflow.com/a/9182787/478603
-    })
-    .mousemove(function(e) {
-      var left, top, width
-      ;({ left, top } = $(this).offset())
-      width = input.width()
-      return input.css({
-        left: e.pageX - left - width + 10,
-        top: e.pageY - top - 10
-      })
-    })
 }
 
 const fileSelectDialog = function(container, settings, fn, attributes = {}) {
@@ -333,27 +332,6 @@ const ajaxDefaults = {
   cache: false
 }
 
-const jsonp = function(url, type, data, settings = {}) {
-  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
-    function(data) {
-      var text
-      if (data.error) {
-        text = data.error.content || data.error
-        return $.Deferred().reject(text)
-      } else {
-        return data
-      }
-    },
-    function(_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
-      warn(`JSONP unexpected error: ${text} while loading ${url}`)
-
-      return text
-    }
-  )
-}
-
 const canvasToBlob = function(canvas, type, quality, callback) {
   var arr, binStr, dataURL, i, j, ref
   if (window.HTMLCanvasElement.prototype.toBlob) {
@@ -416,32 +394,6 @@ const pipeTuples = [
   ['reject', 'fail', 1]
 ]
 
-const fixedPipe = function(promise, ...fns) {
-  return $.Deferred(function(newDefer) {
-    return $.each(pipeTuples, function(i, tuple) {
-      var fn
-      // Map tuples (progress, done, fail) to arguments (done, fail, progress)
-      fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
-      return promise[tuple[1]](function() {
-        var returned
-        returned = fn && fn.apply(this, arguments)
-        if (returned && $.isFunction(returned.promise)) {
-          return returned
-            .promise()
-            .progress(newDefer.notify)
-            .done(newDefer.resolve)
-            .fail(newDefer.reject)
-        } else {
-          return newDefer[tuple[0] + 'With'](
-            this === promise ? newDefer.promise() : this,
-            fn ? [returned] : arguments
-          )
-        }
-      })
-    })
-  }).promise()
-}
-
 const isFunction = fn => {
   // Support: Chrome <=57, Firefox <=52
   // In some browsers, typeof returns "function" for HTML <object> elements
@@ -490,29 +442,29 @@ const isArrayLike = obj => {
   )
 }
 
-const callbacks = function(options) {
-  const each = function(obj, callback) {
-    var length
-    var i = 0
+const each = function(obj, callback) {
+  var length
+  var i = 0
 
-    if (isArrayLike(obj)) {
-      length = obj.length
-      for (; i < length; i++) {
-        if (callback.call(obj[i], i, obj[i]) === false) {
-          break
-        }
-      }
-    } else {
-      for (i in obj) {
-        if (callback.call(obj[i], i, obj[i]) === false) {
-          break
-        }
+  if (isArrayLike(obj)) {
+    length = obj.length
+    for (; i < length; i++) {
+      if (callback.call(obj[i], i, obj[i]) === false) {
+        break
       }
     }
-
-    return obj
+  } else {
+    for (i in obj) {
+      if (callback.call(obj[i], i, obj[i]) === false) {
+        break
+      }
+    }
   }
 
+  return obj
+}
+
+const callbacks = function(options) {
   // Convert String-formatted options into Object-formatted ones
   function createOptions(options) {
     var object = {}
@@ -882,10 +834,8 @@ export {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe,
   isFunction,
   callbacks,
   inArray,
