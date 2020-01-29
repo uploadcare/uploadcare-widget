@@ -385,14 +385,6 @@ const taskRunner = function(capacity) {
 
   return run
 }
-// This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
-// action, add listener, callbacks,
-// ... .then handlers, argument index, [final state]
-const pipeTuples = [
-  ['notify', 'progress', 2],
-  ['resolve', 'done', 0],
-  ['reject', 'fail', 1]
-]
 
 const isFunction = fn => {
   // Support: Chrome <=57, Firefox <=52
