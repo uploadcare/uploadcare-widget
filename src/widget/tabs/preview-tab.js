@@ -286,62 +286,62 @@ class PreviewTab extends BasePreviewTab {
     // }
   }
 
-  populateCropSizes() {
-    const control = this.container.find('.uploadcare--crop-sizes')
-    const template = control.children()
-    const currentClass = 'uploadcare--crop-sizes__item_current'
-    each(this.settings.crop, (i, crop) => {
-      var caption, gcd, icon, item, prefered, size
-      prefered = crop.preferedSize
-      if (prefered) {
-        gcd = calcGCD(prefered[0], prefered[1])
-        caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
-      } else {
-        caption = locale.t('dialog.tabs.preview.crop.free')
-      }
-      item = template
-        .clone()
-        .appendTo(control)
-        .attr('data-caption', caption)
-        .on('click', e => {
-          if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
-            return
-          }
-          if (
-            !e.currentTarget.classList.contains(currentClass) &&
-            this.settings.crop.length > 1 &&
-            this.widget
-          ) {
-            this.widget.setCrop(crop)
-            control.find('>*').classList.remove(currentClass)
-            item.classList.add(currentClass)
-          }
-        })
-      if (prefered) {
-        size = fitSize(prefered, [30, 30], true)
-        return item.children().css({
-          width: Math.max(20, size[0]),
-          height: Math.max(12, size[1])
-        })
-      } else {
-        icon = parseHTML(
-          "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
-        )
-          .setAttribute('role', 'presentation')
-          .setAttribute('class', 'uploadcare--icon')
-        return item
-          .children()
-          .append(icon)
-          .addClass('uploadcare--crop-sizes__icon_free')
-      }
-    })
-    template.remove()
-
-    return control
-      .find('>*')
-      .eq(0)
-      .addClass(currentClass)
-  }
+  // populateCropSizes() {
+  //   const control = this.container.find('.uploadcare--crop-sizes')
+  //   const template = control.children()
+  //   const currentClass = 'uploadcare--crop-sizes__item_current'
+  //   each(this.settings.crop, (i, crop) => {
+  //     var caption, gcd, icon, item, prefered, size
+  //     prefered = crop.preferedSize
+  //     if (prefered) {
+  //       gcd = calcGCD(prefered[0], prefered[1])
+  //       caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
+  //     } else {
+  //       caption = locale.t('dialog.tabs.preview.crop.free')
+  //     }
+  //     item = template
+  //       .clone()
+  //       .appendTo(control)
+  //       .attr('data-caption', caption)
+  //       .on('click', e => {
+  //         if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
+  //           return
+  //         }
+  //         if (
+  //           !e.currentTarget.classList.contains(currentClass) &&
+  //           this.settings.crop.length > 1 &&
+  //           this.widget
+  //         ) {
+  //           this.widget.setCrop(crop)
+  //           control.find('>*').classList.remove(currentClass)
+  //           item.classList.add(currentClass)
+  //         }
+  //       })
+  //     if (prefered) {
+  //       size = fitSize(prefered, [30, 30], true)
+  //       return item.children().css({
+  //         width: Math.max(20, size[0]),
+  //         height: Math.max(12, size[1])
+  //       })
+  //     } else {
+  //       icon = parseHTML(
+  //         "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
+  //       )
+  //         .setAttribute('role', 'presentation')
+  //         .setAttribute('class', 'uploadcare--icon')
+  //       return item
+  //         .children()
+  //         .append(icon)
+  //         .addClass('uploadcare--crop-sizes__icon_free')
+  //     }
+  //   })
+  //   template.remove()
+  //
+  //   return control
+  //     .find('>*')
+  //     .eq(0)
+  //     .addClass(currentClass)
+  // }
 
   displayed() {
     this.container.querySelector('.uploadcare--preview__done').focus()
