@@ -35,8 +35,13 @@ class UrlTab {
     function inputHandler() {
       const isDisabled = !this.value.trim()
 
-      button.setAttribute('disabled', isDisabled)
-      button.setAttribute('aria-disabled', isDisabled)
+      if (isDisabled) {
+        button.setAttribute('disabled', '')
+        button.setAttribute('aria-disabled', '')
+      } else {
+        button.removeAttribute('disabled')
+        button.removeAttribute('aria-disabled')
+      }
     }
 
     input.addEventListener('change', inputHandler)
@@ -44,16 +49,14 @@ class UrlTab {
     input.addEventListener('input', inputHandler)
 
     const form = this.container.querySelector('.uploadcare--form')
-    form.addEventListener('submit', () => {
-      var url = fixUrl(input.val())
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      var url = fixUrl(input.value)
 
       if (url) {
         this.dialogApi.addFiles('url', [
           [
-            url,
-            {
-              source: 'url-tab'
-            }
+            url
           ]
         ])
 
