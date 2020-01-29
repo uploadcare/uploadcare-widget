@@ -2,9 +2,10 @@ import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
 import { globRegexp, parseHTML } from '../../utils'
 import { html } from '../../utils/html'
-import { UrlFile } from '../../files/url'
+// import { UrlFile } from '../../files/url'
 
 import { version } from '../../../package.json'
+import { uploadFile } from '@uploadcare/upload-client'
 
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {
@@ -92,21 +93,24 @@ class RemoteTab {
         return message.url
       })()
 
-      const sourceInfo = Object.assign(
-        {
-          source: this.name
-        },
-        message.info || {}
-      )
+      // const sourceInfo = Object.assign(
+      //   {
+      //     source: this.name
+      //   },
+      //   message.info || {}
+      // )
 
-      const file = new UrlFile(url, this.settings, sourceInfo)
+      // const file = new UrlFile(url, this.settings, sourceInfo)
+      const file = uploadFile(url, this.settings)
 
       if (message.filename) {
-        file.setName(message.filename)
+        // file.setName(message.filename)
+        file.name = message.filename
       }
 
       if (message.is_image != null) {
-        file.setIsImage(message.is_image)
+        // file.setIsImage(message.is_image)
+        file.isImage = message.is_image
       }
 
       this.dialogApi.addFiles([file.promise()])
@@ -149,7 +153,7 @@ class RemoteTab {
       }
     })
 
-    return this.dialogApi.done(() => {
+    return this.dialogApi.then(() => {
       unregisterMessage('file-selected', iframe)
       return unregisterMessage('open-new-window', iframe)
     })
