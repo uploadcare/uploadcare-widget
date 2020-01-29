@@ -9,7 +9,6 @@ class Circle {
     } else {
       this.renderer = new TextRenderer(element)
     }
-    this.observed = null
   }
 
   listen(callback, promise, selector) {
@@ -37,7 +36,6 @@ class Circle {
   }
 
   reset(filled = false) {
-    this.observed = null
     return this.renderer.setValue(filled ? 1 : 0, true)
   }
 
