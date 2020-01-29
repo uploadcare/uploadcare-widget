@@ -3,7 +3,7 @@ import { build } from '../settings'
 import { isWindowDefined } from '../utils/is-window-defined'
 import ready from '../utils/ready'
 import { uploadFile } from '@uploadcare/upload-client'
-import { filesFrom } from '../files'
+// import { filesFrom } from '../files'
 
 const support = fileDragAndDrop
 
@@ -11,10 +11,9 @@ const uploadDrop = function(el, callback, settings) {
   settings = build(settings)
 
   return receiveDrop(el, function(data) {
-    const type = 'object'
     return callback(
       settings.multiple
-        ? filesFrom(type, data, settings)
+        ? null // filesFrom(type, data, settings)
         : uploadFile(data[0], settings)
     )
   })
