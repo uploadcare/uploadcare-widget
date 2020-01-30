@@ -1,16 +1,16 @@
 import { CancelController, uploadFile } from '@uploadcare/upload-client'
 import { callbacks } from './utils'
+import { build } from './settings'
 
 class WidgetFile {
   constructor(data, settings) {
     this.fail = this.fail.bind(this)
     this.done = this.done.bind(this)
     this.progress = this.progress.bind(this)
-
     this.callback = callbacks()
     this.ctrl = new CancelController()
     this.file = uploadFile(data, {
-      ...settings,
+      ...build(settings || {}),
       onProgress: info => this.callback.fire(info),
       cancel: this.ctrl
     })
