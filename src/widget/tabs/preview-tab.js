@@ -215,7 +215,7 @@ class PreviewTab extends BasePreviewTab {
     this.container.appendChild(parseHTML(tpl(`tab-preview-${state}`, data)))
 
     Array.from(this.container.classList)
-      .filter(className => className.indexOf('uploadcare--preview_status_'))
+      .filter(className => className.indexOf('uploadcare--preview_status_') !== -1)
       .forEach(classToRemove => {
         this.container.classList.remove(classToRemove)
       })

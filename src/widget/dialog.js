@@ -16,7 +16,7 @@ import {
   isPlainObject,
   matches
 } from '../utils'
-import { build, emptyKeyText } from '../settings'
+import { build } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
 import { FileGroup } from '../files/group-creator'
@@ -24,6 +24,7 @@ import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
 import WidgetFile from '../file'
+import { welcomeContent } from '../templates/welcome-content'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -238,7 +239,7 @@ registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
 registerTab('empty-pubkey', function(tabPanel, _1, _2, settings) {
-  return tabPanel.append(emptyKeyText)
+  return tabPanel.append(parseHTML(welcomeContent))
 })
 
 registerTab('preview', function(

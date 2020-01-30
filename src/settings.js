@@ -364,7 +364,7 @@ const common = once(function(settings, ignoreGlobals) {
 const build = function(settings) {
   var result
   result = extend({}, common())
-  if (settings && !Object.keys(settings).length === 0) {
+  if (settings && Object.keys(settings).length !== 0) {
     result = normalize(extend(result, settings))
   }
   return result
@@ -392,13 +392,9 @@ const CssCollector = class CssCollector {
   }
 }
 
-const emptyKeyText =
-  '<div class="uploadcare--tab__content">\n<div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">Hello!</div>\n<div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>\n<div class="uploadcare--text">Add this to the &lt;head&gt; tag to start uploading files:</div>\n<div class="uploadcare--text uploadcare--text_pre">&lt;script&gt;\nUPLOADCARE_PUBLIC_KEY = \'your_public_key\';\n&lt;/script&gt;</div>\n</div>'
-
 export {
   defaults,
   presets,
-  emptyKeyText,
   globals,
   build,
   common,
