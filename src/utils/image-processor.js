@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { Blob, FileReader, URL } from '../utils/abilities'
-import { imageLoader } from '../utils/image-loader'
+import { imageLoader } from '../utils/image-loader.ts'
 import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 import { isWindowDefined } from './is-window-defined'
 
@@ -171,26 +171,31 @@ const shrinkImage = function(img, settings) {
 }
 
 const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
-  var df, op
   // in -> file
   // out <- canvas
-  df = $.Deferred()
+  let res = () => {}
+  let rej = () => {}
+  const promise = new Promise((resolve, reject) => {
+    res = resolve
+    rej = reject
+  })
+
   if (!URL) {
-    return df.reject('support')
+    return rej(Error('support'))
   }
-  op = imageLoader(URL.createObjectURL(file))
-  op.always(function(img) {
+  const op = imageLoader(URL.createObjectURL(file))
+  op.finally(function(img) {
     return URL.revokeObjectURL(img.src)
   })
-  op.fail(function() {
-    return df.reject('not image')
+  op.catch(function() {
+    return rej(Error('not image'))
   })
-  op.done(function(img) {
-    df.always(function() {
+  op.then(function(img) {
+    promise.finally(function() {
       img.src = '//:0'
     })
     if (maxSource && img.width * img.height > maxSource) {
-      return df.reject('max source')
+      return rej('max source')
     }
     return getExif(file).always(function(exif) {
       var canvas, ctx, dH, dW, orientation, sSize, swap, trns
@@ -209,7 +214,7 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
         [0, -1, 1, 0, 0, dH]
       ][orientation - 1]
       if (!trns) {
-        return df.reject('bad image')
+        return rej('bad image')
       }
       canvas = document.createElement('canvas')
       canvas.width = dW
@@ -224,10 +229,11 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
         ctx.fillRect(0, 0, dW, dH)
       }
       ctx.drawImage(img, 0, 0, dW, dH)
-      return df.resolve(canvas, sSize)
+      return res(canvas, sSize)
     })
   })
-  return df.promise()
+
+  return promise
 }
 
 // Util functions
@@ -409,15 +415,19 @@ const parseExifOrientation = function(exif) {
 }
 
 const hasTransparency = function(img) {
-  var canvas, ctx, data, i, j, pcsn, ref
-  pcsn = 50
-  canvas = document.createElement('canvas')
+  let i, j
+  const pcsn = 50
+  const canvas = document.createElement('canvas')
   canvas.width = canvas.height = pcsn
-  ctx = canvas.getContext('2d')
+
+  const ctx = canvas.getContext('2d')
   ctx.drawImage(img, 0, 0, pcsn, pcsn)
-  data = ctx.getImageData(0, 0, pcsn, pcsn).data
+
+  const data = ctx.getImageData(0, 0, pcsn, pcsn).data
   canvas.width = canvas.height = 1
-  for (i = j = 3, ref = data.length; j < ref; i = j += 4) {
+
+  const ref = data.length
+  for (i = j = 3, ref; j < ref; i = j += 4) {
     if (data[i] < 254) {
       return true
     }
