@@ -267,17 +267,11 @@ class CameraTab {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(video, 0, 0, w, h)
+
     return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
-      this.dialogApi.addData('object', [
-        [
-          blob,
-          {
-            source: 'camera'
-          }
-        ]
-      ])
+      this.dialogApi.addData('object', blob)
       return this.dialogApi.switchTab('preview')
     })
   }
@@ -316,14 +310,7 @@ class CameraTab {
       const ext = this.__guessExtensionByMime(this.__recorder.mimeType)
       blob.name = `record.${ext}`
 
-      this.dialogApi.addData('object', [
-        [
-          blob,
-          {
-            source: 'camera'
-          }
-        ]
-      ])
+      this.dialogApi.addData('object', blob)
       this.dialogApi.switchTab('preview')
       this.__chunks = []
 
