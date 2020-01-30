@@ -445,7 +445,7 @@ class Panel {
       this.switchTab(tab || this.__firstVisibleTab())
     }
     if (this.settings.tabs.length === 0) {
-      this.panel.addClass('uploadcare--panel_menu-hidden')
+      this.panel.classList.add('uploadcare--panel_menu-hidden')
       return this.panel
         .querySelector('.uploadcare--panel__menu')
         .classList.add('uploadcare--panel__menu_hidden')
