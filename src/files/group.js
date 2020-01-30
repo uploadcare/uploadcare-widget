@@ -6,7 +6,7 @@ import { wrapToPromise, bindAll } from '../utils'
 import { jsonp } from './base'
 import { build } from '../settings'
 import locale from '../locale'
-import { filesFrom } from '../files'
+import WidgetFile from '../file'
 
 // files
 class FileGroup {
@@ -199,8 +199,7 @@ class FileGroup {
 
 class SavedFileGroup extends FileGroup {
   constructor(data, settings) {
-    var files
-    files = filesFrom('ready', data.files, settings)
+    const files = new WidgetFile(data.files, settings)
     super(files, settings)
     this.__data = data
   }

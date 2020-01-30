@@ -267,6 +267,7 @@ class CameraTab {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(video, 0, 0, w, h)
+
     return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
