@@ -19,11 +19,11 @@ import {
 import { build, emptyKeyText } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
-import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
+import WidgetFile from '../file'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -352,8 +352,7 @@ class Panel {
   }
 
   addData(type, data) {
-    // 'files' is actually file type
-    const files = filesFrom(type, data, this.settings)
+    const files = Array.from(data).map(file => new WidgetFile(file, this.settings))
 
     this.addFiles(files)
   }

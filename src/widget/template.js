@@ -54,7 +54,7 @@ class Template {
 
     const progressCallback = callbacks()
 
-    this.circle.listen(progressCallback, Promise.resolve(file.promise()), 'uploadProgress')
+    this.circle.listen(progressCallback, file, 'value')
     this.setStatus('started')
     this.content.setAttribute('aria-busy', true)
 

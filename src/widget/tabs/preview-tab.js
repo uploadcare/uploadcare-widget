@@ -88,7 +88,7 @@ class PreviewTab extends BasePreviewTab {
             if (this.settings.previewUrlCallback) {
               src = this.settings.previewUrlCallback(src, info)
             }
-            imgInfo = info.originalImageInfo
+            imgInfo = info
             this.__setState('image', {
               src,
               name: info.name,
