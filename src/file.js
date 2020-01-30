@@ -7,7 +7,7 @@ class WidgetFile {
     this.fail = this.fail.bind(this)
     this.done = this.done.bind(this)
     this.progress = this.progress.bind(this)
-    this.callback = callbacks()
+    this.callback = callbacks('memory')
     this.ctrl = new CancelController()
     this.file = uploadFile(data, {
       ...build(settings || {}),
