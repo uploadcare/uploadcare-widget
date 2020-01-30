@@ -84,7 +84,7 @@ const then = function(pr, doneFilter, failFilter, progressFilter) {
 const bindAll = function(source, methods) {
   const target = {}
 
-  each(methods, function(i, method) {
+  methods.forEach(function(method, i) {
     const fn = source[method]
 
     if (isFunction(fn)) {
@@ -440,28 +440,6 @@ const isArrayLike = obj => {
   )
 }
 
-const each = function(obj, callback) {
-  var length
-  var i = 0
-
-  if (isArrayLike(obj)) {
-    length = obj.length
-    for (; i < length; i++) {
-      if (callback.call(obj[i], i, obj[i]) === false) {
-        break
-      }
-    }
-  } else {
-    for (i in obj) {
-      if (callback.call(obj[i], i, obj[i]) === false) {
-        break
-      }
-    }
-  }
-
-  return obj
-}
-
 const callbacks = function(options) {
   // Convert String-formatted options into Object-formatted ones
   function createOptions(options) {
@@ -548,7 +526,7 @@ const callbacks = function(options) {
         }
 
         ;(function add(args) {
-          each(args, function(_, arg) {
+          Array.from(args).forEach(function(arg, _) {
             if (isFunction(arg)) {
               if (!options.unique || !self.has(arg)) {
                 list.push(arg)
@@ -569,7 +547,7 @@ const callbacks = function(options) {
 
     // Remove a callback from the list
     remove: function() {
-      each(arguments, function(_, arg) {
+      arguments.forEach(function(arg, _) {
         var index
         while ((index = inArray(arg, list, index)) > -1) {
           list.splice(index, 1)
@@ -841,5 +819,4 @@ export {
   parseHTML,
   isPlainObject,
   matches,
-  each
 }
