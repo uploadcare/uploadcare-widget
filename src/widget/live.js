@@ -47,7 +47,7 @@ const Widget = function(el) {
 }
 
 const initializeWidget = function(input, targetClass) {
-  const s = build(input.dataset)
+  const s = build(Object.assign({}, input.dataset))
   const Widget = s.multiple ? MultipleWidgetClass : WidgetClass
 
   if (targetClass && Widget !== targetClass) {

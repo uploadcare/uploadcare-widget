@@ -77,7 +77,7 @@ class CameraTab {
       .addEventListener('click', this.__capture)
     const startRecord = this.container
       .querySelector('.uploadcare--camera__button_type_start-record')
-      .addEventListener('click', this.__startRecording)
+    startRecord.addEventListener('click', this.__startRecording)
     this.container
       .querySelector('.uploadcare--camera__button_type_stop-record')
       .addEventListener('click', this.__stopRecording)
