@@ -52,10 +52,10 @@ import {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  jsonp,
+  // jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
+  // fixedPipe
 } from '../utils'
 
 // import {
@@ -156,10 +156,10 @@ const namespace = {
     fileSizeLabels,
     readableFileSize,
     ajaxDefaults,
-    jsonp,
+    // jsonp,
     canvasToBlob,
     taskRunner,
-    fixedPipe,
+    // fixedPipe,
 
     isFile,
     valueToFile,

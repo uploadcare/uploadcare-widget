@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import { html } from './utils/html'
 
 const indexOf = [].indexOf
@@ -50,7 +51,9 @@ const wrapToPromise = function(value) {
 // same as promise.then(), but if filter returns promise
 // it will be just passed forward without any special behavior
 const then = function(pr, doneFilter, failFilter, progressFilter) {
-  const compose = function(fn1, fn2) {
+  var compose, df
+  df = $.Deferred()
+  compose = function(fn1, fn2) {
     if (fn1 && fn2) {
       return function() {
         return fn2.call(this, fn1.apply(this, arguments))
@@ -59,19 +62,21 @@ const then = function(pr, doneFilter, failFilter, progressFilter) {
       return fn1 || fn2
     }
   }
-
-  return new Promise((resolve, reject) => {
-    return pr.then(
-      compose(
-        doneFilter,
-        resolve
-      ),
-      compose(
-        failFilter,
-        reject
-      )
+  pr.then(
+    compose(
+      doneFilter,
+      df.resolve
+    ),
+    compose(
+      failFilter,
+      df.reject
+    ),
+    compose(
+      progressFilter,
+      df.notify
     )
-  })
+  )
+  return df.promise()
 }
 
 // Build copy of source with only specified methods.

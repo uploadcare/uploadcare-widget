@@ -2,7 +2,7 @@ import $ from 'jquery'
 
 import { CollectionOfPromises } from '../utils/collection'
 import { log } from '../utils/warnings'
-import { wrapToPromise, bindAll, jsonp } from '../utils'
+import { wrapToPromise, bindAll } from '../utils'
 import { build } from '../settings'
 import locale from '../locale'
 import WidgetFile from '../file'
@@ -150,37 +150,37 @@ class FileGroup {
     df = $.Deferred()
     if (this.__fileColl.length()) {
       this.__fileInfosDf.done((...infos) => {
-        var info
-        return jsonp(
-          `${this.settings.urlBase}/group/`,
-          'POST',
-          {
-            pub_key: this.settings.publicKey,
-            signature: this.settings.secureSignature,
-            expire: this.settings.secureExpire,
-            files: (function() {
-              var j, len, results
-              results = []
-              for (j = 0, len = infos.length; j < len; j++) {
-                info = infos[j]
-                results.push(`/${info.uuid}/${info.cdnUrlModifiers || ''}`)
-              }
-              return results
-            })()
-          },
-          {
-            headers: {
-              'X-UC-User-Agent': this.settings._userAgent
-            }
-          }
-        )
-          .fail(reason => {
-            if (this.settings.debugUploads) {
-              log("Can't create group.", this.settings.publicKey, reason)
-            }
-            return df.reject()
-          })
-          .done(df.resolve)
+        // var info
+        // return jsonp(
+        //   `${this.settings.urlBase}/group/`,
+        //   'POST',
+        //   {
+        //     pub_key: this.settings.publicKey,
+        //     signature: this.settings.secureSignature,
+        //     expire: this.settings.secureExpire,
+        //     files: (function() {
+        //       var j, len, results
+        //       results = []
+        //       for (j = 0, len = infos.length; j < len; j++) {
+        //         info = infos[j]
+        //         results.push(`/${info.uuid}/${info.cdnUrlModifiers || ''}`)
+        //       }
+        //       return results
+        //     })()
+        //   },
+        //   {
+        //     headers: {
+        //       'X-UC-User-Agent': this.settings._userAgent
+        //     }
+        //   }
+        // )
+        //   .fail(reason => {
+        //     if (this.settings.debugUploads) {
+        //       log("Can't create group.", this.settings.publicKey, reason)
+        //     }
+        //     return df.reject()
+        //   })
+        //   .done(df.resolve)
       })
     } else {
       df.reject()

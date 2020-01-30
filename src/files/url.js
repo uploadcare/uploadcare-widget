@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { debug } from '../utils/warnings'
 
 import { getPusher } from '../utils/pusher'
-import { defer, splitUrlRegex, jsonp } from '../utils'
+import { defer, splitUrlRegex } from '../utils'
 import { BaseFile } from './base'
 
 // files
@@ -56,52 +56,52 @@ class UrlFile extends BaseFile {
       if (this.apiDeferred.state() !== 'pending') {
         return
       }
-      return jsonp(`${this.settings.urlBase}/from_url/`, 'GET', data, {
-        headers: {
-          'X-UC-User-Agent': this.settings._userAgent
-        }
-      })
-        .fail(reason => {
-          if (this.settings.debugUploads) {
-            debug("Can't start upload from URL.", reason, data)
-          }
-          return df.reject()
-        })
-        .done(data => {
-          var logger
-          if (this.apiDeferred.state() !== 'pending') {
-            return
-          }
-          if (this.settings.debugUploads) {
-            debug('Start watchers.', data.token)
-            logger = setInterval(() => {
-              return debug('Still watching.', data.token)
-            }, 5000)
-            df.done(() => {
-              return debug('Stop watchers.', data.token)
-            }).always(() => {
-              return clearInterval(logger)
-            })
-          }
-          this.__listenWatcher(df, $([pusherWatcher, pollWatcher]))
-          df.always(() => {
-            $([pusherWatcher, pollWatcher]).off(this.allEvents)
-            pusherWatcher.stopWatching()
-            return pollWatcher.stopWatching()
-          })
-          // turn off pollWatcher if we receive any message from pusher
-          $(pusherWatcher).one(this.allEvents, () => {
-            if (!pollWatcher.interval) {
-              return
-            }
-            if (this.settings.debugUploads) {
-              debug('Start using pusher.', data.token)
-            }
-            return pollWatcher.stopWatching()
-          })
-          pusherWatcher.watch(data.token)
-          return pollWatcher.watch(data.token)
-        })
+      // return jsonp(`${this.settings.urlBase}/from_url/`, 'GET', data, {
+      //   headers: {
+      //     'X-UC-User-Agent': this.settings._userAgent
+      //   }
+      // })
+      //   .fail(reason => {
+      //     if (this.settings.debugUploads) {
+      //       debug("Can't start upload from URL.", reason, data)
+      //     }
+      //     return df.reject()
+      //   })
+      //   .done(data => {
+      //     var logger
+      //     if (this.apiDeferred.state() !== 'pending') {
+      //       return
+      //     }
+      //     if (this.settings.debugUploads) {
+      //       debug('Start watchers.', data.token)
+      //       logger = setInterval(() => {
+      //         return debug('Still watching.', data.token)
+      //       }, 5000)
+      //       df.done(() => {
+      //         return debug('Stop watchers.', data.token)
+      //       }).always(() => {
+      //         return clearInterval(logger)
+      //       })
+      //     }
+      //     this.__listenWatcher(df, $([pusherWatcher, pollWatcher]))
+      //     df.always(() => {
+      //       $([pusherWatcher, pollWatcher]).off(this.allEvents)
+      //       pusherWatcher.stopWatching()
+      //       return pollWatcher.stopWatching()
+      //     })
+      //     // turn off pollWatcher if we receive any message from pusher
+      //     $(pusherWatcher).one(this.allEvents, () => {
+      //       if (!pollWatcher.interval) {
+      //         return
+      //       }
+      //       if (this.settings.debugUploads) {
+      //         debug('Start using pusher.', data.token)
+      //       }
+      //       return pollWatcher.stopWatching()
+      //     })
+      //     pusherWatcher.watch(data.token)
+      //     return pollWatcher.watch(data.token)
+      //   })
     })
     return df
   }

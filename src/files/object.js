@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { log, debug } from '../utils/warnings'
-import { jsonp, taskRunner } from '../utils'
+import { taskRunner } from '../utils'
 // import { shrinkFile } from '../utils/image-processor'
 
 import { BaseFile } from './base'
@@ -196,16 +196,16 @@ class ObjectFile extends BaseFile {
       UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
     }
     return this.__autoAbort(
-      jsonp(
-        `${this.settings.urlBase}/multipart/start/?jsonerrors=1`,
-        'POST',
-        data,
-        {
-          headers: {
-            'X-UC-User-Agent': this.settings._userAgent
-          }
-        }
-      )
+      // jsonp(
+      //   `${this.settings.urlBase}/multipart/start/?jsonerrors=1`,
+      //   'POST',
+      //   data,
+      //   {
+      //     headers: {
+      //       'X-UC-User-Agent': this.settings._userAgent
+      //     }
+      //   }
+      // )
     ).fail(reason => {
       if (this.settings.debugUploads) {
         return log("Can't start multipart upload.", reason, data)

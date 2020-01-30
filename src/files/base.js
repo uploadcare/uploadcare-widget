@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { log, debug } from '../utils/warnings'
-import { jsonp, fixedPipe } from '../utils'
+// import { jsonp, fixedPipe } from '../utils'
 
 // files
 
@@ -77,35 +77,35 @@ class BaseFile {
   }
 
   __updateInfo() {
-    return jsonp(
-      `${this.settings.urlBase}/info/`,
-      'GET',
-      {
-        jsonerrors: 1,
-        file_id: this.fileId,
-        pub_key: this.settings.publicKey,
-        // Assume that we have all other info if isImage is set to something
-        // other than null and we only waiting for is_ready flag.
-        wait_is_ready: +(this.isImage === null)
-      },
-      {
-        headers: {
-          'X-UC-User-Agent': this.settings._userAgent
-        }
-      }
-    )
-      .fail(reason => {
-        if (this.settings.debugUploads) {
-          log(
-            "Can't load file info. Probably removed.",
-            this.fileId,
-            this.settings.publicKey,
-            reason
-          )
-        }
-        return this.__rejectApi('info')
-      })
-      .done(this.__handleFileData.bind(this))
+    // return jsonp(
+    //   `${this.settings.urlBase}/info/`,
+    //   'GET',
+    //   {
+    //     jsonerrors: 1,
+    //     file_id: this.fileId,
+    //     pub_key: this.settings.publicKey,
+    //     // Assume that we have all other info if isImage is set to something
+    //     // other than null and we only waiting for is_ready flag.
+    //     wait_is_ready: +(this.isImage === null)
+    //   },
+    //   {
+    //     headers: {
+    //       'X-UC-User-Agent': this.settings._userAgent
+    //     }
+    //   }
+    // )
+    //   .fail(reason => {
+    //     if (this.settings.debugUploads) {
+    //       log(
+    //         "Can't load file info. Probably removed.",
+    //         this.fileId,
+    //         this.settings.publicKey,
+    //         reason
+    //       )
+    //     }
+    //     return this.__rejectApi('info')
+    //   })
+    //   .done(this.__handleFileData.bind(this))
   }
 
   __handleFileData(data) {
@@ -231,7 +231,7 @@ class BaseFile {
     api.cancel = this.__cancel.bind(this)
     api.pipe = api.then = (...args) => {
       // 'pipe' is alias to 'then' from jQuery 1.8
-      return this.__extendApi(fixedPipe(api, ...args))
+      // return this.__extendApi(fixedPipe(api, ...args))
     }
 
     return api // extended promise
