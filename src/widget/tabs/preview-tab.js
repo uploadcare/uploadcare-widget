@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
@@ -8,7 +6,8 @@ import {
   once,
   fitSize,
   readableFileSize,
-  parseHTML
+  parseHTML,
+  each
   // canvasToBlob
 } from '../../utils'
 // import { drawFileToCanvas } from '../../utils/image-processor'
@@ -109,6 +108,7 @@ class PreviewTab extends BasePreviewTab {
     )
     return this.file.fail(
       ifCur((error, info) => {
+        console.log(error, info)
         return this.__setState('error', {
           error,
           file: info
@@ -221,11 +221,14 @@ class PreviewTab extends BasePreviewTab {
       })
 
     if (state === 'unknown' && this.settings.crop) {
-      this.container.querySelector('.uploadcare--preview__done').style.display = 'none'
+      this.container.querySelector('.uploadcare--preview__done').style.display =
+        'none'
     }
 
     if (state === 'error') {
-      this.container.classList.add('uploadcare--preview_status_error-' + data.error)
+      this.container.classList.add(
+        'uploadcare--preview_status_error-' + data.error
+      )
     }
 
     const done = this.container.querySelector('.uploadcare--preview__done')
@@ -241,10 +244,11 @@ class PreviewTab extends BasePreviewTab {
     // done = this.container.find('.uploadcare--preview__done')
     return imageLoader(img)
       .then(() => {
-        return this.container.addClass('uploadcare--preview_status_loaded')
+        return this.container.classList.add('uploadcare--preview_status_loaded')
       })
-      .catch(() => {
+      .catch(error => {
         this.file = null
+        console.log(error)
         return this.__setState('error', {
           error: 'loadImage'
         })
@@ -295,7 +299,7 @@ class PreviewTab extends BasePreviewTab {
     const control = this.container.find('.uploadcare--crop-sizes')
     const template = control.children()
     const currentClass = 'uploadcare--crop-sizes__item_current'
-    $.each(this.settings.crop, (i, crop) => {
+    each(this.settings.crop, (i, crop) => {
       var caption, gcd, icon, item, prefered, size
       prefered = crop.preferedSize
       if (prefered) {
