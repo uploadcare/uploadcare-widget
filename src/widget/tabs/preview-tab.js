@@ -1,18 +1,16 @@
-import $ from 'jquery'
-
 import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader'
 import {
   // defer,
-  gcd as calcGCD,
+  // gcd as calcGCD,
   once,
-  fitSize,
+  // fitSize,
   readableFileSize,
   parseHTML
   // canvasToBlob
 } from '../../utils'
 // import { drawFileToCanvas } from '../../utils/image-processor'
-import locale from '../../locale'
+// import locale from '../../locale'
 import { tpl } from '../../templates'
 // import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
@@ -291,62 +289,62 @@ class PreviewTab extends BasePreviewTab {
     // }
   }
 
-  populateCropSizes() {
-    const control = this.container.find('.uploadcare--crop-sizes')
-    const template = control.children()
-    const currentClass = 'uploadcare--crop-sizes__item_current'
-    $.each(this.settings.crop, (i, crop) => {
-      var caption, gcd, icon, item, prefered, size
-      prefered = crop.preferedSize
-      if (prefered) {
-        gcd = calcGCD(prefered[0], prefered[1])
-        caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
-      } else {
-        caption = locale.t('dialog.tabs.preview.crop.free')
-      }
-      item = template
-        .clone()
-        .appendTo(control)
-        .attr('data-caption', caption)
-        .on('click', e => {
-          if ($(e.currentTarget).attr('aria-disabled') === 'true') {
-            return
-          }
-          if (
-            !$(e.currentTarget).hasClass(currentClass) &&
-            this.settings.crop.length > 1 &&
-            this.widget
-          ) {
-            this.widget.setCrop(crop)
-            control.find('>*').removeClass(currentClass)
-            item.addClass(currentClass)
-          }
-        })
-      if (prefered) {
-        size = fitSize(prefered, [30, 30], true)
-        return item.children().css({
-          width: Math.max(20, size[0]),
-          height: Math.max(12, size[1])
-        })
-      } else {
-        icon = $(
-          "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
-        )
-          .attr('role', 'presentation')
-          .attr('class', 'uploadcare--icon')
-        return item
-          .children()
-          .append(icon)
-          .addClass('uploadcare--crop-sizes__icon_free')
-      }
-    })
-    template.remove()
+  // populateCropSizes() {
+  //   const control = this.container.find('.uploadcare--crop-sizes')
+  //   const template = control.children()
+  //   const currentClass = 'uploadcare--crop-sizes__item_current'
+  //   $.each(this.settings.crop, (i, crop) => {
+  //     var caption, gcd, icon, item, prefered, size
+  //     prefered = crop.preferedSize
+  //     if (prefered) {
+  //       gcd = calcGCD(prefered[0], prefered[1])
+  //       caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
+  //     } else {
+  //       caption = locale.t('dialog.tabs.preview.crop.free')
+  //     }
+  //     item = template
+  //       .clone()
+  //       .appendTo(control)
+  //       .attr('data-caption', caption)
+  //       .on('click', e => {
+  //         if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+  //           return
+  //         }
+  //         if (
+  //           !$(e.currentTarget).hasClass(currentClass) &&
+  //           this.settings.crop.length > 1 &&
+  //           this.widget
+  //         ) {
+  //           this.widget.setCrop(crop)
+  //           control.find('>*').removeClass(currentClass)
+  //           item.addClass(currentClass)
+  //         }
+  //       })
+  //     if (prefered) {
+  //       size = fitSize(prefered, [30, 30], true)
+  //       return item.children().css({
+  //         width: Math.max(20, size[0]),
+  //         height: Math.max(12, size[1])
+  //       })
+  //     } else {
+  //       icon = $(
+  //         "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
+  //       )
+  //         .attr('role', 'presentation')
+  //         .attr('class', 'uploadcare--icon')
+  //       return item
+  //         .children()
+  //         .append(icon)
+  //         .addClass('uploadcare--crop-sizes__icon_free')
+  //     }
+  //   })
+  //   template.remove()
 
-    return control
-      .find('>*')
-      .eq(0)
-      .addClass(currentClass)
-  }
+  //   return control
+  //     .find('>*')
+  //     .eq(0)
+  //     .addClass(currentClass)
+  // }
 
   displayed() {
     this.container.querySelector('.uploadcare--preview__done').focus()
