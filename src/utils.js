@@ -159,10 +159,12 @@ const normalizeUrl = function(url) {
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
+
 const fitText = function(text, max) {
   if (text.length > max) {
     const head = Math.ceil((max - 3) / 2)
     const tail = Math.floor((max - 3) / 2)
+
     return text.slice(0, head) + '...' + text.slice(-tail)
   } else {
     return text
@@ -415,29 +417,6 @@ function toType(obj) {
   return typeof obj === 'object' || typeof obj === 'function'
     ? class2type[toString.call(obj)] || 'object'
     : typeof obj
-}
-
-const isArrayLike = obj => {
-  function isWindow(obj) {
-    return obj != null && obj === obj.window
-  }
-
-  // Support: real iOS 8.2 only (not reproducible in simulator)
-  // `in` check used to prevent JIT error (gh-2145)
-  // hasOwn isn't used here due to false negatives
-  // regarding Nodelist length in IE
-  var length = !!obj && 'length' in obj && obj.length
-  var type = toType(obj)
-
-  if (isFunction(obj) || isWindow(obj)) {
-    return false
-  }
-
-  return (
-    type === 'array' ||
-    length === 0 ||
-    (typeof length === 'number' && length > 0 && length - 1 in obj)
-  )
 }
 
 const callbacks = function(options) {
