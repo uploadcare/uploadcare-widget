@@ -30,12 +30,12 @@ class MultipleWidget extends BaseWidget {
       this.template.statusText.textContent = locale.t('loadingInfo')
     }
     return groupPr
-      .done(group => {
+      .then(group => {
         if (this.__lastGroupPr === groupPr) {
           return this.__setObject(group)
         }
       })
-      .fail(() => {
+      .catch(() => {
         if (this.__lastGroupPr === groupPr) {
           return this.__onUploadingFailed('createGroup')
         }
