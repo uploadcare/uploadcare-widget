@@ -215,7 +215,7 @@ class PreviewTab extends BasePreviewTab {
     this.container.appendChild(parseHTML(tpl(`tab-preview-${state}`, data)))
 
     Array.from(this.container.classList)
-      .filter(className => className.indexOf('uploadcare--preview_status_'))
+      .filter(className => className.indexOf('uploadcare--preview_status_') !== -1)
       .forEach(classToRemove => {
         this.container.classList.remove(classToRemove)
       })
@@ -241,7 +241,7 @@ class PreviewTab extends BasePreviewTab {
     // done = this.container.find('.uploadcare--preview__done')
     return imageLoader(img)
       .then(() => {
-        return this.container.addClass('uploadcare--preview_status_loaded')
+        return this.container.classList.add('uploadcare--preview_status_loaded')
       })
       .catch(() => {
         this.file = null
