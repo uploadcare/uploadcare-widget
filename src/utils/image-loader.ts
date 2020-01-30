@@ -1,5 +1,5 @@
 // utils
-const trackLoading = (image, src) =>
+const trackLoading = (image: HTMLImageElement, src?: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     if (src) {
       image.src = src
@@ -16,7 +16,7 @@ const trackLoading = (image, src) =>
     }
   })
 
-const imageLoader = function(image) {
+const imageLoader = function(image: string | HTMLImageElement) {
   // if argument is an array, treat as
   // load(['1.jpg', '2.jpg'])
   if (Array.isArray(image)) {
@@ -29,7 +29,7 @@ const imageLoader = function(image) {
   }
 }
 
-const videoLoader = function(src) {
+const videoLoader = function(src: string): Promise<Event> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video')
 
