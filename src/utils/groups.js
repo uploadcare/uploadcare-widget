@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import { wrapToPromise } from '../utils'
 import { valueToFile } from './files'
 import { loadFileGroup, FileGroup } from '../files/group-creator'
@@ -12,7 +10,7 @@ const isFileGroup = function(obj) {
 const valueToGroup = function(value, settings) {
   var files, item
   if (value) {
-    if ($.isArray(value)) {
+    if (Array.isArray(value)) {
       files = (function() {
         var j, len, results
         results = []
