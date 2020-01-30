@@ -1,5 +1,6 @@
 import { BaseWidget } from './base-widget'
-import { fileFrom } from '../files'
+import WidgetFile from '../file'
+// import { fileFrom } from '../files'
 
 class Widget extends BaseWidget {
   __currentFile() {
@@ -7,7 +8,7 @@ class Widget extends BaseWidget {
   }
 
   __handleDirectSelection(type, data) {
-    var file = fileFrom(type, data[0], this.settings)
+    const file = new WidgetFile(data[0], this.settings)
     if (this.settings.systemDialog || !this.settings.previewStep) {
       return this.__setObject(file)
     } else {

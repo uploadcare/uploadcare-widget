@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { presets, defaults, common } from '../settings'
-import { fileFrom, filesFrom } from '../files'
+// import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
 import { plugin } from './namespace.api'
@@ -20,8 +20,8 @@ export default {
 
   globals: common,
   start: common,
-  fileFrom,
-  filesFrom,
+  // fileFrom,
+  // filesFrom,
   FileGroup,
   loadFileGroup,
   locales: ['en']
