@@ -316,6 +316,8 @@ class Panel {
     if (!this.promise) {
       const promise = this.dfd.then(files => {
         if (this.settings.multiple) {
+          // return object not promise for
+          // stop promise chain
           return { v: FileGroup(files, this.settings) }
         } else {
           return { v: files[0] }
