@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 // utils
 import {
   FileReader,
@@ -22,7 +20,6 @@ import {
 import { registerMessage, unregisterMessage } from '../utils/messages'
 import { imageLoader, videoLoader } from '../utils/image-loader'
 import { log, debug, warn, warnOnce } from '../utils/warnings'
-import { getPusher } from '../utils/pusher'
 
 import {
   unique,
@@ -52,25 +49,9 @@ import {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  // jsonp,
   canvasToBlob,
   taskRunner,
-  // fixedPipe
 } from '../utils'
-
-// import {
-//   shrinkFile,
-//   shrinkImage,
-//   drawFileToCanvas,
-//   readJpegChunks,
-//   replaceJpegChunk,
-//   getExif,
-//   parseExifOrientation,
-//   hasTransparency
-// } from '../utils/image-processor'
-
-import { isFile, valueToFile } from '../utils/files'
-import { isFileGroup, valueToGroup, isFileGroupsEqual } from '../utils/groups'
 
 import locale from '../locale'
 
@@ -82,22 +63,10 @@ import {
   CssCollector
 } from '../settings'
 
-import { Pusher } from '../vendor/pusher'
-import { BaseFile } from '../files/base'
-import { ObjectFile } from '../files/object'
-import { InputFile } from '../files/input'
-import { UrlFile } from '../files/url'
-import { UploadedFile, ReadyFile } from '../files/uploaded'
-import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
-
-// import { fileFrom, filesFrom } from '../files'
-import { FileGroup, loadFileGroup } from '../files/group-creator'
-
 import { version } from '../../package.json'
 
 const namespace = {
   version,
-  jQuery: $,
 
   utils: {
     abilities: {
@@ -156,32 +125,8 @@ const namespace = {
     fileSizeLabels,
     readableFileSize,
     ajaxDefaults,
-    // jsonp,
     canvasToBlob,
     taskRunner,
-    // fixedPipe,
-
-    isFile,
-    valueToFile,
-
-    // image: {
-      // shrinkFile,
-      // shrinkImage,
-      // drawFileToCanvas,
-      // readJpegChunks,
-      // replaceJpegChunk,
-      // getExif,
-      // parseExifOrientation,
-      // hasTransparency
-    // },
-
-    pusher: {
-      getPusher
-    },
-
-    isFileGroup,
-    valueToGroup,
-    isFileGroupsEqual
   },
 
   settings: {
@@ -193,24 +138,6 @@ const namespace = {
   },
 
   locale,
-
-  files: {
-    BaseFile,
-    ObjectFile,
-    InputFile,
-    UrlFile,
-    UploadedFile,
-    ReadyFile,
-    FileGroup: FileGroupClass,
-    SavedFileGroup
-  },
-
-  Pusher,
-
-  FileGroup,
-  loadFileGroup,
-  // fileFrom,
-  // filesFrom,
 
   __exports: {},
 
