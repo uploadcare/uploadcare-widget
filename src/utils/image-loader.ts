@@ -1,9 +1,6 @@
 // utils
-const trackLoading = (image: HTMLImageElement, src?: string): Promise<HTMLImageElement> =>
+const trackLoading = (image: HTMLImageElement): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
-    if (src) {
-      image.src = src
-    }
     if (image.complete) {
       resolve(image)
     } else {
@@ -16,17 +13,25 @@ const trackLoading = (image: HTMLImageElement, src?: string): Promise<HTMLImageE
     }
   })
 
-const imageLoader = function(image: string | HTMLImageElement) {
+const makeImage = function(image: HTMLImageElement | HTMLImageElement[]): Promise<HTMLImageElement | HTMLImageElement[]> {
   // if argument is an array, treat as
   // load(['1.jpg', '2.jpg'])
   if (Array.isArray(image)) {
-    return Promise.all(image.map(imageLoader))
-  }
-  if (image.src) {
-    return trackLoading(image)
+    return Promise.all(image.map(img => trackLoading(img)))
   } else {
-    return trackLoading(new window.Image(), image)
+    return trackLoading(image)
   }
+}
+
+const imageLoader = function(image: string | HTMLImageElement | HTMLImageElement[]): Promise<HTMLImageElement | HTMLImageElement[]> {
+  if (typeof image === 'string') {
+    const img = new window.Image()
+
+    img.src = image
+    image = img
+  }
+
+  return makeImage(image)
 }
 
 const videoLoader = function(src: string): Promise<Event> {
