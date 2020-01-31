@@ -526,7 +526,7 @@ const callbacks = function(options) {
 
     // Remove a callback from the list
     remove: function() {
-      arguments.forEach(function(arg, _) {
+      Array.from(arguments).forEach(function(arg, _) {
         var index
         while ((index = inArray(arg, list, index)) > -1) {
           list.splice(index, 1)
