@@ -1,9 +1,9 @@
 import locale from '../locale'
 import { defer, bindAll, publicCallbacks, fileSelectDialog, callbacks } from '../utils'
-import { valueToFile } from '../utils/files'
 import { receiveDrop } from './dragdrop'
 import { Template } from './template'
 import { openDialog } from './dialog'
+import WidgetFile from '../file'
 
 class BaseWidget {
   constructor(element, settings) {
@@ -130,11 +130,11 @@ class BaseWidget {
   }
 
   __setExternalValue(value) {
-    return this.__setObject(valueToFile(value, this.settings))
+    return this.__setObject(new WidgetFile(value, this.settings))
   }
 
   value(value) {
-    if (value !== undefined) {
+    if (value !== undefined && value) {
       this.__hasValue = true
       this.__setExternalValue(value)
       return this
@@ -160,6 +160,7 @@ class BaseWidget {
   __openDialog(tab) {
     var dialogApi = openDialog(this.currentObject, tab, this.settings)
     this.__onDialogOpen.fire(dialogApi)
+
     return dialogApi.done(this.__setObject.bind(this))
   }
 
