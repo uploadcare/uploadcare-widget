@@ -7,7 +7,6 @@ var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
 class CameraTab {
   constructor(container, tabButton, dialogApi, settings, name) {
-
     this.__captureInput = this.__captureInput.bind(this)
     this.__captureInputHandle = this.__captureInputHandle.bind(this)
     this.__setState = this.__setState.bind(this)
