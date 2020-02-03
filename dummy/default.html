@@ -37,30 +37,34 @@
 <div id="last-result"></div>
 <ul id="events"></ul>
 <script>
-  $(function($) {
+  (function() {
     var log = function(text) {
       var time = new Date().toLocaleTimeString();
-      $("<li>")
-        .appendTo("#events")
-        .text(time + " " + text);
+      const $li = document.createElement('li')
+
+      $li.textContent = time + " " + text
+
+      document.querySelector('#events').append(
+        document.createElement('li')
+      )
     };
     var widgets = uploadcare.initialize();
     for (var i = 0; i < widgets.length; i++) {
       widgets[i].onChange.add(function(file) {
+        const $lastResult = document.querySelector('#last-result')
         if (file) {
           file.done(function(info) {
             log("change: " + info.uuid);
-            $("#last-result").html(
-              $("<img/>", {
-                src: info.originalUrl + "-/preview/500x500/"
-              })
-            );
+            const imgSrc = info.originalUrl + "-/preview/500x500/"
+
+            $lastResult.innerHTML = `<img src="${imgSrc}">`
           });
         } else {
-          $("#last-result").empty();
+          while($lastResult.firstChild)
+            $lastResult.removeChild($lastResult.firstChild)
           log("change: (empty)");
         }
       });
     }
-  });
+  })()
 </script>
