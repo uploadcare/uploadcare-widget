@@ -190,8 +190,8 @@ class PreviewTabMultiple extends BasePreviewTab {
 
   __fileFailed(file, error, info) {
     const fileEl = this.__fileToEl(file)
-    fileEl.removeClass('uploadcare--file_status_uploading')
-    fileEl.addClass('uploadcare--file_status_error')
+    fileEl.classList.remove('uploadcare--file_status_uploading')
+    fileEl.classList.add('uploadcare--file_status_error')
     fileEl.querySelector('.uploadcare--file__error').textContent = locale.t(
       `errors.${error}`
     )
