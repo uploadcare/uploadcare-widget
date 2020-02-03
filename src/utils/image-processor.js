@@ -10,28 +10,33 @@ var DataView = isWindowDefined() && window.DataView
 var runner = taskRunner(1)
 
 const shrinkFile = function(file, settings) {
+  let res = () => {}
+  let rej = () => {}
+  const promise = new Promise((resolve, reject) => {
+    res = resolve
+    rej = reject
+  })
   var df
   // in -> file
   // out <- blob
   df = $.Deferred()
   if (!(URL && DataView && Blob)) {
-    return df.reject('support')
+    return rej(Error('support'))
   }
   // start = new Date()
   runner(release => {
-    var op
     // console.log('delayed: ' + (new Date() - start))
-    df.always(release)
+    promise.finally(release)
     // start = new Date()
-    op = imageLoader(URL.createObjectURL(file))
-    op.always(function(img) {
+    let op = imageLoader(URL.createObjectURL(file))
+    op.finally(function(img) {
       return URL.revokeObjectURL(img.src)
     })
-    op.fail(function() {
-      return df.reject('not image')
+    op.catch(function() {
+      return rej(Error('not image'))
     })
 
-    return op.done(function(img) {
+    return op.then(function(img) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
@@ -239,21 +244,30 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
 // Util functions
 
 const readJpegChunks = function(file) {
-  var df, pos, readNext, readNextChunk, readToView
-  readToView = function(file, cb) {
-    var reader
-    reader = new FileReader()
+  let res = () => {}
+  let rej = () => {}
+  const promise = new Promise((resolve, reject) => {
+    res = resolve
+    rej = reject
+  })
+  let pos = 2
+
+  const readToView = function(file, cb) {
+    const reader = new FileReader()
+
     reader.onload = function() {
       return cb(new DataView(reader.result))
     }
     reader.onerror = function(e) {
-      return df.reject('reader', e)
+      return rej(Error('reader'))
     }
+
     return reader.readAsArrayBuffer(file)
   }
-  readNext = function() {
+
+  const readNext = function() {
     return readToView(file.slice(pos, pos + 128), function(view) {
-      var i, j, ref
+      let i, j, ref
       for (
         i = j = 0, ref = view.byteLength;
         ref >= 0 ? j < ref : j > ref;
@@ -268,47 +282,41 @@ const readJpegChunks = function(file) {
     })
   }
 
-  readNextChunk = function() {
-    var startPos
-    startPos = pos
-
-    // todo fix
-    // eslint-disable-next-line no-return-assign
+  const readNextChunk = function() {
     return readToView(file.slice(pos, (pos += 4)), function(view) {
-      var length, marker
       if (view.byteLength !== 4 || view.getUint8(0) !== 0xff) {
-        return df.reject('corrupted')
+        return rej(Error('corrupted'))
       }
-      marker = view.getUint8(1)
+      const marker = view.getUint8(1)
       if (marker === 0xda) {
         // Start Of Scan
         // console.log('read jpeg chunks: ' + (new Date() - start))
-        return df.resolve()
+        return res()
       }
-      length = view.getUint16(2) - 2
+      const length = view.getUint16(2) - 2
       // eslint-disable-next-line no-return-assign
       return readToView(file.slice(pos, (pos += length)), function(view) {
         if (view.byteLength !== length) {
-          return df.reject('corrupted')
+          return rej(Error('corrupted'))
         }
-        df.notify(startPos, length, marker, view)
+        // df.notify(startPos, length, marker, view)
         return readNext()
       })
     })
   }
-  df = $.Deferred()
+
   if (!(FileReader && DataView)) {
-    return df.reject('support')
+    return rej(Error('support'))
   }
-  // start = new Date()
-  pos = 2
+
   readToView(file.slice(0, 2), function(view) {
     if (view.getUint16(0) !== 0xffd8) {
-      return df.reject('not jpeg')
+      return rej(Error('not jpeg'))
     }
     return readNext()
   })
-  return df.promise()
+
+  return promise
 }
 
 const replaceJpegChunk = function(blob, marker, chunks) {
@@ -370,6 +378,7 @@ const getExif = function(file) {
       }
     }
   })
+
   return op.then(
     function() {
       return exif
@@ -377,11 +386,10 @@ const getExif = function(file) {
     function(reason) {
       return $.Deferred().reject(exif, reason)
     }
-  )
+  ).catch(reason => $.Deferred().reject(exif, reason))
 }
 
 const parseExifOrientation = function(exif) {
-  var count, j, little, offset, ref
   if (
     !exif ||
     exif.byteLength < 14 ||
@@ -390,6 +398,8 @@ const parseExifOrientation = function(exif) {
   ) {
     return null
   }
+
+  let little
   if (exif.getUint16(6) === 0x4949) {
     little = true
   } else if (exif.getUint16(6) === 0x4d4d) {
@@ -397,11 +407,15 @@ const parseExifOrientation = function(exif) {
   } else {
     return null
   }
+
   if (exif.getUint16(8, little) !== 0x002a) {
     return null
   }
-  offset = 8 + exif.getUint32(10, little)
-  count = exif.getUint16(offset - 2, little)
+
+  let offset = 8 + exif.getUint32(10, little)
+  const count = exif.getUint16(offset - 2, little)
+  let j
+  let ref
   for (j = 0, ref = count; ref >= 0 ? j < ref : j > ref; ref >= 0 ? ++j : --j) {
     if (exif.byteLength < offset + 10) {
       return null
