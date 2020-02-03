@@ -55,22 +55,22 @@ class PreviewTab extends BasePreviewTab {
     const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
 
-    this.file.progress(
-      ifCur(info => {
-        info = info.incompleteFileInfo
-        const label = (info.name || '') + readableFileSize(info.size, '', ', ')
-        this.container.querySelector(
-          '.uploadcare--preview__file-name'
-        ).textContent = label
-        const source = info.sourceInfo
-        const blob = Blob
-        if (source.file && blob && source.file instanceof blob) {
-          return tryToLoadImagePreview(file, source.file).catch(() => {
-            return tryToLoadVideoPreview(file, source.file)
-          })
-        }
-      })
-    )
+    // this.file.progress(
+    //   ifCur(info => {
+    //     info = info.incompleteFileInfo
+    //     const label = (info.name || '') + readableFileSize(info.size, '', ', ')
+    //     this.container.querySelector(
+    //       '.uploadcare--preview__file-name'
+    //     ).textContent = label
+    //     const source = info.sourceInfo
+    //     const blob = Blob
+    //     if (source.file && blob && source.file instanceof blob) {
+    //       return tryToLoadImagePreview(file, source.file).catch(() => {
+    //         return tryToLoadVideoPreview(file, source.file)
+    //       })
+    //     }
+    //   })
+    // )
     this.file.done(
       ifCur(info => {
         var imgInfo, src
@@ -87,7 +87,7 @@ class PreviewTab extends BasePreviewTab {
             if (this.settings.previewUrlCallback) {
               src = this.settings.previewUrlCallback(src, info)
             }
-            imgInfo = info
+            imgInfo = info.imageInfo
             this.__setState('image', {
               src,
               name: info.name,
@@ -253,7 +253,7 @@ class PreviewTab extends BasePreviewTab {
     const done = this.container.querySelector('.uploadcare--preview__done')
     const imgLoader = imageLoader(img[0])
       .then(() => {
-        return this.container.addClass('uploadcare--preview_status_loaded')
+        return this.container.classList.add('uploadcare--preview_status_loaded')
       })
       .catch(() => {
         this.file = null
@@ -287,8 +287,9 @@ class PreviewTab extends BasePreviewTab {
         .textContent = locale.t('dialog.tabs.preview.crop.title')
       this.container
         .querySelector('.uploadcare--preview__content')
-        .addClass('uploadcare--preview__content_crop')
-      done.setAttribute('disabled', 'true').setAttribute('aria-disabled', 'true')
+        .classList.add('uploadcare--preview__content_crop')
+      done.setAttribute('disabled', 'true')
+        .setAttribute('aria-disabled', 'true')
       done.textContent = locale.t('dialog.tabs.preview.crop.done')
       this.populateCropSizes()
       this.container
@@ -310,15 +311,15 @@ class PreviewTab extends BasePreviewTab {
     const currentClass = 'uploadcare--crop-sizes__item_current'
 
     this.settings.crop.forEach((crop, i) => {
-      var caption, gcd, icon, item, prefered, size
-      prefered = crop.preferedSize
-      if (prefered) {
-        gcd = calcGCD(prefered[0], prefered[1])
-        caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
+      var caption, gcd, icon, item, size
+      const preferred = crop.preferedSize
+      if (preferred) {
+        gcd = calcGCD(preferred[0], preferred[1])
+        caption = `${preferred[0] / gcd}:${preferred[1] / gcd}`
       } else {
         caption = locale.t('dialog.tabs.preview.crop.free')
       }
-      const clone = template
+      const clone = template[0]
         .cloneNode(true)
 
       control.appendChild(clone)
@@ -337,8 +338,8 @@ class PreviewTab extends BasePreviewTab {
             item.classList.add(currentClass)
           }
         })
-      if (prefered) {
-        size = fitSize(prefered, [30, 30], true)
+      if (preferred) {
+        size = fitSize(preferred, [30, 30], true)
         return item.children().css({
           width: Math.max(20, size[0]),
           height: Math.max(12, size[1])
