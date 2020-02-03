@@ -19,19 +19,20 @@ import {
 import { build } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
-import { FileGroup } from '../files/group-creator'
-import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
 import WidgetFile from '../file'
 import { welcomeContent } from '../templates/welcome-content'
+import WidgetGroup from '../group'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.first().focus()
   } else if (e.shiftKey && focusableElements.first().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.last().focus()
   }
 }
@@ -197,7 +198,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   if (!files) {
     files = []
-  } else if (isFileGroup(files)) {
+  } else if (Object.prototype.hasOwnProperty.call(files, "files")) {
     files = files.files()
   } else if (!Array.isArray(files)) {
     files = [files]
@@ -209,7 +210,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   filter = function(files) {
     if (settings.multiple) {
-      return FileGroup(files, settings)
+      return new WidgetGroup(files, settings)
     } else {
       return files[0]
     }
