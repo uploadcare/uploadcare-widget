@@ -365,9 +365,8 @@ const replaceJpegChunk = function(blob, marker, chunks) {
 }
 
 const getExif = function(file) {
-  var exif, op
-  exif = null
-  op = readJpegChunks(file)
+  let exif = null
+  const op = readJpegChunks(file)
   op.progress(function(pos, l, marker, view) {
     if (!exif && marker === 0xe1) {
       if (view.byteLength >= 14) {
