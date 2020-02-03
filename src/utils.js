@@ -51,37 +51,6 @@ const wrapToPromise = function(value) {
     .promise()
 }
 
-// same as promise.then(), but if filter returns promise
-// it will be just passed forward without any special behavior
-const then = function(pr, doneFilter, failFilter, progressFilter) {
-  var compose, df
-  df = $.Deferred()
-  compose = function(fn1, fn2) {
-    if (fn1 && fn2) {
-      return function() {
-        return fn2.call(this, fn1.apply(this, arguments))
-      }
-    } else {
-      return fn1 || fn2
-    }
-  }
-  pr.then(
-    compose(
-      doneFilter,
-      df.resolve
-    ),
-    compose(
-      failFilter,
-      df.reject
-    ),
-    compose(
-      progressFilter,
-      df.notify
-    )
-  )
-  return df.promise()
-}
-
 // Build copy of source with only specified methods.
 // Handles chaining correctly.
 const bindAll = function(source, methods) {
@@ -860,7 +829,6 @@ export {
   gcd,
   once,
   wrapToPromise,
-  then,
   bindAll,
   upperCase,
   publicCallbacks,

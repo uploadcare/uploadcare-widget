@@ -11,7 +11,7 @@ class MultipleWidget extends BaseWidget {
   }
 
   __setObject(group) {
-    if (!isFileGroupsEqual(this.currentObject, group)) {
+    if (group && !isFileGroupsEqual(this.currentObject, group.obj)) {
       return super.__setObject(group)
       // special case, when multiple widget is used with clearable
       // and user or some external code clears the value after

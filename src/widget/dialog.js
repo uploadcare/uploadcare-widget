@@ -7,7 +7,6 @@ import { PreviewTabMultiple } from './tabs/preview-tab-multiple'
 
 import { CollectionOfPromises } from '../utils/collection'
 import {
-  then,
   publicCallbacks,
   fitSize,
   applyCropCoordsToInfo,
@@ -131,7 +130,9 @@ const openDialog = function(files, tab, settings) {
   //   return dialogPr.reject()
   // })
 
-  currentDialogPr = dialogPr.always(function() {
+  currentDialogPr = dialogPr
+
+  dialogPr.always(function() {
     document.documentElement.classList.remove(openedClass)
     document.body.classList.remove(openedClass)
 
@@ -188,8 +189,6 @@ const openPreviewDialog = function(file, settings) {
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
 const openPanel = function(placeholder, files, tab, settings) {
-  var filter, panel
-
   if (isPlainObject(tab)) {
     settings = tab
     tab = null
@@ -205,17 +204,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   settings = build(settings)
 
-  panel = new Panel(settings, placeholder, files, tab).publicPromise()
-
-  filter = function(files) {
-    if (settings.multiple) {
-      return FileGroup(files, settings)
-    } else {
-      return files[0]
-    }
-  }
-
-  return then(panel, filter, filter).promise(panel)
+  return new Panel(settings, placeholder, files, tab).publicPromise()
 }
 
 const registeredTabs = {}
@@ -325,8 +314,17 @@ class Panel {
 
   publicPromise() {
     if (!this.promise) {
-      const then = this.dfd.then.bind(this.dfd)
-      const always = this.dfd.finally.bind(this.dfd)
+      const promise = this.dfd.then(files => {
+        if (this.settings.multiple) {
+          // return an object for stop promise chaining
+          return { obj: FileGroup(files, this.settings) }
+        } else {
+          return { obj: files[0] }
+        }
+      })
+
+      const then = promise.then.bind(promise)
+      const always = promise.finally.bind(promise)
 
       this.promise = {
         always,
