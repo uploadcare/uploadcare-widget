@@ -6,8 +6,8 @@ import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 import { isWindowDefined } from './is-window-defined'
 
 // utils image
-var DataView = isWindowDefined() && window.DataView
-var runner = taskRunner(1)
+const DataView = isWindowDefined() && window.DataView
+const runner = taskRunner(1)
 
 const shrinkFile = function(file, settings) {
   let res = () => {}
