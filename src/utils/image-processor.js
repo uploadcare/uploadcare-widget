@@ -384,9 +384,9 @@ const getExif = function(file) {
       return exif
     },
     function(reason) {
-      return $.Deferred().reject(exif, reason)
+      return Promise.reject(reason)
     }
-  ).catch(reason => $.Deferred().reject(exif, reason))
+  ).catch(reason => Promise.reject(reason))
 }
 
 const parseExifOrientation = function(exif) {
