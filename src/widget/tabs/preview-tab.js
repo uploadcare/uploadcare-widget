@@ -194,7 +194,9 @@ class PreviewTab extends BasePreviewTab {
         return URL.revokeObjectURL(src)
       })
       this.__setState('video')
-      const videoTag = this.container.querySelector('.uploadcare--preview__video')
+      const videoTag = this.container.querySelector(
+        '.uploadcare--preview__video'
+      )
       // hack to enable seeking due to bug in MediaRecorder API
       // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
       const loaded = videoTag.addEventListener('loadeddata', function() {
@@ -228,7 +230,9 @@ class PreviewTab extends BasePreviewTab {
     this.container.appendChild(parseHTML(tpl(`tab-preview-${state}`, data)))
 
     Array.from(this.container.classList)
-      .filter(className => className.indexOf('uploadcare--preview_status_') !== -1)
+      .filter(
+        className => className.indexOf('uploadcare--preview_status_') !== -1
+      )
       .forEach(classToRemove => {
         this.container.classList.remove(classToRemove)
       })
@@ -251,11 +255,12 @@ class PreviewTab extends BasePreviewTab {
   initImage(imgSize, cdnModifiers) {
     const img = this.container.querySelector('.uploadcare--preview__image')
     const done = this.container.querySelector('.uploadcare--preview__done')
-    const imgLoader = imageLoader(img[0])
+    const imgLoader = imageLoader(img)
       .then(() => {
         return this.container.classList.add('uploadcare--preview_status_loaded')
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error)
         this.file = null
         return this.__setState('error', {
           error: 'loadImage'
@@ -263,45 +268,51 @@ class PreviewTab extends BasePreviewTab {
       })
 
     const startCrop = () => {
-      this.container
-        .querySelector('.uploadcare--crop-sizes__item')
-        .removeAttribute('aria-disabled')
-        .setAttribute('tabindex', 0)
+      const $cropSizesItem = this.container.querySelector(
+        '.uploadcare--crop-sizes__item'
+      )
+      $cropSizesItem.removeAttribute('aria-disabled')
+      $cropSizesItem.setAttribute('tabindex', 0)
 
-      done.removeAttribute('disabled').removeAttribute('aria-disabled')
-      this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
-      if (cdnModifiers) {
-        this.widget.setSelectionFromModifiers(cdnModifiers)
-      }
-      return done.addEventListener('click', () => {
-        const newFile = this.widget.applySelectionToFile(this.file)
-        this.dialogApi.fileColl.replace(this.file, newFile)
-
-        return true
-      })
+      done.removeAttribute('disabled')
+      done.removeAttribute('aria-disabled')
+      // crop logic
+      // this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
+      // if (cdnModifiers) {
+      //   this.widget.setSelectionFromModifiers(cdnModifiers)
+      // }
+      // return done.addEventListener('click', () => {
+      //   const newFile = this.widget.applySelectionToFile(this.file)
+      //   this.dialogApi.fileColl.replace(this.file, newFile)
+      //
+      //   return true
+      // })
     }
 
     if (this.settings.crop) {
-      this.container
-        .querySelector('.uploadcare--preview__title')
-        .textContent = locale.t('dialog.tabs.preview.crop.title')
+      this.container.querySelector(
+        '.uploadcare--preview__title'
+      ).textContent = locale.t('dialog.tabs.preview.crop.title')
       this.container
         .querySelector('.uploadcare--preview__content')
         .classList.add('uploadcare--preview__content_crop')
-      done.setAttribute('disabled', 'true')
-        .setAttribute('aria-disabled', 'true')
+      done.disabled = true
+      done.setAttribute('aria-disabled', true)
       done.textContent = locale.t('dialog.tabs.preview.crop.done')
       this.populateCropSizes()
-      this.container
-        .querySelector('.uploadcare--crop-sizes__item')
-        .setAttribute('aria-disabled', 'true')
-        .setAttribute('tabindex', -1)
-      return imgLoader.then(function() {
-        // Often IE 11 doesn't do reflow after image.onLoad
-        // and actual image remains 28x30 (broken image placeholder).
-        // Looks like defer always fixes it.
-        return defer(startCrop)
-      })
+      const $cropSizes = this.container.querySelector(
+        '.uploadcare--crop-sizes__item'
+      )
+      $cropSizes.setAttribute('aria-disabled', 'true')
+      $cropSizes.setAttribute('tabindex', -1)
+      return imgLoader
+        .then(function() {
+          // Often IE 11 doesn't do reflow after image.onLoad
+          // and actual image remains 28x30 (broken image placeholder).
+          // Looks like defer always fixes it.
+          return defer(startCrop)
+        })
+        .catch(reason => console.log(reason))
     }
   }
 
@@ -311,55 +322,62 @@ class PreviewTab extends BasePreviewTab {
     const currentClass = 'uploadcare--crop-sizes__item_current'
 
     this.settings.crop.forEach((crop, i) => {
-      var caption, gcd, icon, item, size
+      let caption
       const preferred = crop.preferedSize
       if (preferred) {
-        gcd = calcGCD(preferred[0], preferred[1])
+        const gcd = calcGCD(preferred[0], preferred[1])
         caption = `${preferred[0] / gcd}:${preferred[1] / gcd}`
       } else {
         caption = locale.t('dialog.tabs.preview.crop.free')
       }
-      const clone = template[0]
-        .cloneNode(true)
+      const item = template[0].cloneNode(true)
+      control.append(item)
 
-      control.appendChild(clone)
-        .setAttribute('data-caption', caption)
-        .addEventListener('click', e => {
-          if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
-            return
-          }
-          if (
-            !e.currentTarget.classList.contains(currentClass) &&
-            this.settings.crop.length > 1 &&
-            this.widget
-          ) {
-            this.widget.setCrop(crop)
-            control.querySelector('>*').classList.remove(currentClass)
-            item.classList.add(currentClass)
-          }
-        })
+      item.dataset.caption = caption
+      item.addEventListener('click', e => {
+        console.log(e)
+        if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
+          return
+        }
+        if (
+          !e.currentTarget.classList.contains(currentClass) &&
+          this.settings.crop.length > 1 &&
+          this.widget
+        ) {
+          this.widget.setCrop(crop)
+          control.querySelector('>*').classList.remove(currentClass)
+          item.classList.add(currentClass)
+        }
+      })
       if (preferred) {
-        size = fitSize(preferred, [30, 30], true)
-        return item.children().css({
-          width: Math.max(20, size[0]),
-          height: Math.max(12, size[1])
-        })
-      } else {
-        icon = parseHTML(html`"<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"`)
-          .setAttribute('role', 'presentation')
-          .setAttribute('class', 'uploadcare--icon')
+        const size = fitSize(preferred, [30, 30], true)
+        const items = item.children
+
+        items.style.width = Math.max(20, size[0])
+        items.style.height = Math.max(12, size[1])
+
         return item
-          .children
-          .appendChild(icon)
-          .classList.add('uploadcare--crop-sizes__icon_free')
+      } else {
+        const icon = parseHTML(html`
+          "<svg
+            class="uploadcare--icon"
+            width="32"
+            height="32"
+            role="presentation"
+          >
+            <use xlink:href="#uploadcare--icon-crop-free" /></svg
+          >"
+        `)
+
+        item.append(icon)
+
+        return item.classList.add('uploadcare--crop-sizes__icon_free')
       }
     })
-    template.parentNode.removeChild()
 
-    // return control
-    //   .querySelector('>*')
-    //   .eq(0) ???
-    //   .classList.add(currentClass)
+    template[0].parentNode.removeChild(template[0])
+
+    return control.children[0].classList.add(currentClass)
   }
 
   displayed() {
