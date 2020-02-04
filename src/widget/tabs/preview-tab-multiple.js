@@ -11,6 +11,7 @@ import { html } from '../../utils/html'
 class PreviewTabMultiple extends BasePreviewTab {
   constructor() {
     super(...arguments)
+    this._mapadelegatov = new WeakMap()
     this.container.appendChild(parseHTML(tpl('tab-preview-multiple')))
     this.__fileTpl = parseHTML(tpl('tab-preview-multiple-file'))
     this.fileListEl = this.container.querySelector('.uploadcare--files')
@@ -39,7 +40,6 @@ class PreviewTabMultiple extends BasePreviewTab {
         ? 'uploadcare--files_type_tiles'
         : 'uploadcare--files_type_table'
     )
-    this._mapadelegatov = new WeakMap()
     // this.__setupSorting()
   }
 
@@ -70,8 +70,13 @@ class PreviewTabMultiple extends BasePreviewTab {
     const tooFewFiles = files < this.settings.multipleMin
     const hasWrongNumberFiles = tooManyFiles || tooFewFiles
 
-    this.doneBtnEl.setAttribute('disabled', hasWrongNumberFiles)
-    this.doneBtnEl.setAttribute('aria-disabled', hasWrongNumberFiles)
+    if (hasWrongNumberFiles) {
+      this.doneBtnEl.setAttribute('disabled', true)
+      this.doneBtnEl.setAttribute('aria-disabled', true)
+    } else {
+      this.doneBtnEl.removeAttribute('disabled')
+      this.doneBtnEl.removeAttribute('aria-disabled')
+    }
 
     const title = locale
       .t('dialog.tabs.preview.multiple.question')
@@ -141,7 +146,7 @@ class PreviewTabMultiple extends BasePreviewTab {
 
     progress.style.width = Math.round(progressInfo.progress * 100) + '%'
 
-    return this.__updateFileInfo(fileEl, progressInfo.incompleteFileInfo)
+    return this.__updateFileInfo(fileEl, progressInfo.incompleteFileInfo || {})
   }
 
   __fileDone(file, info) {

@@ -86,12 +86,12 @@ class BaseWidget {
   }
 
   __setObject(newFile) {
-    if (newFile === this.currentObject) {
+    if (newFile && newFile.obj === this.currentObject) {
       return
     }
     this.__reset()
-    if (newFile) {
-      this.currentObject = newFile
+    if (newFile && newFile.obj) {
+      this.currentObject = newFile.obj
       this.__watchCurrentObject()
     } else {
       this.element.value = ''
