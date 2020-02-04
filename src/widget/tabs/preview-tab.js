@@ -1,11 +1,12 @@
-import { URL, Blob } from '../../utils/abilities'
+import { URL } from '../../utils/abilities'
+// import { Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader.ts'
 import {
   defer,
   gcd as calcGCD,
-  once,
+  // once,
   fitSize,
-  readableFileSize,
+  // readableFileSize,
   parseHTML,
   canvasToBlob
 } from '../../utils'
@@ -51,8 +52,8 @@ class PreviewTab extends BasePreviewTab {
       }
     }
 
-    const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
-    const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
+    // const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
+    // const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
 
     // this.file.progress(

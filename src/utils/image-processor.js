@@ -10,10 +10,10 @@ const DataView = isWindowDefined() && window.DataView
 const runner = taskRunner(1)
 
 const shrinkFile = function(file, settings) {
-  let res = () => {}
+  // let res = () => {}
   let rej = () => {}
   const promise = new Promise((resolve, reject) => {
-    res = resolve
+    // res = resolve
     rej = reject
   })
   var df
