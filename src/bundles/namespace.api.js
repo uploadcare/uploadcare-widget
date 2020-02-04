@@ -51,10 +51,8 @@ import {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  jsonp,
   canvasToBlob,
-  taskRunner,
-  fixedPipe
+  taskRunner
 } from '../utils'
 
 // import {
@@ -82,7 +80,7 @@ import {
 } from '../settings'
 
 import { Pusher } from '../vendor/pusher'
-import { BaseFile } from '../files/base'
+import { BaseFile, jsonp, fixedPipe} from '../files/base'
 import { ObjectFile } from '../files/object'
 import { InputFile } from '../files/input'
 import { UrlFile } from '../files/url'

@@ -1,7 +1,62 @@
 import $ from 'jquery'
 
 import { log, debug } from '../utils/warnings'
-import { jsonp, fixedPipe } from '../utils'
+
+const jsonp = function(url, type, data, settings = {}) {
+  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
+    function(data) {
+      var text
+      if (data.error) {
+        text = data.error.content || data.error
+        return $.Deferred().reject(text)
+      } else {
+        return data
+      }
+    },
+    function(_, textStatus, errorThrown) {
+      var text
+      text = `${textStatus} (${errorThrown})`
+      warn(`JSONP unexpected error: ${text} while loading ${url}`)
+
+      return text
+    }
+  )
+}
+
+// This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
+// action, add listener, callbacks,
+// ... .then handlers, argument index, [final state]
+const pipeTuples = [
+  ['notify', 'progress', 2],
+  ['resolve', 'done', 0],
+  ['reject', 'fail', 1]
+]
+
+const fixedPipe = function(promise, ...fns) {
+  return $.Deferred(function(newDefer) {
+    return $.each(pipeTuples, function(i, tuple) {
+      var fn
+      // Map tuples (progress, done, fail) to arguments (done, fail, progress)
+      fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
+      return promise[tuple[1]](function() {
+        var returned
+        returned = fn && fn.apply(this, arguments)
+        if (returned && $.isFunction(returned.promise)) {
+          return returned
+            .promise()
+            .progress(newDefer.notify)
+            .done(newDefer.resolve)
+            .fail(newDefer.reject)
+        } else {
+          return newDefer[tuple[0] + 'With'](
+            this === promise ? newDefer.promise() : this,
+            fn ? [returned] : arguments
+          )
+        }
+      })
+    })
+  }).promise()
+}
 
 // files
 

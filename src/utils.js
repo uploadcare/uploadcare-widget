@@ -1,14 +1,13 @@
-import $ from 'jquery'
-
-import { warn } from './utils/warnings'
 import { html } from './utils/html'
 
-var indexOf = [].indexOf
+const indexOf = [].indexOf
 
 // utils
 const unique = function(arr) {
-  var item, j, len, result
-  result = []
+  let item
+  let j
+  let len
+  const result = []
   for (j = 0, len = arr.length; j < len; j++) {
     item = arr[j]
     if (indexOf.call(result, item) < 0) {
@@ -23,7 +22,7 @@ const defer = function(fn) {
 }
 
 const gcd = function(a, b) {
-  var c
+  let c
   while (b) {
     c = a % b
     a = b
@@ -33,9 +32,8 @@ const gcd = function(a, b) {
 }
 
 const once = function(fn) {
-  var called, result
-  called = false
-  result = null
+  let called = false
+  let result = null
   return function() {
     if (!called) {
       result = fn.apply(this, arguments)
@@ -46,23 +44,20 @@ const once = function(fn) {
 }
 
 const wrapToPromise = function(value) {
-  return $.Deferred()
-    .resolve(value)
-    .promise()
+  return Promise.resolve(value)
 }
 
 // Build copy of source with only specified methods.
 // Handles chaining correctly.
 const bindAll = function(source, methods) {
-  var target
-  target = {}
+  const target = {}
 
-  $.each(methods, function(i, method) {
-    var fn = source[method]
+  methods.forEach(function(method, i) {
+    const fn = source[method]
 
-    if ($.isFunction(fn)) {
+    if (isFunction(fn)) {
       target[method] = function(...args) {
-        var result = fn.apply(source, args)
+        const result = fn.apply(source, args)
 
         // Fix chaining
         if (result === source) {
@@ -83,17 +78,18 @@ const upperCase = function(s) {
 }
 
 const publicCallbacks = function(callbacks) {
-  var result
-  result = callbacks.add
+  const result = callbacks.add
+
   result.add = callbacks.add
   result.remove = callbacks.remove
+
   return result
 }
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = (Math.random() * 16) | 0
-    var v = c === 'x' ? r : (r & 3) | 8
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 3) | 8
 
     return v.toString(16)
   })
@@ -115,28 +111,28 @@ const escapeRegExp = function(str) {
 }
 
 const globRegexp = function(str, flags = 'i') {
-  var parts
-  parts = $.map(str.split('*'), escapeRegExp)
+  const parts = str.split('*').map(escapeRegExp)
+
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
 const normalizeUrl = function(url) {
-  var scheme
   // google.com/ → google.com
   // /google.com/ → /google.com
   // //google.com/ → http://google.com
   // http://google.com/ → http://google.com
-  scheme = document.location.protocol
+  let scheme = document.location.protocol
   if (scheme !== 'http:') {
     scheme = 'https:'
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
+
 const fitText = function(text, max) {
-  var head, tail
   if (text.length > max) {
-    head = Math.ceil((max - 3) / 2)
-    tail = Math.floor((max - 3) / 2)
+    const head = Math.ceil((max - 3) / 2)
+    const tail = Math.floor((max - 3) / 2)
+
     return text.slice(0, head) + '...' + text.slice(-tail)
   } else {
     return text
@@ -148,10 +144,9 @@ const fitSizeInCdnLimit = function(objSize) {
 }
 
 const fitSize = function(objSize, boxSize, upscale) {
-  var heightRation, widthRatio
   if (objSize[0] > boxSize[0] || objSize[1] > boxSize[1] || upscale) {
-    widthRatio = boxSize[0] / objSize[0]
-    heightRation = boxSize[1] / objSize[1]
+    const widthRatio = boxSize[0] / objSize[0]
+    const heightRation = boxSize[1] / objSize[1]
     if (!boxSize[0] || (boxSize[1] && widthRatio > heightRation)) {
       return [Math.round(heightRation * objSize[0]), boxSize[1]]
     } else {
@@ -179,7 +174,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
   } else if (!wholeImage) {
     modifiers += '-/preview/'
   }
-  info = $.extend({}, info)
+  info = extend({}, info)
   info.cdnUrlModifiers = modifiers
   info.cdnUrl = `${info.originalUrl}${modifiers || ''}`
   info.crop = coords
@@ -187,7 +182,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
 }
 
 const fileInput = function(container, settings, fn) {
-  var run
+  let run
   let input = null
   let accept = settings.inputAcceptTypes
   if (accept === '') {
@@ -195,45 +190,53 @@ const fileInput = function(container, settings, fn) {
   }
 
   ;(run = function() {
-    input = (settings.multiple
-      ? $('<input type="file" multiple>')
-      : $('<input type="file">')
-    )
-      .attr('accept', accept)
-      .css({
-        position: 'absolute',
-        top: 0,
-        opacity: 0,
-        margin: 0,
-        padding: 0,
-        width: 'auto',
-        height: 'auto',
-        cursor: container.css('cursor')
-      })
-      .on('change', function() {
-        fn(this)
-        $(this).hide()
-        return run()
-      })
-    return container.append(input)
+    input = document.createElement('input')
+    input.type = 'file'
+
+    if (settings.multiple) {
+      input.setAttribute('multiple', '')
+    }
+
+    input.setAttribute('accept', accept)
+
+    input.addEventListener('change', function() {
+      fn(this)
+      input.style.display = 'none'
+
+      return run()
+    })
+
+    input.style.position = 'absolute'
+    input.style.top = '0'
+    input.style.opacity = '0'
+    input.style.margin = '0'
+    input.style.padding = '0'
+    input.style.width = 'auto'
+    input.style.height = 'auto'
+    input.style.cursor = window.getComputedStyle(container).cursor
+
+    return container.appendChild(input)
   })()
 
+  container.style.position = 'relative'
+  container.style.overflow = 'hidden'
+
+  container.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect()
+
+    const { left, top } = {
+      top: rect.top + document.body.scrollTop,
+      left: rect.left + document.body.scrollLeft
+    }
+    const width = parseFloat(
+      window.getComputedStyle(input, null).width.replace('px', '')
+    )
+
+    input.style.left = e.pageX - left - width + 10
+    input.style.top = e.pageY - top - 10
+  })
+
   return container
-    .css({
-      position: 'relative',
-      overflow: 'hidden'
-      // to make it posible to set `cursor:pointer` on button
-      // http://stackoverflow.com/a/9182787/478603
-    })
-    .mousemove(function(e) {
-      var left, top, width
-      ;({ left, top } = $(this).offset())
-      width = input.width()
-      return input.css({
-        left: e.pageX - left - width + 10,
-        top: e.pageY - top - 10
-      })
-    })
 }
 
 const fileSelectDialog = function(container, settings, fn, attributes = {}) {
@@ -302,39 +305,21 @@ const ajaxDefaults = {
   cache: false
 }
 
-const jsonp = function(url, type, data, settings = {}) {
-  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
-    function(data) {
-      var text
-      if (data.error) {
-        text = data.error.content || data.error
-        return $.Deferred().reject(text)
-      } else {
-        return data
-      }
-    },
-    function(_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
-      warn(`JSONP unexpected error: ${text} while loading ${url}`)
-
-      return text
-    }
-  )
-}
-
 const canvasToBlob = function(canvas, type, quality, callback) {
-  var arr, binStr, dataURL, i, j, ref
+  let i
+  let j
+  let ref
   if (window.HTMLCanvasElement.prototype.toBlob) {
     return canvas.toBlob(callback, type, quality)
   }
-  dataURL = canvas.toDataURL(type, quality)
+  let dataURL = canvas.toDataURL(type, quality)
   dataURL = dataURL.split(',')
-  binStr = window.atob(dataURL[1])
-  arr = new Uint8Array(binStr.length)
+  const binStr = window.atob(dataURL[1])
+  const arr = new Uint8Array(binStr.length)
   for (i = j = 0, ref = binStr.length; j < ref; i = j += 1) {
     arr[i] = binStr.charCodeAt(i)
   }
+
   return callback(
     new window.Blob([arr], {
       type: /:(.+\/.+);/.exec(dataURL[0])[1]
@@ -376,40 +361,6 @@ const taskRunner = function(capacity) {
 
   return run
 }
-// This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
-// action, add listener, callbacks,
-// ... .then handlers, argument index, [final state]
-const pipeTuples = [
-  ['notify', 'progress', 2],
-  ['resolve', 'done', 0],
-  ['reject', 'fail', 1]
-]
-
-const fixedPipe = function(promise, ...fns) {
-  return $.Deferred(function(newDefer) {
-    return $.each(pipeTuples, function(i, tuple) {
-      var fn
-      // Map tuples (progress, done, fail) to arguments (done, fail, progress)
-      fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
-      return promise[tuple[1]](function() {
-        var returned
-        returned = fn && fn.apply(this, arguments)
-        if (returned && $.isFunction(returned.promise)) {
-          return returned
-            .promise()
-            .progress(newDefer.notify)
-            .done(newDefer.resolve)
-            .fail(newDefer.reject)
-        } else {
-          return newDefer[tuple[0] + 'With'](
-            this === promise ? newDefer.promise() : this,
-            fn ? [returned] : arguments
-          )
-        }
-      })
-    })
-  }).promise()
-}
 
 const isFunction = fn => {
   // Support: Chrome <=57, Firefox <=52
@@ -436,52 +387,7 @@ function toType(obj) {
     : typeof obj
 }
 
-const isArrayLike = obj => {
-  function isWindow(obj) {
-    return obj != null && obj === obj.window
-  }
-
-  // Support: real iOS 8.2 only (not reproducible in simulator)
-  // `in` check used to prevent JIT error (gh-2145)
-  // hasOwn isn't used here due to false negatives
-  // regarding Nodelist length in IE
-  var length = !!obj && 'length' in obj && obj.length
-  var type = toType(obj)
-
-  if (isFunction(obj) || isWindow(obj)) {
-    return false
-  }
-
-  return (
-    type === 'array' ||
-    length === 0 ||
-    (typeof length === 'number' && length > 0 && length - 1 in obj)
-  )
-}
-
 const callbacks = function(options) {
-  const each = function(obj, callback) {
-    var length
-    var i = 0
-
-    if (isArrayLike(obj)) {
-      length = obj.length
-      for (; i < length; i++) {
-        if (callback.call(obj[i], i, obj[i]) === false) {
-          break
-        }
-      }
-    } else {
-      for (i in obj) {
-        if (callback.call(obj[i], i, obj[i]) === false) {
-          break
-        }
-      }
-    }
-
-    return obj
-  }
-
   // Convert String-formatted options into Object-formatted ones
   function createOptions(options) {
     var object = {}
@@ -567,7 +473,7 @@ const callbacks = function(options) {
         }
 
         ;(function add(args) {
-          each(args, function(_, arg) {
+          Array.from(args).forEach(function(arg, _) {
             if (isFunction(arg)) {
               if (!options.unique || !self.has(arg)) {
                 list.push(arg)
@@ -588,7 +494,7 @@ const callbacks = function(options) {
 
     // Remove a callback from the list
     remove: function() {
-      each(arguments, function(_, arg) {
+      Array.from(arguments).forEach(function(arg, _) {
         var index
         while ((index = inArray(arg, list, index)) > -1) {
           list.splice(index, 1)
@@ -699,16 +605,16 @@ const isPlainObject = function(obj) {
 }
 
 const extend = function() {
-  var options
-  var name
-  var src
-  var copy
-  var copyIsArray
-  var clone
-  var target = arguments[0] || {}
-  var i = 1
-  var length = arguments.length
-  var deep = false
+  let options
+  let name
+  let src
+  let copy
+  let copyIsArray
+  let clone
+  let target = arguments[0] || {}
+  let i = 1
+  const length = arguments.length
+  let deep = false
 
   // Handle a deep copy situation
   if (typeof target === 'boolean') {
@@ -777,16 +683,15 @@ const extend = function() {
 }
 
 const grep = (elems, callback, invert) => {
-  var callbackInverse
-  var matches = []
-  var i = 0
-  var length = elems.length
-  var callbackExpect = !invert
+  const matches = []
+  let i = 0
+  const length = elems.length
+  const callbackExpect = !invert
 
   // Go through the array, only saving the items
   // that pass the validator function
   for (; i < length; i++) {
-    callbackInverse = !callback(elems[i], i)
+    const callbackInverse = !callback(elems[i], i)
     if (callbackInverse !== callbackExpect) {
       matches.push(elems[i])
     }
@@ -796,7 +701,7 @@ const grep = (elems, callback, invert) => {
 }
 
 const parseHTML = function(str) {
-  var tmp = document.implementation.createHTMLDocument()
+  const tmp = document.implementation.createHTMLDocument()
   tmp.body.innerHTML = str
 
   if (tmp.body.childElementCount <= 1) {
@@ -850,10 +755,8 @@ export {
   fileSizeLabels,
   readableFileSize,
   ajaxDefaults,
-  jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe,
   isFunction,
   callbacks,
   inArray,
