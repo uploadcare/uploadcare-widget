@@ -12,7 +12,7 @@ import {
 import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
-import { CropWidget } from '../../ui/crop-widget'
+// import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
 import { html } from '../../utils/html'
 
@@ -108,7 +108,6 @@ class PreviewTab extends BasePreviewTab {
     )
     return this.file.fail(
       ifCur((error, info) => {
-        console.log(error, info)
         return this.__setState('error', {
           error,
           file: info
@@ -259,8 +258,7 @@ class PreviewTab extends BasePreviewTab {
       .then(() => {
         return this.container.classList.add('uploadcare--preview_status_loaded')
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
         this.file = null
         return this.__setState('error', {
           error: 'loadImage'
@@ -312,7 +310,6 @@ class PreviewTab extends BasePreviewTab {
           // Looks like defer always fixes it.
           return defer(startCrop)
         })
-        .catch(reason => console.log(reason))
     }
   }
 
@@ -335,7 +332,6 @@ class PreviewTab extends BasePreviewTab {
 
       item.dataset.caption = caption
       item.addEventListener('click', e => {
-        console.log(e)
         if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
           return
         }
