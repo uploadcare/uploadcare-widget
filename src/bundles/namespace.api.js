@@ -79,14 +79,7 @@ import {
 } from '../settings'
 
 import { Pusher } from '../vendor/pusher'
-import { BaseFile, ajaxDefaults, jsonp, fixedPipe} from '../files/base'
-import { ObjectFile } from '../files/object'
-import { InputFile } from '../files/input'
-import { UrlFile } from '../files/url'
-import { UploadedFile, ReadyFile } from '../files/uploaded'
 import { FileGroup as FileGroupClass, SavedFileGroup } from '../files/group'
-
-import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
 import { version } from '../../package.json'
@@ -150,11 +143,8 @@ const namespace = {
     fileSelectDialog,
     fileSizeLabels,
     readableFileSize,
-    ajaxDefaults,
-    jsonp,
     canvasToBlob,
     taskRunner,
-    fixedPipe,
 
     isFile,
     valueToFile,
@@ -190,12 +180,6 @@ const namespace = {
   locale,
 
   files: {
-    BaseFile,
-    ObjectFile,
-    InputFile,
-    UrlFile,
-    UploadedFile,
-    ReadyFile,
     FileGroup: FileGroupClass,
     SavedFileGroup
   },
@@ -204,8 +188,6 @@ const namespace = {
 
   FileGroup,
   loadFileGroup,
-  fileFrom,
-  filesFrom,
 
   __exports: {},
 
