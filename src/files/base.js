@@ -325,4 +325,4 @@ class BaseFile {
   }
 }
 
-export { BaseFile }
+export { BaseFile, ajaxDefaults, jsonp, fixedPipe }
