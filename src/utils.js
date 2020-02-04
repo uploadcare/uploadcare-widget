@@ -299,12 +299,6 @@ const readableFileSize = function(
   return `${prefix}${value} ${fileSizeLabels[i]}${postfix}`
 }
 
-const ajaxDefaults = {
-  dataType: 'json',
-  crossDomain: true,
-  cache: false
-}
-
 const canvasToBlob = function(canvas, type, quality, callback) {
   let i
   let j
@@ -754,7 +748,6 @@ export {
   fileSelectDialog,
   fileSizeLabels,
   readableFileSize,
-  ajaxDefaults,
   canvasToBlob,
   taskRunner,
   isFunction,

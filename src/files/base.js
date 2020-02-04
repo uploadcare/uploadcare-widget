@@ -1,21 +1,25 @@
 import $ from 'jquery'
 
-import { log, debug } from '../utils/warnings'
+import { log, debug, warn } from '../utils/warnings'
+
+const ajaxDefaults = {
+  dataType: 'json',
+  crossDomain: true,
+  cache: false
+}
 
 const jsonp = function(url, type, data, settings = {}) {
   return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
     function(data) {
-      var text
       if (data.error) {
-        text = data.error.content || data.error
+        const text = data.error.content || data.error
         return $.Deferred().reject(text)
       } else {
         return data
       }
     },
     function(_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
+      const text = `${textStatus} (${errorThrown})`
       warn(`JSONP unexpected error: ${text} while loading ${url}`)
 
       return text
