@@ -34,6 +34,7 @@
     "test": "npm run lint:css && npm run lint:js && npm run test:it"
   },
   "dependencies": {
+    "@uploadcare/upload-client": "^1.0.1",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
