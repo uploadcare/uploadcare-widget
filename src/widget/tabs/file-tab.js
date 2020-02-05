@@ -6,7 +6,8 @@ import { tpl } from '../../templates'
 import { receiveDrop } from '../dragdrop'
 
 class FileTab {
-  constructor(container, tabButton1, dialogApi, settings, name1) {
+  constructor(container, tabButton1, dialogApi, settings, name1, inModal) {
+    this.inModal = inModal
     this.__initTabsList = this.__initTabsList.bind(this)
     this.container = container
     this.tabButton = tabButton1
@@ -108,7 +109,7 @@ class FileTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--tab__action-button').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--tab__action-button').focus()
   }
 }
 

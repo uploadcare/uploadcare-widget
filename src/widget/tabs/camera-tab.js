@@ -375,7 +375,7 @@ class CameraTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--camera__button').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--camera__button').focus()
   }
 }
 

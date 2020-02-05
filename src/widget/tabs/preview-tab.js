@@ -344,7 +344,7 @@ class PreviewTab extends BasePreviewTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--preview__done').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--preview__done').focus()
   }
 }
 
