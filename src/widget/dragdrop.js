@@ -1,8 +1,8 @@
 import { fileDragAndDrop } from '../utils/abilities'
 import { build } from '../settings'
-import { filesFrom, fileFrom } from '../files'
 import { isWindowDefined } from '../utils/is-window-defined'
 import ready from '../utils/ready'
+import WidgetFile from '../file'
 
 const support = fileDragAndDrop
 
@@ -10,11 +10,10 @@ const uploadDrop = function(el, callback, settings) {
   settings = build(settings)
 
   return receiveDrop(el, function(data) {
-    const type = 'object'
     return callback(
       settings.multiple
-        ? filesFrom(type, data, settings)
-        : fileFrom(type, data[0], settings)
+        ? new WidgetFile(data, settings)
+        : new WidgetFile(data[0], settings)
     )
   })
 }
