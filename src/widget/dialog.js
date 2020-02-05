@@ -231,7 +231,6 @@ registerTab('preview', function(
 class Panel {
   constructor(settings1, placeholder, files, tab, opt) {
     var sel
-    this.renderCount = 0
     this.inModal = opt.inModal || false
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
@@ -285,7 +284,6 @@ class Panel {
   }
 
   takeFocus() {
-    // || this.renderCount === 0
     return this.inModal
   }
 
