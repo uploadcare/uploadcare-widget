@@ -79,7 +79,7 @@ const then = function(pr, doneFilter, failFilter, progressFilter) {
 const bindAll = function(source, methods) {
   const target = {}
 
-  each(methods, function(i, method) {
+  methods.forEach(function(method, i) {
     const fn = source[method]
 
     if (isFunction(fn)) {
@@ -154,10 +154,12 @@ const normalizeUrl = function(url) {
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
+
 const fitText = function(text, max) {
   if (text.length > max) {
     const head = Math.ceil((max - 3) / 2)
     const tail = Math.floor((max - 3) / 2)
+
     return text.slice(0, head) + '...' + text.slice(-tail)
   } else {
     return text
@@ -412,51 +414,6 @@ function toType(obj) {
     : typeof obj
 }
 
-const isArrayLike = obj => {
-  function isWindow(obj) {
-    return obj != null && obj === obj.window
-  }
-
-  // Support: real iOS 8.2 only (not reproducible in simulator)
-  // `in` check used to prevent JIT error (gh-2145)
-  // hasOwn isn't used here due to false negatives
-  // regarding Nodelist length in IE
-  var length = !!obj && 'length' in obj && obj.length
-  var type = toType(obj)
-
-  if (isFunction(obj) || isWindow(obj)) {
-    return false
-  }
-
-  return (
-    type === 'array' ||
-    length === 0 ||
-    (typeof length === 'number' && length > 0 && length - 1 in obj)
-  )
-}
-
-const each = function(obj, callback) {
-  var length
-  var i = 0
-
-  if (isArrayLike(obj)) {
-    length = obj.length
-    for (; i < length; i++) {
-      if (callback.call(obj[i], i, obj[i]) === false) {
-        break
-      }
-    }
-  } else {
-    for (i in obj) {
-      if (callback.call(obj[i], i, obj[i]) === false) {
-        break
-      }
-    }
-  }
-
-  return obj
-}
-
 const callbacks = function(options) {
   // Convert String-formatted options into Object-formatted ones
   function createOptions(options) {
@@ -543,7 +500,7 @@ const callbacks = function(options) {
         }
 
         ;(function add(args) {
-          each(args, function(_, arg) {
+          Array.from(args).forEach(function(arg, _) {
             if (isFunction(arg)) {
               if (!options.unique || !self.has(arg)) {
                 list.push(arg)
@@ -564,7 +521,7 @@ const callbacks = function(options) {
 
     // Remove a callback from the list
     remove: function() {
-      each(arguments, function(_, arg) {
+      Array.from(arguments).forEach(function(arg, _) {
         var index
         while ((index = inArray(arg, list, index)) > -1) {
           list.splice(index, 1)
@@ -836,5 +793,4 @@ export {
   parseHTML,
   isPlainObject,
   matches,
-  each
 }
