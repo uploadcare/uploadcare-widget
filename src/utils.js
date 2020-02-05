@@ -200,7 +200,7 @@ const fileInput = function(container, settings, fn) {
     input.setAttribute('accept', accept)
 
     input.addEventListener('change', function() {
-      fn(this)
+      fn(input)
       input.style.display = 'none'
 
       return run()
