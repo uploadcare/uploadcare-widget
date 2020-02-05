@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { log, debug } from '../utils/warnings'
-import { jsonp, taskRunner } from '../utils'
+import { taskRunner } from '../utils'
 // import { shrinkFile } from '../utils/image-processor'
 
-import { BaseFile } from './base'
+import { BaseFile, jsonp } from './base'
 
 var _directRunner = null
 

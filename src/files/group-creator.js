@@ -1,7 +1,8 @@
 import $ from 'jquery'
 
 import { log } from '../utils/warnings'
-import { groupIdRegex, jsonp } from '../utils'
+import { groupIdRegex } from '../utils'
+import { jsonp } from './base'
 import { build } from '../settings'
 import { isFile } from '../utils/files'
 import { isFileGroup } from '../utils/groups'
