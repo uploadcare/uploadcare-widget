@@ -10,33 +10,28 @@ const DataView = isWindowDefined() && window.DataView
 const runner = taskRunner(1)
 
 const shrinkFile = function(file, settings) {
-  // let res = () => {}
-  let rej = () => {}
-  const promise = new Promise((resolve, reject) => {
-    // res = resolve
-    rej = reject
-  })
   var df
   // in -> file
   // out <- blob
   df = $.Deferred()
   if (!(URL && DataView && Blob)) {
-    return rej(Error('support'))
+    return df.reject('support')
   }
   // start = new Date()
   runner(release => {
+    var op
     // console.log('delayed: ' + (new Date() - start))
-    promise.finally(release)
+    df.always(release)
     // start = new Date()
-    let op = imageLoader(URL.createObjectURL(file))
-    op.finally(function(img) {
+    op = imageLoader(URL.createObjectURL(file))
+    op.always(function(img) {
       return URL.revokeObjectURL(img.src)
     })
-    op.catch(function() {
-      return rej(Error('not image'))
+    op.fail(function() {
+      return df.reject('not image')
     })
 
-    return op.then(function(img) {
+    return op.done(function(img) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
@@ -86,6 +81,7 @@ const shrinkFile = function(file, settings) {
 
   return df.promise()
 }
+
 
 const shrinkImage = function(img, settings) {
   var cx,
