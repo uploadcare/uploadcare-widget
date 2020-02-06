@@ -36,11 +36,12 @@ class BasePreviewTab {
 
     const progressCallback = callbacks()
     const update = () => {
-      var i, infos, len, progress, progressInfo
-      infos = this.dialogApi.fileColl.lastProgresses()
-      progress = 0
+      let i
+      let len
+      const infos = this.dialogApi.fileColl.lastProgresses()
+      let progress = 0
       for (i = 0, len = infos.length; i < len; i++) {
-        progressInfo = infos[i]
+        const progressInfo = infos[i]
         progress +=
           ((progressInfo != null ? progressInfo.progress : undefined) || 0) /
           infos.length
