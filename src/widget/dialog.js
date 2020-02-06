@@ -350,8 +350,11 @@ class Panel {
     return this.promise
   }
 
-  addData(type, data) {
-    const files = Array.from(data).map(file => new WidgetFile(file, this.settings))
+  addData(source, data) {
+    const files = Array.from(data).map(file => new WidgetFile(file, {
+      ...this.settings,
+      source,
+    }))
 
     this.addFiles(files)
   }
