@@ -47,12 +47,13 @@ import {
   fileSelectDialog,
   fileSizeLabels,
   readableFileSize,
-  ajaxDefaults,
   canvasToBlob,
-  taskRunner,
+  taskRunner
 } from '../utils'
 
 import locale from '../locale'
+
+import { ajaxDefaults } from '../files/base'
 
 import {
   globals,
@@ -124,7 +125,7 @@ const namespace = {
     readableFileSize,
     ajaxDefaults,
     canvasToBlob,
-    taskRunner,
+    taskRunner
   },
 
   settings: {
