@@ -1,7 +1,6 @@
 import uploadcare from './uploadcare.api'
 
 import '../stylesheets'
-// import '../widget/submit-guard'
 import '../widget/accessibility'
 
 import { Circle } from '../ui/progress'

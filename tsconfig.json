@@ -2,7 +2,11 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "lib": ["DOM", "es5"],
+    "lib": [
+      "es5",
+      "dom",
+      "es2015.promise"
+    ],
     "allowJs": true,
     "importHelpers": true,
     "esModuleInterop": true,
