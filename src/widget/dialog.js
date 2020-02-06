@@ -18,19 +18,19 @@ import {
 import { build } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
-import { FileGroup } from '../files/group-creator'
-import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
-import { welcomeContent } from '../templates/welcome-content'
 import WidgetFile from '../file'
+import { welcomeContent } from '../templates/welcome-content'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.first().focus()
   } else if (e.shiftKey && focusableElements.first().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.last().focus()
   }
 }
@@ -47,24 +47,24 @@ const lockScroll = function(toTop) {
 }
 
 isWindowDefined() &&
-  window.addEventListener('keydown', e => {
-    if (isDialogOpened()) {
-      if (e.keyCode === 27) {
-        // Escape
-        // close only topmost dialog
-        if (
-          typeof currentDialogPr !== 'undefined' &&
-          currentDialogPr !== null
-        ) {
-          currentDialogPr.reject()
-        }
-      }
-      if (e.keyCode === 9) {
-        // Tab
-        return lockDialogFocus(e)
+window.addEventListener('keydown', e => {
+  if (isDialogOpened()) {
+    if (e.keyCode === 27) {
+      // Escape
+      // close only topmost dialog
+      if (
+        typeof currentDialogPr !== 'undefined' &&
+        currentDialogPr !== null
+      ) {
+        currentDialogPr.reject()
       }
     }
-  })
+    if (e.keyCode === 9) {
+      // Tab
+      return lockDialogFocus(e)
+    }
+  }
+})
 
 let currentDialogPr = null
 const openedClass = 'uploadcare--page'
@@ -196,7 +196,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   if (!files) {
     files = []
-  } else if (isFileGroup(files)) {
+  } else if (Object.prototype.hasOwnProperty.call(files, "files")) {
     files = files.files()
   } else if (!Array.isArray(files)) {
     files = [files]
@@ -491,13 +491,13 @@ class Panel {
 
     const footer = tooManyFiles
       ? locale
-          .t('dialog.tabs.preview.multiple.tooManyFiles')
-          .replace('%max%', this.settings.multipleMax)
+        .t('dialog.tabs.preview.multiple.tooManyFiles')
+        .replace('%max%', this.settings.multipleMax)
       : files && tooFewFiles
-      ? locale
+        ? locale
           .t('dialog.tabs.preview.multiple.tooFewFiles')
           .replace('%min%', this.settings.multipleMin)
-      : locale.t('dialog.tabs.preview.multiple.title')
+        : locale.t('dialog.tabs.preview.multiple.title')
 
     const message = this.footer.querySelector('.uploadcare--panel__message')
     message.classList.toggle('uploadcare--panel__message_hidden', files === 0)
@@ -604,7 +604,7 @@ class Panel {
     )
 
     currentItem &&
-      currentItem.classList.remove('uploadcare--menu__item_current')
+    currentItem.classList.remove('uploadcare--menu__item_current')
 
     this.panel
       .querySelector(`.uploadcare--menu__item_tab_${tab}`)
@@ -679,7 +679,7 @@ class Panel {
           height="32"
           role="presentation"
           class="uploadcare--icon uploadcare--menu__icon ${name ===
-            'empty-pubkey' && 'uploadcare--panel__icon'}"
+    'empty-pubkey' && 'uploadcare--panel__icon'}"
         >
           <use xlink:href="#uploadcare--icon-${name}" />
         </svg>
