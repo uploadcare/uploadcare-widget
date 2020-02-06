@@ -62,7 +62,7 @@ class CameraTab {
   }
 
   __captureInputHandle(input) {
-    this.dialogApi.addFiles('object', input.files)
+    this.dialogApi.addData('object', input.files)
     return this.dialogApi.switchTab('preview')
   }
 
@@ -270,7 +270,7 @@ class CameraTab {
     return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
-      this.dialogApi.addFiles('object', [
+      this.dialogApi.addData('object', [
         [
           blob,
           {
@@ -316,7 +316,7 @@ class CameraTab {
       const ext = this.__guessExtensionByMime(this.__recorder.mimeType)
       blob.name = `record.${ext}`
 
-      this.dialogApi.addFiles('object', [
+      this.dialogApi.addData('object', [
         [
           blob,
           {
