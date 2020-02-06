@@ -54,7 +54,7 @@ class UrlTab {
       const url = fixUrl(input.value)
 
       if (url) {
-        this.dialogApi.addData('url', [url])
+        this.dialogApi.addData('url-tab', [url])
 
         input.value = ''
       }
