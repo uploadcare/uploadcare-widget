@@ -92,7 +92,10 @@ class RemoteTab {
         return message.url
       })()
 
-      const file = new WidgetFile(url, this.settings)
+      const file = new WidgetFile(url, {
+        ...this.settings,
+        source: this.name
+      })
 
       if (message.filename) {
         file.setName(message.filename)
