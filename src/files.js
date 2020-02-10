@@ -4,6 +4,7 @@ import { ObjectFile } from './files/object'
 import { InputFile } from './files/input'
 import { UrlFile } from './files/url'
 import { UploadedFile, ReadyFile } from './files/uploaded'
+import WidgetFile from './file'
 
 var converters = {
   object: ObjectFile,
@@ -14,7 +15,7 @@ var converters = {
 }
 
 const fileFrom = function(type, data, s) {
-  return filesFrom(type, [data], s)[0]
+  return new WidgetFile([data], s)
 }
 
 const filesFrom = function(type, data, s) {

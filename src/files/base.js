@@ -37,7 +37,7 @@ const fixedPipe = function(promise, ...fns) {
   }).promise()
 }
 
-const ajaxDefaults = {
+export const ajaxDefaults = {
   dataType: 'json',
   crossDomain: true,
   cache: false
