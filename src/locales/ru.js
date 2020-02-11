@@ -67,6 +67,7 @@ const translations = {
         button: 'Загрузить'
       },
       camera: {
+        title: 'Файл из видеокамеры',
         capture: 'Сделать снимок',
         mirror: 'Отразить',
         retry: 'Повторно запросить разрешение',
