@@ -9,12 +9,12 @@ import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
 export default {
-  input: 'src/bundles/uploadcare.full.js',
+  input: 'src/bundles/uploadcare.js',
 
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: 'dist/uploadcare.full.js',
+    file: 'dist/uploadcare.js',
     sourcemap: 'inline'
   },
 

@@ -14,15 +14,8 @@ const bundle = (input, output, options = {}) => ({
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: `${output}`,
-    globals: options.includeJquery
-      ? undefined
-      : {
-          jquery: '$'
-        }
+    file: `${output}`
   },
-
-  external: options.includeJquery ? undefined : ['jquery'],
 
   plugins: [
     options.enOnly &&
@@ -67,19 +60,11 @@ Date: <%= moment().format('YYYY-MM-DD') %>`
 })
 
 export default [
-  bundle('uploadcare.api.js', 'uploadcare.api.js', { enOnly: true }),
-  bundle('uploadcare.api.js', 'uploadcare.api.min.js', { enOnly: true }),
-
   bundle('uploadcare.js', 'uploadcare.js'),
   bundle('uploadcare.js', 'uploadcare.min.js'),
 
   bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.js', { enOnly: true }),
   bundle('uploadcare.lang.en.js', 'uploadcare.lang.en.min.js', {
     enOnly: true
-  }),
-
-  bundle('uploadcare.full.js', 'uploadcare.full.js', { includeJquery: true }),
-  bundle('uploadcare.full.js', 'uploadcare.full.min.js', {
-    includeJquery: true
   })
 ]
