@@ -6,8 +6,7 @@ import { tpl } from '../../templates'
 import { receiveDrop } from '../dragdrop'
 
 class FileTab {
-  constructor(container, tabButton1, dialogApi, settings, name1, inModal) {
-    this.inModal = inModal
+  constructor(container, tabButton1, dialogApi, settings, name1) {
     this.__initTabsList = this.__initTabsList.bind(this)
     this.container = container
     this.tabButton = tabButton1
