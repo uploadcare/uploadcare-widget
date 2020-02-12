@@ -2,9 +2,9 @@ import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
 import { globRegexp, parseHTML } from '../../utils'
 import { html } from '../../utils/html'
-import { UrlFile } from '../../files/url'
 
 import { version } from '../../../package.json'
+import WidgetFile from '../../file'
 
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {
@@ -92,14 +92,10 @@ class RemoteTab {
         return message.url
       })()
 
-      const sourceInfo = Object.assign(
-        {
-          source: this.name
-        },
-        message.info || {}
-      )
-
-      const file = new UrlFile(url, this.settings, sourceInfo)
+      const file = new WidgetFile(url, {
+        ...this.settings,
+        source: this.name
+      })
 
       if (message.filename) {
         file.setName(message.filename)
@@ -109,7 +105,7 @@ class RemoteTab {
         file.setIsImage(message.is_image)
       }
 
-      this.dialogApi.addFiles([file.promise()])
+      this.dialogApi.addFiles([file])
     })
 
     registerMessage('open-new-window', iframe, message => {

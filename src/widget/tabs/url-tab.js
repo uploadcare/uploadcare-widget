@@ -48,7 +48,7 @@ class UrlTab {
       var url = fixUrl(input.val())
 
       if (url) {
-        this.dialogApi.addFiles('url', [
+        this.dialogApi.addData('url', [
           [
             url,
             {
