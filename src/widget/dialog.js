@@ -18,19 +18,19 @@ import {
 import { build } from '../settings'
 import locale from '../locale'
 import { tpl } from '../templates'
-import { filesFrom } from '../files'
-import { FileGroup } from '../files/group-creator'
-import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
+import WidgetFile from '../file'
 import { welcomeContent } from '../templates/welcome-content'
 
 const lockDialogFocus = function(e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.first().focus()
   } else if (e.shiftKey && focusableElements.first().is(e.target)) {
     e.preventDefault()
+
     return focusableElements.last().focus()
   }
 }
@@ -47,24 +47,24 @@ const lockScroll = function(toTop) {
 }
 
 isWindowDefined() &&
-  window.addEventListener('keydown', e => {
-    if (isDialogOpened()) {
-      if (e.keyCode === 27) {
-        // Escape
-        // close only topmost dialog
-        if (
-          typeof currentDialogPr !== 'undefined' &&
-          currentDialogPr !== null
-        ) {
-          currentDialogPr.reject()
-        }
-      }
-      if (e.keyCode === 9) {
-        // Tab
-        return lockDialogFocus(e)
+window.addEventListener('keydown', e => {
+  if (isDialogOpened()) {
+    if (e.keyCode === 27) {
+      // Escape
+      // close only topmost dialog
+      if (
+        typeof currentDialogPr !== 'undefined' &&
+        currentDialogPr !== null
+      ) {
+        currentDialogPr.reject()
       }
     }
-  })
+    if (e.keyCode === 9) {
+      // Tab
+      return lockDialogFocus(e)
+    }
+  }
+})
 
 let currentDialogPr = null
 const openedClass = 'uploadcare--page'
@@ -196,7 +196,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   if (!files) {
     files = []
-  } else if (isFileGroup(files)) {
+  } else if (Object.prototype.hasOwnProperty.call(files, "files")) {
     files = files.files()
   } else if (!Array.isArray(files)) {
     files = [files]
@@ -251,6 +251,7 @@ class Panel {
   constructor(settings1, placeholder, files, tab) {
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
+    this.addData = this.addData.bind(this)
     this.__resolve = this.__resolve.bind(this)
     this.__reject = this.__reject.bind(this)
     this.__updateFooter = this.__updateFooter.bind(this)
@@ -317,7 +318,7 @@ class Panel {
       const promise = this.dfd.then(files => {
         if (this.settings.multiple) {
           // return an object for stop promise chaining
-          return { obj: FileGroup(files, this.settings) }
+          // return { obj: FileGroup(files, this.settings) }
         } else {
           return { obj: files[0] }
         }
@@ -336,6 +337,7 @@ class Panel {
         resolve: this.__resolve,
         fileColl: this.files,
         addFiles: this.addFiles,
+        addData: this.addData,
         switchTab: this.switchTab,
         hideTab: this.hideTab,
         showTab: this.showTab,
@@ -348,12 +350,17 @@ class Panel {
     return this.promise
   }
 
-  addFiles(files, data) {
+  addData(source, data) {
+    const files = Array.from(data).map(file => new WidgetFile(file, {
+      ...this.settings,
+      source,
+    }))
+
+    this.addFiles(files)
+  }
+
+  addFiles(files) {
     var file, i, len
-    if (data) {
-      // 'files' is actually file type
-      files = filesFrom(files, data, this.settings)
-    }
     if (!this.settings.multiple) {
       this.files.clear()
       files = [files[0]]
@@ -487,13 +494,13 @@ class Panel {
 
     const footer = tooManyFiles
       ? locale
-          .t('dialog.tabs.preview.multiple.tooManyFiles')
-          .replace('%max%', this.settings.multipleMax)
+        .t('dialog.tabs.preview.multiple.tooManyFiles')
+        .replace('%max%', this.settings.multipleMax)
       : files && tooFewFiles
-      ? locale
+        ? locale
           .t('dialog.tabs.preview.multiple.tooFewFiles')
           .replace('%min%', this.settings.multipleMin)
-      : locale.t('dialog.tabs.preview.multiple.title')
+        : locale.t('dialog.tabs.preview.multiple.title')
 
     const message = this.footer.querySelector('.uploadcare--panel__message')
     message.classList.toggle('uploadcare--panel__message_hidden', files === 0)
@@ -600,7 +607,7 @@ class Panel {
     )
 
     currentItem &&
-      currentItem.classList.remove('uploadcare--menu__item_current')
+    currentItem.classList.remove('uploadcare--menu__item_current')
 
     this.panel
       .querySelector(`.uploadcare--menu__item_tab_${tab}`)
@@ -675,7 +682,7 @@ class Panel {
           height="32"
           role="presentation"
           class="uploadcare--icon uploadcare--menu__icon ${name ===
-            'empty-pubkey' && 'uploadcare--panel__icon'}"
+    'empty-pubkey' && 'uploadcare--panel__icon'}"
         >
           <use xlink:href="#uploadcare--icon-${name}" />
         </svg>

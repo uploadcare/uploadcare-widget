@@ -4,10 +4,6 @@
   "description": "Uploadcare Widget: file uploader.",
   "main": "uploadcare.js",
   "files": [
-    "uploadcare.api.js",
-    "uploadcare.api.min.js",
-    "uploadcare.full.js",
-    "uploadcare.full.min.js",
     "uploadcare.js",
     "uploadcare.min.js",
     "uploadcare.lang.en.js",
@@ -34,6 +30,7 @@
     "test": "npm run lint:css && npm run lint:js && npm run test:it"
   },
   "dependencies": {
+    "@uploadcare/upload-client": "^1.0.1",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
@@ -90,14 +87,6 @@
     "typescript": "^3.7.5"
   },
   "size-limit": [
-    {
-      "limit": "60 KB",
-      "path": "uploadcare.api.min.js"
-    },
-    {
-      "limit": "120 KB",
-      "path": "uploadcare.full.min.js"
-    },
     {
       "limit": "120 KB",
       "path": "uploadcare.min.js"

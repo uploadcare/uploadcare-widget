@@ -86,11 +86,8 @@ If you're looking for the widget v2 docs, check out [here][uc-docs-widget-v2].
 
 There are a few types of JS bundles:
 
-* `uploadcare.full.js` — a full bundle with built-in jQuery.
-* `uploadcare.js` — a bundle without built-in jQuery.
-* `uploadcare.api.js` — a bundle without UI of the widget and built-in jQuery
-  [JavaScript API][uc-docs-widget-js-api] only.
-* `uploadcare.lang.en.js` — a bundle without built-in jQuery, `en` locale only.
+* `uploadcare.js` — default bundle with widget code.
+* `uploadcare.lang.en.js` — a bundle with `en` locale only.
 
 Each bundle has its minified version. Just add `.min` before `.js`,
 e.g. `uploadcare.min.js`.
