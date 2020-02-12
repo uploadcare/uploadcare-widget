@@ -7,11 +7,13 @@
 * Disabled focus controlling in panel mode. See [#698][698].
 * Updated Ukrainian locale. Thanks to @smartianin. See [#550][550].
 * Removed prototype pollution from Pusher source. See [#704][704].
+* Fixed variable name in Pusher's `subscribeAll`. See [#707][707]
 
 [3.8.3]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.2...v3.8.3
 [698]: https://github.com/uploadcare/uploadcare-widget/pull/698
 [704]: https://github.com/uploadcare/uploadcare-widget/pull/704
 [678]: https://github.com/uploadcare/uploadcare-widget/pull/678
+[707]: https://github.com/uploadcare/uploadcare-widget/pull/707
 
 ## [3.8.2]
 
