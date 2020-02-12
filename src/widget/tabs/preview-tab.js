@@ -1,12 +1,11 @@
-import { URL } from '../../utils/abilities'
-// import { Blob } from '../../utils/abilities'
+import { URL, Blob } from '../../utils/abilities'
 import { imageLoader, videoLoader } from '../../utils/image-loader.ts'
 import {
   defer,
   gcd as calcGCD,
-  // once,
+  once,
   fitSize,
-  // readableFileSize,
+  readableFileSize,
   parseHTML,
   canvasToBlob
 } from '../../utils'
@@ -52,26 +51,23 @@ class PreviewTab extends BasePreviewTab {
       }
     }
 
-    // const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
-    // const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
+    const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
+    const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
 
-    // this.file.progress(
-    //   ifCur(info => {
-    //     info = info.incompleteFileInfo
-    //     const label = (info.name || '') + readableFileSize(info.size, '', ', ')
-    //     this.container.querySelector(
-    //       '.uploadcare--preview__file-name'
-    //     ).textContent = label
-    //     const source = info.sourceInfo
-    //     const blob = Blob
-    //     if (source.file && blob && source.file instanceof blob) {
-    //       return tryToLoadImagePreview(file, source.file).catch(() => {
-    //         return tryToLoadVideoPreview(file, source.file)
-    //       })
-    //     }
-    //   })
-    // )
+    this.file.progress(
+      ifCur((info, data) => {
+        const label = (data.name || '') + readableFileSize(data.size, '', ', ')
+        this.container.querySelector(
+          '.uploadcare--preview__file-name'
+        ).textContent = label
+        if (data instanceof Blob) {
+          return tryToLoadImagePreview(file, data).catch(() => {
+            return tryToLoadVideoPreview(file, data)
+          })
+        }
+      })
+    )
     this.file.done(
       ifCur(info => {
         var imgInfo, src
@@ -125,7 +121,7 @@ class PreviewTab extends BasePreviewTab {
       rej = reject
     })
     if (
-      file.state() !== 'pending' ||
+      file.state() !== 'ready' ||
       !blob.size ||
       blob.size >= this.settings.multipartMinSize
     ) {
@@ -304,13 +300,12 @@ class PreviewTab extends BasePreviewTab {
       )
       $cropSizes.setAttribute('aria-disabled', 'true')
       $cropSizes.setAttribute('tabindex', -1)
-      return imgLoader
-        .then(function() {
-          // Often IE 11 doesn't do reflow after image.onLoad
-          // and actual image remains 28x30 (broken image placeholder).
-          // Looks like defer always fixes it.
-          return defer(startCrop)
-        })
+      return imgLoader.then(function() {
+        // Often IE 11 doesn't do reflow after image.onLoad
+        // and actual image remains 28x30 (broken image placeholder).
+        // Looks like defer always fixes it.
+        return defer(startCrop)
+      })
     }
   }
 
