@@ -108,7 +108,7 @@ class FileTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--tab__action-button').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--tab__action-button').focus()
   }
 }
 
