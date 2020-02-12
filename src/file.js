@@ -9,14 +9,21 @@ class WidgetFile {
     this.progress = this.progress.bind(this)
     this.callback = callbacks('memory')
     this.ctrl = new CancelController()
+    this.progressState = 'pending'
     this.file = uploadFile(data, {
       ...build(settings || {}),
-      onProgress: info => this.callback.fire(info),
+      onProgress: info => this.callback.fire(info, data),
       cancel: this.ctrl
     })
   }
 
+  state() {
+    return this.progressState
+  }
+
   fail(callback) {
+    this.progressState = 'error'
+
     return this.file.catch(error => {
       if (!error.isCancel) {
         return callback(error)
@@ -25,10 +32,14 @@ class WidgetFile {
   }
 
   done(callback) {
+    this.progressState = 'ready'
+
     return this.file.then(callback)
   }
 
   progress(callback) {
+    this.progressState = 'uploading'
+
     this.callback.add(callback)
   }
 
@@ -37,6 +48,8 @@ class WidgetFile {
   }
 
   cancel() {
+    this.progressState = 'cancelled'
+
     this.ctrl.cancel()
   }
 }
