@@ -5,7 +5,7 @@
 ### Fixed
 
 * Disabled focus controlling in panel mode. See [#698][698].
-* Updated Ukrainian locale. Thanks to @smartianin. See [#550][550].
+* Updated Ukrainian locale. Thanks to @smartianin. See [#678][678].
 * Removed prototype pollution from Pusher source. See [#704][704].
 * Fixed variable name in Pusher's `subscribeAll`. See [#707][707].
 
