@@ -41,7 +41,7 @@
     "@babel/preset-env": "7.5.5",
     "@size-limit/preset-big-lib": "2.1.6",
     "autoprefixer": "7.1.5",
-    "aws-sdk": "2.602.0",
+    "aws-sdk": "2.619.0",
     "babel-eslint": "10.0.2",
     "babel-plugin-html-tag": "1.4.0",
     "cross-env": "5.1.0",
