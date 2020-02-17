@@ -189,7 +189,7 @@ const openPreviewDialog = function(file, settings) {
 
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
-const openPanel = function(placeholder, files, tab, settings) {
+const openPanel = function(placeholder, files, tab, settings, opt) {
   if (isPlainObject(tab)) {
     settings = tab
     tab = null
@@ -250,7 +250,6 @@ registerTab('preview', function(
 
 class Panel {
   constructor(settings1, placeholder, files, tab, opt) {
-    var sel
     this.inModal = opt.inModal || false
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
