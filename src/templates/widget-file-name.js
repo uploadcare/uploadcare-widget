@@ -1,3 +1,4 @@
+import escape from 'escape-html'
 import { fitText, readableFileSize } from '../utils'
 import { html } from '../utils/html.ts'
 
@@ -7,7 +8,7 @@ const widgetFileName = ({ name, size }) => html`
     tabindex="0"
     role="link"
   >
-    ${fitText(name, 20)}
+    ${escape(fitText(name, 20))}
   </div>
 
   <div class="uploadcare--widget__file-size">, ${readableFileSize(size)}</div>

@@ -67,6 +67,7 @@ const translations = {
         button: 'Загрузить'
       },
       camera: {
+        title: 'Файл из видеокамеры',
         capture: 'Сделать снимок',
         mirror: 'Отразить',
         retry: 'Повторно запросить разрешение',
@@ -146,7 +147,7 @@ const translations = {
 }
 
 // Pluralization rules taken from:
-// http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+// https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
 const pluralize = function(n) {
   if (((n / 10) % 10 | 0) === 1 || n % 10 === 0 || n % 10 > 4) {
     return 'many'

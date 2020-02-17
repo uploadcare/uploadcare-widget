@@ -132,7 +132,6 @@ const fitText = function(text, max) {
   if (text.length > max) {
     const head = Math.ceil((max - 3) / 2)
     const tail = Math.floor((max - 3) / 2)
-
     return text.slice(0, head) + '...' + text.slice(-tail)
   } else {
     return text

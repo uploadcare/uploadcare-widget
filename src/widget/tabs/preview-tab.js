@@ -356,14 +356,14 @@ class PreviewTab extends BasePreviewTab {
         return item
       } else {
         const icon = parseHTML(html`
-          "<svg
+          <svg
             class="uploadcare--icon"
             width="32"
             height="32"
             role="presentation"
           >
-            <use xlink:href="#uploadcare--icon-crop-free" /></svg
-          >"
+            <use xlink:href="#uploadcare--icon-crop-free" />
+          </svg>
         `)
 
         item.append(icon)
@@ -378,7 +378,7 @@ class PreviewTab extends BasePreviewTab {
   }
 
   displayed() {
-    this.container.querySelector('.uploadcare--preview__done').focus()
+    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--preview__done').focus()
   }
 }
 

@@ -16,15 +16,6 @@ const { isWindowDefined } = require('../utils/is-window-defined')
   var Pusher, _require;
 
 ;(function() {
-  if (Function.prototype.scopedTo === undefined) {
-    Function.prototype.scopedTo = function(context, args) {
-      var f = this;
-      return function() {
-        return f.apply(context, Array.prototype.slice.call(args || [])
-                       .concat(Array.prototype.slice.call(arguments)));
-      };
-    };
-  }
 
   Pusher = function(app_key, options) {
     this.options = options || {};
@@ -90,7 +81,7 @@ const { isWindowDefined } = require('../utils/is-window-defined')
     },
 
     subscribeAll: function() {
-      var channel;
+      var channelName;
       for (channelName in this.channels.channels) {
         if (this.channels.channels.hasOwnProperty(channelName)) {
           this.subscribe(channelName);
