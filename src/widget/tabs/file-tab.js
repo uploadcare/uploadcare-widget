@@ -112,7 +112,7 @@ class FileTab {
   }
 
   displayed() {
-    this.container.querySelector('.uploadcare--tab__action-button').focus()
+    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--tab__action-button').focus()
   }
 }
 

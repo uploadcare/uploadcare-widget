@@ -1,3 +1,4 @@
+import escape from 'escape-html'
 import { html } from '../utils/html.ts'
 import locale from '../locale'
 
@@ -18,8 +19,8 @@ const tabPreviewImage = ({ src, name = '', crop }) => html`
     -->
       <img
         src="${src}"
-        title="${name}"
-        alt="${name}"
+        title="${escape(name)}"
+        alt="${escape(name)}"
         class="uploadcare--media__image uploadcare--preview__image"
       />
     </div>

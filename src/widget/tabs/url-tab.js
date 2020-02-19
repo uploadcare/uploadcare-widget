@@ -64,7 +64,7 @@ class UrlTab {
   }
 
   displayed() {
-    this.container.querySelector('.uploadcare--input').focus()
+    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--input').focus()
   }
 }
 

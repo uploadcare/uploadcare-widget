@@ -26,7 +26,7 @@ const translations = {
     many: '%1 файлів'
   },
   buttons: {
-    cancel: 'Cкасувати',
+    cancel: 'Скасувати',
     remove: 'Видалити',
     choose: {
       files: {
@@ -50,18 +50,7 @@ const translations = {
         preview: 'Попередній перегляд',
         file: 'Локальні файли',
         url: 'Пряме посилання',
-        camera: 'Камера',
-        facebook: 'Facebook',
-        dropbox: 'Dropbox',
-        gdrive: 'Google Drive',
-        gphotos: 'Google Photos',
-        instagram: 'Instagram',
-        vk: 'VK',
-        evernote: 'Evernote',
-        box: 'Box',
-        onedrive: 'OneDrive',
-        flickr: 'Flickr',
-        huddle: 'Huddle'
+        camera: 'Камера'
       },
       file: {
         drag: 'Перетягніть<br>будь-які файли',
@@ -84,7 +73,7 @@ const translations = {
         mirror: 'Віддзеркалити',
         startRecord: 'Записати відео',
         stopRecord: 'Стоп',
-        cancelRecord: 'Cкасувати',
+        cancelRecord: 'Скасувати',
         retry: 'Повторний запит дозволу',
         pleaseAllow: {
           title: 'Будь ласка, надайте доступ до вашої камери',
@@ -99,50 +88,50 @@ const translations = {
       },
       preview: {
         unknownName: 'невідомо',
-        change: 'Cкасувати',
+        change: 'Скасувати',
         back: 'Назад',
-        done: 'Додати'
-      },
-      unknown: {
-        title: 'Завантаження... Зачекайте на попередній перегляд.',
-        done: 'Пропустити перегляд і прийняти'
-      },
-      regular: {
-        title: 'Додати цей файл?',
-        line1: 'Ви збираєтеся додати файл вище.',
-        line2: 'Будь ласка, підтвердіть.'
-      },
-      image: {
-        title: 'Додати це зображення?',
-        change: 'Cкасувати'
-      },
-      crop: {
-        title: 'Обрізати та додати це зображення',
-        done: 'Готово',
-        free: 'довільно'
-      },
-      video: {
-        title: 'Додати це відео?',
-        change: 'Cкасувати'
-      },
-      error: {
-        default: {
-          title: 'Ой!',
-          text: 'Під час завантаження сталася помилка.',
-          back: 'Будь ласка, спробуйте ще раз'
+        done: 'Додати',
+        unknown: {
+          title: 'Завантаження... Зачекайте на попередній перегляд.',
+          done: 'Пропустити перегляд і прийняти'
+        },
+        regular: {
+          title: 'Додати цей файл?',
+          line1: 'Ви збираєтеся додати файл вище.',
+          line2: 'Будь ласка, підтвердіть.'
         },
         image: {
-          title: 'Приймаються лише файли зображень.',
-          text: 'Повторіть спробу з іншим файлом.',
-          back: 'Виберіть зображення'
+          title: 'Додати це зображення?',
+          change: 'Скасувати'
         },
-        size: {
-          title: 'Розмір вибраного файлу перевищує ліміт.',
-          text: 'Повторіть спробу з іншим файлом.'
+        crop: {
+          title: 'Обрізати та додати це зображення',
+          done: 'Готово',
+          free: 'довільно'
         },
-        loadImage: {
-          title: 'Помилка',
-          text: 'Помилка завантаження зображення'
+        video: {
+          title: 'Додати це відео?',
+          change: 'Скасувати'
+        },
+        error: {
+          default: {
+            title: 'Ой!',
+            text: 'Під час завантаження сталася помилка.',
+            back: 'Будь ласка, спробуйте ще раз'
+          },
+          image: {
+            title: 'Приймаються лише файли зображень.',
+            text: 'Повторіть спробу з іншим файлом.',
+            back: 'Виберіть зображення'
+          },
+          size: {
+            title: 'Розмір вибраного файлу перевищує ліміт.',
+            text: 'Повторіть спробу з іншим файлом.'
+          },
+          loadImage: {
+            title: 'Помилка',
+            text: 'Помилка завантаження зображення'
+          },
         },
         multiple: {
           title: 'Ви вибрали %files%.',
@@ -151,11 +140,11 @@ const translations = {
             'Ви вибрали забагато файлів. Максимальна кількість %max%.',
           tooFewFiles: 'Ви вибрали %files%. Мінімальна кількість %min%.',
           clear: 'Видалити все',
-          done: 'Додати'
-        },
-        file: {
-          preview: 'Попередній перегляд %file%',
-          remove: 'Видалити %file%'
+          done: 'Додати',
+          file: {
+            preview: 'Попередній перегляд %file%',
+            remove: 'Видалити %file%'
+          }
         }
       }
     },
@@ -167,7 +156,7 @@ const translations = {
 }
 
 // Pluralization rules taken from:
-// http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+// https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
 const pluralize = function(n) {
   if (((n / 10) % 10 | 0) === 1 || n % 10 === 0 || n % 10 > 4) {
     return 'many'

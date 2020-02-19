@@ -362,7 +362,7 @@ class CameraTab {
   }
 
   displayed() {
-    this.container.querySelector('.uploadcare--camera__button').focus()
+    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--camera__button').focus()
   }
 }
 

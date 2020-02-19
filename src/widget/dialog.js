@@ -93,7 +93,8 @@ const openDialog = function(files, tab, settings) {
     dialog.querySelector('.uploadcare--dialog__placeholder'),
     files,
     tab,
-    settings
+    settings,
+    { inModal: true }
   )
 
   dialog.classList.add('uploadcare--dialog_status_active')
@@ -188,7 +189,7 @@ const openPreviewDialog = function(file, settings) {
 
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
-const openPanel = function(placeholder, files, tab, settings) {
+const openPanel = function(placeholder, files, tab, settings, opt) {
   if (isPlainObject(tab)) {
     settings = tab
     tab = null
@@ -204,7 +205,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   settings = build(settings)
 
-  return new Panel(settings, placeholder, files, tab).publicPromise()
+  return new Panel(settings, placeholder, files, tab, opt).publicPromise()
 }
 
 const registeredTabs = {}
@@ -248,7 +249,8 @@ registerTab('preview', function(
 })
 
 class Panel {
-  constructor(settings1, placeholder, files, tab) {
+  constructor(settings1, placeholder, files, tab, opt) {
+    this.inModal = opt.inModal || false
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
     this.addData = this.addData.bind(this)
@@ -313,6 +315,10 @@ class Panel {
     }
   }
 
+  takeFocus() {
+    return this.inModal
+  }
+
   publicPromise() {
     if (!this.promise) {
       const promise = this.dfd.then(files => {
@@ -343,6 +349,7 @@ class Panel {
         showTab: this.showTab,
         isTabVisible: this.isTabVisible,
         openMenu: this.openMenu,
+        takeFocus: this.takeFocus.bind(this),
         onTabVisibility: publicCallbacks(this.onTabVisibility)
       }
     }
