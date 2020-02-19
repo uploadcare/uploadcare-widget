@@ -31,8 +31,7 @@
   },
   "dependencies": {
     "@uploadcare/upload-client": "^1.0.1",
-    "escape-html": "^1.0.3",
-    "jquery": "^3.4.1"
+    "escape-html": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",

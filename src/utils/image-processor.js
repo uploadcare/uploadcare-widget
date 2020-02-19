@@ -1,174 +1,179 @@
-import $ from 'jquery'
+// import $ from 'jquery'
 
-import { Blob, FileReader, URL } from '../utils/abilities'
+import { FileReader, URL } from '../utils/abilities'
 import { imageLoader } from '../utils/image-loader.ts'
-import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
+import { fitSize } from '../utils'
+// import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 import { isWindowDefined } from './is-window-defined'
 
 // utils image
 const DataView = isWindowDefined() && window.DataView
-const runner = taskRunner(1)
+// const runner = taskRunner(1)
 
 const shrinkFile = function(file, settings) {
-  var df
-  // in -> file
-  // out <- blob
-  df = $.Deferred()
-  if (!(URL && DataView && Blob)) {
-    return df.reject('support')
-  }
-  // start = new Date()
-  runner(release => {
-    var op
-    // console.log('delayed: ' + (new Date() - start))
-    df.always(release)
-    // start = new Date()
-    op = imageLoader(URL.createObjectURL(file))
-    op.always(function(img) {
-      return URL.revokeObjectURL(img.src)
-    })
-    op.fail(function() {
-      return df.reject('not image')
-    })
+  // var df
+  // // in -> file
+  // // out <- blob
+  // df = $.Deferred()
+  // if (!(URL && DataView && Blob)) {
+  //   return df.reject('support')
+  // }
+  // // start = new Date()
+  // runner(release => {
+  //   var op
+  //   // console.log('delayed: ' + (new Date() - start))
+  //   df.always(release)
+  //   // start = new Date()
+  //   op = imageLoader(URL.createObjectURL(file))
+  //   op.always(function(img) {
+  //     return URL.revokeObjectURL(img.src)
+  //   })
+  //   op.fail(function() {
+  //     return df.reject('not image')
+  //   })
 
-    return op.done(function(img) {
-      // console.log('load: ' + (new Date() - start))
-      df.notify(0.1)
+  //   return op.done(function(img) {
+  //     // console.log('load: ' + (new Date() - start))
+  //     df.notify(0.1)
 
-      var exifOp = getExif(file).always(function(exif) {
-        var e, isJPEG
-        df.notify(0.2)
-        isJPEG = exifOp.state() === 'resolved'
-        // start = new Date()
-        op = shrinkImage(img, settings)
-        op.progress(function(progress) {
-          return df.notify(0.2 + progress * 0.6)
-        })
-        op.fail(df.reject)
-        op.done(function(canvas) {
-          var format, quality
-          // console.log('shrink: ' + (new Date() - start))
-          // start = new Date()
-          format = 'image/jpeg'
-          quality = settings.quality || 0.8
-          if (!isJPEG && hasTransparency(canvas)) {
-            format = 'image/png'
-            quality = undefined
-          }
-          return canvasToBlob(canvas, format, quality, function(blob) {
-            canvas.width = canvas.height = 1
-            df.notify(0.9)
-            // console.log('to blob: ' + (new Date() - start))
-            if (exif) {
-              op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
-              op.done(df.resolve)
-              return op.fail(function() {
-                return df.resolve(blob)
-              })
-            } else {
-              return df.resolve(blob)
-            }
-          })
-        })
-        e = null // free reference
+  //     var exifOp = getExif(file).always(function(exif) {
+  //       var e, isJPEG
+  //       df.notify(0.2)
+  //       isJPEG = exifOp.state() === 'resolved'
+  //       // start = new Date()
+  //       op = shrinkImage(img, settings)
+  //       op.progress(function(progress) {
+  //         return df.notify(0.2 + progress * 0.6)
+  //       })
+  //       op.fail(df.reject)
+  //       op.done(function(canvas) {
+  //         var format, quality
+  //         // console.log('shrink: ' + (new Date() - start))
+  //         // start = new Date()
+  //         format = 'image/jpeg'
+  //         quality = settings.quality || 0.8
+  //         if (!isJPEG && hasTransparency(canvas)) {
+  //           format = 'image/png'
+  //           quality = undefined
+  //         }
+  //         return canvasToBlob(canvas, format, quality, function(blob) {
+  //           canvas.width = canvas.height = 1
+  //           df.notify(0.9)
+  //           // console.log('to blob: ' + (new Date() - start))
+  //           if (exif) {
+  //             op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
+  //             op.done(df.resolve)
+  //             return op.fail(function() {
+  //               return df.resolve(blob)
+  //             })
+  //           } else {
+  //             return df.resolve(blob)
+  //           }
+  //         })
+  //       })
+  //       e = null // free reference
 
-        return e
-      })
+  //       return e
+  //     })
 
-      return exifOp
-    })
-  })
+  //     return exifOp
+  //   })
+  // })
 
-  return df.promise()
+  // return df.promise()
+
+  throw Error('not implemented')
 }
 
 
 const shrinkImage = function(img, settings) {
-  var cx,
-    df,
-    h,
-    maxSize,
-    maxSquare,
-    originalW,
-    ratio,
-    run,
-    runNative,
-    sH,
-    sW,
-    step,
-    w
-  // in -> image
-  // out <- canvas
-  df = $.Deferred()
-  step = 0.71 // sohuld be > sqrt(0.5)
-  if (img.width * step * img.height * step < settings.size) {
-    return df.reject('not required')
-  }
-  sW = originalW = img.width
-  sH = img.height
-  ratio = sW / sH
-  w = Math.floor(Math.sqrt(settings.size * ratio))
-  h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
-  maxSquare = 5000000 // ios max canvas square
-  maxSize = 4096 // ie max canvas dimensions
-  run = function() {
-    if (sW <= w) {
-      df.resolve(img)
-      return
-    }
-    return defer(function() {
-      var canvas
-      sW = Math.round(sW * step)
-      sH = Math.round(sH * step)
-      if (sW * step < w) {
-        sW = w
-        sH = h
-      }
-      if (sW * sH > maxSquare) {
-        sW = Math.floor(Math.sqrt(maxSquare * ratio))
-        sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
-      }
-      if (sW > maxSize) {
-        sW = maxSize
-        sH = Math.round(sW / ratio)
-      }
-      if (sH > maxSize) {
-        sH = maxSize
-        sW = Math.round(ratio * sH)
-      }
-      canvas = document.createElement('canvas')
-      canvas.width = sW
-      canvas.height = sH
-      canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
-      img.src = '//:0' // for image
-      img.width = img.height = 1 // for canvas
-      img = canvas
-      df.notify((originalW - sW) / (originalW - w))
-      return run()
-    })
-  }
+  // var cx,
+  //   df,
+  //   h,
+  //   maxSize,
+  //   maxSquare,
+  //   originalW,
+  //   ratio,
+  //   run,
+  //   runNative,
+  //   sH,
+  //   sW,
+  //   step,
+  //   w
+  // // in -> image
+  // // out <- canvas
+  // df = $.Deferred()
+  // step = 0.71 // sohuld be > sqrt(0.5)
+  // if (img.width * step * img.height * step < settings.size) {
+  //   return df.reject('not required')
+  // }
+  // sW = originalW = img.width
+  // sH = img.height
+  // ratio = sW / sH
+  // w = Math.floor(Math.sqrt(settings.size * ratio))
+  // h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
+  // maxSquare = 5000000 // ios max canvas square
+  // maxSize = 4096 // ie max canvas dimensions
+  // run = function() {
+  //   if (sW <= w) {
+  //     df.resolve(img)
+  //     return
+  //   }
+  //   return defer(function() {
+  //     var canvas
+  //     sW = Math.round(sW * step)
+  //     sH = Math.round(sH * step)
+  //     if (sW * step < w) {
+  //       sW = w
+  //       sH = h
+  //     }
+  //     if (sW * sH > maxSquare) {
+  //       sW = Math.floor(Math.sqrt(maxSquare * ratio))
+  //       sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
+  //     }
+  //     if (sW > maxSize) {
+  //       sW = maxSize
+  //       sH = Math.round(sW / ratio)
+  //     }
+  //     if (sH > maxSize) {
+  //       sH = maxSize
+  //       sW = Math.round(ratio * sH)
+  //     }
+  //     canvas = document.createElement('canvas')
+  //     canvas.width = sW
+  //     canvas.height = sH
+  //     canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+  //     img.src = '//:0' // for image
+  //     img.width = img.height = 1 // for canvas
+  //     img = canvas
+  //     df.notify((originalW - sW) / (originalW - w))
+  //     return run()
+  //   })
+  // }
 
-  runNative = function() {
-    var canvas, cx
-    canvas = document.createElement('canvas')
-    canvas.width = w
-    canvas.height = h
-    cx = canvas.getContext('2d')
-    cx.imageSmoothingQuality = 'high'
-    cx.drawImage(img, 0, 0, w, h)
-    img.src = '//:0' // for image
-    img.width = img.height = 1 // for canvas
-    return df.resolve(canvas)
-  }
+  // runNative = function() {
+  //   var canvas, cx
+  //   canvas = document.createElement('canvas')
+  //   canvas.width = w
+  //   canvas.height = h
+  //   cx = canvas.getContext('2d')
+  //   cx.imageSmoothingQuality = 'high'
+  //   cx.drawImage(img, 0, 0, w, h)
+  //   img.src = '//:0' // for image
+  //   img.width = img.height = 1 // for canvas
+  //   return df.resolve(canvas)
+  // }
 
-  cx = document.createElement('canvas').getContext('2d')
+  // cx = document.createElement('canvas').getContext('2d')
 
-  if ('imageSmoothingQuality' in cx) {
-    runNative()
-  } else {
-    run()
-  }
-  return df.promise()
+  // if ('imageSmoothingQuality' in cx) {
+  //   runNative()
+  // } else {
+  //   run()
+  // }
+  // return df.promise()
+
+  throw Error('not implemented')
 }
 
 const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
@@ -316,48 +321,50 @@ const readJpegChunks = function(file) {
 }
 
 const replaceJpegChunk = function(blob, marker, chunks) {
-  var df, oldChunkLength, oldChunkPos, op
-  df = $.Deferred()
-  oldChunkPos = []
-  oldChunkLength = []
-  op = readJpegChunks(blob)
-  op.fail(df.reject)
-  op.progress(function(pos, length, oldMarker) {
-    if (oldMarker === marker) {
-      oldChunkPos.push(pos)
-      return oldChunkLength.push(length)
-    }
-  })
-  op.done(function() {
-    var chunk, i, intro, j, k, len, newChunks, pos, ref
-    newChunks = [blob.slice(0, 2)]
-    for (j = 0, len = chunks.length; j < len; j++) {
-      chunk = chunks[j]
-      intro = new DataView(new ArrayBuffer(4))
-      intro.setUint16(0, 0xff00 + marker)
-      intro.setUint16(2, chunk.byteLength + 2)
-      newChunks.push(intro.buffer)
-      newChunks.push(chunk)
-    }
-    pos = 2
-    for (
-      i = k = 0, ref = oldChunkPos.length;
-      ref >= 0 ? k < ref : k > ref;
-      i = ref >= 0 ? ++k : --k
-    ) {
-      if (oldChunkPos[i] > pos) {
-        newChunks.push(blob.slice(pos, oldChunkPos[i]))
-      }
-      pos = oldChunkPos[i] + oldChunkLength[i] + 4
-    }
-    newChunks.push(blob.slice(pos, blob.size))
-    return df.resolve(
-      new Blob(newChunks, {
-        type: blob.type
-      })
-    )
-  })
-  return df.promise()
+  // var df, oldChunkLength, oldChunkPos, op
+  // df = $.Deferred()
+  // oldChunkPos = []
+  // oldChunkLength = []
+  // op = readJpegChunks(blob)
+  // op.fail(df.reject)
+  // op.progress(function(pos, length, oldMarker) {
+  //   if (oldMarker === marker) {
+  //     oldChunkPos.push(pos)
+  //     return oldChunkLength.push(length)
+  //   }
+  // })
+  // op.done(function() {
+  //   var chunk, i, intro, j, k, len, newChunks, pos, ref
+  //   newChunks = [blob.slice(0, 2)]
+  //   for (j = 0, len = chunks.length; j < len; j++) {
+  //     chunk = chunks[j]
+  //     intro = new DataView(new ArrayBuffer(4))
+  //     intro.setUint16(0, 0xff00 + marker)
+  //     intro.setUint16(2, chunk.byteLength + 2)
+  //     newChunks.push(intro.buffer)
+  //     newChunks.push(chunk)
+  //   }
+  //   pos = 2
+  //   for (
+  //     i = k = 0, ref = oldChunkPos.length;
+  //     ref >= 0 ? k < ref : k > ref;
+  //     i = ref >= 0 ? ++k : --k
+  //   ) {
+  //     if (oldChunkPos[i] > pos) {
+  //       newChunks.push(blob.slice(pos, oldChunkPos[i]))
+  //     }
+  //     pos = oldChunkPos[i] + oldChunkLength[i] + 4
+  //   }
+  //   newChunks.push(blob.slice(pos, blob.size))
+  //   return df.resolve(
+  //     new Blob(newChunks, {
+  //       type: blob.type
+  //     })
+  //   )
+  // })
+  // return df.promise()
+
+  throw Error('not implemented')
 }
 
 const getExif = function(file) {
