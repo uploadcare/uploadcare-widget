@@ -1,6 +1,6 @@
-import { wrapToPromise } from '../utils'
-import { valueToFile } from './files'
-import { loadFileGroup, FileGroup } from '../files/group-creator'
+// import { wrapToPromise } from '../utils'
+// import { valueToFile } from './files'
+// import { loadFileGroup, FileGroup } from '../files/group-creator'
 
 const isFileGroup = function(obj) {
   return obj && obj.files && obj.promise
@@ -8,26 +8,28 @@ const isFileGroup = function(obj) {
 
 // Converts user-given value to FileGroup object.
 const valueToGroup = function(value, settings) {
-  var files, item
-  if (value) {
-    if (Array.isArray(value)) {
-      files = (function() {
-        var j, len, results
-        results = []
-        for (j = 0, len = value.length; j < len; j++) {
-          item = value[j]
-          results.push(valueToFile(item, settings))
-        }
-        return results
-      })()
-      value = FileGroup(files, settings)
-    } else {
-      if (!isFileGroup(value)) {
-        return loadFileGroup(value, settings)
-      }
-    }
-  }
-  return wrapToPromise(value || null)
+  // var files, item
+  // if (value) {
+  //   if (Array.isArray(value)) {
+  //     files = (function() {
+  //       var j, len, results
+  //       results = []
+  //       for (j = 0, len = value.length; j < len; j++) {
+  //         item = value[j]
+  //         results.push(valueToFile(item, settings))
+  //       }
+  //       return results
+  //     })()
+  //     value = FileGroup(files, settings)
+  //   } else {
+  //     if (!isFileGroup(value)) {
+  //       return loadFileGroup(value, settings)
+  //     }
+  //   }
+  // }
+  // return wrapToPromise(value || null)
+
+  throw Error('not implemented')
 }
 
 // check if two groups contains same files in same order

@@ -1,12 +1,10 @@
-import $ from 'jquery'
-
-import { log } from '../utils/warnings'
-import { groupIdRegex } from '../utils'
-import { jsonp } from './base'
-import { build } from '../settings'
+// import { log } from '../utils/warnings'
+// import { groupIdRegex } from '../utils'
+// import { jsonp } from './base'
+// import { build } from '../settings'
 import { isFile } from '../utils/files'
 import { isFileGroup } from '../utils/groups'
-import { FileGroup as FileGroupClass, SavedFileGroup } from './group'
+import { FileGroup as FileGroupClass } from './group'
 
 // root
 const FileGroup = function(filesAndGroups = [], settings) {
@@ -28,45 +26,47 @@ const FileGroup = function(filesAndGroups = [], settings) {
 }
 
 const loadFileGroup = function(groupIdOrUrl, settings) {
-  var df, id
-  settings = build(settings)
-  df = $.Deferred()
-  id = groupIdRegex.exec(groupIdOrUrl)
-  if (id) {
-    jsonp(
-      `${settings.urlBase}/group/info/`,
-      'GET',
-      {
-        jsonerrors: 1,
-        pub_key: settings.publicKey,
-        group_id: id[0]
-      },
-      {
-        headers: {
-          'X-UC-User-Agent': settings._userAgent
-        }
-      }
-    )
-      .fail(reason => {
-        if (settings.debugUploads) {
-          log(
-            "Can't load group info. Probably removed.",
-            id[0],
-            settings.publicKey,
-            reason
-          )
-        }
-        return df.reject()
-      })
-      .done(function(data) {
-        var group
-        group = new SavedFileGroup(data, settings)
-        return df.resolve(group.api())
-      })
-  } else {
-    df.reject()
-  }
-  return df.promise()
+  // var df, id
+  // settings = build(settings)
+  // df = $.Deferred()
+  // id = groupIdRegex.exec(groupIdOrUrl)
+  // if (id) {
+  //   jsonp(
+  //     `${settings.urlBase}/group/info/`,
+  //     'GET',
+  //     {
+  //       jsonerrors: 1,
+  //       pub_key: settings.publicKey,
+  //       group_id: id[0]
+  //     },
+  //     {
+  //       headers: {
+  //         'X-UC-User-Agent': settings._userAgent
+  //       }
+  //     }
+  //   )
+  //     .fail(reason => {
+  //       if (settings.debugUploads) {
+  //         log(
+  //           "Can't load group info. Probably removed.",
+  //           id[0],
+  //           settings.publicKey,
+  //           reason
+  //         )
+  //       }
+  //       return df.reject()
+  //     })
+  //     .done(function(data) {
+  //       var group
+  //       group = new SavedFileGroup(data, settings)
+  //       return df.resolve(group.api())
+  //     })
+  // } else {
+  //   df.reject()
+  // }
+  // return df.promise()
+
+  throw Error('not implemented')
 }
 
 export { FileGroup, loadFileGroup }

@@ -378,7 +378,8 @@ class PreviewTab extends BasePreviewTab {
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--preview__done').focus()
+    const focusTarget = this.container.querySelector('.uploadcare--preview__done')
+    this.dialogApi.takeFocus() && focusTarget && focusTarget.focus()
   }
 }
 
