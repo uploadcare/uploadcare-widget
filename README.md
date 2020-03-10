@@ -202,6 +202,11 @@ Feel free to control the default widget with it,
 or make use of its standalone components that
 can be combined with your solutions.
 
+### UploadClient
+
+If you need only upload api, you might try [upload-client][github-upload-client]
+7.3kB library for uploading files for node and browser.
+
 ## Localization
 
 It’s possible that your locale is not available in the widget yet.
@@ -283,6 +288,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [github-home]: https://github.com/uploadcare/uploadcare-widget
 [github-files-locales]: https://github.com/uploadcare/uploadcare-widget/tree/master/src/locales
 [github-files-development]: https://github.com/uploadcare/uploadcare-widget/blob/master/DEVELOPMENT.md
+[github-upload-client]: https://github.com/uploadcare/uploadcare-upload-client
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
 [uc-libs]: https://uploadcare.com/docs/libs/?utm_source=github&utm_campaign=uploadcare-widget
