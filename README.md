@@ -204,8 +204,7 @@ can be combined with your solutions.
 
 ### UploadClient
 
-If you need only upload api, you might try [upload-client][github-upload-client]
-7.3kB library for uploading files for node and browser.
+If you want to use Upload API directly and don't need a widget, try [upload-client][github-upload-client] — a 7.3 kB JS library for uploading files.
 
 ## Localization
 
