@@ -51,6 +51,7 @@ const translations = {
         gdrive: 'Google Drive',
         gphotos: 'Google Photos',
         instagram: 'Instagram',
+        instagram_graph_api: 'Instagram',
         vk: 'VK',
         evernote: 'Evernote',
         box: 'Box',
