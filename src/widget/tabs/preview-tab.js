@@ -1,20 +1,21 @@
-import $ from 'jquery'
-
-import { URL, Blob } from '../../utils/abilities'
-import { imageLoader, videoLoader } from '../../utils/image-loader'
+import { URL } from '../../utils/abilities'
+// import { Blob } from '../../utils/abilities'
+import { imageLoader, videoLoader } from '../../utils/image-loader.ts'
 import {
   defer,
   gcd as calcGCD,
-  once,
+  // once,
   fitSize,
-  readableFileSize,
+  // readableFileSize,
+  parseHTML,
   canvasToBlob
 } from '../../utils'
 import { drawFileToCanvas } from '../../utils/image-processor'
 import locale from '../../locale'
 import { tpl } from '../../templates'
-import { CropWidget } from '../../ui/crop-widget'
+// import { CropWidget } from '../../ui/crop-widget'
 import { BasePreviewTab } from './base-preview-tab'
+import { html } from '../../utils/html'
 
 class PreviewTab extends BasePreviewTab {
   constructor(container, tabButton, dialogApi, settings, name) {
@@ -31,8 +32,8 @@ class PreviewTab extends BasePreviewTab {
     this.settings = settings
     this.name = name
 
-    $.each(this.dialogApi.fileColl.get(), (i, file) => {
-      return this.__setFile(file)
+    this.dialogApi.fileColl.get().forEach(file => {
+      this.__setFile(file)
     })
 
     this.dialogApi.fileColl.onAdd.add(this.__setFile.bind(this))
@@ -41,34 +42,36 @@ class PreviewTab extends BasePreviewTab {
   }
 
   __setFile(file) {
-    var ifCur, tryToLoadImagePreview, tryToLoadVideoPreview
-
     this.file = file
-    ifCur = fn => {
+
+    const ifCur = fn => {
       return (...args) => {
         if (file === this.file) {
           return fn.apply(null, args)
         }
       }
     }
-    tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
-    tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
+
+    // const tryToLoadImagePreview = once(this.__tryToLoadImagePreview.bind(this))
+    // const tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
-    this.file.progress(
-      ifCur(info => {
-        var blob, label, source
-        info = info.incompleteFileInfo
-        label = (info.name || '') + readableFileSize(info.size, '', ', ')
-        this.container.find('.uploadcare--preview__file-name').text(label)
-        source = info.sourceInfo
-        blob = Blob
-        if (source.file && blob && source.file instanceof blob) {
-          return tryToLoadImagePreview(file, source.file).fail(() => {
-            return tryToLoadVideoPreview(file, source.file)
-          })
-        }
-      })
-    )
+
+    // this.file.progress(
+    //   ifCur(info => {
+    //     info = info.incompleteFileInfo
+    //     const label = (info.name || '') + readableFileSize(info.size, '', ', ')
+    //     this.container.querySelector(
+    //       '.uploadcare--preview__file-name'
+    //     ).textContent = label
+    //     const source = info.sourceInfo
+    //     const blob = Blob
+    //     if (source.file && blob && source.file instanceof blob) {
+    //       return tryToLoadImagePreview(file, source.file).catch(() => {
+    //         return tryToLoadVideoPreview(file, source.file)
+    //       })
+    //     }
+    //   })
+    // )
     this.file.done(
       ifCur(info => {
         var imgInfo, src
@@ -79,13 +82,13 @@ class PreviewTab extends BasePreviewTab {
           // avoid subsequent image states
           if (this.__state !== 'image') {
             src = info.originalUrl
-            // 1162x684 is 1.5 size of conteiner
+            // 1162x684 is 1.5 size of container
             src +=
               '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
             if (this.settings.previewUrlCallback) {
               src = this.settings.previewUrlCallback(src, info)
             }
-            imgInfo = info.originalImageInfo
+            imgInfo = info.imageInfo
             this.__setState('image', {
               src,
               name: info.name,
@@ -115,16 +118,22 @@ class PreviewTab extends BasePreviewTab {
   }
 
   __tryToLoadImagePreview(file, blob) {
-    var df
-
-    df = $.Deferred()
+    let res = () => {}
+    let rej = () => {}
+    const promise = new Promise((resolve, reject) => {
+      res = resolve
+      rej = reject
+    })
     if (
       file.state() !== 'pending' ||
       !blob.size ||
       blob.size >= this.settings.multipartMinSize
     ) {
-      return df.reject().promise()
+      return new Promise(() => {
+        rej()
+      })
     }
+
     drawFileToCanvas(
       blob,
       1550,
@@ -132,10 +141,9 @@ class PreviewTab extends BasePreviewTab {
       '#ffffff',
       this.settings.imagePreviewMaxSize
     )
-      .done((canvas, size) => {
+      .then((canvas, size) => {
         return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
-          var src
-          df.resolve()
+          res()
           canvas.width = canvas.height = 1
           if (
             file.state() !== 'pending' ||
@@ -144,7 +152,7 @@ class PreviewTab extends BasePreviewTab {
           ) {
             return
           }
-          src = URL.createObjectURL(blob)
+          const src = URL.createObjectURL(blob)
           this.dialogApi.always(function() {
             return URL.revokeObjectURL(src)
           })
@@ -157,194 +165,221 @@ class PreviewTab extends BasePreviewTab {
           }
         })
       })
-      .fail(df.reject)
-    return df.promise()
+      .catch(rej)
+
+    return promise
   }
 
   __tryToLoadVideoPreview(file, blob) {
-    var df, op, src
+    let res = () => {}
+    let rej = () => {}
+    const promise = new Promise((resolve, reject) => {
+      res = resolve
+      rej = reject
+    })
 
-    df = $.Deferred()
     if (!URL || !blob.size) {
-      return df.reject().promise()
+      return new Promise(() => {
+        rej()
+      })
     }
-    src = URL.createObjectURL(blob)
-    op = videoLoader(src)
-    op.fail(() => {
+    const src = URL.createObjectURL(blob)
+    const op = videoLoader(src)
+    op.catch(() => {
       URL.revokeObjectURL(src)
-      return df.reject()
-    }).done(() => {
-      var videoTag
-      df.resolve()
+      return rej()
+    }).then(() => {
+      res()
       this.dialogApi.always(function() {
         return URL.revokeObjectURL(src)
       })
       this.__setState('video')
-      videoTag = this.container.find('.uploadcare--preview__video')
+      const videoTag = this.container.querySelector(
+        '.uploadcare--preview__video'
+      )
       // hack to enable seeking due to bug in MediaRecorder API
       // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
-      videoTag.on('loadeddata', function() {
-        var el
-        el = videoTag.get(0)
+      const loaded = videoTag.addEventListener('loadeddata', function() {
+        const el = videoTag.get(0)
         el.currentTime = 360000 // 100 hours
-        return videoTag.off('loadeddata')
+        return videoTag.removeEventListener('loadeddata', loaded)
       })
-      videoTag.on('ended', function() {
-        var el
-        el = videoTag.get(0)
+      const ended = videoTag.addEventListener('ended', function() {
+        const el = videoTag.get(0)
         el.currentTime = 0
-        return videoTag.off('ended')
+        return videoTag.removeEventListener('ended', ended)
       })
       // end of hack
-      videoTag.attr('src', src)
+      videoTag.setAttribute('src', src)
       // hack to load first-frame poster on ios safari
       return videoTag.get(0).load()
     })
-    return df.promise()
+
+    return promise
   }
 
   __setState(state, data) {
     this.__state = state
     data = data || {}
     data.crop = this.settings.crop
-    this.container.empty().append(tpl(`tab-preview-${state}`, data))
-    this.container.removeClass(function(index, classes) {
-      return classes
-        .split(' ')
-        .filter(function(c) {
-          return !!~c.indexOf('uploadcare--preview_status_')
-        })
-        .join(' ')
-    })
+
+    while (this.container.firstChild) {
+      this.container.removeChild(this.container.firstChild)
+    }
+
+    this.container.appendChild(parseHTML(tpl(`tab-preview-${state}`, data)))
+
+    Array.from(this.container.classList)
+      .filter(
+        className => className.indexOf('uploadcare--preview_status_') !== -1
+      )
+      .forEach(classToRemove => {
+        this.container.classList.remove(classToRemove)
+      })
 
     if (state === 'unknown' && this.settings.crop) {
-      this.container.find('.uploadcare--preview__done').hide()
+      this.container.querySelector('.uploadcare--preview__done').style.display =
+        'none'
     }
 
     if (state === 'error') {
-      this.container.addClass('uploadcare--preview_status_error-' + data.error)
+      this.container.classList.add(
+        'uploadcare--preview_status_error-' + data.error
+      )
     }
 
-    this.container.find('.uploadcare--preview__done').focus()
+    const done = this.container.querySelector('.uploadcare--preview__done')
+    done && done.focus()
   }
 
   initImage(imgSize, cdnModifiers) {
-    var done, img, imgLoader, startCrop
-
-    img = this.container.find('.uploadcare--preview__image')
-    done = this.container.find('.uploadcare--preview__done')
-    imgLoader = imageLoader(img[0])
-      .done(() => {
-        return this.container.addClass('uploadcare--preview_status_loaded')
+    const img = this.container.querySelector('.uploadcare--preview__image')
+    const done = this.container.querySelector('.uploadcare--preview__done')
+    const imgLoader = imageLoader(img)
+      .then(() => {
+        return this.container.classList.add('uploadcare--preview_status_loaded')
       })
-      .fail(() => {
+      .catch(() => {
         this.file = null
         return this.__setState('error', {
           error: 'loadImage'
         })
       })
 
-    startCrop = () => {
-      this.container
-        .find('.uploadcare--crop-sizes__item')
-        .attr('aria-disabled', false)
-        .attr('tabindex', 0)
-      done.attr('disabled', false).attr('aria-disabled', false)
-      this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
-      if (cdnModifiers) {
-        this.widget.setSelectionFromModifiers(cdnModifiers)
-      }
-      return done.on('click', () => {
-        var newFile
-        newFile = this.widget.applySelectionToFile(this.file)
-        this.dialogApi.fileColl.replace(this.file, newFile)
-        return true
-      })
+    const startCrop = () => {
+      const $cropSizesItem = this.container.querySelector(
+        '.uploadcare--crop-sizes__item'
+      )
+      $cropSizesItem.removeAttribute('aria-disabled')
+      $cropSizesItem.setAttribute('tabindex', 0)
+
+      done.removeAttribute('disabled')
+      done.removeAttribute('aria-disabled')
+      // crop logic
+      // this.widget = new CropWidget(img, imgSize, this.settings.crop[0])
+      // if (cdnModifiers) {
+      //   this.widget.setSelectionFromModifiers(cdnModifiers)
+      // }
+      // return done.addEventListener('click', () => {
+      //   const newFile = this.widget.applySelectionToFile(this.file)
+      //   this.dialogApi.fileColl.replace(this.file, newFile)
+      //
+      //   return true
+      // })
     }
+
     if (this.settings.crop) {
+      this.container.querySelector(
+        '.uploadcare--preview__title'
+      ).textContent = locale.t('dialog.tabs.preview.crop.title')
       this.container
-        .find('.uploadcare--preview__title')
-        .text(locale.t('dialog.tabs.preview.crop.title'))
-      this.container
-        .find('.uploadcare--preview__content')
-        .addClass('uploadcare--preview__content_crop')
-      done.attr('disabled', true).attr('aria-disabled', true)
-      done.text(locale.t('dialog.tabs.preview.crop.done'))
+        .querySelector('.uploadcare--preview__content')
+        .classList.add('uploadcare--preview__content_crop')
+      done.disabled = true
+      done.setAttribute('aria-disabled', true)
+      done.textContent = locale.t('dialog.tabs.preview.crop.done')
       this.populateCropSizes()
-      this.container
-        .find('.uploadcare--crop-sizes__item')
-        .attr('aria-disabled', true)
-        .attr('tabindex', -1)
-      return imgLoader.done(function() {
-        // Often IE 11 doesn't do reflow after image.onLoad
-        // and actual image remains 28x30 (broken image placeholder).
-        // Looks like defer always fixes it.
-        return defer(startCrop)
-      })
+      const $cropSizes = this.container.querySelector(
+        '.uploadcare--crop-sizes__item'
+      )
+      $cropSizes.setAttribute('aria-disabled', 'true')
+      $cropSizes.setAttribute('tabindex', -1)
+      return imgLoader
+        .then(function() {
+          // Often IE 11 doesn't do reflow after image.onLoad
+          // and actual image remains 28x30 (broken image placeholder).
+          // Looks like defer always fixes it.
+          return defer(startCrop)
+        })
     }
   }
 
   populateCropSizes() {
-    var control, currentClass, template
+    const control = this.container.querySelector('.uploadcare--crop-sizes')
+    const template = control.children
+    const currentClass = 'uploadcare--crop-sizes__item_current'
 
-    control = this.container.find('.uploadcare--crop-sizes')
-    template = control.children()
-    currentClass = 'uploadcare--crop-sizes__item_current'
-    $.each(this.settings.crop, (i, crop) => {
-      var caption, gcd, icon, item, prefered, size
-      prefered = crop.preferedSize
-      if (prefered) {
-        gcd = calcGCD(prefered[0], prefered[1])
-        caption = `${prefered[0] / gcd}:${prefered[1] / gcd}`
+    this.settings.crop.forEach((crop, i) => {
+      let caption
+      const preferred = crop.preferedSize
+      if (preferred) {
+        const gcd = calcGCD(preferred[0], preferred[1])
+        caption = `${preferred[0] / gcd}:${preferred[1] / gcd}`
       } else {
         caption = locale.t('dialog.tabs.preview.crop.free')
       }
-      item = template
-        .clone()
-        .appendTo(control)
-        .attr('data-caption', caption)
-        .on('click', e => {
-          if ($(e.currentTarget).attr('aria-disabled') === 'true') {
-            return
-          }
-          if (
-            !$(e.currentTarget).hasClass(currentClass) &&
-            this.settings.crop.length > 1 &&
-            this.widget
-          ) {
-            this.widget.setCrop(crop)
-            control.find('>*').removeClass(currentClass)
-            item.addClass(currentClass)
-          }
-        })
-      if (prefered) {
-        size = fitSize(prefered, [30, 30], true)
-        return item.children().css({
-          width: Math.max(20, size[0]),
-          height: Math.max(12, size[1])
-        })
-      } else {
-        icon = $(
-          "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-crop-free'/></svg>"
-        )
-          .attr('role', 'presentation')
-          .attr('class', 'uploadcare--icon')
+      const item = template[0].cloneNode(true)
+      control.append(item)
+
+      item.dataset.caption = caption
+      item.addEventListener('click', e => {
+        if (e.currentTarget.getAttribute('aria-disabled') === 'true') {
+          return
+        }
+        if (
+          !e.currentTarget.classList.contains(currentClass) &&
+          this.settings.crop.length > 1 &&
+          this.widget
+        ) {
+          this.widget.setCrop(crop)
+          control.querySelector('>*').classList.remove(currentClass)
+          item.classList.add(currentClass)
+        }
+      })
+      if (preferred) {
+        const size = fitSize(preferred, [30, 30], true)
+        const items = item.children
+
+        items.style.width = Math.max(20, size[0])
+        items.style.height = Math.max(12, size[1])
+
         return item
-          .children()
-          .append(icon)
-          .addClass('uploadcare--crop-sizes__icon_free')
+      } else {
+        const icon = parseHTML(html`
+          <svg
+            class="uploadcare--icon"
+            width="32"
+            height="32"
+            role="presentation"
+          >
+            <use xlink:href="#uploadcare--icon-crop-free" />
+          </svg>
+        `)
+
+        item.append(icon)
+
+        return item.classList.add('uploadcare--crop-sizes__icon_free')
       }
     })
-    template.remove()
 
-    return control
-      .find('>*')
-      .eq(0)
-      .addClass(currentClass)
+    template[0].parentNode.removeChild(template[0])
+
+    return control.children[0].classList.add(currentClass)
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.find('.uploadcare--preview__done').focus()
+    const focusTarget = this.container.querySelector('.uploadcare--preview__done')
+    this.dialogApi.takeFocus() && focusTarget && focusTarget.focus()
   }
 }
 

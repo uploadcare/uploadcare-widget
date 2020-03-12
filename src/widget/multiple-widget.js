@@ -1,8 +1,8 @@
 import { BaseWidget } from './base-widget'
 import locale from '../locale'
-import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
+import WidgetFile from '../file'
 
 class MultipleWidget extends BaseWidget {
   __currentFile() {
@@ -11,14 +11,14 @@ class MultipleWidget extends BaseWidget {
   }
 
   __setObject(group) {
-    if (!isFileGroupsEqual(this.currentObject, group)) {
+    if (group && !isFileGroupsEqual(this.currentObject, group.obj)) {
       return super.__setObject(group)
       // special case, when multiple widget is used with clearable
       // and user or some external code clears the value after
       // group loading error.
     } else if (!group) {
       this.__reset()
-      return this.element.val('')
+      this.element.value = ''
     }
   }
 
@@ -27,7 +27,7 @@ class MultipleWidget extends BaseWidget {
     this.__lastGroupPr = groupPr = valueToGroup(value, this.settings)
     if (value) {
       this.template.setStatus('started')
-      this.template.statusText.text(locale.t('loadingInfo'))
+      this.template.statusText.textContent = locale.t('loadingInfo')
     }
     return groupPr
       .done(group => {
@@ -43,7 +43,7 @@ class MultipleWidget extends BaseWidget {
   }
 
   __handleDirectSelection(type, data) {
-    var files = filesFrom(type, data, this.settings)
+    const files = data.map(file => new WidgetFile(file, this.settings))
     if (this.settings.systemDialog) {
       return this.__setObject(FileGroup(files, this.settings))
     } else {

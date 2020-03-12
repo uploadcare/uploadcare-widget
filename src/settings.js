@@ -1,9 +1,16 @@
-import $ from 'jquery'
 import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
-import { unique, once, upperCase, normalizeUrl } from './utils'
+import {
+  unique,
+  once,
+  upperCase,
+  normalizeUrl,
+  callbacks,
+  extend,
+  isPlainObject
+} from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 
 var indexOf = [].indexOf
@@ -107,13 +114,13 @@ script =
       scripts = document.getElementsByTagName('script')
       return scripts[scripts.length - 1]
     })())
-integration = isWindowDefined() && $(script).data('integration')
+integration = isWindowDefined() && script.dataset.integration
 if (integration && integration != null) {
-  defaults = $.extend(defaults, { integration })
+  defaults = extend(defaults, { integration })
 }
 str2arr = function(value) {
-  if (!$.isArray(value)) {
-    value = $.trim(value)
+  if (!Array.isArray(value)) {
+    value = value.trim()
     value = value ? value.split(' ') : []
   }
   return value
@@ -161,7 +168,7 @@ flagOptions = function(settings, keys) {
     if (typeof value === 'string') {
       // "", "..." -> true
       // "false", "disabled" -> false
-      value = $.trim(value).toLowerCase()
+      value = value.trim().toLowerCase()
       settings[key] = !(value === 'false' || value === 'disabled')
     } else {
       settings[key] = !!value
@@ -214,7 +221,7 @@ constrainOptions = function(settings, constraints) {
 parseCrop = function(val) {
   var ratio, reRatio
   reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
-  ratio = reRatio.exec($.trim(val.toLowerCase())) || []
+  ratio = reRatio.exec(val.toLowerCase().trim()) || []
   return {
     downscale: ratio[2] === 'x',
     upscale: !!ratio[4],
@@ -226,7 +233,7 @@ parseCrop = function(val) {
 parseShrink = function(val) {
   var reShrink, shrink, size
   reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
-  shrink = reShrink.exec($.trim(val.toLowerCase())) || []
+  shrink = reShrink.exec(val.toLowerCase().trim()) || []
   if (!shrink.length) {
     return false
   }
@@ -296,17 +303,17 @@ normalize = function(settings) {
   transformOptions(settings, transforms)
   constrainOptions(settings, constraints)
   integrationToUserAgent(settings)
-  if (settings.crop !== false && !$.isArray(settings.crop)) {
+  if (settings.crop !== false && !Array.isArray(settings.crop)) {
     if (/^(disabled?|false|null)$/i.test(settings.crop)) {
       settings.crop = false
-    } else if ($.isPlainObject(settings.crop)) {
+    } else if (isPlainObject(settings.crop)) {
       // old format
       settings.crop = [settings.crop]
     } else {
-      settings.crop = $.map(('' + settings.crop).split(','), parseCrop)
+      settings.crop = ('' + settings.crop).split(',').map(parseCrop)
     }
   }
-  if (settings.imageShrink && !$.isPlainObject(settings.imageShrink)) {
+  if (settings.imageShrink && !isPlainObject(settings.imageShrink)) {
     settings.imageShrink = parseShrink(settings.imageShrink)
   }
   if (settings.crop || settings.multiple) {
@@ -346,9 +353,9 @@ const globals = function() {
 const common = once(function(settings, ignoreGlobals) {
   var result
   if (!ignoreGlobals) {
-    defaults = $.extend(defaults, globals())
+    defaults = extend(defaults, globals())
   }
-  result = normalize($.extend(defaults, settings || {}))
+  result = normalize(extend(defaults, settings || {}))
   waitForSettings.fire(result)
   return result
 })
@@ -356,14 +363,14 @@ const common = once(function(settings, ignoreGlobals) {
 // Defaults + global variables + global overrides + local overrides
 const build = function(settings) {
   var result
-  result = $.extend({}, common())
-  if (!$.isEmptyObject(settings)) {
-    result = normalize($.extend(result, settings))
+  result = extend({}, common())
+  if (settings && Object.keys(settings).length !== 0) {
+    result = normalize(extend(result, settings))
   }
   return result
 }
 
-const waitForSettings = isWindowDefined() && $.Callbacks('once memory')
+const waitForSettings = isWindowDefined() && callbacks('once memory')
 
 const CssCollector = class CssCollector {
   constructor() {
@@ -385,13 +392,9 @@ const CssCollector = class CssCollector {
   }
 }
 
-const emptyKeyText =
-  '<div class="uploadcare--tab__content">\n<div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">Hello!</div>\n<div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/dashboard/">public key</a> is not set.</div>\n<div class="uploadcare--text">Add this to the &lt;head&gt; tag to start uploading files:</div>\n<div class="uploadcare--text uploadcare--text_pre">&lt;script&gt;\nUPLOADCARE_PUBLIC_KEY = \'your_public_key\';\n&lt;/script&gt;</div>\n</div>'
-
 export {
   defaults,
   presets,
-  emptyKeyText,
   globals,
   build,
   common,

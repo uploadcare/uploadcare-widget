@@ -2,8 +2,8 @@ import $ from 'jquery'
 import { debug } from '../utils/warnings'
 
 import { getPusher } from '../utils/pusher'
-import { defer, splitUrlRegex, jsonp } from '../utils'
-import { BaseFile } from './base'
+import { defer, splitUrlRegex } from '../utils'
+import { BaseFile, jsonp } from './base'
 
 // files
 class UrlFile extends BaseFile {

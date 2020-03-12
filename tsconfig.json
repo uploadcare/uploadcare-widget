@@ -1,0 +1,21 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "lib": [
+      "es5",
+      "dom",
+      "es2015.promise"
+    ],
+    "allowJs": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "outDir": "raw",
+    "declaration": false,
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "target": "ESNext"
+  }
+}

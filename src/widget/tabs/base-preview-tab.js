@@ -1,53 +1,61 @@
-import $ from 'jquery'
-
 import { Circle } from '../../ui/progress'
+import { callbacks, matches } from '../../utils'
 
 class BasePreviewTab {
   constructor(container, tabButton, dialogApi, settings, name) {
-    var notDisabled
     this.container = container
     this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name
     this.__initTabButtonCircle()
-    this.container.addClass('uploadcare--preview')
-    notDisabled = ':not(:disabled)'
-    this.container.on(
+    this.container.classList.add('uploadcare--preview')
+    const notDisabled = ':not(:disabled)'
+
+    this.container.addEventListener(
       'click',
-      '.uploadcare--preview__back' + notDisabled,
-      () => {
-        return this.dialogApi.fileColl.clear()
+      (e) => {
+        if (matches(e.target, '.uploadcare--preview__back' + notDisabled)) {
+          return this.dialogApi.fileColl.clear()
+        }
       }
     )
-    this.container.on(
+
+    this.container.addEventListener(
       'click',
-      '.uploadcare--preview__done' + notDisabled,
-      this.dialogApi.resolve
+      (e) => {
+        if (matches(e.target, '.uploadcare--preview__done' + notDisabled)) {
+          this.dialogApi.resolve()
+        }
+      }
     )
   }
 
   __initTabButtonCircle() {
-    var circle, circleDf, circleEl, update
-    circleEl = this.tabButton.find('.uploadcare--panel__icon')
-    circleDf = $.Deferred()
-    update = () => {
-      var i, infos, len, progress, progressInfo
-      infos = this.dialogApi.fileColl.lastProgresses()
-      progress = 0
+    const circleEl = this.tabButton.querySelector('.uploadcare--panel__icon')
+
+    const progressCallback = callbacks()
+    const update = () => {
+      let i
+      let len
+      const infos = this.dialogApi.fileColl.lastProgresses()
+      let progress = 0
       for (i = 0, len = infos.length; i < len; i++) {
-        progressInfo = infos[i]
+        const progressInfo = infos[i]
         progress +=
           ((progressInfo != null ? progressInfo.progress : undefined) || 0) /
           infos.length
       }
-      return circleDf.notify(progress)
+      return progressCallback.fire(progress)
     }
+
     this.dialogApi.fileColl.onAnyProgress(update)
     this.dialogApi.fileColl.onAdd.add(update)
     this.dialogApi.fileColl.onRemove.add(update)
+
     update()
-    circle = new Circle(circleEl).listen(circleDf.promise())
+
+    const circle = new Circle(circleEl).listen(progressCallback)
     return this.dialogApi.progress((...args) => circle.update(...args))
   }
 }

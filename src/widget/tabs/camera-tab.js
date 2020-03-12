@@ -1,14 +1,12 @@
-import $ from 'jquery'
 import { warn } from '../../utils/warnings'
-import { fileSelectDialog, canvasToBlob } from '../../utils'
+import { fileSelectDialog, canvasToBlob, parseHTML } from '../../utils'
 import { tpl } from '../../templates'
 import { isWindowDefined } from '../../utils/is-window-defined'
 
 var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
 class CameraTab {
-  constructor(container1, tabButton, dialogApi, settings, name1) {
-    var video
+  constructor(container, tabButton, dialogApi, settings, name) {
     this.__captureInput = this.__captureInput.bind(this)
     this.__captureInputHandle = this.__captureInputHandle.bind(this)
     this.__setState = this.__setState.bind(this)
@@ -19,22 +17,24 @@ class CameraTab {
     this.__startRecording = this.__startRecording.bind(this)
     this.__stopRecording = this.__stopRecording.bind(this)
     this.__cancelRecording = this.__cancelRecording.bind(this)
-    this.container = container1
+    this.container = container
     this.tabButton = tabButton
     this.dialogApi = dialogApi
     this.settings = settings
-    this.name = name1
+    this.name = name
     if (this.__checkCapture()) {
-      this.container.append(tpl('tab-camera-capture'))
-      this.container.addClass('uploadcare--camera')
+      this.container.appendChild(parseHTML(tpl('tab-camera-capture')))
+      this.container.classList.add('uploadcare--camera')
       this.container
-        .find('.uploadcare--camera__button_type_photo')
-        .on('click', this.__captureInput('image/*'))
-      video = this.container
-        .find('.uploadcare--camera__button_type_video')
-        .on('click', this.__captureInput('video/*'))
+        .querySelector('.uploadcare--camera__button_type_photo')
+        .addEventListener('click', this.__captureInput('image/*'))
+
+      const video = this.container
+        .querySelector('.uploadcare--camera__button_type_video')
+        .addEventListener('click', this.__captureInput('video/*'))
+
       if (this.settings.imagesOnly) {
-        video.hide()
+        video.style.display = 'none'
       }
     } else {
       if (!this.__checkCompatibility()) {
@@ -61,42 +61,42 @@ class CameraTab {
   }
 
   __captureInputHandle(input) {
-    this.dialogApi.addFiles('object', input.files)
+    this.dialogApi.addData('object', input.files)
     return this.dialogApi.switchTab('preview')
   }
 
   __initCamera() {
-    var startRecord
     this.__loaded = false
     this.mirrored = true
-    this.container.append(tpl('tab-camera'))
-    this.container.addClass('uploadcare--camera')
-    this.container.addClass('uploadcare--camera_status_requested')
+    this.container.appendChild(parseHTML(tpl('tab-camera')))
+    this.container.classList.add('uploadcare--camera')
+    this.container.classList.add('uploadcare--camera_status_requested')
     this.container
-      .find('.uploadcare--camera__button_type_capture')
-      .on('click', this.__capture)
-    startRecord = this.container
-      .find('.uploadcare--camera__button_type_start-record')
-      .on('click', this.__startRecording)
+      .querySelector('.uploadcare--camera__button_type_capture')
+      .addEventListener('click', this.__capture)
+    const startRecord = this.container
+      .querySelector('.uploadcare--camera__button_type_start-record')
+    startRecord.addEventListener('click', this.__startRecording)
     this.container
-      .find('.uploadcare--camera__button_type_stop-record')
-      .on('click', this.__stopRecording)
+      .querySelector('.uploadcare--camera__button_type_stop-record')
+      .addEventListener('click', this.__stopRecording)
     this.container
-      .find('.uploadcare--camera__button_type_cancel-record')
-      .on('click', this.__cancelRecording)
+      .querySelector('.uploadcare--camera__button_type_cancel-record')
+      .addEventListener('click', this.__cancelRecording)
     this.container
-      .find('.uploadcare--camera__button_type_mirror')
-      .on('click', this.__mirror)
+      .querySelector('.uploadcare--camera__button_type_mirror')
+      .addEventListener('click', this.__mirror)
     this.container
-      .find('.uploadcare--camera__button_type_retry')
-      .on('click', this.__requestCamera)
+      .querySelector('.uploadcare--camera__button_type_retry')
+      .addEventListener('click', this.__requestCamera)
     if (!this.MediaRecorder || this.settings.imagesOnly) {
-      startRecord.hide()
+      startRecord.style.display = 'none'
     }
-    this.video = this.container.find('.uploadcare--camera__video')
-    this.video.on('loadeddata', function() {
+    this.video = this.container.querySelector('.uploadcare--camera__video')
+    this.video.addEventListener('loadeddata', function() {
       return this.play()
     })
+
     this.dialogApi.progress(name => {
       if (name === this.name) {
         if (!this.__loaded) {
@@ -108,11 +108,11 @@ class CameraTab {
         }
       }
     })
+
     return this.dialogApi.always(this.__revoke)
   }
 
   __checkCompatibility() {
-    var isLocalhost
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       this.getUserMedia = function(
         constraints,
@@ -132,34 +132,34 @@ class CameraTab {
     }
     this.URL = window.URL || window.webkitURL
     this.MediaRecorder = window.MediaRecorder
-    if (!isSecure) {
+    if (!isSecure ) {
       warn('Camera is not allowed for HTTP. Please use HTTPS connection.')
     }
-    isLocalhost = document.location.hostname === 'localhost'
+    const isLocalhost = document.location.hostname === 'localhost'
     return !!this.getUserMedia && Uint8Array && (isSecure || isLocalhost)
   }
 
   __checkCapture() {
-    var input
-    input = document.createElement('input')
+    var input = document.createElement('input')
     input.setAttribute('capture', 'camera')
     return !!input.capture
   }
 
   __setState(newState) {
     const oldStates = [
-      '',
-      'ready',
-      'requested',
-      'denied',
-      'not-founded',
-      'recording'
-    ].join(' uploadcare--camera_status_')
+      'uploadcare--camera_status_ready',
+      'uploadcare--camera_status_requested',
+      'uploadcare--camera_status_denied',
+      'uploadcare--camera_status_not-founded',
+      'uploadcare--camera_status_recording'
+    ]
 
-    this.container
-      .removeClass(oldStates)
-      .addClass(`uploadcare--camera_status_${newState}`)
-    this.container.find('.uploadcare--camera__button').focus()
+    oldStates.forEach(state => {
+      this.container.classList.remove(state)
+    })
+
+    this.container.classList.add(`uploadcare--camera_status_${newState}`)
+    this.container.querySelector('.uploadcare--camera__button').focus()
   }
 
   __requestCamera() {
@@ -191,19 +191,20 @@ class CameraTab {
       stream => {
         this.__setState('ready')
         this.__stream = stream
-        if ('srcObject' in this.video[0]) {
-          this.video.prop('srcObject', stream)
-          return this.video.on('loadedmetadata', () => {
-            return this.video[0].play()
+        if ('srcObject' in this.video) {
+          this.video.srcObject = stream
+          this.video.addEventListener('loadedmetadata', () => {
+            this.video.play()
           })
         } else {
           if (this.URL) {
             this.__streamObject = this.URL.createObjectURL(stream)
-            this.video.prop('src', this.__streamObject)
+            this.video.src = this.__streamObject
           } else {
-            this.video.prop('src', stream)
+            this.video.src = stream
           }
-          return this.video[0].play()
+
+          return this.video.play()
         }
       },
       error => {
@@ -222,7 +223,6 @@ class CameraTab {
   }
 
   __revoke() {
-    var base
     this.__setState('requested')
     this.__loaded = false
     if (!this.__stream) {
@@ -232,12 +232,12 @@ class CameraTab {
       this.URL.revokeObjectURL(this.__streamObject)
     }
     if (this.__stream.getTracks) {
-      $.each(this.__stream.getTracks(), function() {
-        return typeof this.stop === 'function' ? this.stop() : undefined
+      this.__stream.getTracks().forEach((track) => {
+        typeof track.stop === 'function' && track.stop()
       })
     } else {
-      if (typeof (base = this.__stream).stop === 'function') {
-        base.stop()
+      if (typeof this.__stream.stop === 'function') {
+        this.__stream.stop()
       }
     }
     this.__stream = null
@@ -246,7 +246,7 @@ class CameraTab {
 
   __mirror() {
     this.mirrored = !this.mirrored
-    return this.video.toggleClass(
+    return this.video.classList.toggle(
       'uploadcare--camera__video_mirrored',
       this.mirrored
     )
@@ -254,7 +254,7 @@ class CameraTab {
 
   __capture() {
     var canvas, ctx, h, video, w
-    video = this.video[0]
+    video = this.video
     w = video.videoWidth
     h = video.videoHeight
     canvas = document.createElement('canvas')
@@ -266,17 +266,11 @@ class CameraTab {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(video, 0, 0, w, h)
+
     return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
-      this.dialogApi.addFiles('object', [
-        [
-          blob,
-          {
-            source: 'camera'
-          }
-        ]
-      ])
+      this.dialogApi.addData('object', [blob])
       return this.dialogApi.switchTab('preview')
     })
   }
@@ -309,20 +303,13 @@ class CameraTab {
   __stopRecording() {
     this.__setState('ready')
     this.__recorder.onstop = () => {
-      var blob, ext
-      blob = new window.Blob(this.__chunks, {
+      const blob = new window.Blob(this.__chunks, {
         type: this.__recorder.mimeType
       })
-      ext = this.__guessExtensionByMime(this.__recorder.mimeType)
+      const ext = this.__guessExtensionByMime(this.__recorder.mimeType)
       blob.name = `record.${ext}`
-      this.dialogApi.addFiles('object', [
-        [
-          blob,
-          {
-            source: 'camera'
-          }
-        ]
-      ])
+
+      this.dialogApi.addData('object', [blob])
       this.dialogApi.switchTab('preview')
       this.__chunks = []
 
@@ -375,7 +362,7 @@ class CameraTab {
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.find('.uploadcare--camera__button').focus()
+    this.dialogApi.takeFocus() && this.container.querySelector('.uploadcare--camera__button').focus()
   }
 }
 

@@ -1,41 +1,37 @@
-import $ from 'jquery'
-
 import { Widget as WidgetClass } from './widget'
 import { MultipleWidget as MultipleWidgetClass } from './multiple-widget'
 
-import { warn } from '../utils/warnings'
 import { once } from '../utils'
 import { build, common } from '../settings'
 import { isWindowDefined } from '../utils/is-window-defined'
+import ready from '../utils/ready'
 
 const dataAttr = 'uploadcareWidget'
 const selector = '[role~="uploadcare-uploader"]'
+const cache = new WeakMap()
 
-const initialize = function(container = ':root') {
-  var el, i, len, ref, res, widgets
-  res = []
-  ref = $(container)
-  for (i = 0, len = ref.length; i < len; i++) {
-    el = ref[i]
-    widgets = _initialize(el.querySelectorAll(selector))
-    res = res.concat(widgets)
-  }
-  return res
-}
+const initialize = function(containerSelector = ':root') {
+  const result = []
+  const containers = document.querySelectorAll(containerSelector)
+  for (let i = 0, len = containers.length; i < len; i++) {
+    const el = containers[i]
+    const targets = el.querySelectorAll(selector)
 
-const _initialize = function(targets) {
-  var i, len, results, target, widget
-  results = []
-  for (i = 0, len = targets.length; i < len; i++) {
-    target = targets[i]
-    widget = $(target).data(dataAttr)
-    if (widget && widget.inputElement === target) {
-      // widget already exists
-      continue
+    for (let j = 0, len = targets.length; j < len; j++) {
+      const target = targets[j]
+
+      if (cache.has(target)) {
+        // widget already exists
+        continue
+      }
+
+      const widget = initializeWidget(target)
+      cache.set(target, widget)
+      result.push(widget)
     }
-    results.push(initializeWidget(target))
   }
-  return results
+
+  return result
 }
 
 const SingleWidget = function(el) {
@@ -51,45 +47,32 @@ const Widget = function(el) {
 }
 
 const initializeWidget = function(input, targetClass) {
-  const inputArr = $(input)
-
-  if (inputArr.length === 0) {
-    throw new Error('No DOM elements found matching selector')
-  } else if (inputArr.length > 1) {
-    warn('There are multiple DOM elements matching selector')
-  }
-
-  input = inputArr.eq(0)
-
-  const s = build(input.data())
+  const s = build(Object.assign({}, input.dataset))
   const Widget = s.multiple ? MultipleWidgetClass : WidgetClass
 
   if (targetClass && Widget !== targetClass) {
     throw new Error(`This element should be processed using ${Widget._name}`)
   }
 
-  let api = input.data(dataAttr)
-  if (!api || api.inputElement !== input[0]) {
+  let api = cache.get(input)
+  if (!api || api.inputElement !== input) {
+    cache.delete(input)
     cleanup(input)
     const widget = new Widget(input, s)
 
     api = widget.api()
-    input.data(dataAttr, api)
-    widget.template.content.data(dataAttr, api)
+    cache.set(input, api)
   }
 
   return api
 }
 
 const cleanup = function(input) {
-  return input.off('.uploadcare').each(function() {
-    var widget, widgetElement
-    widgetElement = $(this).next('.uploadcare--widget')
-    widget = widgetElement.data(dataAttr)
-    if (widget && widget.inputElement === this) {
-      return widgetElement.remove()
-    }
-  })
+  const widgetElement = input.nextElementSibling
+  const widget = widgetElement && widgetElement.dataset[dataAttr]
+  if (widget && widget.inputElement === input) {
+    return widgetElement.parentNode.removeChild(widgetElement)
+  }
 }
 
 const start = once(function(s, isolated) {
@@ -102,11 +85,11 @@ const start = once(function(s, isolated) {
     setInterval(initialize, 100)
   }
   // should be after settings.common(s) call
-  return initialize()
+  initialize()
 })
 
 isWindowDefined() &&
-  $(function() {
+  ready(function() {
     if (!window.UPLOADCARE_MANUAL_START) {
       start()
     }

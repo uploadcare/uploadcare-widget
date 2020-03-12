@@ -3,17 +3,18 @@ import { string } from 'rollup-plugin-string'
 import json from 'rollup-plugin-json'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
 export default {
-  input: 'src/bundles/uploadcare.full.js',
+  input: 'src/bundles/uploadcare.js',
 
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: 'dist/uploadcare.full.js',
+    file: 'dist/uploadcare.js',
     sourcemap: 'inline'
   },
 
@@ -24,6 +25,7 @@ export default {
   },
 
   plugins: [
+    typescript(),
     babel({
       exclude: 'node_modules/**',
       presets: [['@babel/env', { modules: false }]]
@@ -33,7 +35,7 @@ export default {
     }),
     json(),
 
-    resolve(),
+    resolve({ browser: true }),
     commonjs({
       namedExports: { './src/vendor/pusher.js': ['Pusher'] }
     }),

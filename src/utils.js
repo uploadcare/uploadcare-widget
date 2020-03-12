@@ -1,13 +1,13 @@
-import $ from 'jquery'
+import { html } from './utils/html'
 
-import { warn } from './utils/warnings'
-
-var indexOf = [].indexOf
+const indexOf = [].indexOf
 
 // utils
 const unique = function(arr) {
-  var item, j, len, result
-  result = []
+  let item
+  let j
+  let len
+  const result = []
   for (j = 0, len = arr.length; j < len; j++) {
     item = arr[j]
     if (indexOf.call(result, item) < 0) {
@@ -22,7 +22,7 @@ const defer = function(fn) {
 }
 
 const gcd = function(a, b) {
-  var c
+  let c
   while (b) {
     c = a % b
     a = b
@@ -32,9 +32,8 @@ const gcd = function(a, b) {
 }
 
 const once = function(fn) {
-  var called, result
-  called = false
-  result = null
+  let called = false
+  let result = null
   return function() {
     if (!called) {
       result = fn.apply(this, arguments)
@@ -45,54 +44,20 @@ const once = function(fn) {
 }
 
 const wrapToPromise = function(value) {
-  return $.Deferred()
-    .resolve(value)
-    .promise()
-}
-
-// same as promise.then(), but if filter returns promise
-// it will be just passed forward without any special behavior
-const then = function(pr, doneFilter, failFilter, progressFilter) {
-  var compose, df
-  df = $.Deferred()
-  compose = function(fn1, fn2) {
-    if (fn1 && fn2) {
-      return function() {
-        return fn2.call(this, fn1.apply(this, arguments))
-      }
-    } else {
-      return fn1 || fn2
-    }
-  }
-  pr.then(
-    compose(
-      doneFilter,
-      df.resolve
-    ),
-    compose(
-      failFilter,
-      df.reject
-    ),
-    compose(
-      progressFilter,
-      df.notify
-    )
-  )
-  return df.promise()
+  return Promise.resolve(value)
 }
 
 // Build copy of source with only specified methods.
 // Handles chaining correctly.
 const bindAll = function(source, methods) {
-  var target
-  target = {}
+  const target = {}
 
-  $.each(methods, function(i, method) {
-    var fn = source[method]
+  methods.forEach(function(method, i) {
+    const fn = source[method]
 
-    if ($.isFunction(fn)) {
+    if (isFunction(fn)) {
       target[method] = function(...args) {
-        var result = fn.apply(source, args)
+        const result = fn.apply(source, args)
 
         // Fix chaining
         if (result === source) {
@@ -113,17 +78,18 @@ const upperCase = function(s) {
 }
 
 const publicCallbacks = function(callbacks) {
-  var result
-  result = callbacks.add
+  const result = callbacks.add
+
   result.add = callbacks.add
   result.remove = callbacks.remove
+
   return result
 }
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = (Math.random() * 16) | 0
-    var v = c === 'x' ? r : (r & 3) | 8
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 3) | 8
 
     return v.toString(16)
   })
@@ -145,23 +111,23 @@ const escapeRegExp = function(str) {
 }
 
 const globRegexp = function(str, flags = 'i') {
-  var parts
-  parts = $.map(str.split('*'), escapeRegExp)
+  const parts = str.split('*').map(escapeRegExp)
+
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
 const normalizeUrl = function(url) {
-  var scheme
   // google.com/ → google.com
   // /google.com/ → /google.com
   // //google.com/ → http://google.com
   // http://google.com/ → http://google.com
-  scheme = document.location.protocol
+  let scheme = document.location.protocol
   if (scheme !== 'http:') {
     scheme = 'https:'
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
+
 const fitText = function(text, max) {
   if (text.length > max) {
     const head = Math.ceil((max - 3) / 2)
@@ -177,10 +143,9 @@ const fitSizeInCdnLimit = function(objSize) {
 }
 
 const fitSize = function(objSize, boxSize, upscale) {
-  var heightRation, widthRatio
   if (objSize[0] > boxSize[0] || objSize[1] > boxSize[1] || upscale) {
-    widthRatio = boxSize[0] / objSize[0]
-    heightRation = boxSize[1] / objSize[1]
+    const widthRatio = boxSize[0] / objSize[0]
+    const heightRation = boxSize[1] / objSize[1]
     if (!boxSize[0] || (boxSize[1] && widthRatio > heightRation)) {
       return [Math.round(heightRation * objSize[0]), boxSize[1]]
     } else {
@@ -208,7 +173,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
   } else if (!wholeImage) {
     modifiers += '-/preview/'
   }
-  info = $.extend({}, info)
+  info = extend({}, info)
   info.cdnUrlModifiers = modifiers
   info.cdnUrl = `${info.originalUrl}${modifiers || ''}`
   info.crop = coords
@@ -216,79 +181,93 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
 }
 
 const fileInput = function(container, settings, fn) {
-  var accept, input, run
-  input = null
-  accept = settings.inputAcceptTypes
+  let run
+  let input = null
+  let accept = settings.inputAcceptTypes
   if (accept === '') {
     accept = settings.imagesOnly ? 'image/*' : null
   }
 
   ;(run = function() {
-    input = (settings.multiple
-      ? $('<input type="file" multiple>')
-      : $('<input type="file">')
-    )
-      .attr('accept', accept)
-      .css({
-        position: 'absolute',
-        top: 0,
-        opacity: 0,
-        margin: 0,
-        padding: 0,
-        width: 'auto',
-        height: 'auto',
-        cursor: container.css('cursor')
-      })
-      .on('change', function() {
-        fn(this)
-        $(this).hide()
-        return run()
-      })
-    return container.append(input)
+    input = document.createElement('input')
+    input.type = 'file'
+
+    if (settings.multiple) {
+      input.setAttribute('multiple', '')
+    }
+
+    input.setAttribute('accept', accept)
+
+    input.addEventListener('change', function() {
+      fn(input)
+      input.style.display = 'none'
+
+      return run()
+    })
+
+    input.style.position = 'absolute'
+    input.style.top = '0'
+    input.style.opacity = '0'
+    input.style.margin = '0'
+    input.style.padding = '0'
+    input.style.width = 'auto'
+    input.style.height = 'auto'
+    input.style.cursor = window.getComputedStyle(container).cursor
+
+    return container.appendChild(input)
   })()
 
+  container.style.position = 'relative'
+  container.style.overflow = 'hidden'
+
+  container.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect()
+
+    const { left, top } = {
+      top: rect.top + document.body.scrollTop,
+      left: rect.left + document.body.scrollLeft
+    }
+    const width = parseFloat(
+      window.getComputedStyle(input, null).width.replace('px', '')
+    )
+
+    input.style.left = e.pageX - left - width + 10
+    input.style.top = e.pageY - top - 10
+  })
+
   return container
-    .css({
-      position: 'relative',
-      overflow: 'hidden'
-      // to make it posible to set `cursor:pointer` on button
-      // http://stackoverflow.com/a/9182787/478603
-    })
-    .mousemove(function(e) {
-      var left, top, width
-      ;({ left, top } = $(this).offset())
-      width = input.width()
-      return input.css({
-        left: e.pageX - left - width + 10,
-        top: e.pageY - top - 10
-      })
-    })
 }
 
 const fileSelectDialog = function(container, settings, fn, attributes = {}) {
-  var accept
-  accept = settings.inputAcceptTypes
+  let accept = settings.inputAcceptTypes
   if (accept === '') {
     accept = settings.imagesOnly ? 'image/*' : null
   }
-  return $(
-    settings.multiple ? '<input type="file" multiple>' : '<input type="file">'
+
+  const serializedAttr = Object.entries(attributes).reduce(
+    (ser, [name, value]) => `${ser} ${name}='${value}'`,
+    ''
   )
-    .attr('accept', accept)
-    .attr(attributes)
-    .css({
-      position: 'fixed',
-      bottom: 0,
-      opacity: 0
-    })
-    .on('change', function() {
-      fn(this)
-      return $(this).remove()
-    })
-    .appendTo(container)
-    .focus()
-    .click()
-    .hide()
+
+  const input = parseHTML(html`
+    <input
+      type="file" ${settings.multiple ? 'multiple' : ''}
+      accept='${accept}'
+      style="position: fixed;bottom: 0;opacity: 0;"
+      ${serializedAttr}
+    ></input>
+  `)
+
+  input.addEventListener('change', e => {
+    fn(e.target)
+    container.removeChild(input)
+  })
+
+  container.appendChild(input)
+
+  input.click()
+
+  input.style.display = 'none'
 }
 
 const fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split(' ')
@@ -319,45 +298,21 @@ const readableFileSize = function(
   return `${prefix}${value} ${fileSizeLabels[i]}${postfix}`
 }
 
-const ajaxDefaults = {
-  dataType: 'json',
-  crossDomain: true,
-  cache: false
-}
-
-const jsonp = function(url, type, data, settings = {}) {
-  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
-    function(data) {
-      var text
-      if (data.error) {
-        text = data.error.content || data.error
-        return $.Deferred().reject(text)
-      } else {
-        return data
-      }
-    },
-    function(_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
-      warn(`JSONP unexpected error: ${text} while loading ${url}`)
-
-      return text
-    }
-  )
-}
-
 const canvasToBlob = function(canvas, type, quality, callback) {
-  var arr, binStr, dataURL, i, j, ref
+  let i
+  let j
+  let ref
   if (window.HTMLCanvasElement.prototype.toBlob) {
     return canvas.toBlob(callback, type, quality)
   }
-  dataURL = canvas.toDataURL(type, quality)
+  let dataURL = canvas.toDataURL(type, quality)
   dataURL = dataURL.split(',')
-  binStr = window.atob(dataURL[1])
-  arr = new Uint8Array(binStr.length)
+  const binStr = window.atob(dataURL[1])
+  const arr = new Uint8Array(binStr.length)
   for (i = j = 0, ref = binStr.length; j < ref; i = j += 1) {
     arr[i] = binStr.charCodeAt(i)
   }
+
   return callback(
     new window.Blob([arr], {
       type: /:(.+\/.+);/.exec(dataURL[0])[1]
@@ -399,39 +354,371 @@ const taskRunner = function(capacity) {
 
   return run
 }
-// This is work around bug in jquery https://github.com/jquery/jquery/issues/2013
-// action, add listener, callbacks,
-// ... .then handlers, argument index, [final state]
-const pipeTuples = [
-  ['notify', 'progress', 2],
-  ['resolve', 'done', 0],
-  ['reject', 'fail', 1]
-]
 
-const fixedPipe = function(promise, ...fns) {
-  return $.Deferred(function(newDefer) {
-    return $.each(pipeTuples, function(i, tuple) {
-      var fn
-      // Map tuples (progress, done, fail) to arguments (done, fail, progress)
-      fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
-      return promise[tuple[1]](function() {
-        var returned
-        returned = fn && fn.apply(this, arguments)
-        if (returned && $.isFunction(returned.promise)) {
-          return returned
-            .promise()
-            .progress(newDefer.notify)
-            .done(newDefer.resolve)
-            .fail(newDefer.reject)
-        } else {
-          return newDefer[tuple[0] + 'With'](
-            this === promise ? newDefer.promise() : this,
-            fn ? [returned] : arguments
-          )
+const isFunction = fn => {
+  // Support: Chrome <=57, Firefox <=52
+  // In some browsers, typeof returns "function" for HTML <object> elements
+  // (i.e., `typeof document.createElement( "object" ) === "function"`).
+  // We don't want to classify *any* DOM node as a function.
+  return typeof fn === 'function' && typeof fn.nodeType !== 'number'
+}
+
+const inArray = (elem, arr, i) => {
+  return arr == null ? -1 : indexOf.call(arr, elem, i)
+}
+
+function toType(obj) {
+  if (obj == null) {
+    return obj + ''
+  }
+
+  const class2type = {}
+
+  // Support: Android <=2.3 only (functionish RegExp)
+  return typeof obj === 'object' || typeof obj === 'function'
+    ? class2type[toString.call(obj)] || 'object'
+    : typeof obj
+}
+
+const callbacks = function(options) {
+  // Convert String-formatted options into Object-formatted ones
+  function createOptions(options) {
+    var object = {}
+    const arr = options.match(/[^\x20\t\r\n\f]+/g) || []
+    arr.forEach(function(_, flag) {
+      object[flag] = true
+    })
+    return object
+  }
+
+  // Convert options from String-formatted to Object-formatted if needed
+  // (we check in cache first)
+  options =
+    typeof options === 'string'
+      ? createOptions(options)
+      : Object.assign({}, options)
+
+  // Flag to know if list is currently firing
+  var firing
+  // Last fire value for non-forgettable lists
+  var memory
+  // Flag to know if list was already fired
+  var fired
+  // Flag to prevent firing
+  var locked
+  // Actual callback list
+  var list = []
+  // Queue of execution data for repeatable lists
+  var queue = []
+  // Index of currently firing callback (modified by add/remove as needed)
+  var firingIndex = -1
+  // Fire callbacks
+  var fire = function() {
+    // Enforce single-firing
+    locked = locked || options.once
+
+    // Execute callbacks for all pending executions,
+    // respecting firingIndex overrides and runtime changes
+    fired = firing = true
+    for (; queue.length; firingIndex = -1) {
+      memory = queue.shift()
+      while (++firingIndex < list.length) {
+        // Run callback and check for early termination
+        if (
+          list[firingIndex].apply(memory[0], memory[1]) === false &&
+          options.stopOnFalse
+        ) {
+          // Jump to end and forget the data so .add doesn't re-fire
+          firingIndex = list.length
+          memory = false
+        }
+      }
+    }
+
+    // Forget the data if we're done with it
+    if (!options.memory) {
+      memory = false
+    }
+
+    firing = false
+
+    // Clean up if we're done firing for good
+    if (locked) {
+      // Keep an empty list if we have data for future add calls
+      if (memory) {
+        list = []
+
+        // Otherwise, this object is spent
+      } else {
+        list = ''
+      }
+    }
+  }
+  // Actual Callbacks object
+  var self = {
+    // Add a callback or a collection of callbacks to the list
+    add: function() {
+      if (list) {
+        // If we have memory from a past run, we should fire after adding
+        if (memory && !firing) {
+          firingIndex = list.length - 1
+          queue.push(memory)
+        }
+
+        ;(function add(args) {
+          Array.from(args).forEach(function(arg, _) {
+            if (isFunction(arg)) {
+              if (!options.unique || !self.has(arg)) {
+                list.push(arg)
+              }
+            } else if (arg && arg.length && toType(arg) !== 'string') {
+              // Inspect recursively
+              add(arg)
+            }
+          })
+        })(arguments)
+
+        if (memory && !firing) {
+          fire()
+        }
+      }
+      return this
+    },
+
+    // Remove a callback from the list
+    remove: function() {
+      Array.from(arguments).forEach(function(arg, _) {
+        var index
+        while ((index = inArray(arg, list, index)) > -1) {
+          list.splice(index, 1)
+
+          // Handle firing indexes
+          if (index <= firingIndex) {
+            firingIndex--
+          }
         }
       })
-    })
-  }).promise()
+      return this
+    },
+
+    // Check if a given callback is in the list.
+    // If no argument is given, return whether or not list has callbacks attached.
+    has: function(fn) {
+      return fn ? inArray(fn, list) > -1 : list.length > 0
+    },
+
+    // Remove all callbacks from the list
+    empty: function() {
+      if (list) {
+        list = []
+      }
+      return this
+    },
+
+    // Disable .fire and .add
+    // Abort any current/pending executions
+    // Clear all callbacks and values
+    disable: function() {
+      locked = queue = []
+      list = memory = ''
+      return this
+    },
+    disabled: function() {
+      return !list
+    },
+
+    // Disable .fire
+    // Also disable .add unless we have memory (since it would have no effect)
+    // Abort any pending executions
+    lock: function() {
+      locked = queue = []
+      if (!memory && !firing) {
+        list = memory = ''
+      }
+      return this
+    },
+    locked: function() {
+      return !!locked
+    },
+
+    // Call all callbacks with the given context and arguments
+    fireWith: function(context, args) {
+      if (!locked) {
+        args = args || []
+        args = [context, args.slice ? args.slice() : args]
+        queue.push(args)
+        if (!firing) {
+          fire()
+        }
+      }
+      return this
+    },
+
+    // Call all the callbacks with the given arguments
+    fire: function() {
+      self.fireWith(this, arguments)
+      return this
+    },
+
+    // To know if the callbacks have already been called at least once
+    fired: function() {
+      return !!fired
+    }
+  }
+
+  return self
+}
+
+const isPlainObject = function(obj) {
+  var proto, Ctor
+
+  // Detect obvious negatives
+  // Use toString instead of jQuery.type to catch host objects
+  if (!obj || toString.call(obj) !== '[object Object]') {
+    return false
+  }
+
+  proto = Object.getPrototypeOf(obj)
+
+  // Objects with no prototype (e.g., `Object.create( null )`) are plain
+  if (!proto) {
+    return true
+  }
+
+  var class2type = {}
+  var hasOwn = class2type.hasOwnProperty
+  var fnToString = hasOwn.toString
+  var ObjectFunctionString = fnToString.call(Object)
+
+  // Objects with prototype are plain iff they were constructed by a global Object function
+  Ctor = hasOwn.call(proto, 'constructor') && proto.constructor
+  return (
+    typeof Ctor === 'function' && fnToString.call(Ctor) === ObjectFunctionString
+  )
+}
+
+const extend = function() {
+  let options
+  let name
+  let src
+  let copy
+  let copyIsArray
+  let clone
+  let target = arguments[0] || {}
+  let i = 1
+  const length = arguments.length
+  let deep = false
+
+  // Handle a deep copy situation
+  if (typeof target === 'boolean') {
+    deep = target
+
+    // Skip the boolean and the target
+    target = arguments[i] || {}
+    i++
+  }
+
+  // Handle case when target is a string or something (possible in deep copy)
+  if (typeof target !== 'object' && !isFunction(target)) {
+    target = {}
+  }
+
+  // Extend jQuery itself if only one argument is passed
+  if (i === length) {
+    target = this
+    i--
+  }
+
+  for (; i < length; i++) {
+    // Only deal with non-null/undefined values
+    if ((options = arguments[i]) != null) {
+      // Extend the base object
+      for (name in options) {
+        copy = options[name]
+
+        // Prevent Object.prototype pollution
+        // Prevent never-ending loop
+        if (name === '__proto__' || target === copy) {
+          continue
+        }
+
+        // Recurse if we're merging plain objects or arrays
+        if (
+          deep &&
+          copy &&
+          (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))
+        ) {
+          src = target[name]
+
+          // Ensure proper type for the source value
+          if (copyIsArray && !Array.isArray(src)) {
+            clone = []
+          } else if (!copyIsArray && !isPlainObject(src)) {
+            clone = {}
+          } else {
+            clone = src
+          }
+          copyIsArray = false
+
+          // Never move original objects, clone them
+          target[name] = extend(deep, clone, copy)
+
+          // Don't bring in undefined values
+        } else if (copy !== undefined) {
+          target[name] = copy
+        }
+      }
+    }
+  }
+
+  // Return the modified object
+  return target
+}
+
+const grep = (elems, callback, invert) => {
+  const matches = []
+  let i = 0
+  const length = elems.length
+  const callbackExpect = !invert
+
+  // Go through the array, only saving the items
+  // that pass the validator function
+  for (; i < length; i++) {
+    const callbackInverse = !callback(elems[i], i)
+    if (callbackInverse !== callbackExpect) {
+      matches.push(elems[i])
+    }
+  }
+
+  return matches
+}
+
+const parseHTML = function(str) {
+  const tmp = document.implementation.createHTMLDocument()
+  tmp.body.innerHTML = str
+
+  if (tmp.body.childElementCount <= 1) {
+    return tmp.body.children[0]
+  } else {
+    return Array.from(tmp.body.children).reduce((fragment, node) => {
+      fragment.appendChild(node)
+      return fragment
+    }, document.createDocumentFragment())
+  }
+}
+
+const matches = function(el, selector) {
+  return (
+    el &&
+    (
+      el.matches ||
+      el.matchesSelector ||
+      el.msMatchesSelector ||
+      el.mozMatchesSelector ||
+      el.webkitMatchesSelector ||
+      el.oMatchesSelector
+    ).call(el, selector)
+  )
 }
 
 export {
@@ -440,7 +727,6 @@ export {
   gcd,
   once,
   wrapToPromise,
-  then,
   bindAll,
   upperCase,
   publicCallbacks,
@@ -461,9 +747,14 @@ export {
   fileSelectDialog,
   fileSizeLabels,
   readableFileSize,
-  ajaxDefaults,
-  jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
+  isFunction,
+  callbacks,
+  inArray,
+  extend,
+  grep,
+  parseHTML,
+  isPlainObject,
+  matches,
 }
