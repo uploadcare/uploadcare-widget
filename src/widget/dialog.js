@@ -197,7 +197,7 @@ const openPanel = function(placeholder, files, tab, settings, opt) {
 
   if (!files) {
     files = []
-  } else if (Object.prototype.hasOwnProperty.call(files, "files")) {
+  } else if (typeof files.files === 'function') {
     files = files.files()
   } else if (!Array.isArray(files)) {
     files = [files]

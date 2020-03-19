@@ -110,6 +110,10 @@ class WidgetGroup {
     this.progress = this.progress.bind(this)
   }
 
+  state() {
+    return 'ready'
+  }
+
   files() {
     return this._files
   }
