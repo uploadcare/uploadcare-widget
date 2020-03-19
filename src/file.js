@@ -96,7 +96,7 @@ class WidgetGroup {
           cdnUrl: groupInfo.id
             ? `${this.settings.cdnBase}/${groupInfo.id}/`
             : null,
-          name: locale.t('file', 1),
+          name: locale.t('file', files.length),
           count: files.length,
           files,
           size: sum(files.map(file => file.size)),
