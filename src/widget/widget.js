@@ -1,5 +1,5 @@
 import { BaseWidget } from './base-widget'
-import WidgetFile from '../file'
+import { WidgetFile } from '../file'
 
 class Widget extends BaseWidget {
   __currentFile() {

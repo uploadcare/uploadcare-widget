@@ -4,7 +4,7 @@ import { globRegexp, parseHTML } from '../../utils'
 import { html } from '../../utils/html'
 
 import { version } from '../../../package.json'
-import WidgetFile from '../../file'
+import { WidgetFile } from '../../file'
 
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {

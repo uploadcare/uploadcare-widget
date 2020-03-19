@@ -3,7 +3,7 @@ import { defer, bindAll, publicCallbacks, fileSelectDialog, callbacks } from '..
 import { receiveDrop } from './dragdrop'
 import { Template } from './template'
 import { openDialog } from './dialog'
-import WidgetFile from '../file'
+import { WidgetFile } from '../file'
 
 class BaseWidget {
   constructor(element, settings) {

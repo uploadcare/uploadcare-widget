@@ -4,7 +4,7 @@
 // // import { jsonp } from './base'
 // import { build } from '../settings'
 // import locale from '../locale'
-// import WidgetFile from '../file'
+// import { WidgetFile } from '../file'
 
 // files
 class FileGroup {

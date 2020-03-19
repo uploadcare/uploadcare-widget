@@ -20,7 +20,7 @@ import locale from '../locale'
 import { tpl } from '../templates'
 import { isWindowDefined } from '../utils/is-window-defined'
 import { html } from '../utils/html.ts'
-import WidgetFile from '../file'
+import { WidgetFile, WidgetGroup } from '../file'
 import { welcomeContent } from '../templates/welcome-content'
 
 const lockDialogFocus = function(e) {
@@ -324,7 +324,7 @@ class Panel {
       const promise = this.dfd.then(files => {
         if (this.settings.multiple) {
           // return an object for stop promise chaining
-          // return { obj: FileGroup(files, this.settings) }
+          return { obj: new WidgetGroup(files, this.settings) }
         } else {
           return { obj: files[0] }
         }

@@ -2,7 +2,7 @@ import { fileDragAndDrop } from '../utils/abilities'
 import { build } from '../settings'
 import { isWindowDefined } from '../utils/is-window-defined'
 import ready from '../utils/ready'
-import WidgetFile from '../file'
+import { WidgetFile } from '../file'
 
 const support = fileDragAndDrop
 
