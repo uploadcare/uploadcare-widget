@@ -2,12 +2,11 @@ import { BaseWidget } from './base-widget'
 import locale from '../locale'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroupsEqual, valueToGroup } from '../utils/groups'
-import WidgetFile from '../file'
+import { WidgetFile } from '../file'
 
 class MultipleWidget extends BaseWidget {
   __currentFile() {
-    var ref1
-    return (ref1 = this.currentObject) != null ? ref1.promise() : undefined
+    return this.currentObject != null ? this.currentObject : undefined
   }
 
   __setObject(group) {
