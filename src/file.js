@@ -24,9 +24,9 @@ class WidgetFile {
   }
 
   fail(callback) {
-    this.progressState = 'error'
-
     return this.file.catch(error => {
+      this.progressState = 'error'
+
       if (!error.isCancel) {
         return callback(error)
       }
@@ -38,15 +38,18 @@ class WidgetFile {
   }
 
   done(callback) {
-    this.progressState = 'ready'
+    return this.file.then((info) => {
+      this.progressState = 'ready'
 
-    return this.file.then(callback)
+      callback(info)
+    })
   }
 
   progress(callback) {
-    this.progressState = 'uploading'
-
-    this.callback.add(callback)
+    this.callback.add((info, data) => {
+      this.progressState = 'uploading'
+      callback(info, data)
+    })
   }
 
   then(callback) {

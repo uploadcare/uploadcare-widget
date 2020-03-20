@@ -28,7 +28,7 @@
 <div id="list"></div>
 
 <script>
-  var widget = uploadcare.MultipleWidget("#uploader");
+  var widget = uploadcare.MultipleWidget(document.querySelector("#uploader"));
 
   widget.onChange(function(group) {
     var $list = $("#list").empty();

@@ -8,8 +8,8 @@ import { PreviewTabMultiple } from './tabs/preview-tab-multiple'
 import { CollectionOfPromises } from '../utils/collection'
 import {
   publicCallbacks,
-  fitSize,
-  applyCropCoordsToInfo,
+  // fitSize,
+  // applyCropCoordsToInfo,
   parseHTML,
   callbacks,
   isPlainObject,
@@ -393,44 +393,44 @@ class Panel {
   }
 
   __autoCrop(files) {
-    var crop, i, len, ref
-    if (!this.settings.crop || !this.settings.multiple) {
-      return
-    }
-    ref = this.settings.crop
-    for (i = 0, len = ref.length; i < len; i++) {
-      crop = ref[i]
-      // if even one of crop option sets allow free crop,
-      // we don't need to crop automatically
-      if (!crop.preferedSize) {
-        return
-      }
-    }
-    return files.autoThen(fileInfo => {
-      var info, size
-      // .cdnUrlModifiers came from already cropped files
-      // .crop came from autocrop even if autocrop do not set cdnUrlModifiers
-      if (!fileInfo.isImage || fileInfo.cdnUrlModifiers || fileInfo.crop) {
-        return fileInfo
-      }
-      info = fileInfo.originalImageInfo
-      size = fitSize(
-        this.settings.crop[0].preferedSize,
-        [info.width, info.height],
-        true
-      )
-      return applyCropCoordsToInfo(
-        fileInfo,
-        this.settings.crop[0],
-        [info.width, info.height],
-        {
-          width: size[0],
-          height: size[1],
-          left: Math.round((info.width - size[0]) / 2),
-          top: Math.round((info.height - size[1]) / 2)
-        }
-      )
-    })
+    // var crop, i, len, ref
+    // if (!this.settings.crop || !this.settings.multiple) {
+    //   return
+    // }
+    // ref = this.settings.crop
+    // for (i = 0, len = ref.length; i < len; i++) {
+    //   crop = ref[i]
+    //   // if even one of crop option sets allow free crop,
+    //   // we don't need to crop automatically
+    //   if (!crop.preferedSize) {
+    //     return
+    //   }
+    // }
+    // return files.autoThen(fileInfo => {
+    //   var info, size
+    //   // .cdnUrlModifiers came from already cropped files
+    //   // .crop came from autocrop even if autocrop do not set cdnUrlModifiers
+    //   if (!fileInfo.isImage || fileInfo.cdnUrlModifiers || fileInfo.crop) {
+    //     return fileInfo
+    //   }
+    //   info = fileInfo.imageInfo
+    //   size = fitSize(
+    //     this.settings.crop[0].preferedSize,
+    //     [info.width, info.height],
+    //     true
+    //   )
+    //   return applyCropCoordsToInfo(
+    //     fileInfo,
+    //     this.settings.crop[0],
+    //     [info.width, info.height],
+    //     {
+    //       width: size[0],
+    //       height: size[1],
+    //       left: Math.round((info.width - size[0]) / 2),
+    //       top: Math.round((info.height - size[1]) / 2)
+    //     }
+    //   )
+    // })
   }
 
   __resolve() {
