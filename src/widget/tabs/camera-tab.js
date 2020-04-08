@@ -282,10 +282,16 @@ class CameraTab {
   }
 
   __startRecording() {
-    var __recorderOptions
     this.__setState('recording')
     this.__chunks = []
-    __recorderOptions = {}
+
+    var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+    var __recorderOptions = isFirefox && window.MediaRecorder.isTypeSupported('video/webm')
+      ? {
+          mimeType: 'video/webm'
+        }
+      : {}
+
     if (this.settings.audioBitsPerSecond !== null) {
       __recorderOptions.audioBitsPerSecond = this.settings.audioBitsPerSecond
     }
@@ -375,7 +381,8 @@ class CameraTab {
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.find('.uploadcare--camera__button').focus()
+    this.dialogApi.takeFocus() &&
+      this.container.find('.uploadcare--camera__button').focus()
   }
 }
 
