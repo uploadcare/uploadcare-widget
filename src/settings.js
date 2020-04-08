@@ -72,7 +72,7 @@ defaults = {
   parallelDirectUploads: 10,
   passWindowOpen: false,
   // camera recording
-  preferedMimeType: null,
+  videoPreferredMimeTypes: null,
   audioBitsPerSecond: null,
   videoBitsPerSecond: null,
   // maintain settings
@@ -271,7 +271,7 @@ defaultPreviewUrlCallback = function(url, info) {
 
 normalize = function(settings) {
   var skydriveIndex
-  arrayOptions(settings, ['tabs', 'preferredTypes'])
+  arrayOptions(settings, ['tabs', 'preferredTypes', 'videoPreferredMimeTypes'])
   urlOptions(settings, ['cdnBase', 'socialBase', 'urlBase', 'scriptBase'])
   flagOptions(settings, [
     'doNotStore',
@@ -326,6 +326,7 @@ normalize = function(settings) {
   if (skydriveIndex !== -1) {
     settings.tabs[skydriveIndex] = 'onedrive'
   }
+
   return settings
 }
 

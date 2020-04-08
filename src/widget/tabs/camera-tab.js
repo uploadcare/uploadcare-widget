@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { warn } from '../../utils/warnings'
 import { fileSelectDialog, canvasToBlob } from '../../utils'
 import { tpl } from '../../templates'
+import find from '../../utils/find'
 import { isWindowDefined } from '../../utils/is-window-defined'
 
 var isSecure = isWindowDefined() && document.location.protocol === 'https:'
@@ -286,24 +287,31 @@ class CameraTab {
     this.__chunks = []
     var __recorderOptions = {}
 
-    var mimeType = this.settings.preferedMimeType
-    if (mimeType != null && this.MediaRecorder.isTypeSupported(mimeType)) {
-      __recorderOptions.mimeType = mimeType
+    var mimeTypes = this.settings.videoPreferredMimeTypes
+    if (mimeTypes != null) {
+      __recorderOptions.mimeType = find(
+        $.isArray(mimeTypes) ? mimeTypes : [mimeTypes],
+        mimeType => this.MediaRecorder.isTypeSupported(mimeType)
+      )
     }
 
-    var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-    if ( __recorderOptions.mimeType == null && isFirefox && this.MediaRecorder.isTypeSupported('video/webm')) {
+    var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    if (
+      __recorderOptions.mimeType == null &&
+      isFirefox &&
+      this.MediaRecorder.isTypeSupported('video/webm')
+    ) {
       __recorderOptions.mimeType = 'video/webm'
     }
 
     if (this.settings.audioBitsPerSecond !== null) {
       __recorderOptions.audioBitsPerSecond = this.settings.audioBitsPerSecond
     }
-    
+
     if (this.settings.videoBitsPerSecond !== null) {
       __recorderOptions.videoBitsPerSecond = this.settings.videoBitsPerSecond
     }
-    
+
     if (Object.keys(__recorderOptions).length !== 0) {
       this.__recorder = new this.MediaRecorder(this.__stream, __recorderOptions)
     } else {
