@@ -72,6 +72,7 @@ defaults = {
   parallelDirectUploads: 10,
   passWindowOpen: false,
   // camera recording
+  preferedMimeType: null,
   audioBitsPerSecond: null,
   videoBitsPerSecond: null,
   // maintain settings
