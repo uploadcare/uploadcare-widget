@@ -289,10 +289,14 @@ class CameraTab {
 
     var mimeTypes = this.settings.videoPreferredMimeTypes
     if (mimeTypes != null) {
-      __recorderOptions.mimeType = find(
+      var mimeType = find(
         $.isArray(mimeTypes) ? mimeTypes : [mimeTypes],
         mimeType => this.MediaRecorder.isTypeSupported(mimeType)
       )
+      
+      if (mimeType != null) {
+        __recorderOptions.mimeType = mimeType
+      }
     }
 
     var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
