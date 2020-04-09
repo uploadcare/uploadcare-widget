@@ -2,12 +2,13 @@
 
 ## [3.9.0]
 
+### Changed
+
 * feat: add videoPreferredMimeTypes setting for camera tab. See [#736][736]
 
 [736]: https://github.com/uploadcare/uploadcare-widget/pull/736
 [3.9.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.3...v3.9.0
 
-### Changed
 
 ## [3.8.3]
 
