@@ -1,10 +1,18 @@
 # Changelog
 
+## [3.9.1]
+
+### Fixed
+
+* fixed wrong npm release
+
+[3.9.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.9.0...v3.9.1
+
 ## [3.9.0]
 
 ### Changed
 
-* feat: add videoPreferredMimeTypes setting for camera tab. See [#736][736]
+* added videoPreferredMimeTypes setting for camera tab. See [#736][736]
 
 [736]: https://github.com/uploadcare/uploadcare-widget/pull/736
 [3.9.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.3...v3.9.0
