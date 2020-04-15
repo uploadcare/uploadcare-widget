@@ -174,13 +174,20 @@ class PreviewTab extends BasePreviewTab {
       URL.revokeObjectURL(src)
       return df.reject()
     }).done(() => {
-      var videoTag
+      if (
+        file.state() !== 'pending' ||
+        this.dialogApi.state() !== 'pending' ||
+        this.file !== file
+      ) {
+        return
+      }
+      
       df.resolve()
       this.dialogApi.always(function() {
         return URL.revokeObjectURL(src)
       })
       this.__setState('video')
-      videoTag = this.container.find('.uploadcare--preview__video')
+      var videoTag = this.container.find('.uploadcare--preview__video')
       // hack to enable seeking due to bug in MediaRecorder API
       // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
       videoTag.on('loadeddata', function() {
