@@ -179,13 +179,16 @@ class PreviewTab extends BasePreviewTab {
         this.dialogApi.state() !== 'pending' ||
         this.file !== file
       ) {
+        URL.revokeObjectURL(src)
         return
       }
-      
-      df.resolve()
+
       this.dialogApi.always(function() {
         return URL.revokeObjectURL(src)
       })
+      
+      df.resolve()
+
       this.__setState('video')
       var videoTag = this.container.find('.uploadcare--preview__video')
       // hack to enable seeking due to bug in MediaRecorder API
