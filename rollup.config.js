@@ -50,9 +50,6 @@ const bundle = (input, output, options = {}) => ({
     }),
 
     terser({
-      compress: {
-        passes: 2 // https://github.com/terser/terser/issues/453
-      },
       include: [/^.+\.min\.js$/]
     }),
 
