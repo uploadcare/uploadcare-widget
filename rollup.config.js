@@ -4,8 +4,8 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import { string } from 'rollup-plugin-string'
-import license from 'rollup-plugin-license'
 import replacement from 'rollup-plugin-module-replacement'
+import pkg from './package.json'
 
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
@@ -55,12 +55,21 @@ const bundle = (input, output, options = {}) => ({
       },
       include: [/^.+\.min\.js$/]
     }),
+    {
+      renderChunk(source) {
+        return `/**
+ * @license ${pkg.name} v${pkg.version}
+ * 
+ * Copyright (c) Uploadcare, Inc.
+ * 
+ * This source code is licensed under the BSD 2-Clause License 
+ * found in the LICENSE file in the root directory of this source tree.
+ */
 
-    license({
-      banner: `
-<%= pkg.name %> <%= pkg.version %>
-Date: <%= moment().format('YYYY-MM-DD') %>`
-    })
+${source}
+`;
+      },
+    }
   ]
 })
 
