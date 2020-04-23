@@ -7,6 +7,15 @@ import { string } from 'rollup-plugin-string'
 import replacement from 'rollup-plugin-module-replacement'
 import pkg from './package.json'
 
+const banner = license => ({
+  renderChunk(source) {
+    return `
+${license}
+
+${source}`.trim()
+  }
+})
+
 const bundle = (input, output, options = {}) => ({
   input: `src/bundles/${input}`,
 
@@ -55,21 +64,14 @@ const bundle = (input, output, options = {}) => ({
       },
       include: [/^.+\.min\.js$/]
     }),
-    {
-      renderChunk(source) {
-        return `/**
+    banner(`/**
  * @license ${pkg.name} v${pkg.version}
  * 
  * Copyright (c) Uploadcare, Inc.
  * 
  * This source code is licensed under the BSD 2-Clause License 
  * found in the LICENSE file in the root directory of this source tree.
- */
-
-${source}
-`;
-      },
-    }
+ */`)
   ]
 })
 
