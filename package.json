@@ -31,7 +31,7 @@
     "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
-    "test:integration": "jest -c tests/jest.config.js",
+    "test:integration": "jest -c tests/jest.config.js --runInBand",
     "test": "npm run lint:css && npm run lint:js && npm run test:integration"
   },
   "dependencies": {
