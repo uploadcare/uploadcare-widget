@@ -32,7 +32,7 @@
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
     "lint:js": "eslint .",
     "test:integration": "jest -c tests/jest.config.js",
-    "test": "npm run lint:css && npm run lint:js && echo \"Soon there will be tests 🖖\" && exit 0"
+    "test": "npm run lint:css && npm run lint:js && npm run test:integration"
   },
   "dependencies": {
     "escape-html": "^1.0.3",
