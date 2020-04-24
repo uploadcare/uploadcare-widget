@@ -30,10 +30,10 @@ describe('uploadcare widget', () => {
       '.uploadcare--widget.uploadcare--widget_status_started'
     )
 
-    // await expect(
-    //   page
-    // ).toMatchElement('.uploadcare--widget_status_loaded', {
-    //   timeout: 30000
-    // })
+    await expect(
+      page
+    ).toMatchElement('.uploadcare--widget_status_loaded', {
+      timeout: 30000
+    })
   })
 })
