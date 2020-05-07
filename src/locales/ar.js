@@ -166,7 +166,7 @@ const translations = {
 }
 
 // Pluralization rules taken from:
-// http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+// https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
 const pluralize = function(n) {
   var mod
   if (n === 0) {

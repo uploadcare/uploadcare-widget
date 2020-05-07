@@ -1,13 +1,55 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [3.9.1]
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+### Fixed
 
-## [Unreleased]
+* fixed wrong npm release
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget/compare/v3.7.9...HEAD
+[3.9.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.9.0...v3.9.1
+
+## [3.9.0]
+
+### Changed
+
+* added videoPreferredMimeTypes setting for camera tab. See [#736][736]
+
+[736]: https://github.com/uploadcare/uploadcare-widget/pull/736
+[3.9.0]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.3...v3.9.0
+
+
+## [3.8.3]
+
+### Fixed
+
+* Disabled focus controlling in panel mode. See [#698][698].
+* Updated Ukrainian locale. Thanks to @smartianin. See [#678][678].
+* Removed prototype pollution from Pusher source. See [#704][704].
+* Fixed variable name in Pusher's `subscribeAll`. See [#707][707].
+
+[3.8.3]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.2...v3.8.3
+[698]: https://github.com/uploadcare/uploadcare-widget/pull/698
+[704]: https://github.com/uploadcare/uploadcare-widget/pull/704
+[678]: https://github.com/uploadcare/uploadcare-widget/pull/678
+[707]: https://github.com/uploadcare/uploadcare-widget/pull/707
+
+## [3.8.2]
+
+### Fixed
+
+* openDialog() failed with `settings is undefined` error. See [#668][668].
+
+[3.8.2]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.1...v3.8.2
+[668]: https://github.com/uploadcare/uploadcare-widget/pull/668
+
+## [3.8.1]
+
+### Fixed
+
+* Escaping special symbols in filenames to avoid XSS attacks. See [#643][643].
+
+[3.8.1]: https://github.com/uploadcare/uploadcare-widget/compare/v3.8.0...v3.8.1
+[643]: https://github.com/uploadcare/uploadcare-widget/pull/643
 
 ## [3.8.0]
 

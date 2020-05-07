@@ -174,13 +174,23 @@ class PreviewTab extends BasePreviewTab {
       URL.revokeObjectURL(src)
       return df.reject()
     }).done(() => {
-      var videoTag
-      df.resolve()
+      if (
+        file.state() !== 'pending' ||
+        this.dialogApi.state() !== 'pending' ||
+        this.file !== file
+      ) {
+        URL.revokeObjectURL(src)
+        return
+      }
+
       this.dialogApi.always(function() {
         return URL.revokeObjectURL(src)
       })
+      
+      df.resolve()
+
       this.__setState('video')
-      videoTag = this.container.find('.uploadcare--preview__video')
+      var videoTag = this.container.find('.uploadcare--preview__video')
       // hack to enable seeking due to bug in MediaRecorder API
       // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
       videoTag.on('loadeddata', function() {
@@ -344,7 +354,7 @@ class PreviewTab extends BasePreviewTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--preview__done').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--preview__done').focus()
   }
 }
 

@@ -70,16 +70,10 @@ const isDialogOpened = function() {
 }
 
 const closeDialog = function() {
-  // todo fix this
-
-  var results = []
-
-  // eslint-disable-next-line no-unmodified-loop-condition
-  while (currentDialogPr) {
-    results.push(currentDialogPr.reject())
+  if (currentDialogPr) {
+    currentDialogPr.reject()
+    currentDialogPr = null
   }
-
-  return results
 }
 
 const openDialog = function(files, tab, settings) {
@@ -91,7 +85,8 @@ const openDialog = function(files, tab, settings) {
     dialog.find('.uploadcare--dialog__placeholder'),
     files,
     tab,
-    settings
+    settings,
+    { inModal: true } 
   )
   dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
   dialog.addClass('uploadcare--dialog_status_active')
@@ -122,6 +117,7 @@ const openDialog = function(files, tab, settings) {
     currentDialogPr = null
     dialog.remove()
     cancelLock()
+
     return originalFocusedElement.focus()
   })
 
@@ -161,7 +157,7 @@ const openPreviewDialog = function(file, settings) {
 
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
-const openPanel = function(placeholder, files, tab, settings) {
+const openPanel = function(placeholder, files, tab, settings, opt = { inModal: false }) {
   var filter, panel
 
   if ($.isPlainObject(tab)) {
@@ -179,7 +175,7 @@ const openPanel = function(placeholder, files, tab, settings) {
 
   settings = build(settings)
 
-  panel = new Panel(settings, placeholder, files, tab).publicPromise()
+  panel = new Panel(settings, placeholder, files, tab, opt).publicPromise()
 
   filter = function(files) {
     if (settings.multiple) {
@@ -233,8 +229,9 @@ registerTab('preview', function(
 })
 
 class Panel {
-  constructor(settings1, placeholder, files, tab) {
+  constructor(settings1, placeholder, files, tab, opt) {
     var sel
+    this.inModal = opt.inModal || false
     // (fileType, data) or ([fileObject, fileObject])
     this.addFiles = this.addFiles.bind(this)
     this.__resolve = this.__resolve.bind(this)
@@ -286,6 +283,10 @@ class Panel {
     }
   }
 
+  takeFocus() {
+    return this.inModal
+  }
+
   publicPromise() {
     if (!this.promise) {
       this.promise = this.dfd.promise({
@@ -298,6 +299,7 @@ class Panel {
         showTab: this.showTab,
         isTabVisible: this.isTabVisible,
         openMenu: this.openMenu,
+        takeFocus: this.takeFocus.bind(this),
         onTabVisibility: publicCallbacks(this.onTabVisibility)
       })
     }
@@ -481,7 +483,7 @@ class Panel {
       .insertBefore(this.footer)
     if (name === 'preview') {
       tabIcon = $(
-        '<div class="uploadcare--menu__icon uploadcare--panel__icon">'
+        '<div class="uploadcare--menu__icon uploadcare--panel__icon" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">'
       )
     } else {
       tabIcon = $(

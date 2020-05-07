@@ -24,7 +24,12 @@ class FileTab {
     dropArea = this.container.find('.uploadcare--draganddrop')
     if (fileDragAndDrop) {
       receiveDrop(dropArea, (type, files) => {
-        this.dialogApi.addFiles(type, files)
+        if (this.settings.multiple) {
+          this.dialogApi.addFiles(type, files)
+        } else {
+          this.dialogApi.addFiles(type, files[0])
+        }
+
         return this.dialogApi.switchTab('preview')
       })
       return dropArea.addClass('uploadcare--draganddrop_supported')
@@ -108,7 +113,7 @@ class FileTab {
   }
 
   displayed() {
-    this.container.find('.uploadcare--tab__action-button').focus()
+    this.dialogApi.takeFocus() && this.container.find('.uploadcare--tab__action-button').focus()
   }
 }
 

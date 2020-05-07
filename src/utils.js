@@ -163,10 +163,9 @@ const normalizeUrl = function(url) {
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
 const fitText = function(text, max) {
-  var head, tail
   if (text.length > max) {
-    head = Math.ceil((max - 3) / 2)
-    tail = Math.floor((max - 3) / 2)
+    const head = Math.ceil((max - 3) / 2)
+    const tail = Math.floor((max - 3) / 2)
     return text.slice(0, head) + '...' + text.slice(-tail)
   } else {
     return text

@@ -11,6 +11,7 @@ src/svgs/icons.html
 src/stylesheets/styles.css
 
 *.log
+.env
 
 .DS_Store
 
