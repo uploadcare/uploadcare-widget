@@ -3,9 +3,8 @@
 /* global cy */
 
 
-
 describe('uploadcare widget', () => {
-  it('uploads with url', function() {
+  it('should upload images from url', function() {
     cy.visit('/simple.html')
 
     cy.get('.uploadcare--widget__button_type_open').click()
@@ -23,7 +22,7 @@ describe('uploadcare widget', () => {
   })
 
 
-  it('uploads with drag-n-drop and closed dialog', async () => {
+  it('should upload files with drag-n-drop', async () => {
     const fileName = 'image.jpeg'
     
     return cy.fixture(fileName).then((fileContent) => {
@@ -42,7 +41,7 @@ describe('uploadcare widget', () => {
     })
   })
 
-  it('uploads with drag-n-drop and open dialog', () => {
+  it('should upload files with drag-n-drop and open dialog', () => {
     const fileName = 'image.jpeg'
     
     return cy.fixture(fileName).then(fileContent => {
@@ -54,6 +53,25 @@ describe('uploadcare widget', () => {
         { fileContent, fileName, mimeType: 'image/jpeg' },
         { subjectType: 'drag-n-drop', events: ['dragcenter', 'drop'] }
       )
+
+      cy.get('.uploadcare--progress').should('exist')
+
+      cy.get('.uploadcare--link')
+        .should('exist')
+        .should('contain.text', fileName)
+    })
+  })
+
+  it('should upload images', () => {
+    const fileName = 'image.jpeg'
+    
+    return cy.fixture(fileName).then(fileContent => {
+      cy.visit('/simple.html')
+
+      cy.get('.uploadcare--widget__button_type_open').click()
+
+      cy.get('div.uploadcare--tab.uploadcare--tab_name_file button.uploadcare--tab__action-button').click()
+      cy.get('input[type="file"]').upload({ fileContent, fileName, mimeType: 'image/jpeg' })
 
       cy.get('.uploadcare--progress').should('exist')
 
