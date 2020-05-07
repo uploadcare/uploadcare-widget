@@ -1,3 +1,5 @@
+const path = require('path')
+
 describe('uploadcare widget', () => {
   beforeEach(async () => {
     await page.goto('http://localhost:10001/default.html')
@@ -30,10 +32,24 @@ describe('uploadcare widget', () => {
       '.uploadcare--widget.uploadcare--widget_status_started'
     )
 
-    await expect(
-      page
-    ).toMatchElement('.uploadcare--widget_status_loaded', {
+    await expect(page).toMatchElement('.uploadcare--widget_status_loaded', {
       timeout: 30000
     })
+  })
+
+  it('shold upload local files', async () => {
+    // open dialog
+    await expect(page).toClick('button', { text: 'Choose a file' })
+    // check if it rendered
+    const dialog = await expect(page).toMatchElement(
+      '.uploadcare--dialog.uploadcare--dialog_status_active'
+    )
+    
+    await expect(dialog).toClick('button.uploadcare--button')
+
+    await expect(page).toUploadFile(
+      'input[type="file"]',
+      path.join(__dirname, 'base.test.js'),
+    )
   })
 })

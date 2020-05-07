@@ -6,9 +6,6 @@ module.exports = {
     command: `npm start`,
     port: 10001,
     launchTimeout: 30000,
-    waitOnScheme: {
-      verbose: true,
-      delay: 10000,
-    },
+    waitOnScheme: { delay: 10000 },
   }
 }
