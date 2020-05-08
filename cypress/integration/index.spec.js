@@ -2,10 +2,12 @@
 /* eslint-env mocha */
 /* global cy */
 
+import { setup } from '../templates'
+
 
 describe('uploadcare widget', () => {
   it('should upload images from url', function() {
-    cy.visit('/simple.html')
+    setup()
 
     cy.get('.uploadcare--widget__button_type_open').click()
 
@@ -26,7 +28,7 @@ describe('uploadcare widget', () => {
     const fileName = 'image.jpeg'
     
     return cy.fixture(fileName).then((fileContent) => {
-      cy.visit('/simple.html')
+      setup()
 
       cy.get('.uploadcare--widget').upload(
         { fileContent, fileName, mimeType: 'image/jpeg' },
@@ -45,7 +47,7 @@ describe('uploadcare widget', () => {
     const fileName = 'image.jpeg'
     
     return cy.fixture(fileName).then(fileContent => {
-      cy.visit('/simple.html')
+      setup()
 
       cy.get('.uploadcare--widget__button_type_open').click()
 
@@ -66,7 +68,7 @@ describe('uploadcare widget', () => {
     const fileName = 'image.jpeg'
     
     return cy.fixture(fileName).then(fileContent => {
-      cy.visit('/simple.html')
+      setup()
 
       cy.get('.uploadcare--widget__button_type_open').click()
 

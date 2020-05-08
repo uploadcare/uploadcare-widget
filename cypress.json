@@ -1,7 +1,4 @@
 {
-  "projectId": "skeqzs",
-  "baseUrl": "http://localhost:10001",
-
   "video": false,
   "pluginsFile": false
 }
