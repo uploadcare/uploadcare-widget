@@ -13,7 +13,6 @@ src/stylesheets/styles.css
 *.log
 .env
 
-.DS_Store
 cypress/screenshots
 
 uploadcare.api.js
