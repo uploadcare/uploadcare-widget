@@ -4,7 +4,6 @@
 
 import { setup } from '../templates'
 
-
 describe('uploadcare widget', () => {
   it('should upload images from url', function() {
     setup()
@@ -24,31 +23,11 @@ describe('uploadcare widget', () => {
   })
 
 
-  it('should upload files with drag-n-drop', async () => {
+  xit('should upload files with drag-n-drop and open dialog', () => {
     const fileName = 'image.jpeg'
-    
-    return cy.fixture(fileName).then((fileContent) => {
-      setup()
-
-      cy.get('.uploadcare--widget').upload(
-        { fileContent, fileName, mimeType: 'image/jpeg' },
-        { subjectType: 'drag-n-drop' }
-      )
-
-      cy.get('.uploadcare--progress').should('exist')
-
-      cy.get('.uploadcare--link')
-        .should('exist')
-        .should('contain.text', 'small.png') // TODO: fix this accert
-    })
-  })
-
-  it('should upload files with drag-n-drop and open dialog', () => {
-    const fileName = 'image.jpeg'
-    
+    setup()
+  
     return cy.fixture(fileName).then(fileContent => {
-      setup()
-
       cy.get('.uploadcare--widget__button_type_open').click()
 
       cy.get('.uploadcare--draganddrop').upload(
