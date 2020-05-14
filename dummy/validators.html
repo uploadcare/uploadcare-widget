@@ -1,88 +1,51 @@
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <script>
-  UPLOADCARE_PUBLIC_KEY = "demopublickey";
-  UPLOADCARE_TABS = "default huddle";
-  UPLOADCARE_DEBUG_UPLOADS = true;
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_TABS = 'default huddle'
+  UPLOADCARE_DEBUG_UPLOADS = true
 </script>
 <script src="./uploadcare.full.js"></script>
 <script>
-  $ = uploadcare.jQuery;
-  jQuery = uploadcare.jQuery;
+  $ = uploadcare.jQuery
+  jQuery = uploadcare.jQuery
 </script>
 
 <p>
   images only, 500kb max<br />
-  <input role="uploadcare-uploader" data-preview-step id="test1" value="" />
+  <input type="hidden" data-preview-step role="uploadcare-uploader" />
 </p>
 
-<p>
-  1mb max<br />
-  <input role="uploadcare-uploader" data-multiple id="test2" value="" />
-</p>
-
-<p>
-  images only, horizontal images<br />
-  <input role="uploadcare-uploader" data-crop id="test3" value="" />
-</p>
-
-<p>
-  images only native<br />
-  <input role="uploadcare-uploader" data-crop value="" data-images-only />
-</p>
 
 <script>
+  UPLOADCARE_PUBLIC_KEY = '3a8b645aef4a1b959b88'
   UPLOADCARE_LOCALE_TRANSLATIONS = {
-    errors: {
-      vertical: "Horizontal images only"
-    },
+    // messages for widget
+    errors: { fileSize: 'File is too large.' },
+    // messages for dialog’s error page
     dialog: {
       tabs: {
         preview: {
           error: {
-            vertical: {
-              title: "No vertical images are allowed.",
-              text: "We are sorry but image should be horizontal.",
-              back: "Back"
+            fileSize: {
+              title: 'Error.',
+              text: 'File is too large.',
+              back: 'Back'
             }
           }
         }
       }
     }
-  };
+  }
 
-  $(function() {
-    function imagesOnly(info) {
-      if (info.isImage === false) {
-        throw new Error("image");
-      }
-      console.log("image loaded", info);
-    }
-
-    function horizontalImage(info) {
-      if (info.originalImageInfo !== null) {
-        if (info.originalImageInfo.height > info.originalImageInfo.width) {
-          throw new Error("vertical");
-        }
+  function fileSizeCheck(fileInfo) {
+    if (fileInfo.size !== null) {
+      if (fileInfo.size > 1024 * 1024) {
+        console.log('err')
+        throw new Error('fileSize')
       }
     }
+  }
 
-    function maxSize(size) {
-      return function(info) {
-        if (info.size !== null) {
-          if (info.size > size) {
-            throw new Error("size");
-          }
-        }
-        console.log("small loaded", info);
-      };
-    }
-
-    uploadcare.SingleWidget("#test1").validators.push(imagesOnly);
-    uploadcare.SingleWidget("#test1").validators.push(maxSize(512 * 1024));
-
-    uploadcare.MultipleWidget("#test2").validators.push(maxSize(1024 * 1024));
-
-    uploadcare.SingleWidget("#test3").validators.push(imagesOnly);
-    uploadcare.SingleWidget("#test3").validators.push(horizontalImage);
-  });
+  var widget = uploadcare.Widget('[role=uploadcare-uploader]')
+  widget.validators.push(fileSizeCheck)
 </script>
