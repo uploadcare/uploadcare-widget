@@ -27,7 +27,7 @@ describe('uploadcare widget', () => {
     const fileName = 'image.jpeg'
     setup()
   
-    return cy.fixture(fileName).then(fileContent => {
+    cy.fixture(fileName).then(fileContent => {
       cy.get('.uploadcare--widget__button_type_open').click()
 
       cy.get('.uploadcare--draganddrop').upload(
@@ -46,12 +46,12 @@ describe('uploadcare widget', () => {
   it('should upload images', () => {
     const fileName = 'image.jpeg'
     
-    return cy.fixture(fileName).then(fileContent => {
+    cy.fixture(fileName).then(fileContent => {
       setup()
 
       cy.get('.uploadcare--widget__button_type_open').click()
 
-      cy.get('div.uploadcare--tab.uploadcare--tab_name_file button.uploadcare--tab__action-button').click()
+      cy.get('.uploadcare--tab_name_file .uploadcare--tab__action-button').click()
       cy.get('input[type="file"]').upload({ fileContent, fileName, mimeType: 'image/jpeg' })
 
       cy.get('.uploadcare--progress').should('exist')
