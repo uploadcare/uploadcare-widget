@@ -23,7 +23,7 @@ describe('uploadcare widget', () => {
   })
 
 
-  xit('should upload files with drag-n-drop and open dialog', () => {
+  it('should upload files with drag-n-drop and open dialog', () => {
     const fileName = 'image.jpeg'
     setup()
   
