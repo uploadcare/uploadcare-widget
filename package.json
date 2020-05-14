@@ -50,9 +50,10 @@
     "babel-plugin-html-tag": "1.4.0",
     "cross-env": "5.2.1",
     "cssnano": "3.10.0",
-    "cypress-file-upload": "3.5.3",
     "cypress": "3.8.3",
+    "cypress-file-upload": "3.5.3",
     "dotenv": "8.2.0",
+    "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-config-standard": "14.1.0",
     "eslint-plugin-import": "2.20.1",
@@ -60,7 +61,6 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
-    "eslint": "6.8.0",
     "nodemon": "1.19.4",
     "postcss-calc": "6.0.2",
     "postcss-cli": "4.1.1",
@@ -73,6 +73,7 @@
     "postcss-prefixer": "2.1.2",
     "postcss-reporter": "5.0.0",
     "prettier": "1.19.1",
+    "rollup": "1.31.1",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
@@ -82,10 +83,9 @@
     "rollup-plugin-serve": "1.0.1",
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.2.0",
-    "rollup": "1.31.1",
-    "shipjs": "0.13.1",
-    "stylelint-config-uploadcare": "3.0.0",
+    "shipjs": "0.19.0",
     "stylelint": "8.4.0",
+    "stylelint-config-uploadcare": "3.0.0",
     "svg-sprite": "1.5.0"
   },
   "size-limit": [
@@ -106,10 +106,7 @@
       "path": "uploadcare.lang.en.min.js"
     }
   ],
-  "browserslist": [
-    "> .4%",
-    "ie >= 10"
-  ],
+  "browserslist": ["> .4%", "ie >= 10"],
   "keywords": [
     "uploadcare",
     "file",

@@ -14,16 +14,10 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-      - uses: actions/setup-node@master
+      - run: npm ci
       - run: |
-          if [ -f "yarn.lock" ]; then
-            yarn install
-          else
-            npm install
-          fi
-      - run: |
-          git config --global user.email "jeetiss@yandex.ru"
-          git config --global user.name "jeetiss"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
       - run: npm run release:prepare -- --yes --no-browse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
