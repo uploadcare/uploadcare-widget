@@ -6,3 +6,8 @@ notifications:
   email:
     on_success: never
     on_failure: always
+
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
