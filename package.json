@@ -81,6 +81,7 @@
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.2.0",
     "rollup": "1.31.1",
+    "size-limit": "4.4.5",
     "stylelint-config-uploadcare": "3.0.0",
     "stylelint": "8.4.0",
     "svg-sprite": "1.5.0"
@@ -88,19 +89,19 @@
   "size-limit": [
     {
       "limit": "60 KB",
-      "path": "uploadcare.api.min.js"
+      "path": "./uploadcare.api.min.js"
     },
     {
       "limit": "120 KB",
-      "path": "uploadcare.full.min.js"
+      "path": "./uploadcare.full.min.js"
     },
     {
       "limit": "120 KB",
-      "path": "uploadcare.min.js"
+      "path": "./uploadcare.min.js"
     },
     {
       "limit": "90 KB",
-      "path": "uploadcare.lang.en.min.js"
+      "path": "./uploadcare.lang.en.min.js"
     }
   ],
   "browserslist": [
