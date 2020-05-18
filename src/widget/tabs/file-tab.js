@@ -27,7 +27,7 @@ class FileTab {
         if (this.settings.multiple) {
           this.dialogApi.addFiles(type, files)
         } else {
-          this.dialogApi.addFiles(type, files[0])
+          this.dialogApi.addFiles(type, [files[0]])
         }
 
         return this.dialogApi.switchTab('preview')

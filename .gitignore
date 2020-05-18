@@ -13,6 +13,8 @@ src/stylesheets/styles.css
 *.log
 .env
 
+cypress/screenshots
+
 uploadcare.api.js
 uploadcare.api.min.js
 uploadcare.full.js
