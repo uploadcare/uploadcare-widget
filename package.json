@@ -64,7 +64,7 @@
     "postcss-cli": "4.1.1",
     "postcss-color-function": "4.1.0",
     "postcss-css-variables": "0.17.0",
-    "postcss-custom-media": "6.0.0",
+    "postcss-custom-media": "7.0.8",
     "postcss-flexbugs-fixes": "3.3.1",
     "postcss-import": "11.1.0",
     "postcss-nested": "2.1.2",
