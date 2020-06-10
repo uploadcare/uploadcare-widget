@@ -1,3 +1,15 @@
+## [3.9.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.9.1...v3.9.2) (2020-06-10)
+
+
+### Bug Fixes
+
+* fix single widget drag and drop ([#749](https://github.com/uploadcare/uploadcare-widget/issues/749)) ([8b3e833](https://github.com/uploadcare/uploadcare-widget/commit/8b3e833c80f4b21d672d286c0b96231cfdcd0e9b))
+* stop video processing when widget changes state ([#741](https://github.com/uploadcare/uploadcare-widget/issues/741)) ([128e4db](https://github.com/uploadcare/uploadcare-widget/commit/128e4dbf6800ce90cf6c38ee2d7c1bda29c12800))
+* update facebook logo ([#754](https://github.com/uploadcare/uploadcare-widget/issues/754)) ([af1db51](https://github.com/uploadcare/uploadcare-widget/commit/af1db519b61fd194866f9e96588edb9de95b4454))
+* upload only one dropped file when widget in single mode ([#740](https://github.com/uploadcare/uploadcare-widget/issues/740)) ([68be990](https://github.com/uploadcare/uploadcare-widget/commit/68be990042b333678c31c031c9b451276ba11a50))
+
+
+
 # Changelog
 
 ## [3.9.1]
