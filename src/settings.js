@@ -71,6 +71,8 @@ defaults = {
   multipartMaxAttempts: 3,
   parallelDirectUploads: 10,
   passWindowOpen: false,
+  // camera
+  cameraMirrorDefault: true,
   // camera recording
   videoPreferredMimeTypes: null,
   audioBitsPerSecond: null,
@@ -282,7 +284,8 @@ normalize = function(settings) {
     'previewStep',
     'systemDialog',
     'debugUploads',
-    'multipleMaxStrict'
+    'multipleMaxStrict',
+    'cameraMirrorDefault'
   ])
   intOptions(settings, [
     'multipleMax',

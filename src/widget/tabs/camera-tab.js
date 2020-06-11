@@ -69,7 +69,7 @@ class CameraTab {
   __initCamera() {
     var startRecord
     this.__loaded = false
-    this.mirrored = true
+    this.mirrored = this.settings.cameraMirrorDefault
     this.container.append(tpl('tab-camera'))
     this.container.addClass('uploadcare--camera')
     this.container.addClass('uploadcare--camera_status_requested')
@@ -95,6 +95,10 @@ class CameraTab {
       startRecord.hide()
     }
     this.video = this.container.find('.uploadcare--camera__video')
+    this.video.toggleClass(
+      'uploadcare--camera__video_mirrored',
+      this.mirrored
+    )
     this.video.on('loadeddata', function() {
       return this.play()
     })
