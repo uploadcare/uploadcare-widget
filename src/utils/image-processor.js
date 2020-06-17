@@ -4,6 +4,7 @@ import { Blob, FileReader, URL } from '../utils/abilities'
 import { imageLoader } from '../utils/image-loader'
 import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 import { isWindowDefined } from './is-window-defined'
+import isBrowserApplyExif from './is-browser-apply-exif'
 
 // utils image
 var DataView = isWindowDefined() && window.DataView
@@ -192,13 +193,15 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
     if (maxSource && img.width * img.height > maxSource) {
       return df.reject('max source')
     }
-    return getExif(file).always(function(exif) {
-      var canvas, ctx, dH, dW, orientation, sSize, swap, trns
-      orientation = parseExifOrientation(exif) || 1
-      swap = orientation > 4
-      sSize = swap ? [img.height, img.width] : [img.width, img.height]
-      ;[dW, dH] = fitSize(sSize, [mW, mH])
-      trns = [
+    return $.when(
+      getExif(file),
+      isBrowserApplyExif()
+    ).always(function(exif, isExifApplied) {
+      var orientation = isExifApplied ? 1 : parseExifOrientation(exif) || 1
+      var swap = orientation > 4
+      var sSize = swap ? [img.height, img.width] : [img.width, img.height]
+      var [dW, dH] = fitSize(sSize, [mW, mH])
+      var trns = [
         [1, 0, 0, 1, 0, 0],
         [-1, 0, 0, 1, dW, 0],
         [-1, 0, 0, -1, dW, dH],
@@ -211,10 +214,10 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
       if (!trns) {
         return df.reject('bad image')
       }
-      canvas = document.createElement('canvas')
+      var canvas = document.createElement('canvas')
       canvas.width = dW
       canvas.height = dH
-      ctx = canvas.getContext('2d')
+      var ctx = canvas.getContext('2d')
       ctx.transform.apply(ctx, trns)
       if (swap) {
         ;[dW, dH] = [dH, dW]
