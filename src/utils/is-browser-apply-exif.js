@@ -8,7 +8,6 @@ var testImageSrc = 'data:image/jpg;base64,' +
   '/8QAJgABAAAAAAAAAAAAAAAAAAAAAxABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQAAPwBH/9k=';
 
 var isApplied
-
 var isBrowserApplyExif = () => {
   var df = $.Deferred()
 
@@ -19,7 +18,7 @@ var isBrowserApplyExif = () => {
     
     image.src = testImageSrc
     image.onload = () => {
-      isApplied = image.width === 2
+      isApplied = image.naturalWidth < image.naturalHeight
       image.src = '//:0'
       df.resolve(isApplied)
     }
