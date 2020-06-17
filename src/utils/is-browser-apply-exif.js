@@ -15,13 +15,13 @@ var isBrowserApplyExif = () => {
     df.resolve(isApplied)
   } else {
     var image = new window.Image()
-    
-    image.src = testImageSrc
+  
     image.onload = () => {
       isApplied = image.naturalWidth < image.naturalHeight
       image.src = '//:0'
       df.resolve(isApplied)
     }
+    image.src = testImageSrc
   }
 
   return df.promise()
