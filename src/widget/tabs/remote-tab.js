@@ -39,8 +39,7 @@ class RemoteTab {
         public_key: this.settings.publicKey,
         widget_version: version,
         images_only: this.settings.imagesOnly,
-        pass_window_open: this.settings.passWindowOpen,
-        itp_workaround: true
+        pass_window_open: this.settings.passWindowOpen
       })
     )
   }
@@ -94,27 +93,6 @@ class RemoteTab {
     this.container.addClass('uploadcare--tab_remote')
 
     iframe = this.iframe[0].contentWindow
-
-
-    registerMessage('social-auth', iframe, message => {
-      console.log(message)
-      const button = $('<button>auth</button>').on('click', () => {
-        const popup = window.open(message.url)
-
-
-        registerMessage('ck', popup, (message) => {
-          console.log(message)
-          this.__sendMessage({
-            type: 'set-cookie',
-            cookie: message.cookie
-          })
-
-          button.remove()
-        })
-      })
-
-      this.container.append(button)
-    })
 
     registerMessage('file-selected', iframe, message => {
       var file, sourceInfo, url
