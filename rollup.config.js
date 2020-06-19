@@ -59,9 +59,8 @@ const bundle = (input, output, options = {}) => ({
       namedExports: { './src/vendor/pusher.js': ['Pusher'] }
     }),
 
-    terser({
-      include: [/^.+\.min\.js$/]
-    }),
+    /^.+\.min\.js$/.test(output) && terser(),
+
     banner(`/**
  * @license ${pkg.name} v${pkg.version}
  * 
