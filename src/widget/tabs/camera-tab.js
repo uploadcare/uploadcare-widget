@@ -158,7 +158,8 @@ class CameraTab {
       'requested',
       'denied',
       'not-founded',
-      'recording'
+      'recording',
+      'error',
     ].join(' uploadcare--camera_status_')
 
     this.container
@@ -174,24 +175,16 @@ class CameraTab {
       {
         audio: true,
         video: {
-          optional: [
-            {
-              minWidth: 320
-            },
-            {
-              minWidth: 640
-            },
-            {
-              minWidth: 1024
-            },
-            {
-              minWidth: 1280
-            },
-            {
-              minWidth: 1920
-            }
-          ]
-        }
+          width: {
+            ideal: 1920
+          },
+          height: {
+            ideal: 1080
+          },
+          frameRate: {
+            ideal: 30
+          }
+        },
       },
       stream => {
         this.__setState('ready')
@@ -212,14 +205,18 @@ class CameraTab {
         }
       },
       error => {
-        if (
-          error === 'NO_DEVICES_FOUND' ||
-          error.name === 'DevicesNotFoundError'
-        ) {
+        const handle = Object.create(null)
+        handle.NotFoundError = () => {
           this.__setState('not-founded')
-        } else {
+        }
+        handle.NotAllowedError = () => {
           this.__setState('denied')
         }
+        handle.other = () => {
+          this.__setState('denied') // TODO: add common error state: this.__setState('error')
+          console.warn('Camera error occurred: ' + error.name)
+        }
+        (handle[error.name] || handle.other)()
         this.__loaded = false
         return this.__loaded
       }
@@ -297,7 +294,7 @@ class CameraTab {
         $.isArray(mimeTypes) ? mimeTypes : [mimeTypes],
         mimeType => this.MediaRecorder.isTypeSupported(mimeType)
       )
-      
+
       if (mimeType != null) {
         __recorderOptions.mimeType = mimeType
       }
