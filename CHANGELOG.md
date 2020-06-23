@@ -3,13 +3,13 @@
 
 ### Bug Fixes
 
-* apply exif to preview images only when browsers haven't done that yet ([#764](https://github.com/uploadcare/uploadcare-widget/issues/764)) ([13f8e12](https://github.com/uploadcare/uploadcare-widget/commit/13f8e1225fe3d3915870ff18ebb8f6967b5fd7f3))
+* applied exif to preview images only when browsers haven't done that yet ([#764](https://github.com/uploadcare/uploadcare-widget/issues/764)) ([13f8e12](https://github.com/uploadcare/uploadcare-widget/commit/13f8e1225fe3d3915870ff18ebb8f6967b5fd7f3))
 * camera-tab constraints updated to actual specs ([#765](https://github.com/uploadcare/uploadcare-widget/issues/765)) ([c434100](https://github.com/uploadcare/uploadcare-widget/commit/c43410015049820916140c061fdf401fe67f8fe6))
 
 
 ### Features
 
-* **camera:** add default mirror option ([#761](https://github.com/uploadcare/uploadcare-widget/issues/761)) ([8c49659](https://github.com/uploadcare/uploadcare-widget/commit/8c496598cf6870b88c9f2b42ab4e19779dda4cba))
+* **camera:** added default mirror option ([#761](https://github.com/uploadcare/uploadcare-widget/issues/761)) ([8c49659](https://github.com/uploadcare/uploadcare-widget/commit/8c496598cf6870b88c9f2b42ab4e19779dda4cba))
 
 
 
