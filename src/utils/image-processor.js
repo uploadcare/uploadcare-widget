@@ -36,7 +36,10 @@ const shrinkFile = function(file, settings) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
-      var exifOp = getExif(file).always(function(exif) {
+      var exifOp = $.when(getExif(file), isBrowserApplyExif()).always(function(
+        exif,
+        isExifApplied
+      ) {
         var e, isJPEG
         df.notify(0.2)
         isJPEG = exifOp.state() === 'resolved'
@@ -60,7 +63,7 @@ const shrinkFile = function(file, settings) {
             canvas.width = canvas.height = 1
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
-            if (exif) {
+            if (exif && !isExifApplied) {
               op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
               op.done(df.resolve)
               return op.fail(function() {
@@ -193,10 +196,10 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
     if (maxSource && img.width * img.height > maxSource) {
       return df.reject('max source')
     }
-    return $.when(
-      getExif(file),
-      isBrowserApplyExif()
-    ).always(function(exif, isExifApplied) {
+    return $.when(getExif(file), isBrowserApplyExif()).always(function(
+      exif,
+      isExifApplied
+    ) {
       var orientation = isExifApplied ? 1 : parseExifOrientation(exif) || 1
       var swap = orientation > 4
       var sSize = swap ? [img.height, img.width] : [img.width, img.height]
