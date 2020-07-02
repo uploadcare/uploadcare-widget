@@ -63,9 +63,15 @@ const shrinkFile = function(file, settings) {
             canvas.width = canvas.height = 1
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
-            if (exif && !isExifApplied) {
-              op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
-              op.done(df.resolve)
+            if (exif) {
+              if (isExifApplied) {
+                const newExif = setExifOrientation(exif, 1)
+                op = replaceJpegChunk(blob, 0xe1, [newExif.buffer])
+                op.done(df.resolve)
+              } else {
+                op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
+                op.done(df.resolve)
+              }
               return op.fail(function() {
                 return df.resolve(blob)
               })
@@ -380,7 +386,21 @@ const getExif = function(file) {
   )
 }
 
+const setExifOrientation = function(exif, orientation) {
+  findExifOrientation(exif, (offset, little) =>
+    exif.setUint16(offset, orientation, little)
+  )
+
+  return exif
+}
+
 const parseExifOrientation = function(exif) {
+  return findExifOrientation(exif, (offset, little) =>
+    exif.getUint16(offset, little)
+  )
+}
+
+const findExifOrientation = function(exif, exifCallback) {
   var count, j, little, offset, ref
   if (
     !exif ||
@@ -407,7 +427,7 @@ const parseExifOrientation = function(exif) {
       return null
     }
     if (exif.getUint16(offset, little) === 0x0112) {
-      return exif.getUint16(offset + 8, little)
+      return exifCallback(offset + 8, little)
     }
     offset += 12
   }
