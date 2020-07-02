@@ -388,8 +388,6 @@ const setExifOrientation = function(exif, orientation) {
   findExifOrientation(exif, (offset, little) =>
     exif.setUint16(offset, orientation, little)
   )
-
-  return exif
 }
 
 const parseExifOrientation = function(exif) {
