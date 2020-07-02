@@ -64,14 +64,10 @@ const shrinkFile = function(file, settings) {
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
             if (exif) {
-              if (isExifApplied) {
-                const newExif = setExifOrientation(exif, 1)
-                op = replaceJpegChunk(blob, 0xe1, [newExif.buffer])
-                op.done(df.resolve)
-              } else {
-                op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
-                op.done(df.resolve)
-              }
+              const newExif = isExifApplied ? setExifOrientation(exif, 1) : exif
+              op = replaceJpegChunk(blob, 0xe1, [newExif.buffer])
+              op.done(df.resolve)
+
               return op.fail(function() {
                 return df.resolve(blob)
               })
