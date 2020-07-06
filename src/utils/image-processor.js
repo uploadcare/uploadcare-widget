@@ -36,7 +36,10 @@ const shrinkFile = function(file, settings) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
-      var exifOp = getExif(file).always(function(exif) {
+      var exifOp = $.when(getExif(file), isBrowserApplyExif()).always(function(
+        exif,
+        isExifApplied
+      ) {
         var e, isJPEG
         df.notify(0.2)
         isJPEG = exifOp.state() === 'resolved'
@@ -61,8 +64,12 @@ const shrinkFile = function(file, settings) {
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
             if (exif) {
+              if (isExifApplied) {
+                setExifOrientation(exif, 1)
+              }
               op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
               op.done(df.resolve)
+
               return op.fail(function() {
                 return df.resolve(blob)
               })
@@ -193,10 +200,10 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
     if (maxSource && img.width * img.height > maxSource) {
       return df.reject('max source')
     }
-    return $.when(
-      getExif(file),
-      isBrowserApplyExif()
-    ).always(function(exif, isExifApplied) {
+    return $.when(getExif(file), isBrowserApplyExif()).always(function(
+      exif,
+      isExifApplied
+    ) {
       var orientation = isExifApplied ? 1 : parseExifOrientation(exif) || 1
       var swap = orientation > 4
       var sSize = swap ? [img.height, img.width] : [img.width, img.height]
@@ -377,7 +384,19 @@ const getExif = function(file) {
   )
 }
 
+const setExifOrientation = function(exif, orientation) {
+  findExifOrientation(exif, (offset, little) =>
+    exif.setUint16(offset, orientation, little)
+  )
+}
+
 const parseExifOrientation = function(exif) {
+  return findExifOrientation(exif, (offset, little) =>
+    exif.getUint16(offset, little)
+  )
+}
+
+const findExifOrientation = function(exif, exifCallback) {
   var count, j, little, offset, ref
   if (
     !exif ||
@@ -404,7 +423,7 @@ const parseExifOrientation = function(exif) {
       return null
     }
     if (exif.getUint16(offset, little) === 0x0112) {
-      return exif.getUint16(offset + 8, little)
+      return exifCallback(offset + 8, little)
     }
     offset += 12
   }
