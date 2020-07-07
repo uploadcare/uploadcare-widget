@@ -1,3 +1,12 @@
+## [3.10.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.0...v3.10.1) (2020-07-07)
+
+
+### Bug Fixes
+
+* **shrink:** alter exif orientation to 1 when exif have been applied by browser ([#769](https://github.com/uploadcare/uploadcare-widget/issues/769)) ([1558a26](https://github.com/uploadcare/uploadcare-widget/commit/1558a26d2738b91960a91dfd33244cb99cce191b))
+
+
+
 # [3.10.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.9.2...v3.10.0) (2020-06-23)
 
 
