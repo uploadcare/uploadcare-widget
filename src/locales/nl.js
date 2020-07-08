@@ -54,6 +54,10 @@ const translations = {
         button: 'Selecteer een bestand op je computer',
         also: 'Je kan ook selecteren van'
       },
+      camera: {
+        title: 'Bestand van webcamera',
+        retry: 'Opnieuw toegang aanvragen'
+      },
       url: {
         title: 'Bestanden op het web',
         line1: 'Selecteer een bestand op het web.',
