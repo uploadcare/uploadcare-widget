@@ -68,6 +68,7 @@ const translations = {
         button: 'Hochladen'
       },
       camera: {
+        title: 'Foto mit Webcam aufnehmen',
         capture: 'Machen Sie ein Foto',
         mirror: 'Andere Kamera',
         retry: 'Berechtigungen erneut anfordern',
