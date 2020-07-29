@@ -43,7 +43,7 @@ const translations = {
     showFiles: 'Mostrar arquivos',
     tabs: {
       names: {
-        preview: 'Pré-estréia',
+        preview: 'Visualizar',
         file: 'Computador',
         url: 'Link da web'
       },
