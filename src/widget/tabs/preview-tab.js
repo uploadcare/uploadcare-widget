@@ -63,9 +63,15 @@ class PreviewTab extends BasePreviewTab {
         source = info.sourceInfo
         blob = Blob
         if (source.file && blob && source.file instanceof blob) {
-          return tryToLoadImagePreview(file, source.file).fail(() => {
+          if (source.file.type && source.file.type.search(/^image\//i) !== -1) {
+            return tryToLoadImagePreview(file, source.file)
+          } else if (source.file.type && source.file.type.search(/^video\//i) !== -1) {
             return tryToLoadVideoPreview(file, source.file)
-          })
+          } else {
+            return tryToLoadImagePreview(file, source.file).fail(() => {
+              return tryToLoadVideoPreview(file, source.file)
+            })
+          }        
         }
       })
     )
