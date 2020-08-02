@@ -41,11 +41,11 @@
     "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "@babel/core": "7.10.5",
-    "@babel/preset-env": "7.10.4",
+    "@babel/core": "7.11.0",
+    "@babel/preset-env": "7.11.0",
     "@size-limit/preset-big-lib": "4.5.5",
     "autoprefixer": "7.2.6",
-    "aws-sdk": "2.720.0",
+    "aws-sdk": "2.725.0",
     "babel-eslint": "10.1.0",
     "babel-plugin-html-tag": "1.4.1",
     "cross-env": "5.2.1",
