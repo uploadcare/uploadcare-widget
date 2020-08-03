@@ -1,10 +1,21 @@
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <script>
-  UPLOADCARE_PUBLIC_KEY = "demopublickey";
-  UPLOADCARE_TABS = "default huddle";
-  UPLOADCARE_DEBUG_UPLOADS = true;
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_TABS = 'default huddle'
+  UPLOADCARE_DEBUG_UPLOADS = true
 </script>
 <script src="./uploadcare.full.js"></script>
+
+<p>
+  Preview:
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-crop="4:5"
+    data-images-only=""
+    preview-step=""
+  />
+</p>
 
 <p>
   Simple:
