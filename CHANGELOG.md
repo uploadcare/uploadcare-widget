@@ -1,3 +1,13 @@
+## [3.10.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.1...v3.10.2) (2020-08-04)
+
+
+### Bug Fixes
+
+* improve image/video detection in preview tab ([#776](https://github.com/uploadcare/uploadcare-widget/issues/776)) ([d0ecb09](https://github.com/uploadcare/uploadcare-widget/commit/d0ecb095bdbbf60f9397cabdcf133afd98848807))
+* update PT, DE, NL locales ([#774](https://github.com/uploadcare/uploadcare-widget/issues/774)) ([f3364d6](https://github.com/uploadcare/uploadcare-widget/commit/f3364d60d4705b20c8f92668cf67ecbfe6a9b881))
+
+
+
 ## [3.10.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.0...v3.10.1) (2020-07-07)
 
 
