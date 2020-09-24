@@ -146,7 +146,8 @@ class ObjectFile extends BaseFile {
               this.fileId = data.file
               return df.resolve()
             } else {
-              return df.reject()
+              const error = data.error && data.error.content
+              return df.reject(error)
             }
           }
         })

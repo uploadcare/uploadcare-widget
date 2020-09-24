@@ -13,7 +13,8 @@ const translations = {
     info: 'Can’t load info',
     image: 'Only images allowed',
     createGroup: 'Can’t create file group',
-    deleted: 'File was deleted'
+    deleted: 'File was deleted',
+    signature: '`signature` is required.'
   },
   draghere: 'Drop a file here',
   file: {

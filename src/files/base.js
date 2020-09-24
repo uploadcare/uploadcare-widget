@@ -256,14 +256,22 @@ class BaseFile {
             return this.__notifyApi()
           }
         })
-        op.fail(() => {
-          return this.__rejectApi('upload')
+        op.fail((error) => {
+          return this.__rejectApi(toLabel(error))
         })
         this.apiDeferred.always(op.reject)
       }
     }
     return this.__apiPromise
   }
+}
+
+const toLabel = (text) => {
+  const map = {
+    '`signature` is required.': 'signature' 
+  }
+
+  return map[text] || 'upload' 
 }
 
 export { BaseFile }
