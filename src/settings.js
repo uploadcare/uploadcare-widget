@@ -227,22 +227,19 @@ parseCrop = function(val) {
 }
 
 parseShrink = function(val) {
-  var reShrink, shrink, size
-  reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
-  shrink = reShrink.exec($.trim(val.toLowerCase())) || []
+  const reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
+  const shrink = reShrink.exec($.trim(val.toLowerCase())) || []
   if (!shrink.length) {
     return false
   }
-  size = shrink[1] * shrink[2]
+  const size = shrink[1] * shrink[2]
   if (size > 5000000) {
     // ios max canvas square
     warnOnce(
-      'Shrinked size can not be larger than 5MP. ' +
+      'Shrinked size larger than 5MP can not fit in maximum browser canvas size. ' +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
-
-    return false
   }
   return {
     quality: shrink[3] ? shrink[3] / 100 : undefined,
