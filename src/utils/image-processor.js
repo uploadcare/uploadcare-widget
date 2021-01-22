@@ -5,6 +5,7 @@ import { imageLoader } from '../utils/image-loader'
 import { defer, fitSize, canvasToBlob, taskRunner } from '../utils'
 import { isWindowDefined } from './is-window-defined'
 import isBrowserApplyExif from './is-browser-apply-exif'
+import maxCanvasSize from './canvas-size'
 
 // utils image
 var DataView = isWindowDefined() && window.DataView
@@ -91,90 +92,86 @@ const shrinkFile = function(file, settings) {
 }
 
 const shrinkImage = function(img, settings) {
-  var cx,
-    df,
-    h,
-    maxSize,
-    maxSquare,
-    originalW,
-    ratio,
-    run,
-    runNative,
-    sH,
-    sW,
-    step,
-    w
   // in -> image
   // out <- canvas
-  df = $.Deferred()
-  step = 0.71 // sohuld be > sqrt(0.5)
-  if (img.width * step * img.height * step < settings.size) {
-    return df.reject('not required')
-  }
-  sW = originalW = img.width
-  sH = img.height
-  ratio = sW / sH
-  w = Math.floor(Math.sqrt(settings.size * ratio))
-  h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
-  maxSquare = 5000000 // ios max canvas square
-  maxSize = 4096 // ie max canvas dimensions
-  run = function() {
-    if (sW <= w) {
-      df.resolve(img)
-      return
+  const df = $.Deferred()
+
+  const maxSizePromise = maxCanvasSize()
+  maxSizePromise.done(({ maxSize, maxSquare }) => {
+    const step = 0.71 // sohuld be > sqrt(0.5)
+    if (img.width * step * img.height * step < settings.size) {
+      return df.reject('not required')
     }
-    return defer(function() {
-      var canvas
-      sW = Math.round(sW * step)
-      sH = Math.round(sH * step)
-      if (sW * step < w) {
-        sW = w
-        sH = h
+    const originalW = img.width
+    let sW = originalW
+    let sH = img.height
+    const ratio = sW / sH
+    const w = Math.floor(Math.sqrt(settings.size * ratio))
+    const h = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
+
+    const run = function() {
+      if (sW <= w) {
+        df.resolve(img)
+        return
       }
-      if (sW * sH > maxSquare) {
-        sW = Math.floor(Math.sqrt(maxSquare * ratio))
-        sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
-      }
-      if (sW > maxSize) {
-        sW = maxSize
-        sH = Math.round(sW / ratio)
-      }
-      if (sH > maxSize) {
-        sH = maxSize
-        sW = Math.round(ratio * sH)
-      }
-      canvas = document.createElement('canvas')
-      canvas.width = sW
-      canvas.height = sH
-      canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+      return defer(function() {
+        var canvas
+        sW = Math.round(sW * step)
+        sH = Math.round(sH * step)
+        if (sW * step < w) {
+          sW = w
+          sH = h
+        }
+        if (sW * sH > maxSquare) {
+          sW = Math.floor(Math.sqrt(maxSquare * ratio))
+          sH = Math.floor(maxSquare / Math.sqrt(maxSquare * ratio))
+        }
+        if (sW > maxSize) {
+          sW = maxSize
+          sH = Math.round(sW / ratio)
+        }
+        if (sH > maxSize) {
+          sH = maxSize
+          sW = Math.round(ratio * sH)
+        }
+        canvas = document.createElement('canvas')
+        canvas.width = sW
+        canvas.height = sH
+        canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+
+        img.src = '//:0' // for image
+        img.width = img.height = 1 // for canvas
+        img = canvas
+
+        df.notify((originalW - sW) / (originalW - w))
+
+        return run()
+      })
+    }
+
+    const runNative = function() {
+      const canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+
+      const cx = canvas.getContext('2d')
+      cx.imageSmoothingQuality = 'high'
+      cx.drawImage(img, 0, 0, w, h)
+
       img.src = '//:0' // for image
       img.width = img.height = 1 // for canvas
-      img = canvas
-      df.notify((originalW - sW) / (originalW - w))
-      return run()
-    })
-  }
+      return df.resolve(canvas)
+    }
 
-  runNative = function() {
-    var canvas, cx
-    canvas = document.createElement('canvas')
-    canvas.width = w
-    canvas.height = h
-    cx = canvas.getContext('2d')
-    cx.imageSmoothingQuality = 'high'
-    cx.drawImage(img, 0, 0, w, h)
-    img.src = '//:0' // for image
-    img.width = img.height = 1 // for canvas
-    return df.resolve(canvas)
-  }
+    const cx = document.createElement('canvas').getContext('2d')
 
-  cx = document.createElement('canvas').getContext('2d')
+    if ('imageSmoothingQuality' in cx) {
+      runNative()
+    } else {
+      run()
+    }
+  })
 
-  if ('imageSmoothingQuality' in cx) {
-    runNative()
-  } else {
-    run()
-  }
   return df.promise()
 }
 
