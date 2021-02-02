@@ -115,7 +115,6 @@ const shrinkImage = function(img, settings) {
         return
       }
       return defer(function() {
-        var canvas
         sW = Math.round(sW * step)
         sH = Math.round(sH * step)
         if (sW * step < w) {
@@ -134,10 +133,14 @@ const shrinkImage = function(img, settings) {
           sH = maxSize
           sW = Math.round(ratio * sH)
         }
-        canvas = document.createElement('canvas')
+        const canvas = document.createElement('canvas')
+        const cx = canvas.getContext('2d')
+        if ('imageSmoothingQuality' in cx) {
+          cx.imageSmoothingQuality = 'high'
+        }
         canvas.width = sW
         canvas.height = sH
-        canvas.getContext('2d').drawImage(img, 0, 0, sW, sH)
+        cx.drawImage(img, 0, 0, sW, sH)
 
         img.src = '//:0' // for image
         img.width = img.height = 1 // for canvas
@@ -149,26 +152,10 @@ const shrinkImage = function(img, settings) {
       })
     }
 
-    const runNative = function() {
-      const canvas = document.createElement('canvas')
-      canvas.width = w
-      canvas.height = h
-
-      const cx = canvas.getContext('2d')
-      cx.imageSmoothingQuality = 'high'
-      cx.drawImage(img, 0, 0, w, h)
-
-      img.src = '//:0' // for image
-      img.width = img.height = 1 // for canvas
-      return df.resolve(canvas)
-    }
-
-    const cx = document.createElement('canvas').getContext('2d')
-
-    if ('imageSmoothingQuality' in cx) {
-      runNative()
-    } else {
+    if (maxSize > 0 && maxSquare > 0) {
       run()
+    } else {
+      return df.reject('not supported')
     }
   })
 

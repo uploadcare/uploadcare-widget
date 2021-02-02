@@ -5,6 +5,7 @@ import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
+import { MAX_SIDE, MAX_SQUARE_SIDE } from './utils/canvas-test'
 
 var indexOf = [].indexOf
 
@@ -233,13 +234,24 @@ parseShrink = function(val) {
     return false
   }
   const size = shrink[1] * shrink[2]
-  if (size > 5000000) {
-    // ios max canvas square
+  if (size > MAX_SQUARE_SIDE * MAX_SQUARE_SIDE) {
+    // Synthetic limit of 75 Mpx
     warnOnce(
-      'Shrinked size larger than 5MP can not fit in maximum browser canvas size. ' +
+      'Shrinked size can not be larger than 75MP. ' +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
+
+    return false
+  }
+  if (shrink[1] > MAX_SIDE || shrink[2] > MAX_SIDE) {
+    // Synthetic limit of 16384 pixels
+    warnOnce(
+      `Shrinked size dimensions can not exceed ${MAX_SIDE} pixels. ` +
+        `You have set ${shrink[1]}x${shrink[2]}.`
+    )
+
+    return false
   }
   return {
     quality: shrink[3] ? shrink[3] / 100 : undefined,
