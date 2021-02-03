@@ -1,7 +1,7 @@
 const sizes = {
   squareSide: [
     // Synthetic limit
-    // Equals ~75 Mpx, which is the processing limit of our CDN
+    // Equals almost 75 Mpx, which is the processing limit of our CDN
     // Allocating larger canvases takes a lot of time - about ~200ms
     // 75 Mpx is more than enough for our users, so larger canvas sizes won't be tested for
     8660,
@@ -11,9 +11,9 @@ const sizes = {
     // Safari (iOS >= 9)
     4096,
     // Safari (iOS < 9, ram >= 256)
+    // We are supported mobile safari < 9 since widget v2, by 5 Mpx limit
+    // so it's better to continue support despite the absence of this browser in the support table
     2289,
-    // Safari (iOS < 9, ram < 256)
-    1773,
   ],
   side: [
     // Synthetic limit
