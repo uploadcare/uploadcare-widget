@@ -12,7 +12,7 @@ describe('uploadcare widget', () => {
 
     cy.get('.uploadcare--menu__item_tab_url').click()
     cy.get('.uploadcare--input').type(
-      'https://ucarecdn.com/3db26848-d1c6-4b3d-8cfa-13cc5a76f2a1/small.png{enter}'
+      'https://ucarecdn.com/e8701017-071b-42f4-b4db-0592b24931f9/small.png{enter}'
     )
 
     cy.get('.uploadcare--progress').should('exist')
@@ -26,7 +26,7 @@ describe('uploadcare widget', () => {
   it('should upload files with drag-n-drop and open dialog', () => {
     const fileName = 'image.jpeg'
     setup()
-  
+
     cy.fixture(fileName).then(fileContent => {
       cy.get('.uploadcare--widget__button_type_open').click()
 
@@ -45,7 +45,7 @@ describe('uploadcare widget', () => {
 
   it('should upload images', () => {
     const fileName = 'image.jpeg'
-    
+
     cy.fixture(fileName).then(fileContent => {
       setup()
 
