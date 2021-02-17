@@ -3,10 +3,8 @@ import { log } from './warnings'
 const sizes = {
   squareSide: [
     // Synthetic limit
-    // Equals almost 75 Mpx, which is the processing limit of our CDN
     // Allocating larger canvases takes a lot of time - about ~200ms
-    // 75 Mpx is more than enough for our users, so larger canvas sizes won't be tested for
-    8660,
+    // 67 Mpx is more than enough for our users, so larger canvas sizes won't be tested for
     // IE 9 (Win)
     8192,
     // IE Mobile (Windows Phone 8.x)
@@ -15,7 +13,7 @@ const sizes = {
     // Safari (iOS < 9, ram >= 256)
     // We are supported mobile safari < 9 since widget v2, by 5 Mpx limit
     // so it's better to continue support despite the absence of this browser in the support table
-    2289,
+    Math.ceil(Math.sqrt(5 * 1000 * 1000))
   ],
   side: [
     // Synthetic limit
@@ -24,7 +22,7 @@ const sizes = {
     // Safari (iOS 9)
     8192,
     // IE Mobile (Windows Phone 8.x)
-    4096,
+    4096
   ]
 }
 
@@ -87,20 +85,20 @@ function canvasTest([width, height]) {
     testCvs.width = testCvs.height = 1
 
     return isTestPass
-  } catch(e) {
+  } catch (e) {
     log(`Failed to test for max canvas size of ${width}x${height}.`, e)
     return false
   }
 }
 
 const test = () => {
-  let maxSquare = 0
-  let maxSize = 0
+  let maxArea = 0
+  let maxDimension = 0
 
   for (let i = 0; i < sizes.squareSide.length; ++i) {
     const side = sizes.squareSide[i]
     if (canvasTest([side, side])) {
-      maxSquare = side * side
+      maxArea = side * side
       break
     }
   }
@@ -109,14 +107,14 @@ const test = () => {
     const side = sizes.side[i]
 
     if (canvasTest([side, 1])) {
-      maxSize = side
+      maxDimension = side
       break
     }
   }
 
   return {
-    maxSquare,
-    maxSize
+    maxArea,
+    maxDimension
   }
 }
 
