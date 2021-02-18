@@ -235,7 +235,7 @@ parseShrink = function(val) {
   }
   const size = shrink[1] * shrink[2]
   if (size > MAX_SQUARE_SIDE * MAX_SQUARE_SIDE) {
-    // Synthetic limit of 75 Mpx
+    // Synthetic limit of 67 Mpx
     warnOnce(
       'Shrinked size can not be larger than 75MP. ' +
         `You have set ${shrink[1]}x${shrink[2]} (` +
