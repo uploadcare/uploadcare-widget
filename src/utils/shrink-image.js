@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import { defer } from '../utils'
 import maxCanvasSize from './canvas-size'
-import { log } from './warnings'
 
 const shrinkCanvas = function(img, w, h, native) {
   const df = $.Deferred()
