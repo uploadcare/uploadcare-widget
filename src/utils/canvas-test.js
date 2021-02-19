@@ -1,34 +1,5 @@
 import { log } from './warnings'
 
-const sizes = {
-  squareSide: [
-    // Synthetic limit
-    // Allocating larger canvases takes a lot of time - about ~200ms
-    // 67 Mpx is more than enough for our users, so larger canvas sizes won't be tested for
-    // IE 9 (Win)
-    8192,
-    // IE Mobile (Windows Phone 8.x)
-    // Safari (iOS >= 9)
-    4096,
-    // Safari (iOS < 9, ram >= 256)
-    // We are supported mobile safari < 9 since widget v2, by 5 Mpx limit
-    // so it's better to continue support despite the absence of this browser in the support table
-    Math.ceil(Math.sqrt(5 * 1000 * 1000))
-  ],
-  side: [
-    // Synthetic limit
-    16384,
-    // IE 9 (Win)
-    // Safari (iOS 9)
-    8192,
-    // IE Mobile (Windows Phone 8.x)
-    4096
-  ]
-}
-
-export const MAX_SQUARE_SIDE = sizes.squareSide[0]
-export const MAX_SIDE = sizes.side[0]
-
 const TestPixel = {
   R: 55,
   G: 110,
@@ -40,7 +11,7 @@ const FILL_STYLE = `rgba(${TestPixel.R}, ${TestPixel.G}, ${
   TestPixel.B
 }, ${TestPixel.A / 255})`
 
-function canvasTest([width, height]) {
+export function canvasTest([width, height]) {
   // Wrapped into try/catch because memory alloction errors can be thrown due to insufficient RAM
   try {
     const fill = [width - 1, height - 1, 1, 1] // x, y, width, height
@@ -90,32 +61,3 @@ function canvasTest([width, height]) {
     return false
   }
 }
-
-const test = () => {
-  let maxArea = 0
-  let maxDimension = 0
-
-  for (let i = 0; i < sizes.squareSide.length; ++i) {
-    const side = sizes.squareSide[i]
-    if (canvasTest([side, side])) {
-      maxArea = side * side
-      break
-    }
-  }
-
-  for (let i = 0; i < sizes.side.length; ++i) {
-    const side = sizes.side[i]
-
-    if (canvasTest([side, 1])) {
-      maxDimension = side
-      break
-    }
-  }
-
-  return {
-    maxArea,
-    maxDimension
-  }
-}
-
-export default test

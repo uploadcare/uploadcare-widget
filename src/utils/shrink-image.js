@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { defer } from '../utils'
-import maxCanvasSize from './canvas-size'
+import { testCanvasSize } from './canvas-size'
 
 const shrinkCanvas = function(img, w, h, native) {
   const df = $.Deferred()
@@ -59,26 +59,24 @@ const calcShrinkSteps = function(sourceW, targetW, targetH, step) {
  * Target dimensions expected to be supported by browser,
  * unsupported steps will be dropped.
  */
-const runFallback = function(
-  img,
-  sourceW,
-  targetW,
-  targetH,
-  maxArea,
-  maxDimension,
-  step
-) {
+const runFallback = function(img, sourceW, targetW, targetH, step) {
   const steps = calcShrinkSteps(sourceW, targetW, targetH, step)
-  const supportedSteps = steps.filter(([w, h]) => {
-    return w * h <= maxArea && w <= maxDimension && h <= maxDimension
-  })
 
   const seriesDf = $.Deferred()
   let chainedDf = $.Deferred()
   chainedDf.resolve(img)
-  for (const [w, h] of supportedSteps) {
+  for (const [w, h] of steps) {
     chainedDf = chainedDf
-      .then(canvas => shrinkCanvas(canvas, w, h, false))
+      .then(canvas => {
+        const df = $.Deferred()
+        testCanvasSize(w, h)
+          .then(() => df.resolve(canvas, false))
+          .fail(() => df.resolve(canvas, true))
+        return df.promise()
+      })
+      .then((canvas, skip) => {
+        return skip ? canvas : shrinkCanvas(canvas, w, h, false)
+      })
       .then(canvas => {
         seriesDf.notify((sourceW - w) / (sourceW - targetW))
         return canvas
@@ -111,52 +109,29 @@ export const shrinkImage = function(img, settings) {
   if (img.width * STEP * img.height * STEP < settings.size) {
     return df.reject('not required')
   }
-
   const sourceW = img.width
   const sourceH = img.height
   const ratio = sourceW / sourceH
 
-  maxCanvasSize().done(({ maxDimension, maxArea }) => {
-    // fit size to browser capabilities
-    const targetSize = Math.min(maxArea, settings.size)
-    let targetW = Math.floor(Math.sqrt(targetSize * ratio))
-    let targetH = Math.floor(targetSize / Math.sqrt(targetSize * ratio))
+  const targetW = Math.floor(Math.sqrt(settings.size * ratio))
+  const targetH = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
 
-    // fit dimensions to browser capabilities
-    if (targetW > maxDimension) {
-      targetW = maxDimension
-      targetH = Math.round(targetW / ratio)
-    }
-    if (targetH > maxDimension) {
-      targetH = maxDimension
-      targetW = Math.round(ratio * targetH)
-    }
+  testCanvasSize(targetW, targetH)
+    .fail(() => {
+      df.reject('not supported')
+    })
+    .then(() => {
+      const cx = document.createElement('canvas').getContext('2d')
+      const supportNative = false || 'imageSmoothingQuality' in cx
 
-    /*
-     * If browser can't shrink image to specified size, we don't do it.
-     * This condition isn't strict and controlled by BROWSER_CAPABILITY_RATIO.
-     * Ratio 0.7 means we shrink image to at least 70% of specified size,
-     * if browser doesn't support 100%
-     */
-    const BROWSER_CAPABILITY_RATIO = 0.7 // browser can / user specified
-    const fittedSize = targetW * targetH
-    const lowTargetSize = targetSize / settings.size < BROWSER_CAPABILITY_RATIO
-    const lowFittedSize = fittedSize / settings.size < BROWSER_CAPABILITY_RATIO
-    if (lowTargetSize || lowFittedSize) {
-      return df.reject('not supported')
-    }
+      const task = supportNative
+        ? runNative(img, targetW, targetH)
+        : runFallback(img, sourceW, targetW, targetH, STEP)
 
-    const cx = document.createElement('canvas').getContext('2d')
-    const supportNative = 'imageSmoothingQuality' in cx
-
-    const task = supportNative
-      ? runNative(img, targetW, targetH)
-      : runFallback(img, sourceW, targetW, targetH, maxArea, maxDimension, STEP)
-
-    task
-      .done(canvas => df.resolve(canvas))
-      .progress(progress => df.notify(progress))
-  })
+      task
+        .done(canvas => df.resolve(canvas))
+        .progress(progress => df.notify(progress))
+    })
 
   return df.promise()
 }

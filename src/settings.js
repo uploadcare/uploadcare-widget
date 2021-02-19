@@ -5,7 +5,7 @@ import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
-import { MAX_SIDE, MAX_SQUARE_SIDE } from './utils/canvas-test'
+import { MAX_SIDE, MAX_SQUARE_SIDE } from './utils/canvas-size'
 
 var indexOf = [].indexOf
 
