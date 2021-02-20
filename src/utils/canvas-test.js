@@ -11,7 +11,7 @@ const FILL_STYLE = `rgba(${TestPixel.R}, ${TestPixel.G}, ${
   TestPixel.B
 }, ${TestPixel.A / 255})`
 
-export function canvasTest([width, height]) {
+export function canvasTest(width, height) {
   // Wrapped into try/catch because memory alloction errors can be thrown due to insufficient RAM
   try {
     const fill = [width - 1, height - 1, 1, 1] // x, y, width, height

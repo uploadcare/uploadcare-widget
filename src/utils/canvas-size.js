@@ -25,6 +25,8 @@ const sizes = {
     // Safari (iOS 9)
     8192,
     // Synthetic limit
+    // Edge 17 (Win)
+    // IE11 (Win)
     16384
   ]
 }
@@ -32,20 +34,51 @@ const sizes = {
 export const MAX_SQUARE_SIDE = sizes.squareSide[sizes.squareSide.length - 1]
 export const MAX_SIDE = sizes.side[sizes.side.length - 1]
 
-const memoizedCanvasTest = memoize(canvasTest, ([w, h]) => `${w}x${h}`)
-/**
- * Async and memoized wrapper for canvas test
- */
-function asyncCanvasTest([w, h]) {
-  const df = $.Deferred()
+function asyncWrapper(fn) {
+  return (...args) => {
+    const df = $.Deferred()
 
-  defer(() => {
-    const passed = memoizedCanvasTest([w, h])
-    df.resolve(passed)
-  })
+    defer(() => {
+      const passed = fn(...args)
+      df.resolve(passed)
+    })
 
-  return df.promise()
+    return df.promise()
+  }
 }
+
+/**
+ * Memoization key serealizer, that prevents unnecessary canvas tests.
+ * No need to make test if we know that:
+ * - browser supports higher canvas size
+ * - browser doesn't support lower canvas size
+ *
+ * TODO: memoization can be optimized -
+ * no need to test dimension if browser supports lower square sides
+ */
+function memoKeySerializer([w], cache) {
+  const keys = Object.keys(cache).sort()
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    const supported = !!cache[key]
+    // higher supported canvas size, return it
+    if (key > w && supported) {
+      return key
+    }
+    // lower unsupported canvas size, return it
+    if (key < w && !supported) {
+      return key
+    }
+  }
+
+  // use canvas width as the key,
+  // because we're doing dimension test by width - [dimension, 1]
+  return w
+}
+
+// separate memoization for square and dimension tests
+const squareTest = asyncWrapper(memoize(canvasTest, memoKeySerializer))
+const dimensionTest = asyncWrapper(memoize(canvasTest, memoKeySerializer))
 
 export function testCanvasSize(w, h) {
   const df = $.Deferred()
@@ -57,8 +90,8 @@ export function testCanvasSize(w, h) {
   }
 
   const tasks = [
-    asyncCanvasTest([testSquareSide, testSquareSide]),
-    asyncCanvasTest([testSide, 1])
+    squareTest(testSquareSide, testSquareSide),
+    dimensionTest(testSide, 1)
   ]
 
   $.when(...tasks).done((squareSidePassed, sidePassed) => {
