@@ -54,17 +54,20 @@ function asyncWrapper(fn) {
  * - browser doesn't support lower canvas size
  */
 function memoKeySerializer([w], cache) {
-  const keys = Object.keys(cache).sort()
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i]
-    const supported = !!cache[key]
+  const cachedWidths = Object.keys(cache)
+    .map(val => parseInt(val, 10))
+    .sort((a, b) => a - b)
+
+  for (let i = 0; i < cachedWidths.length; i++) {
+    const cachedWidth = cachedWidths[i]
+    const isSupported = !!cache[cachedWidth]
     // higher supported canvas size, return it
-    if (key > w && supported) {
-      return key
+    if (cachedWidth > w && isSupported) {
+      return cachedWidth
     }
     // lower unsupported canvas size, return it
-    if (key < w && !supported) {
-      return key
+    if (cachedWidth < w && !isSupported) {
+      return cachedWidth
     }
   }
 
