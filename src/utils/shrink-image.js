@@ -122,7 +122,7 @@ export const shrinkImage = function(img, settings) {
     })
     .then(() => {
       const cx = document.createElement('canvas').getContext('2d')
-      const supportNative = false || 'imageSmoothingQuality' in cx
+      const supportNative = 'imageSmoothingQuality' in cx
 
       const task = supportNative
         ? runNative(img, targetW, targetH)

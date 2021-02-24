@@ -18,7 +18,7 @@ const sizes = {
     // IE 9 (Win)
     8192
   ],
-  side: [
+  dimension: [
     // IE Mobile (Windows Phone 8.x)
     4096,
     // IE 9 (Win)
@@ -32,9 +32,9 @@ const sizes = {
 }
 
 export const MAX_SQUARE_SIDE = sizes.squareSide[sizes.squareSide.length - 1]
-export const MAX_SIDE = sizes.side[sizes.side.length - 1]
+export const MAX_DIMENSION = sizes.dimension[sizes.dimension.length - 1]
 
-function asyncWrapper(fn) {
+function wrapAsync(fn) {
   return (...args) => {
     const df = $.Deferred()
 
@@ -53,7 +53,8 @@ function asyncWrapper(fn) {
  * - browser supports higher canvas size
  * - browser doesn't support lower canvas size
  */
-function memoKeySerializer([w], cache) {
+function memoKeySerializer(args, cache) {
+  const [w] = args
   const cachedWidths = Object.keys(cache)
     .map(val => parseInt(val, 10))
     .sort((a, b) => a - b)
@@ -77,25 +78,25 @@ function memoKeySerializer([w], cache) {
 }
 
 // separate memoization for square and dimension tests
-const squareTest = asyncWrapper(memoize(canvasTest, memoKeySerializer))
-const dimensionTest = asyncWrapper(memoize(canvasTest, memoKeySerializer))
+const squareTest = wrapAsync(memoize(canvasTest, memoKeySerializer))
+const dimensionTest = wrapAsync(memoize(canvasTest, memoKeySerializer))
 
 export function testCanvasSize(w, h) {
   const df = $.Deferred()
 
   const testSquareSide = sizes.squareSide.find(side => side * side >= w * h)
-  const testSide = sizes.side.find(side => side >= w && side >= h)
-  if (!testSquareSide || !testSide) {
+  const testDimension = sizes.dimension.find(side => side >= w && side >= h)
+  if (!testSquareSide || !testDimension) {
     return df.reject()
   }
 
   const tasks = [
     squareTest(testSquareSide, testSquareSide),
-    dimensionTest(testSide, 1)
+    dimensionTest(testDimension, 1)
   ]
 
-  $.when(...tasks).done((squareSidePassed, sidePassed) => {
-    if (squareSidePassed && sidePassed) {
+  $.when(...tasks).done((squareSupported, dimensionSupported) => {
+    if (squareSupported && dimensionSupported) {
       df.resolve()
     } else {
       df.reject()
