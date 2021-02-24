@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { defer } from '../utils'
 import { testCanvasSize } from './canvas-size'
 
-const shrinkCanvas = function(img, w, h, native) {
+const resizeCanvas = function(img, w, h, native) {
   const df = $.Deferred()
 
   defer(() => {
@@ -75,7 +75,7 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
         return df.promise()
       })
       .then((canvas, skip) => {
-        return skip ? canvas : shrinkCanvas(canvas, w, h, false)
+        return skip ? canvas : resizeCanvas(canvas, w, h, false)
       })
       .then(canvas => {
         seriesDf.notify((sourceW - w) / (sourceW - targetW))
@@ -96,7 +96,7 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
  * Target dimensions expected to be supported by browser.
  */
 const runNative = function(img, targetW, targetH) {
-  return shrinkCanvas(img, targetW, targetH, true)
+  return resizeCanvas(img, targetW, targetH, true)
 }
 
 export const shrinkImage = function(img, settings) {

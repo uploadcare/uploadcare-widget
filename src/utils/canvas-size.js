@@ -52,9 +52,6 @@ function asyncWrapper(fn) {
  * No need to make test if we know that:
  * - browser supports higher canvas size
  * - browser doesn't support lower canvas size
- *
- * TODO: memoization can be optimized -
- * no need to test dimension if browser supports higher square sides
  */
 function memoKeySerializer([w], cache) {
   const keys = Object.keys(cache).sort()

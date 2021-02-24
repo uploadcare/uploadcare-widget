@@ -234,10 +234,10 @@ parseShrink = function(val) {
     return false
   }
   const size = shrink[1] * shrink[2]
-  if (size > MAX_SQUARE_SIDE * MAX_SQUARE_SIDE) {
-    // Synthetic limit of 67 Mpx
+  const maxSize = MAX_SQUARE_SIDE * MAX_SQUARE_SIDE
+  if (size > maxSize) {
     warnOnce(
-      'Shrinked size can not be larger than 75MP. ' +
+      `Shrinked size can not be larger than ${Math.floor(maxSize/1000/1000)}MP. ` +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
@@ -245,7 +245,6 @@ parseShrink = function(val) {
     return false
   }
   if (shrink[1] > MAX_SIDE || shrink[2] > MAX_SIDE) {
-    // Synthetic limit of 16384 pixels
     warnOnce(
       `Shrinked size dimensions can not exceed ${MAX_SIDE} pixels. ` +
         `You have set ${shrink[1]}x${shrink[2]}.`
