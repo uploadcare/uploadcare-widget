@@ -237,7 +237,9 @@ parseShrink = function(val) {
   const maxSize = MAX_SQUARE_SIDE * MAX_SQUARE_SIDE
   if (size > maxSize) {
     warnOnce(
-      `Shrinked size can not be larger than ${Math.floor(maxSize/1000/1000)}MP. ` +
+      `Shrinked size can not be larger than ${Math.floor(
+        maxSize / 1000 / 1000
+      )}MP. ` +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
