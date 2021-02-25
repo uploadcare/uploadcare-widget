@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { defer } from '../utils'
 import { testCanvasSize } from './canvas-size'
 
-const resizeCanvas = function(img, w, h, native) {
+const resizeCanvas = function(img, w, h) {
   const df = $.Deferred()
 
   defer(() => {
@@ -12,9 +12,7 @@ const resizeCanvas = function(img, w, h, native) {
     canvas.width = w
     canvas.height = h
 
-    if (native) {
-      cx.imageSmoothingQuality = 'high'
-    }
+    cx.imageSmoothingQuality = 'high'
     cx.drawImage(img, 0, 0, w, h)
 
     img.src = '//:0' // for image
@@ -75,7 +73,7 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
         return df.promise()
       })
       .then((canvas, skip) => {
-        return skip ? canvas : resizeCanvas(canvas, w, h, false)
+        return skip ? canvas : resizeCanvas(canvas, w, h)
       })
       .then(canvas => {
         seriesDf.notify((sourceW - w) / (sourceW - targetW))
@@ -96,7 +94,7 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
  * Target dimensions expected to be supported by browser.
  */
 const runNative = function(img, targetW, targetH) {
-  return resizeCanvas(img, targetW, targetH, true)
+  return resizeCanvas(img, targetW, targetH)
 }
 
 export const shrinkImage = function(img, settings) {
