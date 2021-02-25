@@ -1,24 +1,30 @@
 import $ from 'jquery'
 import { defer } from '../utils'
 import { testCanvasSize } from './canvas-size'
+import { log } from './warnings'
 
 const resizeCanvas = function(img, w, h) {
   const df = $.Deferred()
 
   defer(() => {
-    const canvas = document.createElement('canvas')
-    const cx = canvas.getContext('2d')
+    try {
+      const canvas = document.createElement('canvas')
+      const cx = canvas.getContext('2d')
 
-    canvas.width = w
-    canvas.height = h
+      canvas.width = w
+      canvas.height = h
 
-    cx.imageSmoothingQuality = 'high'
-    cx.drawImage(img, 0, 0, w, h)
+      cx.imageSmoothingQuality = 'high'
+      cx.drawImage(img, 0, 0, w, h)
 
-    img.src = '//:0' // for image
-    img.width = img.height = 1 // for canvas
+      img.src = '//:0' // for image
+      img.width = img.height = 1 // for canvas
 
-    df.resolve(canvas)
+      df.resolve(canvas)
+    } catch (e) {
+      log(`Failed to shrink image to size ${w}x${h}.`, e)
+      df.reject(e)
+    }
   })
 
   return df.promise()
@@ -83,6 +89,9 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
   chainedDf.done(canvas => {
     seriesDf.resolve(canvas)
   })
+  chainedDf.fail(error => {
+    seriesDf.reject(error)
+  })
 
   return seriesDf.promise()
 }
@@ -131,6 +140,7 @@ export const shrinkImage = function(img, settings) {
       task
         .done(canvas => df.resolve(canvas))
         .progress(progress => df.notify(progress))
+        .fail(() => df.reject('not supported'))
     })
 
   return df.promise()
