@@ -12,27 +12,44 @@ const sizes = {
     // IE Mobile (Windows Phone 8.x)
     // Safari (iOS >= 9)
     4096,
-    // Synthetic limit
-    // Allocating larger canvases takes a lot of time - about ~200ms
-    // 67 Mpx is more than enough for our users, so larger canvas sizes won't be tested for
     // IE 9 (Win)
-    8192
+    8192,
+    // Firefox 63 (Mac, Win)
+    11180,
+    // Chrome 68 (Android 6)
+    10836,
+    // Chrome 68 (Android 5)
+    11402,
+    // Chrome 68 (Android 7.1-9)
+    14188,
+    // Chrome 70 (Mac, Win)
+    // Chrome 68 (Android 4.4)
+    // Edge 17 (Win)
+    // Safari 7-12 (Mac)
+    16384
   ],
   dimension: [
     // IE Mobile (Windows Phone 8.x)
     4096,
     // IE 9 (Win)
-    // Safari (iOS 9)
     8192,
-    // Synthetic limit
     // Edge 17 (Win)
     // IE11 (Win)
-    16384
+    16384,
+    // Chrome 70 (Mac, Win)
+    // Chrome 68 (Android 4.4-9)
+    // Firefox 63 (Mac, Win)
+    32767,
+    // Chrome 83 (Mac, Win)
+    // Safari 7-12 (Mac)
+    // Safari (iOS 9-12)
+    // Actually Safari has a much bigger limits - 4194303 of width and 8388607 of height,
+    // but we will not use them
+    65535
   ]
 }
 
 export const MAX_SQUARE_SIDE = sizes.squareSide[sizes.squareSide.length - 1]
-export const MAX_DIMENSION = sizes.dimension[sizes.dimension.length - 1]
 
 function wrapAsync(fn) {
   return (...args) => {
