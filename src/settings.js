@@ -5,7 +5,7 @@ import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
-import { MAX_DIMENSION, MAX_SQUARE_SIDE } from './utils/canvas-size'
+import { MAX_SQUARE_SIDE } from './utils/canvas-size'
 
 var indexOf = [].indexOf
 
@@ -242,14 +242,6 @@ parseShrink = function(val) {
       )}MP. ` +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
-    )
-
-    return false
-  }
-  if (shrink[1] > MAX_DIMENSION || shrink[2] > MAX_DIMENSION) {
-    warnOnce(
-      `Shrinked size dimensions can not exceed ${MAX_DIMENSION} pixels. ` +
-        `You have set ${shrink[1]}x${shrink[2]}.`
     )
 
     return false
