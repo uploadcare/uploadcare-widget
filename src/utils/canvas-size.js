@@ -8,7 +8,7 @@ const sizes = {
     // Safari (iOS < 9, ram >= 256)
     // We are supported mobile safari < 9 since widget v2, by 5 Mpx limit
     // so it's better to continue support despite the absence of this browser in the support table
-    Math.ceil(Math.sqrt(5 * 1000 * 1000)),
+    Math.floor(Math.sqrt(5 * 1000 * 1000)),
     // IE Mobile (Windows Phone 8.x)
     // Safari (iOS >= 9)
     4096,
