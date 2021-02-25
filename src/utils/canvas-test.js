@@ -39,8 +39,9 @@ export function canvasTest(width, height) {
     const imageData = cropCtx && cropCtx.getImageData(0, 0, 1, 1).data
     let isTestPass = false
     if (imageData) {
-      // can't use array destructuring because transpiled code fails on IE10
-      // there, imageData have type CanvasPixelArray, not Uint8ClampedArray
+      // On IE10, imageData have type CanvasPixelArray, not Uint8ClampedArray.
+      // CanvasPixelArray supports index access operations only.
+      // Array buffers can't be destructuredd and compared with JSON.stringify
       const r = imageData[0]
       const g = imageData[1]
       const b = imageData[2]

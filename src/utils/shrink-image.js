@@ -111,9 +111,11 @@ export const shrinkImage = function(img, settings) {
   const sourceH = img.height
   const ratio = sourceW / sourceH
 
+  // target size shouldn't be greater than settings.size in any case
   const targetW = Math.floor(Math.sqrt(settings.size * ratio))
   const targetH = Math.floor(settings.size / Math.sqrt(settings.size * ratio))
 
+  // we test the last step because we can skip all intermediate steps
   testCanvasSize(targetW, targetH)
     .fail(() => {
       df.reject('not supported')
