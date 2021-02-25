@@ -42,16 +42,11 @@ export function canvasTest(width, height) {
       // On IE10, imageData have type CanvasPixelArray, not Uint8ClampedArray.
       // CanvasPixelArray supports index access operations only.
       // Array buffers can't be destructuredd and compared with JSON.stringify
-      const r = imageData[0]
-      const g = imageData[1]
-      const b = imageData[2]
-      const a = imageData[3]
-      // Verify test pixel (rgba channels should match TestPixel ones)
       isTestPass =
-        r === TestPixel.R &&
-        g === TestPixel.G &&
-        b === TestPixel.B &&
-        a === TestPixel.A
+        imageData[0] === TestPixel.R &&
+        imageData[1] === TestPixel.G &&
+        imageData[2] === TestPixel.B &&
+        imageData[3] === TestPixel.A
     }
 
     testCvs.width = testCvs.height = 1
