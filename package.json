@@ -2,16 +2,16 @@
   "name": "uploadcare-widget",
   "version": "3.10.2",
   "description": "Uploadcare Widget: file uploader.",
-  "main": "uploadcare.js",
+  "main": "./dist/uploadcare.js",
   "files": [
-    "uploadcare.api.js",
-    "uploadcare.api.min.js",
-    "uploadcare.full.js",
-    "uploadcare.full.min.js",
-    "uploadcare.js",
-    "uploadcare.min.js",
-    "uploadcare.lang.en.js",
-    "uploadcare.lang.en.min.js"
+    "./dist/uploadcare.api.js",
+    "./dist/uploadcare.api.min.js",
+    "./dist/uploadcare.full.js",
+    "./dist/uploadcare.full.min.js",
+    "./dist/uploadcare.js",
+    "./dist/uploadcare.min.js",
+    "./dist/uploadcare.lang.en.js",
+    "./dist/uploadcare.lang.en.min.js"
   ],
   "scripts": {
     "help:dev": "SCRIPTS FOR LOCAL DEVELOPMENT",
