@@ -22,7 +22,7 @@ const bundle = (input, output, options = {}) => ({
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: `${output}`,
+    file: `./dist/${output}`,
     globals: options.includeJquery
       ? undefined
       : {
@@ -64,10 +64,10 @@ const bundle = (input, output, options = {}) => ({
     }),
     banner(`/**
  * @license ${pkg.name} v${pkg.version}
- * 
+ *
  * Copyright (c) 2020 Uploadcare, Inc.
- * 
- * This source code is licensed under the BSD 2-Clause License 
+ *
+ * This source code is licensed under the BSD 2-Clause License
  * found in the LICENSE file in the root directory of this source tree.
  */`)
   ]
