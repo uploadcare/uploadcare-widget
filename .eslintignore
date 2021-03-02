@@ -1,5 +1,4 @@
 src/vendor/*
-
 !.stylelintrc.js
-
 dist
+public
