@@ -90,8 +90,11 @@ class CanvasRenderer extends BaseRenderer {
   }
 
   update() {
-    window.requestAnimationFrame(() => {
-      const half = Math.floor(Math.min(this.element.width(), this.element.height()))
+    this.__rafId = window.requestAnimationFrame(() => {
+      window.cancelAnimationFrame(this.__rafId)
+      const half = Math.floor(
+        Math.min(this.element.width(), this.element.height())
+      )
       const size = half * 2
       if (half) {
         if (this.canvasEl.width !== size || this.canvasEl.height !== size) {
