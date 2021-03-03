@@ -67,9 +67,16 @@ const uploadFile = (data, fileName, options) => {
 }
 
 // main part starts here
-Promise.all(pkg.files.map(name => Promise.all([readFile(name), name])))
+Promise.all(
+  pkg.files.map(filePath => {
+    const name = path.basename(filePath)
+    return Promise.all([readFile(name), name])
+  })
+)
   .then(files =>
-    Promise.all(files.map(([data, name]) => uploadFile(data, name, { dry: false })))
+    Promise.all(
+      files.map(([data, name]) => uploadFile(data, name, { dry: false }))
+    )
   )
   .catch(error => {
     console.error('Error: \n', error.message)
