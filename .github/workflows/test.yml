@@ -1,0 +1,16 @@
+name: ci
+
+on: pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Install dependencies
+        working-directory: ./
+        run: npm ci
+      - name: Run test
+        working-directory: ./
+        run: npm run test
