@@ -32,12 +32,12 @@ class Circle {
         .progress(progress => {
           // if we are still listening to this one
           if (file === this.observed) {
-            return this.renderer.setValue(selectorFn(progress))
+            this.renderer.setValue(selectorFn(progress))
           }
         })
         .always(uploadedFile => {
           if (file === this.observed) {
-            return this.renderer.setValue(1, false)
+            this.renderer.setValue(1, false)
           }
         })
     }
@@ -46,11 +46,11 @@ class Circle {
 
   reset(filled = false) {
     this.observed = null
-    return this.renderer.setValue(filled ? 1 : 0, true)
+    this.renderer.setValue(filled ? 1 : 0, true)
   }
 
   update() {
-    return this.renderer.update()
+    this.renderer.update()
   }
 }
 
@@ -74,7 +74,7 @@ class TextRenderer extends BaseRenderer {
 
   setValue(val) {
     val = Math.round(val * 100)
-    return this.text.html(`${val} %`)
+    this.text.html(`${val} %`)
   }
 }
 
@@ -90,36 +90,41 @@ class CanvasRenderer extends BaseRenderer {
   }
 
   update() {
-    var arc, ctx, half, size
-    half = Math.floor(Math.min(this.element.width(), this.element.height()))
-    size = half * 2
-    if (half) {
-      if (this.canvasEl.width !== size || this.canvasEl.height !== size) {
-        this.canvasEl.width = size
-        this.canvasEl.height = size
+    window.cancelAnimationFrame(this.__rafId)
+
+    this.__rafId = window.requestAnimationFrame(() => {
+      const half = Math.floor(
+        Math.min(this.element.width(), this.element.height())
+      )
+      const size = half * 2
+      if (half) {
+        if (this.canvasEl.width !== size || this.canvasEl.height !== size) {
+          this.canvasEl.width = size
+          this.canvasEl.height = size
+        }
+        const ctx = this.canvasEl.getContext('2d')
+        const arc = function(radius, val) {
+          var offset
+          offset = -Math.PI / 2
+          ctx.beginPath()
+          ctx.moveTo(half, half)
+          ctx.arc(half, half, radius, offset, offset + 2 * Math.PI * val, false)
+          ctx.fill()
+        }
+        // Clear
+        ctx.clearRect(0, 0, size, size)
+        // Background circle
+        ctx.globalCompositeOperation = 'source-over'
+        ctx.fillStyle = this.element.css('border-left-color')
+        arc(half - 0.5, 1)
+        // Progress circle
+        ctx.fillStyle = this.element.css('color')
+        arc(half, this.val)
+        // Make a hole
+        ctx.globalCompositeOperation = 'destination-out'
+        arc(half / 7, 1)
       }
-      ctx = this.canvasEl.getContext('2d')
-      arc = function(radius, val) {
-        var offset
-        offset = -Math.PI / 2
-        ctx.beginPath()
-        ctx.moveTo(half, half)
-        ctx.arc(half, half, radius, offset, offset + 2 * Math.PI * val, false)
-        return ctx.fill()
-      }
-      // Clear
-      ctx.clearRect(0, 0, size, size)
-      // Background circle
-      ctx.globalCompositeOperation = 'source-over'
-      ctx.fillStyle = this.element.css('border-left-color')
-      arc(half - 0.5, 1)
-      // Progress circle
-      ctx.fillStyle = this.element.css('color')
-      arc(half, this.val)
-      // Make a hole
-      ctx.globalCompositeOperation = 'destination-out'
-      return arc(half / 7, 1)
-    }
+    })
   }
 
   __animateValue(target) {
@@ -134,10 +139,8 @@ class CanvasRenderer extends BaseRenderer {
       if (current === target) {
         this.__stopAnimation()
       }
-      return this.__setValue(current)
+      this.__setValue(current)
     }, 15)
-
-    return this.__animIntervalId
   }
 
   __stopAnimation() {
@@ -145,21 +148,20 @@ class CanvasRenderer extends BaseRenderer {
       clearInterval(this.__animIntervalId)
     }
     this.__animIntervalId = null
-    return this.__animIntervalId
   }
 
   __setValue(val) {
     this.val = val
     this.element.attr('aria-valuenow', (val * 100).toFixed(0))
-    return this.update()
+    this.update()
   }
 
   setValue(val, instant = false) {
     this.__stopAnimation()
     if (instant) {
-      return this.__setValue(val)
+      this.__setValue(val)
     } else {
-      return this.__animateValue(val)
+      this.__animateValue(val)
     }
   }
 }
