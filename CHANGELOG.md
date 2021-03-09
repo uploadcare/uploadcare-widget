@@ -3,14 +3,7 @@
 
 ### Bug Fixes
 
-* cancel previous raf before calling new one ([8a4ff4a](https://github.com/uploadcare/uploadcare-widget/commit/8a4ff4a90a12807aef098f278c8af668459a0eb8))
-* raf cancelling ([ba8942c](https://github.com/uploadcare/uploadcare-widget/commit/ba8942c35bcc47bc566cf157946b28d8e36dc5f9))
-* restore rounded corners in safari ([20a2e82](https://github.com/uploadcare/uploadcare-widget/commit/20a2e824af83c205e5f262256882e7c90286f86e))
-* wrap progress animation into raf to fix safari glitches ([401fbba](https://github.com/uploadcare/uploadcare-widget/commit/401fbbac20a028ec6759b2b527fe35db9624bf2e))
-* wrong tab height on safari ([e48354c](https://github.com/uploadcare/uploadcare-widget/commit/e48354c5ef9ca522dff9616af06ef98a77c72a8f))
-* **menu-items:** fix menu height on new safaries ([35628e1](https://github.com/uploadcare/uploadcare-widget/commit/35628e1b1d335dbf8291e1646d85738a84d58975))
-* **preview-tab:** tab height on the new safaries ([2d8373c](https://github.com/uploadcare/uploadcare-widget/commit/2d8373c874d2200ae85330ff9c64e1255ed7f2ed))
-
+* fix ui elements height calculation on safari ([#813](https://github.com/uploadcare/uploadcare-widget/pull/813))
 
 
 ## [3.10.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.1...v3.10.2) (2020-08-04)
