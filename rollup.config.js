@@ -22,7 +22,7 @@ const bundle = (input, output, options = {}) => ({
   output: {
     name: 'uploadcare',
     format: 'umd',
-    file: `./dist/${output}`,
+    file: `./${output}`,
     globals: options.includeJquery
       ? undefined
       : {

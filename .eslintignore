@@ -1,4 +1,12 @@
 src/vendor/*
 !.stylelintrc.js
-dist
 public
+uploadcare.api.js
+uploadcare.api.min.js
+uploadcare.full.js
+uploadcare.full.min.js
+uploadcare.js
+uploadcare.min.js
+uploadcare.lang.en.js
+uploadcare.lang.en.min.js
+dist
