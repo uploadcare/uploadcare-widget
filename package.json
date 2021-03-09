@@ -2,16 +2,16 @@
   "name": "uploadcare-widget",
   "version": "3.10.3",
   "description": "Uploadcare Widget: file uploader.",
-  "main": "./dist/uploadcare.js",
+  "main": "uploadcare.js",
   "files": [
-    "./dist/uploadcare.api.js",
-    "./dist/uploadcare.api.min.js",
-    "./dist/uploadcare.full.js",
-    "./dist/uploadcare.full.min.js",
-    "./dist/uploadcare.js",
-    "./dist/uploadcare.min.js",
-    "./dist/uploadcare.lang.en.js",
-    "./dist/uploadcare.lang.en.min.js"
+    "uploadcare.api.js",
+    "uploadcare.api.min.js",
+    "uploadcare.full.js",
+    "uploadcare.full.min.js",
+    "uploadcare.js",
+    "uploadcare.min.js",
+    "uploadcare.lang.en.js",
+    "uploadcare.lang.en.min.js"
   ],
   "scripts": {
     "help:dev": "SCRIPTS FOR LOCAL DEVELOPMENT",
@@ -24,7 +24,7 @@
     "build:css": "postcss -o ./src/stylesheets/styles.css -c ./scripts/postcss.config.js ./src/stylesheets/styles.pcss",
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build:js": "rollup -c",
-    "build:public": "rimraf public/* && cpy dummy/* public && cpy dist/uploadcare.full.js public",
+    "build:public": "rimraf public/* && cpy dummy/* public && cpy uploadcare.full.js public",
     "build": "npm run build:svg && npm run build:css:min && npm run build:js && npm run build:public",
     "help:test": "SCRIPTS FOR TESTS AND CODE QUALITY CHECKS",
     "format": "prettier --write \"**/*.js\"",
@@ -95,19 +95,19 @@
   "size-limit": [
     {
       "limit": "60 KB",
-      "path": "./dist/uploadcare.api.min.js"
+      "path": "./uploadcare.api.min.js"
     },
     {
       "limit": "120 KB",
-      "path": "./dist/uploadcare.full.min.js"
+      "path": "./uploadcare.full.min.js"
     },
     {
       "limit": "120 KB",
-      "path": "./dist/uploadcare.min.js"
+      "path": "./uploadcare.min.js"
     },
     {
       "limit": "90 KB",
-      "path": "./dist/uploadcare.lang.en.min.js"
+      "path": "./uploadcare.lang.en.min.js"
     }
   ],
   "browserslist": [
