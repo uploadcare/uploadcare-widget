@@ -1,3 +1,11 @@
+## [3.10.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.2...v3.10.3) (2021-03-09)
+
+
+### Bug Fixes
+
+* fix ui elements height calculation on safari ([#813](https://github.com/uploadcare/uploadcare-widget/pull/813))
+
+
 ## [3.10.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.1...v3.10.2) (2020-08-04)
 
 
