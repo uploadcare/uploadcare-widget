@@ -1,22 +1,9 @@
 # [3.11.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.4...v3.11.0) (2021-03-10)
 
 
-### Bug Fixes
+### Changed
 
-* add memoization ([906d249](https://github.com/uploadcare/uploadcare-widget/commit/906d249081a880e4bbbe67eed9c9ae7600549686))
-* add more canvas size breakpoint to avoid synthetic limits ([647e7bd](https://github.com/uploadcare/uploadcare-widget/commit/647e7bdfdbf5effbe1741a68d5564d26cd976e6d))
-* cached values array sorting ([c9b9693](https://github.com/uploadcare/uploadcare-widget/commit/c9b9693c25b79d54539ed104bea927fa405b3350))
-* catch errors when trying to resize image ([22a0b53](https://github.com/uploadcare/uploadcare-widget/commit/22a0b53cd7dbfcc07bf6ab212b8e0c142ea1153f))
-* check max canvas size bebore shrink ([9ff394b](https://github.com/uploadcare/uploadcare-widget/commit/9ff394b2f253c77f270d07e157cc00bde0a11afb))
-* do not check passed settings for max dimension ([362d37a](https://github.com/uploadcare/uploadcare-widget/commit/362d37af1197fae9a94e20622e6b53f1e9dd59e7))
-* dynamic max size overflow error ([283c629](https://github.com/uploadcare/uploadcare-widget/commit/283c629daeaa8d0440680d23ff0121393d53c1ef))
-* floor minimal square side ([cecae49](https://github.com/uploadcare/uploadcare-widget/commit/cecae49bca54b8f526fadf7c278e8a4bddf9b0dd))
-* improve memoization ([4fb51ad](https://github.com/uploadcare/uploadcare-widget/commit/4fb51ad4946269a68a5824e47c5ad7fb316969a6))
-* rework canvas size checking ([f366f42](https://github.com/uploadcare/uploadcare-widget/commit/f366f4298f1ba50a65af71fb82974f030c37c1cb))
-* rework downsampling algorithm ([cd6aa47](https://github.com/uploadcare/uploadcare-widget/commit/cd6aa472d9e2d2f3ed933b0c332b32e6fd5e243f))
-* update image url at e2e tests ([20cf08f](https://github.com/uploadcare/uploadcare-widget/commit/20cf08f935f266f3abd087f3a364d85a37a18e8c))
-* wrap canvas test into try/catch ([3cfb085](https://github.com/uploadcare/uploadcare-widget/commit/3cfb0855e53a14e893121fc7b688f6956c5338ac))
-
+* **shrink**: add support for shrink resolution higher than 5 megapixels ([#804](https://github.com/uploadcare/uploadcare-widget/pull/804))
 
 
 ## [3.10.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.3...v3.10.4) (2021-03-09)
