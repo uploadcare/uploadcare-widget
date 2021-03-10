@@ -1,3 +1,20 @@
+## [3.10.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.3...v3.10.4) (2021-03-09)
+
+
+### Bug Fixes
+
+* don't build files to dist cause it's breaks api ([#817](https://github.com/uploadcare/uploadcare-widget/issues/817)) ([09b8299](https://github.com/uploadcare/uploadcare-widget/commit/09b82999093af828da17921918ba54c1dd166c04))
+
+
+
+## [3.10.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.2...v3.10.3) (2021-03-09)
+
+
+### Bug Fixes
+
+* fix ui elements height calculation on safari ([#813](https://github.com/uploadcare/uploadcare-widget/pull/813))
+
+
 ## [3.10.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.1...v3.10.2) (2020-08-04)
 
 

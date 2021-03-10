@@ -70,7 +70,7 @@ const uploadFile = (data, fileName, options) => {
 Promise.all(
   pkg.files.map(filePath => {
     const name = path.basename(filePath)
-    return Promise.all([readFile(name), name])
+    return Promise.all([readFile(filePath), name])
   })
 )
   .then(files =>
