@@ -5,6 +5,7 @@ import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
+import { MAX_SQUARE_SIDE } from './utils/canvas-size'
 
 var indexOf = [].indexOf
 
@@ -227,17 +228,18 @@ parseCrop = function(val) {
 }
 
 parseShrink = function(val) {
-  var reShrink, shrink, size
-  reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
-  shrink = reShrink.exec($.trim(val.toLowerCase())) || []
+  const reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
+  const shrink = reShrink.exec($.trim(val.toLowerCase())) || []
   if (!shrink.length) {
     return false
   }
-  size = shrink[1] * shrink[2]
-  if (size > 5000000) {
-    // ios max canvas square
+  const size = shrink[1] * shrink[2]
+  const maxSize = MAX_SQUARE_SIDE * MAX_SQUARE_SIDE
+  if (size > maxSize) {
     warnOnce(
-      'Shrinked size can not be larger than 5MP. ' +
+      `Shrinked size can not be larger than ${Math.floor(
+        maxSize / 1000 / 1000
+      )}MP. ` +
         `You have set ${shrink[1]}x${shrink[2]} (` +
         `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
