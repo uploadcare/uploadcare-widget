@@ -1,3 +1,11 @@
+# [3.11.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.4...v3.11.0) (2021-03-10)
+
+
+### Changed
+
+* **shrink**: add support for shrink resolution higher than 5 megapixels ([#804](https://github.com/uploadcare/uploadcare-widget/pull/804))
+
+
 ## [3.10.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.3...v3.10.4) (2021-03-09)
 
 
