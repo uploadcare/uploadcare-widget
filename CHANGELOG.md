@@ -1,3 +1,12 @@
+## [3.11.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.0...v3.11.1) (2021-06-24)
+
+
+### Bug Fixes
+
+* disable browser touch actions for the container ([#842](https://github.com/uploadcare/uploadcare-widget/issues/842)) ([91b28a2](https://github.com/uploadcare/uploadcare-widget/commit/91b28a297d4a4df98d15109b6c5f1ddb85d4b37b))
+
+
+
 # [3.11.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.10.4...v3.11.0) (2021-03-10)
 
 
