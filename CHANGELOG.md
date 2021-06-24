@@ -1,3 +1,12 @@
+## [3.11.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.1...v3.11.2) (2021-06-24)
+
+
+### Bug Fixes
+
+* typo at `touch-action` css property ([#844](https://github.com/uploadcare/uploadcare-widget/issues/844)) ([a86f240](https://github.com/uploadcare/uploadcare-widget/commit/a86f240d80faefb7f42bbae61e9d93c26cdb3ce2))
+
+
+
 ## [3.11.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.0...v3.11.1) (2021-06-24)
 
 
