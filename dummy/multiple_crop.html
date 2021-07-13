@@ -45,8 +45,8 @@
         var file = this;
         file.done(function(fileInfo) {
           $list.append(
-            $("<div/>").append(
-              $('<a href="#"/>')
+            $("<div></div>").append(
+              $('<a href="#"></a>')
                 .text(fileInfo.name)
                 .on("click", function() {
                   uploadcare

@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { isWindowDefined } from '../utils/is-window-defined'
 /**
  * jquery.Jcrop.js v0.9.10
- * jQuery Image Cropping Plugin - released under MIT License 
+ * jQuery Image Cropping Plugin - released under MIT License
  * Author: Kelly Hallman <khallman@gmail.com>
  * http://github.com/tapmodo/Jcrop
  * Copyright (c) 2008-2012 Tapmodo Interactive LLC {{{
@@ -169,7 +169,7 @@ isWindowDefined() && (function ($) {
         if ((ord === 'move') && !options.allowMove) {
           return false;
         }
-        
+
         // Fix position of crop area when dragged the very first time.
         // Necessary when crop image is in a hidden element when page is loaded.
         docOffset = getPos($img);
@@ -272,12 +272,12 @@ isWindowDefined() && (function ($) {
         $origimg.width($origimg[0].width);
         $origimg.height($origimg[0].height);
       } else {
-        // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0). 
+        // Obtain dimensions from temporary image in case the original is not loaded yet (e.g. IE 7.0).
         var tempImage = new Image();
         tempImage.src = $origimg[0].src;
         $origimg.width(tempImage.width);
         $origimg.height(tempImage.height);
-      } 
+      }
 
       var $img = $origimg.clone().removeAttr('id').css(img_css).show();
 
@@ -296,7 +296,7 @@ isWindowDefined() && (function ($) {
     var boundx = $img.width(),
         boundy = $img.height(),
 
-        $div = $('<div />').width(boundx).height(boundy).addClass(cssClass('holder')).css({
+        $div = $('<div></div>').width(boundx).height(boundy).addClass(cssClass('holder')).css({
           position: 'relative',
           backgroundColor: options.bgColor
         }).insertAfter($origimg).append($img);
@@ -305,16 +305,16 @@ isWindowDefined() && (function ($) {
       $div.addClass(options.addClass);
     }
 
-    var $img2 = $('<div />'),
+    var $img2 = $('<div></div>'),
 
-        $img_holder = $('<div />') 
+        $img_holder = $('<div></div>')
         .width('100%').height('100%').css({
           zIndex: 310,
           position: 'absolute',
           overflow: 'hidden'
         }),
 
-        $sel = $('<div />') 
+        $sel = $('<div></div>')
         .css({
           position: 'absolute',
           zIndex: 600
@@ -351,7 +351,7 @@ isWindowDefined() && (function ($) {
     // }}}
     // }}}
     // Internal Modules {{{
-    // Touch Module {{{ 
+    // Touch Module {{{
     var Touch = (function () {
       // Touch support detection function adapted (under MIT License)
       // from code by Jeffrey Sambells - http://github.com/iamamused/
@@ -482,8 +482,8 @@ isWindowDefined() && (function ($) {
         // This function could use some optimization I think...
         var aspect = options.aspectRatio,
             min_x = options.minSize[0] / xscale,
-            
-            
+
+
             //min_y = options.minSize[1]/yscale,
             max_x = options.maxSize[0] / xscale,
             max_y = options.maxSize[1] / yscale,
@@ -697,7 +697,7 @@ isWindowDefined() && (function ($) {
     // Shade Module {{{
     var Shade = (function() {
       var enabled = false,
-          holder = $('<div />').css({
+          holder = $('<div></div>').css({
             position: 'absolute',
             zIndex: 240,
             opacity: 0
@@ -739,7 +739,7 @@ isWindowDefined() && (function ($) {
         });
       }
       function createShade() {
-        return $('<div />').css({
+        return $('<div></div>').css({
           position: 'absolute',
           backgroundColor: options.shadeColor||options.bgColor
         }).appendTo(holder);
@@ -822,7 +822,7 @@ isWindowDefined() && (function ($) {
       // Private Methods
       function insertBorder(type) //{{{
       {
-        var jq = $('<div />').css({
+        var jq = $('<div></div>').css({
           position: 'absolute'
         }).addClass(cssClass(type));
         $sel.append(jq);
@@ -831,10 +831,10 @@ isWindowDefined() && (function ($) {
       //}}}
       function dragDiv(ord) //{{{
       {
-        var jq = $('<div />').mousedown(createDragger(ord)).css({
+        var jq = $('<div></div>').mousedown(createDragger(ord)).css({
           cursor: ord + '-resize',
           position: 'absolute'
-        }).append('<div/>')
+        }).append('<div></div>')
           .addClass('ord-'+ord);
 
         if (Touch.support) {
@@ -986,13 +986,13 @@ isWindowDefined() && (function ($) {
           animating = false;
           enableHandles();
         }
-      } 
+      }
       //}}}
       function done() //{{{
       {
         animMode(false);
         refresh();
-      } 
+      }
       //}}}
       // Insert draggable elements {{{
       // Insert border divs for outline
@@ -1044,7 +1044,7 @@ isWindowDefined() && (function ($) {
         done: done
       };
     }());
-    
+
     //}}}
     // Tracker Module {{{
     var Tracker = (function () {
@@ -1067,7 +1067,7 @@ isWindowDefined() && (function ($) {
             .on('mousemove.jcrop',trackMove)
             .on('mouseup.jcrop',trackUp);
         }
-      } 
+      }
       //}}}
       function toBack() //{{{
       {
@@ -1075,13 +1075,13 @@ isWindowDefined() && (function ($) {
           zIndex: 290
         });
         $(document).off('.jcrop');
-      } 
+      }
       //}}}
       function trackMove(e) //{{{
       {
         onMove(mouseAbs(e));
         return false;
-      } 
+      }
       //}}}
       function trackUp(e) //{{{
       {
@@ -1147,7 +1147,7 @@ isWindowDefined() && (function ($) {
         width: '12px'
       }).addClass('jcrop-keymgr'),
 
-        $keywrap = $('<div />').css({
+        $keywrap = $('<div></div>').css({
           position: 'absolute',
           overflow: 'hidden'
         }).append($keymgr);

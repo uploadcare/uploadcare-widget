@@ -37,7 +37,7 @@ const imageLoader = function(image) {
 const videoLoader = function(src) {
   var def = $.Deferred()
 
-  $('<video/>')
+  $('<video></video>')
     .on('loadeddata', def.resolve)
     .on('error', def.reject)
     .attr('src', src)
