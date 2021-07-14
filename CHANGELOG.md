@@ -1,3 +1,11 @@
+## [3.11.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.2...v3.11.3) (2021-07-14)
+
+### Changed
+
+* Upgrade jquery to v3.6.0 due to security issue. See [#849][849].
+
+[849]: https://github.com/uploadcare/uploadcare-widget/issues/849
+
 ## [3.11.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.1...v3.11.2) (2021-06-24)
 
 
