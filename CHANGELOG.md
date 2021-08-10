@@ -539,7 +539,7 @@
   use `button` tag instead `div`
 * Added focus for all buttons and they are tabbable now
 * Updated English (en) locale, added new captions
-* Migration guide from v2 to v3 [here](https://uploadcare.com/documentation/widget/migration_v2_v3/)
+* Migration guide from v2 to v3 [here](https://uploadcare.com/docs/uploads/v2/migration-v2-v3/)
 
 [blocks]: https://github.com/uploadcare/uploadcare-widget/tree/master/app/assets/stylesheets/uploadcare/blocks
 
