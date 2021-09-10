@@ -2,6 +2,7 @@ import $ from 'jquery'
 import { defer } from '../utils'
 import { testCanvasSize } from './canvas-size'
 import { log } from './warnings'
+import { iOSVersion } from '../utils/abilities'
 
 const resizeCanvas = function(img, w, h) {
   const df = $.Deferred()
@@ -134,8 +135,10 @@ export const shrinkImage = function(img, settings) {
     .then(() => {
       const cx = document.createElement('canvas').getContext('2d')
       const supportNative = 'imageSmoothingQuality' in cx
+      // native scaling on ios gives blurry results
+      const useNativeScaling = supportNative && !iOSVersion
 
-      const task = supportNative
+      const task = useNativeScaling
         ? runNative(img, targetW, targetH)
         : runFallback(img, sourceW, targetW, targetH, STEP)
 
