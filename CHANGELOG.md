@@ -1,3 +1,12 @@
+## [3.11.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.3...v3.11.4) (2021-09-10)
+
+
+### Bug Fixes
+
+* disable native shrink for ios ([#859](https://github.com/uploadcare/uploadcare-widget/issues/859)) ([6c01870](https://github.com/uploadcare/uploadcare-widget/commit/6c0187015dd43355406c441dafe87f26d34cc453))
+
+
+
 ## [3.11.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.2...v3.11.3) (2021-07-14)
 
 ### Changed
