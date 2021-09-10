@@ -34,7 +34,7 @@ const ios =
   /^[^(]+\(iP(?:hone|od|ad);\s*(.+?)\)/.exec(navigator.userAgent)
 
 if (ios) {
-  const ver = /OS (\d)_(\d)/.exec(ios[1])
+  const ver = /OS (\d*)_(\d*)/.exec(ios[1])
 
   if (ver) {
     iOSVersion = +ver[1] + ver[2] / 10
