@@ -1,3 +1,12 @@
+## [3.11.5](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.4...v3.11.5) (2021-09-13)
+
+
+### Bug Fixes
+
+* disable native scaling for iPadOs ([#861](https://github.com/uploadcare/uploadcare-widget/issues/861)) ([6da42f2](https://github.com/uploadcare/uploadcare-widget/commit/6da42f2e543641df394dd828afecbd32318d3f4e))
+
+
+
 ## [3.11.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.3...v3.11.4) (2021-09-10)
 
 
