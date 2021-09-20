@@ -58,9 +58,9 @@ defaults = {
   secureSignature: '',
   secureExpire: '',
   pusherKey: '79ae88bd931ea68464d9',
-  cdnBase: 'https://ucarecdn.com',
-  urlBase: 'https://upload.uploadcare.com',
-  socialBase: 'https://social.uploadcare.com',
+  cdnBase: 'https://x.ucarecdn.com',
+  urlBase: 'https://upload.x.uploadcare.com',
+  socialBase: 'https://social.x.uploadcare.com',
   previewProxy: null,
   previewUrlCallback: null,
   // fine tuning
