@@ -211,10 +211,10 @@ class BaseFile {
     return this.apiDeferred.notify(this.__progressInfo())
   }
 
-  __rejectApi(err) {
+  __rejectApi(source, err) {
     this.__progressState = 'error'
     this.__notifyApi()
-    return this.apiDeferred.reject(err, this.__fileInfo())
+    return this.apiDeferred.reject(source, this.__fileInfo(), err)
   }
 
   __resolveApi() {
@@ -256,8 +256,8 @@ class BaseFile {
             return this.__notifyApi()
           }
         })
-        op.fail(() => {
-          return this.__rejectApi('upload')
+        op.fail((message, error) => {
+          return this.__rejectApi('upload', error)
         })
         this.apiDeferred.always(op.reject)
       }

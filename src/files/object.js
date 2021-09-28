@@ -145,6 +145,10 @@ class ObjectFile extends BaseFile {
             if (data != null ? data.file : undefined) {
               this.fileId = data.file
               return df.resolve()
+            } else if (data.error) {
+              const text = data.error.content || data.error
+              const { content: message, error_code: code } = data.error
+              return df.reject(text, { message, code })
             } else {
               return df.reject()
             }

@@ -56,8 +56,8 @@ class FileGroup {
               }
             })
           })
-          .fail(() => {
-            return this.__createGroupDf.reject('createGroup')
+          .fail((message, error) => {
+            return this.__createGroupDf.reject('createGroup', error)
           })
       })
     }
@@ -152,7 +152,7 @@ class FileGroup {
       this.__fileInfosDf.done((...infos) => {
         var info
         return jsonp(
-          `${this.settings.urlBase}/group/`,
+          `${this.settings.urlBase}/group/?jsonerrors=1`,
           'POST',
           {
             pub_key: this.settings.publicKey,
@@ -174,11 +174,16 @@ class FileGroup {
             }
           }
         )
-          .fail((reason) => {
+          .fail((message, error) => {
             if (this.settings.debugUploads) {
-              log("Can't create group.", this.settings.publicKey, reason)
+              log(
+                "Can't create group.",
+                this.settings.publicKey,
+                message,
+                error
+              )
             }
-            return df.reject()
+            return df.reject(message, error)
           })
           .done(df.resolve)
       })

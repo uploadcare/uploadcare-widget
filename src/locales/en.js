@@ -157,6 +157,18 @@ const translations = {
       text: 'powered by',
       link: 'uploadcare'
     }
+  },
+  serverErrors: {
+    AccountBlockedError:
+      "Administrator's account has been blocked. Please, contact support.",
+    AccountUnpaidError:
+      "Administrator's account has been blocked. Please, contact support.",
+    AccountLimitsExceededError:
+      "Administrator's account has reached its limits. Please, contact support.",
+    FileSizeLimitExceededError: 'File is too large.',
+    MultipartFileSizeLimitExceededError: 'File size exceeds limit.',
+    FileTypeForbiddenOnCurrentPlanError:
+      'Uploading of these files types is not allowed.'
   }
 }
 

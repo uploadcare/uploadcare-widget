@@ -171,13 +171,16 @@ class PreviewTabMultiple extends BasePreviewTab {
     })
   }
 
-  __fileFailed(file, error, info) {
-    var fileEl, filePreview
-    fileEl = this.__fileToEl(file)
+  __fileFailed(file, source, info, error) {
+    const text =
+      (this.settings.debugUploads && error.message) ||
+      locale.t(`serverErrors.${error.code}`) ||
+      locale.t(`errors.${error.source}`)
+    const fileEl = this.__fileToEl(file)
       .removeClass('uploadcare--file_status_uploading')
       .addClass('uploadcare--file_status_error')
-    fileEl.find('.uploadcare--file__error').text(locale.t(`errors.${error}`))
-    filePreview = $(
+    fileEl.find('.uploadcare--file__error').text(text)
+    const filePreview = $(
       "<svg width='32' height='32'><use xlink:href='#uploadcare--icon-error'/></svg>"
     )
       .attr('role', 'presentation')
