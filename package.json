@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "7.13.10",
     "@babel/preset-env": "7.13.10",
-    "@size-limit/preset-big-lib": "4.10.1",
+    "@size-limit/preset-big-lib": "5.0.5",
     "autoprefixer": "7.2.6",
     "aws-sdk": "2.863.0",
     "babel-eslint": "10.1.0",
