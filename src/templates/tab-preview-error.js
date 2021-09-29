@@ -3,7 +3,8 @@ import locale from '../locale'
 
 const tabPreviewError = ({
   debugUploads,
-  error: { source, message, code }
+  source,
+  error
 }) => html`
   <div
     class="uploadcare--tab__content uploadcare--preview__content uploadcare--error"
@@ -17,9 +18,9 @@ const tabPreviewError = ({
 
     <div class="uploadcare--text">
       ${locale.t('dialog.tabs.preview.error.' + source + '.text') ||
-      (debugUploads && message) ||
-      locale.t(`serverErrors.${code}`) ||
-      message ||
+      (debugUploads && error?.message) ||
+      locale.t(`serverErrors.${error?.code}`) ||
+      error?.message ||
       locale.t('dialog.tabs.preview.error.default.text')}
     </div>
 
