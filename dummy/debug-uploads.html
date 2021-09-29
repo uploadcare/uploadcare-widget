@@ -14,6 +14,17 @@
     type="hidden"
     role="uploadcare-uploader"
     data-crop="4:5"
+    preview-step=""
+    data-debug-uploads
+  />
+</p>
+
+<p>
+  Preview images only:
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-crop="4:5"
     data-images-only=""
     preview-step=""
     data-debug-uploads
@@ -26,14 +37,35 @@
 </p>
 
 <p>
+  Simple images only:
+  <input type="hidden" role="uploadcare-uploader" data-debug-uploads data-images-only="" />
+</p>
+
+<p>
   Multiple:
   <input type="hidden" role="uploadcare-uploader" data-multiple data-debug-uploads />
+</p>
+
+<p>
+  Multiple images only:
+  <input type="hidden" role="uploadcare-uploader" data-multiple data-debug-uploads data-images-only="" />
 </p>
 
 <h2>DEBUGGING OFF</h2>
 
 <p>
   Preview:
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-crop="4:5"
+    preview-step=""
+  />
+</p>
+
+
+<p>
+  Preview images only:
   <input
     type="hidden"
     role="uploadcare-uploader"
@@ -49,6 +81,16 @@
 </p>
 
 <p>
+  Simple images only:
+  <input type="hidden" role="uploadcare-uploader" data-images-only="" />
+</p>
+
+<p>
   Multiple:
   <input type="hidden" role="uploadcare-uploader" data-multiple />
+</p>
+
+<p>
+  Multiple images only:
+  <input type="hidden" role="uploadcare-uploader" data-multiple data-images-only="" />
 </p>
