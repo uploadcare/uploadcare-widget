@@ -247,9 +247,7 @@ class PreviewTab extends BasePreviewTab {
     }
 
     if (state === 'error') {
-      this.container.addClass(
-        'uploadcare--preview_status_error-' + data.source
-      )
+      this.container.addClass('uploadcare--preview_status_error-' + data.source)
     }
 
     this.container.find('.uploadcare--preview__done').focus()

@@ -166,7 +166,7 @@ const translations = {
     AccountLimitsExceededError:
       "Administrator's account has reached its limits. Please, contact support.",
     FileSizeLimitExceededError: 'File is too large.',
-    MultipartFileSizeLimitExceededError: 'File size exceeds limit.',
+    MultipartFileSizeLimitExceededError: 'File is too large.',
     FileTypeForbiddenOnCurrentPlanError:
       'Uploading of these files types is not allowed.'
   }

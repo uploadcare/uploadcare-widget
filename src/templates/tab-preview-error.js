@@ -1,11 +1,7 @@
 import { html } from '../utils/html'
 import locale from '../locale'
 
-const tabPreviewError = ({
-  debugUploads,
-  source,
-  error
-}) => html`
+const tabPreviewError = ({ debugUploads, source, error }) => html`
   <div
     class="uploadcare--tab__content uploadcare--preview__content uploadcare--error"
   >
