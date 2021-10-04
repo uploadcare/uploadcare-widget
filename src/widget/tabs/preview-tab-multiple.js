@@ -171,11 +171,12 @@ class PreviewTabMultiple extends BasePreviewTab {
     })
   }
 
-  __fileFailed(file, source, info, error) {
+  __fileFailed(file, errorType, info, error) {
     const text =
-      (this.settings.debugUploads && error.message) ||
-      locale.t(`serverErrors.${error.code}`) ||
-      locale.t(`errors.${error.source}`)
+      (this.settings.debugUploads && error?.message) ||
+      locale.t(`serverErrors.${error?.code}`) ||
+      error?.message ||
+      locale.t(`errors.${errorType}`)
     const fileEl = this.__fileToEl(file)
       .removeClass('uploadcare--file_status_uploading')
       .addClass('uploadcare--file_status_error')

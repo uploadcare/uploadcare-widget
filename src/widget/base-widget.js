@@ -110,9 +110,9 @@ class BaseWidget {
             return this.__onUploadingDone(info)
           }
         })
-        .fail((source, fileInfo, error) => {
+        .fail((errorType, fileInfo, error) => {
           if (object === this.__currentFile()) {
-            return this.__onUploadingFailed(source, error)
+            return this.__onUploadingFailed(errorType, error)
           }
         })
     }
@@ -124,9 +124,9 @@ class BaseWidget {
     return this.template.loaded()
   }
 
-  __onUploadingFailed(source, error) {
+  __onUploadingFailed(errorType, error) {
     this.template.reset()
-    return this.template.error(source, error)
+    return this.template.error(errorType, error)
   }
 
   __setExternalValue(value) {

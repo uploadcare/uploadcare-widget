@@ -114,9 +114,9 @@ class PreviewTab extends BasePreviewTab {
       })
     )
     return this.file.fail(
-      ifCur((source, info, error) => {
+      ifCur((errorType, info, error) => {
         return this.__setState('error', {
-          source,
+          errorType,
           error,
           file: info
         })
@@ -247,7 +247,9 @@ class PreviewTab extends BasePreviewTab {
     }
 
     if (state === 'error') {
-      this.container.addClass('uploadcare--preview_status_error-' + data.source)
+      this.container.addClass(
+        'uploadcare--preview_status_error-' + data.errorType
+      )
     }
 
     this.container.find('.uploadcare--preview__done').focus()

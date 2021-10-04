@@ -168,7 +168,8 @@ const translations = {
     FileSizeLimitExceededError: 'File is too large.',
     MultipartFileSizeLimitExceededError: 'File is too large.',
     FileTypeForbiddenOnCurrentPlanError:
-      'Uploading of these files types is not allowed.'
+      'Uploading of these files types is not allowed.',
+    DownloadFileSizeLimitExceededError: 'Downloaded file is too big.'
   }
 }
 

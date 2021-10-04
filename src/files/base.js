@@ -211,10 +211,10 @@ class BaseFile {
     return this.apiDeferred.notify(this.__progressInfo())
   }
 
-  __rejectApi(source, err) {
+  __rejectApi(errorType, err) {
     this.__progressState = 'error'
     this.__notifyApi()
-    return this.apiDeferred.reject(source, this.__fileInfo(), err)
+    return this.apiDeferred.reject(errorType, this.__fileInfo(), err)
   }
 
   __resolveApi() {
