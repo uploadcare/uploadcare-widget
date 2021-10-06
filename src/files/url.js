@@ -115,7 +115,16 @@ class UrlFile extends BaseFile {
         this.__handleFileData(data)
         return df.resolve()
       })
-      .on('error fail', df.reject)
+      .on('error fail', (e, error) => {
+        if (error.error_code) {
+          // error from our pusher backend
+          const { error_code: code, msg: message } = error
+          df.reject(e, { code, message })
+        } else {
+          // some other error
+          df.reject(e, error)
+        }
+      })
   }
 }
 

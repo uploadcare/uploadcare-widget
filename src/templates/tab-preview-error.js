@@ -13,10 +13,10 @@ const tabPreviewError = ({ debugUploads, errorType, error }) => html`
     </div>
 
     <div class="uploadcare--text">
-      ${locale.t('dialog.tabs.preview.error.' + errorType + '.text') ||
-      (debugUploads && error?.message) ||
+      ${(debugUploads && error?.message) ||
       locale.t(`serverErrors.${error?.code}`) ||
       error?.message ||
+      locale.t('dialog.tabs.preview.error.' + errorType + '.text') ||
       locale.t('dialog.tabs.preview.error.default.text')}
     </div>
 

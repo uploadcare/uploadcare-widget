@@ -227,6 +227,7 @@ class PreviewTab extends BasePreviewTab {
     this.__state = state
     data = data || {}
     data.crop = this.settings.crop
+
     this.container.empty().append(
       tpl(`tab-preview-${state}`, {
         ...data,
