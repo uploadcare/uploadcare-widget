@@ -321,19 +321,17 @@ const jsonp = function (url, type, data, settings = {}) {
   return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
     function (data) {
       if (data.error) {
-        let text, message, code
+        let message, code
         if (typeof data.error === 'string') {
           // /from_url/state/ case
-          text = data.error
-          message = text
+          message = data.error
           code = data.error_code
         } else {
           // other cases (direct/multipart/group)
-          text = data.error.content
-          message = text
+          message = data.error.content
           code = data.error.error_code
         }
-        return $.Deferred().reject(text, { message, code })
+        return $.Deferred().reject({ message, code })
       }
 
       return data

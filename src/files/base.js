@@ -94,16 +94,16 @@ class BaseFile {
         }
       }
     )
-      .fail((reason) => {
+      .fail((error) => {
         if (this.settings.debugUploads) {
           log(
             "Can't load file info. Probably removed.",
             this.fileId,
             this.settings.publicKey,
-            reason
+            error.message
           )
         }
-        return this.__rejectApi('info')
+        return this.__rejectApi('info', error)
       })
       .done(this.__handleFileData.bind(this))
   }
@@ -256,7 +256,7 @@ class BaseFile {
             return this.__notifyApi()
           }
         })
-        op.fail((message, error) => {
+        op.fail((error) => {
           return this.__rejectApi('upload', error)
         })
         this.apiDeferred.always(op.reject)

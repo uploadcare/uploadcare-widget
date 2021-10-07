@@ -174,16 +174,11 @@ class FileGroup {
             }
           }
         )
-          .fail((message, error) => {
+          .fail((error) => {
             if (this.settings.debugUploads) {
-              log(
-                "Can't create group.",
-                this.settings.publicKey,
-                message,
-                error
-              )
+              log("Can't create group.", this.settings.publicKey, error.message)
             }
-            return df.reject(message, error)
+            return df.reject(error)
           })
           .done(df.resolve)
       })

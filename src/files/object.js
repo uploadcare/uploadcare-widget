@@ -208,9 +208,9 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail((reason) => {
+    ).fail((error) => {
       if (this.settings.debugUploads) {
-        return log("Can't start multipart upload.", reason, data)
+        return log("Can't start multipart upload.", error.message, data)
       }
     })
   }
@@ -345,13 +345,13 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail((reason) => {
+    ).fail((error) => {
       if (this.settings.debugUploads) {
         return log(
           "Can't complete multipart upload.",
           uuid,
           this.settings.publicKey,
-          reason
+          error.message
         )
       }
     })

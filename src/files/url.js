@@ -58,11 +58,11 @@ class UrlFile extends BaseFile {
           'X-UC-User-Agent': this.settings._userAgent
         }
       })
-        .fail((reason, error) => {
+        .fail((error) => {
           if (this.settings.debugUploads) {
-            debug("Can't start upload from URL.", reason, error, data)
+            debug("Can't start upload from URL.", error.message, data)
           }
-          return df.reject(reason, error)
+          return df.reject(error)
         })
         .done((data) => {
           var logger
@@ -119,10 +119,10 @@ class UrlFile extends BaseFile {
         if (error.error_code) {
           // error from our pusher backend
           const { error_code: code, msg: message } = error
-          df.reject(e, { code, message })
+          df.reject({ code, message })
         } else {
           // some other error
-          df.reject(e, error)
+          df.reject(error)
         }
       })
   }
@@ -206,7 +206,7 @@ class PollWatcher {
         }
       }
     )
-      .fail((reason, error) => {
+      .fail((error) => {
         return $(this).trigger('error', error)
       })
       .done((data) => {
