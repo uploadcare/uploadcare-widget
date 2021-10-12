@@ -1,0 +1,18 @@
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<script src="./uploadcare.full.js"></script>
+<script>
+  $ = uploadcare.jQuery;
+  jQuery = uploadcare.jQuery;
+</script>
+
+<input
+  type="text"
+  id="uploader"
+  hidden
+/>
+
+<script>
+  var $ = uploadcare.jQuery;
+  var widget = uploadcare.MultipleWidget("#uploader", {multiple: true, publicKey: 'demopublickey'});
+</script>
