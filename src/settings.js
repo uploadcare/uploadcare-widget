@@ -74,6 +74,8 @@ defaults = {
   // camera
   cameraMirrorDefault: true,
   // camera recording
+  enableAudioRecording: true,
+  enableVideoRecording: true,
   videoPreferredMimeTypes: null,
   audioBitsPerSecond: null,
   videoBitsPerSecond: null,
