@@ -94,7 +94,7 @@ class BaseFile {
         }
       }
     )
-      .fail(reason => {
+      .fail((reason) => {
         if (this.settings.debugUploads) {
           log(
             "Can't load file info. Probably removed.",
@@ -173,7 +173,7 @@ class BaseFile {
     this.validators =
       this.settings.validators || this.settings.__validators || []
     if (this.settings.imagesOnly) {
-      return this.validators.push(function(info) {
+      return this.validators.push(function (info) {
         if (info.isImage === false) {
           throw new Error('image')
         }
@@ -250,7 +250,7 @@ class BaseFile {
           this.__notifyApi()
           return this.__completeUpload()
         })
-        op.progress(progress => {
+        op.progress((progress) => {
           if (progress > this.__progress) {
             this.__progress = progress
             return this.__notifyApi()

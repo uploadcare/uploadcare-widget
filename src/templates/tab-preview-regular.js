@@ -8,7 +8,8 @@ const tabPreviewRegular = ({ file }) => html`
     <div
       id="tab__title"
       class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title"
-      role="status" aria-live="assertive"
+      role="status"
+      aria-live="assertive"
     >
       ${locale.t('dialog.tabs.preview.regular.title')}
     </div>

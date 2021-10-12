@@ -33,7 +33,7 @@ class ManagedPusher extends Pusher {
   }
 }
 
-const getPusher = function(key) {
+const getPusher = function (key) {
   if (pushers[key] == null) {
     pushers[key] = new ManagedPusher(key)
   }

@@ -7,6 +7,6 @@ module.exports = {
   slack: {
     // disable slack notification for `prepared` lifecycle.
     // Ship.js will send slack message only for `releaseSuccess`.
-    prepared: null,
+    prepared: null
   }
 }

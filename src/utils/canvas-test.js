@@ -7,9 +7,9 @@ const TestPixel = {
   A: 255
 }
 
-const FILL_STYLE = `rgba(${TestPixel.R}, ${TestPixel.G}, ${
-  TestPixel.B
-}, ${TestPixel.A / 255})`
+const FILL_STYLE = `rgba(${TestPixel.R}, ${TestPixel.G}, ${TestPixel.B}, ${
+  TestPixel.A / 255
+})`
 
 export function canvasTest(width, height) {
   // Wrapped into try/catch because memory alloction errors can be thrown due to insufficient RAM

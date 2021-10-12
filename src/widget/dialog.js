@@ -17,7 +17,7 @@ import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 
-const lockDialogFocus = function(e) {
+const lockDialogFocus = function (e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
     return focusableElements.first().focus()
@@ -27,20 +27,20 @@ const lockDialogFocus = function(e) {
   }
 }
 
-const lockScroll = function(el, toTop) {
+const lockScroll = function (el, toTop) {
   var left, top
   top = el.scrollTop()
   left = el.scrollLeft()
   if (toTop) {
     el.scrollTop(0).scrollLeft(0)
   }
-  return function() {
+  return function () {
     return el.scrollTop(top).scrollLeft(left)
   }
 }
 
 isWindowDefined() &&
-  $(window).on('keydown', e => {
+  $(window).on('keydown', (e) => {
     if (isDialogOpened()) {
       if (e.which === 27) {
         // Escape
@@ -65,18 +65,18 @@ const openedClass = 'uploadcare--page'
 let originalFocusedElement = null
 let focusableElements = null
 
-const isDialogOpened = function() {
+const isDialogOpened = function () {
   return currentDialogPr !== null
 }
 
-const closeDialog = function() {
+const closeDialog = function () {
   if (currentDialogPr) {
     currentDialogPr.reject()
     currentDialogPr = null
   }
 }
 
-const openDialog = function(files, tab, settings) {
+const openDialog = function (files, tab, settings) {
   var cancelLock, dialog, dialogPr
   closeDialog()
   originalFocusedElement = document.activeElement
@@ -86,7 +86,7 @@ const openDialog = function(files, tab, settings) {
     files,
     tab,
     settings,
-    { inModal: true } 
+    { inModal: true }
   )
   dialog.find('.uploadcare--panel').addClass('uploadcare--dialog__panel')
   dialog.addClass('uploadcare--dialog_status_active')
@@ -96,7 +96,7 @@ const openDialog = function(files, tab, settings) {
   cancelLock = lockScroll($(window), dialog.css('position') === 'absolute')
   $('html, body').addClass(openedClass)
   dialog.find('.uploadcare--dialog__close').on('click', dialogPr.reject)
-  dialog.on('dblclick', function(e) {
+  dialog.on('dblclick', function (e) {
     var showStoppers
     // handler can be called after element detached (close button)
     if (!$.contains(document.documentElement, e.target)) {
@@ -112,7 +112,7 @@ const openDialog = function(files, tab, settings) {
     return dialogPr.reject()
   })
 
-  currentDialogPr = dialogPr.always(function() {
+  currentDialogPr = dialogPr.always(function () {
     $('html, body').removeClass(openedClass)
     currentDialogPr = null
     dialog.remove()
@@ -124,7 +124,7 @@ const openDialog = function(files, tab, settings) {
   return currentDialogPr
 }
 
-const openPreviewDialog = function(file, settings) {
+const openPreviewDialog = function (file, settings) {
   var dialog, oldDialogPr
   // hide current opened dialog and open new one
   oldDialogPr = currentDialogPr
@@ -137,7 +137,7 @@ const openPreviewDialog = function(file, settings) {
   if (oldDialogPr != null) {
     oldDialogPr.dialogElement.addClass('uploadcare--dialog_status_inactive')
   }
-  dialog.always(function() {
+  dialog.always(function () {
     currentDialogPr = oldDialogPr
     if (oldDialogPr != null) {
       // still opened
@@ -157,7 +157,13 @@ const openPreviewDialog = function(file, settings) {
 
 // files - null, or File object, or array of File objects, or FileGroup object
 // result - File objects or FileGroup object (depends on settings.multiple)
-const openPanel = function(placeholder, files, tab, settings, opt = { inModal: false }) {
+const openPanel = function (
+  placeholder,
+  files,
+  tab,
+  settings,
+  opt = { inModal: false }
+) {
   var filter, panel
 
   if ($.isPlainObject(tab)) {
@@ -177,7 +183,7 @@ const openPanel = function(placeholder, files, tab, settings, opt = { inModal: f
 
   panel = new Panel(settings, placeholder, files, tab, opt).publicPromise()
 
-  filter = function(files) {
+  filter = function (files) {
     if (settings.multiple) {
       return FileGroup(files, settings)
     } else {
@@ -189,7 +195,7 @@ const openPanel = function(placeholder, files, tab, settings, opt = { inModal: f
 }
 
 const registeredTabs = {}
-const registerTab = function(tabName, constructor) {
+const registerTab = function (tabName, constructor) {
   registeredTabs[tabName] = constructor
   return registeredTabs[tabName]
 }
@@ -208,25 +214,22 @@ registerTab('evernote', RemoteTab)
 registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
-registerTab('empty-pubkey', function(tabPanel, _1, _2, settings) {
+registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
 
-registerTab('preview', function(
-  tabPanel,
-  tabButton,
-  dialogApi,
-  settings,
-  name
-) {
-  var tabCls
-  if (!settings.previewStep && dialogApi.fileColl.length() === 0) {
-    return
+registerTab(
+  'preview',
+  function (tabPanel, tabButton, dialogApi, settings, name) {
+    var tabCls
+    if (!settings.previewStep && dialogApi.fileColl.length() === 0) {
+      return
+    }
+    tabCls = settings.multiple ? PreviewTabMultiple : PreviewTab
+    // eslint-disable-next-line new-cap
+    return new tabCls(tabPanel, tabButton, dialogApi, settings, name)
   }
-  tabCls = settings.multiple ? PreviewTabMultiple : PreviewTab
-  // eslint-disable-next-line new-cap
-  return new tabCls(tabPanel, tabButton, dialogApi, settings, name)
-})
+)
 
 class Panel {
   constructor(settings1, placeholder, files, tab, opt) {
@@ -351,7 +354,7 @@ class Panel {
         return
       }
     }
-    return files.autoThen(fileInfo => {
+    return files.autoThen((fileInfo) => {
       var info, size
       // .cdnUrlModifiers came from already cropped files
       // .crop came from autocrop even if autocrop do not set cdnUrlModifiers

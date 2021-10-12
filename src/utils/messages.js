@@ -31,7 +31,7 @@ isWindowDefined() &&
     }
   })
 
-const registerMessage = function(type, sender, callback) {
+const registerMessage = function (type, sender, callback) {
   if (!(type in callbacks)) {
     callbacks[type] = []
   }
@@ -39,9 +39,9 @@ const registerMessage = function(type, sender, callback) {
   return callbacks[type].push([sender, callback])
 }
 
-const unregisterMessage = function(type, sender) {
+const unregisterMessage = function (type, sender) {
   if (type in callbacks) {
-    callbacks[type] = $.grep(callbacks[type], function(item) {
+    callbacks[type] = $.grep(callbacks[type], function (item) {
       return item[0] !== sender
     })
 

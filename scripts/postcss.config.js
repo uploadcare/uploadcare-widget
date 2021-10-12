@@ -1,7 +1,7 @@
 const { join } = require('path')
 const stylesheetsPath = join(__dirname, 'src/stylesheets')
 
-module.exports = ctx => ({
+module.exports = (ctx) => ({
   plugins: {
     'postcss-import': {
       path: stylesheetsPath,

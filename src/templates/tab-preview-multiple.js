@@ -4,9 +4,10 @@ import locale from '../locale'
 const tabPreviewMultiple = () => html`
   <div class="uploadcare--tab__header">
     <div
-      id="preview__title" 
+      id="preview__title"
       class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title uploadcare--preview__title"
-      role="status" aria-live="assertive"
+      role="status"
+      aria-live="assertive"
     ></div>
   </div>
 

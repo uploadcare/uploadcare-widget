@@ -7,7 +7,7 @@ const { promisify } = require('util')
 
 const pkg = require('../package.json')
 
-const getVersionTypes = version => [
+const getVersionTypes = (version) => [
   version,
   version.replace(/^(\d+\.\d+)\.\d+/, '$1.x'),
   version.replace(/^(\d+)\.\d+\.\d+/, '$1.x')
@@ -37,7 +37,7 @@ const S3 = new AWS.S3({
 const baseS3upload = promisify(S3.upload.bind(S3))
 const readFilePr = promisify(fs.readFile)
 
-const readFile = filePath => {
+const readFile = (filePath) => {
   const absolutePath = path.resolve(__dirname, '../', filePath)
 
   return readFilePr(absolutePath, 'utf-8')
@@ -60,7 +60,7 @@ const uploadToS3 = (data, path, { dry } = {}) => {
 
 const uploadFile = (data, fileName, options) => {
   return Promise.all(
-    VERSION_TYPES.map(version =>
+    VERSION_TYPES.map((version) =>
       uploadToS3(data, `${BASE_PATH}${version}/uploadcare/${fileName}`, options)
     )
   )
@@ -68,17 +68,17 @@ const uploadFile = (data, fileName, options) => {
 
 // main part starts here
 Promise.all(
-  pkg.files.map(filePath => {
+  pkg.files.map((filePath) => {
     const name = path.basename(filePath)
     return Promise.all([readFile(filePath), name])
   })
 )
-  .then(files =>
+  .then((files) =>
     Promise.all(
       files.map(([data, name]) => uploadFile(data, name, { dry: false }))
     )
   )
-  .catch(error => {
+  .catch((error) => {
     console.error('Error: \n', error.message)
     process.exit(1)
   })

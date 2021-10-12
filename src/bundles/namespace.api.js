@@ -259,7 +259,7 @@ const namespace = {
 }
 
 function createPlugin(ns) {
-  return fn => fn(ns)
+  return (fn) => fn(ns)
 }
 
 const plugin = createPlugin(namespace)

@@ -11,7 +11,7 @@ import { isWindowDefined } from '../utils/is-window-defined'
 const dataAttr = 'uploadcareWidget'
 const selector = '[role~="uploadcare-uploader"]'
 
-const initialize = function(container = ':root') {
+const initialize = function (container = ':root') {
   var el, i, len, ref, res, widgets
   res = []
   ref = $(container)
@@ -23,7 +23,7 @@ const initialize = function(container = ':root') {
   return res
 }
 
-const _initialize = function(targets) {
+const _initialize = function (targets) {
   var i, len, results, target, widget
   results = []
   for (i = 0, len = targets.length; i < len; i++) {
@@ -38,19 +38,19 @@ const _initialize = function(targets) {
   return results
 }
 
-const SingleWidget = function(el) {
+const SingleWidget = function (el) {
   return initializeWidget(el, WidgetClass)
 }
 
-const MultipleWidget = function(el) {
+const MultipleWidget = function (el) {
   return initializeWidget(el, MultipleWidgetClass)
 }
 
-const Widget = function(el) {
+const Widget = function (el) {
   return initializeWidget(el)
 }
 
-const initializeWidget = function(input, targetClass) {
+const initializeWidget = function (input, targetClass) {
   const inputArr = $(input)
 
   if (inputArr.length === 0) {
@@ -81,8 +81,8 @@ const initializeWidget = function(input, targetClass) {
   return api
 }
 
-const cleanup = function(input) {
-  return input.off('.uploadcare').each(function() {
+const cleanup = function (input) {
+  return input.off('.uploadcare').each(function () {
     var widget, widgetElement
     widgetElement = $(this).next('.uploadcare--widget')
     widget = widgetElement.data(dataAttr)
@@ -92,7 +92,7 @@ const cleanup = function(input) {
   })
 }
 
-const start = once(function(s, isolated) {
+const start = once(function (s, isolated) {
   // when isolated, call settings.common(s) only
   s = common(s, isolated)
   if (isolated) {
@@ -106,7 +106,7 @@ const start = once(function(s, isolated) {
 })
 
 isWindowDefined() &&
-  $(function() {
+  $(function () {
     if (!window.UPLOADCARE_MANUAL_START) {
       start()
     }

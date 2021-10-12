@@ -44,17 +44,17 @@ class PreviewTabMultiple extends BasePreviewTab {
     return this.fileListEl.uploadcareSortable({
       touch: false,
       axis: this.settings.imagesOnly ? 'xy' : 'y',
-      start: function(info) {
+      start: function (info) {
         return info.dragged.css('visibility', 'hidden')
       },
-      finish: info => {
+      finish: (info) => {
         var elements, index
         info.dragged.css('visibility', 'visible')
         elements = this.container.find('.uploadcare--file')
-        index = file => {
+        index = (file) => {
           return elements.index(this.__fileToEl(file))
         }
-        return this.dialogApi.fileColl.sort(function(a, b) {
+        return this.dialogApi.fileColl.sort(function (a, b) {
           return index(a) - index(b)
         })
       }
@@ -120,10 +120,10 @@ class PreviewTabMultiple extends BasePreviewTab {
           .replace('%file%', filename)
       )
       .attr(
-          'aria-label',
-          locale
-              .t('dialog.tabs.preview.multiple.file.remove')
-              .replace('%file%', filename)
+        'aria-label',
+        locale
+          .t('dialog.tabs.preview.multiple.file.remove')
+          .replace('%file%', filename)
       )
     return fileEl
       .find('.uploadcare--file__size')
@@ -165,7 +165,7 @@ class PreviewTabMultiple extends BasePreviewTab {
     }
     fileEl.find('.uploadcare--file__preview').html(filePreview)
     return fileEl.find('.uploadcare--file__description').on('click', () => {
-      return openPreviewDialog(file, this.settings).done(newFile => {
+      return openPreviewDialog(file, this.settings).done((newFile) => {
         return this.dialogApi.fileColl.replace(file, newFile)
       })
     })

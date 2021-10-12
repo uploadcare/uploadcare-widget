@@ -16,7 +16,7 @@ class FileGroup {
     this.__allFilesDf = $.when(...this.files())
     this.__fileInfosDf = (() => {
       var file
-      files = function() {
+      files = function () {
         var j, len, ref, results
         ref = this.files()
         results = []
@@ -24,7 +24,7 @@ class FileGroup {
           file = ref[j]
           results.push(
             // eslint-disable-next-line handle-callback-err
-            file.then(null, function(err, info) {
+            file.then(null, function (err, info) {
               return $.when(info)
             })
           )
@@ -46,9 +46,9 @@ class FileGroup {
       this.__saved = true
       return this.__allFilesDf.done(() => {
         return this.__createGroup()
-          .done(groupInfo => {
+          .done((groupInfo) => {
             this.__uuid = groupInfo.id
-            return this.__buildInfo(info => {
+            return this.__buildInfo((info) => {
               if (this.settings.imagesOnly && !info.isImage) {
                 return this.__createGroupDf.reject('image', info)
               } else {
@@ -73,12 +73,12 @@ class FileGroup {
     var notify, reject, resolve
     this.__apiDf = $.Deferred()
     this.__progressState = 'uploading'
-    reject = err => {
-      return this.__buildInfo(info => {
+    reject = (err) => {
+      return this.__buildInfo((info) => {
         return this.__apiDf.reject(err, info)
       })
     }
-    resolve = info => {
+    resolve = (info) => {
       return this.__apiDf.resolve(info)
     }
     notify = () => {
@@ -93,7 +93,7 @@ class FileGroup {
       })
       .fail(reject)
     return this.__createGroupDf
-      .done(info => {
+      .done((info) => {
         this.__progressState = 'ready'
         notify()
         return resolve(info)
@@ -129,7 +129,7 @@ class FileGroup {
       isImage: true,
       isStored: true
     }
-    return this.__fileInfosDf.done(function(...infos) {
+    return this.__fileInfosDf.done(function (...infos) {
       var _info, j, len
       for (j = 0, len = infos.length; j < len; j++) {
         _info = infos[j]
@@ -158,7 +158,7 @@ class FileGroup {
             pub_key: this.settings.publicKey,
             signature: this.settings.secureSignature,
             expire: this.settings.secureExpire,
-            files: (function() {
+            files: (function () {
               var j, len, results
               results = []
               for (j = 0, len = infos.length; j < len; j++) {
@@ -174,7 +174,7 @@ class FileGroup {
             }
           }
         )
-          .fail(reason => {
+          .fail((reason) => {
             if (this.settings.debugUploads) {
               log("Can't create group.", this.settings.publicKey, reason)
             }

@@ -18,10 +18,10 @@ class Circle {
     this.reset()
     selectorFn =
       selector != null
-        ? function(info) {
+        ? function (info) {
             return info[selector]
           }
-        : function(x) {
+        : function (x) {
             return x
           }
     this.observed = file
@@ -29,13 +29,13 @@ class Circle {
       this.renderer.setValue(1, true)
     } else {
       this.observed
-        .progress(progress => {
+        .progress((progress) => {
           // if we are still listening to this one
           if (file === this.observed) {
             this.renderer.setValue(selectorFn(progress))
           }
         })
-        .always(uploadedFile => {
+        .always((uploadedFile) => {
           if (file === this.observed) {
             this.renderer.setValue(1, false)
           }
@@ -103,7 +103,7 @@ class CanvasRenderer extends BaseRenderer {
           this.canvasEl.height = size
         }
         const ctx = this.canvasEl.getContext('2d')
-        const arc = function(radius, val) {
+        const arc = function (radius, val) {
           var offset
           offset = -Math.PI / 2
           ctx.beginPath()

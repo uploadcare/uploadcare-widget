@@ -5,7 +5,7 @@ import { waitForSettings } from './settings'
 import { isWindowDefined } from './utils/is-window-defined'
 
 isWindowDefined() &&
-  waitForSettings.add(function(settings) {
+  waitForSettings.add(function (settings) {
     const css = tpl('styles', { settings })
     const style = document.createElement('style')
 

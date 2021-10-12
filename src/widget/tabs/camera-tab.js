@@ -95,14 +95,11 @@ class CameraTab {
       startRecord.hide()
     }
     this.video = this.container.find('.uploadcare--camera__video')
-    this.video.toggleClass(
-      'uploadcare--camera__video_mirrored',
-      this.mirrored
-    )
-    this.video.on('loadeddata', function() {
+    this.video.toggleClass('uploadcare--camera__video_mirrored', this.mirrored)
+    this.video.on('loadeddata', function () {
       return this.play()
     })
-    this.dialogApi.progress(name => {
+    this.dialogApi.progress((name) => {
       if (name === this.name) {
         if (!this.__loaded) {
           return this.__requestCamera()
@@ -119,7 +116,7 @@ class CameraTab {
   __checkCompatibility() {
     var isLocalhost
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      this.getUserMedia = function(
+      this.getUserMedia = function (
         constraints,
         successCallback,
         errorCallback
@@ -159,7 +156,7 @@ class CameraTab {
       'denied',
       'not-founded',
       'recording',
-      'error',
+      'error'
     ].join(' uploadcare--camera_status_')
 
     this.container
@@ -184,9 +181,9 @@ class CameraTab {
           frameRate: {
             ideal: 30
           }
-        },
+        }
       },
-      stream => {
+      (stream) => {
         this.__setState('ready')
         this.__stream = stream
         if ('srcObject' in this.video[0]) {
@@ -204,7 +201,7 @@ class CameraTab {
           return this.video[0].play()
         }
       },
-      error => {
+      (error) => {
         const handle = Object.create(null)
         handle.NotFoundError = () => {
           this.__setState('not-founded')
@@ -216,7 +213,7 @@ class CameraTab {
           this.__setState('denied') // TODO: add common error state: this.__setState('error')
           console.warn('Camera error occurred: ' + error.name)
         }
-        (handle[error.name] || handle.other)()
+        ;(handle[error.name] || handle.other)()
         this.__loaded = false
         return this.__loaded
       }
@@ -234,7 +231,7 @@ class CameraTab {
       this.URL.revokeObjectURL(this.__streamObject)
     }
     if (this.__stream.getTracks) {
-      $.each(this.__stream.getTracks(), function() {
+      $.each(this.__stream.getTracks(), function () {
         return typeof this.stop === 'function' ? this.stop() : undefined
       })
     } else {
@@ -268,7 +265,7 @@ class CameraTab {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(video, 0, 0, w, h)
-    return canvasToBlob(canvas, 'image/jpeg', 0.9, blob => {
+    return canvasToBlob(canvas, 'image/jpeg', 0.9, (blob) => {
       canvas.width = canvas.height = 1
       blob.name = 'camera.jpg'
       this.dialogApi.addFiles('object', [
@@ -292,7 +289,7 @@ class CameraTab {
     if (mimeTypes != null) {
       var mimeType = find(
         $.isArray(mimeTypes) ? mimeTypes : [mimeTypes],
-        mimeType => this.MediaRecorder.isTypeSupported(mimeType)
+        (mimeType) => this.MediaRecorder.isTypeSupported(mimeType)
       )
 
       if (mimeType != null) {
@@ -324,7 +321,7 @@ class CameraTab {
     }
     this.__recorder.start()
 
-    this.__recorder.ondataavailable = e => {
+    this.__recorder.ondataavailable = (e) => {
       return this.__chunks.push(e.data)
     }
 

@@ -48,7 +48,7 @@ const translations = {
   }
 }
 
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (n === 0) {
     return 'zero'
   }

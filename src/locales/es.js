@@ -82,8 +82,7 @@ const translations = {
         },
         notFound: {
           title: 'No se ha detectado ninguna cámara',
-          text:
-            'Parece que no tienes ninguna cámara conectada a este dispositivo.'
+          text: 'Parece que no tienes ninguna cámara conectada a este dispositivo.'
         }
       },
       preview: {
@@ -155,7 +154,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (n === 1) {
     return 'one'
   }

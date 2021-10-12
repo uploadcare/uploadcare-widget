@@ -19,13 +19,13 @@ const locale = {
   }, {}),
 
   // Backdoor for widget constructor
-  rebuild: function(settings) {
+  rebuild: function (settings) {
     currentLocale = null
 
     return _build(settings)
   },
 
-  t: function(key, n) {
+  t: function (key, n) {
     let locale, ref, value
     locale = _build()
     value = translate(key, locale.translations)
@@ -55,7 +55,7 @@ const defaults = {
   pluralize: locales[defaultLang].pluralize
 }
 
-const _build = function(stgs) {
+const _build = function (stgs) {
   if (!currentLocale) {
     const settings = buildSettings(stgs)
     const lang = settings.locale || defaults.lang
@@ -76,7 +76,7 @@ const _build = function(stgs) {
   return currentLocale
 }
 
-const translate = function(key, node) {
+const translate = function (key, node) {
   const path = key.split('.')
   for (let i = 0, len = path.length; i < len; i++) {
     const subkey = path[i]

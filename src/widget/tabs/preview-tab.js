@@ -44,7 +44,7 @@ class PreviewTab extends BasePreviewTab {
     var ifCur, tryToLoadImagePreview, tryToLoadVideoPreview
 
     this.file = file
-    ifCur = fn => {
+    ifCur = (fn) => {
       return (...args) => {
         if (file === this.file) {
           return fn.apply(null, args)
@@ -55,7 +55,7 @@ class PreviewTab extends BasePreviewTab {
     tryToLoadVideoPreview = once(this.__tryToLoadVideoPreview.bind(this))
     this.__setState('unknown', {})
     this.file.progress(
-      ifCur(info => {
+      ifCur((info) => {
         var blob, label, source
         info = info.incompleteFileInfo
         label = (info.name || '') + readableFileSize(info.size, '', ', ')
@@ -65,18 +65,21 @@ class PreviewTab extends BasePreviewTab {
         if (source.file && blob && source.file instanceof blob) {
           if (source.file.type && source.file.type.search(/^image\//i) !== -1) {
             return tryToLoadImagePreview(file, source.file)
-          } else if (source.file.type && source.file.type.search(/^video\//i) !== -1) {
+          } else if (
+            source.file.type &&
+            source.file.type.search(/^video\//i) !== -1
+          ) {
             return tryToLoadVideoPreview(file, source.file)
           } else {
             return tryToLoadImagePreview(file, source.file).fail(() => {
               return tryToLoadVideoPreview(file, source.file)
             })
-          }        
+          }
         }
       })
     )
     this.file.done(
-      ifCur(info => {
+      ifCur((info) => {
         var imgInfo, src
         if (this.__state === 'video') {
           return
@@ -139,7 +142,7 @@ class PreviewTab extends BasePreviewTab {
       this.settings.imagePreviewMaxSize
     )
       .done((canvas, size) => {
-        return canvasToBlob(canvas, 'image/jpeg', 0.95, blob => {
+        return canvasToBlob(canvas, 'image/jpeg', 0.95, (blob) => {
           var src
           df.resolve()
           canvas.width = canvas.height = 1
@@ -151,7 +154,7 @@ class PreviewTab extends BasePreviewTab {
             return
           }
           src = URL.createObjectURL(blob)
-          this.dialogApi.always(function() {
+          this.dialogApi.always(function () {
             return URL.revokeObjectURL(src)
           })
           if (this.__state !== 'image') {
@@ -189,23 +192,23 @@ class PreviewTab extends BasePreviewTab {
         return
       }
 
-      this.dialogApi.always(function() {
+      this.dialogApi.always(function () {
         return URL.revokeObjectURL(src)
       })
-      
+
       df.resolve()
 
       this.__setState('video')
       var videoTag = this.container.find('.uploadcare--preview__video')
       // hack to enable seeking due to bug in MediaRecorder API
       // https://bugs.chromium.org/p/chromium/issues/detail?id=569840
-      videoTag.on('loadeddata', function() {
+      videoTag.on('loadeddata', function () {
         var el
         el = videoTag.get(0)
         el.currentTime = 360000 // 100 hours
         return videoTag.off('loadeddata')
       })
-      videoTag.on('ended', function() {
+      videoTag.on('ended', function () {
         var el
         el = videoTag.get(0)
         el.currentTime = 0
@@ -224,10 +227,10 @@ class PreviewTab extends BasePreviewTab {
     data = data || {}
     data.crop = this.settings.crop
     this.container.empty().append(tpl(`tab-preview-${state}`, data))
-    this.container.removeClass(function(index, classes) {
+    this.container.removeClass(function (index, classes) {
       return classes
         .split(' ')
-        .filter(function(c) {
+        .filter(function (c) {
           return !!~c.indexOf('uploadcare--preview_status_')
         })
         .join(' ')
@@ -291,7 +294,7 @@ class PreviewTab extends BasePreviewTab {
         .find('.uploadcare--crop-sizes__item')
         .attr('aria-disabled', true)
         .attr('tabindex', -1)
-      return imgLoader.done(function() {
+      return imgLoader.done(function () {
         // Often IE 11 doesn't do reflow after image.onLoad
         // and actual image remains 28x30 (broken image placeholder).
         // Looks like defer always fixes it.
@@ -319,7 +322,7 @@ class PreviewTab extends BasePreviewTab {
         .clone()
         .appendTo(control)
         .attr('data-caption', caption)
-        .on('click', e => {
+        .on('click', (e) => {
           if ($(e.currentTarget).attr('aria-disabled') === 'true') {
             return
           }
@@ -353,14 +356,12 @@ class PreviewTab extends BasePreviewTab {
     })
     template.remove()
 
-    return control
-      .find('>*')
-      .eq(0)
-      .addClass(currentClass)
+    return control.find('>*').eq(0).addClass(currentClass)
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.find('.uploadcare--preview__done').focus()
+    this.dialogApi.takeFocus() &&
+      this.container.find('.uploadcare--preview__done').focus()
   }
 }
 

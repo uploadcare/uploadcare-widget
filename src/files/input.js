@@ -8,10 +8,7 @@ class InputFile extends BaseFile {
     super(...arguments)
     this.__input = __input
     this.fileId = uuid()
-    this.fileName = $(this.__input)
-      .val()
-      .split('\\')
-      .pop()
+    this.fileName = $(this.__input).val().split('\\').pop()
     this.__notifyApi()
   }
 
@@ -29,7 +26,7 @@ class InputFile extends BaseFile {
       .appendTo('body')
       .on('load', df.resolve)
       .on('error', df.reject)
-    formParam = function(name, value) {
+    formParam = function (name, value) {
       return $('<input/>', {
         type: 'hidden',
         name: name,

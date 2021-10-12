@@ -74,13 +74,11 @@ const translations = {
         retry: 'Berechtigungen erneut anfordern',
         pleaseAllow: {
           title: 'Bitte erlauben Sie den Zugriff auf Ihre Kamera',
-          text:
-            'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
+          text: 'Sie wurden gebeten, dieser Website den Zugriff auf Ihre Kamera zu erlauben. Um mit Ihrer Kamera Fotos machen zu können, müssen Sie diese Erlaubnis erteilen.'
         },
         notFound: {
           title: 'Keine Kamera gefunden',
-          text:
-            'Es sieht so aus, als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
+          text: 'Es sieht so aus, als hätten Sie keine Kamera an dieses Gerät angeschlossen.'
         }
       },
       preview: {
@@ -143,7 +141,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (n === 1) {
     return 'one'
   }
