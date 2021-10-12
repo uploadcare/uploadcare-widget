@@ -86,8 +86,7 @@ const translations = {
         stopRecord: 'Διακοπή',
         retry: 'Νέο αίτημα για άδεια',
         pleaseAllow: {
-          text:
-            'Έχετε δεχτεί υπόδειξη να επιτρέψετε την πρόσβαση στην κάμερα από αυτόν τον ιστότοπο.<br>Για να τραβήξετε φωτογραφίες με την κάμερά σας πρέπει να εγκρίνετε αυτό το αίτημα.',
+          text: 'Έχετε δεχτεί υπόδειξη να επιτρέψετε την πρόσβαση στην κάμερα από αυτόν τον ιστότοπο.<br>Για να τραβήξετε φωτογραφίες με την κάμερά σας πρέπει να εγκρίνετε αυτό το αίτημα.',
           title: 'Παρακαλούμε επιτρέψτε την πρόσβαση στην κάμερά σας'
         },
         notFound: {
@@ -166,7 +165,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (n === 1) {
     return 'one'
   }

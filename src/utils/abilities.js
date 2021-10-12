@@ -9,7 +9,7 @@ const sendFileAPI = isWindowDefined() && !!(window.FormData && fileAPI)
 // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/draganddrop.js
 const dragAndDrop =
   isWindowDefined() &&
-  (function() {
+  (function () {
     var el
     el = document.createElement('div')
     return 'draggable' in el || ('ondragstart' in el && 'ondrop' in el)
@@ -18,7 +18,7 @@ const dragAndDrop =
 // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas.js
 const canvas =
   isWindowDefined() &&
-  (function() {
+  (function () {
     var el
     el = document.createElement('canvas')
     return !!(el.getContext && el.getContext('2d'))
@@ -65,10 +65,10 @@ const URL = url && url.createObjectURL && url
 
 const FileReader =
   isWindowDefined() &&
-  ((window.FileReader != null
+  (window.FileReader != null
     ? window.FileReader.prototype.readAsArrayBuffer
     : undefined) &&
-    window.FileReader)
+  window.FileReader
 
 export {
   FileReader,

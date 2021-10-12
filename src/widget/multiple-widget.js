@@ -30,7 +30,7 @@ class MultipleWidget extends BaseWidget {
       this.template.statusText.text(locale.t('loadingInfo'))
     }
     return groupPr
-      .done(group => {
+      .done((group) => {
         if (this.__lastGroupPr === groupPr) {
           return this.__setObject(group)
         }

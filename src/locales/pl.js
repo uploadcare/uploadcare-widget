@@ -83,8 +83,7 @@ const translations = {
         },
         notFound: {
           title: 'Nie wykryto aparatu.',
-          text:
-            'Wygląda na to, że nie masz podłączonego aparatu do tego urządzenia.'
+          text: 'Wygląda na to, że nie masz podłączonego aparatu do tego urządzenia.'
         }
       },
       preview: {
@@ -153,7 +152,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   var ref
   if (n === 1) {
     return 'one'

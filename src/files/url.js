@@ -11,10 +11,7 @@ class UrlFile extends BaseFile {
     var filename
     super(...arguments)
     this.__url = __url
-    filename = splitUrlRegex
-      .exec(this.__url)[3]
-      .split('/')
-      .pop()
+    filename = splitUrlRegex.exec(this.__url)[3].split('/').pop()
     if (filename) {
       try {
         this.fileName = decodeURIComponent(filename)
@@ -61,13 +58,13 @@ class UrlFile extends BaseFile {
           'X-UC-User-Agent': this.settings._userAgent
         }
       })
-        .fail(reason => {
+        .fail((reason) => {
           if (this.settings.debugUploads) {
             debug("Can't start upload from URL.", reason, data)
           }
           return df.reject()
         })
-        .done(data => {
+        .done((data) => {
           var logger
           if (this.apiDeferred.state() !== 'pending') {
             return
@@ -200,10 +197,10 @@ class PollWatcher {
         }
       }
     )
-      .fail(reason => {
+      .fail((reason) => {
         return $(this).trigger('error')
       })
-      .done(data => {
+      .done((data) => {
         return $(this).trigger(data.status, data)
       })
   }

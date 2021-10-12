@@ -5,7 +5,7 @@ import { warn } from './utils/warnings'
 var indexOf = [].indexOf
 
 // utils
-const unique = function(arr) {
+const unique = function (arr) {
   var item, j, len, result
   result = []
   for (j = 0, len = arr.length; j < len; j++) {
@@ -17,11 +17,11 @@ const unique = function(arr) {
   return result
 }
 
-const defer = function(fn) {
+const defer = function (fn) {
   return setTimeout(fn, 0)
 }
 
-const gcd = function(a, b) {
+const gcd = function (a, b) {
   var c
   while (b) {
     c = a % b
@@ -31,11 +31,11 @@ const gcd = function(a, b) {
   return a
 }
 
-const once = function(fn) {
+const once = function (fn) {
   var called, result
   called = false
   result = null
-  return function() {
+  return function () {
     if (!called) {
       result = fn.apply(this, arguments)
       called = true
@@ -44,20 +44,18 @@ const once = function(fn) {
   }
 }
 
-const wrapToPromise = function(value) {
-  return $.Deferred()
-    .resolve(value)
-    .promise()
+const wrapToPromise = function (value) {
+  return $.Deferred().resolve(value).promise()
 }
 
 // same as promise.then(), but if filter returns promise
 // it will be just passed forward without any special behavior
-const then = function(pr, doneFilter, failFilter, progressFilter) {
+const then = function (pr, doneFilter, failFilter, progressFilter) {
   var compose, df
   df = $.Deferred()
-  compose = function(fn1, fn2) {
+  compose = function (fn1, fn2) {
     if (fn1 && fn2) {
-      return function() {
+      return function () {
         return fn2.call(this, fn1.apply(this, arguments))
       }
     } else {
@@ -65,33 +63,24 @@ const then = function(pr, doneFilter, failFilter, progressFilter) {
     }
   }
   pr.then(
-    compose(
-      doneFilter,
-      df.resolve
-    ),
-    compose(
-      failFilter,
-      df.reject
-    ),
-    compose(
-      progressFilter,
-      df.notify
-    )
+    compose(doneFilter, df.resolve),
+    compose(failFilter, df.reject),
+    compose(progressFilter, df.notify)
   )
   return df.promise()
 }
 
 // Build copy of source with only specified methods.
 // Handles chaining correctly.
-const bindAll = function(source, methods) {
+const bindAll = function (source, methods) {
   var target
   target = {}
 
-  $.each(methods, function(i, method) {
+  $.each(methods, function (i, method) {
     var fn = source[method]
 
     if ($.isFunction(fn)) {
-      target[method] = function(...args) {
+      target[method] = function (...args) {
         var result = fn.apply(source, args)
 
         // Fix chaining
@@ -108,11 +97,11 @@ const bindAll = function(source, methods) {
   return target
 }
 
-const upperCase = function(s) {
+const upperCase = function (s) {
   return s.replace(/([A-Z])/g, '_$1').toUpperCase()
 }
 
-const publicCallbacks = function(callbacks) {
+const publicCallbacks = function (callbacks) {
   var result
   result = callbacks.add
   result.add = callbacks.add
@@ -120,8 +109,8 @@ const publicCallbacks = function(callbacks) {
   return result
 }
 
-const uuid = function() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+const uuid = function () {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0
     var v = c === 'x' ? r : (r & 3) | 8
 
@@ -130,27 +119,29 @@ const uuid = function() {
 }
 
 // splitUrlRegex("url") => ["url", "scheme", "host", "path", "query", "fragment"]
-const splitUrlRegex = /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)\??([^#]*)#?(.*)$/
-const uuidRegex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
+const splitUrlRegex =
+  /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)\??([^#]*)#?(.*)$/
+const uuidRegex =
+  /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/i
 const groupIdRegex = new RegExp(`${uuidRegex.source}~[0-9]+`, 'i')
 const cdnUrlRegex = new RegExp(
   `^/?(${uuidRegex.source})(?:/(-/(?:[^/]+/)+)?([^/]*))?$`,
   'i'
 )
-const splitCdnUrl = function(url) {
+const splitCdnUrl = function (url) {
   return cdnUrlRegex.exec(splitUrlRegex.exec(url)[3])
 }
-const escapeRegExp = function(str) {
+const escapeRegExp = function (str) {
   return str.replace(/[\\-\\[]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
 }
 
-const globRegexp = function(str, flags = 'i') {
+const globRegexp = function (str, flags = 'i') {
   var parts
   parts = $.map(str.split('*'), escapeRegExp)
   return new RegExp('^' + parts.join('.+') + '$', flags)
 }
 
-const normalizeUrl = function(url) {
+const normalizeUrl = function (url) {
   var scheme
   // google.com/ → google.com
   // /google.com/ → /google.com
@@ -162,7 +153,7 @@ const normalizeUrl = function(url) {
   }
   return url.replace(/^\/\//, scheme + '//').replace(/\/+$/, '')
 }
-const fitText = function(text, max) {
+const fitText = function (text, max) {
   if (text.length > max) {
     const head = Math.ceil((max - 3) / 2)
     const tail = Math.floor((max - 3) / 2)
@@ -172,11 +163,11 @@ const fitText = function(text, max) {
   }
 }
 
-const fitSizeInCdnLimit = function(objSize) {
+const fitSizeInCdnLimit = function (objSize) {
   return fitSize(objSize, [2048, 2048])
 }
 
-const fitSize = function(objSize, boxSize, upscale) {
+const fitSize = function (objSize, boxSize, upscale) {
   var heightRation, widthRatio
   if (objSize[0] > boxSize[0] || objSize[1] > boxSize[1] || upscale) {
     widthRatio = boxSize[0] / objSize[0]
@@ -191,7 +182,7 @@ const fitSize = function(objSize, boxSize, upscale) {
   }
 }
 
-const applyCropCoordsToInfo = function(info, crop, size, coords) {
+const applyCropCoordsToInfo = function (info, crop, size, coords) {
   var downscale, h, modifiers, prefered, upscale, w, wholeImage
   ;({ width: w, height: h } = coords)
   prefered = crop.preferedSize
@@ -215,7 +206,7 @@ const applyCropCoordsToInfo = function(info, crop, size, coords) {
   return info
 }
 
-const fileInput = function(container, settings, fn) {
+const fileInput = function (container, settings, fn) {
   var accept, input, run
   input = null
   accept = settings.inputAcceptTypes
@@ -223,10 +214,11 @@ const fileInput = function(container, settings, fn) {
     accept = settings.imagesOnly ? 'image/*' : null
   }
 
-  ;(run = function() {
-    input = (settings.multiple
-      ? $('<input type="file" multiple>')
-      : $('<input type="file">')
+  ;(run = function () {
+    input = (
+      settings.multiple
+        ? $('<input type="file" multiple>')
+        : $('<input type="file">')
     )
       .attr('accept', accept)
       .css({
@@ -239,7 +231,7 @@ const fileInput = function(container, settings, fn) {
         height: 'auto',
         cursor: container.css('cursor')
       })
-      .on('change', function() {
+      .on('change', function () {
         fn(this)
         $(this).hide()
         return run()
@@ -254,7 +246,7 @@ const fileInput = function(container, settings, fn) {
       // to make it posible to set `cursor:pointer` on button
       // http://stackoverflow.com/a/9182787/478603
     })
-    .mousemove(function(e) {
+    .mousemove(function (e) {
       var left, top, width
       ;({ left, top } = $(this).offset())
       width = input.width()
@@ -265,7 +257,7 @@ const fileInput = function(container, settings, fn) {
     })
 }
 
-const fileSelectDialog = function(container, settings, fn, attributes = {}) {
+const fileSelectDialog = function (container, settings, fn, attributes = {}) {
   var accept
   accept = settings.inputAcceptTypes
   if (accept === '') {
@@ -281,7 +273,7 @@ const fileSelectDialog = function(container, settings, fn, attributes = {}) {
       bottom: 0,
       opacity: 0
     })
-    .on('change', function() {
+    .on('change', function () {
       fn(this)
       return $(this).remove()
     })
@@ -293,7 +285,7 @@ const fileSelectDialog = function(container, settings, fn, attributes = {}) {
 
 const fileSizeLabels = 'B KB MB GB TB PB EB ZB YB'.split(' ')
 
-const readableFileSize = function(
+const readableFileSize = function (
   value,
   onNaN = '',
   prefix = '',
@@ -325,9 +317,9 @@ const ajaxDefaults = {
   cache: false
 }
 
-const jsonp = function(url, type, data, settings = {}) {
+const jsonp = function (url, type, data, settings = {}) {
   return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
-    function(data) {
+    function (data) {
       var text
       if (data.error) {
         text = data.error.content || data.error
@@ -336,7 +328,7 @@ const jsonp = function(url, type, data, settings = {}) {
         return data
       }
     },
-    function(_, textStatus, errorThrown) {
+    function (_, textStatus, errorThrown) {
       var text
       text = `${textStatus} (${errorThrown})`
       warn(`JSONP unexpected error: ${text} while loading ${url}`)
@@ -346,7 +338,7 @@ const jsonp = function(url, type, data, settings = {}) {
   )
 }
 
-const canvasToBlob = function(canvas, type, quality, callback) {
+const canvasToBlob = function (canvas, type, quality, callback) {
   var arr, binStr, dataURL, i, j, ref
   if (window.HTMLCanvasElement.prototype.toBlob) {
     return canvas.toBlob(callback, type, quality)
@@ -365,17 +357,17 @@ const canvasToBlob = function(canvas, type, quality, callback) {
   )
 }
 
-const taskRunner = function(capacity) {
+const taskRunner = function (capacity) {
   var queue, release, run, running
   running = 0
   queue = []
-  release = function() {
+  release = function () {
     var task
 
     if (queue.length) {
       task = queue.shift()
 
-      return defer(function() {
+      return defer(function () {
         return task(release)
       })
     } else {
@@ -385,11 +377,11 @@ const taskRunner = function(capacity) {
     }
   }
 
-  run = function(task) {
+  run = function (task) {
     if (!capacity || running < capacity) {
       running += 1
 
-      return defer(function() {
+      return defer(function () {
         return task(release)
       })
     } else {
@@ -408,13 +400,13 @@ const pipeTuples = [
   ['reject', 'fail', 1]
 ]
 
-const fixedPipe = function(promise, ...fns) {
-  return $.Deferred(function(newDefer) {
-    return $.each(pipeTuples, function(i, tuple) {
+const fixedPipe = function (promise, ...fns) {
+  return $.Deferred(function (newDefer) {
+    return $.each(pipeTuples, function (i, tuple) {
       var fn
       // Map tuples (progress, done, fail) to arguments (done, fail, progress)
       fn = $.isFunction(fns[tuple[2]]) && fns[tuple[2]]
-      return promise[tuple[1]](function() {
+      return promise[tuple[1]](function () {
         var returned
         returned = fn && fn.apply(this, arguments)
         if (returned && $.isFunction(returned.promise)) {

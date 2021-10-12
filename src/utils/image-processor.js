@@ -11,7 +11,7 @@ import { shrinkImage } from './shrink-image'
 var DataView = isWindowDefined() && window.DataView
 var runner = taskRunner(1)
 
-const shrinkFile = function(file, settings) {
+const shrinkFile = function (file, settings) {
   var df
   // in -> file
   // out <- blob
@@ -20,24 +20,24 @@ const shrinkFile = function(file, settings) {
     return df.reject('support')
   }
   // start = new Date()
-  runner(release => {
+  runner((release) => {
     var op
     // console.log('delayed: ' + (new Date() - start))
     df.always(release)
     // start = new Date()
     op = imageLoader(URL.createObjectURL(file))
-    op.always(function(img) {
+    op.always(function (img) {
       return URL.revokeObjectURL(img.src)
     })
-    op.fail(function() {
+    op.fail(function () {
       return df.reject('not image')
     })
 
-    return op.done(function(img) {
+    return op.done(function (img) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
-      var exifOp = $.when(getExif(file), isBrowserApplyExif()).always(function(
+      var exifOp = $.when(getExif(file), isBrowserApplyExif()).always(function (
         exif,
         isExifApplied
       ) {
@@ -46,11 +46,11 @@ const shrinkFile = function(file, settings) {
         isJPEG = exifOp.state() === 'resolved'
         // start = new Date()
         op = shrinkImage(img, settings)
-        op.progress(function(progress) {
+        op.progress(function (progress) {
           return df.notify(0.2 + progress * 0.6)
         })
         op.fail(df.reject)
-        op.done(function(canvas) {
+        op.done(function (canvas) {
           var format, quality
           // console.log('shrink: ' + (new Date() - start))
           // start = new Date()
@@ -60,7 +60,7 @@ const shrinkFile = function(file, settings) {
             format = 'image/png'
             quality = undefined
           }
-          return canvasToBlob(canvas, format, quality, function(blob) {
+          return canvasToBlob(canvas, format, quality, function (blob) {
             canvas.width = canvas.height = 1
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
@@ -71,7 +71,7 @@ const shrinkFile = function(file, settings) {
               op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
               op.done(df.resolve)
 
-              return op.fail(function() {
+              return op.fail(function () {
                 return df.resolve(blob)
               })
             } else {
@@ -91,7 +91,7 @@ const shrinkFile = function(file, settings) {
   return df.promise()
 }
 
-const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
+const drawFileToCanvas = function (file, mW, mH, bg, maxSource) {
   var df, op
   // in -> file
   // out <- canvas
@@ -100,20 +100,20 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
     return df.reject('support')
   }
   op = imageLoader(URL.createObjectURL(file))
-  op.always(function(img) {
+  op.always(function (img) {
     return URL.revokeObjectURL(img.src)
   })
-  op.fail(function() {
+  op.fail(function () {
     return df.reject('not image')
   })
-  op.done(function(img) {
-    df.always(function() {
+  op.done(function (img) {
+    df.always(function () {
       img.src = '//:0'
     })
     if (maxSource && img.width * img.height > maxSource) {
       return df.reject('max source')
     }
-    return $.when(getExif(file), isBrowserApplyExif()).always(function(
+    return $.when(getExif(file), isBrowserApplyExif()).always(function (
       exif,
       isExifApplied
     ) {
@@ -155,21 +155,21 @@ const drawFileToCanvas = function(file, mW, mH, bg, maxSource) {
 
 // Util functions
 
-const readJpegChunks = function(file) {
+const readJpegChunks = function (file) {
   var df, pos, readNext, readNextChunk, readToView
-  readToView = function(file, cb) {
+  readToView = function (file, cb) {
     var reader
     reader = new FileReader()
-    reader.onload = function() {
+    reader.onload = function () {
       return cb(new DataView(reader.result))
     }
-    reader.onerror = function(e) {
+    reader.onerror = function (e) {
       return df.reject('reader', e)
     }
     return reader.readAsArrayBuffer(file)
   }
-  readNext = function() {
-    return readToView(file.slice(pos, pos + 128), function(view) {
+  readNext = function () {
+    return readToView(file.slice(pos, pos + 128), function (view) {
       var i, j, ref
       for (
         i = j = 0, ref = view.byteLength;
@@ -185,13 +185,13 @@ const readJpegChunks = function(file) {
     })
   }
 
-  readNextChunk = function() {
+  readNextChunk = function () {
     var startPos
     startPos = pos
 
     // todo fix
     // eslint-disable-next-line no-return-assign
-    return readToView(file.slice(pos, (pos += 4)), function(view) {
+    return readToView(file.slice(pos, (pos += 4)), function (view) {
       var length, marker
       if (view.byteLength !== 4 || view.getUint8(0) !== 0xff) {
         return df.reject('corrupted')
@@ -204,7 +204,7 @@ const readJpegChunks = function(file) {
       }
       length = view.getUint16(2) - 2
       // eslint-disable-next-line no-return-assign
-      return readToView(file.slice(pos, (pos += length)), function(view) {
+      return readToView(file.slice(pos, (pos += length)), function (view) {
         if (view.byteLength !== length) {
           return df.reject('corrupted')
         }
@@ -219,7 +219,7 @@ const readJpegChunks = function(file) {
   }
   // start = new Date()
   pos = 2
-  readToView(file.slice(0, 2), function(view) {
+  readToView(file.slice(0, 2), function (view) {
     if (view.getUint16(0) !== 0xffd8) {
       return df.reject('not jpeg')
     }
@@ -228,20 +228,20 @@ const readJpegChunks = function(file) {
   return df.promise()
 }
 
-const replaceJpegChunk = function(blob, marker, chunks) {
+const replaceJpegChunk = function (blob, marker, chunks) {
   var df, oldChunkLength, oldChunkPos, op
   df = $.Deferred()
   oldChunkPos = []
   oldChunkLength = []
   op = readJpegChunks(blob)
   op.fail(df.reject)
-  op.progress(function(pos, length, oldMarker) {
+  op.progress(function (pos, length, oldMarker) {
     if (oldMarker === marker) {
       oldChunkPos.push(pos)
       return oldChunkLength.push(length)
     }
   })
-  op.done(function() {
+  op.done(function () {
     var chunk, i, intro, j, k, len, newChunks, pos, ref
     newChunks = [blob.slice(0, 2)]
     for (j = 0, len = chunks.length; j < len; j++) {
@@ -273,11 +273,11 @@ const replaceJpegChunk = function(blob, marker, chunks) {
   return df.promise()
 }
 
-const getExif = function(file) {
+const getExif = function (file) {
   var exif, op
   exif = null
   op = readJpegChunks(file)
-  op.progress(function(pos, l, marker, view) {
+  op.progress(function (pos, l, marker, view) {
     if (!exif && marker === 0xe1) {
       if (view.byteLength >= 14) {
         if (view.getUint32(0) === 0x45786966 && view.getUint16(4) === 0) {
@@ -288,28 +288,28 @@ const getExif = function(file) {
     }
   })
   return op.then(
-    function() {
+    function () {
       return exif
     },
-    function(reason) {
+    function (reason) {
       return $.Deferred().reject(exif, reason)
     }
   )
 }
 
-const setExifOrientation = function(exif, orientation) {
+const setExifOrientation = function (exif, orientation) {
   findExifOrientation(exif, (offset, little) =>
     exif.setUint16(offset, orientation, little)
   )
 }
 
-const parseExifOrientation = function(exif) {
+const parseExifOrientation = function (exif) {
   return findExifOrientation(exif, (offset, little) =>
     exif.getUint16(offset, little)
   )
 }
 
-const findExifOrientation = function(exif, exifCallback) {
+const findExifOrientation = function (exif, exifCallback) {
   var count, j, little, offset, ref
   if (
     !exif ||
@@ -343,7 +343,7 @@ const findExifOrientation = function(exif, exifCallback) {
   return null
 }
 
-const hasTransparency = function(img) {
+const hasTransparency = function (img) {
   var canvas, ctx, data, i, j, pcsn, ref
   pcsn = 50
   canvas = document.createElement('canvas')

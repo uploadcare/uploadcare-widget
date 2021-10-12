@@ -8,7 +8,7 @@ import { isFileGroup } from '../utils/groups'
 import { FileGroup as FileGroupClass, SavedFileGroup } from './group'
 
 // root
-const FileGroup = function(filesAndGroups = [], settings) {
+const FileGroup = function (filesAndGroups = [], settings) {
   var file, files, item, j, k, len, len1, ref
   files = []
   for (j = 0, len = filesAndGroups.length; j < len; j++) {
@@ -26,7 +26,7 @@ const FileGroup = function(filesAndGroups = [], settings) {
   return new FileGroupClass(files, settings).api()
 }
 
-const loadFileGroup = function(groupIdOrUrl, settings) {
+const loadFileGroup = function (groupIdOrUrl, settings) {
   var df, id
   settings = build(settings)
   df = $.Deferred()
@@ -46,7 +46,7 @@ const loadFileGroup = function(groupIdOrUrl, settings) {
         }
       }
     )
-      .fail(reason => {
+      .fail((reason) => {
         if (settings.debugUploads) {
           log(
             "Can't load group info. Probably removed.",
@@ -57,7 +57,7 @@ const loadFileGroup = function(groupIdOrUrl, settings) {
         }
         return df.reject()
       })
-      .done(function(data) {
+      .done(function (data) {
         var group
         group = new SavedFileGroup(data, settings)
         return df.resolve(group.api())

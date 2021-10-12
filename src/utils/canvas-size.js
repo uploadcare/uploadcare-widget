@@ -73,7 +73,7 @@ function wrapAsync(fn) {
 function memoKeySerializer(args, cache) {
   const [w] = args
   const cachedWidths = Object.keys(cache)
-    .map(val => parseInt(val, 10))
+    .map((val) => parseInt(val, 10))
     .sort((a, b) => a - b)
 
   for (let i = 0; i < cachedWidths.length; i++) {
@@ -101,8 +101,8 @@ const dimensionTest = wrapAsync(memoize(canvasTest, memoKeySerializer))
 export function testCanvasSize(w, h) {
   const df = $.Deferred()
 
-  const testSquareSide = sizes.squareSide.find(side => side * side >= w * h)
-  const testDimension = sizes.dimension.find(side => side >= w && side >= h)
+  const testSquareSide = sizes.squareSide.find((side) => side * side >= w * h)
+  const testDimension = sizes.dimension.find((side) => side >= w && side >= h)
   if (!testSquareSide || !testDimension) {
     return df.reject()
   }

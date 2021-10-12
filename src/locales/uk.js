@@ -131,7 +131,7 @@ const translations = {
           loadImage: {
             title: 'Помилка',
             text: 'Помилка завантаження зображення'
-          },
+          }
         },
         multiple: {
           title: 'Ви вибрали %files%.',
@@ -157,7 +157,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (((n / 10) % 10 | 0) === 1 || n % 10 === 0 || n % 10 > 4) {
     return 'many'
   } else if (n % 10 === 1) {

@@ -136,7 +136,7 @@ const translations = {
   }
 }
 
-const pluralize = function(n) {
+const pluralize = function (n) {
   return 'other'
 }
 

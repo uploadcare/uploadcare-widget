@@ -87,13 +87,11 @@ const translations = {
         retry: 'Envoyer une nouvelle demande de permission',
         pleaseAllow: {
           title: "Autorisez l'accès à votre appareil photo",
-          text:
-            "Vous avez été invité à autoriser l'accès à votre appareil photo. Pour prendre des photos avec votre caméra vous devez approuver cette demande."
+          text: "Vous avez été invité à autoriser l'accès à votre appareil photo. Pour prendre des photos avec votre caméra vous devez approuver cette demande."
         },
         notFound: {
           title: 'Aucun appareil photo détecté',
-          text:
-            "Il semblerait que vous n'ayez pas d'appareil photo connecté à cet appareil."
+          text: "Il semblerait que vous n'ayez pas d'appareil photo connecté à cet appareil."
         }
       },
       preview: {
@@ -163,7 +161,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   if (n === 1) {
     return 'one'
   }

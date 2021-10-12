@@ -41,14 +41,14 @@ class FileTab {
     fileButton = this.container.find('.uploadcare--tab__action-button')
     if (sendFileAPI) {
       return fileButton.on('click', () => {
-        fileSelectDialog(this.container, this.settings, input => {
+        fileSelectDialog(this.container, this.settings, (input) => {
           this.dialogApi.addFiles('object', input.files)
           return this.dialogApi.switchTab('preview')
         })
         return false
       })
     } else {
-      return fileInput(fileButton, this.settings, input => {
+      return fileInput(fileButton, this.settings, (input) => {
         this.dialogApi.addFiles('input', [input])
         return this.dialogApi.switchTab('preview')
       })
@@ -113,7 +113,8 @@ class FileTab {
   }
 
   displayed() {
-    this.dialogApi.takeFocus() && this.container.find('.uploadcare--tab__action-button').focus()
+    this.dialogApi.takeFocus() &&
+      this.container.find('.uploadcare--tab__action-button').focus()
   }
 }
 

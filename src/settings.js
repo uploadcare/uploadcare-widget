@@ -48,8 +48,7 @@ defaults = {
   multipleMaxStrict: false,
   imageShrink: false,
   pathValue: true,
-  tabs:
-    'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
+  tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
   preferredTypes: '',
   inputAcceptTypes: '', // '' means default, null means "disable accept"
   // upload settings
@@ -97,8 +96,7 @@ constraints = {
 }
 presets = {
   tabs: {
-    all:
-      'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle',
+    all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle',
     default: defaults.tabs
   }
 }
@@ -106,7 +104,7 @@ presets = {
 script =
   isWindowDefined() &&
   (document.currentScript ||
-    (function() {
+    (function () {
       var scripts
       scripts = document.getElementsByTagName('script')
       return scripts[scripts.length - 1]
@@ -115,14 +113,14 @@ integration = isWindowDefined() && $(script).data('integration')
 if (integration && integration != null) {
   defaults = $.extend(defaults, { integration })
 }
-str2arr = function(value) {
+str2arr = function (value) {
   if (!$.isArray(value)) {
     value = $.trim(value)
     value = value ? value.split(' ') : []
   }
   return value
 }
-arrayOptions = function(settings, keys) {
+arrayOptions = function (settings, keys) {
   var hasOwnProperty = Object.prototype.hasOwnProperty
 
   var i, item, j, key, len, len1, source, value
@@ -144,7 +142,7 @@ arrayOptions = function(settings, keys) {
   }
   return settings
 }
-urlOptions = function(settings, keys) {
+urlOptions = function (settings, keys) {
   var i, key, len
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -154,7 +152,7 @@ urlOptions = function(settings, keys) {
   }
   return settings
 }
-flagOptions = function(settings, keys) {
+flagOptions = function (settings, keys) {
   var i, key, len, value
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -173,7 +171,7 @@ flagOptions = function(settings, keys) {
   }
   return settings
 }
-intOptions = function(settings, keys) {
+intOptions = function (settings, keys) {
   var i, key, len
   for (i = 0, len = keys.length; i < len; i++) {
     key = keys[i]
@@ -184,14 +182,14 @@ intOptions = function(settings, keys) {
   return settings
 }
 
-integrationToUserAgent = function(settings) {
+integrationToUserAgent = function (settings) {
   settings._userAgent = `UploadcareWidget/${version}/${
     settings.publicKey
   } (JavaScript${settings.integration ? `; ${settings.integration}` : ''})`
   return settings
 }
 
-transformOptions = function(settings, transforms) {
+transformOptions = function (settings, transforms) {
   var key, transform
   for (key in transforms) {
     transform = transforms[key]
@@ -204,7 +202,7 @@ transformOptions = function(settings, transforms) {
   return settings
 }
 
-constrainOptions = function(settings, constraints) {
+constrainOptions = function (settings, constraints) {
   var key, max, min
   for (key in constraints) {
     ;({ min, max } = constraints[key])
@@ -215,7 +213,7 @@ constrainOptions = function(settings, constraints) {
   return settings
 }
 
-parseCrop = function(val) {
+parseCrop = function (val) {
   var ratio, reRatio
   reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
   ratio = reRatio.exec($.trim(val.toLowerCase())) || []
@@ -227,7 +225,7 @@ parseCrop = function(val) {
   }
 }
 
-parseShrink = function(val) {
+parseShrink = function (val) {
   const reShrink = /^([0-9]+)x([0-9]+)(?:\s+(\d{1,2}|100)%)?$/i
   const shrink = reShrink.exec($.trim(val.toLowerCase())) || []
   if (!shrink.length) {
@@ -252,7 +250,7 @@ parseShrink = function(val) {
   }
 }
 
-defaultPreviewUrlCallback = function(url, info) {
+defaultPreviewUrlCallback = function (url, info) {
   var addAmpersand, addName, addQuery, queryPart
   if (!this.previewProxy) {
     return url
@@ -273,7 +271,7 @@ defaultPreviewUrlCallback = function(url, info) {
   return this.previewProxy + queryPart
 }
 
-normalize = function(settings) {
+normalize = function (settings) {
   var skydriveIndex
   arrayOptions(settings, ['tabs', 'preferredTypes', 'videoPreferredMimeTypes'])
   urlOptions(settings, ['cdnBase', 'socialBase', 'urlBase', 'scriptBase'])
@@ -336,7 +334,7 @@ normalize = function(settings) {
 }
 
 // global variables only
-const globals = function() {
+const globals = function () {
   var key, scriptSettings, value
   scriptSettings = {}
   for (key in defaults) {
@@ -350,7 +348,7 @@ const globals = function() {
 
 // Defaults + global variables + global overrides (once from uploadcare.start)
 // Not publicly-accessible
-const common = once(function(settings, ignoreGlobals) {
+const common = once(function (settings, ignoreGlobals) {
   var result
   if (!ignoreGlobals) {
     defaults = $.extend(defaults, globals())
@@ -361,7 +359,7 @@ const common = once(function(settings, ignoreGlobals) {
 })
 
 // Defaults + global variables + global overrides + local overrides
-const build = function(settings) {
+const build = function (settings) {
   var result
   result = $.extend({}, common())
   if (!$.isEmptyObject(settings)) {

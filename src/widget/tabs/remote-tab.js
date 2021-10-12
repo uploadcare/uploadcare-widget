@@ -18,7 +18,7 @@ class RemoteTab {
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name1
-    this.dialogApi.progress(name => {
+    this.dialogApi.progress((name) => {
       if (name === this.name) {
         this.__createIframe()
         this.container.find('.uploadcare--tab__iframe').focus()
@@ -94,7 +94,7 @@ class RemoteTab {
 
     iframe = this.iframe[0].contentWindow
 
-    registerMessage('file-selected', iframe, message => {
+    registerMessage('file-selected', iframe, (message) => {
       var file, sourceInfo, url
       url = (() => {
         var i, key, len, ref, type
@@ -133,7 +133,7 @@ class RemoteTab {
       return this.dialogApi.addFiles([file.promise()])
     })
 
-    registerMessage('open-new-window', iframe, message => {
+    registerMessage('open-new-window', iframe, (message) => {
       var interval, popup, resolve
       if (this.settings.debugUploads) {
         debug('Open new window message.', this.name)

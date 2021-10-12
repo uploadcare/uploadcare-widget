@@ -4,7 +4,7 @@ import { testCanvasSize } from './canvas-size'
 import { log } from './warnings'
 import { iOSVersion, isIpadOs } from '../utils/abilities'
 
-const resizeCanvas = function(img, w, h) {
+const resizeCanvas = function (img, w, h) {
   const df = $.Deferred()
 
   defer(() => {
@@ -39,7 +39,7 @@ const resizeCanvas = function(img, w, h) {
  * Example with step = 0.71, source = 2000, target = 400
  * 400 (target) <- 563 <- 793 <- 1117 <- 1574 (dropped) <- [2000 (source)]
  */
-const calcShrinkSteps = function(sourceW, targetW, targetH, step) {
+const calcShrinkSteps = function (sourceW, targetW, targetH, step) {
   const steps = []
   let sW = targetW
   let sH = targetH
@@ -66,7 +66,7 @@ const calcShrinkSteps = function(sourceW, targetW, targetH, step) {
  * Target dimensions expected to be supported by browser,
  * unsupported steps will be dropped.
  */
-const runFallback = function(img, sourceW, targetW, targetH, step) {
+const runFallback = function (img, sourceW, targetW, targetH, step) {
   const steps = calcShrinkSteps(sourceW, targetW, targetH, step)
 
   const seriesDf = $.Deferred()
@@ -74,7 +74,7 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
   chainedDf.resolve(img)
   for (const [w, h] of steps) {
     chainedDf = chainedDf
-      .then(canvas => {
+      .then((canvas) => {
         const df = $.Deferred()
         testCanvasSize(w, h)
           .then(() => df.resolve(canvas, false))
@@ -84,15 +84,15 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
       .then((canvas, skip) => {
         return skip ? canvas : resizeCanvas(canvas, w, h)
       })
-      .then(canvas => {
+      .then((canvas) => {
         seriesDf.notify((sourceW - w) / (sourceW - targetW))
         return canvas
       })
   }
-  chainedDf.done(canvas => {
+  chainedDf.done((canvas) => {
     seriesDf.resolve(canvas)
   })
-  chainedDf.fail(error => {
+  chainedDf.fail((error) => {
     seriesDf.reject(error)
   })
 
@@ -105,11 +105,11 @@ const runFallback = function(img, sourceW, targetW, targetH, step) {
  * Browser support: https://caniuse.com/mdn-api_canvasrenderingcontext2d_imagesmoothingenabled
  * Target dimensions expected to be supported by browser.
  */
-const runNative = function(img, targetW, targetH) {
+const runNative = function (img, targetW, targetH) {
   return resizeCanvas(img, targetW, targetH)
 }
 
-export const shrinkImage = function(img, settings) {
+export const shrinkImage = function (img, settings) {
   // in -> image
   // out <- canvas
   const df = $.Deferred()
@@ -143,8 +143,8 @@ export const shrinkImage = function(img, settings) {
         : runFallback(img, sourceW, targetW, targetH, STEP)
 
       task
-        .done(canvas => df.resolve(canvas))
-        .progress(progress => df.notify(progress))
+        .done((canvas) => df.resolve(canvas))
+        .progress((progress) => df.notify(progress))
         .fail(() => df.reject('not supported'))
     })
 

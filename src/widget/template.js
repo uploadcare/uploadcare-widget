@@ -60,7 +60,7 @@ class Template {
     this.setStatus('started')
     this.content.attr('aria-busy', true)
 
-    return file.progress(info => {
+    return file.progress((info) => {
       if (file === this.__file) {
         switch (info.state) {
           case 'uploading':

@@ -4,7 +4,8 @@ import '../vendor/jquery-jcrop'
 import { fitSize, applyCropCoordsToInfo } from '../utils'
 
 // crop
-var cropModifierRegExp = /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
+var cropModifierRegExp =
+  /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i
 
 class CropWidget {
   constructor(element, originalSize, crop = {}) {
@@ -106,7 +107,7 @@ class CropWidget {
   }
 
   applySelectionToFile(file) {
-    return file.then(info => {
+    return file.then((info) => {
       return applyCropCoordsToInfo(
         info,
         this.crop,

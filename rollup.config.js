@@ -7,7 +7,7 @@ import { string } from 'rollup-plugin-string'
 import replacement from 'rollup-plugin-module-replacement'
 import pkg from './package.json'
 
-const banner = license => ({
+const banner = (license) => ({
   renderChunk(source) {
     return `
 ${license}

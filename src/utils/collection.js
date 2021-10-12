@@ -118,7 +118,7 @@ class CollectionOfPromises extends UniqCollection {
     this.anyProgressList = $.Callbacks()
 
     this._thenArgs = null
-    this.anyProgressList.add(function(item, firstArgument) {
+    this.anyProgressList.add(function (item, firstArgument) {
       return $(item).data('lastProgress', firstArgument)
     })
 
@@ -135,7 +135,7 @@ class CollectionOfPromises extends UniqCollection {
       file = ref1[j]
       if (file.state() === 'resolved') {
         results.push(
-          file.done(function(...args) {
+          file.done(function (...args) {
             return cb(file, ...args)
           })
         )
@@ -156,7 +156,7 @@ class CollectionOfPromises extends UniqCollection {
       file = ref1[j]
       if (file.state() === 'rejected') {
         results.push(
-          file.fail(function(...args) {
+          file.fail(function (...args) {
             return cb(file, ...args)
           })
         )
@@ -213,7 +213,7 @@ class CollectionOfPromises extends UniqCollection {
   }
 
   __watchItem(item) {
-    var handler = callbacks => {
+    var handler = (callbacks) => {
       return (...args) => {
         if (indexOf.call(this.__items, item) >= 0) {
           return callbacks.fire(item, ...args)

@@ -83,8 +83,7 @@ const translations = {
         stopRecord: 'Dừng',
         retry: 'Yêu cầu cấp phép lần nữa',
         pleaseAllow: {
-          text:
-            'Bạn đã được nhắc nhở để cho phép truy cập vào camera từ trang này.<br>Để có thể chụp ảnh với camera, bạn phải chấp thuận yêu cầu này.',
+          text: 'Bạn đã được nhắc nhở để cho phép truy cập vào camera từ trang này.<br>Để có thể chụp ảnh với camera, bạn phải chấp thuận yêu cầu này.',
           title: 'Vui lòng cho phép truy cập tới camera của bạn'
         },
         notFound: {
@@ -162,7 +161,7 @@ const translations = {
 
 // Pluralization rules taken from:
 // https://unicode.org/cldr/charts/34/supplemental/language_plural_rules.html
-const pluralize = function(n) {
+const pluralize = function (n) {
   return 'other'
 }
 

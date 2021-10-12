@@ -52,7 +52,7 @@ class ObjectFile extends BaseFile {
     df = $.Deferred()
     resizeShare = 0.4
     shrinkFile(this.__file, this.settings.imageShrink)
-      .progress(function(progress) {
+      .progress(function (progress) {
         return df.notify(progress * resizeShare)
       })
       .done(this.setFile.bind(this))
@@ -66,7 +66,7 @@ class ObjectFile extends BaseFile {
         return this.directUpload()
           .done(df.resolve)
           .fail(df.reject)
-          .progress(function(progress) {
+          .progress(function (progress) {
             return df.notify(resizeShare + progress * (1 - resizeShare))
           })
       })
@@ -96,7 +96,7 @@ class ObjectFile extends BaseFile {
       this.__rejectApi('size')
       return df
     }
-    this.directRunner(release => {
+    this.directRunner((release) => {
       var formData
       df.always(release)
       if (this.apiDeferred.state() !== 'pending') {
@@ -122,7 +122,7 @@ class ObjectFile extends BaseFile {
             if (xhr.upload) {
               xhr.upload.addEventListener(
                 'progress',
-                e => {
+                (e) => {
                   return df.notify(e.loaded / e.total)
                 },
                 false
@@ -141,7 +141,7 @@ class ObjectFile extends BaseFile {
           data: formData,
           dataType: 'json',
           error: df.reject,
-          success: data => {
+          success: (data) => {
             if (data != null ? data.file : undefined) {
               this.fileId = data.file
               return df.resolve()
@@ -162,11 +162,11 @@ class ObjectFile extends BaseFile {
       return df
     }
     this.multipartStart()
-      .done(data => {
+      .done((data) => {
         return this.uploadParts(data.parts, data.uuid)
           .done(() => {
             return this.multipartComplete(data.uuid)
-              .done(data => {
+              .done((data) => {
                 this.fileId = data.uuid
                 this.__handleFileData(data)
                 return df.resolve()
@@ -204,7 +204,7 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail(reason => {
+    ).fail((reason) => {
       if (this.settings.debugUploads) {
         return log("Can't start multipart upload.", reason, data)
       }
@@ -275,7 +275,7 @@ class ObjectFile extends BaseFile {
               if (xhr.upload) {
                 xhr.upload.addEventListener(
                   'progress',
-                  e => {
+                  (e) => {
                     return updateProgress(partNo, e.loaded)
                   },
                   false
@@ -303,7 +303,7 @@ class ObjectFile extends BaseFile {
                 return retry()
               }
             },
-            success: function() {
+            success: function () {
               inProgress -= 1
               submit()
               if (!inProgress) {
@@ -341,7 +341,7 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail(reason => {
+    ).fail((reason) => {
       if (this.settings.debugUploads) {
         return log(
           "Can't complete multipart upload.",

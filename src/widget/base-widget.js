@@ -15,9 +15,9 @@ class BaseWidget {
     this.currentObject = null
     this.__onDialogOpen = $.Callbacks()
     this.__onUploadComplete = $.Callbacks()
-    this.__onChange = $.Callbacks().add(object => {
+    this.__onChange = $.Callbacks().add((object) => {
       return object != null
-        ? object.promise().done(info => {
+        ? object.promise().done((info) => {
             return this.__onUploadComplete.fire(info)
           })
         : undefined
@@ -105,12 +105,12 @@ class BaseWidget {
     if (object) {
       this.template.listen(object)
       return object
-        .done(info => {
+        .done((info) => {
           if (object === this.__currentFile()) {
             return this.__onUploadingDone(info)
           }
         })
-        .fail(error => {
+        .fail((error) => {
           if (object === this.__currentFile()) {
             return this.__onUploadingFailed(error)
           }
@@ -149,7 +149,7 @@ class BaseWidget {
 
   openDialog(tab) {
     if (this.settings.systemDialog) {
-      return fileSelectDialog(this.template.content, this.settings, input => {
+      return fileSelectDialog(this.template.content, this.settings, (input) => {
         return this.__handleDirectSelection('object', input.files)
       })
     } else {

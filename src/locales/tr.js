@@ -69,8 +69,7 @@ const translations = {
         retry: 'Tekrar izin iste',
         pleaseAllow: {
           title: 'Lütfen kameranıza erişilmesine izin verin',
-          text:
-            'Bu siteden kamera erişimine izin vermeniz talep ediliyor. Kameranızla fotoğraf çekmek için bu isteği onaylamanız gerekmektedir.'
+          text: 'Bu siteden kamera erişimine izin vermeniz talep ediliyor. Kameranızla fotoğraf çekmek için bu isteği onaylamanız gerekmektedir.'
         },
         notFound: {
           title: 'Kamera algılanamadı',
@@ -133,7 +132,7 @@ const translations = {
   }
 }
 
-const pluralize = function(n) {
+const pluralize = function (n) {
   return 'other'
 }
 
