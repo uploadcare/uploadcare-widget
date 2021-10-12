@@ -91,7 +91,11 @@ class CameraTab {
     this.container
       .find('.uploadcare--camera__button_type_retry')
       .on('click', this.__requestCamera)
-    if (!this.MediaRecorder || this.settings.imagesOnly || !this.settings.enableVideoRecording) {
+    if (
+      !this.MediaRecorder ||
+      this.settings.imagesOnly ||
+      !this.settings.enableVideoRecording
+    ) {
       startRecord.hide()
     }
     this.video = this.container.find('.uploadcare--camera__video')

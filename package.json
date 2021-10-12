@@ -30,7 +30,7 @@
     "format": "prettier --write \"**/*.js\"",
     "size": "size-limit",
     "lint:css": "stylelint src/stylesheets/**/*.pcss",
-    "lint:js": "eslint .",
+    "lint:js": "eslint . && prettier --check \"**/*.js\"",
     "test:ci": "cypress run",
     "pretest": "npm run build",
     "test": "npm run lint:css && npm run lint:js && npm run test:ci",
