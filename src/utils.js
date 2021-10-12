@@ -320,13 +320,21 @@ const ajaxDefaults = {
 const jsonp = function (url, type, data, settings = {}) {
   return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
     function (data) {
-      var text
       if (data.error) {
-        text = data.error.content || data.error
-        return $.Deferred().reject(text)
-      } else {
-        return data
+        let message, code
+        if (typeof data.error === 'string') {
+          // /from_url/state/ case
+          message = data.error
+          code = data.error_code
+        } else {
+          // other cases (direct/multipart/group)
+          message = data.error.content
+          code = data.error.error_code
+        }
+        return $.Deferred().reject({ message, code })
       }
+
+      return data
     },
     function (_, textStatus, errorThrown) {
       var text

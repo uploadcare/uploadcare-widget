@@ -145,6 +145,9 @@ class ObjectFile extends BaseFile {
             if (data != null ? data.file : undefined) {
               this.fileId = data.file
               return df.resolve()
+            } else if (data.error) {
+              const { content: message, error_code: code } = data.error
+              return df.reject({ message, code })
             } else {
               return df.reject()
             }
@@ -204,9 +207,9 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail((reason) => {
+    ).fail((error) => {
       if (this.settings.debugUploads) {
-        return log("Can't start multipart upload.", reason, data)
+        return log("Can't start multipart upload.", error.message, data)
       }
     })
   }
@@ -341,13 +344,13 @@ class ObjectFile extends BaseFile {
           }
         }
       )
-    ).fail((reason) => {
+    ).fail((error) => {
       if (this.settings.debugUploads) {
         return log(
           "Can't complete multipart upload.",
           uuid,
           this.settings.publicKey,
-          reason
+          error.message
         )
       }
     })

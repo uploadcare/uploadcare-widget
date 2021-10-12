@@ -72,8 +72,13 @@ class Template {
     })
   }
 
-  error(type) {
-    this.statusText.text(locale.t(`errors.${type || 'default'}`))
+  error(errorType, error) {
+    const text =
+      (this.settings.debugUploads && error?.message) ||
+      locale.t(`serverErrors.${error?.code}`) ||
+      error?.message ||
+      locale.t(`errors.${errorType || 'default'}`)
+    this.statusText.text(text)
     this.content.attr('aria-busy', false)
     return this.setStatus('error')
   }

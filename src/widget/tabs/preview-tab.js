@@ -114,8 +114,9 @@ class PreviewTab extends BasePreviewTab {
       })
     )
     return this.file.fail(
-      ifCur((error, info) => {
+      ifCur((errorType, info, error) => {
         return this.__setState('error', {
+          errorType,
           error,
           file: info
         })
@@ -226,7 +227,13 @@ class PreviewTab extends BasePreviewTab {
     this.__state = state
     data = data || {}
     data.crop = this.settings.crop
-    this.container.empty().append(tpl(`tab-preview-${state}`, data))
+
+    this.container.empty().append(
+      tpl(`tab-preview-${state}`, {
+        ...data,
+        debugUploads: this.settings.debugUploads
+      })
+    )
     this.container.removeClass(function (index, classes) {
       return classes
         .split(' ')
@@ -241,7 +248,9 @@ class PreviewTab extends BasePreviewTab {
     }
 
     if (state === 'error') {
-      this.container.addClass('uploadcare--preview_status_error-' + data.error)
+      this.container.addClass(
+        'uploadcare--preview_status_error-' + data.errorType
+      )
     }
 
     this.container.find('.uploadcare--preview__done').focus()

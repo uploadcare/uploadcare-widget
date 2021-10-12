@@ -46,16 +46,16 @@ const loadFileGroup = function (groupIdOrUrl, settings) {
         }
       }
     )
-      .fail((reason) => {
+      .fail((error) => {
         if (settings.debugUploads) {
           log(
             "Can't load group info. Probably removed.",
             id[0],
             settings.publicKey,
-            reason
+            error.message
           )
         }
-        return df.reject()
+        return df.reject(error)
       })
       .done(function (data) {
         var group
