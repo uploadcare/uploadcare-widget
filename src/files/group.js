@@ -56,7 +56,7 @@ class FileGroup {
               }
             })
           })
-          .fail((message, error) => {
+          .fail((error) => {
             return this.__createGroupDf.reject('createGroup', error)
           })
       })
