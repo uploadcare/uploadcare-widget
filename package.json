@@ -73,7 +73,7 @@
     "postcss-import": "11.1.0",
     "postcss-nested": "2.1.2",
     "postcss-prefixer": "2.1.2",
-    "postcss-reporter": "5.0.0",
+    "postcss-reporter": "7.0.4",
     "prettier": "2.4.1",
     "rimraf": "3.0.2",
     "rollup": "2.41.2",
