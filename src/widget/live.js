@@ -38,19 +38,19 @@ const _initialize = function (targets) {
   return results
 }
 
-const SingleWidget = function (el) {
-  return initializeWidget(el, WidgetClass)
+const SingleWidget = function (el, settings) {
+  return initializeWidget(el, settings, WidgetClass)
 }
 
-const MultipleWidget = function (el) {
-  return initializeWidget(el, MultipleWidgetClass)
+const MultipleWidget = function (el, settings) {
+  return initializeWidget(el, settings, MultipleWidgetClass)
 }
 
-const Widget = function (el) {
-  return initializeWidget(el)
+const Widget = function (el, settings) {
+  return initializeWidget(el, settings)
 }
 
-const initializeWidget = function (input, targetClass) {
+const initializeWidget = function (input, settings = {}, targetClass) {
   const inputArr = $(input)
 
   if (inputArr.length === 0) {
@@ -61,7 +61,10 @@ const initializeWidget = function (input, targetClass) {
 
   input = inputArr.eq(0)
 
-  const s = build(input.data())
+  const s = build({
+    ...settings,
+    ...input.data()
+  })
   const Widget = s.multiple ? MultipleWidgetClass : WidgetClass
 
   if (targetClass && Widget !== targetClass) {
