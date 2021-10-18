@@ -1,3 +1,14 @@
+# [3.12.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.5...v3.12.0) (2021-10-13)
+
+
+### Features
+
+* added support to enable only camera photos ([1aa0619](https://github.com/uploadcare/uploadcare-widget/commit/1aa0619303e88d00991ed823b791307e1e0e2c5f))
+* allow to pass settings object to the live initialization methods ([#870](https://github.com/uploadcare/uploadcare-widget/issues/870)) ([b23d446](https://github.com/uploadcare/uploadcare-widget/commit/b23d446a517ab26e20c21d6aa41962585f097c00))
+* show uploading errors to the end-user ([#857](https://github.com/uploadcare/uploadcare-widget/issues/857)) ([064213b](https://github.com/uploadcare/uploadcare-widget/commit/064213bc38030c5c69ba62ad1e0e7741e6f328be))
+
+
+
 ## [3.11.5](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.4...v3.11.5) (2021-09-13)
 
 
