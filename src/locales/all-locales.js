@@ -10,6 +10,7 @@ import es from './es'
 import et from './et'
 import fr from './fr'
 import he from './he'
+import is from './is'
 import it from './it'
 import ja from './ja'
 import ko from './ko'
@@ -42,6 +43,7 @@ export default {
   et,
   fr,
   he,
+  is,
   it,
   ja,
   ko,
