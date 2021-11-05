@@ -65,7 +65,7 @@
     "eslint-plugin-standard": "4.1.0",
     "nodemon": "2.0.7",
     "postcss-calc": "6.0.2",
-    "postcss-cli": "4.1.1",
+    "postcss-cli": "9.0.2",
     "postcss-color-function": "4.1.0",
     "postcss-css-variables": "0.17.0",
     "postcss-custom-media": "6.0.0",
