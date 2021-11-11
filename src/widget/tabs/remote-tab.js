@@ -2,13 +2,46 @@ import $ from 'jquery'
 
 import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
-import { globRegexp } from '../../utils'
+import { globRegexp, parseQuery } from '../../utils'
 import { UrlFile } from '../../files/url'
 import { CssCollector } from '../../settings'
 
 import { version } from '../../../package.json'
 
 const tabsCss = new CssCollector()
+
+/*
+ * See Google Drive possible mime types here:
+ * https://developers.google.com/drive/api/v3/ref-export-formats?hl=en
+ *
+ * Type `application/vnd.oasis.opendocument.spreadsheet` (without `x-` prefix)
+ * isn't on this list, but it actually comes from their API.
+ *
+ * Docs is probably out of date, feedback has been sent.
+ */
+const googleDriveMimeTypeMapping = {
+  'text/html': 'html',
+  'application/zip': 'zip',
+  'text/plain': 'txt',
+  'application/rtf': 'rtf',
+  'application/vnd.oasis.opendocument.text': 'odt',
+  'application/pdf': 'pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+    'docx',
+  'application/epub+zip': 'epub',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+  'application/x-vnd.oasis.opendocument.spreadsheet': 'ods',
+  'application/vnd.oasis.opendocument.spreadsheet': 'ods',
+  'text/csv': 'csv',
+  'text/tab-separated-values': 'tsv',
+  'image/jpeg': 'jpeg',
+  'image/png': 'png',
+  'image/svg+xml': 'svg',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+    'pptx',
+  'application/vnd.oasis.opendocument.presentation': 'odp',
+  'application/vnd.google-apps.script+json': 'gs'
+}
 
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {
@@ -53,6 +86,22 @@ class RemoteTab {
       : undefined
   }
 
+  __calculateFilename(sourceFilename, mimeType, url) {
+    if (this.name === 'gdrive') {
+      /*
+       * Using `exportFormat` query key allows us to set filename
+       * for gdrive files without `preferredTypes` option set.
+       * But since it isn't documented and therefore not so reliable,
+       * we fallback it with static mimeType -> extension mapping.
+       */
+      const googleApiLink = parseQuery(url).link
+      const exportFormat = parseQuery(googleApiLink)?.exportFormat
+      const ext = exportFormat || googleDriveMimeTypeMapping[mimeType]
+      return ext ? `${sourceFilename}.${ext}` : sourceFilename
+    }
+    return sourceFilename
+  }
+
   __createIframe() {
     var iframe
     if (this.iframe) {
@@ -95,16 +144,16 @@ class RemoteTab {
     iframe = this.iframe[0].contentWindow
 
     registerMessage('file-selected', iframe, (message) => {
-      var file, sourceInfo, url
-      url = (() => {
-        var i, key, len, ref, type
+      let preferredType
+      const url = (() => {
         if (message.alternatives) {
-          ref = this.settings.preferredTypes
-          for (i = 0, len = ref.length; i < len; i++) {
-            type = ref[i]
+          const ref = this.settings.preferredTypes
+          for (let i = 0, len = ref.length; i < len; i++) {
+            let type = ref[i]
             type = globRegexp(type)
-            for (key in message.alternatives) {
+            for (const key in message.alternatives) {
               if (type.test(key)) {
+                preferredType = key
                 return message.alternatives[key]
               }
             }
@@ -113,17 +162,21 @@ class RemoteTab {
         return message.url
       })()
 
-      sourceInfo = $.extend(
+      const sourceInfo = $.extend(
         {
           source: this.name
         },
         message.info || {}
       )
 
-      file = new UrlFile(url, this.settings, sourceInfo)
-
+      const file = new UrlFile(url, this.settings, sourceInfo)
       if (message.filename) {
-        file.setName(message.filename)
+        const filename = this.__calculateFilename(
+          message.filename,
+          preferredType,
+          url
+        )
+        file.setName(filename)
       }
 
       if (message.is_image != null) {
