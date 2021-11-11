@@ -438,7 +438,7 @@ const parseQuery = function (queryString) {
   const hashes = queryString.slice(queryString.indexOf('?') + 1).split('&')
   return hashes.reduce((params, hash) => {
     const [key, val] = hash.split('=')
-    return Object.assign(params, { [key]: decodeURIComponent(val) })
+    return { ...params, [key]: decodeURIComponent(val) }
   }, {})
 }
 
