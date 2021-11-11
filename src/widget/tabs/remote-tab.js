@@ -91,7 +91,7 @@ class RemoteTab {
       /*
        * Using `exportFormat` query key allows us to set filename
        * for gdrive files without `preferredTypes` option set.
-       * But since it isn't documented and therefore not so reliable,
+       * But since it's not documented and therefore not so reliable,
        * we fallback it with static mimeType -> extension mapping.
        */
       const googleApiLink = parseQuery(url).link
