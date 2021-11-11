@@ -1,0 +1,26 @@
+<meta charset="UTF-8" />
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<script>
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_DEBUG_UPLOADS = true
+</script>
+<script src="./uploadcare.full.js"></script>
+
+<p>
+  No preferred types: <br/>
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    preview-step=""
+  />
+</p>
+
+<p>
+  Preferred type = application/vnd.openxmlformats-officedocument.spreadsheetml.sheet<br/>
+  (XLSX format)<br/>
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-preferred-types="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  />
+</p>
