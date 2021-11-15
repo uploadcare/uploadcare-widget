@@ -143,7 +143,8 @@ const translations = {
           title: 'Þú hefur valið %files%.',
           question: 'Bæta við %files%?',
           tooManyFiles: 'Þú hefur valið of margar skrár. %max% er hámarkið.',
-          tooFewFiles: 'Þú hefur valið %files%. Að minnsta kosti %min% er lágmarkið.',
+          tooFewFiles:
+            'Þú hefur valið %files%. Að minnsta kosti %min% er lágmarkið.',
           clear: 'Fjarlægja allar skrár',
           done: 'Bæta við',
           file: {
@@ -152,24 +153,7 @@ const translations = {
           }
         }
       }
-    },
-    footer: {
-      text: 'powered by',
-      link: 'uploadcare'
     }
-  },
-  serverErrors: {
-    AccountBlockedError:
-      "Administrator's account has been blocked. Please, contact support.",
-    AccountUnpaidError:
-      "Administrator's account has been blocked. Please, contact support.",
-    AccountLimitsExceededError:
-      "Administrator's account has reached its limits. Please, contact support.",
-    FileSizeLimitExceededError: 'File is too large.',
-    MultipartFileSizeLimitExceededError: 'File is too large.',
-    FileTypeForbiddenOnCurrentPlanError:
-      'Uploading of these files types is not allowed.',
-    DownloadFileSizeLimitExceededError: 'Downloaded file is too big.'
   }
 }
 
