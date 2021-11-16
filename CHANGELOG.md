@@ -1,3 +1,12 @@
+# [3.13.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.12.0...v3.13.0) (2021-11-16)
+
+
+### Features
+
+* Add Icelandic translations ([#874](https://github.com/uploadcare/uploadcare-widget/issues/874)) ([cb9823f](https://github.com/uploadcare/uploadcare-widget/commit/cb9823fe17943e3e112d15c8bf481092f443c059))
+
+
+
 # [3.12.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.11.5...v3.12.0) (2021-10-13)
 
 
