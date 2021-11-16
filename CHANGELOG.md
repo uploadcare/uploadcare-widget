@@ -1,3 +1,12 @@
+# [3.14.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.13.0...v3.14.0) (2021-11-16)
+
+
+### Features
+
+* allow to select HEIC images when `imagesOnly` enabled ([#881](https://github.com/uploadcare/uploadcare-widget/issues/881)) ([d067016](https://github.com/uploadcare/uploadcare-widget/commit/d067016178ba7badaf036c2b0739378682f20519))
+
+
+
 # [3.13.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.12.0...v3.13.0) (2021-11-16)
 
 
