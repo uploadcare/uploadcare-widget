@@ -206,12 +206,14 @@ const applyCropCoordsToInfo = function (info, crop, size, coords) {
   return info
 }
 
+const imagesOnlyAcceptTypes = `image/*,image/heic`
+
 const fileInput = function (container, settings, fn) {
   var accept, input, run
   input = null
   accept = settings.inputAcceptTypes
   if (accept === '') {
-    accept = settings.imagesOnly ? 'image/*' : null
+    accept = settings.imagesOnly ? imagesOnlyAcceptTypes : null
   }
 
   ;(run = function () {
@@ -261,7 +263,7 @@ const fileSelectDialog = function (container, settings, fn, attributes = {}) {
   var accept
   accept = settings.inputAcceptTypes
   if (accept === '') {
-    accept = settings.imagesOnly ? 'image/*' : null
+    accept = settings.imagesOnly ? imagesOnlyAcceptTypes : null
   }
   return $(
     settings.multiple ? '<input type="file" multiple>' : '<input type="file">'
