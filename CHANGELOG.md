@@ -1,3 +1,12 @@
+# [3.15.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.14.0...v3.15.0) (2021-11-26)
+
+
+### Features
+
+* avif support ([#883](https://github.com/uploadcare/uploadcare-widget/issues/883)) ([110523c](https://github.com/uploadcare/uploadcare-widget/commit/110523c41c4aeec70b4c2726fab71f94cf45edce))
+
+
+
 # [3.14.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.13.0...v3.14.0) (2021-11-16)
 
 
