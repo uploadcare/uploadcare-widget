@@ -206,7 +206,21 @@ const applyCropCoordsToInfo = function (info, crop, size, coords) {
   return info
 }
 
-const imagesOnlyAcceptTypes = `image/*,image/heic`
+const imagesOnlyAcceptTypes = [
+  'image/*',
+  'image/heif',
+  'image/heif-sequence',
+  'image/heic',
+  'image/heic-sequence',
+  'image/avif',
+  'image/avif-sequence',
+  '.heif',
+  '.heifs',
+  '.heic',
+  '.heics',
+  '.avif',
+  '.avifs'
+].join(',')
 
 const fileInput = function (container, settings, fn) {
   var accept, input, run
