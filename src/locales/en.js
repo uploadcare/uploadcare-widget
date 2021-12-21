@@ -56,7 +56,8 @@ const translations = {
         box: 'Box',
         onedrive: 'OneDrive',
         flickr: 'Flickr',
-        huddle: 'Huddle'
+        huddle: 'Huddle',
+        nft: 'NFT',
       },
       file: {
         drag: 'drag & drop<br>any files',
@@ -150,7 +151,7 @@ const translations = {
             preview: 'Preview %file%',
             remove: 'Remove %file%'
           }
-        }
+        },
       }
     },
     footer: {

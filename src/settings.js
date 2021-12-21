@@ -48,7 +48,7 @@ defaults = {
   multipleMaxStrict: false,
   imageShrink: false,
   pathValue: true,
-  tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
+  tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive nft',
   preferredTypes: '',
   inputAcceptTypes: '', // '' means default, null means "disable accept"
   // upload settings
