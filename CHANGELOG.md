@@ -1,3 +1,12 @@
+# [3.16.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.15.0...v3.16.0) (2021-12-23)
+
+
+### Features
+
+* nft tab ([#887](https://github.com/uploadcare/uploadcare-widget/issues/887)) ([1a33996](https://github.com/uploadcare/uploadcare-widget/commit/1a33996d801d5cfecbdf81efadd5754a81967441))
+
+
+
 # [3.15.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.14.0...v3.15.0) (2021-11-26)
 
 
