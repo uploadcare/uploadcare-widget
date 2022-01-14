@@ -10,6 +10,7 @@ Uploadcare Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
 file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
+[![Build Status][badge-travis-img]][badge-travis-url]
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
 
 Uploads affect your web or mobile app performance. The widget ensures you
@@ -278,6 +279,8 @@ request at [hello@uploadcare.com][uc-email-hello].
 
 [badge-npm-img]: http://img.shields.io/npm/v/uploadcare-widget.svg
 [badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget
+[badge-travis-img]: https://github.com/uploadcare/uploadcare-widget/actions/workflows/checks.yml/badge.svg
+[badge-travis-url]: https://github.com/uploadcare/uploadcare-widget/actions/workflows/checks.yml
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
 [github-branch-v2]: https://github.com/uploadcare/uploadcare-widget/tree/v2
