@@ -1,0 +1,21 @@
+<meta charset="UTF-8" />
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script>
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_TABS = 'all'
+  UPLOADCARE_DEBUG_UPLOADS = true
+</script>
+<script src="./uploadcare.full.js"></script>
+
+<input type="hidden" role="uploadcare-uploader" preview-step="" />
+
+<button id="logout">logout</button>
+
+<script>
+  document.querySelector('#logout').addEventListener('click', () => {
+    uploadcare
+      .logout()
+      .then(() => console.log('LOGOUT OK'))
+      .catch((err) => console.log('LOGOUT FAILED', err))
+  })
+</script>

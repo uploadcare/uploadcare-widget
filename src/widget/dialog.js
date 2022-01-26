@@ -16,6 +16,7 @@ import { filesFrom } from '../files'
 import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
+import { SocialSource } from '../social-sources'
 
 const lockDialogFocus = function (e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
@@ -203,18 +204,18 @@ const registerTab = function (tabName, constructor) {
 registerTab('file', FileTab)
 registerTab('url', UrlTab)
 registerTab('camera', CameraTab)
-registerTab('facebook', RemoteTab)
-registerTab('dropbox', RemoteTab)
-registerTab('gdrive', RemoteTab)
-registerTab('gphotos', RemoteTab)
-registerTab('instagram', RemoteTab)
-registerTab('flickr', RemoteTab)
-registerTab('vk', RemoteTab)
-registerTab('evernote', RemoteTab)
-registerTab('box', RemoteTab)
-registerTab('onedrive', RemoteTab)
-registerTab('huddle', RemoteTab)
-registerTab('nft', RemoteTab)
+registerTab(SocialSource.FACEBOOK, RemoteTab)
+registerTab(SocialSource.DROPBOX, RemoteTab)
+registerTab(SocialSource.GDRIVE, RemoteTab)
+registerTab(SocialSource.GPHOTOS, RemoteTab)
+registerTab(SocialSource.INSTAGRAM, RemoteTab)
+registerTab(SocialSource.FLICKR, RemoteTab)
+registerTab(SocialSource.VK, RemoteTab)
+registerTab(SocialSource.EVERNOTE, RemoteTab)
+registerTab(SocialSource.BOX, RemoteTab)
+registerTab(SocialSource.ONEDRIVE, RemoteTab)
+registerTab(SocialSource.HUDDLE, RemoteTab)
+registerTab(SocialSource.NFT, RemoteTab)
 registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
