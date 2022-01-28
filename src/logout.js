@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { SocialSource } from './social-sources'
+import { socialSources } from './social-sources'
 import { registerMessage, unregisterMessage } from './utils/messages'
 import { build } from './settings'
 
@@ -11,7 +11,7 @@ export function logout({ sources, socialBase }) {
   const df = $.Deferred()
   const settings = build({})
 
-  sources = sources || Object.values(SocialSource)
+  sources = sources || socialSources
   socialBase = socialBase || settings.socialBase
 
   const url = getSourceUrl(sources[0], socialBase)
