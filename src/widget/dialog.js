@@ -207,7 +207,7 @@ registerTab('camera', CameraTab)
 registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
-socialSources.forEach(source => registerTab(source, RemoteTab))
+socialSources.forEach((source) => registerTab(source, RemoteTab))
 
 registerTab(
   'preview',
