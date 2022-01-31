@@ -34,19 +34,19 @@ export function logout({ sources, socialBase }) {
     .appendTo('body')
     .on('load', () => {
       const iframeWindow = iframeEl[0].contentWindow
-      registerMessage('logout-success', iframeWindow, () => {
-        unregisterMessage('logout-success', iframeWindow)
+      registerMessage('logout-from-success', iframeWindow, () => {
+        unregisterMessage('logout-from-success', iframeWindow)
         iframeEl.remove()
         clearTimeout(timeoutId)
         df.resolve()
       })
-      registerMessage('logout-failed', iframeWindow, (message) => {
-        unregisterMessage('logout-failed', iframeWindow)
+      registerMessage('logout-from-failed', iframeWindow, (message) => {
+        unregisterMessage('logout-from-failed', iframeWindow)
         iframeEl.remove()
         clearTimeout(timeoutId)
         df.reject(message.error)
       })
-      iframeWindow.postMessage(JSON.stringify({ type: 'logout', sources }), '*')
+      iframeWindow.postMessage(JSON.stringify({ type: 'logout-from', sources }), '*')
     })
 
   return df
