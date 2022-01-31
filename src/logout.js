@@ -46,7 +46,10 @@ export function logout({ sources, socialBase }) {
         clearTimeout(timeoutId)
         df.reject(message.error)
       })
-      iframeWindow.postMessage(JSON.stringify({ type: 'logout-from', sources }), '*')
+      iframeWindow.postMessage(
+        JSON.stringify({ type: 'logout-from', sources }),
+        '*'
+      )
     })
 
   return df
