@@ -204,10 +204,10 @@ const registerTab = function (tabName, constructor) {
 registerTab('file', FileTab)
 registerTab('url', UrlTab)
 registerTab('camera', CameraTab)
+socialSources.forEach((source) => registerTab(source, RemoteTab))
 registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
-socialSources.forEach((source) => registerTab(source, RemoteTab))
 
 registerTab(
   'preview',
