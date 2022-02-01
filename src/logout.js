@@ -52,5 +52,5 @@ export function logout({ sources, socialBase }) {
       )
     })
 
-  return df
+  return df.promise()
 }
