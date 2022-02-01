@@ -29,7 +29,7 @@ describe('uploadcare widget', () => {
     cy.fixture(fileName).then((fileContent) => {
       cy.get('.uploadcare--widget__button_type_open').click()
 
-      cy.get('.uploadcare--draganddrop').upload(
+      cy.get('.uploadcare--draganddrop').attachFile(
         { fileContent, fileName, mimeType: 'image/jpeg' },
         { subjectType: 'drag-n-drop', events: ['dragcenter', 'drop'] }
       )
@@ -53,7 +53,7 @@ describe('uploadcare widget', () => {
       cy.get(
         '.uploadcare--tab_name_file .uploadcare--tab__action-button'
       ).click()
-      cy.get('input[type="file"]').upload({
+      cy.get('input[type="file"]').attachFile({
         fileContent,
         fileName,
         mimeType: 'image/jpeg'
