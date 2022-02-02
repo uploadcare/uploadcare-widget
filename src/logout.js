@@ -7,14 +7,11 @@ function getSourceUrl(sourceName, socialBase) {
   return `${socialBase}/window3/${sourceName}`
 }
 
-export function logout({ sources, socialBase } = {}) {
+export function logout(sources = socialSources) {
   const df = $.Deferred()
   const settings = build({})
 
-  sources = sources || socialSources
-  socialBase = socialBase || settings.socialBase
-
-  const url = getSourceUrl(sources[0], socialBase)
+  const url = getSourceUrl(sources[0], settings.socialBase)
   const timeout = 15 * 1000
   const timeoutId = setTimeout(() => {
     df.reject(new Error(`Logout timeout expired`))
