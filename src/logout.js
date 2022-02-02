@@ -3,15 +3,19 @@ import { socialSources } from './social-sources'
 import { registerMessage, unregisterMessage } from './utils/messages'
 import { build } from './settings'
 
-function getSourceUrl(sourceName, socialBase) {
-  return `${socialBase}/window3/${sourceName}`
+function getSourceUrl(sourceName, publicKey, socialBase) {
+  return `${socialBase}/window3/${sourceName}?public_key=${publicKey}`
 }
 
-export function logout(sources = socialSources) {
+export function logout(sources = socialSources, publicKey) {
   const df = $.Deferred()
   const settings = build({})
 
-  const url = getSourceUrl(sources[0], settings.socialBase)
+  const url = getSourceUrl(
+    sources[0],
+    publicKey || settings.publicKey,
+    settings.socialBase
+  )
   const timeout = 15 * 1000
   const timeoutId = setTimeout(() => {
     df.reject(new Error(`Logout timeout expired`))
