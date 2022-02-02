@@ -34,11 +34,11 @@ export function logout({ sources, socialBase } = {}) {
     .appendTo('body')
     .on('load', () => {
       const iframeWindow = iframeEl[0].contentWindow
-      registerMessage('logout-from-success', iframeWindow, () => {
+      registerMessage('logout-from-success', iframeWindow, (message) => {
         unregisterMessage('logout-from-success', iframeWindow)
         iframeEl.remove()
         clearTimeout(timeoutId)
-        df.resolve()
+        df.resolve(message.sources)
       })
       registerMessage('logout-from-failed', iframeWindow, (message) => {
         unregisterMessage('logout-from-failed', iframeWindow)
