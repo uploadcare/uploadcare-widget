@@ -1,3 +1,12 @@
+# [3.17.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.16.0...v3.17.0) (2022-02-02)
+
+
+### Features
+
+* add `logout` api method ([#893](https://github.com/uploadcare/uploadcare-widget/issues/893)) ([0273443](https://github.com/uploadcare/uploadcare-widget/commit/0273443c5051c772417d1179606a01f2b8043755))
+
+
+
 # [3.16.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.15.0...v3.16.0) (2021-12-23)
 
 
