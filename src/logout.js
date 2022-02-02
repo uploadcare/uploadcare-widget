@@ -7,7 +7,7 @@ function getSourceUrl(sourceName, socialBase) {
   return `${socialBase}/window3/${sourceName}`
 }
 
-export function logout({ sources, socialBase }) {
+export function logout({ sources, socialBase } = {}) {
   const df = $.Deferred()
   const settings = build({})
 
