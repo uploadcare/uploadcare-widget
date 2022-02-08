@@ -62,6 +62,7 @@ defaults = {
   socialBase: 'https://social.uploadcare.com',
   previewProxy: null,
   previewUrlCallback: null,
+  removeTabSessionKey: null,
   // fine tuning
   imagePreviewMaxSize: 25 * 1024 * 1024,
   multipartMinSize: 10 * 1024 * 1024,
