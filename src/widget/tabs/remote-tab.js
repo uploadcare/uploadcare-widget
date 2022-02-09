@@ -32,16 +32,17 @@ class RemoteTab {
   }
 
   remoteUrl() {
-    return (
-      `${this.settings.socialBase}/window3/${this.name}?` +
-      $.param({
-        lang: this.settings.locale,
-        public_key: this.settings.publicKey,
-        widget_version: version,
-        images_only: this.settings.imagesOnly,
-        pass_window_open: this.settings.passWindowOpen
-      })
-    )
+    const params = {
+      lang: this.settings.locale,
+      public_key: this.settings.publicKey,
+      widget_version: version,
+      images_only: this.settings.imagesOnly,
+      pass_window_open: this.settings.passWindowOpen
+    }
+    if (this.settings.remoteTabSessionKey) {
+      params.session_key = this.settings.remoteTabSessionKey
+    }
+    return `${this.settings.socialBase}/window3/${this.name}?` + $.param(params)
   }
 
   __sendMessage(messageObj) {
