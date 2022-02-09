@@ -12,79 +12,80 @@ var DataView = isWindowDefined() && window.DataView
 var runner = taskRunner(1)
 
 const shrinkFile = function (file, settings) {
-  var df
   // in -> file
   // out <- blob
-  df = $.Deferred()
+  const df = $.Deferred()
   if (!(URL && DataView && Blob)) {
     return df.reject('support')
   }
   // start = new Date()
   runner((release) => {
-    var op
     // console.log('delayed: ' + (new Date() - start))
     df.always(release)
     // start = new Date()
-    op = imageLoader(URL.createObjectURL(file))
+    let op = shouldSkipShrink(file).then((shouldSkip) => {
+      if (shouldSkip) {
+        df.reject('skipped')
+      }
+    })
+    op = op.then(() => imageLoader(URL.createObjectURL(file)))
     op.always(function (img) {
-      return URL.revokeObjectURL(img.src)
+      URL.revokeObjectURL(img.src)
     })
     op.fail(function () {
-      return df.reject('not image')
+      df.reject('not image')
     })
 
-    return op.done(function (img) {
+    op.done(function (img) {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
-      var exifOp = $.when(getExif(file), isBrowserApplyExif()).always(function (
-        exif,
-        isExifApplied
-      ) {
-        var e, isJPEG
+      const exifOp = $.when(
+        getExif(file),
+        isBrowserApplyExif(),
+        getIccProfile(file)
+      ).always(function (exif, isExifApplied, iccProfile) {
         df.notify(0.2)
-        isJPEG = exifOp.state() === 'resolved'
+        const isJPEG = exifOp.state() === 'resolved'
         // start = new Date()
-        op = shrinkImage(img, settings)
+        const op = stripIccProfile(file)
+          .then((img) => shrinkImage(img, settings))
+          .catch(() => shrinkImage(img, settings))
+
         op.progress(function (progress) {
           return df.notify(0.2 + progress * 0.6)
         })
         op.fail(df.reject)
         op.done(function (canvas) {
-          var format, quality
           // console.log('shrink: ' + (new Date() - start))
           // start = new Date()
-          format = 'image/jpeg'
-          quality = settings.quality || 0.8
+          let format = 'image/jpeg'
+          let quality = settings.quality || 0.8
           if (!isJPEG && hasTransparency(canvas)) {
             format = 'image/png'
             quality = undefined
           }
-          return canvasToBlob(canvas, format, quality, function (blob) {
+          canvasToBlob(canvas, format, quality, function (blob) {
             canvas.width = canvas.height = 1
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
+            let replaceChain = $.Deferred().resolve(blob)
             if (exif) {
-              if (isExifApplied) {
-                setExifOrientation(exif, 1)
-              }
-              op = replaceJpegChunk(blob, 0xe1, [exif.buffer])
-              op.done(df.resolve)
-
-              return op.fail(function () {
-                return df.resolve(blob)
-              })
-            } else {
-              return df.resolve(blob)
+              replaceChain = replaceChain
+                .then((blob) => replaceExif(blob, exif, isExifApplied))
+                .catch(() => $.Deferred().resolve(blob))
             }
+            if (iccProfile) {
+              replaceChain = replaceChain
+                .then((blob) => replaceIccProfile(blob, iccProfile))
+                .catch(() => $.Deferred().resolve(blob))
+            }
+
+            replaceChain.done(df.resolve)
+            replaceChain.fail(() => df.resolve(blob))
           })
         })
-        e = null // free reference
-
-        return e
       })
-
-      return exifOp
     })
   })
 
@@ -274,9 +275,8 @@ const replaceJpegChunk = function (blob, marker, chunks) {
 }
 
 const getExif = function (file) {
-  var exif, op
-  exif = null
-  op = readJpegChunks(file)
+  let exif = null
+  const op = readJpegChunks(file)
   op.progress(function (pos, l, marker, view) {
     if (!exif && marker === 0xe1) {
       if (view.byteLength >= 14) {
@@ -295,6 +295,100 @@ const getExif = function (file) {
       return $.Deferred().reject(exif, reason)
     }
   )
+}
+
+const getIccProfile = function (file) {
+  let iccProfile = null
+  const op = readJpegChunks(file)
+  op.progress(function (pos, l, marker, view) {
+    if (marker === 0xe2) {
+      // TODO: what kind of checks should be here?
+      if (!iccProfile) {
+        iccProfile = []
+      }
+      iccProfile.push(view)
+    }
+  })
+  return op.then(
+    function () {
+      return iccProfile
+    },
+    function (reason) {
+      return $.Deferred().reject(iccProfile, reason)
+    }
+  )
+}
+
+const replaceExif = function (blob, exif, isExifApplied) {
+  if (isExifApplied) {
+    setExifOrientation(exif, 1)
+  }
+  return replaceJpegChunk(blob, 0xe1, [exif.buffer])
+}
+
+const replaceIccProfile = function (blob, iccProfile) {
+  return replaceJpegChunk(
+    blob,
+    0xe2,
+    iccProfile.map((chunk) => chunk.buffer)
+  )
+}
+
+const stripIccProfile = function (file) {
+  const df = $.Deferred()
+
+  replaceIccProfile(file, [])
+    .done((file) => {
+      const op = imageLoader(URL.createObjectURL(file))
+      op.always((img) => {
+        URL.revokeObjectURL(img.src)
+      })
+      op.fail(() => {
+        df.reject()
+      })
+      op.done((img) => {
+        df.resolve(img)
+      })
+    })
+    .fail(() => {
+      df.reject()
+    })
+
+  return df.promise()
+}
+
+const shouldSkipShrink = (file) => {
+  const allowLayers = [
+    1, // L (black-white)
+    3 // RGB
+  ]
+  const markers = [
+    0xc0, // ("SOF0", "Baseline DCT", SOF)
+    0xc1, // ("SOF1", "Extended Sequential DCT", SOF)
+    0xc2, // ("SOF2", "Progressive DCT", SOF)
+    0xc3, // ("SOF3", "Spatial lossless", SOF)
+    0xc5, // ("SOF5", "Differential sequential DCT", SOF)
+    0xc6, // ("SOF6", "Differential progressive DCT", SOF)
+    0xc7, // ("SOF7", "Differential spatial", SOF)
+    0xc9, // ("SOF9", "Extended sequential DCT (AC)", SOF)
+    0xca, // ("SOF10", "Progressive DCT (AC)", SOF)
+    0xcb, // ("SOF11", "Spatial lossless DCT (AC)", SOF)
+    0xcd, // ("SOF13", "Differential sequential DCT (AC)", SOF)
+    0xce, // ("SOF14", "Differential progressive DCT (AC)", SOF)
+    0xcf // ("SOF15", "Differential spatial (AC)", SOF)
+  ]
+  let skip = false
+  const op = readJpegChunks(file)
+  op.progress(function (pos, l, marker, view) {
+    console.log(arguments)
+    if (!skip && markers.includes(marker)) {
+      const layer = view.getUint8(5)
+      if (!allowLayers.includes(layer)) {
+        skip = true
+      }
+    }
+  })
+  return op.then(() => skip).catch(() => $.Deferred().resolve(skip))
 }
 
 const setExifOrientation = function (exif, orientation) {
