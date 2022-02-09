@@ -39,8 +39,8 @@ class RemoteTab {
       images_only: this.settings.imagesOnly,
       pass_window_open: this.settings.passWindowOpen
     }
-    if (this.settings.removeTabSessionKey) {
-      params.session_key = this.settings.removeTabSessionKey
+    if (this.settings.remoteTabSessionKey) {
+      params.session_key = this.settings.remoteTabSessionKey
     }
     return `${this.settings.socialBase}/window3/${this.name}?` + $.param(params)
   }
