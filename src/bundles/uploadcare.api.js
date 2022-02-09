@@ -5,8 +5,6 @@ import { presets, defaults, common } from '../settings'
 import { fileFrom, filesFrom } from '../files'
 import { FileGroup, loadFileGroup } from '../files/group-creator'
 
-import { logout } from '../logout'
-
 import { plugin } from './namespace.api'
 import { version } from '../../package.json'
 
@@ -27,6 +25,5 @@ export default {
   filesFrom,
   FileGroup,
   loadFileGroup,
-  logout,
   locales: ['en']
 }
