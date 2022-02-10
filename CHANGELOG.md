@@ -1,3 +1,18 @@
+# [3.17.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.16.0...v3.17.0) (2022-02-10)
+
+
+### Features
+
+* add `logout` api method ([#893](https://github.com/uploadcare/uploadcare-widget/issues/893)) ([0273443](https://github.com/uploadcare/uploadcare-widget/commit/0273443c5051c772417d1179606a01f2b8043755))
+* pass session key to the remote tab ([#900](https://github.com/uploadcare/uploadcare-widget/issues/900)) ([cf329ae](https://github.com/uploadcare/uploadcare-widget/commit/cf329aefd4e5ca6d2b57a0108fc41cbeb710a9e4))
+
+
+### Reverts
+
+* Revert "feat: add `logout` api method (#893)" (#901) ([4acdcc5](https://github.com/uploadcare/uploadcare-widget/commit/4acdcc50d7da523779dc1183f9156c4edc174dc0)), closes [#893](https://github.com/uploadcare/uploadcare-widget/issues/893) [#901](https://github.com/uploadcare/uploadcare-widget/issues/901)
+
+
+
 # [3.16.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.15.0...v3.16.0) (2021-12-23)
 
 
