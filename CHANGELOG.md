@@ -1,3 +1,11 @@
+# [3.17.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.16.0...v3.17.0) (2022-02-10)
+
+
+### Features
+
+* pass session key to the remote tab ([#900](https://github.com/uploadcare/uploadcare-widget/issues/900)) ([cf329ae](https://github.com/uploadcare/uploadcare-widget/commit/cf329aefd4e5ca6d2b57a0108fc41cbeb710a9e4))
+
+
 # [3.16.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.15.0...v3.16.0) (2021-12-23)
 
 
