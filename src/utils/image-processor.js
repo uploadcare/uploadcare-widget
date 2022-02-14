@@ -75,7 +75,7 @@ const shrinkFile = function (file, settings) {
                 .then((blob) => replaceExif(blob, exif, isExifApplied))
                 .catch(() => $.Deferred().resolve(blob))
             }
-            if (iccProfile) {
+            if (iccProfile.length > 0) {
               replaceChain = replaceChain
                 .then((blob) => replaceIccProfile(blob, iccProfile))
                 .catch(() => $.Deferred().resolve(blob))
@@ -280,7 +280,11 @@ const getExif = function (file) {
   op.progress(function (pos, l, marker, view) {
     if (!exif && marker === 0xe1) {
       if (view.byteLength >= 14) {
-        if (view.getUint32(0) === 0x45786966 && view.getUint16(4) === 0) {
+        if (
+          // check for "Exif\0"
+          view.getUint32(0) === 0x45786966 &&
+          view.getUint16(4) === 0
+        ) {
           exif = view
           return exif
         }
@@ -298,15 +302,18 @@ const getExif = function (file) {
 }
 
 const getIccProfile = function (file) {
-  let iccProfile = null
+  const iccProfile = []
   const op = readJpegChunks(file)
   op.progress(function (pos, l, marker, view) {
     if (marker === 0xe2) {
-      // TODO: what kind of checks should be here?
-      if (!iccProfile) {
-        iccProfile = []
+      if (
+        // check for "ICC_PROFILE\0"
+        view.getUint32(0) === 0x4943435f &&
+        view.getUint32(4) === 0x50524f46 &&
+        view.getUint32(8) === 0x494c4500
+      ) {
+        iccProfile.push(view)
       }
-      iccProfile.push(view)
     }
   })
   return op.then(
