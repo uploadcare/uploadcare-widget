@@ -387,7 +387,6 @@ const shouldSkipShrink = (file) => {
   let skip = false
   const op = readJpegChunks(file)
   op.progress(function (pos, l, marker, view) {
-    console.log(arguments)
     if (!skip && markers.includes(marker)) {
       const layer = view.getUint8(5)
       if (!allowLayers.includes(layer)) {
