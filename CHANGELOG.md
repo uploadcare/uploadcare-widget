@@ -1,3 +1,12 @@
+## [3.17.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.0...v3.17.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* update Google Photos icon ([#907](https://github.com/uploadcare/uploadcare-widget/issues/907)) ([fcfa716](https://github.com/uploadcare/uploadcare-widget/commit/fcfa716749dd37007824ecfdecf9d4c72c752115))
+
+
+
 # [3.17.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.16.0...v3.17.0) (2022-02-10)
 
 
