@@ -186,8 +186,9 @@ intOptions = function (settings, keys) {
 }
 
 integrationToUserAgent = function (settings) {
-  settings._userAgent = `UploadcareWidget/${version}/${settings.publicKey
-    } (JavaScript${settings.integration ? `; ${settings.integration}` : ''})`
+  settings._userAgent = `UploadcareWidget/${version}/${
+    settings.publicKey
+  } (JavaScript${settings.integration ? `; ${settings.integration}` : ''})`
   return settings
 }
 
@@ -207,7 +208,7 @@ transformOptions = function (settings, transforms) {
 constrainOptions = function (settings, constraints) {
   var key, max, min
   for (key in constraints) {
-    ; ({ min, max } = constraints[key])
+    ;({ min, max } = constraints[key])
     if (settings[key] != null) {
       settings[key] = Math.min(Math.max(settings[key], min), max)
     }
@@ -240,8 +241,8 @@ parseShrink = function (val) {
       `Shrinked size can not be larger than ${Math.floor(
         maxSize / 1000 / 1000
       )}MP. ` +
-      `You have set ${shrink[1]}x${shrink[2]} (` +
-      `${Math.ceil(size / 1000 / 100) / 10}MP).`
+        `You have set ${shrink[1]}x${shrink[2]} (` +
+        `${Math.ceil(size / 1000 / 100) / 10}MP).`
     )
 
     return false
