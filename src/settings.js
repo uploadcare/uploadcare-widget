@@ -380,16 +380,20 @@ const CssCollector = class CssCollector {
   }
 
   addUrl(url) {
-    if (!/^https?:\/\//i.test(url)) {
-      throw new Error('Embedded urls should be absolute. ' + url)
-    }
-    if (!(indexOf.call(this.urls, url) >= 0)) {
-      return this.urls.push(url)
-    }
+    if (!/^https?:\/\//i.test(url)) throw new Error('Embedded urls should be absolute. ' + url)
+    if (!(this.urls.includes(url))) return this.urls.push(url)
   }
 
   addStyle(style) {
-    return this.styles.push(style)
+    if (!(this.styles.includes(style))) return this.styles.push(style)
+  }
+
+  removeUrl(url) {
+    this.urls = this.urls.filter(item => item !== url)
+  }
+
+  removeStyle(style) {
+    this.urls = this.urls.filter(item => item !== style)
   }
 }
 
