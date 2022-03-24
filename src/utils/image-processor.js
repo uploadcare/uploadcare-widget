@@ -23,11 +23,10 @@ const shrinkFile = function (file, settings) {
     // console.log('delayed: ' + (new Date() - start))
     df.always(release)
     // start = new Date()
-    let op = shouldSkipShrink(file).then((shouldSkip) => {
-      if (shouldSkip) {
-        df.reject('skipped')
-      }
-    })
+    let op = shouldSkipShrink(file)
+      .then((shouldSkip) => shouldSkip && $.reject())
+      .catch(() => df.reject('skipped'))
+
     op = op.then(() => imageLoader(URL.createObjectURL(file)))
     op.always(function (img) {
       URL.revokeObjectURL(img.src)
