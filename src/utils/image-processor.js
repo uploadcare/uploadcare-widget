@@ -292,12 +292,8 @@ const getExif = function (file) {
     }
   })
   return op.then(
-    function () {
-      return exif
-    },
-    function (reason) {
-      return $.Deferred().reject(exif, reason)
-    }
+    () => exif,
+    (reason) => $.Deferred().reject(exif, reason)
   )
 }
 
@@ -317,12 +313,8 @@ const getIccProfile = function (file) {
     }
   })
   return op.then(
-    function () {
-      return iccProfile
-    },
-    function (reason) {
-      return $.Deferred().reject(iccProfile, reason)
-    }
+    () => iccProfile,
+    (reason) => $.Deferred().reject(iccProfile, reason)
   )
 }
 
