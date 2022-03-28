@@ -332,11 +332,12 @@ const replaceIccProfile = function (blob, iccProfile) {
   )
 }
 
-const stripIccProfile = function (file) {
+const stripIccProfile = function (inputFile) {
   const df = $.Deferred()
 
-  replaceIccProfile(file, [])
-    .done((file) => {
+  replaceIccProfile(inputFile, [])
+    .catch(() => inputFile)
+    .then((file) => {
       const op = imageLoader(URL.createObjectURL(file))
       op.always((img) => {
         URL.revokeObjectURL(img.src)
