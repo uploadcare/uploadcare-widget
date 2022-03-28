@@ -35,7 +35,7 @@ const shrinkFile = function (file, settings) {
       df.reject('not image')
     })
 
-    op.done(function (img) {
+    op.done((img) => {
       // console.log('load: ' + (new Date() - start))
       df.notify(0.1)
 
@@ -43,7 +43,7 @@ const shrinkFile = function (file, settings) {
         getExif(file),
         isBrowserApplyExif(),
         getIccProfile(file)
-      ).always(function (exif, isExifApplied, iccProfile) {
+      ).always((exif, isExifApplied, iccProfile) => {
         df.notify(0.2)
         const isJPEG = exifOp.state() === 'resolved'
         // start = new Date()
@@ -51,11 +51,11 @@ const shrinkFile = function (file, settings) {
           .then((img) => shrinkImage(img, settings))
           .catch(() => shrinkImage(img, settings))
 
-        op.progress(function (progress) {
+        op.progress((progress) => {
           return df.notify(0.2 + progress * 0.6)
         })
         op.fail(df.reject)
-        op.done(function (canvas) {
+        op.done((canvas) => {
           // console.log('shrink: ' + (new Date() - start))
           // start = new Date()
           let format = 'image/jpeg'
@@ -64,7 +64,7 @@ const shrinkFile = function (file, settings) {
             format = 'image/png'
             quality = undefined
           }
-          canvasToBlob(canvas, format, quality, function (blob) {
+          canvasToBlob(canvas, format, quality, (blob) => {
             canvas.width = canvas.height = 1
             df.notify(0.9)
             // console.log('to blob: ' + (new Date() - start))
@@ -72,12 +72,12 @@ const shrinkFile = function (file, settings) {
             if (exif) {
               replaceChain = replaceChain
                 .then((blob) => replaceExif(blob, exif, isExifApplied))
-                .catch(() => $.Deferred().resolve(blob))
+                .catch(() => blob)
             }
             if (iccProfile.length > 0) {
               replaceChain = replaceChain
                 .then((blob) => replaceIccProfile(blob, iccProfile))
-                .catch(() => $.Deferred().resolve(blob))
+                .catch(() => blob)
             }
 
             replaceChain.done(df.resolve)
@@ -385,7 +385,7 @@ const shouldSkipShrink = (file) => {
       }
     }
   })
-  return op.then(() => skip).catch(() => $.Deferred().resolve(skip))
+  return op.then(() => skip).catch(() => skip)
 }
 
 const setExifOrientation = function (exif, orientation) {
