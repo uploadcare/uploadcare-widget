@@ -23,17 +23,19 @@ const shrinkFile = function (file, settings) {
     // console.log('delayed: ' + (new Date() - start))
     df.always(release)
     // start = new Date()
-    let op = shouldSkipShrink(file)
-      .then((shouldSkip) => shouldSkip && $.reject())
-      .catch(() => df.reject('skipped'))
 
-    op = op.then(() => imageLoader(URL.createObjectURL(file)))
-    op.always(function (img) {
-      URL.revokeObjectURL(img.src)
-    })
-    op.fail(function () {
-      df.reject('not image')
-    })
+    const op = shouldSkipShrink(file)
+      .then((shouldSkip) => {
+        if (shouldSkip) {
+          df.reject('skipped')
+          return $.Deferred().reject()
+        }
+      })
+      .then(() =>
+        stripIccProfile(file).fail(() => {
+          df.reject('not image')
+        })
+      )
 
     op.done((img) => {
       // console.log('load: ' + (new Date() - start))
@@ -47,10 +49,7 @@ const shrinkFile = function (file, settings) {
         df.notify(0.2)
         const isJPEG = exifOp.state() === 'resolved'
         // start = new Date()
-        const op = stripIccProfile(file)
-          .then((img) => shrinkImage(img, settings))
-          .catch(() => shrinkImage(img, settings))
-
+        const op = shrinkImage(img, settings)
         op.progress((progress) => {
           return df.notify(0.2 + progress * 0.6)
         })
@@ -74,7 +73,7 @@ const shrinkFile = function (file, settings) {
                 .then((blob) => replaceExif(blob, exif, isExifApplied))
                 .catch(() => blob)
             }
-            if (iccProfile.length > 0) {
+            if (iccProfile?.length > 0) {
               replaceChain = replaceChain
                 .then((blob) => replaceIccProfile(blob, iccProfile))
                 .catch(() => blob)
@@ -292,7 +291,7 @@ const getExif = function (file) {
   })
   return op.then(
     () => exif,
-    (reason) => $.Deferred().reject(exif, reason)
+    () => $.Deferred().reject(exif)
   )
 }
 
@@ -313,7 +312,7 @@ const getIccProfile = function (file) {
   })
   return op.then(
     () => iccProfile,
-    (reason) => $.Deferred().reject(iccProfile, reason)
+    () => $.Deferred().reject(iccProfile)
   )
 }
 
