@@ -1,3 +1,12 @@
+## [3.17.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.1...v3.17.2) (2022-04-04)
+
+
+### Bug Fixes
+
+* **image-shrink:** improve ICC profile support ([#902](https://github.com/uploadcare/uploadcare-widget/issues/902)) ([806734e](https://github.com/uploadcare/uploadcare-widget/commit/806734e3639c0363a6067a069c6fdf37805cf9d7))
+
+
+
 ## [3.17.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.0...v3.17.1) (2022-03-16)
 
 
