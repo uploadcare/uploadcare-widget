@@ -63,6 +63,8 @@ defaults = {
   previewProxy: null,
   previewUrlCallback: null,
   remoteTabSessionKey: null,
+  metadata: null,
+  metadataCallback: null,
   // fine tuning
   imagePreviewMaxSize: 25 * 1024 * 1024,
   multipartMinSize: 10 * 1024 * 1024,

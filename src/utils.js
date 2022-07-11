@@ -450,6 +450,14 @@ const fixedPipe = function (promise, ...fns) {
   }).promise()
 }
 
+const getMetadataObject = function(settings) {
+  const {metadata, metadataCallback} = settings
+  if(metadataCallback) {
+    return metadataCallback()
+  }
+  return metadata || null
+}
+
 export {
   unique,
   defer,
@@ -481,5 +489,6 @@ export {
   jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
+  fixedPipe,
+  getMetadataObject
 }
