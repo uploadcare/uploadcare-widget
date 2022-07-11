@@ -458,8 +458,8 @@ const getMetadataObject = function (settings) {
   return metadata || null
 }
 
-const isObject = function(input) {
-  return Object.prototype.toString.call(input) === '[object Object]';
+const isObject = function (input) {
+  return Object.prototype.toString.call(input) === '[object Object]'
 }
 
 export {

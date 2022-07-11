@@ -220,20 +220,28 @@ constrainOptions = function (settings, constraints) {
   return settings
 }
 
-callbackOptions = function(settings, keys) {
+callbackOptions = function (settings, keys) {
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i]
     if (settings[key] && typeof settings[key] !== 'function') {
-      warnOnce(`Option "${key}" is expected to be a function. Instead got: ${typeof settings[key]}`)
+      warnOnce(
+        `Option "${key}" is expected to be a function. Instead got: ${typeof settings[
+          key
+        ]}`
+      )
     }
   }
 }
 
-objectOptions = function(settings, keys) {
+objectOptions = function (settings, keys) {
   for (let i = 0, len = keys.length; i < len; i++) {
     const key = keys[i]
     if (settings[key] && !isObject(settings[key])) {
-      warnOnce(`Option "${key}" is expected to be an object. Instead got: ${typeof settings[key]}`)
+      warnOnce(
+        `Option "${key}" is expected to be an object. Instead got: ${typeof settings[
+          key
+        ]}`
+      )
     }
   }
 }
