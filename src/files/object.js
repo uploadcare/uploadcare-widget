@@ -114,8 +114,8 @@ class ObjectFile extends BaseFile {
       formData.append('source', this.sourceInfo.source)
 
       const metadata = getMetadataObject(this.settings)
-      if(metadata) {
-        $.each(metadata, (key ,value) => {
+      if (metadata) {
+        $.each(metadata, (key, value) => {
           formData.append(`metadata[${key}]`, String(value))
         })
       }
@@ -204,8 +204,8 @@ class ObjectFile extends BaseFile {
     }
 
     const metadata = getMetadataObject(this.settings)
-    if(metadata) {
-      $.each(metadata, (key ,value) => {
+    if (metadata) {
+      $.each(metadata, (key, value) => {
         data[`metadata[${key}]`] = String(value)
       })
     }

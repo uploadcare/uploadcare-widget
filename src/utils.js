@@ -450,9 +450,9 @@ const fixedPipe = function (promise, ...fns) {
   }).promise()
 }
 
-const getMetadataObject = function(settings) {
-  const {metadata, metadataCallback} = settings
-  if(metadataCallback) {
+const getMetadataObject = function (settings) {
+  const { metadata, metadataCallback } = settings
+  if (metadataCallback) {
     return metadataCallback()
   }
   return metadata || null
