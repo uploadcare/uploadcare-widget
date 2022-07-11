@@ -458,6 +458,10 @@ const getMetadataObject = function (settings) {
   return metadata || null
 }
 
+const isObject = function(input) {
+  return Object.prototype.toString.call(input) === '[object Object]';
+}
+
 export {
   unique,
   defer,
@@ -490,5 +494,6 @@ export {
   canvasToBlob,
   taskRunner,
   fixedPipe,
-  getMetadataObject
+  getMetadataObject,
+  isObject
 }
