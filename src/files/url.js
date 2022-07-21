@@ -49,11 +49,9 @@ class UrlFile extends BaseFile {
     }
 
     const metadata = getMetadataObject(this.settings)
-    if (metadata) {
-      $.each(metadata, (key, value) => {
-        data[`metadata[${key}]`] = String(value)
-      })
-    }
+    $.each(metadata, (key, value) => {
+      data[`metadata[${key}]`] = String(value)
+    })
 
     defer(() => {
       if (this.apiDeferred.state() !== 'pending') {

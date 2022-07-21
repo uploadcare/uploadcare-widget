@@ -453,9 +453,9 @@ const fixedPipe = function (promise, ...fns) {
 const getMetadataObject = function (settings) {
   const { metadata, metadataCallback } = settings
   if (metadataCallback) {
-    return metadataCallback()
+    return metadataCallback() || {}
   }
-  return metadata || null
+  return metadata || {}
 }
 
 const isObject = function (input) {
