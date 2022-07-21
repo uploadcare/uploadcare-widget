@@ -451,11 +451,24 @@ const fixedPipe = function (promise, ...fns) {
 }
 
 const getMetadataObject = function (settings) {
-  const { metadata, metadataCallback } = settings
-  if (metadataCallback) {
-    return metadataCallback() || {}
+  let metadata
+  if (settings.metadataCallback) {
+    metadata = settings.metadataCallback() || {}
+  } else {
+    metadata = settings.metadata || {}
   }
-  return metadata || {}
+  metadata = { ...metadata }
+  $.each(metadata, (key, value) => {
+    metadata[key] = String(value)
+  })
+  return metadata
+}
+
+const iterateMetadata = function (settings, fn) {
+  const metadata = getMetadataObject(settings)
+  $.each(metadata, (key, value) => {
+    fn(key, value)
+  })
 }
 
 const isObject = function (input) {
@@ -495,5 +508,6 @@ export {
   taskRunner,
   fixedPipe,
   getMetadataObject,
-  isObject
+  isObject,
+  iterateMetadata
 }
