@@ -1,0 +1,74 @@
+.camera__device-select {
+  all: initial;
+  display: none;
+
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  margin: 5px 10px 15px;
+  padding: 10px 60px 10px 10px;
+  width: auto;
+  max-width: 100%;
+  min-width: 100px;
+  height: auto;
+  min-height: 0;
+
+  border-radius: 6px;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+
+  cursor: default;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 20px;
+
+  box-shadow: none;
+  text-shadow: none;
+
+  transition: background .3s, color .3s, border .3s;
+
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-primary-light) 50%), linear-gradient(135deg, var(--color-primary-light) 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) .5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+
+  & svg {
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-primary-light);
+    color: var(--color-primary-light);
+
+    font-weight: normal;
+    font-style: normal;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: 1px;
+  }
+
+  &:active {
+    border-color: var(--color-primary-dark);
+    color: var(--color-primary-dark);
+  }
+
+  @media (--desktop) {
+    padding: 10px 60px 10px 20px;
+
+    font-size: 17.5px;
+    line-height: 25px;
+  }
+}
