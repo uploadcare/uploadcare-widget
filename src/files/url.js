@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { debug } from '../utils/warnings'
 
 import { getPusher } from '../utils/pusher'
-import { defer, splitUrlRegex, jsonp, iterateMetadata } from '../utils'
+import { defer, splitUrlRegex, jsonp, getMetadataObject } from '../utils'
 import { BaseFile } from './base'
 
 // files
@@ -48,7 +48,7 @@ class UrlFile extends BaseFile {
       jsonerrors: 1
     }
 
-    iterateMetadata(this.settings, (key, value) => {
+    $.each(getMetadataObject(this.settings), (key, value) => {
       data[`metadata[${key}]`] = value
     })
 

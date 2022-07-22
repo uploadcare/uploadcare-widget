@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { log, debug } from '../utils/warnings'
-import { jsonp, taskRunner, iterateMetadata } from '../utils'
+import { jsonp, taskRunner, getMetadataObject } from '../utils'
 import { shrinkFile } from '../utils/image-processor'
 
 import { BaseFile } from './base'
@@ -113,7 +113,7 @@ class ObjectFile extends BaseFile {
       formData.append('file_name', this.fileName)
       formData.append('source', this.sourceInfo.source)
 
-      iterateMetadata(this.settings, (key, value) => {
+      $.each(getMetadataObject(this.settings), (key, value) => {
         formData.append(`metadata[${key}]`, value)
       })
 
@@ -200,7 +200,7 @@ class ObjectFile extends BaseFile {
       UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
     }
 
-    iterateMetadata(this.settings, (key, value) => {
+    $.each(getMetadataObject(this.settings), (key, value) => {
       data[`metadata[${key}]`] = value
     })
 

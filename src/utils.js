@@ -464,13 +464,6 @@ const getMetadataObject = function (settings) {
   return metadata
 }
 
-const iterateMetadata = function (settings, fn) {
-  const metadata = getMetadataObject(settings)
-  $.each(metadata, (key, value) => {
-    fn(key, value)
-  })
-}
-
 const isObject = function (input) {
   return Object.prototype.toString.call(input) === '[object Object]'
 }
@@ -508,6 +501,5 @@ export {
   taskRunner,
   fixedPipe,
   getMetadataObject,
-  isObject,
-  iterateMetadata
+  isObject
 }
