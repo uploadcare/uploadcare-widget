@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { Blob, iOSVersion } from '../utils/abilities'
 import { log, debug } from '../utils/warnings'
-import { jsonp, taskRunner } from '../utils'
+import { jsonp, taskRunner, getMetadataObject } from '../utils'
 import { shrinkFile } from '../utils/image-processor'
 
 import { BaseFile } from './base'
@@ -97,12 +97,11 @@ class ObjectFile extends BaseFile {
       return df
     }
     this.directRunner((release) => {
-      var formData
       df.always(release)
       if (this.apiDeferred.state() !== 'pending') {
         return
       }
-      formData = new window.FormData()
+      const formData = new window.FormData()
       formData.append('UPLOADCARE_PUB_KEY', this.settings.publicKey)
       formData.append('signature', this.settings.secureSignature)
       formData.append('expire', this.settings.secureExpire)
@@ -113,6 +112,11 @@ class ObjectFile extends BaseFile {
       formData.append('file', this.__file, this.fileName)
       formData.append('file_name', this.fileName)
       formData.append('source', this.sourceInfo.source)
+
+      $.each(getMetadataObject(this.settings), (key, value) => {
+        formData.append(`metadata[${key}]`, value)
+      })
+
       return this.__autoAbort(
         $.ajax({
           xhr: () => {
@@ -184,8 +188,7 @@ class ObjectFile extends BaseFile {
   }
 
   multipartStart() {
-    var data
-    data = {
+    const data = {
       UPLOADCARE_PUB_KEY: this.settings.publicKey,
       signature: this.settings.secureSignature,
       expire: this.settings.secureExpire,
@@ -196,6 +199,11 @@ class ObjectFile extends BaseFile {
       part_size: this.settings.multipartPartSize,
       UPLOADCARE_STORE: this.settings.doNotStore ? '' : 'auto'
     }
+
+    $.each(getMetadataObject(this.settings), (key, value) => {
+      data[`metadata[${key}]`] = value
+    })
+
     return this.__autoAbort(
       jsonp(
         `${this.settings.urlBase}/multipart/start/?jsonerrors=1`,

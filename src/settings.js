@@ -3,7 +3,7 @@ import { version } from '../package.json'
 
 import { sendFileAPI } from './utils/abilities'
 import { warnOnce } from './utils/warnings'
-import { unique, once, upperCase, normalizeUrl } from './utils'
+import { unique, once, upperCase, normalizeUrl, isObject } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 import { MAX_SQUARE_SIDE } from './utils/canvas-size'
 
@@ -27,7 +27,9 @@ var arrayOptions,
   str2arr,
   transformOptions,
   transforms,
-  urlOptions
+  urlOptions,
+  callbackOptions,
+  objectOptions
 
 defaults = {
   // developer hooks
@@ -63,6 +65,8 @@ defaults = {
   previewProxy: null,
   previewUrlCallback: null,
   remoteTabSessionKey: null,
+  metadata: null,
+  metadataCallback: null,
   // fine tuning
   imagePreviewMaxSize: 25 * 1024 * 1024,
   multipartMinSize: 10 * 1024 * 1024,
@@ -216,6 +220,32 @@ constrainOptions = function (settings, constraints) {
   return settings
 }
 
+callbackOptions = function (settings, keys) {
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const key = keys[i]
+    if (settings[key] && typeof settings[key] !== 'function') {
+      warnOnce(
+        `Option "${key}" is expected to be a function. Instead got: ${typeof settings[
+          key
+        ]}`
+      )
+    }
+  }
+}
+
+objectOptions = function (settings, keys) {
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const key = keys[i]
+    if (settings[key] && !isObject(settings[key])) {
+      warnOnce(
+        `Option "${key}" is expected to be an object. Instead got: ${typeof settings[
+          key
+        ]}`
+      )
+    }
+  }
+}
+
 parseCrop = function (val) {
   var ratio, reRatio
   reRatio = /^([0-9]+)([x:])([0-9]+)\s*(|upscale|minimum)$/i
@@ -300,6 +330,8 @@ normalize = function (settings) {
     'multipartMaxAttempts',
     'parallelDirectUploads'
   ])
+  callbackOptions(settings, ['previewUrlCallback', 'metadataCallback'])
+  objectOptions(settings, ['metadata'])
   transformOptions(settings, transforms)
   constrainOptions(settings, constraints)
   integrationToUserAgent(settings)

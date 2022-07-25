@@ -450,6 +450,24 @@ const fixedPipe = function (promise, ...fns) {
   }).promise()
 }
 
+const getMetadataObject = function (settings) {
+  let metadata
+  if (settings.metadataCallback) {
+    metadata = settings.metadataCallback() || {}
+  } else {
+    metadata = settings.metadata || {}
+  }
+  metadata = { ...metadata }
+  $.each(metadata, (key, value) => {
+    metadata[key] = String(value)
+  })
+  return metadata
+}
+
+const isObject = function (input) {
+  return Object.prototype.toString.call(input) === '[object Object]'
+}
+
 export {
   unique,
   defer,
@@ -481,5 +499,7 @@ export {
   jsonp,
   canvasToBlob,
   taskRunner,
-  fixedPipe
+  fixedPipe,
+  getMetadataObject,
+  isObject
 }

@@ -1,18 +1,22 @@
 name: Ship js trigger
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types:
+      - closed
 jobs:
   build:
-    name: Build
+    name: Release
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/v')
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: master
+      - uses: actions/setup-node@v2
         with:
           registry-url: "https://registry.npmjs.org"
-      - run: git switch master
+          node-version: '16'
       - run: npm ci
       - run: npm run release:trigger
         env:

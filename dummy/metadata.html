@@ -1,0 +1,33 @@
+<meta charset="UTF-8" />
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<script>
+  UPLOADCARE_PUBLIC_KEY = 'demopublickey'
+  UPLOADCARE_DEBUG_UPLOADS = true
+  UPLOADCARE_METADATA = {
+    globalObject: 'value'
+  }
+  UPLOADCARE_METADATA_CALLBACK = () => ({
+    globalCallback: 'value'
+  })
+</script>
+<script src="./uploadcare.full.js"></script>
+
+<p>
+  Widget:
+  <input type="hidden" role="uploadcare-uploader" />
+</p>
+
+<button>open dialog</button>
+
+<script>
+  const btn = document.querySelectorAll('button')
+
+  btn[0].addEventListener('click', () => {
+    uploadcare.openDialog(null, {
+      metadata: {dialogObject: 'value'},
+      metadataCallback: () => ({dialogCallback: 'value'})
+    }).done(function(file) {
+      console.log(file)
+    })
+  })
+</script>
