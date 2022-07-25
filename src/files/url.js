@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { debug } from '../utils/warnings'
 
 import { getPusher } from '../utils/pusher'
-import { defer, splitUrlRegex, jsonp } from '../utils'
+import { defer, splitUrlRegex, jsonp, getMetadataObject } from '../utils'
 import { BaseFile } from './base'
 
 // files
@@ -34,11 +34,10 @@ class UrlFile extends BaseFile {
   }
 
   __startUpload() {
-    var data, df, pollWatcher, pusherWatcher
-    df = $.Deferred()
-    pusherWatcher = new PusherWatcher(this.settings)
-    pollWatcher = new PollWatcher(this.settings)
-    data = {
+    const df = $.Deferred()
+    const pusherWatcher = new PusherWatcher(this.settings)
+    const pollWatcher = new PollWatcher(this.settings)
+    const data = {
       pub_key: this.settings.publicKey,
       signature: this.settings.secureSignature,
       expire: this.settings.secureExpire,
@@ -48,6 +47,10 @@ class UrlFile extends BaseFile {
       store: this.settings.doNotStore ? '' : 'auto',
       jsonerrors: 1
     }
+
+    $.each(getMetadataObject(this.settings), (key, value) => {
+      data[`metadata[${key}]`] = value
+    })
 
     defer(() => {
       if (this.apiDeferred.state() !== 'pending') {
