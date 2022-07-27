@@ -4,6 +4,7 @@ import { fileSelectDialog, canvasToBlob } from '../../utils'
 import { tpl } from '../../templates'
 import find from '../../utils/find'
 import { isWindowDefined } from '../../utils/is-window-defined'
+import { canUsePermissionsApi } from '../../utils/abilities'
 
 var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
@@ -21,6 +22,7 @@ class CameraTab {
     this.__stopRecording = this.__stopRecording.bind(this)
     this.__cancelRecording = this.__cancelRecording.bind(this)
     this.__onDeviceSelect = this.__onDeviceSelect.bind(this)
+    this.__requestDevicesList = this.__requestDevicesList.bind(this)
     this.container = container1
     this.tabButton = tabButton
     this.dialogApi = dialogApi
@@ -67,6 +69,19 @@ class CameraTab {
     return this.dialogApi.switchTab('preview')
   }
 
+  __subscribePermissions() {
+    navigator.permissions
+      .query({ name: 'camera' })
+      .then((permissionsResponse) => {
+        permissionsResponse.addEventListener('change', () => {
+          this.__requestDevicesList()
+        })
+      })
+      .catch(() => {
+        // do nothing
+      })
+  }
+
   __initCamera() {
     this.__loaded = false
     this.mirrored = this.settings.cameraMirrorDefault
@@ -90,10 +105,14 @@ class CameraTab {
       .on('click', this.__mirror)
     this.container
       .find('.uploadcare--camera__button_type_retry')
-      .on('click', this.__requestCamera)
+      .on('click', this.__requestDevicesList)
     this.container
       .find('.uploadcare--camera__device-select')
       .on('change', this.__onDeviceSelect)
+
+    if (canUsePermissionsApi()) {
+      this.__subscribePermissions()
+    }
 
     if (
       !this.MediaRecorder ||
@@ -110,7 +129,7 @@ class CameraTab {
     this.dialogApi.progress((name) => {
       if (name === this.name) {
         if (!this.__loaded) {
-          this.__requestCamera()
+          this.__requestDevicesList()
         }
       } else {
         if (this.__loaded && isSecure) {
@@ -123,34 +142,33 @@ class CameraTab {
 
   __checkCompatibility() {
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-      this.enumerateVideoDevices = function (successCallback, errorCallback) {
-        return navigator.mediaDevices
-          .enumerateDevices()
-          .then((mediaDevices) => {
-            const videoDevices = mediaDevices.filter(
-              (device) => device.kind === 'videoinput'
-            )
-            successCallback(videoDevices)
-          })
-          .catch(errorCallback)
-      }
+      this.enumerateVideoDevices = () =>
+        navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
+          const videoDevices = mediaDevices
+            .filter((device) => device.kind === 'videoinput')
+          return videoDevices
+        })
     }
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      this.getUserMedia = function (
-        constraints,
-        successCallback,
-        errorCallback
-      ) {
-        return navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then(successCallback)
-          .catch(errorCallback)
+      this.getUserMedia = function (constraints) {
+        return navigator.mediaDevices.getUserMedia(constraints)
       }
     } else {
-      this.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
+      this.getUserMedia = function (constraints) {
+        const getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia
+
+        const df = $.Deferred()
+        getUserMedia.call(
+          navigator,
+          constraints,
+          (stream) => df.resolve(stream),
+          (error) => df.reject(error)
+        )
+        return df.promise()
+      }
     }
     this.URL = window.URL || window.webkitURL
     this.MediaRecorder = window.MediaRecorder
@@ -185,40 +203,56 @@ class CameraTab {
     this.container.find('.uploadcare--camera__button').focus()
   }
 
+  __requestDevicesList() {
+    if (this.enumerateVideoDevices) {
+      this.getUserMedia({ audio: true, video: true })
+        .then(() => this.enumerateVideoDevices())
+        .then((devices) => {
+          this.__deviceId = devices?.[0]?.deviceId
+          this.__renderDevicesList(devices)
+        })
+        .then(() => this.__requestCamera())
+        .catch(() => this.__requestCamera())
+    } else {
+      this.__requestCamera()
+    }
+  }
+
   __requestCamera() {
     this.__loaded = true
 
-    return this.getUserMedia.call(
-      navigator,
-      {
-        audio: this.settings.enableAudioRecording,
-        video: {
-          width: {
-            ideal: 1920
-          },
-          height: {
-            ideal: 1080
-          },
-          frameRate: {
-            ideal: 30
-          },
-          // getUserMedia will ignore invalid or undefined deviceId value
-          deviceId: this.__deviceId
+    const constraints = {
+      audio: this.settings.enableAudioRecording,
+      video: {
+        width: {
+          ideal: 1920
+        },
+        height: {
+          ideal: 1080
+        },
+        frameRate: {
+          ideal: 30
         }
-      },
-      (stream) => {
+      }
+    }
+    if (this.__deviceId) {
+      constraints.video.deviceId = {
+        exact: this.__deviceId
+      }
+    }
+
+    return this.getUserMedia
+      .call(navigator, constraints)
+      .then((stream) => {
         this.__setState('ready')
         this.__stream = stream
 
+        stream.addEventListener('inactive', () => {
+          this.__setState('denied')
+        })
+
         const currentDeviceId = this.__getDeviceIdByStream(stream)
         this.__deviceId = currentDeviceId
-
-        if (this.enumerateVideoDevices) {
-          this.enumerateVideoDevices(
-            (devices) => this.__onGotDevices(devices),
-            () => this.__onGotDevicesError()
-          )
-        }
 
         if ('srcObject' in this.video[0]) {
           this.video.prop('srcObject', stream)
@@ -234,8 +268,8 @@ class CameraTab {
           }
           return this.video[0].play()
         }
-      },
-      (error) => {
+      })
+      .catch((error) => {
         const handle = Object.create(null)
         handle.NotFoundError = () => {
           this.__setState('not-founded')
@@ -250,8 +284,7 @@ class CameraTab {
         ;(handle[error.name] || handle.other)()
         this.__loaded = false
         return this.__loaded
-      }
-    )
+      })
   }
 
   __revoke() {
@@ -402,42 +435,27 @@ class CameraTab {
     this.__requestCamera()
   }
 
-  __onGotDevices(devices, currentDeviceId) {
+  __renderDevicesList(devices) {
     const deviceSelect = this.container.find(
       '.uploadcare--camera__device-select'
     )
-    if (devices.length <= 1) {
-      deviceSelect.empty()
-      deviceSelect.toggleClass(
-        'uploadcare--camera__device-select_has-options',
-        false
-      )
-      return
-    }
     deviceSelect.empty()
-    devices.forEach((device) => {
+    devices.forEach((device, idx) => {
+      const selected = this.__deviceId
+        ? device.deviceId === this.__deviceId
+        : idx === 0
       deviceSelect.append(
         $('<option>', {
           value: device.deviceId,
-          text: device.label,
-          selected: device.deviceId === this.__deviceId
+          // Firefox could return empty labels in some cases, so fallback it to the camera index
+          text: device.label || idx + 1,
+          selected: selected
         })
       )
-      deviceSelect.toggleClass(
-        'uploadcare--camera__device-select_has-options',
-        true
-      )
     })
-  }
-
-  __onGotDevicesError() {
-    const deviceSelect = this.container.find(
-      '.uploadcare--camera__device-select'
-    )
-    deviceSelect.empty()
     deviceSelect.toggleClass(
       'uploadcare--camera__device-select_has-options',
-      false
+      true
     )
   }
 
