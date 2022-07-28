@@ -144,8 +144,9 @@ class CameraTab {
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       this.enumerateVideoDevices = () =>
         navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
-          const videoDevices = mediaDevices
-            .filter((device) => device.kind === 'videoinput')
+          const videoDevices = mediaDevices.filter(
+            (device) => device.kind === 'videoinput'
+          )
           return videoDevices
         })
     }
@@ -205,7 +206,7 @@ class CameraTab {
 
   __requestDevicesList() {
     if (this.enumerateVideoDevices) {
-      this.getUserMedia({ audio: true, video: true })
+      this.getUserMedia(this.__baseConstraints())
         .then(() => this.enumerateVideoDevices())
         .then((devices) => {
           this.__deviceId = devices?.[0]?.deviceId
@@ -218,10 +219,8 @@ class CameraTab {
     }
   }
 
-  __requestCamera() {
-    this.__loaded = true
-
-    const constraints = {
+  __baseConstraints() {
+    return {
       audio: this.settings.enableAudioRecording,
       video: {
         width: {
@@ -235,6 +234,12 @@ class CameraTab {
         }
       }
     }
+  }
+
+  __requestCamera() {
+    this.__loaded = true
+
+    const constraints = this.__baseConstraints()
     if (this.__deviceId) {
       constraints.video.deviceId = {
         exact: this.__deviceId
