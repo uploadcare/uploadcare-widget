@@ -5,6 +5,7 @@ import { tpl } from '../../templates'
 import find from '../../utils/find'
 import { isWindowDefined } from '../../utils/is-window-defined'
 import { canUsePermissionsApi } from '../../utils/abilities'
+import locale from '../../locale'
 
 var isSecure = isWindowDefined() && document.location.protocol === 'https:'
 
@@ -206,9 +207,18 @@ class CameraTab {
 
   __requestDevicesList() {
     if (this.enumerateVideoDevices) {
-      this.getUserMedia(this.__baseConstraints())
-        .then(() => this.enumerateVideoDevices())
+      // before calling enumerateVideoDevices we should request user permissions with getUserMedia
+      // see https://www.w3.org/TR/mediacapture-streams/
+      this.getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          return this.enumerateVideoDevices().then((devices) => {
+            // after calling enumerateVideoDevices we need to stop media tracks
+            stream.getTracks().forEach((track) => track.stop())
+            return devices
+          })
+        })
         .then((devices) => {
+          // select first device, it should be default one in browser/os
           this.__groupId = devices?.[0]?.groupId
           this.__renderDevicesList(devices)
         })
@@ -219,8 +229,14 @@ class CameraTab {
     }
   }
 
-  __baseConstraints() {
-    return {
+  __requestCamera() {
+    if (this.__stream) {
+      this.__revoke()
+    }
+
+    this.__loaded = true
+
+    const constraints = {
       audio: this.settings.enableAudioRecording,
       video: {
         width: {
@@ -234,12 +250,6 @@ class CameraTab {
         }
       }
     }
-  }
-
-  __requestCamera() {
-    this.__loaded = true
-
-    const constraints = this.__baseConstraints()
     if (this.__groupId) {
       constraints.video.groupId = {
         exact: this.__groupId
@@ -315,7 +325,6 @@ class CameraTab {
       }
     }
     this.__stream = null
-    return this.__stream
   }
 
   __mirror() {
@@ -439,7 +448,6 @@ class CameraTab {
     const groupId = e.target.value
     this.__groupId = groupId
 
-    this.__revoke()
     this.__requestCamera()
   }
 
@@ -455,8 +463,10 @@ class CameraTab {
       deviceSelect.append(
         $('<option>', {
           value: device.groupId,
-          // Firefox could return empty labels in some cases, so fallback it to the camera index
-          text: device.label || idx + 1,
+          // Browsers could return empty labels in some cases, so fallback it to the camera index
+          text:
+            device.label ||
+            `${locale.t('dialog.tabs.camera.camera')} #${idx + 1}`,
           selected: selected
         })
       )
