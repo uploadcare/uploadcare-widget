@@ -209,7 +209,7 @@ class CameraTab {
       this.getUserMedia(this.__baseConstraints())
         .then(() => this.enumerateVideoDevices())
         .then((devices) => {
-          this.__deviceId = devices?.[0]?.deviceId
+          this.__groupId = devices?.[0]?.groupId
           this.__renderDevicesList(devices)
         })
         .then(() => this.__requestCamera())
@@ -240,9 +240,12 @@ class CameraTab {
     this.__loaded = true
 
     const constraints = this.__baseConstraints()
-    if (this.__deviceId) {
-      constraints.video.deviceId = {
-        exact: this.__deviceId
+    if (this.__groupId) {
+      constraints.video.groupId = {
+        exact: this.__groupId
+      }
+      constraints.audio = constraints.audio && {
+        exact: this.__groupId
       }
     }
 
@@ -256,8 +259,8 @@ class CameraTab {
           this.__setState('denied')
         })
 
-        const currentDeviceId = this.__getDeviceIdByStream(stream)
-        this.__deviceId = currentDeviceId
+        const currentGroupId = this.__getGroupIdByStream(stream)
+        this.__groupId = currentGroupId
 
         if ('srcObject' in this.video[0]) {
           this.video.prop('srcObject', stream)
@@ -433,8 +436,8 @@ class CameraTab {
   }
 
   __onDeviceSelect(e) {
-    const deviceId = e.target.value
-    this.__deviceId = deviceId
+    const groupId = e.target.value
+    this.__groupId = groupId
 
     this.__revoke()
     this.__requestCamera()
@@ -446,12 +449,12 @@ class CameraTab {
     )
     deviceSelect.empty()
     devices.forEach((device, idx) => {
-      const selected = this.__deviceId
-        ? device.deviceId === this.__deviceId
+      const selected = this.__groupId
+        ? device.groupId === this.__groupId
         : idx === 0
       deviceSelect.append(
         $('<option>', {
-          value: device.deviceId,
+          value: device.groupId,
           // Firefox could return empty labels in some cases, so fallback it to the camera index
           text: device.label || idx + 1,
           selected: selected
@@ -464,15 +467,15 @@ class CameraTab {
     )
   }
 
-  __getDeviceIdByStream(stream) {
+  __getGroupIdByStream(stream) {
     const videoTracks = stream.getVideoTracks()
     if (videoTracks.length === 0) {
       return
     }
     const firstTrack = videoTracks[0]
-    const { deviceId } = firstTrack.getSettings()
+    const { groupId } = firstTrack.getSettings()
 
-    return deviceId
+    return groupId
   }
 
   __guessExtensionByMime(mime) {
