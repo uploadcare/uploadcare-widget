@@ -70,6 +70,10 @@ const FileReader =
     : undefined) &&
   window.FileReader
 
+const canUsePermissionsApi = () => {
+  return typeof navigator.permissions !== 'undefined'
+}
+
 export {
   FileReader,
   URL,
@@ -80,5 +84,6 @@ export {
   canvas,
   dragAndDrop,
   sendFileAPI,
-  fileAPI
+  fileAPI,
+  canUsePermissionsApi
 }

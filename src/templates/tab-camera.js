@@ -9,6 +9,8 @@ const tabCamera = () => html`
       ${locale.t('dialog.tabs.camera.title')}
     </div>
 
+    <select class="uploadcare--camera__device-select"></select>
+
     <div class="uploadcare--media uploadcare--camera__video-container">
       <video
         muted

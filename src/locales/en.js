@@ -75,6 +75,7 @@ const translations = {
         button: 'Upload'
       },
       camera: {
+        camera: 'Camera',
         title: 'File from web camera',
         capture: 'Take a photo',
         mirror: 'Mirror',
