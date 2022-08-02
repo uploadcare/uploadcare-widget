@@ -1,3 +1,13 @@
+# [3.18.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.2...v3.18.0) (2022-08-02)
+
+
+### Features
+
+* `metadata` and `metadataCallback` settings ([#915](https://github.com/uploadcare/uploadcare-widget/issues/915)) ([c7e1dc4](https://github.com/uploadcare/uploadcare-widget/commit/c7e1dc47ac5746c4dd4184d83d9bff5d29286853))
+* camera selector ([#917](https://github.com/uploadcare/uploadcare-widget/issues/917)) ([5736389](https://github.com/uploadcare/uploadcare-widget/commit/5736389f121e95949f75073414ae3059cd5653dd))
+
+
+
 ## [3.17.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.1...v3.17.2) (2022-04-04)
 
 
