@@ -1,0 +1,23 @@
+<meta charset="UTF-8" />
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        frame-src https://social.uploadcare.com/;
+        script-src-elem https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js;
+        img-src https://ucarecdn.com blob: data:;
+        media-src blob:;
+        style-src 'sha256-zPKgrZOwesgub9ctO8D9XspdYyx4SJVh59exthgCPjw=';
+        connect-src https://upload.uploadcare.com https://uploadcare.s3-accelerate.amazonaws.com wss://ws.pusherapp.com ws://ws.pusherapp.com
+      "
+>
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-public-key="demopublickey"
+    data-multiple="true"
+    data-preview-step=""
+  />
