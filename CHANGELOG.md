@@ -1,3 +1,17 @@
+# [3.19.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.18.0...v3.19.0) (2022-08-26)
+
+
+### Bug Fixes
+
+* do not use inline styles inside icons to prevent `unsafe-hashes` CSP flag usage ([5af1ced](https://github.com/uploadcare/uploadcare-widget/commit/5af1cedaf0d9dee37d194831310da28463e8bf46))
+
+
+### Features
+
+* add `style-hashes.txt` to the package root with SHA hashes for CSP ([f4d80d9](https://github.com/uploadcare/uploadcare-widget/commit/f4d80d9e8d20f32c0510b1457a600cc15df6020a))
+
+
+
 # [3.18.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.17.2...v3.18.0) (2022-08-02)
 
 
