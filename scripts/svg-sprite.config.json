@@ -8,10 +8,18 @@
   },
   "mode": {
     "symbol": {
-      "inline": true,
+      "inline": false,
       "css": false,
       "dest": "",
       "sprite": "icons.html"
+    }
+  },
+  "svg": {
+    "xmlDeclaration": false,
+    "rootAttributes": {
+      "class": "uploadcare--icons",
+      "width": "0",
+      "height": "0"
     }
   }
 }
