@@ -11,8 +11,7 @@
     "uploadcare.js",
     "uploadcare.min.js",
     "uploadcare.lang.en.js",
-    "uploadcare.lang.en.min.js",
-    "style-hashes.txt"
+    "uploadcare.lang.en.min.js"
   ],
   "scripts": {
     "help:dev": "SCRIPTS FOR LOCAL DEVELOPMENT",
@@ -26,8 +25,7 @@
     "build:css:min": "cross-env NODE_ENV=production npm run build:css",
     "build:js": "rollup -c",
     "build:public": "rimraf public/* && cpy dummy/* public && cpy uploadcare.full.js public",
-    "build:style-hashes": "node ./generate-style-hashes.js",
-    "build": "npm run build:svg && npm run build:css:min && npm run build:js && npm run build:public && npm run build:style-hashes",
+    "build": "npm run build:svg && npm run build:css:min && npm run build:js && npm run build:public",
     "help:test": "SCRIPTS FOR TESTS AND CODE QUALITY CHECKS",
     "format": "prettier --write \"**/*.js\"",
     "size": "size-limit",

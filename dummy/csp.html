@@ -4,15 +4,21 @@
       content="
         default-src 'self';
         frame-src https://social.uploadcare.com/;
-        script-src-elem https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js;
+        script-src-elem 'self' 'nonce-local' https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js;
         img-src https://ucarecdn.com blob: data:;
         media-src blob:;
-        style-src 'sha256-zPKgrZOwesgub9ctO8D9XspdYyx4SJVh59exthgCPjw=';
+        style-src 'sha256-z2tSHZZND7S0k4apE+cUuKYecpmTP6hEpQNUsBKJ7/k=' 'sha256-Svhv+Czr4YhnAxqEBWYz7xQFr62J0XStJJwc2l72URI=';
         connect-src https://upload.uploadcare.com https://uploadcare.s3-accelerate.amazonaws.com wss://ws.pusherapp.com ws://ws.pusherapp.com
       "
 >
 
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<script src="./uploadcare.full.js"></script>
+<!-- <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script> -->
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js"></script>
+
+<script nonce="local">
+  uploadcare.registerTab('preview', uploadcareTabEffects)
+</script>
 
 <input
     type="hidden"
