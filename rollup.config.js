@@ -65,7 +65,7 @@ const bundle = (input, output, options = {}) => ({
     banner(`/**
  * @license ${pkg.name} v${pkg.version}
  *
- * Copyright (c) 2020 Uploadcare, Inc.
+ * Copyright (c) ${new Date().getFullYear()} Uploadcare, Inc.
  *
  * This source code is licensed under the BSD 2-Clause License
  * found in the LICENSE file in the root directory of this source tree.
