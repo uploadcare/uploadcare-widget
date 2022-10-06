@@ -43,7 +43,8 @@ const loadFileGroup = function (groupIdOrUrl, settings) {
       {
         headers: {
           'X-UC-User-Agent': settings._userAgent
-        }
+        },
+        retryConfig: settings.retryConfig
       }
     )
       .fail((error) => {

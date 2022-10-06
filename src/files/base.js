@@ -91,7 +91,8 @@ class BaseFile {
       {
         headers: {
           'X-UC-User-Agent': this.settings._userAgent
-        }
+        },
+        retryConfig: this.settings.retryConfig
       }
     )
       .fail((error) => {

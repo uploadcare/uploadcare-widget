@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import '../utils/jquery-ajax-retry'
 import '../vendor/jquery-xdr'
 
 import { presets, defaults, common } from '../settings'
