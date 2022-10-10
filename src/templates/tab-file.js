@@ -44,7 +44,7 @@ const tabFile = () => html`
       <div class="uploadcare--file-sources__items">
         <button
           type="button"
-          class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources_item"
+          class="uploadcare--button uploadcare--button_icon uploadcare--file-source uploadcare--file-source_all uploadcare--file-sources__item"
         >
           <svg
             role="presentation"
