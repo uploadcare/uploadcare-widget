@@ -15,10 +15,12 @@ var arrayOptions,
   constraints,
   defaultPreviewUrlCallback,
   defaults,
+  initialSettings,
   flagOptions,
   intOptions,
   integration,
   integrationToUserAgent,
+  buildRetryConfig,
   normalize,
   parseCrop,
   parseShrink,
@@ -73,7 +75,12 @@ defaults = {
   multipartPartSize: 5 * 1024 * 1024,
   multipartMinLastPartSize: 1024 * 1024,
   multipartConcurrency: 4,
-  multipartMaxAttempts: 3,
+  // `multipartMaxAttempts` is deprecated, value will be assigned to `retryAttempts` if set
+  multipartMaxAttempts: null,
+  retryAttempts: 3,
+  retryThrottledAttempts: 10,
+  retryBaseTimeout: 1000,
+  retryFactor: 2,
   parallelDirectUploads: 10,
   passWindowOpen: false,
   // camera
@@ -89,6 +96,7 @@ defaults = {
   debugUploads: false,
   integration: ''
 }
+initialSettings = $.extend({}, defaults)
 transforms = {
   multipleMax: {
     from: 0,
@@ -194,6 +202,23 @@ integrationToUserAgent = function (settings) {
     settings.publicKey
   } (JavaScript${settings.integration ? `; ${settings.integration}` : ''})`
   return settings
+}
+
+buildRetryConfig = function (settings) {
+  if (
+    settings.retryAttempts === initialSettings.retryAttempts &&
+    settings.multipartMaxAttempts !== null
+  ) {
+    settings.retryAttempts = settings.multipartMaxAttempts
+  }
+
+  settings.retryConfig = {
+    baseTimeout: settings.retryBaseTimeout,
+    factor: settings.retryFactor,
+    attempts: settings.retryAttempts,
+    debugUploads: settings.debugUploads,
+    throttledAttempts: settings.retryThrottledAttempts
+  }
 }
 
 transformOptions = function (settings, transforms) {
@@ -305,7 +330,6 @@ defaultPreviewUrlCallback = function (url, info) {
 }
 
 normalize = function (settings) {
-  var skydriveIndex
   arrayOptions(settings, ['tabs', 'preferredTypes', 'videoPreferredMimeTypes'])
   urlOptions(settings, ['cdnBase', 'socialBase', 'urlBase', 'scriptBase'])
   flagOptions(settings, [
@@ -328,6 +352,10 @@ normalize = function (settings) {
     'multipartMinLastPartSize',
     'multipartConcurrency',
     'multipartMaxAttempts',
+    'retryAttempts',
+    'retryThrottledAttempts',
+    'retryBaseTimeout',
+    'retryFactor',
     'parallelDirectUploads'
   ])
   callbackOptions(settings, ['previewUrlCallback', 'metadataCallback'])
@@ -335,6 +363,7 @@ normalize = function (settings) {
   transformOptions(settings, transforms)
   constrainOptions(settings, constraints)
   integrationToUserAgent(settings)
+  buildRetryConfig(settings)
   if (settings.crop !== false && !$.isArray(settings.crop)) {
     if (/^(disabled?|false|null)$/i.test(settings.crop)) {
       settings.crop = false
@@ -360,7 +389,7 @@ normalize = function (settings) {
   if (settings.previewProxy && !settings.previewUrlCallback) {
     settings.previewUrlCallback = defaultPreviewUrlCallback
   }
-  skydriveIndex = settings.tabs.indexOf('skydrive')
+  const skydriveIndex = settings.tabs.indexOf('skydrive')
   if (skydriveIndex !== -1) {
     settings.tabs[skydriveIndex] = 'onedrive'
   }

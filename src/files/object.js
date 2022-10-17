@@ -74,7 +74,7 @@ class ObjectFile extends BaseFile {
   }
 
   __autoAbort(xhr) {
-    this.apiDeferred.fail(xhr.abort)
+    this.apiDeferred.fail(() => xhr.abort())
     return xhr
   }
 
@@ -143,9 +143,10 @@ class ObjectFile extends BaseFile {
           contentType: false, // For correct boundary string
           processData: false,
           data: formData,
-          dataType: 'json',
-          error: df.reject,
-          success: (data) => {
+          dataType: 'json'
+        })
+          .retry(this.settings.retryConfig)
+          .done((data) => {
             if (data != null ? data.file : undefined) {
               this.fileId = data.file
               return df.resolve()
@@ -155,8 +156,8 @@ class ObjectFile extends BaseFile {
             } else {
               return df.reject()
             }
-          }
-        })
+          })
+          .fail(df.reject)
       )
     })
     return df
@@ -212,7 +213,8 @@ class ObjectFile extends BaseFile {
         {
           headers: {
             'X-UC-User-Agent': this.settings._userAgent
-          }
+          },
+          retryConfig: this.settings.retryConfig
         }
       )
     ).fail((error) => {
@@ -254,24 +256,22 @@ class ObjectFile extends BaseFile {
     submittedParts = 0
     submittedBytes = 0
     submit = () => {
-      var attempts, blob, bytesToSubmit, partNo, retry
       if (submittedBytes >= this.fileSize) {
         return
       }
-      bytesToSubmit = submittedBytes + this.settings.multipartPartSize
+      let bytesToSubmit = submittedBytes + this.settings.multipartPartSize
       if (
         this.fileSize <
         bytesToSubmit + this.settings.multipartMinLastPartSize
       ) {
         bytesToSubmit = this.fileSize
       }
-      blob = this.__file.slice(submittedBytes, bytesToSubmit)
+      const blob = this.__file.slice(submittedBytes, bytesToSubmit)
       submittedBytes = bytesToSubmit
-      partNo = submittedParts
+      const partNo = submittedParts
       inProgress += 1
       submittedParts += 1
-      attempts = 0
-      return (retry = () => {
+      return (() => {
         if (this.apiDeferred.state() !== 'pending') {
           return
         }
@@ -299,29 +299,29 @@ class ObjectFile extends BaseFile {
             type: 'PUT',
             processData: false,
             contentType: this.fileType,
-            data: blob,
-            error: () => {
-              attempts += 1
-              if (attempts > this.settings.multipartMaxAttempts) {
+            data: blob
+          })
+            .retry({
+              ...this.settings.retryConfig,
+              onAttemptFail: ({ attempt }) => {
                 if (this.settings.debugUploads) {
-                  log(`Part #${partNo} and file upload is failed.`, uuid)
+                  debug(`Part #${partNo}(${attempt}) upload is failed.`, uuid)
                 }
-                return df.reject()
-              } else {
-                if (this.settings.debugUploads) {
-                  debug(`Part #${partNo}(${attempts}) upload is failed.`, uuid)
-                }
-                return retry()
               }
-            },
-            success: function () {
+            })
+            .done(() => {
               inProgress -= 1
               submit()
               if (!inProgress) {
                 return df.resolve()
               }
-            }
-          })
+            })
+            .fail(() => {
+              if (this.settings.debugUploads) {
+                log(`Part #${partNo} and file upload is failed.`, uuid)
+              }
+              return df.reject()
+            })
         )
       })()
     }
@@ -349,7 +349,8 @@ class ObjectFile extends BaseFile {
         {
           headers: {
             'X-UC-User-Agent': this.settings._userAgent
-          }
+          },
+          retryConfig: this.settings.retryConfig
         }
       )
     ).fail((error) => {

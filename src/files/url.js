@@ -59,7 +59,8 @@ class UrlFile extends BaseFile {
       return jsonp(`${this.settings.urlBase}/from_url/`, 'GET', data, {
         headers: {
           'X-UC-User-Agent': this.settings._userAgent
-        }
+        },
+        retryConfig: this.settings.retryConfig
       })
         .fail((error) => {
           if (this.settings.debugUploads) {
@@ -206,7 +207,8 @@ class PollWatcher {
       {
         headers: {
           'X-UC-User-Agent': this.settings._userAgent
-        }
+        },
+        retryConfig: this.settings.retryConfig
       }
     )
       .fail((error) => {

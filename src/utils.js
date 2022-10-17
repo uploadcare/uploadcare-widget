@@ -333,33 +333,33 @@ const ajaxDefaults = {
   cache: false
 }
 
-const jsonp = function (url, type, data, settings = {}) {
-  return $.ajax($.extend({ url, type, data }, settings, ajaxDefaults)).then(
-    function (data) {
-      if (data.error) {
-        let message, code
-        if (typeof data.error === 'string') {
-          // /from_url/state/ case
-          message = data.error
-          code = data.error_code
-        } else {
-          // other cases (direct/multipart/group)
-          message = data.error.content
-          code = data.error.error_code
-        }
-        return $.Deferred().reject({ message, code })
-      }
-
-      return data
-    },
-    function (_, textStatus, errorThrown) {
-      var text
-      text = `${textStatus} (${errorThrown})`
+const jsonp = function (url, type, data, options = {}) {
+  const jqXHR = $.ajax($.extend({ url, type, data }, options, ajaxDefaults))
+    .retry(options.retryConfig)
+    .fail((_, textStatus, errorThrown) => {
+      const text = `${textStatus} (${errorThrown})`
       warn(`JSONP unexpected error: ${text} while loading ${url}`)
+    })
 
-      return text
+  const df = jqXHR.then(function (data) {
+    if (data.error) {
+      let message, code
+      if (typeof data.error === 'string') {
+        // /from_url/state/ case
+        message = data.error
+        code = data.error_code
+      } else {
+        // other cases (direct/multipart/group)
+        message = data.error.content
+        code = data.error.error_code
+      }
+      return $.Deferred().reject({ message, code })
     }
-  )
+
+    return data
+  })
+  df.abort = jqXHR.abort.bind(jqXHR)
+  return df
 }
 
 const canvasToBlob = function (canvas, type, quality, callback) {
