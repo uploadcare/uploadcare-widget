@@ -6,24 +6,24 @@ const REQUEST_WAS_THROTTLED_CODE = 'RequestThrottledError'
 const DEFAULT_THROTTLED_TIMEOUT = 15000
 
 /**
- * @typedef {Object} RetryState
- * @property {Number} attempt
- * @property {Number} timeoutId
- * @property {JQuery.jqXHR} jqXHR
+ * @typedef {object} RetryState
+ * @property {number} [attempt]
+ * @property {number} [timeoutId]
+ * @property {JQuery.jqXHR} [jqXHR]
  */
 
 /**
- * @typedef {Object} RetryConfig
- * @property {Number} baseTimeout
- * @property {Number} attempts
- * @property {Number} throttledAttempts
- * @property {Number} factor
- * @property {Function} onAttemptFail
- * @property {Boolean} debugUploads
+ * @typedef {object} RetryConfig
+ * @property {number} baseTimeout
+ * @property {number} attempts
+ * @property {number} throttledAttempts
+ * @property {number} factor
+ * @property {boolean} debugUploads
+ * @property {Function} [onAttemptFail]
  */
 
 /**
- * @param {JQuery.qjXHR} jqXHR
+ * @param {JQuery.jqXHR} jqXHR
  * @param {RetryConfig} config
  * @param {RetryState} state
  */
@@ -43,7 +43,7 @@ function getRetrySettings(jqXHR, config, state) {
   const isRequestFailed = ['error', 'timeout'].indexOf(jqXHR.statusText) !== -1
   if (isRequestFailed && state.attempt < config.attempts) {
     const retryTimeout = Math.round(
-      config.baseTimeout * config.retryFactor ** state.attempt
+      config.baseTimeout * config.factor ** state.attempt
     )
     return { shouldRetry: true, retryTimeout }
   }
@@ -53,7 +53,7 @@ function getRetrySettings(jqXHR, config, state) {
 
 /**
  *
- * @param {JQuery.qjXHR} jqXHR
+ * @param {JQuery.jqXHR} jqXHR
  * @param {JQuery.AjaxSettings} ajaxSettings
  * @param {RetryConfig} config
  * @param {RetryState} state
@@ -61,7 +61,7 @@ function getRetrySettings(jqXHR, config, state) {
  */
 function createPipeFilter(jqXHR, ajaxSettings, config, state) {
   return (...args) => {
-    const df = new $.Deferred()
+    const df = $.Deferred()
 
     function nextRequest() {
       state.jqXHR = $.ajax(ajaxSettings)
@@ -99,7 +99,7 @@ function createPipeFilter(jqXHR, ajaxSettings, config, state) {
  * @param {JQuery.AjaxSettings} ajaxSettings
  * @param {RetryConfig} retryConfig
  * @param {RetryState} retryState
- * @returns {JQuery.Deferred}
+ * @returns {JQuery.PromiseBase}
  */
 function ajaxRetry(jqXHR, ajaxSettings, retryConfig, retryState) {
   const missedOption = ['baseTimeout', 'attempts', 'factor'].find(
