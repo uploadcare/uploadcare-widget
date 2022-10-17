@@ -1,3 +1,17 @@
+# [3.20.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.19.0...v3.20.0) (2022-10-17)
+
+
+### Bug Fixes
+
+* file source class name typo ([#927](https://github.com/uploadcare/uploadcare-widget/issues/927)) ([212c932](https://github.com/uploadcare/uploadcare-widget/commit/212c932144042cd1f9897bce80602056468c1206))
+
+
+### Features
+
+* request retry mechanics ([#926](https://github.com/uploadcare/uploadcare-widget/issues/926)) ([218f6b9](https://github.com/uploadcare/uploadcare-widget/commit/218f6b9c4047a8c2c24c4195ca7f68000cd9c4cb))
+
+
+
 # [3.19.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.18.0...v3.19.0) (2022-08-29)
 
 
