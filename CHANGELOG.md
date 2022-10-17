@@ -1,4 +1,4 @@
-# [3.20.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.19.0...v3.20.0) (2022-10-17)
+# [3.20.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.19.0...v3.20.0) (2022-10-17) 
 
 
 ### Bug Fixes
