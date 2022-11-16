@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* remove jquery usage at the module root scope ([#941](https://github.com/uploadcare/uploadcare-widget/issues/941)) ([34f3e74](https://github.com/uploadcare/uploadcare-widget/commit/34f3e743b907bbdcda1caadf67786f59e72a9ba3))
+* remove jquery usage at the module root scope, this caused an error `TypeError: $__default.default.extend is not a function` in some environments. ([#941](https://github.com/uploadcare/uploadcare-widget/issues/941)) ([34f3e74](https://github.com/uploadcare/uploadcare-widget/commit/34f3e743b907bbdcda1caadf67786f59e72a9ba3))
 
 
 
