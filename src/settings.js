@@ -96,7 +96,7 @@ defaults = {
   debugUploads: false,
   integration: ''
 }
-initialSettings = $.extend({}, defaults)
+initialSettings = { ...defaults }
 transforms = {
   multipleMax: {
     from: 0,
