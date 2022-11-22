@@ -25,8 +25,11 @@ class BaseFile {
     this.cdnUrlModifiers = null
     this.isImage = null
     this.imageInfo = null
+    this.videoInfo = null
+    this.contentInfo = null
     this.mimeType = null
     this.s3Bucket = null
+    this.metadata = null
     ;(base = this.sourceInfo).source || (base.source = this.sourceName)
     this.__setupValidation()
     this.__initApi()
@@ -115,9 +118,12 @@ class BaseFile {
     this.fileSize = data.size
     this.isImage = data.is_image
     this.imageInfo = data.image_info
+    this.videoInfo = data.video_info
+    this.contentInfo = data.content_info
     this.mimeType = data.mime_type
     this.isStored = data.is_stored
     this.s3Bucket = data.s3_bucket
+    this.metadata = data.metadata
     if (data.default_effects) {
       this.cdnUrlModifiers = '-/' + data.default_effects
     }
@@ -160,11 +166,14 @@ class BaseFile {
       isStored: this.isStored,
       isImage: !this.s3Bucket && this.isImage,
       originalImageInfo: this.imageInfo,
+      originalVideoInfo: this.videoInfo,
+      originalContentInfo: this.contentInfo,
       mimeType: this.mimeType,
       originalUrl: this.fileId ? urlBase : null,
       cdnUrl: this.fileId ? `${urlBase}${this.cdnUrlModifiers || ''}` : null,
       cdnUrlModifiers: this.cdnUrlModifiers,
-      sourceInfo: this.sourceInfo
+      sourceInfo: this.sourceInfo,
+      metadata: this.metadata
     }
   }
 
