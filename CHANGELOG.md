@@ -1,3 +1,12 @@
+# [3.21.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.20.1...v3.21.0) (2022-11-23)
+
+
+### Features
+
+* add `originalVideoInfo`, `originalContentInfo` and `metadata` properties to the `fileInfo` object ([#945](https://github.com/uploadcare/uploadcare-widget/issues/945)) ([f568260](https://github.com/uploadcare/uploadcare-widget/commit/f5682603875feb4e89f3be74f68f33230e86392e)). Check out [our docs](https://uploadcare.com/docs/file-uploader-api/files-uploads/#file-info) for more info.
+
+
+
 ## [3.20.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.20.0...v3.20.1) (2022-11-16)
 
 
