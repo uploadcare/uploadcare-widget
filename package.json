@@ -63,7 +63,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-standard": "4.1.0",
-    "nodemon": "2.0.15",
+    "nodemon": "2.0.22",
     "postcss-calc": "8.2.4",
     "postcss-cli": "10.1.0",
     "postcss-color-function": "4.1.0",
