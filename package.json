@@ -46,7 +46,7 @@
     "@babel/preset-env": "7.16.11",
     "@size-limit/preset-big-lib": "8.2.4",
     "@types/jquery": "^3.5.14",
-    "autoprefixer": "7.2.6",
+    "autoprefixer": "^10.4.14",
     "aws-sdk": "2.1357.0",
     "babel-plugin-html-tag": "2.0.1",
     "cpy-cli": "4.2.0",
@@ -64,6 +64,7 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-standard": "4.1.0",
     "nodemon": "2.0.22",
+    "postcss": "^8.4.21",
     "postcss-calc": "8.2.4",
     "postcss-cli": "10.1.0",
     "postcss-css-variables": "0.19.0",
@@ -142,5 +143,13 @@
   "bugs": {
     "url": "https://github.com/uploadcare/uploadcare-widget/issues"
   },
-  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme"
+  "homepage": "https://github.com/uploadcare/uploadcare-widget#readme",
+  "overrides": {
+    "postcss-prefixer": {
+      "postcss": "$postcss"
+    },
+    "shipjs": {
+      "conventional-changelog-core": "^4.2.4"
+    }
+  }
 }
