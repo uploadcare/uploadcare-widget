@@ -13,12 +13,6 @@ module.exports = {
           'inside-single-line-block'
         ]
       }
-    ],
-    "function-no-unknown": [
-      true,
-      {
-        "ignoreFunctions": ["a"]
-      }
-    ],
+    ]
   }
 }
