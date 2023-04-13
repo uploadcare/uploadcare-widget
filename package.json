@@ -90,7 +90,7 @@
     "size-limit": "8.2.4",
     "stylelint": "15.4.0",
     "stylelint-config-recommended": "^11.0.0",
-    "svg-sprite": "1.5.3"
+    "svg-sprite": "2.0.2"
   },
   "size-limit": [
     {
