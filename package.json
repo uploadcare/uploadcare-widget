@@ -51,7 +51,7 @@
     "babel-plugin-html-tag": "2.0.1",
     "cpy-cli": "3.1.1",
     "cross-env": "7.0.3",
-    "cssnano": "4.1.11",
+    "cssnano": "6.0.0",
     "cypress": "9.4.1",
     "cypress-file-upload": "5.0.8",
     "dotenv": "8.6.0",
