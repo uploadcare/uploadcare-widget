@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  extends: 'stylelint-config-uploadcare',
+  extends: 'stylelint-config-recommended',
   rules: {
     'declaration-empty-line-before': [
       'always',
@@ -13,6 +13,12 @@ module.exports = {
           'inside-single-line-block'
         ]
       }
-    ]
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["a"]
+      }
+    ],
   }
 }
