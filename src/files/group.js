@@ -23,7 +23,7 @@ class FileGroup {
         for (j = 0, len = ref.length; j < len; j++) {
           file = ref[j]
           results.push(
-            // eslint-disable-next-line handle-callback-err
+            // eslint-disable-next-line n/handle-callback-err
             file.then(null, function (err, info) {
               return $.when(info)
             })
