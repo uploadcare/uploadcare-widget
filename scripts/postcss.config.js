@@ -15,7 +15,7 @@ module.exports = (ctx) => ({
     'postcss-nested': {},
     'postcss-css-variables': {},
     'postcss-calc': {},
-    'postcss-color-function': {},
+    'postcss-hexrgba': {},
     'postcss-flexbugs-fixes': {},
     autoprefixer: {},
     cssnano: ctx.env === 'production' ? { zindex: false } : false,

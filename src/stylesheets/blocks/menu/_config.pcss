@@ -2,11 +2,13 @@
   --menu-item-size: var(--base-size);
   --menu-width: 100vw;
 
-  @media (--desktop) {
-    --menu-width: var(--base-size);
-  }
-
   --menu-back-color: var(--back-main-color);
   --menu-color: var(--color-base-light);
   --menu-disable-color: var(--color-base-light);
+}
+
+@media (--desktop) {
+  :root {
+    --menu-width: var(--base-size);
+  }
 }

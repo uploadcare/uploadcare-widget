@@ -37,7 +37,7 @@ const receiveDrop = !support
             return
           }
           if (dt.files.length) {
-            // eslint-disable-next-line standard/no-callback-literal
+            // eslint-disable-next-line n/no-callback-literal
             return callback('object', dt.files)
           } else {
             uris = []
@@ -50,7 +50,7 @@ const receiveDrop = !support
               }
             }
             if (uris) {
-              // eslint-disable-next-line standard/no-callback-literal
+              // eslint-disable-next-line n/no-callback-literal
               return callback('url', uris)
             }
           }
