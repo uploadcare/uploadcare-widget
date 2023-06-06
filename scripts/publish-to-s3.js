@@ -13,13 +13,29 @@ const getVersionTypes = (version) => [
   version.replace(/^(\d+)\.\d+\.\d+/, '$1.x')
 ]
 
-const BASE_PATH = 'widget/'
-const VERSION_TYPES = getVersionTypes(pkg.version)
-const BUCKET = process.env.BUCKET
-const ACCESS_KEY = process.env.ACCESS_KEY
-const SECRET_KEY = process.env.SECRET_KEY
+const normalizeBasePath = (basePath) => {
+  let normalizeBasePath = basePath
 
-if (!BUCKET || !ACCESS_KEY || !SECRET_KEY) {
+  if (normalizeBasePath.startsWith('/')) {
+    normalizeBasePath = normalizeBasePath.substring(1)
+  }
+  if (normalizeBasePath.endsWith('/')) {
+    normalizeBasePath = normalizeBasePath.substring(
+      0,
+      normalizeBasePath.length - 1
+    )
+  }
+
+  return normalizeBasePath
+}
+
+const VERSION_TYPES = getVersionTypes(pkg.version)
+const BASE_PATH = normalizeBasePath(process.env.WIDGET_S3_PATH)
+const BUCKET = process.env.WIDGET_S3_BUCKET
+const ACCESS_KEY = process.env.WIDGET_S3_ACCESS_KEY
+const SECRET_KEY = process.env.WIDGET_S3_SECRET_KEY
+
+if (!BASE_PATH || !BUCKET || !ACCESS_KEY || !SECRET_KEY) {
   console.log("don't found credentials skip publish to s3")
   process.exit(0)
 }
@@ -61,7 +77,11 @@ const uploadToS3 = (data, path, { dry } = {}) => {
 const uploadFile = (data, fileName, options) => {
   return Promise.all(
     VERSION_TYPES.map((version) =>
-      uploadToS3(data, `${BASE_PATH}${version}/uploadcare/${fileName}`, options)
+      uploadToS3(
+        data,
+        `${BASE_PATH}/${version}/uploadcare/${fileName}`,
+        options
+      )
     )
   )
 }
