@@ -77,7 +77,11 @@ const uploadToS3 = (data, path, { dry } = {}) => {
 const uploadFile = (data, fileName, options) => {
   return Promise.all(
     VERSION_TYPES.map((version) =>
-      uploadToS3(data, `${BASE_PATH}/${version}/uploadcare/${fileName}`, options)
+      uploadToS3(
+        data,
+        `${BASE_PATH}/${version}/uploadcare/${fileName}`,
+        options
+      )
     )
   )
 }
