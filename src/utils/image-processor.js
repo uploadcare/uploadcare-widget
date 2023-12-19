@@ -112,42 +112,41 @@ const drawFileToCanvas = function (file, mW, mH, bg, maxSource) {
     if (maxSource && img.width * img.height > maxSource) {
       return df.reject('max source')
     }
-    return $.when(getExif(file), isBrowserApplyExif()).always(function (
-      exif,
-      isExifApplied
-    ) {
-      var orientation = isExifApplied ? 1 : parseExifOrientation(exif) || 1
-      var swap = orientation > 4
-      var sSize = swap ? [img.height, img.width] : [img.width, img.height]
-      var [dW, dH] = fitSize(sSize, [mW, mH])
-      var trns = [
-        [1, 0, 0, 1, 0, 0],
-        [-1, 0, 0, 1, dW, 0],
-        [-1, 0, 0, -1, dW, dH],
-        [1, 0, 0, -1, 0, dH],
-        [0, 1, 1, 0, 0, 0],
-        [0, 1, -1, 0, dW, 0],
-        [0, -1, -1, 0, dW, dH],
-        [0, -1, 1, 0, 0, dH]
-      ][orientation - 1]
-      if (!trns) {
-        return df.reject('bad image')
+    return $.when(getExif(file), isBrowserApplyExif()).always(
+      function (exif, isExifApplied) {
+        var orientation = isExifApplied ? 1 : parseExifOrientation(exif) || 1
+        var swap = orientation > 4
+        var sSize = swap ? [img.height, img.width] : [img.width, img.height]
+        var [dW, dH] = fitSize(sSize, [mW, mH])
+        var trns = [
+          [1, 0, 0, 1, 0, 0],
+          [-1, 0, 0, 1, dW, 0],
+          [-1, 0, 0, -1, dW, dH],
+          [1, 0, 0, -1, 0, dH],
+          [0, 1, 1, 0, 0, 0],
+          [0, 1, -1, 0, dW, 0],
+          [0, -1, -1, 0, dW, dH],
+          [0, -1, 1, 0, 0, dH]
+        ][orientation - 1]
+        if (!trns) {
+          return df.reject('bad image')
+        }
+        var canvas = document.createElement('canvas')
+        canvas.width = dW
+        canvas.height = dH
+        var ctx = canvas.getContext('2d')
+        ctx.transform.apply(ctx, trns)
+        if (swap) {
+          ;[dW, dH] = [dH, dW]
+        }
+        if (bg) {
+          ctx.fillStyle = bg
+          ctx.fillRect(0, 0, dW, dH)
+        }
+        ctx.drawImage(img, 0, 0, dW, dH)
+        return df.resolve(canvas, sSize)
       }
-      var canvas = document.createElement('canvas')
-      canvas.width = dW
-      canvas.height = dH
-      var ctx = canvas.getContext('2d')
-      ctx.transform.apply(ctx, trns)
-      if (swap) {
-        ;[dW, dH] = [dH, dW]
-      }
-      if (bg) {
-        ctx.fillStyle = bg
-        ctx.fillRect(0, 0, dW, dH)
-      }
-      ctx.drawImage(img, 0, 0, dW, dH)
-      return df.resolve(canvas, sSize)
-    })
+    )
   })
   return df.promise()
 }

@@ -452,10 +452,10 @@ class Panel {
           .t('dialog.tabs.preview.multiple.tooManyFiles')
           .replace('%max%', this.settings.multipleMax)
       : files && tooFewFiles
-      ? locale
-          .t('dialog.tabs.preview.multiple.tooFewFiles')
-          .replace('%min%', this.settings.multipleMin)
-      : locale.t('dialog.tabs.preview.multiple.title')
+        ? locale
+            .t('dialog.tabs.preview.multiple.tooFewFiles')
+            .replace('%min%', this.settings.multipleMin)
+        : locale.t('dialog.tabs.preview.multiple.title')
     this.footer
       .find('.uploadcare--panel__message')
       .toggleClass('uploadcare--panel__message_hidden', files === 0)
