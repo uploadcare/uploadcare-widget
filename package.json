@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "7.16.12",
     "@babel/preset-env": "7.16.11",
-    "@size-limit/preset-big-lib": "8.2.4",
+    "@size-limit/preset-big-lib": "11.0.1",
     "@types/jquery": "^3.5.14",
     "autoprefixer": "^10.4.14",
     "aws-sdk": "2.1357.0",
@@ -88,7 +88,7 @@
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.3.1",
     "shipjs": "0.26.3",
-    "size-limit": "8.2.4",
+    "size-limit": "11.0.1",
     "stylelint": "15.4.0",
     "stylelint-config-recommended": "^11.0.0",
     "svg-sprite": "2.0.2"
