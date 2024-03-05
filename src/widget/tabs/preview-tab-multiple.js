@@ -88,11 +88,11 @@ class PreviewTabMultiple extends BasePreviewTab {
             .t('dialog.tabs.preview.multiple.tooManyFiles')
             .replace('%max%', this.settings.multipleMax)
         : files && tooFewFiles
-        ? locale
-            .t('dialog.tabs.preview.multiple.tooFewFiles')
-            .replace('%min%', this.settings.multipleMin)
-            .replace('%files%', locale.t('file', files))
-        : undefined
+          ? locale
+              .t('dialog.tabs.preview.multiple.tooFewFiles')
+              .replace('%min%', this.settings.multipleMin)
+              .replace('%files%', locale.t('file', files))
+          : undefined
       return errorContainer
         .addClass('uploadcare--error')
         .text(wrongNumberFilesMessage)
