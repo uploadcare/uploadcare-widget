@@ -164,7 +164,7 @@ class BaseFile {
       name: this.fileName,
       size: this.fileSize,
       isStored: this.isStored,
-      isImage: !this.s3Bucket && this.isImage,
+      isImage: this.isImage,
       originalImageInfo: this.imageInfo,
       originalVideoInfo: this.videoInfo,
       originalContentInfo: this.contentInfo,
