@@ -111,6 +111,11 @@ const translations = {
             text: 'Bitte veruschen Sie es erneut mit einer anderen Datei.',
             back: 'Bild wählen'
           },
+          crop: {
+          title: 'Dieses Bild zuschneiden und hinzufügen',
+          done: 'Hinzufügen',
+          free: 'frei'
+          },
           size: {
             title: 'Die gewählte Datei ist zu groß.',
             text: 'Bitte versuchen Sie es erneut mit einer anderen Datei.'
