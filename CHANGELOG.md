@@ -4,7 +4,8 @@
 ### Bug Fixes
 
 * do not override `isImage` flag when s3 bucket is enabled ([725d836](https://github.com/uploadcare/uploadcare-widget/commit/725d836ff0c991f9c53030184b6825a450616f98))
-
+* Update de.js ([#964](https://github.com/uploadcare/uploadcare-widget/pull/964))
+* fix german translation ([966](https://github.com/uploadcare/uploadcare-widget/pull/966))
 
 
 ## 3.21.4 (2024-05-28)
