@@ -58,7 +58,7 @@ const translations = {
         cloudsTip: 'Cloud-Speicher<br>und soziale Dienste',
         or: 'oder',
         button: 'Wählen Sie eine Datei',
-        also: 'Sie können sie auch Dateien wählen aus'
+        also: 'Sie können auch Dateien wählen aus'
       },
       url: {
         title: 'Eine Datei aus dem Web hochladen',
