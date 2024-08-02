@@ -1,5 +1,11 @@
 # Uploadcare jQuery File Uploader Widget
 
+## ⚠️ Deprecation alert
+
+**This repository is deprecated. Please use the [new Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) for the latest updates and improvements.**
+
+---
+
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
     <img align="right" width="64" height="64"
          src="https://ucarecdn.com/2f4864b7-ed0e-4411-965b-8148623aa680/uploadcare-logo-mark.svg"
