@@ -1,4 +1,4 @@
-# Uploadcare Widget
+# Uploadcare jQuery File Uploader Widget
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
     <img align="right" width="64" height="64"
@@ -6,7 +6,7 @@
          alt="">
 </a>
 
-Uploadcare Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
+jQuery File Uploader Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
 file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
@@ -114,7 +114,7 @@ import uploadcare from 'uploadcare-widget'
 ### CDN
 
 Embed our client library via the `<script>` tag in the `<head>`
-section of each page where you’d like to use Uploadcare Widget.
+section of each page where you’d like to use jQuery File Uploader Widget.
 Here is the CDN link to the current widget version with built-in jQuery,
 
 ```html
@@ -172,13 +172,13 @@ upload is in progress. This can be a real time saver.
 ### Usage with React
 
 Check out our [React component](https://github.com/uploadcare/react-widget/)
-for Uploadcare Widget.
+for jQuery File Uploader Widget.
 
 ### Usage with Angular
 
 Check out our
 [Angular 2+ wrapper](https://www.npmjs.com/package/ngx-uploadcare-widget) for
-Uploadcare Widget.
+jQuery File Uploader Widget.
 
 [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare) can be
 used with Angular 1.
@@ -261,7 +261,7 @@ If you need the support for older browsers including IE8, consider using
 
 ## Development
 
-Check out the Uploadcare Widget [development guide][github-files-development].
+Check out the jQuery File Uploader Widget [development guide][github-files-development].
 
 ## Security issues
 
