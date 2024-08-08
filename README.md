@@ -1,4 +1,10 @@
-# Uploadcare Widget
+# Uploadcare jQuery File Uploader
+
+## ⚠️ Deprecation alert
+
+**This package is deprecated. Please use the new [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) for the latest updates and improvements.**
+
+---
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
     <img align="right" width="64" height="64"
@@ -6,7 +12,7 @@
          alt="">
 </a>
 
-Uploadcare Widget is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
+jQuery File Uploader is a part of the [Uploadcare][uc-home]
 file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
@@ -29,7 +35,7 @@ The widget features:
   Django, Ruby on Rails, Angular, and more.
 * 20+ languages, [learn more][uc-docs-widget-locales].
 
-We provide the file uploader as a typical JavaScript library; it can be easily
+We provide the uploading widget as a typical JavaScript library; it can be easily
 embedded in your site.
 
 Using the older `2.x` version? Check out the stuff under the
@@ -114,7 +120,7 @@ import uploadcare from 'uploadcare-widget'
 ### CDN
 
 Embed our client library via the `<script>` tag in the `<head>`
-section of each page where you’d like to use Uploadcare Widget.
+section of each page where you’d like to use the uploading widget.
 Here is the CDN link to the current widget version with built-in jQuery,
 
 ```html
@@ -172,13 +178,13 @@ upload is in progress. This can be a real time saver.
 ### Usage with React
 
 Check out our [React component](https://github.com/uploadcare/react-widget/)
-for Uploadcare Widget.
+for jQuery File Uploader.
 
 ### Usage with Angular
 
 Check out our
 [Angular 2+ wrapper](https://www.npmjs.com/package/ngx-uploadcare-widget) for
-Uploadcare Widget.
+jQuery File Uploader.
 
 [angular-uploadcare](https://github.com/uploadcare/angular-uploadcare) can be
 used with Angular 1.
@@ -261,7 +267,7 @@ If you need the support for older browsers including IE8, consider using
 
 ## Development
 
-Check out the Uploadcare Widget [development guide][github-files-development].
+Check out jQuery File Uploader [development guide][github-files-development].
 
 ## Security issues
 

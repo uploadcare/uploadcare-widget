@@ -1,4 +1,4 @@
-# Uploadcare Widget development guide
+# jQuery File Uploader development guide
 
 Clone the repository.
 
