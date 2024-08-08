@@ -2,7 +2,7 @@
 
 ## ⚠️ Deprecation alert
 
-**This package is deprecated. Please use the [new Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) for the latest updates and improvements.**
+**This package is deprecated. Please use the new [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) for the latest updates and improvements.**
 
 ---
 
@@ -12,7 +12,7 @@
          alt="">
 </a>
 
-jQuery File Uploader is an HTML5 file uploader, a part of the [Uploadcare][uc-home]
+jQuery File Uploader is a part of the [Uploadcare][uc-home]
 file handling platform.
 
 [![NPM version][badge-npm-img]][badge-npm-url]
@@ -35,7 +35,7 @@ The widget features:
   Django, Ruby on Rails, Angular, and more.
 * 20+ languages, [learn more][uc-docs-widget-locales].
 
-We provide the file uploader as a typical JavaScript library; it can be easily
+We provide the uploading widget as a typical JavaScript library; it can be easily
 embedded in your site.
 
 Using the older `2.x` version? Check out the stuff under the
@@ -120,7 +120,7 @@ import uploadcare from 'uploadcare-widget'
 ### CDN
 
 Embed our client library via the `<script>` tag in the `<head>`
-section of each page where you’d like to use jQuery File Uploader.
+section of each page where you’d like to use the uploading widget.
 Here is the CDN link to the current widget version with built-in jQuery,
 
 ```html
@@ -267,7 +267,7 @@ If you need the support for older browsers including IE8, consider using
 
 ## Development
 
-Check out the jQuery File Uploader [development guide][github-files-development].
+Check out jQuery File Uploader [development guide][github-files-development].
 
 ## Security issues
 
