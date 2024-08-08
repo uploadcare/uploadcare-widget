@@ -1,6 +1,6 @@
 ## [3.21.5](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.4...v3.21.5) (2024-08-08)
 
-
+No changes
 
 ## [3.21.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.3...v3.21.4) (2024-07-26)
 
