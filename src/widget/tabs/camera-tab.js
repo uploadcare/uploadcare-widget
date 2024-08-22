@@ -142,6 +142,20 @@ class CameraTab {
   }
 
   __checkCompatibility() {
+    if (navigator.mediaDevices?.getSupportedConstraints) {
+      const supportedConstraints =
+        navigator.mediaDevices.getSupportedConstraints()
+      const { groupId: isGroupIdConstraintSupported } = supportedConstraints
+
+      /**
+       * In Safari v17.6 (probably earlier versions too) groupId constraint is not supported for some unknown reason.
+       * So we're getting "OverconstrainedError" when trying to use it.
+       * In this case we should force use deviceId constraint instead of groupId.
+       */
+      this.__mediaIdProperty = isGroupIdConstraintSupported
+        ? 'groupId'
+        : 'deviceId'
+    }
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       this.enumerateVideoDevices = () =>
         navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
@@ -219,7 +233,7 @@ class CameraTab {
         })
         .then((devices) => {
           // select first device, it should be default one in browser/os
-          this.__groupId = devices?.[0]?.groupId
+          this.__mediaId = devices?.[0]?.[this.__mediaIdProperty]
           this.__renderDevicesList(devices)
         })
         .then(() => this.__requestCamera())
@@ -250,12 +264,21 @@ class CameraTab {
         }
       }
     }
-    if (this.__groupId) {
-      constraints.video.groupId = {
-        exact: this.__groupId
+
+    if (this.__mediaId) {
+      constraints.video[this.__mediaIdProperty] = {
+        exact: this.__mediaId
       }
-      constraints.audio = constraints.audio && {
-        exact: this.__groupId
+      /**
+       * In case when the deviceId constraint is used, we can't request browser to use the same camera for audio and video.
+       * So we leave it on the browser to decide which audio device to use.
+       */
+      if (this.__mediaIdProperty === 'groupId') {
+        constraints.audio = constraints.audio && {
+          [this.__mediaIdProperty]: {
+            exact: this.__mediaId
+          }
+        }
       }
     }
 
@@ -269,8 +292,7 @@ class CameraTab {
           this.__setState('denied')
         })
 
-        const currentGroupId = this.__getGroupIdByStream(stream)
-        this.__groupId = currentGroupId
+        this.__mediaId = this.__getMediaIdByStream(stream)
 
         if ('srcObject' in this.video[0]) {
           this.video.prop('srcObject', stream)
@@ -445,9 +467,7 @@ class CameraTab {
   }
 
   __onDeviceSelect(e) {
-    const groupId = e.target.value
-    this.__groupId = groupId
-
+    this.__mediaId = e.target.value
     this.__requestCamera()
   }
 
@@ -457,12 +477,12 @@ class CameraTab {
     )
     deviceSelect.empty()
     devices.forEach((device, idx) => {
-      const selected = this.__groupId
-        ? device.groupId === this.__groupId
+      const selected = this.__mediaId
+        ? device[this.__mediaIdProperty] === this.__mediaId
         : idx === 0
       deviceSelect.append(
         $('<option>', {
-          value: device.groupId,
+          value: device[this.__mediaIdProperty],
           // Browsers could return empty labels in some cases, so fallback it to the camera index
           text:
             device.label ||
@@ -477,15 +497,14 @@ class CameraTab {
     )
   }
 
-  __getGroupIdByStream(stream) {
+  __getMediaIdByStream(stream) {
     const videoTracks = stream.getVideoTracks()
     if (videoTracks.length === 0) {
       return
     }
     const firstTrack = videoTracks[0]
-    const { groupId } = firstTrack.getSettings()
-
-    return groupId
+    const trackSettings = firstTrack.getSettings()
+    return trackSettings[this.__mediaIdProperty]
   }
 
   __guessExtensionByMime(mime) {
