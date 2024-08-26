@@ -52,7 +52,7 @@
     "cpy-cli": "5.0.0",
     "cross-env": "7.0.3",
     "cssnano": "6.0.2",
-    "cypress": "13.6.1",
+    "cypress": "13.13.3",
     "cypress-file-upload": "5.0.8",
     "dotenv": "8.6.0",
     "eslint": "8.56.0",
