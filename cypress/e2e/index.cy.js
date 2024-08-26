@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 /* eslint-env mocha */
 /* global cy */
+/* global Cypress */
 
 import { setup } from '../templates'
 
@@ -26,44 +27,48 @@ describe('uploadcare widget', () => {
     const fileName = 'image.jpeg'
     setup()
 
-    cy.fixture(fileName).then((fileContent) => {
-      cy.get('.uploadcare--widget__button_type_open').click()
+    cy.fixture(fileName, 'binary')
+      .then(Cypress.Blob.binaryStringToBlob)
+      .then((fileContent) => {
+        cy.get('.uploadcare--widget__button_type_open').click()
 
-      cy.get('.uploadcare--draganddrop').attachFile(
-        { fileContent, fileName, mimeType: 'image/jpeg' },
-        { subjectType: 'drag-n-drop', events: ['dragcenter', 'drop'] }
-      )
+        cy.get('.uploadcare--draganddrop').attachFile(
+          { fileContent, fileName, mimeType: 'image/jpeg' },
+          { subjectType: 'drag-n-drop', events: ['dragcenter', 'drop'] }
+        )
 
-      cy.get('.uploadcare--progress').should('exist')
+        cy.get('.uploadcare--progress').should('exist')
 
-      cy.get('.uploadcare--link')
-        .should('exist')
-        .should('contain.text', fileName)
-    })
+        cy.get('.uploadcare--link')
+          .should('exist')
+          .should('contain.text', fileName)
+      })
   })
 
   it('should upload images', () => {
     const fileName = 'image.jpeg'
 
-    cy.fixture(fileName).then((fileContent) => {
-      setup()
+    cy.fixture(fileName, 'binary')
+      .then(Cypress.Blob.binaryStringToBlob)
+      .then((fileContent) => {
+        setup()
 
-      cy.get('.uploadcare--widget__button_type_open').click()
+        cy.get('.uploadcare--widget__button_type_open').click()
 
-      cy.get(
-        '.uploadcare--tab_name_file .uploadcare--tab__action-button'
-      ).click()
-      cy.get('input[type="file"]').attachFile({
-        fileContent,
-        fileName,
-        mimeType: 'image/jpeg'
+        cy.get(
+          '.uploadcare--tab_name_file .uploadcare--tab__action-button'
+        ).click()
+        cy.get('input[type="file"]').attachFile({
+          fileContent,
+          fileName,
+          mimeType: 'image/jpeg'
+        })
+
+        cy.get('.uploadcare--progress').should('exist')
+
+        cy.get('.uploadcare--link')
+          .should('exist')
+          .should('contain.text', fileName)
       })
-
-      cy.get('.uploadcare--progress').should('exist')
-
-      cy.get('.uploadcare--link')
-        .should('exist')
-        .should('contain.text', fileName)
-    })
   })
 })
