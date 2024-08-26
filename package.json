@@ -1,6 +1,6 @@
 {
   "name": "uploadcare-widget",
-  "version": "3.21.5",
+  "version": "3.21.6",
   "description": "Uploadcare Widget: file uploader.",
   "main": "uploadcare.js",
   "files": [
