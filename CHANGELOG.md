@@ -5,13 +5,6 @@
 
 * safari camera issues ([#974](https://github.com/uploadcare/uploadcare-widget/issues/974)) ([94a9dc8](https://github.com/uploadcare/uploadcare-widget/commit/94a9dc8d46d521ca6b521075e76259fbc3e1a9cc))
 
-
-### Reverts
-
-* Revert "chore: release v3.21.6 (#975)" ([a97289b](https://github.com/uploadcare/uploadcare-widget/commit/a97289b06de657cef410a855b7831d37ec27d021)), closes [#975](https://github.com/uploadcare/uploadcare-widget/issues/975)
-
-
-
 ## [3.21.5](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.4...v3.21.5) (2024-08-08)
 
 No changes
