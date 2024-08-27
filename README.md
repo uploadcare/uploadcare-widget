@@ -1,8 +1,8 @@
 # Uploadcare jQuery File Uploader
 
-## ⚠️ Deprecation alert
+## ⚠️ Notice: File Uploader Option
 
-**This package is deprecated. Please use the new [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) for the latest updates and improvements.**
+This jQuery-based uploader remains fully functional and can be a great fit for your projects, especially if you have specific needs for jQuery. However, we recommend exploring our new web component-based [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) to access the latest features and improvements.
 
 ---
 
