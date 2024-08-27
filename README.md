@@ -2,7 +2,7 @@
 
 ## ⚠️ Notice: File Uploader Option
 
-This jQuery-based uploader remains fully functional and can be a great fit for your projects, especially if you have specific needs for jQuery. However, we recommend exploring our new web component-based [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) to access the latest features and improvements.
+**This jQuery-based uploader remains fully functional and can be a great fit for your projects, especially if you have specific needs for jQuery. However, we recommend exploring our new web component-based [Uploadcare File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) to access the latest features and improvements.**
 
 ---
 
