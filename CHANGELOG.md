@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* the mic is selected as default and video is used deviceId anywhere ([ec387f4](https://github.com/uploadcare/uploadcare-widget/commit/ec387f450fdeedb5b23b0225a9a5fa46fb5786b3))
+* fixed the bug with audio and video capture for the camera. Use deviceId instead of groupId. ([ec387f4](https://github.com/uploadcare/uploadcare-widget/commit/ec387f450fdeedb5b23b0225a9a5fa46fb5786b3))
 
 
 
