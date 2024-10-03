@@ -1,3 +1,12 @@
+## [3.21.8](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.7...v3.21.8) (2024-10-03)
+
+
+### Bug Fixes
+
+* the mic is selected as default and video is used deviceId anywhere ([ec387f4](https://github.com/uploadcare/uploadcare-widget/commit/ec387f450fdeedb5b23b0225a9a5fa46fb5786b3))
+
+
+
 ## [3.21.7](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.6...v3.21.7) (2024-08-27)
 
 
