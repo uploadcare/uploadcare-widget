@@ -142,20 +142,6 @@ class CameraTab {
   }
 
   __checkCompatibility() {
-    if (navigator.mediaDevices?.getSupportedConstraints) {
-      const supportedConstraints =
-        navigator.mediaDevices.getSupportedConstraints()
-      const { groupId: isGroupIdConstraintSupported } = supportedConstraints
-
-      /**
-       * In Safari v17.6 (probably earlier versions too) groupId constraint is not supported for some unknown reason.
-       * So we're getting "OverconstrainedError" when trying to use it.
-       * In this case we should force use deviceId constraint instead of groupId.
-       */
-      this.__mediaIdProperty = isGroupIdConstraintSupported
-        ? 'groupId'
-        : 'deviceId'
-    }
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       this.enumerateVideoDevices = () =>
         navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
@@ -233,7 +219,7 @@ class CameraTab {
         })
         .then((devices) => {
           // select first device, it should be default one in browser/os
-          this.__mediaId = devices?.[0]?.[this.__mediaIdProperty]
+          this.__mediaId = devices?.[0]?.deviceId
           this.__renderDevicesList(devices)
         })
         .then(() => this.__requestCamera())
@@ -266,19 +252,8 @@ class CameraTab {
     }
 
     if (this.__mediaId) {
-      constraints.video[this.__mediaIdProperty] = {
+      constraints.video.deviceId = {
         exact: this.__mediaId
-      }
-      /**
-       * In case when the deviceId constraint is used, we can't request browser to use the same camera for audio and video.
-       * So we leave it on the browser to decide which audio device to use.
-       */
-      if (this.__mediaIdProperty === 'groupId') {
-        constraints.audio = constraints.audio && {
-          [this.__mediaIdProperty]: {
-            exact: this.__mediaId
-          }
-        }
       }
     }
 
@@ -478,11 +453,11 @@ class CameraTab {
     deviceSelect.empty()
     devices.forEach((device, idx) => {
       const selected = this.__mediaId
-        ? device[this.__mediaIdProperty] === this.__mediaId
+        ? device.deviceId === this.__mediaId
         : idx === 0
       deviceSelect.append(
         $('<option>', {
-          value: device[this.__mediaIdProperty],
+          value: device.deviceId,
           // Browsers could return empty labels in some cases, so fallback it to the camera index
           text:
             device.label ||
@@ -504,7 +479,7 @@ class CameraTab {
     }
     const firstTrack = videoTracks[0]
     const trackSettings = firstTrack.getSettings()
-    return trackSettings[this.__mediaIdProperty]
+    return trackSettings.deviceId
   }
 
   __guessExtensionByMime(mime) {
