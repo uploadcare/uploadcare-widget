@@ -1,8 +1,12 @@
 # Uploadcare jQuery File Uploader
 
-## ⚠️ Notice: File Uploader Option
+## ⚠️ Deprecation notice: jQuery File Uploader
 
-**This jQuery-based uploader remains fully functional and can be a great fit for your projects, especially if you have specific needs for jQuery. However, we recommend exploring our new web component-based [File Uploader](https://github.com/uploadcare/file-uploader?tab=readme) to access the latest features and improvements.**
+**We’re announcing that the jQuery File Uploader package is officially deprecated as of September 1, 2025. Moving forward, we will no longer release updates or new versions of this widget. Support will also be discontinued, except in cases where critical security vulnerabilities need to be addressed.**
+
+**If you're using jQuery File Uploader in your project, we recommend considering our web-component-based [File Uploader](https://www.npmjs.com/package/@uploadcare/file-uploader), which contains all the latest features and updates.**
+
+**We understand that this might affect your workflows, and we are committed to providing as much support as possible during this transition. If you have any questions or concerns, please reach out to us at help@uploadcare.com**
 
 ---
 
