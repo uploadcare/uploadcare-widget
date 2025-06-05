@@ -91,6 +91,8 @@ defaults = {
   videoPreferredMimeTypes: null,
   audioBitsPerSecond: null,
   videoBitsPerSecond: null,
+  // social sources settings
+  topLevelOrigin: null,
   // maintain settings
   scriptBase: `//ucarecdn.com/widget/${version}/uploadcare/`,
   debugUploads: false,
