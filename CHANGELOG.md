@@ -1,3 +1,11 @@
+# [3.22.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.8...v3.22.0) (2025-06-16)
+
+
+### Features
+
+* use Google Drive Picker for Google Drive social source ([#989](https://github.com/uploadcare/uploadcare-widget/issues/989)) ([e57dd2b](https://github.com/uploadcare/uploadcare-widget/commit/e57dd2b3f0f76c71e03f960f6f9570dfe1ec3ae8))
+
+
 ## [3.21.8](https://github.com/uploadcare/uploadcare-widget/compare/v3.21.7...v3.21.8) (2024-10-03)
 
 
