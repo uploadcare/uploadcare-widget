@@ -2,13 +2,24 @@ import $ from 'jquery'
 
 import { registerMessage, unregisterMessage } from '../../utils/messages'
 import { warn, debug } from '../../utils/warnings'
-import { globRegexp } from '../../utils'
+import { getTopLevelOrigin, globRegexp } from '../../utils'
 import { UrlFile } from '../../files/url'
 import { CssCollector } from '../../settings'
 
 import { version } from '../../../package.json'
 
 const tabsCss = new CssCollector()
+
+const SOURCE_NAME_MAPPING = {
+  gdrive: 'ngdrive'
+}
+
+function mapSourceName(name) {
+  if (name in SOURCE_NAME_MAPPING) {
+    return SOURCE_NAME_MAPPING[name]
+  }
+  return name
+}
 
 class RemoteTab {
   constructor(container, tabButton, dialogApi, settings, name1) {
@@ -37,12 +48,17 @@ class RemoteTab {
       public_key: this.settings.publicKey,
       widget_version: version,
       images_only: this.settings.imagesOnly,
-      pass_window_open: this.settings.passWindowOpen
+      pass_window_open: this.settings.passWindowOpen,
+      multiple: this.settings.multiple,
+      origin: this.settings.topLevelOrigin || getTopLevelOrigin()
     }
     if (this.settings.remoteTabSessionKey) {
       params.session_key = this.settings.remoteTabSessionKey
     }
-    return `${this.settings.socialBase}/window3/${this.name}?` + $.param(params)
+    return (
+      `${this.settings.socialBase}/window3/${mapSourceName(this.name)}?` +
+      $.param(params)
+    )
   }
 
   __sendMessage(messageObj) {

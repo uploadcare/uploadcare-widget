@@ -468,6 +468,16 @@ const isObject = function (input) {
   return Object.prototype.toString.call(input) === '[object Object]'
 }
 
+const getTopLevelOrigin = () => {
+  const topLevelWindow = globalThis.top ?? globalThis.parent ?? globalThis.self
+  try {
+    return topLevelWindow.location.origin
+  } catch (e) {
+    console.warn('Unable to access top-level window location:', e)
+    return globalThis.location.origin
+  }
+}
+
 export {
   unique,
   defer,
@@ -501,5 +511,6 @@ export {
   taskRunner,
   fixedPipe,
   getMetadataObject,
-  isObject
+  isObject,
+  getTopLevelOrigin
 }
