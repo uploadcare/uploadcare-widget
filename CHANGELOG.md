@@ -1,3 +1,12 @@
+## [3.23.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.0...v3.23.1) (2025-07-07)
+
+
+### Bug Fixes
+
+* added public key verification for subdomains with a prefix ([#995](https://github.com/uploadcare/uploadcare-widget/issues/995)) ([397a3eb](https://github.com/uploadcare/uploadcare-widget/commit/397a3ebf5cb45af926d901a073b0ccf5c25102f0))
+
+
+
 # [3.23.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.22.1...v3.23.0) (2025-07-07)
 
 ### Features
