@@ -404,7 +404,7 @@ normalize = function (settings) {
     settings.tabs[skydriveIndex] = 'onedrive'
   }
 
-  if (settings.cdnBase === initialSettings.cdnBase) {
+  if (settings.publicKey && settings.cdnBase === initialSettings.cdnBase) {
     settings.cdnBase = getPrefixedCdnBaseSync(
       settings.publicKey,
       settings.cdnBasePrefixed
