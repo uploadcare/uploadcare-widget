@@ -6,6 +6,7 @@ import { warnOnce } from './utils/warnings'
 import { unique, once, upperCase, normalizeUrl, isObject } from './utils'
 import { isWindowDefined } from './utils/is-window-defined'
 import { MAX_SQUARE_SIDE } from './utils/canvas-size'
+import { getPrefixedCdnBaseSync } from '@uploadcare/cname-prefix/dist/sync'
 
 var indexOf = [].indexOf
 
@@ -62,6 +63,7 @@ defaults = {
   secureExpire: '',
   pusherKey: '79ae88bd931ea68464d9',
   cdnBase: 'https://ucarecdn.com',
+  cdnBasePrefixed: 'https://ucarecd.net',
   urlBase: 'https://upload.uploadcare.com',
   socialBase: 'https://social.uploadcare.com',
   previewProxy: null,
@@ -333,7 +335,13 @@ defaultPreviewUrlCallback = function (url, info) {
 
 normalize = function (settings) {
   arrayOptions(settings, ['tabs', 'preferredTypes', 'videoPreferredMimeTypes'])
-  urlOptions(settings, ['cdnBase', 'socialBase', 'urlBase', 'scriptBase'])
+  urlOptions(settings, [
+    'cdnBase',
+    'socialBase',
+    'urlBase',
+    'scriptBase',
+    'cdnBasePrefixed'
+  ])
   flagOptions(settings, [
     'doNotStore',
     'imagesOnly',
@@ -394,6 +402,13 @@ normalize = function (settings) {
   const skydriveIndex = settings.tabs.indexOf('skydrive')
   if (skydriveIndex !== -1) {
     settings.tabs[skydriveIndex] = 'onedrive'
+  }
+
+  if (settings.cdnBase === initialSettings.cdnBase) {
+    settings.cdnBase = getPrefixedCdnBaseSync(
+      settings.publicKey,
+      settings.cdnBasePrefixed
+    )
   }
 
   return settings
