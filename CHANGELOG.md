@@ -1,3 +1,10 @@
+# [3.23.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.22.1...v3.23.0) (2025-07-07)
+
+### Features
+
+* add prefixed subdomains support ([#993](https://github.com/uploadcare/uploadcare-widget/issues/993)) ([b835c07](https://github.com/uploadcare/uploadcare-widget/commit/b835c07460c3e6b6b24656dbd17fbb193c2adbc6))
+
+
 ## [3.22.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.22.0...v3.22.1) (2025-06-17)
 
 
