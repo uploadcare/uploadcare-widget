@@ -1,3 +1,11 @@
+## [3.23.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.1...v3.23.2) (2025-07-08)
+
+
+### Bug Fixes
+
+* subdomain prefix wrong calculation ([#997](https://github.com/uploadcare/uploadcare-widget/issues/997)) ([ad6d5f7](https://github.com/uploadcare/uploadcare-widget/commit/ad6d5f79cfe08ff5c2683cc68f3e49be49045ca7))
+
+
 ## [3.23.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.0...v3.23.1) (2025-07-07)
 
 
