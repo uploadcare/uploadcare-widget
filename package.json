@@ -38,7 +38,7 @@
     "release:trigger": "shipjs trigger"
   },
   "dependencies": {
-    "@uploadcare/cname-prefix": "^6.16.1",
+    "@uploadcare/cname-prefix": "^6.16.2",
     "escape-html": "^1.0.3",
     "jquery": "^3.7.1"
   },
