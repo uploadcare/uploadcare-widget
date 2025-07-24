@@ -340,7 +340,8 @@ normalize = function (settings) {
     'socialBase',
     'urlBase',
     'scriptBase',
-    'cdnBasePrefixed'
+    'cdnBasePrefixed',
+    'topLevelOrigin'
   ])
   flagOptions(settings, [
     'doNotStore',
