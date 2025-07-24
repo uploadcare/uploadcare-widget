@@ -333,7 +333,7 @@ defaultPreviewUrlCallback = function (url, info) {
   return this.previewProxy + queryPart
 }
 
-normalize = function (settings) {
+normalize = function (settings, dirtySettings = []) {
   arrayOptions(settings, ['tabs', 'preferredTypes', 'videoPreferredMimeTypes'])
   urlOptions(settings, [
     'cdnBase',
@@ -405,7 +405,11 @@ normalize = function (settings) {
     settings.tabs[skydriveIndex] = 'onedrive'
   }
 
-  if (settings.publicKey && settings.cdnBase === initialSettings.cdnBase) {
+  if (
+    !dirtySettings.includes('cdnBase') &&
+    settings.publicKey &&
+    settings.cdnBase === initialSettings.cdnBase
+  ) {
     settings.cdnBase = getPrefixedCdnBaseSync(
       settings.publicKey,
       settings.cdnBasePrefixed
@@ -416,36 +420,67 @@ normalize = function (settings) {
 }
 
 // global variables only
+// Publicly-accessible
 const globals = function () {
-  var key, scriptSettings, value
-  scriptSettings = {}
-  for (key in defaults) {
-    value = window[`UPLOADCARE_${upperCase(key)}`]
+  const globalSettings = {}
+  const dirtyKeys = []
+  for (const key in defaults) {
+    const value = window[`UPLOADCARE_${upperCase(key)}`]
     if (value != null) {
-      scriptSettings[key] = value
+      dirtyKeys.push(key)
+      globalSettings[key] = value
     }
   }
-  return scriptSettings
+
+  // Define non-enumerable property for dirtyKeys on returned object
+  // This is needed to support backwards compatibility with existing code that relies on this method
+  Object.defineProperty(globalSettings, '__dirtyKeys', {
+    value: dirtyKeys,
+    enumerable: false,
+    writable: false,
+    configurable: false
+  })
+
+  return globalSettings
 }
 
 // Defaults + global variables + global overrides (once from uploadcare.start)
-// Not publicly-accessible
+// Publicly-accessible (but under `global` name for some reason)
 const common = once(function (settings, ignoreGlobals) {
-  var result
+  const dirtyKeys = []
   if (!ignoreGlobals) {
-    defaults = $.extend(defaults, globals())
+    const globalSettings = globals()
+    dirtyKeys.push(...globalSettings.__dirtyKeys)
+    defaults = $.extend(defaults, globalSettings)
   }
-  result = normalize($.extend(defaults, settings || {}))
-  waitForSettings.fire(result)
-  return result
+  const userSettings = settings || {}
+  dirtyKeys.push(...Object.keys(userSettings))
+  const commonSettings = normalize($.extend(defaults, userSettings), dirtyKeys)
+  waitForSettings.fire(commonSettings)
+
+  // Define non-enumerable property for dirtyKeys on returned object
+  // This is needed to support backwards compatibility with existing code that relies on this method
+  Object.defineProperty(commonSettings, '__dirtyKeys', {
+    value: dirtyKeys,
+    enumerable: false,
+    writable: false,
+    configurable: false
+  })
+
+  return commonSettings
 })
 
 // Defaults + global variables + global overrides + local overrides
+// Publicly-accessible
 const build = function (settings) {
-  var result
-  result = $.extend({}, common())
+  const dirtyKeys = []
+  const commonSettings = common()
+  dirtyKeys.push(...commonSettings.__dirtyKeys)
+  let result = $.extend({}, commonSettings)
   if (!$.isEmptyObject(settings)) {
-    result = normalize($.extend(result, settings))
+    const userDirtyKeys = Object.keys(settings)
+    dirtyKeys.push(...userDirtyKeys)
+    result = normalize($.extend(result, settings), dirtyKeys)
   }
   return result
 }
