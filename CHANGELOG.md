@@ -1,6 +1,9 @@
 ## [3.23.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.2...v3.23.3) (2025-07-25)
 
+### Bug Fixes
 
+* parse `cdnBasePrefixed` as URL ([commit](https://github.com/uploadcare/uploadcare-widget/commit/972ff9a3c3874dbd35c1e7810cf38c7c7b5d4184))
+* allow setting `ucarecdn.com` as a legacy `cdnBase` ([commit](https://github.com/uploadcare/uploadcare-widget/commit/972ff9a3c3874dbd35c1e7810cf38c7c7b5d4184))
 
 ## [3.23.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.1...v3.23.2) (2025-07-08)
 
