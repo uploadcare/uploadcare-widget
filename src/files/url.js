@@ -47,7 +47,7 @@ class UrlFile extends BaseFile {
       jsonerrors: 1
     }
 
-    if(this.__realFileName) {
+    if (this.__realFileName) {
       data.filename = this.__realFileName
     }
 
