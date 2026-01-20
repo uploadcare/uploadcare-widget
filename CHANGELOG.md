@@ -1,3 +1,12 @@
+## [3.23.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.3...v3.23.4) (2026-01-20)
+
+
+### Bug Fixes
+
+* handle optional filename for URL uploads ([#1002](https://github.com/uploadcare/uploadcare-widget/issues/1002)) ([a5d11ae](https://github.com/uploadcare/uploadcare-widget/commit/a5d11aefb85752e0722c57bc42fc91b58e45c40b))
+
+
+
 ## [3.23.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.2...v3.23.3) (2025-07-25)
 
 ### Bug Fixes
