@@ -57,7 +57,8 @@ const translations = {
         onedrive: 'OneDrive',
         flickr: 'Flickr',
         huddle: 'Huddle',
-        nft: 'NFT'
+        nft: 'NFT',
+        unsplash: 'Unsplash'
       },
       file: {
         drag: 'drag & drop<br>any files',

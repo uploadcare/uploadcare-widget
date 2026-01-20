@@ -215,6 +215,7 @@ registerTab('box', RemoteTab)
 registerTab('onedrive', RemoteTab)
 registerTab('huddle', RemoteTab)
 registerTab('nft', RemoteTab)
+registerTab('unsplash', RemoteTab)
 registerTab('empty-pubkey', function (tabPanel, _1, _2, settings) {
   return tabPanel.append(emptyKeyText)
 })
