@@ -42,10 +42,13 @@ class UrlFile extends BaseFile {
       signature: this.settings.secureSignature,
       expire: this.settings.secureExpire,
       source_url: this.__url,
-      filename: this.__realFileName || '',
       source: this.sourceInfo.source,
       store: this.settings.doNotStore ? '' : 'auto',
       jsonerrors: 1
+    }
+
+    if (this.__realFileName) {
+      data.filename = this.__realFileName
     }
 
     $.each(getMetadataObject(this.settings), (key, value) => {
