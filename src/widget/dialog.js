@@ -498,7 +498,9 @@ class Panel {
       )
     } else {
       tabIcon = $(
-        `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${tabLocaleName(name)}'/></svg>`
+        `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${tabLocaleName(
+          name
+        )}'/></svg>`
       )
         .attr('role', 'presentation')
         .attr('class', 'uploadcare--icon uploadcare--menu__icon')
@@ -610,7 +612,9 @@ class Panel {
   __addFakeTab(name) {
     var tabIcon
     tabIcon = $(
-      `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${tabLocaleName(name)}'/></svg>`
+      `<svg width='32' height='32'><use xlink:href='#uploadcare--icon-${tabLocaleName(
+        name
+      )}'/></svg>`
     )
       .attr('role', 'presentation')
       .attr('class', 'uploadcare--icon uploadcare--menu__icon')
