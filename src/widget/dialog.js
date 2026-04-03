@@ -17,6 +17,12 @@ import { FileGroup } from '../files/group-creator'
 import { isFileGroup } from '../utils/groups'
 import { isWindowDefined } from '../utils/is-window-defined'
 
+const TAB_LOCALE_NAME_MAP = {
+  dropboxchooser: 'dropbox'
+}
+
+const tabLocaleName = (name) => TAB_LOCALE_NAME_MAP[name] || name
+
 const lockDialogFocus = function (e) {
   if (!e.shiftKey && focusableElements.last().is(e.target)) {
     e.preventDefault()
@@ -205,6 +211,7 @@ registerTab('url', UrlTab)
 registerTab('camera', CameraTab)
 registerTab('facebook', RemoteTab)
 registerTab('dropbox', RemoteTab)
+registerTab('dropboxchooser', RemoteTab)
 registerTab('gdrive', RemoteTab)
 registerTab('gphotos', RemoteTab)
 registerTab('instagram', RemoteTab)
@@ -502,7 +509,7 @@ class Panel {
     })
       .addClass('uploadcare--menu__item')
       .addClass(`uploadcare--menu__item_tab_${name}`)
-      .attr('title', locale.t(`dialog.tabs.names.${name}`))
+      .attr('title', locale.t(`dialog.tabs.names.${tabLocaleName(name)}`))
       .append(tabIcon)
       .appendTo(this.panel.find('.uploadcare--menu__items'))
       .on('click', () => {
@@ -614,7 +621,7 @@ class Panel {
       .addClass('uploadcare--menu__item')
       .addClass(`uploadcare--menu__item_tab_${name}`)
       .attr('aria-disabled', true)
-      .attr('title', locale.t(`dialog.tabs.names.${name}`))
+      .attr('title', locale.t(`dialog.tabs.names.${tabLocaleName(name)}`))
       .append(tabIcon)
       .appendTo(this.panel.find('.uploadcare--menu__items'))
   }
