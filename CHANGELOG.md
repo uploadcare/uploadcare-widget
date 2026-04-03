@@ -1,3 +1,11 @@
+# [3.24.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.4...v3.24.0) (2026-04-03)
+
+
+### Features
+
+* add dropboxchooser tab and map locale key to dropbox ([#1004](https://github.com/uploadcare/uploadcare-widget/issues/1004)) ([273a17d](https://github.com/uploadcare/uploadcare-widget/commit/273a17d0b3547f5dabedec7429a368a30c1989e3))
+
+
 ## [3.23.4](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.3...v3.23.4) (2026-01-20)
 
 
