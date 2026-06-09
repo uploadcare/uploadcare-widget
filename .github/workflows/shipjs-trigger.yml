@@ -15,8 +15,10 @@ jobs:
           ref: master
       - uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version: 24
           cache: npm
+      - name: Pin npm with staged publishing support
+        run: npm install -g npm@">=11.15.0"
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
@@ -29,3 +31,19 @@ jobs:
           WIDGET_S3_PATH: ${{ secrets.WIDGET_S3_PATH }}
           WIDGET_S3_ACCESS_KEY: ${{ secrets.WIDGET_S3_ACCESS_KEY }}
           WIDGET_S3_SECRET_KEY: ${{ secrets.WIDGET_S3_SECRET_KEY }}
+      - name: Read package metadata
+        id: pkg
+        run: |
+          {
+            echo "name=$(node -p "require('./package.json').name")"
+            echo "version=$(node -p "require('./package.json').version")"
+          } >> "$GITHUB_OUTPUT"
+      - name: Notify Slack about staged release
+        uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: ${{ secrets.SLACK_NPM_RELEASE_CHANNEL }}
+          slack-message: |
+            :package: *${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }}* staged for review
+            Review & approve (2FA required): https://www.npmjs.com/package/${{ steps.pkg.outputs.name }}?activeTab=staged

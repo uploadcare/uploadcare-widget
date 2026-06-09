@@ -4,5 +4,6 @@ module.exports = {
   // build command is empty because it will be implicitly run by the test command below
   buildCommand: () => null,
   testCommandBeforeRelease: () => 'npm run test',
+  publishCommand: ({ tag }) => `npm stage publish --tag ${tag}`,
   afterPublish: ({ exec }) => exec('node ./scripts/publish-to-s3.js')
 }
