@@ -115,7 +115,7 @@ constraints = {
 }
 presets = {
   tabs: {
-    all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle',
+    all: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive box vk huddle unsplash',
     default: defaults.tabs
   }
 }
