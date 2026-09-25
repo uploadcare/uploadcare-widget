@@ -8,6 +8,7 @@ import el from './el'
 import en from './en'
 import es from './es'
 import et from './et'
+import fi from './fi'
 import fr from './fr'
 import he from './he'
 import is from './is'
@@ -41,6 +42,7 @@ export default {
   en,
   es,
   et,
+  fi,
   fr,
   he,
   is,
