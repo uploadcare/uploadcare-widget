@@ -1,10 +1,4 @@
-## [3.25.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.25.0...v3.25.1) (2026-09-29)
-
-
-### Bug Fixes
-
-* restore missing @resvg/resvg-js platform entries in lockfile ([#1009](https://github.com/uploadcare/uploadcare-widget/issues/1009)) ([dbf6a1e](https://github.com/uploadcare/uploadcare-widget/commit/dbf6a1ef20452f14fba8098119d3cb7f2e04fb33))
-# [3.25.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.24.0...v3.25.0) (2026-09-29)
+## [3.25.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.24.0...v3.25.1) (2026-09-29)
 
 
 ### Features
