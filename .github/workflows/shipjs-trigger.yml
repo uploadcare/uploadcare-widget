@@ -15,7 +15,7 @@ jobs:
           ref: master
       - uses: actions/setup-node@v3
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
       - name: Pin npm with staged publishing support
         run: npm install -g npm@">=11.15.0"

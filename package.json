@@ -88,7 +88,7 @@
     "rollup-plugin-serve": "1.1.1",
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-terser": "5.3.1",
-    "shipjs": "0.26.3",
+    "shipjs": "0.28.4",
     "size-limit": "11.0.1",
     "stylelint": "15.11.0",
     "stylelint-config-recommended": "^11.0.0",
@@ -148,9 +148,6 @@
   "overrides": {
     "postcss-prefixer": {
       "postcss": "$postcss"
-    },
-    "shipjs": {
-      "conventional-changelog-core": "^4.2.4"
     }
   }
 }
