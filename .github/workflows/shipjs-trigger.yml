@@ -38,7 +38,12 @@ jobs:
             echo "name=$(node -p "require('./package.json').name")"
             echo "version=$(node -p "require('./package.json').version")"
           } >> "$GITHUB_OUTPUT"
+          # shipjs exits 0 when it skips a release; the tag only exists if it published
+          if git ls-remote --exit-code --tags origin "refs/tags/v$(node -p "require('./package.json').version")" > /dev/null; then
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Notify Slack about staged release
+        if: steps.pkg.outputs.released == 'true'
         uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
