@@ -51,6 +51,7 @@ defaults = {
   multipleMax: 1000,
   multipleMin: 1,
   multipleMaxStrict: false,
+  maxFileSize: null,
   imageShrink: false,
   pathValue: true,
   tabs: 'file camera url facebook gdrive gphotos dropbox instagram evernote flickr onedrive',
