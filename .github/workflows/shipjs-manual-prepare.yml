@@ -10,7 +10,7 @@ jobs:
           ref: master
       - uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version: 24
           cache: npm
       - run: npm ci
       - run: |
