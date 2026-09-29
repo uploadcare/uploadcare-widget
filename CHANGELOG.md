@@ -1,3 +1,12 @@
+# [3.25.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.24.0...v3.25.0) (2026-09-29)
+
+
+### Features
+
+* add Finnish translations ([#1007](https://github.com/uploadcare/uploadcare-widget/issues/1007)) ([ce5d6b2](https://github.com/uploadcare/uploadcare-widget/commit/ce5d6b22666c5f7832f62c7d932d202578fc28b4))
+
+
+
 # [3.24.0](https://github.com/uploadcare/uploadcare-widget/compare/v3.23.4...v3.24.0) (2026-04-03)
 
 
