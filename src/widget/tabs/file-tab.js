@@ -42,7 +42,15 @@ class FileTab {
     if (sendFileAPI) {
       return fileButton.on('click', () => {
         fileSelectDialog(this.container, this.settings, (input) => {
-          this.dialogApi.addFiles('object', input.files)
+          var files, maxFileSize
+          maxFileSize = this.settings.maxFileSize
+          files = maxFileSize
+            ? Array.prototype.filter.call(
+                input.files,
+                (file) => !file.size || file.size <= maxFileSize
+              )
+            : input.files
+          this.dialogApi.addFiles('object', files)
           return this.dialogApi.switchTab('preview')
         })
         return false
