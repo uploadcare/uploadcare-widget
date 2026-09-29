@@ -149,5 +149,8 @@
     "postcss-prefixer": {
       "postcss": "$postcss"
     }
+  },
+  "allowScripts": {
+    "cypress": true
   }
 }
