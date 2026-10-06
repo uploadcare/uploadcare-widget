@@ -1,3 +1,9 @@
+## [3.25.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.25.1...v3.25.2) (2026-10-06)
+
+
+### Bug Fixes
+
+* improve finnish locale ([#1015](https://github.com/uploadcare/uploadcare-widget/issues/1015)) ([3406cdd](https://github.com/uploadcare/uploadcare-widget/commit/3406cdd9723aee7af29f37e23b1b6103e8262f75))
 ## [3.25.1](https://github.com/uploadcare/uploadcare-widget/compare/v3.24.0...v3.25.1) (2026-09-29)
 
 
