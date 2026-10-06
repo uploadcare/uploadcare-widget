@@ -12,11 +12,11 @@ const translations = {
     default: 'Virhe',
     baddata: 'Virheellinen arvo',
     size: 'Tiedosto on liian suuri',
-    upload: 'Lataus ei onnistu',
-    user: 'Lataus peruutettu',
-    info: 'Tietojen lataus ei onnistu',
-    image: 'Vain kuvat ovat sallittuja',
-    createGroup: 'Tiedostoryhmän luonti ei onnistu',
+    upload: 'Lataus epäonnistui',
+    user: 'Lataus peruutettiin',
+    info: 'Tietoja ei voitu ladata',
+    image: 'Vain kuvatiedostot ovat sallittuja',
+    createGroup: 'Tiedostoryhmän luonti epäonnistui',
     deleted: 'Tiedosto on poistettu'
   },
   draghere: 'Pudota tiedosto tähän',
@@ -69,7 +69,7 @@ const translations = {
         cloudsTip: 'Pilvipalvelut<br>ja sosiaalinen media',
         or: 'tai',
         button: 'Valitse tiedosto',
-        also: 'tai valitse palvelusta'
+        also: 'tai valitse lähde'
       },
       url: {
         title: 'Tiedostot verkosta',
@@ -91,7 +91,7 @@ const translations = {
           title: 'Salli kameran käyttö',
           text:
             'Sivusto pyytää lupaa käyttää kameraa.<br>' +
-            'Salli pyyntö, jotta voit ottaa kuvia kameralla.'
+            'Kuvien ottaminen edellyttää, että hyväksyt pyynnön.'
         },
         notFound: {
           title: 'Kameraa ei löytynyt',
@@ -132,12 +132,12 @@ const translations = {
             back: 'Yritä uudelleen'
           },
           image: {
-            title: 'Vain kuvatiedostot kelpaavat.',
+            title: 'Vain kuvatiedostot hyväksytään.',
             text: 'Yritä uudelleen toisella tiedostolla.',
             back: 'Valitse kuva'
           },
           size: {
-            title: 'Valitsemasi tiedosto ylittää rajan.',
+            title: 'Valitsemasi tiedosto on liian suuri.',
             text: 'Yritä uudelleen toisella tiedostolla.'
           },
           loadImage: {
@@ -146,10 +146,10 @@ const translations = {
           }
         },
         multiple: {
-          title: 'Valitsit %files%.',
+          title: 'Valittuna %files%.',
           question: 'Lisätäänkö %files%?',
           tooManyFiles: 'Valitsit liian monta tiedostoa. Enintään %max%.',
-          tooFewFiles: 'Valitsit %files%. Vähintään %min% vaaditaan.',
+          tooFewFiles: 'Valittuna: %files%. Vähimmäismäärä on %min%.',
           clear: 'Poista kaikki',
           done: 'Lisää',
           file: {
@@ -168,7 +168,7 @@ const translations = {
     AccountBlockedError: 'Ylläpitäjän tili on estetty. Ota yhteyttä tukeen.',
     AccountUnpaidError: 'Ylläpitäjän tili on estetty. Ota yhteyttä tukeen.',
     AccountLimitsExceededError:
-      'Ylläpitäjän tili on saavuttanut rajansa. Ota yhteyttä tukeen.',
+      'Ylläpitäjän tilin käyttörajat on saavutettu. Ota yhteyttä tukeen.',
     FileSizeLimitExceededError: 'Tiedosto on liian suuri.',
     MultipartFileSizeLimitExceededError: 'Tiedosto on liian suuri.',
     FileTypeForbiddenOnCurrentPlanError:
