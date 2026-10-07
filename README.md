@@ -11,9 +11,13 @@
 ---
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget">
-    <img align="right" width="64" height="64"
-         src="https://ucarecdn.com/2f4864b7-ed0e-4411-965b-8148623aa680/uploadcare-logo-mark.svg"
-         alt="">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://ucarecdn.com/0c643d09-f5cb-47f5-ac55-8e5273819476/uploadcare-logo-mark-inverted.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://ucarecdn.com/4f546650-8772-4222-baf3-2ad2d5a855b0/uploadcare-logo-mark.svg">
+      <img align="right" width="64" height="64"
+           src="https://ucarecdn.com/4f546650-8772-4222-baf3-2ad2d5a855b0/uploadcare-logo-mark.svg"
+           alt="">
+    </picture>
 </a>
 
 jQuery File Uploader is a part of the [Uploadcare][uc-home]
