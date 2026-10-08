@@ -14,6 +14,8 @@ const SOURCE_NAME_MAPPING = {
   gdrive: 'ngdrive'
 }
 
+const ALLOWED_POPUP_PROTOCOLS = ['http:', 'https:']
+
 // Returns null for invalid URLs and where URL is missing (IE).
 function parseUrl(url) {
   try {
@@ -21,6 +23,10 @@ function parseUrl(url) {
   } catch (e) {
     return null
   }
+}
+
+function isSafePopupUrl(url) {
+  return ALLOWED_POPUP_PROTOCOLS.includes(parseUrl(url)?.protocol)
 }
 
 function mapSourceName(name) {
@@ -168,10 +174,20 @@ class RemoteTab {
       if (this.settings.debugUploads) {
         debug('Open new window message.', this.name)
       }
+      if (!isSafePopupUrl(message.url)) {
+        warn('Refused to open new window: unsafe URL.', this.name)
+        return
+      }
       popup = window.open(message.url, '_blank')
       if (!popup) {
         warn("Can't open new window. Possible blocked.", this.name)
         return
+      }
+      // Reverse tabnabbing. Not 'noopener': it nulls `popup`, breaking `closed`.
+      try {
+        popup.opener = null
+      } catch (e) {
+        // Cordova InAppBrowser objects and the like: nothing to do.
       }
       resolve = () => {
         if (this.settings.debugUploads) {
