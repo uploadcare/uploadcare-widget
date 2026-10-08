@@ -21,8 +21,11 @@ isWindowDefined() &&
       results = []
       for (i = 0, len = ref.length; i < len; i++) {
         item = ref[i]
-        if (e.source === item[0]) {
-          results.push(item[1](message))
+        if (
+          e.source === item.sender &&
+          (item.origin == null || e.origin === item.origin)
+        ) {
+          results.push(item.callback(message))
         } else {
           results.push(undefined)
         }
@@ -31,18 +34,20 @@ isWindowDefined() &&
     }
   })
 
-const registerMessage = function (type, sender, callback) {
+// `origin` is optional. When given, a message must come from that exact
+// origin in addition to coming from the registered sender window.
+const registerMessage = function (type, sender, callback, origin) {
   if (!(type in callbacks)) {
     callbacks[type] = []
   }
 
-  return callbacks[type].push([sender, callback])
+  return callbacks[type].push({ sender, callback, origin })
 }
 
 const unregisterMessage = function (type, sender) {
   if (type in callbacks) {
     callbacks[type] = $.grep(callbacks[type], function (item) {
-      return item[0] !== sender
+      return item.sender !== sender
     })
 
     return callbacks[type]
