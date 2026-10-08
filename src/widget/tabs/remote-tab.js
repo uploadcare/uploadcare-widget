@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { registerMessage, unregisterMessage } from '../../utils/messages'
-import { warn, debug } from '../../utils/warnings'
+import { warn, warnOnce, debug } from '../../utils/warnings'
 import { getTopLevelOrigin, globRegexp } from '../../utils'
 import { UrlFile } from '../../files/url'
 import { CssCollector } from '../../settings'
@@ -12,6 +12,15 @@ const tabsCss = new CssCollector()
 
 const SOURCE_NAME_MAPPING = {
   gdrive: 'ngdrive'
+}
+
+// Returns null for invalid URLs and where URL is missing (IE).
+function parseUrl(url) {
+  try {
+    return new URL(url)
+  } catch (e) {
+    return null
+  }
 }
 
 function mapSourceName(name) {
@@ -29,6 +38,10 @@ class RemoteTab {
     this.dialogApi = dialogApi
     this.settings = settings
     this.name = name1
+    this.origin = parseUrl(this.settings.socialBase)?.origin
+    if (!this.origin) {
+      warnOnce("Can't get socialBase origin, messages aren't origin-checked.")
+    }
     this.dialogApi.progress((name) => {
       if (name === this.name) {
         this.__createIframe()
@@ -65,7 +78,7 @@ class RemoteTab {
     var ref, ref1
     return (ref = this.iframe) != null
       ? (ref1 = ref[0].contentWindow) != null
-        ? ref1.postMessage(JSON.stringify(messageObj), '*')
+        ? ref1.postMessage(JSON.stringify(messageObj), this.origin || '*')
         : undefined
       : undefined
   }
@@ -111,7 +124,7 @@ class RemoteTab {
 
     iframe = this.iframe[0].contentWindow
 
-    registerMessage('file-selected', iframe, (message) => {
+    const onFileSelected = (message) => {
       var file, sourceInfo, url
       url = (() => {
         var i, key, len, ref, type
@@ -148,9 +161,9 @@ class RemoteTab {
       }
 
       return this.dialogApi.addFiles([file.promise()])
-    })
+    }
 
-    registerMessage('open-new-window', iframe, (message) => {
+    const onOpenNewWindow = (message) => {
       var interval, popup, resolve
       if (this.settings.debugUploads) {
         debug('Open new window message.', this.name)
@@ -184,7 +197,10 @@ class RemoteTab {
       } else {
         return popup.addEventListener('exit', resolve)
       }
-    })
+    }
+
+    registerMessage('file-selected', iframe, onFileSelected, this.origin)
+    registerMessage('open-new-window', iframe, onOpenNewWindow, this.origin)
 
     return this.dialogApi.done(() => {
       unregisterMessage('file-selected', iframe)

@@ -5,6 +5,16 @@
 
 import { setup } from '../templates'
 
+const postToWidget = (win, { data, origin, source }) => {
+  win.dispatchEvent(
+    new win.MessageEvent('message', {
+      data: JSON.stringify(data),
+      origin,
+      source
+    })
+  )
+}
+
 // window.uploadcare only exposes internals through the plugin API.
 const internals = (win) => win.uploadcare.plugin((uc) => uc)
 
@@ -36,6 +46,37 @@ describe('security hardening', () => {
 
       expect(markup).to.contain('Please try again with another file.')
       expect(markup).not.to.contain('undefined')
+    })
+  })
+
+  it('registerMessage only accepts messages from the given origin', () => {
+    setup()
+
+    cy.window().then((win) => {
+      const { registerMessage, unregisterMessage } = internals(win).utils
+      const strict = cy.stub().as('strict')
+      const loose = cy.stub().as('loose')
+
+      registerMessage('test-msg', win, strict, 'https://trusted.example')
+      registerMessage('test-msg', win, loose)
+
+      postToWidget(win, {
+        data: { type: 'test-msg', n: 1 },
+        origin: 'https://evil.example',
+        source: win
+      })
+      postToWidget(win, {
+        data: { type: 'test-msg', n: 2 },
+        origin: 'https://trusted.example',
+        source: win
+      })
+
+      unregisterMessage('test-msg', win)
+
+      expect(strict).to.have.callCount(1)
+      expect(strict.firstCall.args[0]).to.deep.equal({ type: 'test-msg', n: 2 })
+      // Without an origin the old behaviour is kept: source check only.
+      expect(loose).to.have.callCount(2)
     })
   })
 })
