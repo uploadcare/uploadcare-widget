@@ -1,3 +1,11 @@
+## [3.25.3](https://github.com/uploadcare/uploadcare-widget/compare/v3.25.2...v3.25.3) (2026-10-08)
+
+
+### Bug Fixes
+
+* **security:** check origin of messages from remote tabs ([2c1722c](https://github.com/uploadcare/uploadcare-widget/commit/2c1722c440f7bea740162be436c663db8da9130e))
+* **security:** escape server error messages in the preview tab ([18e144f](https://github.com/uploadcare/uploadcare-widget/commit/18e144f0d948597367c49891af7e8cf6029cb8e5))
+* **security:** open only http(s) popups from remote tabs and drop opener ([11d15c8](https://github.com/uploadcare/uploadcare-widget/commit/11d15c8b3ca5a7eb4881ee70ae5f39af6575e73d))
 ## [3.25.2](https://github.com/uploadcare/uploadcare-widget/compare/v3.25.1...v3.25.2) (2026-10-06)
 
 
