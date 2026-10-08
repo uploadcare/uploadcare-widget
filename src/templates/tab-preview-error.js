@@ -1,5 +1,9 @@
+import escape from 'escape-html'
 import { html } from '../utils/html'
 import locale from '../locale'
+
+// escape-html stringifies undefined, which would short-circuit the fallbacks
+const escapedMessage = (error) => error?.message && escape(error.message)
 
 const tabPreviewError = ({ debugUploads, errorType, error }) => html`
   <div
@@ -13,9 +17,9 @@ const tabPreviewError = ({ debugUploads, errorType, error }) => html`
     </div>
 
     <div class="uploadcare--text">
-      ${(debugUploads && error?.message) ||
+      ${(debugUploads && escapedMessage(error)) ||
       locale.t(`serverErrors.${error?.code}`) ||
-      error?.message ||
+      escapedMessage(error) ||
       locale.t('dialog.tabs.preview.error.' + errorType + '.text') ||
       locale.t('dialog.tabs.preview.error.default.text')}
     </div>
