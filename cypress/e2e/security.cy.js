@@ -5,6 +5,8 @@
 
 import { setup } from '../templates'
 
+const SOCIAL_ORIGIN = 'https://social.uploadcare.com'
+
 const postToWidget = (win, { data, origin, source }) => {
   win.dispatchEvent(
     new win.MessageEvent('message', {
@@ -78,5 +80,53 @@ describe('security hardening', () => {
       // Without an origin the old behaviour is kept: source check only.
       expect(loose).to.have.callCount(2)
     })
+  })
+
+  it('open-new-window ignores foreign origins and non-http URLs', () => {
+    setup()
+
+    cy.get('.uploadcare--widget__button_type_open').click()
+    cy.get('.uploadcare--menu__item_tab_huddle').click()
+
+    cy.get('.uploadcare--tab_name_huddle iframe')
+      .should('exist')
+      .then(($iframe) => {
+        const source = $iframe[0].contentWindow
+
+        cy.window().then((win) => {
+          const open = cy.stub(win, 'open').returns(null).as('open')
+
+          // Wrong origin, same source window: refused.
+          postToWidget(win, {
+            data: { type: 'open-new-window', url: 'https://example.com/a' },
+            origin: 'https://evil.example',
+            source
+          })
+          // Right origin, dangerous scheme: refused.
+          postToWidget(win, {
+            data: { type: 'open-new-window', url: 'javascript:alert(1)' },
+            origin: SOCIAL_ORIGIN,
+            source
+          })
+          // Right origin, wrong source window: refused.
+          postToWidget(win, {
+            data: { type: 'open-new-window', url: 'https://example.com/b' },
+            origin: SOCIAL_ORIGIN,
+            source: win
+          })
+          expect(open).to.have.callCount(0)
+
+          // Right origin, right source, http(s) URL: opened.
+          postToWidget(win, {
+            data: { type: 'open-new-window', url: 'https://example.com/ok' },
+            origin: SOCIAL_ORIGIN,
+            source
+          })
+          expect(open).to.have.been.calledOnceWith(
+            'https://example.com/ok',
+            '_blank'
+          )
+        })
+      })
   })
 })
